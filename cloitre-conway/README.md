@@ -1,7 +1,33 @@
 # Cloitre's variable-depth Conway candidate
 
-Read [proof.md](proof.md) for the precise recurrence, proved results, corrected
-finite observations and open conjectures.
+[Back to the research overview](../README.md) · [Current research status](../STATUS.md)
+
+## Read the research note
+
+**[Open the Conway research note](proof.md).** It is displayed directly as a
+web page; no download, installation or GitHub account is needed.
+
+Suggested reading order:
+
+1. [Definition and result summary](proof.md#definition-and-result-status): the
+   precise recurrence and the distinction between proofs and observations.
+2. [Global ratio bounds](proof.md#3-finite-window-propagation-and-explicit-infinite-bounds):
+   how a finite exact certificate yields a bound for every sufficiently large index.
+3. [Corrections to the numerical conjectures](proof.md#5-independent-reproduction-and-corrections):
+   the four additional equality indices and the refined conjecture.
+4. [The next proof problem](proof.md#6-more-structural-evidence-and-the-remaining-proof-problem):
+   the Fibonacci fixed point and what is still needed to prove that the orbit reaches it.
+
+Sections 1, 2 and 4 supply the detailed well-definedness, split-separation and
+cycle-entry arguments. The exact G lower bound, Fibonacci identity and refined
+equality-set description remain conjectures. Comments and proposed arguments
+can be shared in the existing email thread.
+
+## Optional computational checks
+
+The recorded data and code are for auditing the computation; they are not
+required reading. With Python 3.10 or newer, open a terminal in this directory
+and run:
 
 ```sh
 python3 conway_explore.py --output replay.json

@@ -1,14 +1,32 @@
 # Campbell's variable-depth recurrence
 
-The [PDF note](note.pdf) and [LaTeX source](note.tex) prove global
+[Back to the research overview](../README.md) · [Current research status](../STATUS.md)
+
+## Read the proof
+
+**[Open the three-page proof (PDF)](note.pdf).** No software or GitHub account
+is needed. Read it in GitHub's preview, or use **Download raw file** (the
+download-arrow button) to save a copy for reading or printing.
+
+The note proves global
 well-definedness, the explicit power-of-three formula, the sharp four-step
 transient bound, the eventual cycle classification and the asymptotic ratio
 bounds for the recurrence proposed by John M. Campbell.
 
-The note has no author byline. It acknowledges Campbell's proposal and
-Cloitre's discussion of stabilization, and discloses AI assistance.
+The main result is an explicit formula organized by powers of three. The proof
+then explains why the inner orbit reaches a fixed point or a two-cycle after
+at most four transient steps. The final consequences include the dilation
+identity and the lower and upper asymptotic ratios.
 
-## Reproduce
+You can send comments in the existing email thread; no GitHub workflow is
+required. For the second example, continue to the
+[Conway research guide](../cloitre-conway/README.md).
+
+## Optional computational checks
+
+The [LaTeX source](note.tex), Python programs and recorded data support the PDF;
+you do not need them to read the argument. The note remains unsigned and retains
+its acknowledgements and research-practice disclosure.
 
 With Python 3.10 or newer, from this directory:
 

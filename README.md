@@ -4,10 +4,48 @@ Research on recurrences in which an earlier sequence value determines the
 number of nested iterations. The initial example was proposed by John M.
 Campbell; the Conway-type candidate was proposed by Benoît Cloitre.
 
-This repository contains mathematical arguments, exact computation programs,
-and reproducible evidence. Written theorems, computer-assisted theorems and
-finite observations are distinguished below. Neither example has been
-formalized in Lean.
+## Start here: read the mathematics
+
+Everything can be read in your web browser. No GitHub account, installation,
+or programming knowledge is needed.
+
+| What would you like to read? | Open this document | What it contains |
+|---|---|---|
+| The complete solution of Campbell's first example | **[Three-page proof (PDF)](campbell/note.pdf)** | The explicit formula, why the nested iterations stabilize, and the ratio limits |
+| Progress on Cloitre's new Conway-type example | **[Conway research note](cloitre-conway/proof.md)** | The recurrence, proved bounds, corrected observations and open conjectures |
+| A quick overview of what is proved and what remains open | **[Current research status](STATUS.md)** | A claim-by-claim table and the next proof problem |
+
+For the latest Conway results, start with the note's
+[definition and result summary](cloitre-conway/proof.md#definition-and-result-status),
+then [the global ratio bounds](cloitre-conway/proof.md#3-finite-window-propagation-and-explicit-infinite-bounds).
+For discussion, go to
+[the remaining proof problem](cloitre-conway/proof.md#6-more-structural-evidence-and-the-remaining-proof-problem).
+
+**Reading on GitHub:** click any document link above to open it. The PDF can be
+read in the preview; if the preview is unavailable, use **Download raw file**
+(the download-arrow button) to open a local copy. The research note is a normal
+web page. Your browser's Back button returns here. You can ignore the file list
+and the Code button above this page.
+
+Comments, corrections and proposed arguments are welcome in our existing email
+thread. There is no need to learn GitHub Issues or submit a pull request.
+
+## Results at a glance
+
+- **Campbell's example: explicit formula proved.** The prescribed orbit reaches
+  a fixed point or a two-cycle after at most four transient steps. A complete
+  written proof is available in the PDF.
+- **Cloitre's example: global bounds proved; finer structure open.** We prove
+  that the recurrence is well-defined and that its chosen iteration depth
+  reaches a cycle. A propagation argument and an exact finite computation give
+  the universal rational bounds below. The proposed Hofstadter G lower bound
+  and Fibonacci identity still need general proofs.
+- **Next question:** can we prove that, at a Fibonacci index, the prescribed
+  orbit reaches the Fibonacci fixed point? The precise question and its small
+  exceptional case are explained in the Conway note.
+
+The following sections give the precise statements. Code and recorded data are
+optional supporting material, collected under **Optional: reproduce the checks**.
 
 ## Campbell's recurrence: explicit formula proved
 
@@ -74,7 +112,24 @@ counterexamples. The note states a refined equality-set conjecture.
 - [Recorded results and complete orbit witnesses](cloitre-conway/conway-results.json).
 - [Current research status and next questions](STATUS.md).
 
-## Reproduce all recorded checks
+## Optional: reproduce the checks
+
+The proofs and research notes above can be read without running any code.
+For readers who want to audit the computations, the files have these roles:
+
+| File type | Purpose |
+|---|---|
+| `.pdf` | A typeset proof to read or print |
+| `.md` | A note displayed as a web page on GitHub |
+| `.py` | A Python program for reproducing computations |
+| `.json` | Recorded exact results for comparison with a new run |
+| `.tex` | The editable LaTeX source of the PDF |
+
+<details>
+<summary>Show the command and technical reproduction instructions</summary>
+
+After downloading or cloning this repository, open a terminal in its main
+folder (the folder containing this README).
 
 Python 3.10 or newer and its standard library are sufficient:
 
@@ -88,6 +143,11 @@ hash. Run without Python's `-O` option or `PYTHONOPTIMIZE`: assertions are part
 of the mathematical checks. PDF rebuilding is optional and described in the
 Campbell directory.
 
+For separate instructions, see the [Campbell guide](campbell/README.md#optional-computational-checks)
+or the [Conway guide](cloitre-conway/README.md#optional-computational-checks).
+
+</details>
+
 ## Attribution and research practice
 
 Campbell and Cloitre are credited for their respective recurrence proposals.
@@ -95,8 +155,8 @@ This repository does not set a paper's author list or claim a journal
 submission. The Campbell note retains its unsigned presentation.
 
 AI assistance was used in exploration, proof development, implementation and
-writing. Each result states its actual verification scope; executable checks
-are not described as Lean proofs. The related Grytczuk paper is *Another
+writing. Each result states its actual verification scope; neither example has
+been formalized in Lean. The related Grytczuk paper is *Another
 variation on Conway's recursive sequence* (2004),
 [DOI: 10.1016/j.disc.2003.10.022](https://doi.org/10.1016/j.disc.2003.10.022).
 Its relationship to the new candidate and the priority of individual methods
