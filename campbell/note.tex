@@ -1,0 +1,253 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,booktabs,graphicx,microtype}
+\usepackage[margin=24mm]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\setlength{\parskip}{1.5pt}
+\hypersetup{pdftitle={An explicit formula for Campbell's variable-depth recurrence},
+pdfauthor={}}
+\title{An explicit formula for Campbell's\texorpdfstring{\\}{ }variable-depth recurrence}
+\author{}
+\date{29 September 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+We give an explicit formula for the nested recurrence proposed by John M.
+Campbell, in which the number of iterations is itself a preceding sequence
+term. Its even and odd subsequences consist of alternating linear pieces and
+plateaux on powers-of-three scales. The proof identifies every prescribed
+inner orbit after four steps: it is then fixed or two-periodic, and the
+iteration depth selects the required phase. We also obtain exact dilation
+and the lower and upper limits of the ratio of the sequence to its index.
+\end{abstract}
+
+\section{The recurrence and its explicit formula}
+Campbell's proposed recurrence\footnote{John M. Campbell,
+\texttt{MetaMetaV32.pdf}, unpublished note communicated 29 September 2026.} is
+\begin{equation}\label{eq:recurrence}
+b(1)=1,\qquad T_n(x)=n-b(x),\qquad
+b(n)=T_n^{\,b(n-1)}(n-1)\quad(n\ge2).
+\end{equation}
+Here the exponent denotes iteration of the map $x\mapsto n-b(x)$ with $n$
+fixed. The first terms are
+\[
+1,1,2,3,2,3,4,5,6,7,6,9,6,9,6,9,8,9,10,\ldots.
+\]
+\begin{theorem}\label{thm:main}
+The recurrence defines a unique positive integer sequence. For $n\ge2$,
+let $s$ be the unique power of $3$ in the applicable interval below. Then
+\begin{equation}\label{eq:formula}
+\begin{aligned}
+b(n)&=\min(n-s,3s),&& n\text{ even},&2s\le n<6s,\\
+b(n)&=\max(2s,n-3s),&& n\text{ odd},&3s\le n<9s.
+\end{aligned}
+\end{equation}
+For every $n\ge2$, the orbit starting at $n-1$ satisfies
+\begin{equation}\label{eq:orbit}
+T_n^6(n-1)=T_n^4(n-1).
+\end{equation}
+Its preperiod is at most four and its eventual period is one or two.
+The bound four is attained.
+\end{theorem}
+
+For example, at scale $s=9$ the even subsequence follows $n-9$ from
+$n=18$ through $36$, and then stays at $27$ through $52$. The odd
+subsequence stays at $18$ from $27$ through $45$, and then follows $n-27$
+from $47$ through $79$. Their interleaving explains the clusters.
+
+\paragraph{Well-definedness.}
+Suppose the prefix through $n-1$ is defined with $1\le b(k)\le k$.
+For $1\le x\le n-1$ we have $1\le n-b(x)\le n-1$. Thus $T_n$ maps
+the known index set into itself, and any positive finite iterate exists
+uniquely. Strong induction proves well-definedness and
+$1\le b(n)\le n-1$ for $n\ge2$. In fact, for $n\ge3$ the map takes
+values in $[2,n-1]$: at $x=1$ its value is $n-1$, while at $x\ge2$ the
+stronger bound $b(x)\le x-1$ gives $n-b(x)\ge n-x+1\ge2$.
+
+\section{The candidate function and short orbits}
+Define $F(1)=1$ and define $F(n)$ by the right side of
+\eqref{eq:formula} for $n\ge2$. Its scale is unique because the respective
+half-open intervals partition the eligible even and odd indices. Directly,
+\begin{equation}\label{eq:bounds}
+1\le F(n)\le n-1,\qquad F(n)\equiv n+1\pmod2\quad(n\ge2).
+\end{equation}
+The following four rules hold on closed intervals; the formulas agree at
+every shared endpoint. In each row $t$ is a power of $3$.
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Parity of $x$ & Interval & $F(x)$\\
+\midrule
+even & $2t\le x\le4t$ & $x-t$\\
+even & $4t\le x\le6t$ & $3t$\\
+odd & $3t\le x\le5t$ & $2t$\\
+odd & $5t\le x\le9t$ & $x-3t$\\
+\bottomrule
+\end{tabular}
+\end{center}
+At $x=6t$, for instance, the next even scale $3t$ gives the same value
+$3t$; at $x=9t$ the next odd scale gives $6t$.
+
+Fix $n$ and put $U_n(x)=n-F(x)$ on $1\le x\le n-1$. By
+\eqref{eq:bounds}, this interval is invariant. Write $x_0=n-1$ and
+$x_{j+1}=U_n(x_j)$.
+
+\begin{lemma}\label{lem:orbit}
+Let $s\ge3$ be a power of $3$ in the interval associated with $n$.
+The orbit is given by the tables below. In particular, $x_6=x_4$;
+if $n$ is even then $x_4=F(n)$, and if $n$ is odd then $x_5=F(n)$.
+\end{lemma}
+
+In the first table set
+\[
+A=\min(n-2s/3,5s/3+1),\qquad B=\min(n-2s/3,2s).
+\]
+Rows are closed for convenience, and are intersected with $2s\le n<6s$
+or $3s\le n<9s$, respectively. Adjacent rows agree at shared endpoints.
+
+\begin{center}
+\textbf{Even $n$}\par\smallskip
+\setlength{\tabcolsep}{3pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c c c c c c c c}
+\toprule
+& Interval for $n$ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$\\
+\midrule
+E1 & $[2s,3s+1]$ & $s+1$ & $n-2s/3-1$ & $A$ & $n-s$ & $B$ & $n-s$\\
+E2 & $[3s+1,10s/3]$ & $n-2s$ & $7s/3$ & $n-4s/3$ & $n-s$ & $2s$ & $n-s$\\
+E3 & $[10s/3,4s]$ & $n-2s$ & $n-s$ & $2s$ & $n-s$ & $2s$ & $n-s$\\
+E4 & $[4s,5s+1]$ & $n-2s$ & $3s$ & $n-2s$ & $3s$ & $n-2s$ & $3s$\\
+E5 & $[5s+1,6s]$ & $3s+1$ & $n-2s-1$ & $n-2s$ & $3s$ & $n-2s$ & $3s$\\
+\bottomrule
+\end{tabular}}
+\end{center}
+
+\begin{center}
+\textbf{Odd $n$}\par\smallskip
+\setlength{\tabcolsep}{3pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c c c c c c c c}
+\toprule
+& Interval for $n$ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$\\
+\midrule
+O1 & $[3s,4s+1]$ & $s+1$ & $n-2s/3-1$ & $5s/3+1$ & $n-s$ & $2s$ & $n-s$\\
+O2 & $[4s+1,13s/3]$ & $n-3s$ & $10s/3$ & $n-7s/3$ & $n-s$ & $2s$ & $n-s$\\
+O3 & $[13s/3,5s]$ & $n-3s$ & $n-s$ & $2s$ & $n-s$ & $2s$ & $n-s$\\
+O4 & $[5s,6s+1]$ & $n-3s$ & $4s$ & $n-3s$ & $4s$ & $n-3s$ & $4s$\\
+O5 & $[6s+1,7s]$ & $3s+1$ & $n-2s-1$ & $n-3s$ & $4s$ & $n-3s$ & $4s$\\
+O6 & $[7s,8s+1]$ & $3s+1$ & $n-2s-1$ & $n-3s$ & $n-3s$ & $n-3s$ & $n-3s$\\
+O7 & $[8s+1,9s]$ & $3s+1$ & $n-2s-1$ & $5s+1$ & $n-3s$ & $n-3s$ & $n-3s$\\
+\bottomrule
+\end{tabular}}
+\end{center}
+
+\begin{proof}
+Use the four branch rules with $t=s/3,s,3s$, all powers of $3$. The
+parities alternate for even $n$, starting with odd $x_0$; for odd $n$
+all indices $x_j$ are even. All listed arguments remain in $[1,n-1]$.
+
+We detail E1, which involves the two minima. Here
+$5s/3\le2s-1\le n-1\le3s$, so the odd linear branch at scale $s/3$
+gives $F(n-1)=n-s-1$ and $x_1=s+1$. Since
+$2s/3\le s+1\le4s/3$, we get $F(x_1)=2s/3+1$ and
+$x_2=n-2s/3-1$. This odd index lies in $[s,3s]$, and hence
+\[
+F(x_2)=\max(2s/3,n-5s/3-1),\qquad x_3=A.
+\]
+Both arguments defining $A$ are at least $4s/3$, and
+$A\le5s/3+1\le2s$. The even plateau at scale $s/3$ therefore gives
+$F(x_3)=s$ and $x_4=n-s$. This odd index lies in $[s,3s]$, so
+$F(x_4)=\max(2s/3,n-2s)$ and $x_5=B$. Finally,
+$4s/3\le B\le2s$ gives $F(x_5)=s$ and $x_6=n-s$.
+
+The remaining rows follow by the same substitutions. To illustrate the
+change of scale in O7, $x_1=3s+1$ gives $F(x_1)=2s+1$, so
+$x_2=n-2s-1\in[6s,7s-1]$. The even linear branch at scale $3s$
+gives $F(x_2)=n-5s-1$ and $x_3=5s+1$. The even plateau at scale $s$
+then gives $x_4=n-3s$; this lies in $[5s+1,6s]$ and is fixed by $U_n$.
+Each of the other rows uses the displayed branch intervals directly.
+\end{proof}
+
+\section{Proof of the formula}
+We prove $b(n)=F(n)$ by strong induction. Direct evaluation through $n=8$
+gives $(1,1,2,3,2,3,4,5)$, as required. For $n\ge9$, assume equality
+at every smaller index. Then $T_n=U_n$ throughout $[1,n-1]$. Since this
+interval is invariant, their entire starting orbits agree.
+
+Let $d=b(n-1)=F(n-1)$. Equation~\eqref{eq:bounds} gives
+$d\equiv n\pmod2$. For even $n\ge10$, the table gives $d\ge4$:
+in E1, $d=n-s-1\ge n/2-1\ge4$; in E2--E4, $d=2s\ge6$;
+in E5, $d=n-3s-1\ge2s\ge6$. For odd $n$, it gives $d\ge5$:
+in O1, $d=n-s-1\ge2s-1\ge5$; in O2--O4, $d=3s\ge9$;
+in O5--O7, $d=n-3s-1\ge3s\ge9$.
+
+Since $x_6=x_4$, determinism implies $x_{j+2}=x_j$ for every $j\ge4$.
+For even $n$, $d$ is even and at least four, so
+$b(n)=x_d=x_4=F(n)$. For odd $n$, $d$ is odd and at least five, so
+$b(n)=x_d=x_5=F(n)$. This closes the induction.
+
+The same lemma proves~\eqref{eq:orbit} for $n\ge9$. For
+$n=2,3,4,5,6,7,8$, direct calculation gives $x_4=x_6$ equal to
+$1,2,3,4,3,4,5$, respectively. The bound four is attained at $n=24$:
+\[
+23\longmapsto10\longmapsto17\longmapsto16\longmapsto15
+\longmapsto18\longmapsto15\longmapsto18\longmapsto\cdots.
+\]
+The first six displayed values are distinct. This finishes the proof of
+Theorem~\ref{thm:main}.\hfill$\square$
+
+\section{Scaling, fluctuations and fixed points}
+\begin{corollary}
+For every $n\ge2$, $b(3n)=3b(n)$. Moreover,
+\[
+\liminf_{n\to\infty}\frac{b(n)}n=\frac25,\qquad
+\limsup_{n\to\infty}\frac{b(n)}n=\frac34.
+\]
+\end{corollary}
+\begin{proof}
+Multiplying $n$ by $3$ preserves parity, sends its scale $s$ to $3s$,
+and multiplies either expression in~\eqref{eq:formula} by $3$.
+On even indices, $b(n)/n\in[1/2,3/4]$; on odd indices it lies in
+$[2/5,2/3]$. The values $n=5\cdot3^k$ attain $2/5$, and
+$n=4\cdot3^k$ attain $3/4$, proving the two limits.
+\end{proof}
+
+For even $n\ge4$, the eventual period is exactly two, since the two
+phases have opposite parity; at $n=2$ the orbit is fixed. For odd $n$,
+the tables give
+\[
+x_4=\begin{cases}
+n-s,&3s\le n\le5s,\\
+4s,&5s\le n\le7s,\\
+n-3s,&7s\le n<9s,
+\end{cases}
+\qquad x_5=\max(2s,n-3s).
+\]
+Consequently the prescribed orbit is eventually fixed exactly when
+$n=3s$ or $7s\le n<9s$. At the other odd indices its period is two.
+The small scale $s=1$ agrees by direct calculation at $n=3,5,7$.
+
+\section{Computational support}
+The accompanying package provides two complementary checks. The program
+\texttt{explore.py} generates the original recurrence through $10^6$ terms
+without using the closed formula, compares every term with it, and separately
+performs literal nesting through $5000$ terms. All comparisons agree.
+The program \texttt{check\_proof.py} checks the twelve orbit rows using exact
+rational Fourier--Motzkin elimination, including the strict inequalities
+needed to negate an implication. It verifies all 72 transitions over their
+full parameter regions, together with interval coverage, index bounds,
+parity, selected outputs, depth bounds and the small cases.
+
+These computations supplement the written induction proof. This result has
+not yet been formalized in Lean. AI assistance was used for exploration,
+proof development, code generation and writing; the package records the
+arithmetic checks performed on the resulting argument.
+
+\paragraph{Acknowledgements.}
+We thank John M. Campbell for sharing the recurrence and Beno\^it Cloitre
+for the discussion of stabilization in nested iterations.
+
+\end{document}

@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "table_rows": 12,
+  "transitions": 72,
+  "feasible_affine_transition_branches": 146,
+  "method": "exact rational Fourier-Motzkin elimination over all real s>=3",
+  "checked": [
+    "interval coverage",
+    "transition identities",
+    "index bounds",
+    "parity",
+    "x6=x4",
+    "formula output",
+    "minimum depth",
+    "small cases"
+  ],
+  "scope": "arithmetic certificate for the written induction, not Lean verification"
+}

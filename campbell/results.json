@@ -1,0 +1,211 @@
+{
+  "definition": "b(1)=1; b(n)=T_n^b(n-1)(n-1); T_n(x)=n-b(x)",
+  "limit": 1000000,
+  "literal_limit": 5000,
+  "literal_updates": 6944434,
+  "literal_agrees": true,
+  "candidate_mismatches": [],
+  "orbit_bound_failures": [],
+  "cycle_histogram": {
+    "1": 88586,
+    "2": 911413
+  },
+  "max_preperiod": 4,
+  "max_distinct_orbit_values": 6,
+  "first_80": [
+    1,
+    1,
+    2,
+    3,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    6,
+    9,
+    6,
+    9,
+    6,
+    9,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    18,
+    21,
+    18,
+    23,
+    18,
+    25,
+    18,
+    27,
+    18,
+    27,
+    18,
+    27,
+    18,
+    27,
+    18,
+    27,
+    18,
+    27,
+    20,
+    27,
+    22,
+    27,
+    24,
+    27,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53
+  ],
+  "comma_separated_sequence_sha256": "819d3a0632427cefca525a96b7d498c453586e8ae2c93882520231aad8f4a801",
+  "witnesses": {
+    "4": {
+      "depth": 2,
+      "values": [
+        3,
+        2
+      ],
+      "mu": 0,
+      "period": 2,
+      "result": 3
+    },
+    "11": {
+      "depth": 7,
+      "values": [
+        10,
+        4,
+        8,
+        6
+      ],
+      "mu": 2,
+      "period": 2,
+      "result": 6
+    },
+    "24": {
+      "depth": 14,
+      "values": [
+        23,
+        10,
+        17,
+        16,
+        15,
+        18
+      ],
+      "mu": 4,
+      "period": 2,
+      "result": 15
+    },
+    "29": {
+      "depth": 19,
+      "values": [
+        28,
+        10,
+        22,
+        16,
+        20,
+        18
+      ],
+      "mu": 4,
+      "period": 2,
+      "result": 18
+    },
+    "30": {
+      "depth": 18,
+      "values": [
+        29,
+        12,
+        21,
+        18
+      ],
+      "mu": 2,
+      "period": 2,
+      "result": 21
+    },
+    "36": {
+      "depth": 18,
+      "values": [
+        35,
+        18,
+        27
+      ],
+      "mu": 1,
+      "period": 2,
+      "result": 27
+    },
+    "47": {
+      "depth": 27,
+      "values": [
+        46,
+        20,
+        36
+      ],
+      "mu": 1,
+      "period": 2,
+      "result": 20
+    },
+    "54": {
+      "depth": 26,
+      "values": [
+        53,
+        28,
+        35,
+        36,
+        27
+      ],
+      "mu": 3,
+      "period": 2,
+      "result": 27
+    },
+    "81": {
+      "depth": 53,
+      "values": [
+        80,
+        28,
+        62,
+        46,
+        54
+      ],
+      "mu": 4,
+      "period": 1,
+      "result": 54
+    }
+  },
+  "status": "finite exact computation, not a universal proof or Lean verification"
+}
