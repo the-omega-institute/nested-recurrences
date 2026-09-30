@@ -545,6 +545,22 @@ witnesses. The public three-block audit has more than one legal split in 57 of
 cannot be complete on the audited data. This is an exact finite necessity
 result, not a claim that the number of selector types is globally bounded.
 
+There is also a local product lemma. Once the parent word and the two lower
+profiles are fixed, the decomposition equation for row `i` contains only
+`r_i`; no `r_j` with `j!=i` occurs. Hence the complete row-local witness set is
+exactly
+
+```text
+R_0 x R_1 x R_2 x R_3 x R_4.
+```
+
+This is the precise sense in which five selector positions are required at the
+cross-scale interface. A future lower-window closure theorem may impose extra
+relations between these choices, but those relations are additional arithmetic
+information and cannot be assumed at the parent decomposition layer. The public
+selector verifier enumerates all 69,064 row-local combinations and checks every
+child-defect equation.
+
 When the two lower profiles are already available, the numeric split `r_i` can
 be represented without storing its value: sort the exact candidate set `R_i`
 and store the ordinal `sigma_i` with `r_i=R_i[sigma_i]`. This is a lossless
@@ -555,7 +571,8 @@ endpoint or a defect value cannot recover the selector. At `n=431` the five
 candidate-set sizes are `(6,8,8,7,17)`, giving 45,696 Cartesian choices before
 any cross-row restriction; a fixed-width ordinal encoding of that raw space
 uses 16 bits. The [selector audit](verification/selector-payload-check.json)
-records the exact rank words and explicitly does not assume that all Cartesian
-choices are jointly realizable. It also recovers all 65 numeric child splits
-from their ordinals and rechecks all 65 parent transitions, so the ordinal
-representation is sufficient for the audited recursive certificate.
+records the exact rank words and separates the row-local product check from any
+future constraints on the two lower five-windows. It also recovers all 65
+numeric child splits from their ordinals and rechecks all 65 parent transitions,
+so the ordinal representation is sufficient for the audited recursive
+certificate.

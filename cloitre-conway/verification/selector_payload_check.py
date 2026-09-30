@@ -2,6 +2,7 @@
 
 from collections import Counter
 import json
+from itertools import product
 import math
 import sys
 
@@ -43,6 +44,7 @@ def main():
     parent_rows = 0
     reconstructed_selector_positions = 0
     reconstructed_parent_transitions = 0
+    row_local_combinations_checked = 0
     for order in (12, 13, 14):
         anchor = fibonacci[order - 1]
         lower_anchor = fibonacci[order - 2]
@@ -60,6 +62,16 @@ def main():
                 candidate_lengths.update(lengths)
                 ambiguous_rows += sum(length > 1 for length in lengths)
                 noncontiguous_sets += sum(not is_contiguous(values) for values in sets)
+                for combination in product(*sets):
+                    for offset, split in zip(offsets, combination):
+                        complement = offset - split
+                        first = (sequence[lower_anchor + split] - child_anchor
+                                 - max(0, split))
+                        second = (sequence[child_anchor + complement] - child_lower_anchor
+                                  - max(0, complement))
+                        parent_defect = sequence[anchor + offset] - lower_anchor - offset
+                        assert first + second == parent_defect
+                    row_local_combinations_checked += 1
                 selected = [selected_splits[anchor + offset] - lower_anchor
                             for offset in offsets]
                 ranks = [values.index(split) for values, split in zip(sets, selected)]
@@ -92,11 +104,12 @@ def main():
     assert noncontiguous_sets == 56
     assert reconstructed_selector_positions == 65
     assert reconstructed_parent_transitions == 65
+    assert row_local_combinations_checked == 69064
     assert largest["index"] == 431
     assert largest["cartesian_candidate_count"] == 45696
     print(json.dumps({
         "status": "passed",
-        "scope": "Exact public three-block selector audit; no independence of Cartesian choices is claimed.",
+        "scope": "Exact public three-block selector audit; row-local Cartesian independence is checked, while lower-window closure constraints remain separate.",
         "period_five_payloads": len(payloads),
         "parent_rows": parent_rows,
         "ambiguous_parent_rows": ambiguous_rows,
@@ -104,6 +117,7 @@ def main():
         "noncontiguous_candidate_sets": noncontiguous_sets,
         "reconstructed_selector_positions": reconstructed_selector_positions,
         "reconstructed_parent_transitions": reconstructed_parent_transitions,
+        "row_local_combinations_checked": row_local_combinations_checked,
         "max_candidate_count": max(candidate_lengths),
         "largest_cartesian_candidate_space": largest,
         "ordinal_encoding": {

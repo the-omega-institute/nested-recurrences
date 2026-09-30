@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "scope": "Exact public three-block selector audit; no independence of Cartesian choices is claimed.",
+  "scope": "Exact public three-block selector audit; row-local Cartesian independence is checked, while lower-window closure constraints remain separate.",
   "period_five_payloads": 13,
   "parent_rows": 65,
   "ambiguous_parent_rows": 57,
@@ -21,6 +21,7 @@
   "noncontiguous_candidate_sets": 56,
   "reconstructed_selector_positions": 65,
   "reconstructed_parent_transitions": 65,
+  "row_local_combinations_checked": 69064,
   "max_candidate_count": 29,
   "largest_cartesian_candidate_space": {
     "index": 431,
