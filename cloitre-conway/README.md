@@ -12,7 +12,9 @@
 2. **[Fibonacci collars](fibonacci-collars.md):** consequences near Fibonacci
    indices, all-cycle period bounds, five-offset classification, convergence
    in sublinear neighborhoods, and the two-scale profile/defect dynamics behind
-   the first period-five arch.
+   the first period-five arch. Section 8 extracts the cross-scale information
+   needed to close a recursive five-window and compares it with Campbell's
+   ternary-scale formula.
    Section 6 propagates exact collars from two seeds and gives the complete
    fixed-point/two-cycle classification throughout a wider certified band.
 3. **[Foundations](proof.md):** the recurrence definition, well-definedness,

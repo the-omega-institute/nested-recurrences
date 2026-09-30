@@ -345,3 +345,60 @@ from arch centres be covered by finitely many certified local types, with a
 reverse completeness map as in the Trureturing proof? The present theorem
 settles the zero-defect collar and supplies the first nontrivial five-cycle
 type; it does not yet answer that finiteness question.
+
+## 8. Five-window closure interface
+
+The Trureturing period-five classification suggests separating three kinds of
+information when a local recursion is closed:
+
+1. **One-scale closure:** five offsets `u_0,...,u_4`, their five defect values
+   `e_i`, and the branch inequalities. On a positive arch the closure equations
+   are
+
+   ```text
+   u_(i+1) = t - u_i + e_i   (i mod 5).
+   ```
+
+2. **Cross-scale closure:** five child split offsets `r_i`, giving
+   `e_i = e_i^(1) + e_i^(2)` through the Fibonacci defect identity. These are
+   the witnesses needed to descend the five-window to orders `k-1` and `k-2`.
+
+3. **Selected-value closure:** a depth certificate `d=C(n-1) >= mu` and a
+   phase residue `d-mu (mod 5)`. It identifies which point of a closed
+   five-cycle is selected by the defining recurrence.
+
+Each item has a separate role. The defects determine the normalized transition;
+the child splits make the certificate inductive; and the phase connects an
+arbitrary periodic cycle to the prescribed value `C(n)`. Omitting any one of
+these leaves one of those three conclusions undetermined.
+
+For the first arch, `n=196=F_12+52`, the exact payload is:
+
+| offset `u_i` | defect `e_i` | child split `r_i` | child offsets | next offset |
+|---:|---:|---:|---:|---:|
+| 31 | 6 | 20 | 11 | 27 |
+| 27 | 3 | 16 | 11 | 28 |
+| 28 | 5 | 12 | 16 | 29 |
+| 29 | 3 | 18 | 11 | 26 |
+| 26 | 5 | 10 | 16 | 31 |
+
+The child defect pairs are respectively `(5,1), (2,1), (1,4), (2,1), (1,4)`.
+The selected orbit has `C(195)=131`, transient length `8`, period `5`, and
+phase `131-8 = 3 (mod 5)`. This is a complete local five-window certificate,
+while remaining only one local type.
+
+Campbell's ternary-scale formula passes the same interface with a smaller
+payload. At scale `s=3^k`, parity and a low/middle/high zone determine one of
+six endpoint templates for `(x_4,x_5)`; the orbit then satisfies `x_6=x_4`.
+The exact dilation `b(3n)=3b(n)` replaces the two-child Fibonacci defect
+descent, and the depth needs only a parity phase because the eventual period is
+at most two. Thus the arithmetic changes from Fibonacci two-scale addition to
+ternary homogeneity, but the closure contract is the same:
+
+```text
+scale coordinates + branch label + affine transition + closure phase
+```
+
+The next bounded C result should enumerate all period-five words in one arch
+window using this payload and prove a reverse completeness map. No global finite
+alphabet is claimed yet.
