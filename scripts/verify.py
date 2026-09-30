@@ -21,6 +21,8 @@ def main():
         ('Campbell million-term and literal comparison', root / 'campbell/explore.py', root / 'campbell/results.json'),
         ('Cloitre Conway independent evaluators and certificates', root / 'cloitre-conway/conway_explore.py', root / 'cloitre-conway/conway-results.json'),
         ('Global golden-structure finite premises', root / 'cloitre-conway/golden_check.py', root / 'cloitre-conway/golden-check.json'),
+        ('Fibonacci collar identities and all-start cycle classification',
+         root / 'cloitre-conway/collar_check.py', root / 'cloitre-conway/collar-check.json'),
     ]
     if arguments.extended:
         checks.append(('Fibonacci landing and shifted family audit',

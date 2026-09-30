@@ -35,6 +35,11 @@ the universal shifted-family assertions are not established by this proof.
 [Research overview](../README.md) · [Earlier results](proof.md) ·
 [Landing development](landing.md) · [Finite certificate](golden-check.json)
 
+[Fibonacci collars](fibonacci-collars.md) derives further consequences: bounded
+periods at fixed offsets, complete nearby cycle classification and convergence
+throughout sublinear-width Fibonacci neighborhoods. Full ratio convergence
+remains open.
+
 ## 1. Established inputs and the finite premises
 
 Use the exact recurrence and indexing of [the original proof](proof.md):

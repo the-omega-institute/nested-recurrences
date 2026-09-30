@@ -1,0 +1,240 @@
+{
+  "status": "Finite corroboration of the written collar theorems; universal proof in fibonacci-collars.md depends only on golden-proof.md.",
+  "source_sha256": "2c67a3f3610d3892fb1d7b40113c68a13fd7cf23172fe75226ed4591a1c970a1",
+  "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
+  "limit": 131071,
+  "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
+  "independent_brent_agrees_through": 131071,
+  "literal_agrees_through": 4096,
+  "literal_updates": 5467850,
+  "selected_orbit_localization_inclusive": [
+    8,
+    131071
+  ],
+  "selected_cycle_points_checked": 677836,
+  "positive_two_identity_orders": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26
+  ],
+  "negative_two_identity_orders": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26
+  ],
+  "all_start_graphs_checked": 105,
+  "all_start_vertices_checked": 1588885,
+  "exact_classified_graphs_checked": 102,
+  "graph_order_range_inclusive": [
+    6,
+    26
+  ],
+  "graph_offsets_inclusive": [
+    -2,
+    2
+  ],
+  "classification_witnesses": [
+    {
+      "order": 6,
+      "offset": -2,
+      "index": 6,
+      "cycles": [
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "order": 6,
+      "offset": -1,
+      "index": 7,
+      "cycles": [
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "order": 6,
+      "offset": 0,
+      "index": 8,
+      "cycles": [
+        [
+          5
+        ]
+      ]
+    },
+    {
+      "order": 6,
+      "offset": 1,
+      "index": 9,
+      "cycles": [
+        [
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "order": 6,
+      "offset": 2,
+      "index": 10,
+      "cycles": [
+        [
+          5,
+          7
+        ],
+        [
+          6
+        ]
+      ]
+    },
+    {
+      "order": 9,
+      "offset": -2,
+      "index": 32,
+      "cycles": [
+        [
+          19
+        ]
+      ]
+    },
+    {
+      "order": 9,
+      "offset": -1,
+      "index": 33,
+      "cycles": [
+        [
+          20
+        ]
+      ]
+    },
+    {
+      "order": 9,
+      "offset": 0,
+      "index": 34,
+      "cycles": [
+        [
+          21
+        ]
+      ]
+    },
+    {
+      "order": 9,
+      "offset": 1,
+      "index": 35,
+      "cycles": [
+        [
+          21,
+          22
+        ]
+      ]
+    },
+    {
+      "order": 9,
+      "offset": 2,
+      "index": 36,
+      "cycles": [
+        [
+          21,
+          23
+        ],
+        [
+          22
+        ]
+      ]
+    },
+    {
+      "order": 26,
+      "offset": -2,
+      "index": 121391,
+      "cycles": [
+        [
+          75023
+        ]
+      ]
+    },
+    {
+      "order": 26,
+      "offset": -1,
+      "index": 121392,
+      "cycles": [
+        [
+          75024
+        ]
+      ]
+    },
+    {
+      "order": 26,
+      "offset": 0,
+      "index": 121393,
+      "cycles": [
+        [
+          75025
+        ]
+      ]
+    },
+    {
+      "order": 26,
+      "offset": 1,
+      "index": 121394,
+      "cycles": [
+        [
+          75025,
+          75026
+        ]
+      ]
+    },
+    {
+      "order": 26,
+      "offset": 2,
+      "index": 121395,
+      "cycles": [
+        [
+          75025,
+          75027
+        ],
+        [
+          75026
+        ]
+      ]
+    }
+  ],
+  "full_ratio_convergence": "open; sublinear-neighborhood convergence is proved separately"
+}

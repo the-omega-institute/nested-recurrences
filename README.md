@@ -13,6 +13,7 @@ or programming knowledge is needed.
 |---|---|---|
 | The complete solution of Campbell's first example | **[Three-page proof (PDF)](campbell/note.pdf)** | The explicit formula, why the nested iterations stabilize, and the ratio limits |
 | The golden structure of Cloitre's Conway-type example | **[Global proof](cloitre-conway/golden-proof.md)** | The G lower bound, exact equality set, Fibonacci landing and golden-ratio liminf |
+| What happens near Fibonacci indices? | **[Fibonacci collars](cloitre-conway/fibonacci-collars.md)** | Bounded inner periods, exact nearby cycles and convergence in sublinear neighborhoods |
 | A quick overview of what is proved and what remains open | **[Current research status](STATUS.md)** | A claim-by-claim table and the next proof problem |
 
 For the recurrence and earlier ratio bounds, read the original note's

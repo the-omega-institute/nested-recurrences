@@ -16,6 +16,11 @@ to reproduce it.
 The [earlier landing development](landing.md) records the intermediate route,
 the independent checks through F_36 and the corrected decay observations.
 
+**New consequences:** [Fibonacci collars](fibonacci-collars.md) explains why
+periods are uniformly bounded at any fixed offset from a Fibonacci number,
+classifies all cycles at offsets -2..2, and proves convergence throughout
+sublinear-width Fibonacci neighborhoods. It does not prove the full ratio limit.
+
 For the earlier proofs and computational context, read the
 [first-results note](proof.md) in this order:
 
