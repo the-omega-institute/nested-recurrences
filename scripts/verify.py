@@ -28,6 +28,9 @@ def main():
         ('Generic reflection-window closure interface',
          root / 'cloitre-conway/verification/closure_interface.py',
          root / 'cloitre-conway/verification/closure-interface-check.json'),
+        ('Ordinal child-selector payload audit',
+         root / 'cloitre-conway/verification/selector_payload_check.py',
+         root / 'cloitre-conway/verification/selector-payload-check.json'),
     ]
     if arguments.extended:
         checks.append(('Fibonacci landing and shifted family audit',

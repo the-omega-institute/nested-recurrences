@@ -63,7 +63,7 @@ From the repository's main folder, with Python 3.10 or newer:
 python3 scripts/verify.py
 ```
 
-This reruns seven checks, compares their exact JSON output with committed
+This reruns eight checks, compares their exact JSON output with committed
 evidence, and checks recorded source hashes. Use
 `python3 scripts/verify.py --extended` to include the larger F_36 and shifted-family
 audit. Run without `-O` or `PYTHONOPTIMIZE`; assertions perform mathematical checks.

@@ -544,3 +544,16 @@ witnesses. The public three-block audit has more than one legal split in 57 of
 65 parent rows, with a maximum of 29 candidates, so a parent-only selector
 cannot be complete on the audited data. This is an exact finite necessity
 result, not a claim that the number of selector types is globally bounded.
+
+When the two lower profiles are already available, the numeric split `r_i` can
+be represented without storing its value: sort the exact candidate set `R_i`
+and store the ordinal `sigma_i` with `r_i=R_i[sigma_i]`. This is a lossless
+representation of the same five selector positions, not a new mathematical
+relation. The public audit shows why the candidate set must remain in the
+context: 56 of its 65 individual sets are non-contiguous, so an interval
+endpoint or a defect value cannot recover the selector. At `n=431` the five
+candidate-set sizes are `(6,8,8,7,17)`, giving 45,696 Cartesian choices before
+any cross-row restriction; a fixed-width ordinal encoding of that raw space
+uses 16 bits. The [selector audit](verification/selector-payload-check.json)
+records the exact rank words and explicitly does not assume that all Cartesian
+choices are jointly realizable.
