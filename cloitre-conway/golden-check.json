@@ -1,0 +1,384 @@
+{
+  "status": "Exact finite premises; the universal induction and cycle capture are written in golden-proof.md; no Lean formalization.",
+  "source_sha256": "ff5a0c35c6730e7bc632d7ecc19e020c446464e00762b329e91a73ec113e70d0",
+  "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
+  "limit": 131071,
+  "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
+  "independent_brent_agrees_through": 131071,
+  "literal_agrees_through": 4096,
+  "literal_updates": 5467850,
+  "induction_base_inclusive": [
+    1,
+    65535
+  ],
+  "base_defects_nonnegative": true,
+  "base_zero_set_contained": true,
+  "base_zero_count": 57,
+  "base_zero_indices": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    8,
+    9,
+    11,
+    12,
+    13,
+    14,
+    21,
+    22,
+    24,
+    25,
+    33,
+    34,
+    35,
+    55,
+    56,
+    59,
+    88,
+    89,
+    90,
+    144,
+    145,
+    232,
+    233,
+    234,
+    377,
+    378,
+    609,
+    610,
+    611,
+    987,
+    988,
+    1596,
+    1597,
+    1598,
+    2584,
+    2585,
+    4180,
+    4181,
+    4182,
+    6765,
+    6766,
+    10945,
+    10946,
+    10947,
+    17711,
+    17712,
+    28656,
+    28657,
+    28658,
+    46368,
+    46369
+  ],
+  "propagation_seed": {
+    "seed_interval_inclusive": [
+      16384,
+      131071
+    ],
+    "lower_numerator": 17711,
+    "lower_denominator": 28657,
+    "upper_numerator": 15225,
+    "upper_denominator": 22877,
+    "lower_witness": {
+      "index": 28657,
+      "value": 17711
+    },
+    "upper_witness": {
+      "index": 22877,
+      "value": 15225
+    },
+    "all_seed_inequalities_verified": true,
+    "universal_domain": "all n >= 16384, by the written finite-window propagation lemma"
+  },
+  "upper_seed_strictly_below_two_thirds": true,
+  "upper_cap_initial_values": [
+    1,
+    1,
+    2,
+    3,
+    3,
+    4,
+    5
+  ],
+  "upper_cap_lipschitz_checked_through": 131071,
+  "upper_cap_inequalities_checked_through": 131071,
+  "exact_equality_set_checked_through": 131071,
+  "equality_indices": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    8,
+    9,
+    11,
+    12,
+    13,
+    14,
+    21,
+    22,
+    24,
+    25,
+    33,
+    34,
+    35,
+    55,
+    56,
+    59,
+    88,
+    89,
+    90,
+    144,
+    145,
+    232,
+    233,
+    234,
+    377,
+    378,
+    609,
+    610,
+    611,
+    987,
+    988,
+    1596,
+    1597,
+    1598,
+    2584,
+    2585,
+    4180,
+    4181,
+    4182,
+    6765,
+    6766,
+    10945,
+    10946,
+    10947,
+    17711,
+    17712,
+    28656,
+    28657,
+    28658,
+    46368,
+    46369,
+    75024,
+    75025,
+    75026,
+    121393,
+    121394
+  ],
+  "cycle_capture_checked_inclusive": [
+    8,
+    131071
+  ],
+  "cycle_points_checked": 677836,
+  "fibonacci_checks": [
+    {
+      "order": 2,
+      "index": 1,
+      "value": 1
+    },
+    {
+      "order": 3,
+      "index": 2,
+      "value": 1
+    },
+    {
+      "order": 4,
+      "index": 3,
+      "value": 2
+    },
+    {
+      "order": 5,
+      "index": 5,
+      "value": 3
+    },
+    {
+      "order": 6,
+      "index": 8,
+      "value": 5
+    },
+    {
+      "order": 7,
+      "index": 13,
+      "value": 8
+    },
+    {
+      "order": 8,
+      "index": 21,
+      "value": 13
+    },
+    {
+      "order": 9,
+      "index": 34,
+      "value": 21
+    },
+    {
+      "order": 10,
+      "index": 55,
+      "value": 34
+    },
+    {
+      "order": 11,
+      "index": 89,
+      "value": 55
+    },
+    {
+      "order": 12,
+      "index": 144,
+      "value": 89
+    },
+    {
+      "order": 13,
+      "index": 233,
+      "value": 144
+    },
+    {
+      "order": 14,
+      "index": 377,
+      "value": 233
+    },
+    {
+      "order": 15,
+      "index": 610,
+      "value": 377
+    },
+    {
+      "order": 16,
+      "index": 987,
+      "value": 610
+    },
+    {
+      "order": 17,
+      "index": 1597,
+      "value": 987
+    },
+    {
+      "order": 18,
+      "index": 2584,
+      "value": 1597
+    },
+    {
+      "order": 19,
+      "index": 4181,
+      "value": 2584
+    },
+    {
+      "order": 20,
+      "index": 6765,
+      "value": 4181
+    },
+    {
+      "order": 21,
+      "index": 10946,
+      "value": 6765
+    },
+    {
+      "order": 22,
+      "index": 17711,
+      "value": 10946
+    },
+    {
+      "order": 23,
+      "index": 28657,
+      "value": 17711
+    },
+    {
+      "order": 24,
+      "index": 46368,
+      "value": 28657
+    },
+    {
+      "order": 25,
+      "index": 75025,
+      "value": 46368
+    },
+    {
+      "order": 26,
+      "index": 121393,
+      "value": 75025
+    }
+  ],
+  "exact_rotation_diagnostics": [
+    {
+      "order": 5,
+      "argument_upper_exclusive": 13,
+      "high_returns": [
+        8
+      ]
+    },
+    {
+      "order": 7,
+      "argument_upper_exclusive": 34,
+      "high_returns": [
+        21
+      ]
+    },
+    {
+      "order": 9,
+      "argument_upper_exclusive": 89,
+      "high_returns": [
+        55
+      ]
+    },
+    {
+      "order": 11,
+      "argument_upper_exclusive": 233,
+      "high_returns": [
+        144
+      ]
+    },
+    {
+      "order": 13,
+      "argument_upper_exclusive": 610,
+      "high_returns": [
+        377
+      ]
+    },
+    {
+      "order": 15,
+      "argument_upper_exclusive": 1597,
+      "high_returns": [
+        987
+      ]
+    },
+    {
+      "order": 17,
+      "argument_upper_exclusive": 4181,
+      "high_returns": [
+        2584
+      ]
+    },
+    {
+      "order": 19,
+      "argument_upper_exclusive": 10946,
+      "high_returns": [
+        6765
+      ]
+    },
+    {
+      "order": 21,
+      "argument_upper_exclusive": 28657,
+      "high_returns": [
+        17711
+      ]
+    },
+    {
+      "order": 23,
+      "argument_upper_exclusive": 75025,
+      "high_returns": [
+        46368
+      ]
+    },
+    {
+      "order": 25,
+      "argument_upper_exclusive": 196418,
+      "high_returns": [
+        121393
+      ]
+    }
+  ]
+}

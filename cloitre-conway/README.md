@@ -4,15 +4,20 @@
 
 ## Read the research note
 
-**[Open the Conway research note](proof.md).** It is displayed directly as a
+**[Open the global golden-structure proof](golden-proof.md).** It is displayed directly as a
 web page; no download, installation or GitHub account is needed.
 
-**Latest progress:** [Fibonacci landing: corrected induction and two conditional
-reductions](landing.md). Start with Section 2 for the new infinite-set arithmetic
-lemma, Section 3 for the precise remaining proof conditions, or Section 4 for
+**Latest proof:** [Global golden structure](golden-proof.md). The introduction
+lists the completed theorems: the G lower bound, exact equality set, Fibonacci
+identities and landing, upper cap and golden-ratio liminf. Sections 4 and 6
+contain the two inductions; Section 7 explains the finite certificate and how
+to reproduce it.
+
+The [earlier landing development](landing.md) records the intermediate route,
 the independent checks through F_36 and the corrected decay observations.
 
-Suggested reading order:
+For the earlier proofs and computational context, read the
+[first-results note](proof.md) in this order:
 
 1. [Definition and result summary](proof.md#definition-and-result-status): the
    precise recurrence and the distinction between proofs and observations.
@@ -25,7 +30,8 @@ Suggested reading order:
 
 Sections 1, 2 and 4 supply the detailed well-definedness, split-separation and
 cycle-entry arguments. The exact G lower bound, Fibonacci identity and refined
-equality-set description remain conjectures. Comments and proposed arguments
+equality-set description were open at that first-results stage and are now proved
+in the latest note. Comments and proposed arguments
 can be shared in the existing email thread.
 
 ## Optional computational checks
@@ -56,5 +62,6 @@ It reaches 14,930,352 terms and takes longer than the original checks; it uses
 a compact array to keep sequence storage modest.
 
 The finite-window certificates yield universal rational bounds through the
-separate propagation proof. The exact G lower bound, Fibonacci identity and
-refined equality-set description remain conjectures.
+propagation proof. The new [finite golden-structure certificate](golden-check.json)
+supports the universal induction and is replayed by `python3 scripts/verify.py`.
+Full convergence to 1/phi and decay rates remain conjectures.

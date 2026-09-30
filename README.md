@@ -12,14 +12,16 @@ or programming knowledge is needed.
 | What would you like to read? | Open this document | What it contains |
 |---|---|---|
 | The complete solution of Campbell's first example | **[Three-page proof (PDF)](campbell/note.pdf)** | The explicit formula, why the nested iterations stabilize, and the ratio limits |
-| Progress on Cloitre's new Conway-type example | **[Conway research note](cloitre-conway/proof.md)** | The recurrence, proved bounds, corrected observations and open conjectures |
+| The golden structure of Cloitre's Conway-type example | **[Global proof](cloitre-conway/golden-proof.md)** | The G lower bound, exact equality set, Fibonacci landing and golden-ratio liminf |
 | A quick overview of what is proved and what remains open | **[Current research status](STATUS.md)** | A claim-by-claim table and the next proof problem |
 
-For the latest Conway results, start with the note's
-[definition and result summary](cloitre-conway/proof.md#definition-and-result-status),
-then [the global ratio bounds](cloitre-conway/proof.md#3-finite-window-propagation-and-explicit-infinite-bounds).
-For discussion, go to
-[the remaining proof problem](cloitre-conway/proof.md#6-more-structural-evidence-and-the-remaining-proof-problem).
+For the recurrence and earlier ratio bounds, read the original note's
+[definition](cloitre-conway/proof.md#definition-and-result-status) and
+[global bounds](cloitre-conway/proof.md#3-finite-window-propagation-and-explicit-infinite-bounds).
+For the new proof, start with
+[the simultaneous induction](cloitre-conway/golden-proof.md#4-simultaneous-induction-g-lower-bound-and-zero-set-containment),
+then [the upper cap and Fibonacci identities](cloitre-conway/golden-proof.md#6-the-upper-cap-fibonacci-identities-and-the-full-equality-set).
+The [status page](STATUS.md) lists the remaining questions about convergence and decay.
 
 **Reading on GitHub:** click any document link above to open it. The PDF can be
 read in the preview; if the preview is unavailable, use **Download raw file**
@@ -30,25 +32,26 @@ and the Code button above this page.
 Comments, corrections and proposed arguments are welcome in our existing email
 thread. There is no need to learn GitHub Issues or submit a pull request.
 
-**Latest research update:** [Fibonacci landing and corrected induction](cloitre-conway/landing.md).
-An infinite arithmetic lemma reduces the G lower bound to a zero-set containment
-problem; a second theorem gives sufficient neighborhood conditions for Fibonacci
-landing. New finite checks reach F_36=14,930,352 and correct the reported decay
-precision. The universal Fibonacci, limit and decay statements remain open.
+**Latest research update:** [Global golden structure](cloitre-conway/golden-proof.md).
+The G lower bound, exact equality set, Fibonacci identities and landing are now
+proved, together with a Fibonacci-block upper cap and liminf C(n)/n=1/phi.
+The proof uses a checked finite base followed by general induction. Full
+convergence and decay rates remain open; the reported decay precision has been
+corrected in the [earlier audit](cloitre-conway/landing.md).
 
 ## Results at a glance
 
 - **Campbell's example: explicit formula proved.** The prescribed orbit reaches
   a fixed point or a two-cycle after at most four transient steps. A complete
   written proof is available in the PDF.
-- **Cloitre's example: global bounds proved; finer structure open.** We prove
+- **Cloitre's example: golden structure proved.** We prove
   that the recurrence is well-defined and that its chosen iteration depth
   reaches a cycle. A propagation argument and an exact finite computation give
-  the universal rational bounds below. The proposed Hofstadter G lower bound
-  and Fibonacci identity still need general proofs.
-- **Next question:** can we prove that, at a Fibonacci index, the prescribed
-  orbit reaches the Fibonacci fixed point? The precise question and its small
-  exceptional case are explained in the Conway note.
+  the universal rational bounds below. A further induction proves the Hofstadter
+  G lower bound and exact equality set. The Fibonacci identities, landing
+  theorem and golden-ratio liminf follow from a new upper cap.
+- **Next question:** does the entire ratio C(n)/n converge to 1/phi, and at
+  what rate? The liminf is established; controlling the limsup remains open.
 
 The following sections give the precise statements. Code and recorded data are
 optional supporting material, collected under **Optional: reproduce the checks**.
@@ -81,7 +84,7 @@ for n>=2 and ratio limits liminf b(n)/n=2/5, limsup b(n)/n=3/4.
 - The original recurrence agrees with the formula through 1,000,000 terms;
   literal nesting independently agrees through 5,000 terms.
 
-## Cloitre's Conway candidate: proved bounds and open structure
+## Cloitre's Conway candidate: golden structure proved
 
 Define C(1)=C(2)=1 and, for n>=3,
 
@@ -108,10 +111,12 @@ Independent full-orbit and Brent implementations agree through 2^20=1,048,576,
 with a literal check through 4096. The largest observed period is 106 and the
 largest observed preperiod is 211. These maxima are finite observations.
 
-The conjectures C(n)>=G(n) and C(F_k)=F_(k-1), k>=2, hold throughout the
-computed range but still lack universal proofs. Equality C(n)=G(n) is **not**
+The statements C(n)>=G(n) and C(F_k)=F_(k-1), k>=2, are now universal theorems
+in the [global golden-structure proof](cloitre-conway/golden-proof.md).
+Equality C(n)=G(n) is **not**
 confined to Fibonacci numbers and their immediate neighbors: 11,24,25,59 are
-counterexamples. The note states a refined equality-set conjecture.
+counterexamples to that older claim. The corrected equality set is now proved
+exactly, including those four exceptional indices.
 
 - [Proofs, counterexamples and remaining gaps](cloitre-conway/proof.md).
 - [Exact experiment and certificate generator](cloitre-conway/conway_explore.py).

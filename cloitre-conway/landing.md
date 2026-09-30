@@ -1,5 +1,12 @@
 # Fibonacci landing: corrected induction and two conditional reductions
 
+**Completed continuation:** [Global golden structure](golden-proof.md) now
+discharges the hypotheses of the reductions below. It proves C>=G, the exact
+equality set, Fibonacci identities and landing, the neighborhood bounds, and
+liminf C(n)/n=1/phi. This note records the intermediate stage and its independent
+numerical audit. Its remaining-conjecture labels for those completed claims are
+historical; full convergence and decay rates remain open.
+
 This note develops Benoît Cloitre's proposed Fibonacci-orbit and zero-defect
 approach. The identities and reductions proved below are unconditional
 mathematical statements, but their application to all terms of C still has

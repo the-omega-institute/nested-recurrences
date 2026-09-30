@@ -20,6 +20,7 @@ def main():
         ('Campbell symbolic interval proof', root / 'campbell/check_proof.py', root / 'campbell/proof-check.json'),
         ('Campbell million-term and literal comparison', root / 'campbell/explore.py', root / 'campbell/results.json'),
         ('Cloitre Conway independent evaluators and certificates', root / 'cloitre-conway/conway_explore.py', root / 'cloitre-conway/conway-results.json'),
+        ('Global golden-structure finite premises', root / 'cloitre-conway/golden_check.py', root / 'cloitre-conway/golden-check.json'),
     ]
     if arguments.extended:
         checks.append(('Fibonacci landing and shifted family audit',

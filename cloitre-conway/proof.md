@@ -6,11 +6,14 @@ G/Fibonacci observations are due to Benoît Cloitre, proposed during joint
 research discussions in September 2026. The results below concern that exact
 candidate, separately from Campbell's already evaluated b-sequence.
 
-**Follow-up:** [Fibonacci landing and corrected induction](landing.md) proves
-an infinite arithmetic lemma for the candidate zero set and a conditional basin
-criterion. Its new finite audit extends C to F_36, checks the proposed shifted
-variants, and corrects the carry range and reported decay precision. The original
-proofs and 2^20 computation record below remain unchanged in scope.
+**Latest theorem:** [Global golden structure](golden-proof.md) proves C>=G,
+the exact equality set, Fibonacci identities and global landing at Fibonacci
+indices, a Fibonacci-block upper cap, and liminf C(n)/n=1/phi. The finite premises
+are separately certified; the universal argument is an induction and cycle
+capture. The G/Fibonacci conjecture labels in this original first-results note
+are historical and superseded by that proof. The [landing development](landing.md)
+retains the intermediate argument and the larger F36 audit, including the decay
+precision correction.
 
 ## Definition and result status
 
