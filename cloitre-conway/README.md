@@ -10,8 +10,9 @@
    Section 8 shortens the propagation window, improves the tail bound, and
    reduces the limsup to a decreasing family of exact finite-window maxima.
 2. **[Fibonacci collars](fibonacci-collars.md):** consequences near Fibonacci
-   indices, all-cycle period bounds, five-offset classification and convergence
-   in sublinear neighborhoods.
+   indices, all-cycle period bounds, five-offset classification, convergence
+   in sublinear neighborhoods, and the two-scale profile/defect dynamics behind
+   the first period-five arch.
    Section 6 propagates exact collars from two seeds and gives the complete
    fixed-point/two-cycle classification throughout a wider certified band.
 3. **[Foundations](proof.md):** the recurrence definition, well-definedness,

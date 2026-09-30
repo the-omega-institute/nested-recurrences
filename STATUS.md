@@ -1,6 +1,6 @@
 # Research status
 
-Updated 2026-09-30. [Reading guide](README.md)
+Updated 2026-10-01. [Reading guide](README.md)
 
 ## Completed results
 
@@ -13,6 +13,7 @@ Updated 2026-09-30. [Reading guide](README.md)
 | Cloitre: all-cycle period bound at F_k+t, exact +/-2 identities, five-offset cycle classification and uniform convergence in sublinear Fibonacci neighborhoods | Consequences of the global theorem; no additional finite premise | [Fibonacci collars](cloitre-conway/fibonacci-collars.md) |
 | Cloitre: three-window certificates, exact finite-window characterization of the tail supremum, and C(n)/n<=8900/13459 for all n>=349525 | General propagation theorem plus independently reproduced window [349525,1048574] | [Limsup certificates](cloitre-conway/golden-proof.md#8-shorter-certificates-and-the-global-limsup) |
 | Cloitre: C(F_k+t)=F_(k-1)+max(0,t) for k>=23 and -12<=t<=32; complete fixed-point/two-cycle classification for k>=24 | Two-collar induction using 90 exact seed values at orders 23 and 24; all-start graph diagnostics are corroboration | [Exact collars](cloitre-conway/fibonacci-collars.md#6-exact-collars-propagate-from-two-seeds) |
+| Cloitre: exact Fibonacci profile renormalization and nonpositive defect cocycle; first period-five arch certificate at n=196 | Direct consequence of cycle capture and the upper cap; exact finite orbit/profile arithmetic | [Profile dynamics](cloitre-conway/fibonacci-collars.md#7-fibonacci-profile-renormalization-and-defect-dynamics) |
 
 Here G(n)=floor((n+1)/phi). The equality set is exactly
 
@@ -37,7 +38,11 @@ supplies an ingredient of the induction; it also documents numerical corrections
    nonincreasing for M>=21846. Its proved limit is the limsup; proving that
    limit equals 1/phi remains open. The certified upper bound is now
    8900/13459=0.6612675533100527..., improved from 103088/155677.
-2. **Rates and inner dynamics.** Establish a decay rate only after obtaining
+2. **Arch profiles and inner dynamics.** The defect identity gives a two-scale
+   renormalization skeleton, while the first period-five arch supplies a local
+   branch certificate. Determine whether arch defect trees admit finitely many
+   certified local types and a reverse completeness map. Establish a decay rate
+   only after obtaining
    global control; study whether cycle periods are unbounded and derive
    landing-time bounds. The claimed 0.087 +/-0.5% sampled stability was not
    reproduced; see the [decay audit](cloitre-conway/landing.md#4-reproducible-finite-audit).
