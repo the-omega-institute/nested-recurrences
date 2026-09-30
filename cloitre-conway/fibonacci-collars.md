@@ -32,6 +32,185 @@ This result does not bound periods uniformly across all n: in the middle of
 a Fibonacci block, the distance |t| to the nearest anchor is of order n.
 For any fixed offset, however, the period bound is independent of k.
 
+### Quantitative capture and a short exterior certificate
+
+The distance decrease in the capture proof can be strengthened to a uniform
+contraction. First, for every `j>=5` and `1<=d<F_j`,
+
+$$
+F_{j-1}-C(F_j-d)\le\left\lfloor\frac{2d}{3}\right\rfloor. \tag{1.1}
+$$
+
+**Proof.** Write `A=F_j`, `B=F_(j-1)`, and `alpha=1/phi<5/8`. The G lower
+bound and `G(A)=B` give
+
+```text
+B-C(A-d) <= G(A)-G(A-d) <= ceil(alpha*d).
+```
+
+If `d>=24`, then `ceil(alpha*d)<alpha*d+1<5*d/8+1<=2*d/3`, proving
+(1.1). For `j>=11` and `2<=d<=23`, the point `A-d` is outside the exact
+equality set: the previous Fibonacci-plus-one is at distance
+`F_(j-2)-1>=33`, and the largest exceptional zero 59 is at distance at
+least 30. Hence `C(A-d)>=G(A-d)+1`, giving
+`B-C(A-d)<=ceil(alpha*d)-1<alpha*d<2*d/3`. For `d=1`, the already proved
+anchor bound gives `C(A-1)=B`. For the remaining `j=5,...,10`, use the proved
+integer lower bound `C(x)>=G(x)+1` outside the equality set and `C(x)=G(x)`
+inside it. The 130 cases are direct floor/equality-set arithmetic on
+`1<=x<=54`; the collar verifier checks each inequality with this lower bound,
+without substituting a newly computed C-value. There is no additional
+sequence-prefix premise. QED.
+
+Now let `I` be the capture interval between `A` and `n-B`, and let
+`rho(x)=dist(x,I)` for any integer `1<=x<n`. Then
+
+$$
+\rho(T_n^2(x))\le\left\lfloor\frac{2\rho(x)}3\right\rfloor. \tag{1.2}
+$$
+
+To prove it for either sign of `D=n-A-B`, put
+`L=A+min(0,D)` and `R=A+max(0,D)`. A point `x=L-d` below the interval
+has `T_n(x)>=L` and
+
+```text
+T_n(x)-R = min(0,D)+B-C(x)
+           <= min(0,D)+floor(2*(d-min(0,D))/3)
+           <= floor(2*d/3).
+```
+
+A point `x=R+d` above the interval maps to `[L-d,R]` by the monotone
+1-Lipschitz cap. Thus each exterior step switches sides or enters the
+interval; the below-to-above step contracts by (1.1), and the above-to-below
+step does not increase distance. Invariance handles points already inside.
+Combining two steps proves (1.2). The factor is attained at `A=5`, `n=8`,
+`x=2`: the interval is `{5}`, the initial distance is three, and
+`T_8^2(2)=3` has distance two.
+
+Define the integer budget
+
+```text
+Q(0)=0,
+Q(d)=1+Q(floor(2*d/3))   for d>=1.
+```
+
+If the starting distance is `d_0`, the first entrance time `tau` satisfies
+`tau<=2*Q(d_0)`. For `d_0>=1`,
+`Q(d_0)<=1+floor(log_(3/2)(d_0))`, so capture needs `O(log(d_0+1))`
+steps. For the prescribed start `n-1` at `n=F_k+t`,
+
+```text
+d_0 = max(0, F_(k-2)+min(0,t)-1).
+```
+
+For example, at n=8 this distance is two, `Q(2)=2`, and the trajectory
+`7,3,6,4,5` has transient length four, attaining the entrance bound.
+This gives a short exterior certificate: relative to verified C-values,
+record the actual path through its first point in `I`. It uses at most
+`2*Q(d_0)+1` states and fixes the entrance point and entrance time. The
+bound alone does not identify that point; the checked path is still needed.
+
+If the eventual period is `ell`, at most `|t|+1-ell` further transient
+points can occur inside `I`. Therefore the full preperiod obeys
+
+$$
+\mu+\ell\le2Q(d_0)+|t|+1. \tag{1.3}
+$$
+
+In particular, `mu=O(k+|t|)`. Along any sublinear neighborhood
+`|t_k|=o(F_k)`, both `mu=o(F_k)` and `mu/C(F_k+t_k-1)->0`: asymptotically
+almost all of the prescribed iterations take place on the cycle. This does
+not imply logarithmic full landing in a wide arch; its interior transient
+is a separate problem.
+
+### Intersecting the anchor bounds
+
+The two adjacent anchors give a stronger global consequence. Write
+`n=F_k+t`, `0<=t<F_(k-1)`, `k>=6`, and put `a=F_k`, `b=F_(k-1)`,
+`c=F_(k-2)` and `h=F_(k-3)=b-c`. The capture intervals from anchors b and a
+intersect in
+
+$$
+J_n=[\max(b,n-b),\ \min(n-c,a)]. \tag{1.4}
+$$
+
+Every earlier anchor interval contains `[b,n-c]`, and every later one
+contains `[n-b,a]`. Thus J is the intersection of **all** eligible Fibonacci
+anchor intervals. Its width is exactly
+
+```text
+w = min(t,h,b-t).
+```
+
+Relative to the anchor b, these are three affine domain shapes:
+
+| Offset range | Normalized core `J-b` | Width |
+|---|---|---|
+| `0<=t<=h` | `[0,t]` | t |
+| `h<=t<=c` | `[t-h,t]` | h |
+| `c<=t<=b` | `[t-h,c]` | b-t |
+
+The formulas agree at shared boundaries. This arithmetic domain restriction
+needs no additional stored coordinate once the scale and offset are known.
+It gives a bound `period<=w+1` on all cycles, not a claim that actual periods
+attain it. Campbell's ternary domain templates additionally determine the
+orbit endpoints and phase; for C, the lower-profile dynamics inside these
+Fibonacci domains still have to be certified.
+
+Distance to an intersection of overlapping intervals is the maximum of their
+distances. Applying (1.2) to each anchor therefore proves the same two-step
+contraction for J. At the prescribed start its distance is
+`d_J=max(c,t)-1`, and the full orbit budget satisfies
+
+$$
+\mu(n)+\ell(n)\le2Q(d_J)+w+1. \tag{1.5}
+$$
+
+Set `beta=(3-sqrt(5))/4=1-1/(2*alpha)`. Within a block, the largest value
+of `w-beta*n` occurs at the start of the width plateau, `t=h`, `n=2b`.
+Its value is `(b-alpha*a)/alpha`, of absolute value less than one by the
+Fibonacci identity. Therefore `w<beta*n+1`, and, for all `n>=8`,
+
+$$
+\mu(n)+\ell(n)<\frac{3-\sqrt5}{4}n+2Q(d_J)+2.
+$$
+
+Since `d_J<=n`, the second term is `O(log n)`. Thus
+`limsup (mu(n)+ell(n))/n <= (3-sqrt(5))/4`, improving the elementary
+`17*n/32+4` bound for this joint orbit budget. It does not prove sublinear
+periods or transients throughout all arches.
+
+In the exact collar `k>=24`, `-12<=t<=32`, the interior simplifies further.
+For `t>=0`, every captured point is already on the reflection cycle, so
+`mu=tau`. For `t<0`, the map sends every captured point to the unique fixed
+point on its next step, so `mu<=tau+1`. A verified exterior path therefore
+completes the basin certificate with at most one further transition. For a
+positive reflection pair, the entry point and `C(n-1)-tau mod 2` identify
+the selected split; for a fixed point no phase label is needed. If only the
+value C(n) is wanted, the collar's two-child sum is phase-independent, so
+no basin or phase label is needed beyond the proved capture and collar data.
+Campbell's explicit templates make a stronger family-specific reduction:
+his full prescribed transient is at most four, while here the certificate
+has a logarithmic exterior and, outside the collar, an unresolved interior.
+
+The interior term cannot be removed from a generic capped-profile argument.
+For any fixed integer `W>=0` and `m>W`, take the interval `{0,...,2m}` and
+
+```text
+H(u)=u-1   for W<u<=m,
+H(u)=u     otherwise.
+```
+
+This profile is nondecreasing, `0<=H(u)<=u`, its defects are only zero or one,
+and it is exactly identity on `{0,...,W}`. For `Psi(u)=2m-H(u)`, an orbit
+starting at m alternates downward through the low side and upward through the
+high side until it reaches the terminal two-cycle `(2m-W,W)`. Its preperiod
+is exactly `2*(m-W)-1`. For W=0, `mu+period=2m+1`, attaining the interval's
+cardinality; for W=32, a fixed identity collar still leaves linearly long
+interior transients as m grows. This is an abstract profile counterexample,
+not a C instance. It shows that bounded defects, monotone branches and small
+periods do not by themselves compress the basin certificate. A stronger
+interior bound must use additional family information.
+
 ## 2. Two additional Fibonacci identities
 
 **Proposition.**

@@ -1,6 +1,6 @@
 {
   "status": "Exact two-collar seeds and finite corroboration; fibonacci-collars.md Sections 1-4 use golden-proof.md, and Section 6 adds the recorded seed premises; no Lean formalization.",
-  "source_sha256": "17b060b4a42d25517b9adf53ed34601b1d5c4ec8c9f4ab2c8305c2150cff5be4",
+  "source_sha256": "a8fef2bcc62094c7851c27dffca60842fe3068b1ea41ae368c07bdecba8f6cd8",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -468,6 +468,132 @@
         ]
       }
     ]
+  },
+  "quantitative_capture": {
+    "anchor_drop_formula": "F_(j-1)-C(F_j-d) <= floor(2*d/3), j>=5, 1<=d<F_j",
+    "anchor_drop_base": [
+      {
+        "order": 5,
+        "anchor": 5,
+        "lower_anchor": 3,
+        "arguments_checked": 4
+      },
+      {
+        "order": 6,
+        "anchor": 8,
+        "lower_anchor": 5,
+        "arguments_checked": 7
+      },
+      {
+        "order": 7,
+        "anchor": 13,
+        "lower_anchor": 8,
+        "arguments_checked": 12
+      },
+      {
+        "order": 8,
+        "anchor": 21,
+        "lower_anchor": 13,
+        "arguments_checked": 20
+      },
+      {
+        "order": 9,
+        "anchor": 34,
+        "lower_anchor": 21,
+        "arguments_checked": 33
+      },
+      {
+        "order": 10,
+        "anchor": 55,
+        "lower_anchor": 34,
+        "arguments_checked": 54
+      }
+    ],
+    "anchor_drop_base_pairs": 130,
+    "anchor_drop_base_scope": "Exact G-floor and equality-set arithmetic; no new sequence-prefix premise",
+    "anchor_drop_pairs_checked": 317781,
+    "two_step_formula": "dist(T_n^2(x), I) <= floor(2*dist(x,I)/3)",
+    "selected_trajectory_two_step_checks": 4252526,
+    "all_start_two_step_checks": 3675850,
+    "selected_capture_bound_indices": [
+      8,
+      131071
+    ],
+    "maximum_capture_time": 14,
+    "capture_time_witness": {
+      "index": 28666,
+      "order": 23,
+      "offset": 9,
+      "initial_distance": 10945,
+      "capture_time": 14,
+      "pair_budget": 22,
+      "preperiod": 14,
+      "period": 2
+    },
+    "pair_budget_rule": "repeat d <- floor(2*d/3) until zero; capture time <= 2 * number of repetitions",
+    "full_preperiod_bound": "mu <= 2*q(d_initial) + abs(t)+1-period",
+    "global_joint_orbit_bound": "mu+period < (sqrt(5)-2)*n + 2*q(d_initial)+2, using the closest Fibonacci index",
+    "two_anchor_core": {
+      "interval_formula": "[max(F_(k-1),n-F_(k-1)), min(n-F_(k-2),F_k)] for F_k<=n<F_(k+1)",
+      "width_formula": "min(t,F_(k-3),F_(k-1)-t), t=n-F_k",
+      "initial_distance_formula": "max(F_(k-2),t)-1 for start n-1",
+      "selected_two_step_checks": 4252526,
+      "maximum_capture_time": 14,
+      "capture_time_witness": {
+        "index": 28666,
+        "block_order": 23,
+        "block_offset": 9,
+        "core_interval": [
+          17711,
+          17720
+        ],
+        "initial_distance": 10945,
+        "capture_time": 14,
+        "pair_budget": 22,
+        "preperiod": 14,
+        "period": 2
+      },
+      "joint_orbit_bound": "mu+period <= 2*q(d_core)+core_width+1",
+      "global_joint_orbit_bound": "mu+period < ((3-sqrt(5))/4)*n+2*q(d_core)+2",
+      "scope": "The two adjacent anchor intervals intersect to the full intersection of every eligible Fibonacci capture interval. Actual cycle widths or periods need not attain this geometric bound."
+    },
+    "certified_collar_preperiod": "mu <= capture_time for 0<=t<=32; mu <= capture_time+1 for -12<=t<0, k>=24",
+    "sharp_two_step_example": {
+      "anchor": 5,
+      "lower_anchor": 3,
+      "index": 8,
+      "start": 2,
+      "second_iterate": 3,
+      "initial_distance": 3,
+      "second_distance": 2
+    },
+    "sharp_prescribed_start_example": {
+      "index": 8,
+      "initial_distance": 2,
+      "pair_budget": 2,
+      "trajectory": [
+        7,
+        3,
+        6,
+        4,
+        5
+      ],
+      "preperiod": 4
+    },
+    "scope": "General argument uses the proved G bound, equality set and cap; the 130 small-anchor cases are exact G-floor/equality-set arithmetic, not new sequence premises. Larger orbit checks are corroboration. Logarithmic capture is not logarithmic full landing in arbitrary wide arches.",
+    "interior_tail_counterexample": {
+      "contexts_checked": 24,
+      "profile_rule": "H(u)=u-1 for W<u<=m; H(u)=u otherwise, on 0<=u<=2m, m>W",
+      "zero_defect_collar_widths": [
+        0,
+        32
+      ],
+      "start": "u=m",
+      "transient_formula": "2*(m-W)-1",
+      "terminal_cycle": "(2m-W,W)",
+      "period": 2,
+      "scope": "Abstract shared profile, not a C example. Nondecreasing capped profiles, defects in {0,1}, a fixed identity collar and period two do not imply short interior transients. W=0 attains mu+period=interval cardinality."
+    }
   },
   "full_ratio_convergence": "open; sublinear-neighborhood convergence is proved separately"
 }

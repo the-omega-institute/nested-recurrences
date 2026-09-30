@@ -11,6 +11,7 @@ Updated 2026-10-01. [Reading guide](README.md)
 | Cloitre: rational envelope for every n>=131072 | Propagation proof plus exact finite seed certificate | [Propagation](cloitre-conway/proof.md#3-finite-window-propagation-and-explicit-infinite-bounds) |
 | Cloitre: C>=G, exact equality set, Fibonacci identities and landing, block upper cap, liminf C(n)/n=1/phi | Computer-assisted theorem: exact finite base followed by general induction and cycle capture | [Global golden structure](cloitre-conway/golden-proof.md) |
 | Cloitre: all-cycle period bound at F_k+t, exact +/-2 identities, five-offset cycle classification and uniform convergence in sublinear Fibonacci neighborhoods | Consequences of the global theorem; no additional finite premise | [Fibonacci collars](cloitre-conway/fibonacci-collars.md) |
+| Cloitre: capture distance contracts by at most 2/3 every two steps; capture takes `O(log n)` steps; intersecting all Fibonacci anchor bounds gives width `min(t,F_(k-3),F_(k-1)-t)`; globally `limsup (mu+period)/n<=(3-sqrt(5))/4` | General proof from G, the exact equality set and the cap; 130 small-anchor floor checks introduce no sequence premise. All-start and prescribed-orbit checks are corroboration. An abstract monotone profile with defects 0/1 has linear interior tails even with a fixed identity collar; full C landing in wide arches remains open | [Quantitative capture](cloitre-conway/fibonacci-collars.md#quantitative-capture-and-a-short-exterior-certificate) · [Anchor intersection](cloitre-conway/fibonacci-collars.md#intersecting-the-anchor-bounds) · [Exact check](cloitre-conway/verification/collar-check.json) |
 | Cloitre: three-window certificates, exact finite-window characterization of the tail supremum, and C(n)/n<=8900/13459 for all n>=349525 | General propagation theorem plus independently reproduced window [349525,1048574] | [Limsup certificates](cloitre-conway/golden-proof.md#8-shorter-certificates-and-the-global-limsup) |
 | Cloitre: C(F_k+t)=F_(k-1)+max(0,t) for k>=23 and -12<=t<=32; complete fixed-point/two-cycle classification for k>=24 | Two-collar induction using 90 exact seed values at orders 23 and 24; all-start graph diagnostics are corroboration | [Exact collars](cloitre-conway/fibonacci-collars.md#6-exact-collars-propagate-from-two-seeds) |
 | Cloitre: exact Fibonacci profile renormalization and nonpositive defect cocycle; first period-five arch certificate at n=196 | Direct consequence of cycle capture and the upper cap; exact finite orbit/profile arithmetic | [Profile dynamics](cloitre-conway/fibonacci-collars.md#7-fibonacci-profile-renormalization-and-defect-dynamics) |
@@ -50,8 +51,11 @@ supplies an ingredient of the induction; it also documents numerical corrections
    branch certificate. Determine whether arch defect trees admit finitely many
    certified local types and a reverse completeness map. Establish a decay rate
    only after obtaining
-   global control; study whether cycle periods are unbounded and derive
-   landing-time bounds. The claimed 0.087 +/-0.5% sampled stability was not
+   global control; study whether cycle periods are unbounded and bound interior
+   transients in wide arches. Exterior capture now has a logarithmic bound;
+   fixed-width neighborhoods have logarithmic full landing, while the global
+   joint orbit budget is at most `((3-sqrt(5))/4)*n+O(log n)`. The claimed
+   0.087 +/-0.5% sampled stability was not
    reproduced; see the [decay audit](cloitre-conway/landing.md#4-reproducible-finite-audit).
    The exact-collar theorem propagates any width with suitable two seeds;
    existence of such seeds for every width has not been proved.
