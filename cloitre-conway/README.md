@@ -39,7 +39,7 @@ python3 scripts/verify.py
 
 The six checks cover Campbell's symbolic and sequence proofs, the independent
 Conway evaluators, the golden theorem's finite premises, the collar diagnostics,
-and the first Fibonacci arch's all-start five-window certificate.
+and the first three Fibonacci arch blocks' all-start five-window certificate.
 They compare exact JSON output and source hashes with committed evidence.
 Run without `-O` or `PYTHONOPTIMIZE`; only the standard library is needed.
 

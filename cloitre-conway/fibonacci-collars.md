@@ -351,13 +351,26 @@ type; it does not yet answer that finiteness question.
 The Trureturing period-five classification suggests separating three kinds of
 information when a local recursion is closed:
 
-1. **One-scale closure:** five offsets `u_0,...,u_4`, their five defect values
-   `e_i`, and the branch inequalities. On a positive arch the closure equations
-   are
+1. **One-scale closure:** On a positive arch the closure equations are
 
    ```text
    u_(i+1) = t - u_i + e_i   (i mod 5).
    ```
+
+   Composing the five reflections gives the single closure equation
+
+   ```text
+   2*u_0 = t + e_0 - e_1 + e_2 - e_3 + e_4.
+   ```
+
+   Consequently a five-cycle can be reconstructed from `t`, one starting
+   offset `u_0`, and four defects `e_0,...,e_3`: generate `u_1,...,u_4`,
+   compute `e_4` from the displayed equation, and then check the five profile
+   values and all branch inequalities. This is the compressed one-scale
+   payload. The fifth defect and the other four offsets are consistency data,
+   rather than independent closure inputs. In a black-box profile each of
+   `u_0,e_0,...,e_3` can change the generated word, so this compression does
+   not remove a generic input without adding a family-specific relation.
 
 2. **Cross-scale closure:** five child split offsets `r_i`, giving
    `e_i = e_i^(1) + e_i^(2)` through the Fibonacci defect identity. These are
@@ -387,19 +400,29 @@ The selected orbit has `C(195)=131`, transient length `8`, period `5`, and
 phase `131-8 = 3 (mod 5)`. This is a complete local five-window certificate,
 while remaining only one local type.
 
-The first full-block audit now gives a finite reverse-completeness result. For
-all 89 orders `144 <= n <= 232` and every starting state of each functional
-graph, exact enumeration checks 16,643 vertices. The cycle histogram is
+The first three full-block audits now give a finite reverse-completeness result.
+For every starting state in the three blocks, exact enumeration checks 466
+functional graphs and 174,983 vertices. The block totals are:
+
+| Fibonacci order | index range | graphs | vertices | period-five indices |
+|---:|---:|---:|---:|---|
+| 12 | `144..232` | 89 | 16,643 | `196` |
+| 13 | `233..376` | 144 | 43,704 | `304, 307, 310, 313, 316` |
+| 14 | `377..609` | 233 | 114,636 | `431, 500, 507, 513, 523, 535, 550` |
+
+The combined cycle histogram is not treated as a global law; the exact per-block
+histograms and all thirteen payloads are in the recorded JSON. In the first
+block, the cycle histogram is
 
 ```text
 period 1: 55    period 2: 111    period 3: 5
 period 4: 5     period 5: 1
 ```
 
-The unique period-five graph is the one at `n=196`, and its payload is the
-table above. This is a complete finite statement for the first Fibonacci arch,
-not a global finite-state claim. The [dedicated checker](verification/five_window_check.py)
-and [recorded certificate](verification/five-window-check.json) replay it from
+The unique period-five graph in the first block is the one at `n=196`, and its
+payload is the table above. These are complete finite statements for the three
+audited blocks, not a global finite-state claim. The [dedicated checker](verification/five_window_check.py)
+and [recorded certificate](verification/five-window-check.json) replay them from
 the exact evaluator.
 
 Campbell's ternary-scale formula passes the same interface with a smaller
