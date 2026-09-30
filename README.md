@@ -14,6 +14,7 @@ or programming knowledge is needed.
 | Read the complete solution of Campbell's example | **[Three-page proof (PDF)](campbell/note.pdf)** |
 | Read the main theorem for Cloitre's example | **[Global golden structure](cloitre-conway/golden-proof.md)** |
 | Understand cycles and convergence near Fibonacci indices | **[Fibonacci collars](cloitre-conway/fibonacci-collars.md)** |
+| See the common five-window closure interface | **[Closure theorem](cloitre-conway/fibonacci-collars.md#9-common-closure-theorem-and-generic-minimality)** |
 | See what is proved and what remains open | **[Current status](STATUS.md)** |
 
 Click a link to read its document, then use your browser's Back button to
@@ -62,7 +63,7 @@ From the repository's main folder, with Python 3.10 or newer:
 python3 scripts/verify.py
 ```
 
-This reruns six checks, compares their exact JSON output with committed
+This reruns seven checks, compares their exact JSON output with committed
 evidence, and checks recorded source hashes. Use
 `python3 scripts/verify.py --extended` to include the larger F_36 and shifted-family
 audit. Run without `-O` or `PYTHONOPTIMIZE`; assertions perform mathematical checks.

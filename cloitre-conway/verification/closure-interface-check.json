@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "periods_checked": [1, 2, 3, 4, 5, 6, 7, 8],
+  "payload_dimension_including_scale": {
+    "p=1": 2,
+    "p=2": 3,
+    "p=3": 4,
+    "p=4": 5,
+    "p=5": 6,
+    "p=6": 7,
+    "p=7": 8,
+    "p=8": 9
+  },
+  "additional_coordinates_beyond_scale": {
+    "p=1": 1,
+    "p=2": 2,
+    "p=3": 3,
+    "p=4": 4,
+    "p=5": 5,
+    "p=6": 6,
+    "p=7": 7,
+    "p=8": 8
+  },
+  "feature_rank": {
+    "p=1": 2,
+    "p=2": 3,
+    "p=3": 4,
+    "p=4": 5,
+    "p=5": 6,
+    "p=6": 7,
+    "p=7": 8,
+    "p=8": 9
+  },
+  "five_window_payload": {
+    "input": ["t", "u0", "e0", "e1", "e2", "e3"],
+    "derived": ["u1", "u2", "u3", "u4", "e4"],
+    "additional_coordinates_beyond_scale": 5
+  },
+  "scope": "Exact symbolic affine closure; branch inequalities and family-specific selectors remain separate."
+}

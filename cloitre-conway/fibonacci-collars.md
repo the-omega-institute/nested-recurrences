@@ -477,3 +477,70 @@ scale coordinates + branch label + affine transition + closure phase
 The next bounded C result should enumerate all period-five words in one arch
 window using this payload and prove a reverse completeness map. No global finite
 alphabet is claimed yet.
+
+## 9. Common closure theorem and generic minimality
+
+The preceding interface can be stated independently of the source recurrence.
+Fix a scale coordinate `t`, a window length `p>=1`, and a defect word
+`e_0,...,e_(p-1)`. Suppose the normalized offsets obey
+
+```text
+u_(i+1) = t - u_i + e_i   (i mod p).
+```
+
+Writing `A_i=t+e_i` and expanding the recurrence gives
+
+```text
+u_p = (-1)^p u_0 + sum_{i=0}^{p-1} (-1)^(p-1-i) A_i.
+```
+
+Therefore closure has exactly two parity forms:
+
+```text
+p odd:   2*u_0 = t + e_0 - e_1 + e_2 - ... + e_(p-1),
+p even:  0    =     e_0 - e_1 + e_2 - ... - e_(p-1).
+```
+
+For either parity, a uniform lossless encoding is
+
+```text
+Q_p = (t, u_0, e_0, ..., e_(p-2)).
+```
+
+Generate `u_1,...,u_(p-1)` from the transition and set
+`e_(p-1)=u_0+u_(p-1)-t`; the last transition then closes automatically. The
+encoding has `p+1` affine coordinates including the scale and exactly `p`
+additional coordinates beyond `t`. In the unrestricted black-box reflection
+model these coordinates are independent: the exact symbolic feature map
+`Q_p -> (t,u_0,...,u_(p-1),e_0,...,e_(p-1))` has rank `p+1`. Thus no generic
+lossless affine payload can use fewer coordinates. This is a statement about
+semantic closure data; integer compression or relations special to a particular
+recurrence can reduce it only after additional family information is supplied.
+
+For odd `p`, an equivalent encoding stores `t` and all `p` defects and derives
+`u_0` from the fixed-point equation. For even `p`, the alternating defect
+constraint is required and one offset remains as the translation phase. The
+five-window payload in Section 8 is exactly
+`Q_5=(t,u_0,e_0,e_1,e_2,e_3)`, with `e_4` derived. The exact check for
+`p=1,...,8` is in
+[`closure_interface.py`](verification/closure_interface.py), whose output
+records rank `p+1` in every case.
+
+This also isolates Campbell's apparent compression. His eventual period-one/two
+orbits use the even case `p=2`, whose generic condition is `e_0=e_1` and whose
+payload would be `(t,u_0,e_0)`. Campbell's parity, ternary scale and low/middle/
+high endpoint template determine those coordinates within his specific family;
+only the parity phase remains for the prescribed value. The six endpoint
+templates therefore compress the generic `p=2` contract by a proved family
+relation; they do not invalidate the rank count for a black-box reflection
+window.
+
+The Fibonacci cross-scale requirement is separate from this one-scale rank.
+For each row, let `R_i` be the set of legal child splits compatible with the
+parent profile value and its two lower profiles. A recursive certificate needs
+one selector witness `r_i in R_i` for each window position, together with the
+child-domain inequalities; the parent defects alone do not identify those
+witnesses. The public three-block audit has more than one legal split in 57 of
+65 parent rows, with a maximum of 29 candidates, so a parent-only selector
+cannot be complete on the audited data. This is an exact finite necessity
+result, not a claim that the number of selector types is globally bounded.

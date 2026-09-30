@@ -25,6 +25,9 @@ def main():
          root / 'cloitre-conway/verification/collar_check.py', root / 'cloitre-conway/verification/collar-check.json'),
         ('First Fibonacci arch five-window closure certificate',
          root / 'cloitre-conway/verification/five_window_check.py', root / 'cloitre-conway/verification/five-window-check.json'),
+        ('Generic reflection-window closure interface',
+         root / 'cloitre-conway/verification/closure_interface.py',
+         root / 'cloitre-conway/verification/closure-interface-check.json'),
     ]
     if arguments.extended:
         checks.append(('Fibonacci landing and shifted family audit',
