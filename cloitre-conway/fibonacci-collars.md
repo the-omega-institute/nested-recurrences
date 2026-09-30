@@ -405,12 +405,16 @@ information when a local recursion is closed:
    `e_i = e_i^(1) + e_i^(2)` through the Fibonacci defect identity. These are
    the witnesses needed to descend the five-window to orders `k-1` and `k-2`.
 
-3. **Selected-value closure:** the actual depth `d=C(n-1)` and transient
-   length `mu`, with the certificate `d >= mu`. The phase is then derived as
-   `d-mu (mod 5)`, so it is not a third independent payload entry. If the full
-   depth is not stored, the equivalent compressed certificate is `d >= mu`
-   together with the one residue `d-mu (mod 5)`. Either encoding identifies
-   which point of a closed five-cycle is selected by the defining recurrence.
+3. **Selected-value closure:** certify the cycle reached from the prescribed
+   start `n-1`, with actual depth `d=C(n-1)`, transient length `mu`, and
+   `d>=mu`. If the first entry point has position `j` in the stored cycle,
+   the selected position is `j+d-mu (mod 5)`. Ordering the cycle from its first
+   entry point sets `j=0`; only in that aligned representation does `d-mu`
+   alone give the stored phase. A canonical cycle needs an entry-alignment
+   certificate or the already combined selected residue. One total residue
+   modulo five suffices to label the selected point, once its prescribed-basin
+   and phase certificate is established. Closure data alone do not establish
+   that alignment or basin.
 
 Each item has a separate role. The defects determine the normalized transition;
 the child splits make the certificate inductive; and the phase connects an
@@ -430,7 +434,13 @@ For the first arch, `n=196=F_12+52`, the exact payload is:
 The child defect pairs are respectively `(5,1), (2,1), (1,4), (2,1), (1,4)`.
 The selected orbit has `C(195)=131`, transient length `8`, period `5`, and
 phase `131-8 = 3 (mod 5)`. This is a complete local five-window certificate,
-while remaining only one local type.
+with the displayed word starting at the first entry offset `31`, while
+remaining only one local type. With the canonical cycle
+`[115,120,116,117,118]`, the entry point `120` instead has position `j=1`,
+and the selected position is `1+3=4 (mod 5)`, giving split `118` and
+`C(196)=134`. Applying phase three directly to the canonical cycle would
+select `117` and give `C(117)+C(79)=131`, the wrong value. The selector
+verifier contains this exact alignment certificate.
 
 The first three full-block audits now give a finite reverse-completeness result.
 For every starting state in the three blocks, exact enumeration checks 466
@@ -838,3 +848,104 @@ branch budgets be controlled across Fibonacci orders, or can the actual
 orbit-selected words be characterized by a stronger inverse condition?
 The proved adaptive label need not have bounded size, and finite singleton
 selected fibers do not establish uniform uniqueness or recursive closure.
+
+### Local cycle admissibility and what it does not prove
+
+The row-local decomposition equation is weaker than the defining recurrence's
+orbit requirement. In the positive-offset setting, put
+`m_i=F_(k-1)+u_i`, with `k>=7`. For the lower profile `H=P_(k-2)`, normalize
+the row's own inner map as
+
+```text
+T_(m_i)(F_(k-2)+r) = F_(k-2) + Psi_i(r),
+Psi_i(r) = u_i-H(r).
+```
+
+The cap gives `0<=H(r)<=r` for nonnegative offsets, so `[0,u_i]` is invariant.
+The cycle-capture theorem places every cycle in this interval. Define
+
+```text
+R_i^per = {r in R_i : Psi_i^q(r)=r for some integer q>=1}.
+```
+
+The cycle-entry theorem proves that the actual selected split at `m_i` belongs
+to `R_i^per`. Thus replacing each `R_i` by `R_i^per` loses no actual selector
+word. For any alpha, the refined fiber is exactly the original fiber with all
+nonperiodic coordinates excluded. The seed reconstruction and defect-budget
+theorems continue to apply to the smaller candidate sets. This is a necessary
+domain restriction, not an extra phase label. Computing it requires the lower
+profile on the entire captured interval, rather than only at candidate points.
+
+This distinction matters in the n=7739 counterexample. Its two seeds have
+normalized first-row trajectories
+
+```text
+255 -> 261 -> 250 -> 264 -> 246 -> 261 -> ...
+260 -> 257 -> 258 -> 252 -> 257 -> ...
+```
+
+Both seeds are transient. Hence neither complete word in the displayed
+two-word fiber is locally cycle-admissible, and that particular alpha has an
+empty refined fiber. The verifier checks every coordinate against an
+independent full-domain cycle enumeration, preserves the actual selected word,
+and applies the refinement to the 13 public five-window payloads. Their
+periodic Cartesian domains contain 137 words instead of 69,064 row-local words.
+This does not turn the earlier row-local counterexample into an ambiguity of
+the actual selected recurrence word.
+
+Periodicity alone still cannot establish alpha injectivity for arbitrary
+profiles, even when the profile is shared across all positions and the parent
+is a proper five-cycle. Here is an explicit abstract counterexample. Take
+`t=100` and the following parent offsets, defects and two-child splits:
+
+| `u_i` | `e_i=u_i+u_(i+1)-100` | `r_i` | `q_i=u_i-r_i` |
+|---|---|---|---|
+| 60 | 26 | 35 | 25 |
+| 66 | 38 | 43 | 23 |
+| 72 | 50 | 55 | 17 |
+| 78 | 62 | 65 | 13 |
+| 84 | 44 | 50 | 34 |
+
+Set the parent profile at these offsets to `P(u_i)=u_i-e_i`; then
+`100-P(u_i)=u_(i+1)` cycles through all five distinct offsets. Extend `P`
+by identity elsewhere on `{0,...,100}`. Define two shared child profiles by
+identity except for these overrides:
+
+```text
+H(r_i)=q_i,            H(r_i+1)=q_i-1,
+K(q_i)=r_i-e_i,        K(q_i-1)=r_i+1-e_i.
+```
+
+Within each profile the override domains are disjoint. Every profile value
+lies between zero and its argument. Both `r_i` and `r_i+1` are fixed points
+of `Psi_i=u_i-H`, and both decompositions have the same parent value:
+
+```text
+H(r_i)+K(q_i) = H(r_i+1)+K(q_i-1) = u_i-e_i.
+```
+
+Nevertheless the two distinct locally periodic words
+
+```text
+(35,43,55,65,50)
+(36,44,56,66,51)
+```
+
+have the same `alpha=(68,78,82,63,69)`. The verifier recovers their complete
+two-word refined fiber. This is a counterexample within the abstract profile
+interface, not within C. It proves that shared profiles, nonnegative child
+defects, a parent five-cycle and local periodicity do not together guarantee
+a zero-bit inverse branch budget. An injectivity theorem for C must use an
+additional property of its recursively generated profiles.
+
+There is a further necessary restriction: the row split must belong to the
+terminal cycle reached from the prescribed start `m_i-1`, not just any cycle
+of `Psi_i`. Once that terminal cycle is known with its first entry point as
+phase zero, the exact selected point is specified by the lower row's depth
+and its transient length, or equivalently by a depth-past-transient certificate
+and one residue modulo that row's period. For a canonical cycle, include its
+entry alignment in the total selected residue as in Section 8.
+These are separate lower-row phases. A five-cycle of the parent does not make
+its child cycles period five. This is the same distinction between cycle,
+basin and selected phase that Campbell's endpoint templates resolve in his
+period-one/two family.

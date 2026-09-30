@@ -7,7 +7,7 @@ from itertools import product
 import math
 import sys
 
-from conway_explore import brent_generate, generate
+from conway_explore import brent_generate, full_orbit, generate
 from five_window_check import all_cycles, canonical_cycle, fibonacci_values
 
 
@@ -88,6 +88,91 @@ def defect_monotone_cover(values, profile, defect):
     return tuple(tuple(part) for part in parts.values())
 
 
+def periodic_profile_candidates(values, profile, scale):
+    retained = []
+    for seed in values:
+        point = seed
+        visited = set()
+        while point not in visited:
+            assert 0 <= point <= scale
+            visited.add(point)
+            point = scale - profile[point]
+        if point == seed:
+            retained.append(seed)
+    return tuple(retained)
+
+
+def abstract_periodic_collision():
+    scale = 100
+    offsets = (60, 66, 72, 78, 84)
+    first = (35, 43, 55, 65, 50)
+    second = tuple(split + 1 for split in first)
+    defects = tuple(offset + offsets[(position + 1) % 5] - scale
+                    for position, offset in enumerate(offsets))
+    parent_profile = {point: point for point in range(scale + 1)}
+    for offset, defect in zip(offsets, defects):
+        parent_profile[offset] = offset - defect
+    assert len(set(offsets)) == 5
+    assert all(0 <= value <= point for point, value in parent_profile.items())
+    assert all(scale - parent_profile[offset] == offsets[(position + 1) % 5]
+               for position, offset in enumerate(offsets))
+    profile = {split: split for split in range(scale + 1)}
+    complement_profile = dict(profile)
+    for offset, defect, split in zip(offsets, defects, first):
+        complement = offset - split
+        profile[split] = complement
+        profile[split + 1] = complement - 1
+        complement_profile[complement] = split - defect
+        complement_profile[complement - 1] = split + 1 - defect
+    assert all(0 <= value <= split for split, value in profile.items())
+    assert all(0 <= value <= split for split, value in complement_profile.items())
+    sets = [tuple(split for split in range(offset + 1)
+                  if profile[split] + complement_profile[offset - split] == offset - defect)
+            for offset, defect in zip(offsets, defects)]
+    periodic_sets = [periodic_profile_candidates(values, profile, offset)
+                     for values, offset in zip(sets, offsets)]
+    alpha = tuple(first[(position + 1) % 5] + profile[first[position]]
+                  for position in range(5))
+    fiber = seed_fiber(periodic_sets, profile, alpha)
+    assert first in fiber and second in fiber
+    assert all(offset - profile[split] == split
+               for word in (first, second) for offset, split in zip(offsets, word))
+    return {"scale": scale, "parent_offsets": list(offsets), "parent_defects": list(defects),
+            "alpha": list(alpha), "two_periodic_words": [list(first), list(second)],
+            "complete_periodic_fiber": [list(word) for word in fiber],
+            "profile_overrides": {split: value for split, value in profile.items() if split != value},
+            "complement_profile_overrides": {split: value for split, value in complement_profile.items()
+                                             if split != value},
+            "scope": "Abstract shared nonnegative capped profiles and a genuine five-step parent word. Both inverse words are locally fixed points; periodicity alone does not imply general alpha injectivity. Not a C example."}
+
+
+def phase_alignment_witness():
+    sequence, _, _, selected_splits = generate(196)
+    trajectory, transient, period = full_orbit(sequence, 196)
+    cycle = canonical_cycle(tuple(trajectory[transient:]))
+    entry = trajectory[transient]
+    entry_position = cycle.index(entry)
+    depth = sequence[195]
+    assert depth >= transient
+    relative_phase = (depth - transient) % period
+    selected_position = (entry_position + relative_phase) % period
+    correct_split = cycle[selected_position]
+    wrong_split = cycle[relative_phase]
+    assert cycle == (115, 120, 116, 117, 118)
+    assert correct_split == selected_splits[196] == 118
+    assert wrong_split == 117
+    correct_value = sequence[correct_split] + sequence[196 - correct_split]
+    wrong_value = sequence[wrong_split] + sequence[196 - wrong_split]
+    assert correct_value == sequence[196] == 134
+    assert wrong_value == 131
+    return {"index": 196, "canonical_cycle": list(cycle), "entry_point": entry,
+            "entry_position": entry_position, "depth": depth, "transient": transient,
+            "phase_from_entry": relative_phase, "phase_from_canonical_start": selected_position,
+            "correct_split": correct_split, "wrong_split_without_alignment": wrong_split,
+            "correct_value": correct_value, "wrong_value_without_alignment": wrong_value,
+            "scope": "A stored canonical cycle needs entry alignment. One total selected-phase residue suffices once the prescribed basin and phase certificate are verified."}
+
+
 def defect_box_examples():
     sharp_contexts = 0
     for length in (1, 3, 5, 7):
@@ -133,7 +218,7 @@ def defect_box_examples():
 def higher_order_seed_witness():
     index = 7739
     order = 20
-    sequence, _, _, _ = generate(index)
+    sequence, _, _, selected_splits = generate(index)
     assert sequence == brent_generate(index)
     fibonacci = fibonacci_values(index + 1)
     anchor, lower, child, child_lower = [fibonacci[order - shift]
@@ -166,6 +251,26 @@ def higher_order_seed_witness():
     assert len({word[0] % modulus for word in words}) == len(words)
     for word in words:
         assert decode_defect_residue(sets, profile, alpha, defects, word[0] % modulus) == word
+    full_profile = {split: sequence[lower + split] - child
+                    for split in range(max(offsets) + 1)}
+    periodic_sets = [periodic_profile_candidates(values, full_profile, offset)
+                     for values, offset in zip(sets, offsets)]
+    periodic_membership = [[split in values for split, values in zip(word, periodic_sets)]
+                           for word in words]
+    filtered_fiber = seed_fiber(periodic_sets, full_profile, alpha)
+    assert filtered_fiber == []
+    for offset, candidates, values in zip(offsets, sets, periodic_sets):
+        cyclic_nodes = {point for cycle in all_cycles(sequence, anchor + offset) for point in cycle}
+        assert values == tuple(split for split in candidates if lower + split in cyclic_nodes)
+    selected = tuple(selected_splits[anchor + offset] - lower for offset in offsets)
+    selected_alpha = tuple(selected[(position + 1) % 5] + full_profile[selected[position]]
+                           for position in range(5))
+    assert seed_fiber(periodic_sets, full_profile, selected_alpha) == [selected]
+    terminal_periods = []
+    for offset, split in zip(offsets, selected):
+        trajectory, transient, period = full_orbit(sequence, anchor + offset)
+        assert lower + split in trajectory[transient:]
+        terminal_periods.append(period)
     return {
         "index": index,
         "order": order,
@@ -180,6 +285,12 @@ def higher_order_seed_witness():
         "defects": defects,
         "defect_seed_interval": list(interval),
         "adaptive_seed_modulus": modulus,
+        "local_cycle_refinement": {"periodic_membership_by_word": periodic_membership,
+                                   "periodic_candidate_lengths": [len(values) for values in periodic_sets],
+                                   "original_alpha_filtered_fiber": [],
+                                   "actually_selected_word": list(selected),
+                                   "actually_selected_alpha": list(selected_alpha),
+                                   "lower_terminal_periods": terminal_periods},
         "scope": "Complete fiber for this fixed alpha and these five candidate sets; a counterexample to global alpha injectivity and to the r_0 mod 5 refinement.",
     }
 
@@ -258,6 +369,8 @@ def main():
     alpha_image_counts = []
     selected_seed_reconstructions = 0
     defect_cover_rows_checked = 0
+    local_cycle_candidate_count = 0
+    periodic_cartesian_combinations = 0
     for order in (12, 13, 14):
         anchor = fibonacci[order - 1]
         lower_anchor = fibonacci[order - 2]
@@ -276,7 +389,11 @@ def main():
                 ambiguous_rows += sum(length > 1 for length in lengths)
                 noncontiguous_sets += sum(not is_contiguous(values) for values in sets)
                 row_profile = {split: sequence[lower_anchor + split] - child_anchor
-                               for values in sets for split in values}
+                               for split in range(max(offsets) + 1)}
+                periodic_sets = [periodic_profile_candidates(values, row_profile, offset)
+                                 for values, offset in zip(sets, offsets)]
+                local_cycle_candidate_count += sum(map(len, periodic_sets))
+                periodic_cartesian_combinations += math.prod(map(len, periodic_sets))
                 for offset, values in zip(offsets, sets):
                     defect = lower_anchor + offset - sequence[anchor + offset]
                     defect_monotone_cover(values, row_profile, defect)
@@ -356,6 +473,7 @@ def main():
                 profile = {split: sequence[lower_anchor + split] - child_anchor
                            for values in sets for split in values}
                 assert seed_fiber(sets, profile, alpha_values) == [tuple(recovered)]
+                assert seed_fiber(periodic_sets, row_profile, alpha_values) == [tuple(recovered)]
                 defects = [lower_anchor + offset - sequence[anchor + offset]
                            for offset in offsets]
                 modulus = sum(defects) // 2 + 1
@@ -434,6 +552,14 @@ def main():
             "qualification": "Exact odd-window argument; the interval is checked on all public row-local combinations. The modulus is a sufficient arithmetic label, not the minimum fiber cardinality.",
         },
         "abstract_defect_box_examples": defect_box_examples(),
+        "local_cycle_refinement": {
+            "retained_candidate_positions": local_cycle_candidate_count,
+            "periodic_cartesian_combinations": periodic_cartesian_combinations,
+            "actually_selected_words_preserved": selected_seed_reconstructions,
+            "qualification": "Periodicity is necessary by the cycle-entry theorem; finite public injectivity follows also from the larger unfiltered audit. Whole captured lower profiles are required.",
+            "abstract_periodic_collision": abstract_periodic_collision(),
+        },
+        "phase_alignment_witness": phase_alignment_witness(),
         "higher_order_seed_witness": higher_order_seed_witness(),
         "higher_order_profile_cover_witness": higher_order_cover_witness(),
         "affine_parameter_rank": {

@@ -60,6 +60,114 @@
     "even_zero_defect_contexts": 13,
     "scope": "Abstract position-dependent profiles, not C parent-cycle examples; odd bound is attained and even zero-defect fibers grow with the domain."
   },
+  "local_cycle_refinement": {
+    "retained_candidate_positions": 99,
+    "periodic_cartesian_combinations": 137,
+    "actually_selected_words_preserved": 13,
+    "qualification": "Periodicity is necessary by the cycle-entry theorem; finite public injectivity follows also from the larger unfiltered audit. Whole captured lower profiles are required.",
+    "abstract_periodic_collision": {
+      "scale": 100,
+      "parent_offsets": [
+        60,
+        66,
+        72,
+        78,
+        84
+      ],
+      "parent_defects": [
+        26,
+        38,
+        50,
+        62,
+        44
+      ],
+      "alpha": [
+        68,
+        78,
+        82,
+        63,
+        69
+      ],
+      "two_periodic_words": [
+        [
+          35,
+          43,
+          55,
+          65,
+          50
+        ],
+        [
+          36,
+          44,
+          56,
+          66,
+          51
+        ]
+      ],
+      "complete_periodic_fiber": [
+        [
+          35,
+          43,
+          55,
+          65,
+          50
+        ],
+        [
+          36,
+          44,
+          56,
+          66,
+          51
+        ]
+      ],
+      "profile_overrides": {
+        "35": 25,
+        "36": 24,
+        "43": 23,
+        "44": 22,
+        "50": 34,
+        "51": 33,
+        "55": 17,
+        "56": 16,
+        "65": 13,
+        "66": 12
+      },
+      "complement_profile_overrides": {
+        "12": 4,
+        "13": 3,
+        "16": 6,
+        "17": 5,
+        "22": 6,
+        "23": 5,
+        "24": 10,
+        "25": 9,
+        "33": 7,
+        "34": 6
+      },
+      "scope": "Abstract shared nonnegative capped profiles and a genuine five-step parent word. Both inverse words are locally fixed points; periodicity alone does not imply general alpha injectivity. Not a C example."
+    }
+  },
+  "phase_alignment_witness": {
+    "index": 196,
+    "canonical_cycle": [
+      115,
+      120,
+      116,
+      117,
+      118
+    ],
+    "entry_point": 120,
+    "entry_position": 1,
+    "depth": 131,
+    "transient": 8,
+    "phase_from_entry": 3,
+    "phase_from_canonical_start": 4,
+    "correct_split": 118,
+    "wrong_split_without_alignment": 117,
+    "correct_value": 134,
+    "wrong_value_without_alignment": 131,
+    "scope": "A stored canonical cycle needs entry alignment. One total selected-phase residue suffices once the prescribed basin and phase certificate are verified."
+  },
   "higher_order_seed_witness": {
     "index": 7739,
     "order": 20,
@@ -122,6 +230,53 @@
       301
     ],
     "adaptive_seed_modulus": 92,
+    "local_cycle_refinement": {
+      "periodic_membership_by_word": [
+        [
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      ],
+      "periodic_candidate_lengths": [
+        2,
+        1,
+        1,
+        2,
+        1
+      ],
+      "original_alpha_filtered_fiber": [],
+      "actually_selected_word": [
+        264,
+        287,
+        262,
+        245,
+        265
+      ],
+      "actually_selected_alpha": [
+        539,
+        533,
+        495,
+        492,
+        516
+      ],
+      "lower_terminal_periods": [
+        4,
+        2,
+        6,
+        2,
+        2
+      ]
+    },
     "scope": "Complete fiber for this fixed alpha and these five candidate sets; a counterexample to global alpha injectivity and to the r_0 mod 5 refinement."
   },
   "higher_order_profile_cover_witness": {
