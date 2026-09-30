@@ -232,8 +232,8 @@ does not control Fibonacci-block centers or settle full ratio convergence.
 ## 7. Fibonacci profile renormalization and defect dynamics
 
 The collar formula has a useful two-scale form that also explains why the
-first period-five orbit appears outside the certified collar. For every
-admissible `t`, define
+first period-five orbit appears outside the certified collar. For `k>=6` and
+`F_k+t>=3`, define
 
 $$
 P_k(t):=C(F_k+t)-F_{k-1},\qquad
