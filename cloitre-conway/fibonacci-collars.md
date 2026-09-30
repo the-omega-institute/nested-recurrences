@@ -388,9 +388,12 @@ information when a local recursion is closed:
    `e_i = e_i^(1) + e_i^(2)` through the Fibonacci defect identity. These are
    the witnesses needed to descend the five-window to orders `k-1` and `k-2`.
 
-3. **Selected-value closure:** a depth certificate `d=C(n-1) >= mu` and a
-   phase residue `d-mu (mod 5)`. It identifies which point of a closed
-   five-cycle is selected by the defining recurrence.
+3. **Selected-value closure:** the actual depth `d=C(n-1)` and transient
+   length `mu`, with the certificate `d >= mu`. The phase is then derived as
+   `d-mu (mod 5)`, so it is not a third independent payload entry. If the full
+   depth is not stored, the equivalent compressed certificate is `d >= mu`
+   together with the one residue `d-mu (mod 5)`. Either encoding identifies
+   which point of a closed five-cycle is selected by the defining recurrence.
 
 Each item has a separate role. The defects determine the normalized transition;
 the child splits make the certificate inductive; and the phase connects an
