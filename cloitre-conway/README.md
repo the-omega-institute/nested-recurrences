@@ -37,10 +37,11 @@ With Python 3.10 or newer, from the repository's main folder:
 python3 scripts/verify.py
 ```
 
-The six checks cover Campbell's symbolic and sequence proofs, the independent
+The eight checks cover Campbell's symbolic and sequence proofs, the independent
 Conway evaluators, the golden theorem's finite premises, the collar diagnostics,
-and the first three Fibonacci arch blocks' all-start five-window certificate.
-They compare exact JSON output and source hashes with committed evidence.
+the first three Fibonacci arch blocks' all-start five-window certificate, the
+generic reflection-window interface, and the selector/rank audit. They compare
+exact JSON output and source hashes with committed evidence.
 Run without `-O` or `PYTHONOPTIMIZE`; only the standard library is needed.
 
 For just the original Conway computation, from this directory:
