@@ -37,8 +37,9 @@ With Python 3.10 or newer, from the repository's main folder:
 python3 scripts/verify.py
 ```
 
-The five checks cover Campbell's symbolic and sequence proofs, the independent
-Conway evaluators, the golden theorem's finite premises and the collar diagnostics.
+The six checks cover Campbell's symbolic and sequence proofs, the independent
+Conway evaluators, the golden theorem's finite premises, the collar diagnostics,
+and the first Fibonacci arch's all-start five-window certificate.
 They compare exact JSON output and source hashes with committed evidence.
 Run without `-O` or `PYTHONOPTIMIZE`; only the standard library is needed.
 

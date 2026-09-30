@@ -1,0 +1,29 @@
+{
+  "status": "Exact finite all-start closure certificate; no global finite alphabet claimed.",
+  "source_sha256": "25b108386fe5c8716785cce91863c668b4cf35f0fd69a024953147a86f2b9b0d",
+  "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
+  "block": [144, 232],
+  "fibonacci_anchor": 89,
+  "all_start_graphs_checked": 89,
+  "all_start_vertices_checked": 16643,
+  "cycle_histogram": {"1": 55, "2": 111, "3": 5, "4": 5, "5": 1},
+  "period_five_payloads": [
+    {
+      "index": 196,
+      "block_offset": 52,
+      "cycle_offsets": [26, 31, 27, 28, 29],
+      "defects": [-5, -6, -3, -5, -3],
+      "child_splits": [10, 20, 16, 12, 18],
+      "child_offsets": [16, 11, 11, 16, 11]
+    }
+  ],
+  "selected_n_196": {
+    "value": 134,
+    "selected_split": 118,
+    "depth": 131,
+    "preperiod": 8,
+    "period": 5,
+    "selected_phase": 3,
+    "cycle": [120, 116, 117, 118, 115]
+  }
+}

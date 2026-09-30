@@ -15,6 +15,7 @@ Updated 2026-10-01. [Reading guide](README.md)
 | Cloitre: C(F_k+t)=F_(k-1)+max(0,t) for k>=23 and -12<=t<=32; complete fixed-point/two-cycle classification for k>=24 | Two-collar induction using 90 exact seed values at orders 23 and 24; all-start graph diagnostics are corroboration | [Exact collars](cloitre-conway/fibonacci-collars.md#6-exact-collars-propagate-from-two-seeds) |
 | Cloitre: exact Fibonacci profile renormalization and nonpositive defect cocycle; first period-five arch certificate at n=196 | Direct consequence of cycle capture and the upper cap; exact finite orbit/profile arithmetic | [Profile dynamics](cloitre-conway/fibonacci-collars.md#7-fibonacci-profile-renormalization-and-defect-dynamics) |
 | Five-window closure interface: one-scale defects, cross-scale child splits and selected phase | Exact n=196 payload; Campbell ternary endpoint templates checked by the 12-row arithmetic certificate | [Five-window interface](cloitre-conway/fibonacci-collars.md#8-five-window-closure-interface) |
+| First Fibonacci arch reverse-completeness audit: all starting states for 144<=n<=232 | 89 functional graphs, 16,643 vertices, and exact cycle histogram; unique period-five graph at n=196 | [Finite five-window certificate](cloitre-conway/verification/five-window-check.json) |
 
 Here G(n)=floor((n+1)/phi). The equality set is exactly
 

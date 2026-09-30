@@ -387,6 +387,21 @@ The selected orbit has `C(195)=131`, transient length `8`, period `5`, and
 phase `131-8 = 3 (mod 5)`. This is a complete local five-window certificate,
 while remaining only one local type.
 
+The first full-block audit now gives a finite reverse-completeness result. For
+all 89 orders `144 <= n <= 232` and every starting state of each functional
+graph, exact enumeration checks 16,643 vertices. The cycle histogram is
+
+```text
+period 1: 55    period 2: 111    period 3: 5
+period 4: 5     period 5: 1
+```
+
+The unique period-five graph is the one at `n=196`, and its payload is the
+table above. This is a complete finite statement for the first Fibonacci arch,
+not a global finite-state claim. The [dedicated checker](verification/five_window_check.py)
+and [recorded certificate](verification/five-window-check.json) replay it from
+the exact evaluator.
+
 Campbell's ternary-scale formula passes the same interface with a smaller
 payload. At scale `s=3^k`, parity and a low/middle/high zone determine one of
 six endpoint templates for `(x_4,x_5)`; the orbit then satisfies `x_6=x_4`.
