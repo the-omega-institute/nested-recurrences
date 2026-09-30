@@ -41,6 +41,25 @@
     "formula": "r_(i+1) = alpha_i - P_(k-2)(r_i)",
     "qualification": "Given alpha and the lower profiles, one seed determines the complete selector word; uniqueness of the seed is a separate condition."
   },
+  "defect_seed_budget": {
+    "row_local_combinations_checked": 69064,
+    "interval_formula": "ceil((alternating(alpha)-sum_odd(e))/2) <= r_0 <= floor((alternating(alpha)+sum_even(e))/2)",
+    "adaptive_modulus": "B = floor(sum(e)/2)+1",
+    "defect_monotone_cover_rows_checked": 65,
+    "nondecreasing_cover_bound": "floor(e_i/2)+1, by grouping floor((r-H_i(r))/2)",
+    "qualification": "Exact odd-window argument; the interval is checked on all public row-local combinations. The modulus is a sufficient arithmetic label, not the minimum fiber cardinality."
+  },
+  "abstract_defect_box_examples": {
+    "sharp_odd_defect_box_contexts": 96,
+    "odd_lengths": [
+      1,
+      3,
+      5,
+      7
+    ],
+    "even_zero_defect_contexts": 13,
+    "scope": "Abstract position-dependent profiles, not C parent-cycle examples; odd bound is attained and even zero-defect fibers grow with the domain."
+  },
   "higher_order_seed_witness": {
     "index": 7739,
     "order": 20,
@@ -91,7 +110,75 @@
     ],
     "negative_secants": 1,
     "same_seed_mod5": true,
+    "defects": [
+      36,
+      38,
+      29,
+      42,
+      37
+    ],
+    "defect_seed_interval": [
+      211,
+      301
+    ],
+    "adaptive_seed_modulus": 92,
     "scope": "Complete fiber for this fixed alpha and these five candidate sets; a counterexample to global alpha injectivity and to the r_0 mod 5 refinement."
+  },
+  "higher_order_profile_cover_witness": {
+    "index": 12898,
+    "order": 21,
+    "cycle_offsets": [
+      1013,
+      1033,
+      1022,
+      1029,
+      1024
+    ],
+    "parent_offset": 1013,
+    "parent_defect": 94,
+    "candidates_checked": 18,
+    "minimum_nondecreasing_cover": 4,
+    "descending_splits": [
+      659,
+      660,
+      661,
+      662
+    ],
+    "descending_profile_values": [
+      599,
+      597,
+      595,
+      589
+    ],
+    "nondecreasing_partition": [
+      [
+        384,
+        491,
+        508,
+        509,
+        523,
+        568,
+        591,
+        632,
+        659,
+        667,
+        709,
+        727,
+        746,
+        767,
+        796
+      ],
+      [
+        660
+      ],
+      [
+        661
+      ],
+      [
+        662
+      ]
+    ],
+    "scope": "Exact four-class lower and upper certificates for one C candidate set; refutes a universal three-class cover but does not establish a four-class uniform bound."
   },
   "affine_parameter_rank": {
     "payload_rows": 13,

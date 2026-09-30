@@ -716,7 +716,125 @@ candidates to establish that the displayed fiber is complete, checks both
 independent sequence evaluators, and recovers the 13 public selected words by
 the same seed procedure.
 
-The remaining family question is now precise: can descending profile branches
-be controlled across Fibonacci orders so that admissible seeds admit a bounded,
-arithmetically defined label? A finite collection of small fibers alone does
-not prove such a label or recursive closure.
+Nor is a uniform three-class monotone cover available. At `n=12898`, order
+`21`, the candidate set for parent offset `1013` contains the increasing
+splits `659,660,661,662`, with strictly decreasing lower-profile values
+`599,597,595,589`. Each nondecreasing part contains at most one of these
+four points. The public verifier also constructs a four-part nondecreasing
+partition of the entire 18-element candidate set, so its minimum is exactly
+four. This refutes a uniform three-class cover; it does not refute binary
+alpha fibers, and it does not prove a uniform four-class cover.
+
+### A universal seed label from the parent defect budget
+
+The two-child defect identity supplies an arithmetic label without assuming
+a uniform branch count. Work in a positive-offset parent context, with
+nonnegative integer parent defects `e_i`, and require every `r_i in R_i` to
+satisfy
+
+```text
+lambda_i(r_i) = r_i-H_i(r_i),   0 <= lambda_i(r_i) <= e_i.
+```
+
+For C these inequalities follow from (7.2): the two nonnegative child
+defects add to `e_i`, and `lambda_i` is the first child's defect. The inverse
+transition can therefore be written
+
+```text
+r_(i+1) = alpha_i-r_i+lambda_i(r_i).
+```
+
+For odd `p`, alternating summation around a closed word gives
+
+```text
+2*r_0 = A + sum_i (-1)^i lambda_i(r_i),
+A = sum_i (-1)^i alpha_i.
+```
+
+Indeed, the coefficients of `r_1,...,r_(p-1)` cancel in the alternating
+sum of `r_i+r_(i+1)=alpha_i+lambda_i`; the coefficient of `r_0` is two.
+For `p=5`, every admissible seed lies in the explicit integer interval
+
+$$
+L=\left\lceil\frac{A-e_1-e_3}{2}\right\rceil,
+\qquad
+U=\left\lfloor\frac{A+e_0+e_2+e_4}{2}\right\rfloor. \tag{9.1}
+$$
+
+Put `E=sum_i e_i` and `B=floor(E/2)+1`. The unrounded interval has length
+`E/2`, so `U-L<=floor(E/2)=B-1`. Consequently **alpha and `r_0 mod B`
+recover the entire word**, relative to the same parent, candidate and profile
+context. This is a universal sufficient label, with at most `ceil(log_2 B)`
+bits. It is adaptive to the given defects, rather than a fixed modulus inferred
+from a finite search.
+
+For a residue `0<=zeta<B`, there is at most one compatible seed in the interval.
+Compute it directly as
+
+```text
+r_0 = L + ((zeta-L) mod B).
+```
+
+Reject when this exceeds `U`, fails candidate membership, or fails any of the
+forced transitions or final closure. Otherwise this recovers the unique
+compatible word. Rotating the window gives an interval `[L_j,U_j]` for each
+`r_j`. In particular, for a fixed alpha,
+
+```text
+|fiber(alpha)| <= min(B, min_j |R_j intersect [L_j,U_j]|).
+```
+
+The exact conditional minimum remains the logarithm of the actual fiber
+maximum, as proved above. `B` can be larger. At `n=7739` the parent defects are
+`(36,38,29,42,37)`, `E=182`, and `A=501`. Formula (9.1) gives `[211,301]`
+and `B=92`; it distinguishes seeds 255 and 260, whereas one fiber ordinal
+bit suffices for that particular two-word fiber. The public verifier checks
+the interval on all 69,064 public Cartesian words and decodes the 13 selected
+words and both higher-order witnesses.
+
+There is also a defect-based branch cover. Partition `R_i` by the integer
+`floor(lambda_i(r)/2)`. If `r<s` lie in the same part, the two defects differ
+by at most one, and
+
+```text
+H_i(s)-H_i(r) = (s-r)-(lambda_i(s)-lambda_i(r)) >= 0.
+```
+
+Thus `b_i<=floor(e_i/2)+1` nondecreasing parts suffice. Combined with the
+earlier branch theorem, this gives the additional bound
+`|fiber(alpha)|<=product_i (floor(e_i/2)+1)`. In particular, if every
+`e_i<=1`, an odd-window alpha has at most one preimage: no branch label is
+needed. This does not bound these budgets uniformly in the Fibonacci order.
+
+The bound `B` is sharp in the abstract interface with position-dependent
+profiles and no other family restrictions. For any integer `m>=1`, take
+every `R_i={m,...,2m}`, `H_0(r)=2m-r`, and `H_i(r)=r` for `i=1,...,4`.
+Use `e=(2m,0,0,0,0)` and `alpha=(2m,3m,3m,3m,3m)`. Its complete fiber is
+
+```text
+(m+d, m+d, 2m-d, m+d, 2m-d),   d=0,...,m.
+```
+
+All profiles are nonnegative on their domains, all defect boxes hold, and
+there are exactly `m+1=B` seeds. This proves optimality for that abstract
+defect-box information; it is not an example from C's common lower profile
+or from a genuine C parent cycle.
+
+For even `p`, the seed cancels from alternating summation, so this interval
+argument is unavailable. For example, with `p=2`, `H_0(r)=H_1(r)=r`,
+`e=(0,0)`, both candidate sets `{0,...,t}`, and `alpha=(t,t)`, the fiber is
+`{(r,t-r):0<=r<=t}`. It has `t+1` elements despite zero defects. Campbell's
+proved period-two endpoint templates supply the family information that a
+zero defect budget alone cannot provide.
+
+The Fibonacci collar supplies an exact restricted-context corollary. For
+`k>=25` and candidate sets `R_i` contained in `{0,...,32}`, the collar formula
+gives `H_i=P_(k-2)=identity`. Alpha then uniquely determines any admissible
+odd-window word. The restriction on every candidate set is essential; this
+does not show that all witnesses for an arch-centre word lie in the collar.
+
+The remaining family question is now precise: can the defect or descending
+branch budgets be controlled across Fibonacci orders, or can the actual
+orbit-selected words be characterized by a stronger inverse condition?
+The proved adaptive label need not have bounded size, and finite singleton
+selected fibers do not establish uniform uniqueness or recursive closure.

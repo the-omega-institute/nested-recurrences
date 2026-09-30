@@ -17,6 +17,7 @@ Updated 2026-10-01. [Reading guide](README.md)
 | Five-window closure interface: compressed one-scale payload, cross-scale child selectors and selected phase | Exact alternating closure and centroid identities; 13 public period-five words reconstructed; 57/65 parent rows have split ambiguity, 56/65 individual candidate sets are non-contiguous, all 69,064 row-local selector combinations are replayed, the two lower-map parameters satisfy `alpha_i+beta_i=t` on all 65 rows, `alpha` is injective on all 69,064 row-local combinations, and each child-split/alpha/beta parameterization adds five affine directions in the finite 13-payload rank audit; Campbell ternary endpoint templates checked by the 12-row arithmetic certificate | [Five-window interface](cloitre-conway/fibonacci-collars.md#8-five-window-closure-interface) · [Selector audit](cloitre-conway/verification/selector-payload-check.json) |
 | Common reflection-window closure theorem: generic payload dimension is `p+1` including scale, with odd/even fixed-point/translation closure; the five-window needs five extra coordinates after `t` | Exact symbolic affine verification for `p=1,...,8`; Campbell's `p=2` compression is recorded as a family-specific endpoint-template relation | [Common closure theorem](cloitre-conway/fibonacci-collars.md#9-common-closure-theorem-and-generic-minimality) · [Exact check](cloitre-conway/verification/closure-interface-check.json) |
 | Inverse selector interface: alpha and one admissible seed reconstruct the whole word; the conditional fixed-width branch budget is `ceil(log_2 M)` for maximum fiber size `M`; odd-window collisions require a descending profile secant | General written argument; 13 public selected words reconstructed; a complete two-word fiber at n=7739 disproves global alpha injectivity and the fixed mod-5 seed refinement | [Seed reconstruction](cloitre-conway/fibonacci-collars.md#seed-reconstruction-and-the-remaining-branch-information) · [Witness check](cloitre-conway/verification/selector-payload-check.json) |
+| Defect-box seed theorem for odd windows: alpha plus `r_0 mod (floor(sum e_i/2)+1)` reconstructs the word; rotating the explicit seed interval sharpens the fiber bound; defects also give nondecreasing profile covers | General written proof; interval checked on all 69,064 public Cartesian words; adaptive decoding of 13 selected words and both n=7739 witnesses; exact abstract sharpness and even-window counterexample. A four-class candidate-set witness at n=12898 refutes a uniform three-class cover. The budget need not stay bounded for C | [Defect budget](cloitre-conway/fibonacci-collars.md#a-universal-seed-label-from-the-parent-defect-budget) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
 | First three Fibonacci-arch reverse-completeness audits: all starting states for 144<=n<=609 | 466 functional graphs, 174,983 vertices, exact per-block cycle histograms, and 13 period-five payloads; the first block has its unique period-five graph at n=196 | [Finite five-window certificate](cloitre-conway/verification/five-window-check.json) |
 
 Here G(n)=floor((n+1)/phi). The equality set is exactly
@@ -52,10 +53,12 @@ supplies an ingredient of the induction; it also documents numerical corrections
    reproduced; see the [decay audit](cloitre-conway/landing.md#4-reproducible-finite-audit).
    The exact-collar theorem propagates any width with suitable two seeds;
    existence of such seeds for every width has not been proved.
-   For the inverse selector interface, bound the number of admissible seeds
-   over descending profile branches. The exact conditional fiber budget does
-   not establish a uniform bound; the n=7739 witness rules out a fixed mod-5
-   shortcut.
+   For the inverse selector interface, control the defect-derived seed interval
+   or descending profile branches across orders. The adaptive defect modulus
+   gives a universal arithmetic label, but its size is not uniformly bounded;
+   the n=7739 witness rules out a fixed mod-5 shortcut. Establish whether the
+   actually selected alpha tuples have stronger uniqueness than arbitrary
+   legal row-local decomposition witnesses.
 3. **Shifted Conway/Mallows variants.** The proposed inequalities relative to G
    and Fibonacci anchors are finite observations through 2^20 under the stated
    initial conditions, not universal theorems. See the [family audit](cloitre-conway/verification/landing-audit.json).

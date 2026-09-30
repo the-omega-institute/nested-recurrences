@@ -48,6 +48,88 @@ def seed_fiber(sets, profile, alpha):
     return result
 
 
+def defect_seed_interval(alpha, defects):
+    if len(alpha) != len(defects) or len(alpha) % 2 != 1:
+        raise ValueError("The defect seed interval requires an odd window.")
+    assert all(defect >= 0 for defect in defects)
+    alternating_alpha = sum((-1) ** position * parameter
+                            for position, parameter in enumerate(alpha))
+    lower = (alternating_alpha - sum(defects[1::2]) + 1) // 2
+    upper = (alternating_alpha + sum(defects[::2])) // 2
+    return lower, upper
+
+
+def decode_defect_residue(sets, profile, alpha, defects, residue):
+    lower, upper = defect_seed_interval(alpha, defects)
+    modulus = sum(defects) // 2 + 1
+    assert 0 <= residue < modulus
+    seed = lower + (residue - lower) % modulus
+    if seed > upper or seed not in sets[0]:
+        return None
+    word = [seed]
+    for position, parameter in enumerate(alpha):
+        next_split = parameter - profile[word[-1]]
+        if next_split not in sets[(position + 1) % len(sets)]:
+            return None
+        word.append(next_split)
+    return tuple(word[:-1]) if word[-1] == seed else None
+
+
+def defect_monotone_cover(values, profile, defect):
+    parts = {}
+    for split in values:
+        child_defect = split - profile[split]
+        assert 0 <= child_defect <= defect
+        parts.setdefault(child_defect // 2, []).append(split)
+    assert len(parts) <= defect // 2 + 1
+    for part in parts.values():
+        assert all(profile[first] <= profile[second]
+                   for first, second in zip(part, part[1:]))
+    return tuple(tuple(part) for part in parts.values())
+
+
+def defect_box_examples():
+    sharp_contexts = 0
+    for length in (1, 3, 5, 7):
+        for half_budget in range(1, 13):
+            values = tuple(range(half_budget, 2 * half_budget + 1))
+            profiles = [{split: 2 * half_budget - split for split in values},
+                        *[{split: split for split in values}
+                          for _ in range(length - 1)]]
+            alpha = (2 * half_budget, *([3 * half_budget] * (length - 1)))
+            words = []
+            for seed in values:
+                word = [seed]
+                for position, parameter in enumerate(alpha):
+                    word.append(parameter - profiles[position][word[-1]])
+                assert word[-1] == seed
+                assert all(split in values for split in word)
+                words.append(tuple(word[:-1]))
+            for extra in (0, 1):
+                defects = (2 * half_budget + extra, *([0] * (length - 1)))
+                lower, upper = defect_seed_interval(alpha, defects)
+                modulus = sum(defects) // 2 + 1
+                assert len(words) == modulus == half_budget + 1
+                assert len({word[0] % modulus for word in words}) == modulus
+                for word in words:
+                    assert lower <= word[0] <= upper
+                    assert lower + (word[0] % modulus - lower) % modulus == word[0]
+                    assert all(0 <= split - profiles[position][split] <= defects[position]
+                               for position, split in enumerate(word))
+                sharp_contexts += 1
+    even_contexts = 0
+    for scale in range(13):
+        values = tuple(range(scale + 1))
+        profile = {split: split for split in values}
+        assert seed_fiber((values, values), profile, (scale, scale)) == [
+            (split, scale - split) for split in values]
+        even_contexts += 1
+    return {"sharp_odd_defect_box_contexts": sharp_contexts,
+            "odd_lengths": [1, 3, 5, 7],
+            "even_zero_defect_contexts": even_contexts,
+            "scope": "Abstract position-dependent profiles, not C parent-cycle examples; odd bound is attained and even zero-defect fibers grow with the domain."}
+
+
 def higher_order_seed_witness():
     index = 7739
     order = 20
@@ -75,6 +157,15 @@ def higher_order_seed_witness():
     assert negative % 2 == 1
     assert math.prod(profile_delta) == -math.prod(delta)
     assert words[0][0] % 5 == words[1][0] % 5
+    defects = [lower + offset - sequence[anchor + offset] for offset in offsets]
+    for values, defect in zip(sets, defects):
+        defect_monotone_cover(values, profile, defect)
+    interval = defect_seed_interval(alpha, defects)
+    modulus = sum(defects) // 2 + 1
+    assert all(interval[0] <= word[0] <= interval[1] for word in words)
+    assert len({word[0] % modulus for word in words}) == len(words)
+    for word in words:
+        assert decode_defect_residue(sets, profile, alpha, defects, word[0] % modulus) == word
     return {
         "index": index,
         "order": order,
@@ -86,8 +177,43 @@ def higher_order_seed_witness():
         "profile_difference": list(profile_delta),
         "negative_secants": negative,
         "same_seed_mod5": True,
+        "defects": defects,
+        "defect_seed_interval": list(interval),
+        "adaptive_seed_modulus": modulus,
         "scope": "Complete fiber for this fixed alpha and these five candidate sets; a counterexample to global alpha injectivity and to the r_0 mod 5 refinement.",
     }
+
+
+def higher_order_cover_witness():
+    index, order, offset = 12898, 21, 1013
+    sequence, _, _, _ = generate(index)
+    assert sequence == brent_generate(index)
+    fibonacci = fibonacci_values(index + 1)
+    anchor, lower, child, child_lower = [fibonacci[order - shift]
+                                        for shift in range(1, 5)]
+    cycles = [canonical_cycle(tuple(point - anchor for point in cycle))
+              for cycle in all_cycles(sequence, index)
+              if len(cycle) == 5 and anchor + offset in cycle]
+    assert len(cycles) == 1
+    values = candidate_sets(sequence, anchor, lower, child, child_lower, (offset,))[0]
+    profile = {split: sequence[lower + split] - child for split in values}
+    descending = (659, 660, 661, 662)
+    assert all(split in values for split in descending)
+    assert tuple(profile[split] for split in descending) == (599, 597, 595, 589)
+    parts = [tuple(split for split in values if split not in descending[1:]),
+             *((split,) for split in descending[1:])]
+    assert sorted(split for part in parts for split in part) == list(values)
+    assert all(all(profile[first] <= profile[second]
+                   for first, second in zip(part, part[1:])) for part in parts)
+    defect = lower + offset - sequence[anchor + offset]
+    defect_monotone_cover(values, profile, defect)
+    return {"index": index, "order": order, "cycle_offsets": list(cycles[0]),
+            "parent_offset": offset, "parent_defect": defect,
+            "candidates_checked": len(values), "minimum_nondecreasing_cover": len(parts),
+            "descending_splits": list(descending),
+            "descending_profile_values": [profile[split] for split in descending],
+            "nondecreasing_partition": [list(part) for part in parts],
+            "scope": "Exact four-class lower and upper certificates for one C candidate set; refutes a universal three-class cover but does not establish a four-class uniform bound."}
 
 
 def affine_rank(matrix):
@@ -131,6 +257,7 @@ def main():
     affine_both_parameter_features = []
     alpha_image_counts = []
     selected_seed_reconstructions = 0
+    defect_cover_rows_checked = 0
     for order in (12, 13, 14):
         anchor = fibonacci[order - 1]
         lower_anchor = fibonacci[order - 2]
@@ -148,6 +275,12 @@ def main():
                 candidate_lengths.update(lengths)
                 ambiguous_rows += sum(length > 1 for length in lengths)
                 noncontiguous_sets += sum(not is_contiguous(values) for values in sets)
+                row_profile = {split: sequence[lower_anchor + split] - child_anchor
+                               for values in sets for split in values}
+                for offset, values in zip(offsets, sets):
+                    defect = lower_anchor + offset - sequence[anchor + offset]
+                    defect_monotone_cover(values, row_profile, defect)
+                    defect_cover_rows_checked += 1
                 alpha_images = set()
                 for combination in product(*sets):
                     alpha_vector = []
@@ -159,6 +292,7 @@ def main():
                                   - max(0, complement))
                         parent_defect = sequence[anchor + offset] - lower_anchor - offset
                         assert first + second == parent_defect
+                        assert first <= 0 and second <= 0
                         next_split = combination[(position + 1) % 5]
                         next_offset = offsets[(position + 1) % 5]
                         alpha = (next_split
@@ -170,6 +304,11 @@ def main():
                         assert alpha + beta == index - fibonacci[order]
                         alpha_vector.append(alpha)
                     alpha_images.add(tuple(alpha_vector))
+                    defects = [lower_anchor + offset - sequence[anchor + offset]
+                               for offset in offsets]
+                    seed_lower, seed_upper = defect_seed_interval(alpha_vector, defects)
+                    assert seed_lower <= combination[0] <= seed_upper
+                    assert seed_upper - seed_lower < sum(defects) // 2 + 1
                     row_local_combinations_checked += 1
                 product_size = math.prod(lengths)
                 assert len(alpha_images) == product_size
@@ -217,6 +356,11 @@ def main():
                 profile = {split: sequence[lower_anchor + split] - child_anchor
                            for values in sets for split in values}
                 assert seed_fiber(sets, profile, alpha_values) == [tuple(recovered)]
+                defects = [lower_anchor + offset - sequence[anchor + offset]
+                           for offset in offsets]
+                modulus = sum(defects) // 2 + 1
+                assert decode_defect_residue(sets, profile, alpha_values, defects,
+                                             recovered[0] % modulus) == tuple(recovered)
                 selected_seed_reconstructions += 1
                 affine_split_features.append([*parent_features[:-1], *recovered, 1])
                 affine_alpha_features.append([*parent_features[:-1], *alpha_values, 1])
@@ -281,7 +425,17 @@ def main():
             "formula": "r_(i+1) = alpha_i - P_(k-2)(r_i)",
             "qualification": "Given alpha and the lower profiles, one seed determines the complete selector word; uniqueness of the seed is a separate condition.",
         },
+        "defect_seed_budget": {
+            "row_local_combinations_checked": row_local_combinations_checked,
+            "interval_formula": "ceil((alternating(alpha)-sum_odd(e))/2) <= r_0 <= floor((alternating(alpha)+sum_even(e))/2)",
+            "adaptive_modulus": "B = floor(sum(e)/2)+1",
+            "defect_monotone_cover_rows_checked": defect_cover_rows_checked,
+            "nondecreasing_cover_bound": "floor(e_i/2)+1, by grouping floor((r-H_i(r))/2)",
+            "qualification": "Exact odd-window argument; the interval is checked on all public row-local combinations. The modulus is a sufficient arithmetic label, not the minimum fiber cardinality.",
+        },
+        "abstract_defect_box_examples": defect_box_examples(),
         "higher_order_seed_witness": higher_order_seed_witness(),
+        "higher_order_profile_cover_witness": higher_order_cover_witness(),
         "affine_parameter_rank": {
             "payload_rows": len(payloads),
             "parent_features": "(t, five offsets, five nonnegative defects, 1)",

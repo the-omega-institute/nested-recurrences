@@ -15,6 +15,7 @@ or programming knowledge is needed.
 | Read the main theorem for Cloitre's example | **[Global golden structure](cloitre-conway/golden-proof.md)** |
 | Understand cycles and convergence near Fibonacci indices | **[Fibonacci collars](cloitre-conway/fibonacci-collars.md)** |
 | See the common five-window closure interface | **[Closure theorem](cloitre-conway/fibonacci-collars.md#9-common-closure-theorem-and-generic-minimality)** |
+| Understand the extra information needed to recover child branches | **[Seed reconstruction and defect budget](cloitre-conway/fibonacci-collars.md#seed-reconstruction-and-the-remaining-branch-information)** |
 | See what is proved and what remains open | **[Current status](STATUS.md)** |
 
 Click a link to read its document, then use your browser's Back button to
