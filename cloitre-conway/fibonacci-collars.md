@@ -384,6 +384,23 @@ information when a local recursion is closed:
    direct arch-center observable for the slow-convergence question, while the
    profile cocycle still controls how that sum descends across Fibonacci scales.
 
+   The same calculation separates odd and even window lengths. For a reflection
+   word of length `p`, composing
+
+   ```text
+   u_(i+1) = t - u_i + e_i
+   ```
+
+   gives, when `p` is odd, one scalar equation
+   `2*u_0 = t + e_0 - e_1 + ... + e_(p-1)` (alternating signs), which fixes
+   the starting offset once the defect word is known. When `p` is even, the
+   starting offset cancels and closure instead requires the alternating defect
+   sum to vanish. Thus an odd window carries a phase-bearing fixed-point
+   equation, while an even window carries a translation constraint. The
+   five-window interface is the `p=5` instance of this parity rule; Campbell's
+   eventual period-one/two collapse is its even-window counterpart, with the
+   ternary endpoint templates supplying the remaining branch data.
+
 2. **Cross-scale closure:** five child split offsets `r_i`, giving
    `e_i = e_i^(1) + e_i^(2)` through the Fibonacci defect identity. These are
    the witnesses needed to descend the five-window to orders `k-1` and `k-2`.
