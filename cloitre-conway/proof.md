@@ -6,6 +6,12 @@ G/Fibonacci observations are due to Benoît Cloitre, proposed during joint
 research discussions in September 2026. The results below concern that exact
 candidate, separately from Campbell's already evaluated b-sequence.
 
+**Follow-up:** [Fibonacci landing and corrected induction](landing.md) proves
+an infinite arithmetic lemma for the candidate zero set and a conditional basin
+criterion. Its new finite audit extends C to F_36, checks the proposed shifted
+variants, and corrects the carry range and reported decay precision. The original
+proofs and 2^20 computation record below remain unchanged in scope.
+
 ## Definition and result status
 
 Set C(1)=C(2)=1. For n>=3, define

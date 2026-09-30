@@ -7,6 +7,11 @@
 **[Open the Conway research note](proof.md).** It is displayed directly as a
 web page; no download, installation or GitHub account is needed.
 
+**Latest progress:** [Fibonacci landing: corrected induction and two conditional
+reductions](landing.md). Start with Section 2 for the new infinite-set arithmetic
+lemma, Section 3 for the precise remaining proof conditions, or Section 4 for
+the independent checks through F_36 and the corrected decay observations.
+
 Suggested reading order:
 
 1. [Definition and result summary](proof.md#definition-and-result-status): the
@@ -43,6 +48,12 @@ including source and sequence hashes, exact finite-window certificates,
 equality counterexamples, Fibonacci checks and complete long-cycle witnesses.
 The root command `python3 scripts/verify.py` reruns all repository checks and
 compares their output with committed evidence.
+
+The larger [landing audit](landing_audit.py) has separate recorded output in
+[landing-audit.json](landing-audit.json). From the repository's main folder,
+`python3 scripts/verify.py --extended` also replays and compares this audit.
+It reaches 14,930,352 terms and takes longer than the original checks; it uses
+a compact array to keep sequence storage modest.
 
 The finite-window certificates yield universal rational bounds through the
 separate propagation proof. The exact G lower bound, Fibonacci identity and

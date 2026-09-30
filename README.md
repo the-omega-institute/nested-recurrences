@@ -30,6 +30,12 @@ and the Code button above this page.
 Comments, corrections and proposed arguments are welcome in our existing email
 thread. There is no need to learn GitHub Issues or submit a pull request.
 
+**Latest research update:** [Fibonacci landing and corrected induction](cloitre-conway/landing.md).
+An infinite arithmetic lemma reduces the G lower bound to a zero-set containment
+problem; a second theorem gives sufficient neighborhood conditions for Fibonacci
+landing. New finite checks reach F_36=14,930,352 and correct the reported decay
+precision. The universal Fibonacci, limit and decay statements remain open.
+
 ## Results at a glance
 
 - **Campbell's example: explicit formula proved.** The prescribed orbit reaches
