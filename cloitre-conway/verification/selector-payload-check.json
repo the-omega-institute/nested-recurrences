@@ -27,6 +27,15 @@
     "scope": "all 65 public parent rows; q_i = u_i - r_i and t = n - F_(k-1)",
     "interpretation": "The two lower-map parameters are exact complements at the parent scale; this is not a lower five-cycle closure theorem."
   },
+  "alpha_parameter_injectivity": {
+    "payloads": 13,
+    "row_local_combinations": 69064,
+    "distinct_alpha_vectors": 69064,
+    "collisions": 0,
+    "maximum_fiber": 1,
+    "formula": "alpha_i = r_(i+1) + P_(k-2)(r_i)",
+    "qualification": "Exact finite injectivity over every public row-local Cartesian product; alpha is a lossless reparameterization of the five selectors on this certificate, not a global theorem."
+  },
   "affine_parameter_rank": {
     "payload_rows": 13,
     "parent_features": "(t, five offsets, five nonnegative defects, 1)",

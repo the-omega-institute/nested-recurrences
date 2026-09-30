@@ -594,6 +594,19 @@ the rank to `12`; appending both `alpha` and `beta` still has rank `12` because
 payloads, so it supports five affine directions for the audited family but is
 not a global lower-bound theorem.
 
+The same conclusion holds at the exact combinatorial level for the public
+row-local witness sets. Across all `69,064` elements of the audited Cartesian
+products `R_0 x ... x R_4`, the map
+
+```text
+(r_0,...,r_4) |-> (r_(i+1) + P_(k-2)(r_i))_(i=0,...,4)
+```
+
+has `69,064` distinct images and maximum fiber `1`. Thus `alpha` is a lossless
+reparameterization of the five selectors on the public certificate; the
+complementary `beta` tuple is then recovered coordinatewise from `t-alpha`.
+This is stronger than the rank check but has the same finite scope.
+
 When the two lower profiles are already available, the numeric split `r_i` can
 be represented without storing its value: sort the exact candidate set `R_i`
 and store the ordinal `sigma_i` with `r_i=R_i[sigma_i]`. This is a lossless

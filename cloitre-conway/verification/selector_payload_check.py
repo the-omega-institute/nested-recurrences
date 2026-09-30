@@ -73,6 +73,7 @@ def main():
     affine_alpha_features = []
     affine_beta_features = []
     affine_both_parameter_features = []
+    alpha_image_counts = []
     for order in (12, 13, 14):
         anchor = fibonacci[order - 1]
         lower_anchor = fibonacci[order - 2]
@@ -90,8 +91,10 @@ def main():
                 candidate_lengths.update(lengths)
                 ambiguous_rows += sum(length > 1 for length in lengths)
                 noncontiguous_sets += sum(not is_contiguous(values) for values in sets)
+                alpha_images = set()
                 for combination in product(*sets):
-                    for offset, split in zip(offsets, combination):
+                    alpha_vector = []
+                    for position, (offset, split) in enumerate(zip(offsets, combination)):
                         complement = offset - split
                         first = (sequence[lower_anchor + split] - child_anchor
                                  - max(0, split))
@@ -99,7 +102,21 @@ def main():
                                   - max(0, complement))
                         parent_defect = sequence[anchor + offset] - lower_anchor - offset
                         assert first + second == parent_defect
+                        next_split = combination[(position + 1) % 5]
+                        next_offset = offsets[(position + 1) % 5]
+                        alpha = (next_split
+                                 + sequence[lower_anchor + split] - child_anchor)
+                        next_complement = next_offset - next_split
+                        beta = (next_complement
+                                + sequence[child_anchor + complement]
+                                - child_lower_anchor)
+                        assert alpha + beta == index - fibonacci[order]
+                        alpha_vector.append(alpha)
+                    alpha_images.add(tuple(alpha_vector))
                     row_local_combinations_checked += 1
+                product_size = math.prod(lengths)
+                assert len(alpha_images) == product_size
+                alpha_image_counts.append(len(alpha_images))
                 selected = [selected_splits[anchor + offset] - lower_anchor
                             for offset in offsets]
                 ranks = [values.index(split) for values, split in zip(sets, selected)]
@@ -161,6 +178,8 @@ def main():
     assert reconstructed_parent_transitions == 65
     assert complementary_lower_map_rows == 65
     assert row_local_combinations_checked == 69064
+    assert alpha_image_counts == [math.prod(row["candidate_lengths"])
+                                  for row in payloads]
     parent_rank = affine_rank(affine_parent_features)
     split_rank = affine_rank(affine_split_features)
     alpha_rank = affine_rank(affine_alpha_features)
@@ -185,6 +204,15 @@ def main():
             "formula": "(r_(i+1) + P_(k-2)(r_i)) + (q_(i+1) + P_(k-3)(q_i)) = t",
             "scope": "all 65 public parent rows; q_i = u_i - r_i and t = n - F_(k-1)",
             "interpretation": "The two lower-map parameters are exact complements at the parent scale; this is not a lower five-cycle closure theorem."
+        },
+        "alpha_parameter_injectivity": {
+            "payloads": len(alpha_image_counts),
+            "row_local_combinations": row_local_combinations_checked,
+            "distinct_alpha_vectors": sum(alpha_image_counts),
+            "collisions": row_local_combinations_checked - sum(alpha_image_counts),
+            "maximum_fiber": 1,
+            "formula": "alpha_i = r_(i+1) + P_(k-2)(r_i)",
+            "qualification": "Exact finite injectivity over every public row-local Cartesian product; alpha is a lossless reparameterization of the five selectors on this certificate, not a global theorem."
         },
         "affine_parameter_rank": {
             "payload_rows": len(payloads),
