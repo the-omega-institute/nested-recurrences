@@ -585,6 +585,15 @@ reflection cycle, and it is not a global nonlinear selector-compression
 theorem; it is an exact row-level complement relation derived from the profile
 identity.
 
+The complement relation does not lower the affine selector budget on the public
+certificate. Using one row per public period-five payload, the parent features
+`(t, five offsets, five nonnegative defects, 1)` have rank `7`. Appending the
+five child splits, or instead the five `alpha_i`, or the five `beta_i`, raises
+the rank to `12`; appending both `alpha` and `beta` still has rank `12` because
+`beta_i=t-alpha_i`. This is a finite exact diagnostic on the 13 public
+payloads, so it supports five affine directions for the audited family but is
+not a global lower-bound theorem.
+
 When the two lower profiles are already available, the numeric split `r_i` can
 be represented without storing its value: sort the exact candidate set `R_i`
 and store the ordinal `sigma_i` with `r_i=R_i[sigma_i]`. This is a lossless

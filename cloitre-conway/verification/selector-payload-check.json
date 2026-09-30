@@ -27,6 +27,17 @@
     "scope": "all 65 public parent rows; q_i = u_i - r_i and t = n - F_(k-1)",
     "interpretation": "The two lower-map parameters are exact complements at the parent scale; this is not a lower five-cycle closure theorem."
   },
+  "affine_parameter_rank": {
+    "payload_rows": 13,
+    "parent_features": "(t, five offsets, five nonnegative defects, 1)",
+    "parent_rank": 7,
+    "child_split_rank": 12,
+    "alpha_rank": 12,
+    "beta_rank": 12,
+    "alpha_beta_rank": 12,
+    "rank_increment_for_each_parameterization": 5,
+    "qualification": "Finite exact diagnostic on the 13 public payloads; it shows that the complement identity does not reduce the five affine directions, but is not a global lower bound."
+  },
   "row_local_combinations_checked": 69064,
   "max_candidate_count": 29,
   "largest_cartesian_candidate_space": {
