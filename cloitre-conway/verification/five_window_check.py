@@ -64,11 +64,15 @@ def main():
         next_anchor = fibonacci[order + 1]
         anchor = fibonacci[order - 1]
         lower_anchor = fibonacci[order - 2]
+        child_anchor = fibonacci[order - 3]
+        child_lower_anchor = fibonacci[order - 4]
         histogram = Counter()
         graph_count = 0
         vertex_count = 0
         period_five = []
         compressed_closure_count = 0
+        child_split_ambiguity_count = 0
+        max_child_split_candidates = 0
         for index in range(first_anchor, next_anchor):
             offset = index - first_anchor
             cycles = all_cycles(sequence, index)
@@ -92,8 +96,25 @@ def main():
                             - positive_defects[1] + positive_defects[2]
                             - positive_defects[3] + positive_defects[4])
                     compressed_closure_count += 1
+                    candidate_sets = []
+                    for point, parent_defect in zip(normalized, defects):
+                        candidates = []
+                        for candidate in range(point + 1):
+                            complement = point - candidate
+                            first = sequence[lower_anchor + candidate] - child_anchor - max(0, candidate)
+                            second = (sequence[child_anchor + complement] - child_lower_anchor
+                                      - max(0, complement))
+                            if first + second == parent_defect:
+                                candidates.append(candidate)
+                        assert candidates
+                        candidate_sets.append(tuple(candidates))
+                        max_child_split_candidates = max(max_child_split_candidates, len(candidates))
+                        if len(candidates) > 1:
+                            child_split_ambiguity_count += 1
                     child_splits = tuple(splits[anchor + point] - lower_anchor
                                          for point in normalized)
+                    assert all(child_split in candidates
+                               for child_split, candidates in zip(child_splits, candidate_sets))
                     child_offsets = tuple(point - split for point, split in
                                           zip(normalized, child_splits))
                     period_five.append(dict(
@@ -114,6 +135,8 @@ def main():
             all_start_graphs_checked=graph_count,
             all_start_vertices_checked=vertex_count,
             compressed_closure_checked=compressed_closure_count,
+            child_split_ambiguity_checked=child_split_ambiguity_count,
+            max_child_split_candidates=max_child_split_candidates,
             cycle_histogram=dict(sorted(histogram.items())),
             period_five_payloads=period_five,
         ))
@@ -126,6 +149,7 @@ def main():
         source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         evaluator_source_sha256=hashlib.sha256(Path(__file__).with_name("conway_explore.py").read_bytes()).hexdigest(),
         compressed_closure_checked=sum(block["compressed_closure_checked"] for block in blocks),
+        child_split_ambiguity_checked=sum(block["child_split_ambiguity_checked"] for block in blocks),
         blocks=blocks,
         selected_n_196=dict(
             value=sequence[196],

@@ -436,7 +436,11 @@ payload is the table above. These are complete finite statements for the three
 audited blocks, not a global finite-state claim. The [dedicated checker](verification/five_window_check.py)
 now reconstructs every one of the 13 period-five words from the compressed
 payload and the [recorded certificate](verification/five-window-check.json)
-replays those checks from the exact evaluator.
+replays those checks from the exact evaluator. It also enumerates every legal
+two-scale split with the same parent defect: 57 of the 65 public parent rows
+have more than one candidate split, with a maximum of 29 candidates in one
+row. The orbit-selected `r_i` is therefore an actual closure witness, not a
+redundant decomposition label.
 
 Campbell's ternary-scale formula passes the same interface with a smaller
 payload. At scale `s=3^k`, parity and a low/middle/high zone determine one of
