@@ -556,4 +556,6 @@ candidate-set sizes are `(6,8,8,7,17)`, giving 45,696 Cartesian choices before
 any cross-row restriction; a fixed-width ordinal encoding of that raw space
 uses 16 bits. The [selector audit](verification/selector-payload-check.json)
 records the exact rank words and explicitly does not assume that all Cartesian
-choices are jointly realizable.
+choices are jointly realizable. It also recovers all 65 numeric child splits
+from their ordinals and rechecks all 65 parent transitions, so the ordinal
+representation is sufficient for the audited recursive certificate.

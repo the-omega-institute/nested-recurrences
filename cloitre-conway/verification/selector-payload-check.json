@@ -19,6 +19,8 @@
     "29": 2
   },
   "noncontiguous_candidate_sets": 56,
+  "reconstructed_selector_positions": 65,
+  "reconstructed_parent_transitions": 65,
   "max_candidate_count": 29,
   "largest_cartesian_candidate_space": {
     "index": 431,

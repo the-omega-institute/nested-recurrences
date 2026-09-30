@@ -41,6 +41,8 @@ def main():
     ambiguous_rows = 0
     noncontiguous_sets = 0
     parent_rows = 0
+    reconstructed_selector_positions = 0
+    reconstructed_parent_transitions = 0
     for order in (12, 13, 14):
         anchor = fibonacci[order - 1]
         lower_anchor = fibonacci[order - 2]
@@ -61,6 +63,21 @@ def main():
                 selected = [selected_splits[anchor + offset] - lower_anchor
                             for offset in offsets]
                 ranks = [values.index(split) for values, split in zip(sets, selected)]
+                recovered = [values[rank] for values, rank in zip(sets, ranks)]
+                assert recovered == selected
+                for position, (offset, split) in enumerate(zip(offsets, recovered)):
+                    complement = offset - split
+                    first = (sequence[lower_anchor + split] - child_anchor
+                             - max(0, split))
+                    second = (sequence[child_anchor + complement] - child_lower_anchor
+                              - max(0, complement))
+                    parent_defect = sequence[anchor + offset] - lower_anchor - offset
+                    assert first + second == parent_defect
+                    next_offset = offsets[(position + 1) % 5]
+                    defect = -parent_defect
+                    assert next_offset == (index - fibonacci[order]) - offset + defect
+                    reconstructed_selector_positions += 1
+                    reconstructed_parent_transitions += 1
                 payloads.append({
                     "index": index,
                     "candidate_lengths": lengths,
@@ -73,6 +90,8 @@ def main():
     assert ambiguous_rows == 57
     assert max(candidate_lengths) == 29
     assert noncontiguous_sets == 56
+    assert reconstructed_selector_positions == 65
+    assert reconstructed_parent_transitions == 65
     assert largest["index"] == 431
     assert largest["cartesian_candidate_count"] == 45696
     print(json.dumps({
@@ -83,6 +102,8 @@ def main():
         "ambiguous_parent_rows": ambiguous_rows,
         "candidate_length_histogram": dict(sorted(candidate_lengths.items())),
         "noncontiguous_candidate_sets": noncontiguous_sets,
+        "reconstructed_selector_positions": reconstructed_selector_positions,
+        "reconstructed_parent_transitions": reconstructed_parent_transitions,
         "max_candidate_count": max(candidate_lengths),
         "largest_cartesian_candidate_space": largest,
         "ordinal_encoding": {
