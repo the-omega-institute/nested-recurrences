@@ -4,4 +4,5 @@ __pycache__/
 *.log
 *.out
 *.synctex.gz
-replay.json
+replay*.json
+small-landing.json

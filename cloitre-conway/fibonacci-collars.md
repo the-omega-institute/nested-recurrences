@@ -136,16 +136,16 @@ decay rate are still open.
 
 ## 5. Reproduction
 
-The [collar checker](collar_check.py) verifies the neighboring identities,
+The [collar checker](verification/collar_check.py) verifies the neighboring identities,
 the selected-orbit localization through 131071, and **all starting states**
 of the functional graphs at offsets -2..2 around F_6 through F_26. It
 compares independently generated full-orbit and Brent prefixes and a literal
-prefix. Its [recorded output](collar-check.json) is finite corroboration;
+prefix. Its [recorded output](verification/collar-check.json) is finite corroboration;
 the universal arguments are those above.
 
 From the repository's main folder:
 
 ```sh
-python3 cloitre-conway/collar_check.py
+python3 cloitre-conway/verification/collar_check.py
 python3 scripts/verify.py
 ```

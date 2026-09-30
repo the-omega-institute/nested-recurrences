@@ -14,6 +14,14 @@ This is a PUBLIC repository. Keep private correspondence, mailbox identifiers,
 addresses, credentials and collaboration-management records outside it.
 Research code, mathematical notes and compact evidence belong here.
 
+Keep the public tree small and readable. Maintain the current proofs and status
+in place; put necessary code and evidence in verification/ subdirectories.
+Keep exploratory runs, draft variants and correspondence local or private.
+Use Git history for superseded stages instead of adding dated public archives.
+Preserve published proof URLs and distinguish historical experiment labels
+from current theorem status. Formalization is a separate research decision,
+not a prerequisite for every update.
+
 The user explicitly authorized creation and timely synchronization of this
 repository on 2026-09-30. After substantive research changes, update STATUS.md,
 the relevant proofs and evidence, run the appropriate checks, then commit and

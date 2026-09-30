@@ -1,17 +1,15 @@
-# Fibonacci landing: corrected induction and two conditional reductions
+# Supporting arithmetic, Fibonacci landing and numerical audit
 
-**Completed continuation:** [Global golden structure](golden-proof.md) now
-discharges the hypotheses of the reductions below. It proves C>=G, the exact
-equality set, Fibonacci identities and landing, the neighborhood bounds, and
-liminf C(n)/n=1/phi. This note records the intermediate stage and its independent
-numerical audit. Its remaining-conjecture labels for those completed claims are
-historical; full convergence and decay rates remain open.
+This note develops Benoît Cloitre's Fibonacci-orbit and zero-defect approach.
+Sections 1 and 2 supply the carry identity and an infinite arithmetic lemma
+used by [the global golden-structure proof](golden-proof.md). That proof
+establishes C>=G, the exact equality set, Fibonacci identities and landing,
+and liminf C(n)/n=1/phi.
 
-This note develops Benoît Cloitre's proposed Fibonacci-orbit and zero-defect
-approach. The identities and reductions proved below are unconditional
-mathematical statements, but their application to all terms of C still has
-explicit hypotheses to establish. They do **not** prove the universal
-Fibonacci identity, C>=G, or a limiting ratio.
+Section 3 gives an alternative sufficient criterion for landing; its
+hypotheses are now established in the global proof. Section 4 records
+independent finite observations and corrections to proposed decay estimates.
+Full convergence, decay rates and universal shifted-family patterns remain open.
 
 [Research overview](../README.md) · [Earlier proofs](proof.md) · [Status](../STATUS.md)
 
@@ -132,9 +130,10 @@ belong to Z by hypothesis, so the proposition again gives E(n)>=0 unless
 both are 2. That would force n=4, already excluded. QED.
 
 This reduction needs only **containment** of the zero set in Z, not equality
-at every member of Z. The containment remains an open dynamical problem.
-The result replaces the earlier finite check of all zero-index pairs with an
-infinite arithmetic proof for the candidate set.
+at every member of Z. The simultaneous induction in the [global proof](golden-proof.md)
+establishes containment and the lower bound together; the upper cap then proves
+equality at every member of Z. This arithmetic lemma replaces the earlier
+finite check of all zero-index pairs.
 
 ## 3. A precise sufficient condition for the Fibonacci basin
 
@@ -189,16 +188,17 @@ To see this, subtract the right integer from alpha(F_j-t+1). The result is
 Taking the floor proves the inequality. If the earlier G lower bound is
 available, it gives h(-t)>=-t+1 for t>=2. The separate neighbor identity
 C(q-1)=p gives h(-1)=0. Together these exclude all the symmetric two-cycles.
-The remaining substantive task is to prove the neighborhood inequalities
-and predecessor identities simultaneously without assuming the desired result.
+The [global proof](golden-proof.md#6-the-upper-cap-fibonacci-identities-and-the-full-equality-set)
+establishes the neighborhood inequalities and predecessor identities from its
+upper cap, without assuming the desired Fibonacci identity.
 
 ## 4. Reproducible finite audit
 
-The [audit program](landing_audit.py) computes C using a compact integer array,
+The [audit program](verification/landing_audit.py) computes C using a compact integer array,
 checks its first 2^20 terms against a separate Brent implementation and the
 previously recorded sequence hash, and examines every Fibonacci neighborhood
 specified in Section 3 within the requested range. The detailed output is
-[landing-audit.json](landing-audit.json).
+[landing-audit.json](verification/landing-audit.json).
 
 The recorded full run gives:
 
@@ -261,7 +261,7 @@ maximum of its arch.
 To reproduce the full audit from the repository's main folder:
 
 ```sh
-python3 cloitre-conway/landing_audit.py --output replay-landing.json
+python3 cloitre-conway/verification/landing_audit.py --output replay-landing.json
 ```
 
 The defaults reach F_36=14,930,352 for C and 2^20 for the selected-split audit
@@ -269,9 +269,9 @@ and each shifted variant. The smaller command below is useful while developing;
 its output is a different, shorter experiment and will not match the full report.
 
 ```sh
-python3 cloitre-conway/landing_audit.py --limit 1048576 --output small-landing.json
+python3 cloitre-conway/verification/landing_audit.py --limit 1048576 --output small-landing.json
 ```
 
-Run without Python optimization flags. All limit, decay-rate, universal
-Fibonacci and family-side assertions remain conjectural unless a separate
-proof is supplied.
+Run without Python optimization flags. This audit is finite evidence;
+universal Fibonacci statements are proved separately in the global note.
+Full convergence, decay rates and universal family-side assertions remain open.

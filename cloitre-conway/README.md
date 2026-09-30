@@ -1,72 +1,54 @@
 # Cloitre's variable-depth Conway candidate
 
-[Back to the research overview](../README.md) · [Current research status](../STATUS.md)
+[Research overview](../README.md) · [Current status](../STATUS.md)
 
-## Read the research note
+## Reading route
 
-**[Open the global golden-structure proof](golden-proof.md).** It is displayed directly as a
-web page; no download, installation or GitHub account is needed.
+1. **[Global golden structure](golden-proof.md):** the main theorem. Start with
+   its result list, then Sections 4 and 6 for the inductions and Section 7 for
+   the exact finite premises.
+2. **[Fibonacci collars](fibonacci-collars.md):** consequences near Fibonacci
+   indices, all-cycle period bounds, five-offset classification and convergence
+   in sublinear neighborhoods.
+3. **[Foundations](proof.md):** the recurrence definition, well-definedness,
+   elementary ratio bounds, finite-window propagation and cycle entry.
+4. **[Supporting arithmetic and numerical audit](landing.md):** the exact carry
+   formula, the infinite equality-set arithmetic lemma, a landing criterion,
+   and corrections to the decay observations.
 
-**Latest proof:** [Global golden structure](golden-proof.md). The introduction
-lists the completed theorems: the G lower bound, exact equality set, Fibonacci
-identities and landing, upper cap and golden-ratio liminf. Sections 4 and 6
-contain the two inductions; Section 7 explains the finite certificate and how
-to reproduce it.
-
-The [earlier landing development](landing.md) records the intermediate route,
-the independent checks through F_36 and the corrected decay observations.
-
-**New consequences:** [Fibonacci collars](fibonacci-collars.md) explains why
-periods are uniformly bounded at any fixed offset from a Fibonacci number,
-classifies all cycles at offsets -2..2, and proves convergence throughout
-sublinear-width Fibonacci neighborhoods. It does not prove the full ratio limit.
-
-For the earlier proofs and computational context, read the
-[first-results note](proof.md) in this order:
-
-1. [Definition and result summary](proof.md#definition-and-result-status): the
-   precise recurrence and the distinction between proofs and observations.
-2. [Global ratio bounds](proof.md#3-finite-window-propagation-and-explicit-infinite-bounds):
-   how a finite exact certificate yields a bound for every sufficiently large index.
-3. [Corrections to the numerical conjectures](proof.md#5-independent-reproduction-and-corrections):
-   the four additional equality indices and the refined conjecture.
-4. [The next proof problem](proof.md#6-more-structural-evidence-and-the-remaining-proof-problem):
-   the Fibonacci fixed point and what is still needed to prove that the orbit reaches it.
-
-Sections 1, 2 and 4 supply the detailed well-definedness, split-separation and
-cycle-entry arguments. The exact G lower bound, Fibonacci identity and refined
-equality-set description were open at that first-results stage and are now proved
-in the latest note. Comments and proposed arguments
-can be shared in the existing email thread.
+The notes display directly as web pages. No software or GitHub account is
+needed. Full ratio convergence and decay remain open; the former equality-set
+and Fibonacci landing problems are proved in the global note.
+Comments and proposed arguments can be shared in our existing email thread.
 
 ## Optional computational checks
 
-The recorded data and code are for auditing the computation; they are not
-required reading. With Python 3.10 or newer, open a terminal in this directory
-and run:
+Programs and compact recorded evidence are grouped in [verification/](verification/).
+With Python 3.10 or newer, from the repository's main folder:
 
 ```sh
-python3 conway_explore.py --output replay.json
+python3 scripts/verify.py
 ```
 
-The default limit is 1,048,576. The program generates separate sequences using
-full-orbit and Brent evaluators, checks their equality, and also compares a
-literal 4,096-term calculation. It uses only Python's standard library. Run
-without `-O` or `PYTHONOPTIMIZE` because assertions implement the checks.
+The five checks cover Campbell's symbolic and sequence proofs, the independent
+Conway evaluators, the golden theorem's finite premises and the collar diagnostics.
+They compare exact JSON output and source hashes with committed evidence.
+Run without `-O` or `PYTHONOPTIMIZE`; only the standard library is needed.
 
-[conway-results.json](conway-results.json) contains the committed output,
-including source and sequence hashes, exact finite-window certificates,
-equality counterexamples, Fibonacci checks and complete long-cycle witnesses.
-The root command `python3 scripts/verify.py` reruns all repository checks and
-compares their output with committed evidence.
+For just the original Conway computation, from this directory:
 
-The larger [landing audit](landing_audit.py) has separate recorded output in
-[landing-audit.json](landing-audit.json). From the repository's main folder,
-`python3 scripts/verify.py --extended` also replays and compares this audit.
-It reaches 14,930,352 terms and takes longer than the original checks; it uses
-a compact array to keep sequence storage modest.
+```sh
+python3 verification/conway_explore.py --output replay.json
+```
 
-The finite-window certificates yield universal rational bounds through the
-propagation proof. The new [finite golden-structure certificate](golden-check.json)
-supports the universal induction and is replayed by `python3 scripts/verify.py`.
-Full convergence to 1/phi and decay rates remain conjectures.
+The default limit is 1,048,576, with full-orbit and Brent evaluators and a separate
+literal check through 4096. [Recorded output](verification/conway-results.json)
+contains finite-window certificates, equality corrections and orbit witnesses.
+Its historical conjecture labels describe that experiment's original scope;
+the global note supplies the subsequent proofs.
+
+The optional larger [audit](verification/landing_audit.py) reaches
+F_36=14,930,352 and tests three shifted variants, using compact sequence storage.
+Run `python3 scripts/verify.py --extended` from the repository's main folder
+to replay and compare it too. The stored output remains the original finite
+audit; it supplies no proof of a limit or a universal shifted-family law.

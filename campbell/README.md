@@ -31,8 +31,8 @@ its acknowledgements and research-practice disclosure.
 With Python 3.10 or newer, from this directory:
 
 ```sh
-python3 check_proof.py
-python3 explore.py
+python3 verification/check_proof.py
+python3 verification/explore.py
 ```
 
 Run without `-O` or `PYTHONOPTIMIZE`. Both programs use only the standard
@@ -40,7 +40,7 @@ library. The first verifies 12 table rows, 72 transitions and 146 feasible
 affine transition branches by exact rational Fourier–Motzkin elimination.
 The second compares 1,000,000 recursive terms with the formula and independently
 performs literal nesting through 5,000 terms. Expected output is recorded in
-[proof-check.json](proof-check.json) and [results.json](results.json).
+[proof-check.json](verification/proof-check.json) and [results.json](verification/results.json).
 
 The sequence SHA-256, using comma-separated decimal ASCII without a trailing
 comma or newline, is

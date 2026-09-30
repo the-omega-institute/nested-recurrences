@@ -1,4 +1,4 @@
-# Cloitre's variable-depth Conway recurrence: first independent results
+# Cloitre's variable-depth Conway recurrence: foundations
 
 Research date: 2026-09-30, Asia/Singapore. This is a research note, not a
 manuscript, priority claim, or Lean formalization. The candidate and original
@@ -10,10 +10,9 @@ candidate, separately from Campbell's already evaluated b-sequence.
 the exact equality set, Fibonacci identities and global landing at Fibonacci
 indices, a Fibonacci-block upper cap, and liminf C(n)/n=1/phi. The finite premises
 are separately certified; the universal argument is an induction and cycle
-capture. The G/Fibonacci conjecture labels in this original first-results note
-are historical and superseded by that proof. The [landing development](landing.md)
-retains the intermediate argument and the larger F36 audit, including the decay
-precision correction.
+capture. This note supplies the foundational arguments used there.
+The [supporting arithmetic and audit](landing.md) supplies the carry lemma
+and the larger F36 audit, including the decay precision correction.
 
 ## Definition and result status
 
@@ -44,8 +43,8 @@ Results established here:
 5. At every n>=3 the chosen depth d is at least the preperiod of the starting
    orbit. The proof uses the elementary bounds and a small initial check.
 
-The assertions C(n)>=G(n), C(F_k)=F_(k-1), and the refined equality set below
-remain conjectures. They hold in the independent computation through 2^20.
+The assertions C(n)>=G(n), C(F_k)=F_(k-1), and the exact equality set below
+are proved in the [global golden-structure note](golden-proof.md).
 The statement that every equality C(n)=G(n) is a Fibonacci number or an
 immediate neighbor is false: n=11,24,25,59 are counterexamples.
 
@@ -263,11 +262,12 @@ $$
 \{F_k-1:k\ge3\text{ odd}\}\ \cup\ \{11,24,25,59\},
 $$
 
-with F_0=0,F_1=1. This corrected infinite description is a conjecture.
+with F_0=0,F_1=1. The [global proof](golden-proof.md) establishes this exact
+infinite description.
 C(n)>=G(n) has no failure through 2^20, and C(F_k)=F_(k-1) holds for
 2<=k<=30 (F_30=832040). The k=1 identity would be false under F_0=0.
 
-## 6. More structural evidence and the remaining proof problem
+## 6. Supporting pair inequality and subsequent proofs
 
 For all a,b in [1,2^20], the finite data satisfy
 
@@ -282,19 +282,15 @@ G(a)+G(b)>=G(a+b)-1. Since the finite prefix has E>=0, a failure requires
 E(a)=E(b)=0. It suffices to check the 2628 unordered pairs among the 72 zero
 indices; only (2,2) fails. The floor formula at a+b is evaluated exactly.
 
-This finite strengthening may help with a simultaneous proof of the G lower
-bound and the corrected equality set. It is not an induction proof by itself:
-knowing only C(m)>=G(m) for m<n does not rule out a bad split at n.
+The infinite arithmetic lemma in [the supporting note](landing.md#2-an-infinite-arithmetic-lemma-for-the-candidate-equality-set)
+replaces this finite pair check in the global argument. The simultaneous
+induction and cycle-capture theorem in [the global proof](golden-proof.md)
+establish the exact zero set and Fibonacci landing. Existence of a Fibonacci
+fixed point alone would not establish landing; cycle capture supplies that step.
 
-Similarly, earlier Fibonacci identities make F_(k-1) a fixed point of T_(F_k),
-since F_k-C(F_(k-1))=F_k-F_(k-2)=F_(k-1). But existence of that fixed point
-does not establish that the orbit starting at F_k-1 reaches it. A general
-basin argument remains necessary. The current computation finds this fixed
-point as the selected split at every tested F_k with k>=6.
-
-The immediate next mathematical task is to prove an invariant controlling
-the Fibonacci fixed-point basin and the zero-defect indices simultaneously.
-Neither a golden-ratio limit nor n^0.4 cycle growth is established here.
+Full ratio convergence, decay rates and growth of periods remain open.
+The [collar theorem](fibonacci-collars.md) gives local control near Fibonacci
+indices but does not settle the behavior in the centers of the arches.
 
 The bibliographic identity of the cited Grytczuk paper was checked via
 Crossref: *Another variation on Conway's recursive sequence*, DOI
@@ -303,10 +299,10 @@ propagation argument have not been audited; no priority claim is made.
 
 ## Reproduction
 
-Run with Python 3 and its standard library:
+From this directory, run with Python 3 and its standard library:
 
 ```
-python3 conway_explore.py --output conway-results.json
+python3 verification/conway_explore.py --output replay.json
 ```
 
 The default limit is 2^20 and the literal limit is 4096. The script records its

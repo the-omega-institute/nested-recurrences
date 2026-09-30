@@ -17,16 +17,16 @@ def main():
         raise SystemExit('Run without -O or PYTHONOPTIMIZE; assertions perform the checks.')
     root = Path(__file__).resolve().parents[1]
     checks = [
-        ('Campbell symbolic interval proof', root / 'campbell/check_proof.py', root / 'campbell/proof-check.json'),
-        ('Campbell million-term and literal comparison', root / 'campbell/explore.py', root / 'campbell/results.json'),
-        ('Cloitre Conway independent evaluators and certificates', root / 'cloitre-conway/conway_explore.py', root / 'cloitre-conway/conway-results.json'),
-        ('Global golden-structure finite premises', root / 'cloitre-conway/golden_check.py', root / 'cloitre-conway/golden-check.json'),
+        ('Campbell symbolic interval proof', root / 'campbell/verification/check_proof.py', root / 'campbell/verification/proof-check.json'),
+        ('Campbell million-term and literal comparison', root / 'campbell/verification/explore.py', root / 'campbell/verification/results.json'),
+        ('Cloitre Conway independent evaluators and certificates', root / 'cloitre-conway/verification/conway_explore.py', root / 'cloitre-conway/verification/conway-results.json'),
+        ('Global golden-structure finite premises', root / 'cloitre-conway/verification/golden_check.py', root / 'cloitre-conway/verification/golden-check.json'),
         ('Fibonacci collar identities and all-start cycle classification',
-         root / 'cloitre-conway/collar_check.py', root / 'cloitre-conway/collar-check.json'),
+         root / 'cloitre-conway/verification/collar_check.py', root / 'cloitre-conway/verification/collar-check.json'),
     ]
     if arguments.extended:
         checks.append(('Fibonacci landing and shifted family audit',
-                       root / 'cloitre-conway/landing_audit.py', root / 'cloitre-conway/landing-audit.json'))
+                       root / 'cloitre-conway/verification/landing_audit.py', root / 'cloitre-conway/verification/landing-audit.json'))
     for label, program, expected_path in checks:
         print(label, flush=True)
         completed = subprocess.run(
@@ -42,7 +42,7 @@ def main():
             if digest != expected['source_sha256']:
                 raise SystemExit(f'Source hash differs: {program.relative_to(root)}')
         if 'evaluator_source_sha256' in expected:
-            evaluator = root / 'cloitre-conway/conway_explore.py'
+            evaluator = root / 'cloitre-conway/verification/conway_explore.py'
             if hashlib.sha256(evaluator.read_bytes()).hexdigest() != expected['evaluator_source_sha256']:
                 raise SystemExit('Shared Conway evaluator source hash differs.')
         print('  passed; exact JSON matches committed evidence', flush=True)

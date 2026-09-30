@@ -33,7 +33,7 @@ inputs. This is not a Lean formalization. A full limit, a decay exponent and
 the universal shifted-family assertions are not established by this proof.
 
 [Research overview](../README.md) · [Earlier results](proof.md) ·
-[Landing development](landing.md) · [Finite certificate](golden-check.json)
+[Landing development](landing.md) · [Finite certificate](verification/golden-check.json)
 
 [Fibonacci collars](fibonacci-collars.md) derives further consequences: bounded
 periods at fixed offsets, complete nearby cycle classification and convergence
@@ -64,8 +64,8 @@ E(n)\ge0,\qquad E(n)=0\Longrightarrow n\in Z
 $$
 
 There are 57 zero-defect indices in this base. Their exact list, the seed
-extrema and the evaluator hashes are recorded in [golden-check.json](golden-check.json).
-The [checker](golden_check.py) generates C independently by full-orbit and
+extrema and the evaluator hashes are recorded in [golden-check.json](verification/golden-check.json).
+The [checker](verification/golden_check.py) generates C independently by full-orbit and
 Brent evaluation through 131071, and also checks literal nesting through 4096.
 
 No golden-ratio, zero-set or Fibonacci conjecture is used in these computations.
@@ -355,7 +355,7 @@ not yet establish that step.
 From the repository's main folder:
 
 ```sh
-python3 cloitre-conway/golden_check.py
+python3 cloitre-conway/verification/golden_check.py
 python3 scripts/verify.py
 ```
 
