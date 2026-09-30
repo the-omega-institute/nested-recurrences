@@ -434,8 +434,9 @@ period 4: 5     period 5: 1
 The unique period-five graph in the first block is the one at `n=196`, and its
 payload is the table above. These are complete finite statements for the three
 audited blocks, not a global finite-state claim. The [dedicated checker](verification/five_window_check.py)
-and [recorded certificate](verification/five-window-check.json) replay them from
-the exact evaluator.
+now reconstructs every one of the 13 period-five words from the compressed
+payload and the [recorded certificate](verification/five-window-check.json)
+replays those checks from the exact evaluator.
 
 Campbell's ternary-scale formula passes the same interface with a smaller
 payload. At scale `s=3^k`, parity and a low/middle/high zone determine one of

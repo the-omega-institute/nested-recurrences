@@ -68,6 +68,7 @@ def main():
         graph_count = 0
         vertex_count = 0
         period_five = []
+        compressed_closure_count = 0
         for index in range(first_anchor, next_anchor):
             offset = index - first_anchor
             cycles = all_cycles(sequence, index)
@@ -82,6 +83,15 @@ def main():
                     normalized = canonical_cycle(tuple(point - anchor for point in cycle))
                     defects = tuple(sequence[anchor + point] - lower_anchor - point
                                     for point in normalized)
+                    positive_defects = tuple(-defect for defect in defects)
+                    reconstructed = [normalized[0]]
+                    for defect in positive_defects[:4]:
+                        reconstructed.append(offset - reconstructed[-1] + defect)
+                    assert tuple(reconstructed) == normalized
+                    assert (2 * normalized[0] == offset + positive_defects[0]
+                            - positive_defects[1] + positive_defects[2]
+                            - positive_defects[3] + positive_defects[4])
+                    compressed_closure_count += 1
                     child_splits = tuple(splits[anchor + point] - lower_anchor
                                          for point in normalized)
                     child_offsets = tuple(point - split for point, split in
@@ -103,6 +113,7 @@ def main():
             fibonacci_anchor=anchor,
             all_start_graphs_checked=graph_count,
             all_start_vertices_checked=vertex_count,
+            compressed_closure_checked=compressed_closure_count,
             cycle_histogram=dict(sorted(histogram.items())),
             period_five_payloads=period_five,
         ))
@@ -114,6 +125,7 @@ def main():
         status="Exact finite all-start closure certificates; no global finite alphabet claimed.",
         source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         evaluator_source_sha256=hashlib.sha256(Path(__file__).with_name("conway_explore.py").read_bytes()).hexdigest(),
+        compressed_closure_checked=sum(block["compressed_closure_checked"] for block in blocks),
         blocks=blocks,
         selected_n_196=dict(
             value=sequence[196],

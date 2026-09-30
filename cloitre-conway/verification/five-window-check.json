@@ -1,7 +1,8 @@
 {
   "status": "Exact finite all-start closure certificates; no global finite alphabet claimed.",
-  "source_sha256": "cd2552b937ff605eed4e3a06e7dde9a41c051a289398e5b7234236ae0b9b082c",
+  "source_sha256": "f3b64a4165cab6f0b8db704e0a25b09547226d0b0a2aff99567ff3e3daadba7b",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
+  "compressed_closure_checked": 13,
   "blocks": [
     {
       "order": 12,
@@ -12,6 +13,7 @@
       "fibonacci_anchor": 89,
       "all_start_graphs_checked": 89,
       "all_start_vertices_checked": 16643,
+      "compressed_closure_checked": 1,
       "cycle_histogram": {
         "1": 55,
         "2": 111,
@@ -63,6 +65,7 @@
       "fibonacci_anchor": 144,
       "all_start_graphs_checked": 144,
       "all_start_vertices_checked": 43704,
+      "compressed_closure_checked": 5,
       "cycle_histogram": {
         "1": 89,
         "2": 203,
@@ -243,6 +246,7 @@
       "fibonacci_anchor": 233,
       "all_start_graphs_checked": 233,
       "all_start_vertices_checked": 114636,
+      "compressed_closure_checked": 7,
       "cycle_histogram": {
         "1": 144,
         "2": 359,
