@@ -372,6 +372,18 @@ information when a local recursion is closed:
    `u_0,e_0,...,e_3` can change the generated word, so this compression does
    not remove a generic input without adding a family-specific relation.
 
+   Summing the five transition equations gives a useful centroid identity,
+
+   ```text
+   2 * (u_0 + ... + u_4) = 5*t + (e_0 + ... + e_4).
+   ```
+
+   Hence the mean offset is `t/2 + (e_0+...+e_4)/10`. The zero-defect collar
+   is centered at `t/2`; every positive-defect five-cycle is shifted upward by
+   exactly one tenth of its total defect. This turns the defect sum into a
+   direct arch-center observable for the slow-convergence question, while the
+   profile cocycle still controls how that sum descends across Fibonacci scales.
+
 2. **Cross-scale closure:** five child split offsets `r_i`, giving
    `e_i = e_i^(1) + e_i^(2)` through the Fibonacci defect identity. These are
    the witnesses needed to descend the five-window to orders `k-1` and `k-2`.
