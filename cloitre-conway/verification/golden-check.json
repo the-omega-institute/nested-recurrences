@@ -1,6 +1,6 @@
 {
   "status": "Exact finite premises; the universal induction and cycle capture are written in golden-proof.md; no Lean formalization.",
-  "source_sha256": "ff5a0c35c6730e7bc632d7ecc19e020c446464e00762b329e91a73ec113e70d0",
+  "source_sha256": "6e3259c555c8ea5d35953ffec77ef23d54ac04d30904d7c5ed723310b07e7f70",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -380,5 +380,33 @@
         121393
       ]
     }
-  ]
+  ],
+  "short_window_propagation": {
+    "seed_interval_inclusive": [
+      349525,
+      1048574
+    ],
+    "propagation_factor": 3,
+    "propagation_valid_for_seed_start_at_least": 21846,
+    "independent_brent_agrees_through": 1048574,
+    "sequence_sha256": "f2510da789801b1d69c0f88d9a305b2d5d85f959382a494edd33d30a8b53d7c3",
+    "lower_numerator": 317811,
+    "lower_denominator": 514229,
+    "upper_numerator": 8900,
+    "upper_denominator": 13459,
+    "lower_witness": {
+      "index": 514229,
+      "value": 317811
+    },
+    "upper_witness": {
+      "index": 403770,
+      "value": 267000
+    },
+    "all_seed_inequalities_verified": true,
+    "selected_split_restriction_checked_inclusive": [
+      349525,
+      1048574
+    ],
+    "universal_domain": "all n >= 349525, by golden-proof.md Section 8"
+  }
 }

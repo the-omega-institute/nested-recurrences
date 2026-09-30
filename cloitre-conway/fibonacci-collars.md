@@ -1,9 +1,11 @@
 # Fibonacci collars: bounded periods and exact nearby dynamics
 
 This note derives new consequences of the [global golden-structure proof](golden-proof.md).
-It uses its proved G lower bound, exact equality set and upper cap; it does not
-introduce an additional finite premise. Thus its universal conclusions inherit
-that proof's computer-assisted foundations. No Lean formalization is claimed.
+It uses its proved G lower bound, exact equality set and upper cap. Sections 1–4
+introduce no additional finite premise. Section 6 proves a two-seed propagation
+theorem and an exact wider-band corollary using 90 checked seed values.
+The universal conclusions inherit the global proof's computer-assisted
+foundations. No Lean formalization is claimed.
 Use F_0=0, F_1=1 and alpha=1/phi.
 
 ## 1. All cycles near a Fibonacci index
@@ -136,6 +138,12 @@ decay rate are still open.
 
 ## 5. Reproduction
 
+The [two-collar propagation theorem](#6-exact-collars-propagate-from-two-seeds)
+below strengthens the nearby dynamics: for all k>=23 the whole band
+-12<=t<=32 has C(F_k+t)=F_(k-1)+max(0,t). For k>=24, all its cycles are
+fixed points or two-cycles. Its additional finite premises are two explicitly
+checked collars, recorded by the same checker.
+
 The [collar checker](verification/collar_check.py) verifies the neighboring identities,
 the selected-orbit localization through 131071, and **all starting states**
 of the functional graphs at offsets -2..2 around F_6 through F_26. It
@@ -149,3 +157,74 @@ From the repository's main folder:
 python3 cloitre-conway/verification/collar_check.py
 python3 scripts/verify.py
 ```
+
+## 6. Exact collars propagate from two seeds
+
+**Theorem.** Let K>=6 and let L,R be nonnegative integers with
+L+R<F_(K-2). Suppose both orders j=K,K+1 satisfy
+
+$$
+C(F_j+t)=F_{j-1}+\max(0,t)\qquad(-L\le t\le R).
+$$
+
+Then the same identities hold for every order j>=K.
+
+**Proof.** Induct on k>=K+2, assuming the profiles at k-1 and k-2.
+For n=F_k+t, the capture theorem puts its selected cycle point at
+
+$$
+a=F_{k-1}+s,\qquad
+\min(0,t)\le s\le\max(0,t).
+$$
+
+The complementary argument is b=F_(k-2)+(t-s). Both offsets s and t-s
+belong to [-L,R], and both have the same weak sign as t. The width restriction
+ensures positive indices and keeps these lower-order collars below the current
+band. Applying their proved profiles gives
+
+$$
+\begin{aligned}
+C(n)&=C(a)+C(b)\\
+&=F_{k-2}+F_{k-3}+\max(0,s)+\max(0,t-s)\\
+&=F_{k-1}+\max(0,t).
+\end{aligned}
+$$
+
+This proves the induction. The selected orbit's phase does not affect the sum.
+QED.
+
+**All-cycle classification.** Under the same hypotheses, take k>=K+1 and
+write A=F_(k-1). For every -L<=t<=R:
+
+- If t<=0, the unique cycle at n=F_k+t is the fixed point A+t.
+- If t>0, the cycles are precisely the pairs
+  {A+s,A+t-s} with integers 0<=s<t/2, together with the fixed point A+t/2
+  when t is even.
+
+**Proof.** Capture puts all cycles in [A+min(0,t),A+max(0,t)], and every
+orbit enters it. The now-established profile at order k-1 makes T_n constant
+with value A+t on the negative interval, and the reflection
+T_n(A+s)=A+t-s on the positive interval. All interval points are in the actual
+domain. This proves the complete classification, including every starting state.
+QED.
+
+**Certified corollary.** The two seed orders K=23 and K+1=24 satisfy this
+profile with L=12 and R=32. The [checker](verification/collar_check.py)
+checks all 90 seed values with independently agreeing full-orbit and Brent
+prefixes. The [recorded evidence](verification/collar-check.json) lists both
+relative-value arrays. Since 44<F_21=10946, the theorem proves
+
+$$
+C(F_k+t)=F_{k-1}+\max(0,t)
+\qquad(k\ge23,\ -12\le t\le32).
+$$
+
+For all k>=24, every orbit in these bands therefore lands in a fixed point
+or a two-cycle, with exactly the cycles classified above. The checker also
+enumerates every starting state in all 45 graphs at order k=24 as independent
+finite corroboration. The two seed collars are premises; that graph enumeration
+is not needed for the universal proof.
+
+This theorem propagates any width whose two seeds satisfy the stated profile;
+it does not prove that suitable seeds exist for every width. A fixed band still
+does not control Fibonacci-block centers or settle full ratio convergence.

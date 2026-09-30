@@ -37,6 +37,10 @@ the general induction and its exact finite premises are stated separately.
 The [collar proof](cloitre-conway/fibonacci-collars.md) then bounds all cycle
 periods near Fibonacci indices, classifies offsets -2 through +2, and proves
 ratio convergence throughout sublinear-width Fibonacci neighborhoods.
+The maintained notes now also give a shorter finite-certificate theorem and
+the improved global upper bound 8900/13459 for n>=349525, together with exact
+values and complete nearby cycles in the band -12<=t<=32 for all high-order
+Fibonacci indices. See [current status](STATUS.md) for the thresholds and evidence.
 
 **Still open:** full convergence of C(n)/n, its decay rate, and the growth
 of periods and landing times away from Fibonacci neighborhoods.

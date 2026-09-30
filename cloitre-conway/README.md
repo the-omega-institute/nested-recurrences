@@ -7,9 +7,13 @@
 1. **[Global golden structure](golden-proof.md):** the main theorem. Start with
    its result list, then Sections 4 and 6 for the inductions and Section 7 for
    the exact finite premises.
+   Section 8 shortens the propagation window, improves the tail bound, and
+   reduces the limsup to a decreasing family of exact finite-window maxima.
 2. **[Fibonacci collars](fibonacci-collars.md):** consequences near Fibonacci
    indices, all-cycle period bounds, five-offset classification and convergence
    in sublinear neighborhoods.
+   Section 6 propagates exact collars from two seeds and gives the complete
+   fixed-point/two-cycle classification throughout a wider certified band.
 3. **[Foundations](proof.md):** the recurrence definition, well-definedness,
    elementary ratio bounds, finite-window propagation and cycle entry.
 4. **[Supporting arithmetic and numerical audit](landing.md):** the exact carry

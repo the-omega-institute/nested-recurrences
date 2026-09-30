@@ -1,6 +1,6 @@
 {
-  "status": "Finite corroboration of the written collar theorems; universal proof in fibonacci-collars.md depends only on golden-proof.md.",
-  "source_sha256": "2c67a3f3610d3892fb1d7b40113c68a13fd7cf23172fe75226ed4591a1c970a1",
+  "status": "Exact two-collar seeds and finite corroboration; fibonacci-collars.md Sections 1-4 use golden-proof.md, and Section 6 adds the recorded seed premises; no Lean formalization.",
+  "source_sha256": "17b060b4a42d25517b9adf53ed34601b1d5c4ec8c9f4ab2c8305c2150cff5be4",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -236,5 +236,238 @@
       ]
     }
   ],
+  "exact_collar_propagation": {
+    "offsets_inclusive": [
+      -12,
+      32
+    ],
+    "seeds": [
+      {
+        "order": 23,
+        "index": 28657,
+        "relative_values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32
+        ]
+      },
+      {
+        "order": 24,
+        "index": 46368,
+        "relative_values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32
+        ]
+      }
+    ],
+    "seed_value_count": 90,
+    "identities_checked_orders": [
+      23,
+      24,
+      25,
+      26
+    ],
+    "universal_identity_orders": "all k >= 23, by the two-collar induction",
+    "universal_cycle_classification_orders": "all k >= 24, by capture and reflection",
+    "all_start_graph_order": 24,
+    "all_start_graphs_checked": 45,
+    "all_start_vertices_checked": 2086965,
+    "classification_witnesses": [
+      {
+        "offset": -12,
+        "cycles": [
+          [
+            28645
+          ]
+        ]
+      },
+      {
+        "offset": 0,
+        "cycles": [
+          [
+            28657
+          ]
+        ]
+      },
+      {
+        "offset": 1,
+        "cycles": [
+          [
+            28657,
+            28658
+          ]
+        ]
+      },
+      {
+        "offset": 2,
+        "cycles": [
+          [
+            28657,
+            28659
+          ],
+          [
+            28658
+          ]
+        ]
+      },
+      {
+        "offset": 32,
+        "cycles": [
+          [
+            28657,
+            28689
+          ],
+          [
+            28658,
+            28688
+          ],
+          [
+            28659,
+            28687
+          ],
+          [
+            28660,
+            28686
+          ],
+          [
+            28661,
+            28685
+          ],
+          [
+            28662,
+            28684
+          ],
+          [
+            28663,
+            28683
+          ],
+          [
+            28664,
+            28682
+          ],
+          [
+            28665,
+            28681
+          ],
+          [
+            28666,
+            28680
+          ],
+          [
+            28667,
+            28679
+          ],
+          [
+            28668,
+            28678
+          ],
+          [
+            28669,
+            28677
+          ],
+          [
+            28670,
+            28676
+          ],
+          [
+            28671,
+            28675
+          ],
+          [
+            28672,
+            28674
+          ],
+          [
+            28673
+          ]
+        ]
+      }
+    ]
+  },
   "full_ratio_convergence": "open; sublinear-neighborhood convergence is proved separately"
 }

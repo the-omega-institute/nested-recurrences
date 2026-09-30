@@ -11,6 +11,8 @@ Updated 2026-09-30. [Reading guide](README.md)
 | Cloitre: rational envelope for every n>=131072 | Propagation proof plus exact finite seed certificate | [Propagation](cloitre-conway/proof.md#3-finite-window-propagation-and-explicit-infinite-bounds) |
 | Cloitre: C>=G, exact equality set, Fibonacci identities and landing, block upper cap, liminf C(n)/n=1/phi | Computer-assisted theorem: exact finite base followed by general induction and cycle capture | [Global golden structure](cloitre-conway/golden-proof.md) |
 | Cloitre: all-cycle period bound at F_k+t, exact +/-2 identities, five-offset cycle classification and uniform convergence in sublinear Fibonacci neighborhoods | Consequences of the global theorem; no additional finite premise | [Fibonacci collars](cloitre-conway/fibonacci-collars.md) |
+| Cloitre: three-window certificates, exact finite-window characterization of the tail supremum, and C(n)/n<=8900/13459 for all n>=349525 | General propagation theorem plus independently reproduced window [349525,1048574] | [Limsup certificates](cloitre-conway/golden-proof.md#8-shorter-certificates-and-the-global-limsup) |
+| Cloitre: C(F_k+t)=F_(k-1)+max(0,t) for k>=23 and -12<=t<=32; complete fixed-point/two-cycle classification for k>=24 | Two-collar induction using 90 exact seed values at orders 23 and 24; all-start graph diagnostics are corroboration | [Exact collars](cloitre-conway/fibonacci-collars.md#6-exact-collars-propagate-from-two-seeds) |
 
 Here G(n)=floor((n+1)/phi). The equality set is exactly
 
@@ -31,10 +33,16 @@ supplies an ingredient of the induction; it also documents numerical corrections
 1. **Full ratio convergence.** The liminf is 1/phi. To prove a full limit,
    control the limsup between Fibonacci anchors, especially the centers of
    the arches. The collar theorem covers offsets o(F_k), not offsets of order F_k.
+   The new W(M)=max(C(m)/m: M<=m<3M) is exactly the tail supremum, and is
+   nonincreasing for M>=21846. Its proved limit is the limsup; proving that
+   limit equals 1/phi remains open. The certified upper bound is now
+   8900/13459=0.6612675533100527..., improved from 103088/155677.
 2. **Rates and inner dynamics.** Establish a decay rate only after obtaining
    global control; study whether cycle periods are unbounded and derive
    landing-time bounds. The claimed 0.087 +/-0.5% sampled stability was not
    reproduced; see the [decay audit](cloitre-conway/landing.md#4-reproducible-finite-audit).
+   The exact-collar theorem propagates any width with suitable two seeds;
+   existence of such seeds for every width has not been proved.
 3. **Shifted Conway/Mallows variants.** The proposed inequalities relative to G
    and Fibonacci anchors are finite observations through 2^20 under the stated
    initial conditions, not universal theorems. See the [family audit](cloitre-conway/verification/landing-audit.json).

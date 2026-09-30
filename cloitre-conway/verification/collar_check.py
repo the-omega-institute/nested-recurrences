@@ -95,8 +95,44 @@ def main():
             if order in (6, 9, 26):
                 witnesses.append(dict(order=order, offset=offset, index=index + offset,
                                       cycles=actual_cycles))
+    left_width = 12
+    right_width = 32
+    seed_orders = [23, 24]
+    seed_values = []
+    stable_identity_orders = []
+    for order in range(seed_orders[0], len(fibonacci)):
+        index = fibonacci[order]
+        if index + right_width > limit:
+            break
+        actual = [sequence[index + offset] - fibonacci[order - 1]
+                  for offset in range(-left_width, right_width + 1)]
+        assert actual == [max(0, offset) for offset in range(-left_width, right_width + 1)]
+        stable_identity_orders.append(order)
+        if order in seed_orders:
+            seed_values.append(dict(order=order, index=index, relative_values=actual))
+    assert len(seed_values) == 2
+    stable_graph_order = 24
+    stable_graph_index = fibonacci[stable_graph_order]
+    stable_anchor = fibonacci[stable_graph_order - 1]
+    stable_graph_witnesses = []
+    stable_graph_count = 0
+    stable_graph_vertices = 0
+    for offset in range(-left_width, right_width + 1):
+        actual_cycles = all_cycles(sequence, stable_graph_index + offset)
+        if offset <= 0:
+            expected_cycles = [(stable_anchor + offset,)]
+        else:
+            expected_cycles = [(stable_anchor + point, stable_anchor + offset - point)
+                               for point in range((offset + 1) // 2)]
+            if offset % 2 == 0:
+                expected_cycles.append((stable_anchor + offset // 2,))
+        assert actual_cycles == sorted(expected_cycles)
+        stable_graph_count += 1
+        stable_graph_vertices += stable_graph_index + offset - 1
+        if offset in (-left_width, 0, 1, 2, right_width):
+            stable_graph_witnesses.append(dict(offset=offset, cycles=actual_cycles))
     report = dict(
-        status='Finite corroboration of the written collar theorems; universal proof in fibonacci-collars.md depends only on golden-proof.md.',
+        status='Exact two-collar seeds and finite corroboration; fibonacci-collars.md Sections 1-4 use golden-proof.md, and Section 6 adds the recorded seed premises; no Lean formalization.',
         source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         evaluator_source_sha256=hashlib.sha256(Path(__file__).with_name('conway_explore.py').read_bytes()).hexdigest(),
         limit=limit,
@@ -114,6 +150,17 @@ def main():
         graph_order_range_inclusive=[6, 26],
         graph_offsets_inclusive=[-2, 2],
         classification_witnesses=witnesses,
+        exact_collar_propagation=dict(
+            offsets_inclusive=[-left_width, right_width],
+            seeds=seed_values, seed_value_count=len(seed_values) * (left_width + right_width + 1),
+            identities_checked_orders=stable_identity_orders,
+            universal_identity_orders='all k >= 23, by the two-collar induction',
+            universal_cycle_classification_orders='all k >= 24, by capture and reflection',
+            all_start_graph_order=stable_graph_order,
+            all_start_graphs_checked=stable_graph_count,
+            all_start_vertices_checked=stable_graph_vertices,
+            classification_witnesses=stable_graph_witnesses,
+        ),
         full_ratio_convergence='open; sublinear-neighborhood convergence is proved separately',
     )
     print(json.dumps(report, indent=2) + '\n', end='')

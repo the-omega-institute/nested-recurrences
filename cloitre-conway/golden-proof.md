@@ -32,6 +32,11 @@ the recurrence with two independent evaluators; they are not conjectural
 inputs. This is not a Lean formalization. A full limit, a decay exponent and
 the universal shifted-family assertions are not established by this proof.
 
+A subsequent [three-window propagation theorem](#8-shorter-certificates-and-the-global-limsup)
+improves the certified upper bound to C(n)/n<=8900/13459 for every n>=349525.
+It also expresses the remaining limsup problem in terms of exact finite-window
+maxima. The proof's original finite premises above are unchanged.
+
 [Research overview](../README.md) · [Earlier results](proof.md) ·
 [Landing development](landing.md) · [Finite certificate](verification/golden-check.json)
 
@@ -368,5 +373,72 @@ The logical order is: established totality/bounds/cycle entry; exact seed and
 induction base; split restriction and rotation lemma; simultaneous lower-bound
 and zero-containment induction; upper-cap induction; identities, reverse
 zero-set inclusion, global Fibonacci landing and the liminf corollary.
+
+## 8. Shorter certificates and the global limsup
+
+**Three-window propagation theorem.** Let M>=21846 be an integer. If real
+constants L,H satisfy
+
+$$
+Lm\le C(m)\le Hm\qquad(M\le m\le3M-1),
+$$
+
+then the same inequalities hold for every m>=M.
+
+**Proof.** The finite window supplies the initial cases. At n>=3M we have
+n>=65536, so Section 2 places the selected argument a between 5n/9 and 2n/3.
+Its complement b=n-a exceeds n/3. Thus both a,b are at least M and smaller
+than n. Strong induction and C(n)=C(a)+C(b) give
+
+$$
+Ln=L(a+b)\le C(a)+C(b)\le H(a+b)=Hn.
+$$
+
+The split restriction was proved using the original eight-window seed, before
+this shorter propagation theorem; there is no circular certificate dependency.
+QED.
+
+In particular, put
+
+$$
+W(M)=\max_{M\le m<3M}\frac{C(m)}m.
+$$
+
+The theorem and a maximizing witness in the window give the exact identity
+
+$$
+W(M)=\sup_{n\ge M}\frac{C(n)}n\qquad(M\ge21846).
+$$
+
+Thus W(M) is nonincreasing in M, and
+
+$$
+\lim_{M\to\infty}W(M)=\limsup_{n\to\infty}\frac{C(n)}n.
+$$
+
+For example, the certificates at M,3M,9M,... form a decreasing sequence of
+rational upper bounds with precisely this limit. Full ratio convergence to
+alpha is equivalent to W(M) tending to alpha. This is an exact reduction,
+not a proof that the limiting value is alpha or a rate of convergence.
+
+The updated [checker and certificate](verification/golden-check.json) verify
+the window [349525,1048574] from the recurrence, with independent full-orbit
+and Brent prefixes. Its maximum is attained at n=403770, with C(n)=267000:
+
+$$
+W(349525)=\frac{267000}{403770}=\frac{8900}{13459}
+=0.6612675533100527\ldots.
+$$
+
+Integer cross multiplication checks every term in the window. Consequently
+
+$$
+\frac{C(n)}n\le\frac{8900}{13459}\quad(n\ge349525),\qquad
+\limsup_{n\to\infty}\frac{C(n)}n\le\frac{8900}{13459}
+<\frac{103088}{155677}.
+$$
+
+The golden liminf remains alpha. The improved upper bound is still strictly
+larger than alpha; interval centers remain the outstanding convergence problem.
 The larger F_36 experiment is useful corroboration, but is not a premise of
 the universal proof.

@@ -1,6 +1,7 @@
 """Check the finite premises of the global golden-ratio induction."""
 
 import bisect
+from fractions import Fraction
 import hashlib
 import json
 from pathlib import Path
@@ -30,6 +31,42 @@ def upper_cap(index, fibonacci):
         return 1
     order = bisect.bisect_right(fibonacci, index) - 1
     return min(index - fibonacci[order - 2], fibonacci[order])
+
+
+def short_window_certificate():
+    seed_start = 349525
+    seed_stop = 3 * seed_start - 1
+    sequence, _, _, splits = generate(seed_stop)
+    assert sequence == brent_generate(seed_stop)
+    minimum_index = seed_start
+    maximum_index = seed_start
+    for index in range(seed_start, seed_stop + 1):
+        assert 9 * splits[index] > 5 * index
+        assert 3 * splits[index] < 2 * index
+        if sequence[index] * minimum_index < sequence[minimum_index] * index:
+            minimum_index = index
+        if sequence[index] * maximum_index > sequence[maximum_index] * index:
+            maximum_index = index
+    lower = Fraction(sequence[minimum_index], minimum_index)
+    upper = Fraction(sequence[maximum_index], maximum_index)
+    assert upper == Fraction(8900, 13459)
+    assert upper < Fraction(103088, 155677)
+    assert all(lower.numerator * index <= lower.denominator * sequence[index]
+               and upper.denominator * sequence[index] <= upper.numerator * index
+               for index in range(seed_start, seed_stop + 1))
+    return dict(
+        seed_interval_inclusive=[seed_start, seed_stop], propagation_factor=3,
+        propagation_valid_for_seed_start_at_least=21846,
+        independent_brent_agrees_through=seed_stop,
+        sequence_sha256=hashlib.sha256(','.join(map(str, sequence[1:])).encode('ascii')).hexdigest(),
+        lower_numerator=lower.numerator, lower_denominator=lower.denominator,
+        upper_numerator=upper.numerator, upper_denominator=upper.denominator,
+        lower_witness=dict(index=minimum_index, value=sequence[minimum_index]),
+        upper_witness=dict(index=maximum_index, value=sequence[maximum_index]),
+        all_seed_inequalities_verified=True,
+        selected_split_restriction_checked_inclusive=[seed_start, seed_stop],
+        universal_domain=f'all n >= {seed_start}, by golden-proof.md Section 8',
+    )
 
 
 def main():
@@ -111,6 +148,7 @@ def main():
         cycle_capture_checked_inclusive=[8, limit], cycle_points_checked=cycle_points_checked,
         fibonacci_checks=fibonacci_checks,
         exact_rotation_diagnostics=rotation_checks,
+        short_window_propagation=short_window_certificate(),
     )
     print(json.dumps(report, indent=2) + '\n', end='')
 
