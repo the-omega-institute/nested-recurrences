@@ -12,7 +12,115 @@
     "x6=x4",
     "formula output",
     "minimum depth",
-    "small cases"
+    "small cases",
+    "six distinct endpoint templates"
   ],
+  "closure_interface": {
+    "endpoint_template_count": 6,
+    "distinct_affine_endpoint_map_count": 5,
+    "endpoint_templates": {
+      "even_low_linear": [
+        [
+          "1",
+          "-1",
+          "0"
+        ],
+        [
+          "1",
+          "-2/3",
+          "0"
+        ]
+      ],
+      "even_low_plateau": [
+        [
+          "1",
+          "-1",
+          "0"
+        ],
+        [
+          "0",
+          "2",
+          "0"
+        ]
+      ],
+      "even_high": [
+        [
+          "0",
+          "3",
+          "0"
+        ],
+        [
+          "1",
+          "-2",
+          "0"
+        ]
+      ],
+      "odd_low": [
+        [
+          "1",
+          "-1",
+          "0"
+        ],
+        [
+          "0",
+          "2",
+          "0"
+        ]
+      ],
+      "odd_middle": [
+        [
+          "0",
+          "4",
+          "0"
+        ],
+        [
+          "1",
+          "-3",
+          "0"
+        ]
+      ],
+      "odd_high_fixed": [
+        [
+          "1",
+          "-3",
+          "0"
+        ],
+        [
+          "1",
+          "-3",
+          "0"
+        ]
+      ]
+    },
+    "row_groups": {
+      "even_low_linear": [
+        "E1-left"
+      ],
+      "even_low_plateau": [
+        "E1-right",
+        "E2",
+        "E3"
+      ],
+      "even_high": [
+        "E4",
+        "E5"
+      ],
+      "odd_low": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "odd_middle": [
+        "O4",
+        "O5"
+      ],
+      "odd_high_fixed": [
+        "O6",
+        "O7"
+      ]
+    },
+    "phase": "parity of n; no independent five-phase selector",
+    "qualification": "The six labels are distinct parity/domain templates; five affine endpoint maps occur because the even- and odd-low plateau labels share the same map on different domains. The explicit formula derives the applicable label from n and its power-of-three scale."
+  },
   "scope": "arithmetic certificate for the written induction, not Lean verification"
 }

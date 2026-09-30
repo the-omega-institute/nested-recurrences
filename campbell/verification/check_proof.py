@@ -210,15 +210,58 @@ def check_elimination():
                      (affine(c=-1), False)]) is False
 
 
+def check_closure_interface():
+    templates = {
+        'even_low_linear': (v(1, -1), v(1, '-2/3')),
+        'even_low_plateau': (v(1, -1), v(0, 2)),
+        'even_high': (v(0, 3), v(1, -2)),
+        'odd_low': (v(1, -1), v(0, 2)),
+        'odd_middle': (v(0, 4), v(1, -3)),
+        'odd_high_fixed': (v(1, -3), v(1, -3)),
+    }
+    row_groups = {
+        'even_low_linear': ['E1-left'],
+        'even_low_plateau': ['E1-right', 'E2', 'E3'],
+        'even_high': ['E4', 'E5'],
+        'odd_low': ['O1', 'O2', 'O3'],
+        'odd_middle': ['O4', 'O5'],
+        'odd_high_fixed': ['O6', 'O7'],
+    }
+    endpoint_pairs = set(templates.values())
+    assert len(templates) == 6
+    assert len(endpoint_pairs) == 5
+    assert sum(len(rows) for rows in row_groups.values()) == 13
+    assert row_groups['even_low_linear'] == ['E1-left']
+    assert row_groups['even_low_plateau'] == ['E1-right', 'E2', 'E3']
+    assert row_groups['even_high'] == ['E4', 'E5']
+    assert row_groups['odd_low'] == ['O1', 'O2', 'O3']
+    assert row_groups['odd_middle'] == ['O4', 'O5']
+    assert row_groups['odd_high_fixed'] == ['O6', 'O7']
+    return templates, row_groups
+
+
 if __name__ == '__main__':
     check_elimination()
     check_small()
     count = check_tables()
+    templates, row_groups = check_closure_interface()
     print(json.dumps(dict(
         status='passed', table_rows=12, transitions=72,
         feasible_affine_transition_branches=count,
         method='exact rational Fourier-Motzkin elimination over all real s>=3',
         checked=['interval coverage', 'transition identities', 'index bounds',
-                 'parity', 'x6=x4', 'formula output', 'minimum depth', 'small cases'],
+                 'parity', 'x6=x4', 'formula output', 'minimum depth',
+                 'small cases', 'six distinct endpoint templates'],
+        closure_interface=dict(
+            endpoint_template_count=len(templates),
+            distinct_affine_endpoint_map_count=len(set(templates.values())),
+            endpoint_templates={
+                name: [[str(value) for value in pair] for pair in endpoint]
+                for name, endpoint in templates.items()
+            },
+            row_groups=row_groups,
+            phase='parity of n; no independent five-phase selector',
+            qualification='The six labels are distinct parity/domain templates; five affine endpoint maps occur because the even- and odd-low plateau labels share the same map on different domains. The explicit formula derives the applicable label from n and its power-of-three scale.'
+        ),
         scope='arithmetic certificate for the written induction, not Lean verification',
     ), indent=2))

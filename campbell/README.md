@@ -42,6 +42,15 @@ The second compares 1,000,000 recursive terms with the formula and independently
 performs literal nesting through 5,000 terms. Expected output is recorded in
 [proof-check.json](verification/proof-check.json) and [results.json](verification/results.json).
 
+The proof checker also records the closure interface used in the comparison
+with Cloitre's five-window dynamics. The 12 orbit rows reduce to six
+parity/domain endpoint templates (five distinct affine endpoint maps, since
+the even- and odd-low plateau maps coincide on different domains). The
+eventual phase is determined by the parity of `n`, so this family has no
+independent five-phase selector. The explicit formula derives the template
+from `n` and its power-of-three scale; this is a family-specific compression,
+not a claim about a generic reflection window.
+
 The sequence SHA-256, using comma-separated decimal ASCII without a trailing
 comma or newline, is
 `819d3a0632427cefca525a96b7d498c453586e8ae2c93882520231aad8f4a801`.

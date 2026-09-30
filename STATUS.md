@@ -6,7 +6,7 @@ Updated 2026-10-01. [Reading guide](README.md)
 
 | Result | Verification scope | Read |
 |---|---|---|
-| Campbell: totality, explicit power-of-three formula, sharp four-step transient, periods 1 or 2, dilation identity and ratio extrema | Written proof; exact symbolic arithmetic and independent sequence checks | [Three-page PDF](campbell/note.pdf) |
+| Campbell: totality, explicit power-of-three formula, sharp four-step transient, periods 1 or 2, dilation identity and ratio extrema | Written proof; exact symbolic arithmetic and independent sequence checks; closure checker records six parity/domain endpoint templates (five distinct affine maps) and parity phase | [Three-page PDF](campbell/note.pdf) · [Proof certificate](campbell/verification/proof-check.json) |
 | Cloitre: totality, elementary 3/5 and 3/4 bounds, split separation and entry into the eventual cycle at the prescribed depth | Written arguments with explicit finite initial cases | [Foundations](cloitre-conway/proof.md) |
 | Cloitre: rational envelope for every n>=131072 | Propagation proof plus exact finite seed certificate | [Propagation](cloitre-conway/proof.md#3-finite-window-propagation-and-explicit-infinite-bounds) |
 | Cloitre: C>=G, exact equality set, Fibonacci identities and landing, block upper cap, liminf C(n)/n=1/phi | Computer-assisted theorem: exact finite base followed by general induction and cycle capture | [Global golden structure](cloitre-conway/golden-proof.md) |
