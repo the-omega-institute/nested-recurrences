@@ -561,6 +561,30 @@ information and cannot be assumed at the parent decomposition layer. The public
 selector verifier enumerates all 69,064 row-local combinations and checks every
 child-defect equation.
 
+There is one exact coupling between the two lower branches that is useful for
+future compression. Write `q_i=u_i-r_i` and, for a parent of order `k`, let
+`t=n-F_k`. Define
+
+```text
+alpha_i = r_(i+1) + P_(k-2)(r_i)
+beta_i  = q_(i+1) + P_(k-3)(q_i).
+```
+
+The Fibonacci profile identity and the parent transition give
+
+```text
+alpha_i + beta_i = t.
+```
+
+Indeed, the two profile terms sum to `P_(k-1)(u_i)`, while
+`u_(i+1)=t-P_(k-1)(u_i)=r_(i+1)+q_(i+1)`. The identity is checked on all 65
+public parent rows in the [selector audit](verification/selector-payload-check.json).
+It means that if both lower-map parameters are recorded, one is determined by
+the other and the parent scale. It does not make either `r` or `q` a lower
+reflection cycle, and it is not a global nonlinear selector-compression
+theorem; it is an exact row-level complement relation derived from the profile
+identity.
+
 When the two lower profiles are already available, the numeric split `r_i` can
 be represented without storing its value: sort the exact candidate set `R_i`
 and store the ordinal `sigma_i` with `r_i=R_i[sigma_i]`. This is a lossless

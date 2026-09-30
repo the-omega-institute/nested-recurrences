@@ -44,6 +44,7 @@ def main():
     parent_rows = 0
     reconstructed_selector_positions = 0
     reconstructed_parent_transitions = 0
+    complementary_lower_map_rows = 0
     row_local_combinations_checked = 0
     for order in (12, 13, 14):
         anchor = fibonacci[order - 1]
@@ -79,13 +80,23 @@ def main():
                 assert recovered == selected
                 for position, (offset, split) in enumerate(zip(offsets, recovered)):
                     complement = offset - split
+                    next_offset = offsets[(position + 1) % 5]
+                    next_split = recovered[(position + 1) % 5]
+                    next_complement = next_offset - next_split
+                    alpha = (next_split
+                             + sequence[lower_anchor + split] - child_anchor)
+                    beta = (next_complement
+                            + sequence[child_anchor + complement]
+                            - child_lower_anchor)
+                    parent_scale = index - fibonacci[order]
+                    assert alpha + beta == parent_scale
+                    complementary_lower_map_rows += 1
                     first = (sequence[lower_anchor + split] - child_anchor
                              - max(0, split))
                     second = (sequence[child_anchor + complement] - child_lower_anchor
                               - max(0, complement))
                     parent_defect = sequence[anchor + offset] - lower_anchor - offset
                     assert first + second == parent_defect
-                    next_offset = offsets[(position + 1) % 5]
                     defect = -parent_defect
                     assert next_offset == (index - fibonacci[order]) - offset + defect
                     reconstructed_selector_positions += 1
@@ -104,6 +115,7 @@ def main():
     assert noncontiguous_sets == 56
     assert reconstructed_selector_positions == 65
     assert reconstructed_parent_transitions == 65
+    assert complementary_lower_map_rows == 65
     assert row_local_combinations_checked == 69064
     assert largest["index"] == 431
     assert largest["cartesian_candidate_count"] == 45696
@@ -117,6 +129,12 @@ def main():
         "noncontiguous_candidate_sets": noncontiguous_sets,
         "reconstructed_selector_positions": reconstructed_selector_positions,
         "reconstructed_parent_transitions": reconstructed_parent_transitions,
+        "complementary_lower_map_rows": complementary_lower_map_rows,
+        "complementary_lower_map_identity": {
+            "formula": "(r_(i+1) + P_(k-2)(r_i)) + (q_(i+1) + P_(k-3)(q_i)) = t",
+            "scope": "all 65 public parent rows; q_i = u_i - r_i and t = n - F_(k-1)",
+            "interpretation": "The two lower-map parameters are exact complements at the parent scale; this is not a lower five-cycle closure theorem."
+        },
         "row_local_combinations_checked": row_local_combinations_checked,
         "max_candidate_count": max(candidate_lengths),
         "largest_cartesian_candidate_space": largest,
