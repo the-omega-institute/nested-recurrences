@@ -7,7 +7,7 @@ from itertools import product
 import math
 import sys
 
-from conway_explore import generate
+from conway_explore import brent_generate, generate
 from five_window_check import all_cycles, canonical_cycle, fibonacci_values
 
 
@@ -32,6 +32,62 @@ def candidate_sets(sequence, anchor, lower_anchor, child_anchor,
 
 def is_contiguous(values):
     return list(values) == list(range(values[0], values[-1] + 1))
+
+
+def seed_fiber(sets, profile, alpha):
+    result = []
+    for seed in sets[0]:
+        word = [seed]
+        for position, parameter in enumerate(alpha):
+            next_split = parameter - profile[word[-1]]
+            if next_split not in sets[(position + 1) % len(sets)]:
+                break
+            word.append(next_split)
+        if len(word) == len(sets) + 1 and word[-1] == seed:
+            result.append(tuple(word[:-1]))
+    return result
+
+
+def higher_order_seed_witness():
+    index = 7739
+    order = 20
+    sequence, _, _, _ = generate(index)
+    assert sequence == brent_generate(index)
+    fibonacci = fibonacci_values(index + 1)
+    anchor, lower, child, child_lower = [fibonacci[order - shift]
+                                        for shift in range(1, 5)]
+    offsets = (498, 512, 500, 503, 513)
+    for position, offset in enumerate(offsets):
+        assert index - sequence[anchor + offset] == anchor + offsets[(position + 1) % 5]
+    sets = candidate_sets(sequence, anchor, lower, child, child_lower, offsets)
+    profile = {split: sequence[lower + split] - child
+               for values in sets for split in values}
+    alpha = (605, 678, 576, 520, 518)
+    words = seed_fiber(sets, profile, alpha)
+    assert words == [(255, 368, 344, 255, 283), (260, 364, 341, 258, 274)]
+    delta = tuple(right - left for left, right in zip(*words))
+    profile_delta = tuple(profile[right] - profile[left]
+                          for left, right in zip(*words))
+    assert all(delta[(position + 1) % 5] == -profile_delta[position]
+               for position in range(5))
+    negative = sum(difference * value < 0
+                   for difference, value in zip(delta, profile_delta))
+    assert negative % 2 == 1
+    assert math.prod(profile_delta) == -math.prod(delta)
+    assert words[0][0] % 5 == words[1][0] % 5
+    return {
+        "index": index,
+        "order": order,
+        "cycle_offsets": list(offsets),
+        "alpha": list(alpha),
+        "complete_fiber": [list(word) for word in words],
+        "seed_candidates_checked": len(sets[0]),
+        "split_difference": list(delta),
+        "profile_difference": list(profile_delta),
+        "negative_secants": negative,
+        "same_seed_mod5": True,
+        "scope": "Complete fiber for this fixed alpha and these five candidate sets; a counterexample to global alpha injectivity and to the r_0 mod 5 refinement.",
+    }
 
 
 def affine_rank(matrix):
@@ -74,6 +130,7 @@ def main():
     affine_beta_features = []
     affine_both_parameter_features = []
     alpha_image_counts = []
+    selected_seed_reconstructions = 0
     for order in (12, 13, 14):
         anchor = fibonacci[order - 1]
         lower_anchor = fibonacci[order - 2]
@@ -157,6 +214,10 @@ def main():
                     reconstructed_selector_positions += 1
                     reconstructed_parent_transitions += 1
                 affine_parent_features.append(parent_features)
+                profile = {split: sequence[lower_anchor + split] - child_anchor
+                           for values in sets for split in values}
+                assert seed_fiber(sets, profile, alpha_values) == [tuple(recovered)]
+                selected_seed_reconstructions += 1
                 affine_split_features.append([*parent_features[:-1], *recovered, 1])
                 affine_alpha_features.append([*parent_features[:-1], *alpha_values, 1])
                 affine_beta_features.append([*parent_features[:-1], *beta_values, 1])
@@ -170,6 +231,7 @@ def main():
                 })
     largest = max(payloads, key=lambda row: row["cartesian_candidate_count"])
     assert len(payloads) == 13
+    assert selected_seed_reconstructions == 13
     assert parent_rows == 65
     assert ambiguous_rows == 57
     assert max(candidate_lengths) == 29
@@ -214,6 +276,12 @@ def main():
             "formula": "alpha_i = r_(i+1) + P_(k-2)(r_i)",
             "qualification": "Exact finite injectivity over every public row-local Cartesian product; alpha is a lossless reparameterization of the five selectors on this certificate, not a global theorem."
         },
+        "seed_reconstruction": {
+            "selected_public_fibers_checked": selected_seed_reconstructions,
+            "formula": "r_(i+1) = alpha_i - P_(k-2)(r_i)",
+            "qualification": "Given alpha and the lower profiles, one seed determines the complete selector word; uniqueness of the seed is a separate condition.",
+        },
+        "higher_order_seed_witness": higher_order_seed_witness(),
         "affine_parameter_rank": {
             "payload_rows": len(payloads),
             "parent_features": "(t, five offsets, five nonnegative defects, 1)",

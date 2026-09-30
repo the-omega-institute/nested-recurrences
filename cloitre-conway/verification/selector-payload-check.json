@@ -36,6 +36,63 @@
     "formula": "alpha_i = r_(i+1) + P_(k-2)(r_i)",
     "qualification": "Exact finite injectivity over every public row-local Cartesian product; alpha is a lossless reparameterization of the five selectors on this certificate, not a global theorem."
   },
+  "seed_reconstruction": {
+    "selected_public_fibers_checked": 13,
+    "formula": "r_(i+1) = alpha_i - P_(k-2)(r_i)",
+    "qualification": "Given alpha and the lower profiles, one seed determines the complete selector word; uniqueness of the seed is a separate condition."
+  },
+  "higher_order_seed_witness": {
+    "index": 7739,
+    "order": 20,
+    "cycle_offsets": [
+      498,
+      512,
+      500,
+      503,
+      513
+    ],
+    "alpha": [
+      605,
+      678,
+      576,
+      520,
+      518
+    ],
+    "complete_fiber": [
+      [
+        255,
+        368,
+        344,
+        255,
+        283
+      ],
+      [
+        260,
+        364,
+        341,
+        258,
+        274
+      ]
+    ],
+    "seed_candidates_checked": 20,
+    "split_difference": [
+      5,
+      -4,
+      -3,
+      3,
+      -9
+    ],
+    "profile_difference": [
+      4,
+      3,
+      -3,
+      9,
+      -5
+    ],
+    "negative_secants": 1,
+    "same_seed_mod5": true,
+    "scope": "Complete fiber for this fixed alpha and these five candidate sets; a counterexample to global alpha injectivity and to the r_0 mod 5 refinement."
+  },
   "affine_parameter_rank": {
     "payload_rows": 13,
     "parent_features": "(t, five offsets, five nonnegative defects, 1)",

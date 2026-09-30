@@ -622,3 +622,85 @@ future constraints on the two lower five-windows. It also recovers all 65
 numeric child splits from their ordinals and rechecks all 65 parent transitions,
 so the ordinal representation is sufficient for the audited recursive
 certificate.
+
+### Seed reconstruction and the remaining branch information
+
+There is a sharper inverse description once the `alpha` tuple is given. Fix
+the parent word, candidate sets `R_i` and lower profiles. For a window of
+length `p`, allow a profile `H_i` at each position and write
+
+```text
+alpha_i = r_(i+1) + H_i(r_i),   i mod p.
+```
+
+For C, `p=5` and every `H_i` is `P_(k-2)`. Given one seed `r_0`, the entire
+word is forced by
+
+```text
+r_(i+1) = alpha_i - H_i(r_i).
+```
+
+Retain the seed exactly when each generated value belongs to the corresponding
+`R_i` and the last value equals `r_0`. This gives a bijection between the
+admissible seeds and the complete fiber of `alpha`. Thus an inverse search
+needs at most `|R_0|` seeds, rather than `|R_0|*...*|R_(p-1)|` independent
+combinations. Starting from another position gives the analogous bound, so
+the fiber size is at most `min_i |R_i|`.
+
+This identifies the exact *conditional* branch budget. If the largest fiber
+in the context has size `M`, any fixed-width label that recovers the word from
+`alpha` and that context needs at least `ceil(log_2 M)` bits; that many bits
+suffice by storing the ordinal of the seed in the sorted admissible-seed set.
+The lower bound is the pigeonhole principle, and the inverse recurrence proves
+sufficiency. The candidate sets and profiles remain part of the context. This
+does not reduce the five affine `alpha` coordinates to one coordinate, and it
+does not prove that `M` stays bounded as the Fibonacci order grows.
+
+Odd windows also impose a useful obstruction to collisions. Suppose two
+distinct words `r` and `s` have the same `alpha`, and put
+
+```text
+delta_i = s_i-r_i,
+h_i = H_i(s_i)-H_i(r_i).
+```
+
+Subtracting the two inverse recurrences gives `delta_(i+1)=-h_i`. No
+`delta_i` can vanish: equality at one position forces equality at all following
+positions and hence around the full window. Therefore all secants
+`h_i/delta_i` are defined and nonzero, and multiplication yields
+
+```text
+product_i (h_i/delta_i) = (-1)^p.
+```
+
+For odd `p`, an odd number of these profile secants must be negative. In
+particular, if every `H_i` is nondecreasing on its candidate set, `alpha` is
+injective. A nontrivial odd-window fiber must cross a descending profile
+branch somewhere. For even `p`, the product is positive; monotonicity alone
+does not force injectivity. This distinguishes the five-window inverse from
+Campbell's period-two interface, where the proved parity/domain endpoint
+templates supply additional information.
+
+A compact C witness shows that a simple fixed residue is insufficient. At
+`n=7739`, order `20`, the cycle offsets are `(498,512,500,503,513)`. The
+complete fiber of `alpha=(605,678,576,520,518)` consists of
+
+```text
+(255,368,344,255,283)
+(260,364,341,258,274).
+```
+
+Their differences are `delta=(5,-4,-3,3,-9)` and
+`h=(4,3,-3,9,-5)`, with exactly one negative secant. The two seeds have the
+same residue modulo `5`. Hence neither `alpha` alone nor `(alpha,r_0 mod 5)`
+is a globally lossless code. One fiber ordinal bit does distinguish these two
+words after this particular `alpha` and its profiles are fixed. The maintained
+[selector verifier](verification/selector_payload_check.py) tests all 20 seed
+candidates to establish that the displayed fiber is complete, checks both
+independent sequence evaluators, and recovers the 13 public selected words by
+the same seed procedure.
+
+The remaining family question is now precise: can descending profile branches
+be controlled across Fibonacci orders so that admissible seeds admit a bounded,
+arithmetically defined label? A finite collection of small fibers alone does
+not prove such a label or recursive closure.
