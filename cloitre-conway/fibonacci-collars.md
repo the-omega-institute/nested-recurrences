@@ -681,6 +681,22 @@ does not force injectivity. This distinguishes the five-window inverse from
 Campbell's period-two interface, where the proved parity/domain endpoint
 templates supply additional information.
 
+More generally, suppose `R_i` is covered by `b_i` subsets on each of which
+`H_i` is nondecreasing. For an odd window, fix one such subset at every
+position. Two words in the same alpha fiber cannot both follow this subset
+itinerary, since all their secants would then be nonnegative. Therefore each
+itinerary contains at most one word and
+
+```text
+|fiber(alpha)| <= b_0 * ... * b_(p-1).
+```
+
+A branch itinerary and alpha consequently suffice for inverse reconstruction.
+This is a conditional branch-cover theorem, valid for arbitrary candidate
+sets; it does not assert that C has a uniform bound on the `b_i`. Finding such
+profile covers would turn a family-specific branch description into a bound
+on the conditional selector budget.
+
 A compact C witness shows that a simple fixed residue is insufficient. At
 `n=7739`, order `20`, the cycle offsets are `(498,512,500,503,513)`. The
 complete fiber of `alpha=(605,678,576,520,518)` consists of
