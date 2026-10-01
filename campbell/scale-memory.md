@@ -6,7 +6,9 @@ This note proves a finite-horizon lower bound for autonomous recognition
 in canonical Fibonacci five-window encoding, using the
 [proved Campbell formula](note.pdf). It counts control states and excludes
 the size of horizon-specific transition tables. Supplied clocks are a
-separate resource. No corresponding Cloitre graph lower bound is established.
+separate resource. The
+[Cloitre counterpart](../cloitre-conway/five-window-closure.md#autonomous-memory-of-the-actual-top-plateau-diagnostic)
+now gives an actual-C cap diagnostic and a full-graph state lower bound.
 See the [Conway interface](../cloitre-conway/five-window-closure.md) for the
 cross-family closure question.
 
@@ -199,8 +201,8 @@ states. A proposed minimum additional five-window payload must therefore
 declare whether these scale, position and contextual resources are free.
 Campbell's short period/parity certificate does not pay their cost in FIB;
 its native ternary representation does not have this scale obstruction.
-No corresponding quantitative lower bound for Cloitre's complete graph
-is established here.
+The Cloitre counterpart obtains an actual full-graph lower bound from its
+moving top plateau. A matching upper bound for that graph remains open.
 
 The maintained closure checker verifies the canonical window/Horner
 correspondence, the exact Campbell level set on a finite prefix, and the

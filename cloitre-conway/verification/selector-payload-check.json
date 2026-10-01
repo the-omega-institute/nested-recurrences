@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_sha256": "6fd96c6e49eab9eddd61cba9c90e268903a76f287cd761819a77ddeb2590efc4",
+  "source_sha256": "e3ce5f7951df63940f959fdc03e565fcb6827568dd9e6008fac4b89a489db018",
   "scope": "Exact public three-block selector audit, recursive nonautonomous window descent and conserved conditional seed-label budgets. Row-local Cartesian decompositions remain distinct from actual selected splits and their proof costs.",
   "period_five_payloads": 13,
   "parent_rows": 65,
@@ -4922,6 +4922,18 @@
           "saturated_width": 32,
           "positive_collar_checks": 350,
           "negative_collar_checks": 105,
+          "moving_plateau_violation": {
+            "order": 26,
+            "gap": 15,
+            "index": 121378,
+            "extension_value": 75025,
+            "actual_value": 75024,
+            "split": 75016,
+            "child_gaps": [
+              9,
+              6
+            ]
+          },
           "knee_seed_orders": [
             23,
             24
@@ -5022,6 +5034,18 @@
           "saturated_width": 32,
           "positive_collar_checks": 318,
           "negative_collar_checks": 104,
+          "moving_plateau_violation": {
+            "order": 27,
+            "gap": 16,
+            "index": 196402,
+            "extension_value": 121393,
+            "actual_value": 121392,
+            "split": 121383,
+            "child_gaps": [
+              10,
+              6
+            ]
+          },
           "knee_seed_orders": [
             24,
             25
@@ -5084,8 +5108,64 @@
           ]
         }
       ],
+      "moving_plateau_exclusion_cutoff_orders_inclusive": [
+        26,
+        90
+      ],
+      "moving_plateau_exclusion_arithmetic_witnesses": [
+        {
+          "cutoff_order": 26,
+          "index": 196402,
+          "gap": 16,
+          "child_gaps": [
+            10,
+            6
+          ],
+          "minimum_actual_seed_width": 13
+        },
+        {
+          "cutoff_order": 30,
+          "index": 1346251,
+          "gap": 18,
+          "child_gaps": [
+            11,
+            7
+          ],
+          "minimum_actual_seed_width": 16
+        },
+        {
+          "cutoff_order": 40,
+          "index": 165580116,
+          "gap": 25,
+          "child_gaps": [
+            15,
+            10
+          ],
+          "minimum_actual_seed_width": 23
+        },
+        {
+          "cutoff_order": 60,
+          "index": 2504730781923,
+          "gap": 38,
+          "child_gaps": [
+            23,
+            15
+          ],
+          "minimum_actual_seed_width": 36
+        },
+        {
+          "cutoff_order": 90,
+          "index": 4660046610375530251,
+          "gap": 58,
+          "child_gaps": [
+            36,
+            22
+          ],
+          "minimum_actual_seed_width": 56
+        }
+      ],
       "upper_envelope": "15225/22877 for N>=16384; any certified actual C envelope is inherited when F_(J-2) is beyond its threshold",
-      "scope": "Written infinite extensions agree with arbitrarily late actual prefixes, have G/cap/zero-set/saturation/fixed-collar structure but positive knee defect density and nonconvergent ratios. Numeric cases J25/J26 corroborate through2^20; huge knee values follow exact arithmetic. These are not the actual nested C sequence."
+      "scope": "Written infinite extensions agree with arbitrarily late actual prefixes, have G/cap/zero-set/saturation/eventual-fixed-collar structure but positive knee defect density and nonconvergent ratios. The new exact moving top-plateau law excludes every cutoff J>=26 at the first subsequent complete block; arithmetic checks through order90 corroborate that infinite exclusion. Numeric cases J25/J26 corroborate through2^20. These are not the actual nested C sequence; excluding this counterfamily does not prove uniform dispersion."
     },
     "uniform_bounds": {
       "knee": "lambda_j(F_(j-2)) >= ceil(F_(j-3)/3) once F_j+F_(j-2)>=16384",

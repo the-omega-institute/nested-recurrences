@@ -1,6 +1,6 @@
 {
-  "status": "Exact two-collar and single-negative-seed premises, boundary readout and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "04b5d10924704727a8937d2da7b160b050f64fee6cce003799bf68b6f9eacc80",
+  "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
+  "source_sha256": "04c92bbb551666fb3b5bc3d8db9876f73373eb650676569e8059e08b18520bcf",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -2920,7 +2920,7 @@
     ],
     "growing_linear_width": "L_j=32+2*floor((j-23)/6)+indicator((j-23 mod6)>=4)",
     "growing_saturated_width": "W_j=max(32,G(L_j))",
-    "scope": "General offset induction from the already certified0..32 collar and a necessary defect-persistence/phase rule. Finite Boolean paths are exhaustive for the rule envelope, not reverse-complete actual C histories. Every fixed positive width eventually has a proved exact collar; arbitrary negative widths and global ratio convergence remain open. Additional independent numerical checks stay within the previously published2^20 range, while the infinite conclusion comes from the extinction proof."
+    "scope": "General offset induction from the already certified0..32 collar and a necessary defect-persistence/phase rule. Finite Boolean paths are exhaustive for the rule envelope, not reverse-complete actual C histories. Every fixed positive width eventually has a proved exact collar; the separate moving-negative-plateau theorem supplies all fixed negative widths. Global ratio convergence remains open. Additional independent numerical checks stay within the previously published2^20 range, while the infinite conclusion comes from the extinction proof."
   },
   "negative_fibonacci_boundary": {
     "abstract_gaps_inclusive": [
@@ -3927,9 +3927,165 @@
           "negative_width": 17
         }
       ],
-      "scope": "Complete adjacent-gap cycle/readout envelope, exact parity-trace quotient and clock obstruction are general proofs with supplied flat lower profiles and amplitude. Three/two states count envelope parity continuations, not actual-C graph memory or numeric adjacent defects. Conditional widening requires the actual lower-endpoint entrance to be avoided; finite top suffixes and entrances do not prove this universal premise. Zero adjacent defects are allowed. A perpetual boundary copy would force recurring path-witnessed cap holes. No global limit/dispersion or Lean claim."
+      "scope": "Complete adjacent-gap cycle/readout envelope, exact parity-trace quotient and clock obstruction are general proofs with supplied flat lower profiles and amplitude. Three/two states count envelope parity continuations, not actual-C graph memory or numeric adjacent defects. Zero adjacent defects are allowed in the envelope. The separate moving-plateau induction establishes actual top contiguity and resolves its entrance premise; the qualified actual first boundary has unit amplitude and adjacent defect one. No global limit/dispersion or Lean claim."
     },
-    "scope": "Single-negative-seed propagation and first-boundary copy-or-contract/readout-phase proofs are general. Seeds reuse the independently agreeing F30+34 full-orbit/Brent prefix. Finite observations p=1,q=0,entrance flag1 and width growth are not uniform laws; arbitrary negative widths, full recursive minimum, dispersion and convergence remain open. Conditional phase-state minima exclude supplied context and its certification cost."
+    "moving_negative_plateau": {
+      "base_order": 10,
+      "base_gaps_inclusive": [
+        0,
+        21
+      ],
+      "base_defect_profile": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        3,
+        4,
+        6,
+        5,
+        6,
+        8,
+        9,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "width_three_seed_order": 9,
+      "width_three_seed_values": [
+        21,
+        21,
+        21,
+        21
+      ],
+      "unique_scalar_seed_indices_inclusive": [
+        31,
+        55
+      ],
+      "independently_literal_checked_through": 55,
+      "base_literal_updates": 981,
+      "abstract_widths_inclusive": [
+        3,
+        12
+      ],
+      "abstract_extra_gaps_inclusive": [
+        2,
+        8
+      ],
+      "abstract_shelf_profiles": 59130,
+      "abstract_periodic_readouts": 148500,
+      "actual_complete_block_orders_inclusive": [
+        6,
+        30
+      ],
+      "actual_block_vertices": 832060,
+      "actual_selected_fixed_or_boundary_rows": 233,
+      "actual_closed_arithmetic_rows": 227,
+      "new_two_cycle_endpoints": [
+        {
+          "order": 24,
+          "gap": 13,
+          "index": 46355,
+          "selected_split": 28645,
+          "period": 2,
+          "first_child_gap": 12,
+          "second_child_gap": 1
+        },
+        {
+          "order": 26,
+          "gap": 14,
+          "index": 121379,
+          "selected_split": 75012,
+          "period": 2,
+          "first_child_gap": 13,
+          "second_child_gap": 1
+        },
+        {
+          "order": 30,
+          "gap": 17,
+          "index": 832023,
+          "selected_split": 514213,
+          "period": 2,
+          "first_child_gap": 16,
+          "second_child_gap": 1
+        }
+      ],
+      "actual_moving_five_window_rows": 100,
+      "arithmetic_five_window": {
+        "anchor_order": 30,
+        "gaps": [
+          0,
+          1,
+          8,
+          16,
+          17
+        ],
+        "shifts": [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "parent_parameters": [
+          514228,
+          514221,
+          514213,
+          514212,
+          514229
+        ],
+        "first_parameters": [
+          317810,
+          317803,
+          317795,
+          317795,
+          317811
+        ],
+        "second_parameters": [
+          196418,
+          196418,
+          196418,
+          196417,
+          196418
+        ],
+        "total_natural_defect": 606923,
+        "residual_selector_labels": 0
+      },
+      "width_formula": "L_k=floor(2*k/3)-3, k>=6",
+      "exact_tail_threshold_formula": "max(6,ceil(3*(v+3)/2))",
+      "threshold_examples": [
+        {
+          "gap": 17,
+          "first_exact_order_at_least_six": 30
+        },
+        {
+          "gap": 18,
+          "first_exact_order_at_least_six": 32
+        },
+        {
+          "gap": 32,
+          "first_exact_order_at_least_six": 53
+        },
+        {
+          "gap": 100,
+          "first_exact_order_at_least_six": 155
+        },
+        {
+          "gap": 1000,
+          "first_exact_order_at_least_six": 1505
+        }
+      ],
+      "scope": "Simultaneous top-suffix/shelf-barrier induction and boundary depth parity prove the exact moving negative plateau for actual C. Small seeds are literal/full-orbit/Brent premises; larger blocks and abstract graphs corroborate the written proof. A freshly added zero endpoint has a proper two-cycle, so scalar exactness does not imply a fixed inner cycle. Arithmetic child gaps close the moving plateau with supplied order/gap, excluding finite base-table and scale/context costs. No complete actual-C interface, wide-arch dispersion, global limit or Lean claim."
+    },
+    "scope": "Single-negative-seed propagation and first-boundary copy-or-contract/readout-phase proofs are general. Earlier scalar seeds reuse the independently agreeing F30+34 full-orbit/Brent prefix. The separate small-seed moving-plateau induction now proves all fixed negative widths, top contiguity and the unit-amplitude actual boundary rule. Full recursive minimum, dispersion and global convergence remain open. Conditional phase-state minima exclude supplied context and its certification cost."
   },
   "five_pattern_interaction": {
     "patterns": [

@@ -26,8 +26,8 @@ beyond parity.
    nearby cycle classification, and ratio convergence within sublinear-width
    neighborhoods of Fibonacci indices.
 3. **[Exact collars and phases](exact-collars.md).** Wider exact bands,
-   single-seed negative propagation and its two-state boundary interface,
-   the adjacent-gap parity envelope and conditional widening criterion,
+   the exact moving negative plateau and its arithmetic recursive closure,
+   the boundary phase and adjacent-gap parity envelope,
    saturation, the prescribed positive-collar phase, and eventual linearity
    at every fixed positive offset.
 
@@ -53,7 +53,7 @@ Choose the topic you need; there is no need to read every note in order.
 | Can candidate cycles be reconstructed and qualified? | [Inverse reconstruction](inverse-reconstruction.md) | Reflection-window equations |
 | How much information is shared between recursive rows? | [Recursive descent](recursive-descent.md) | Inverse reconstruction |
 | What would prove a global decay rate, and why are static collars insufficient? | [Martingales and dispersion](dispersion.md) | Profile identity and additive child blocks |
-| Does the same finite encoding work for Campbell's example? | [Campbell scale memory](../campbell/scale-memory.md) | Campbell's explicit formula |
+| How much autonomous memory does canonical five-window recognition require? | [Cloitre cap diagnostic](five-window-closure.md#autonomous-memory-of-the-actual-top-plateau-diagnostic) · [Campbell scale memory](../campbell/scale-memory.md) | Moving negative plateau; Campbell's explicit formula |
 | What arithmetic supports the global induction and shifted-family tests? | [Supporting arithmetic and audit](landing.md) | Foundations |
 
 The local interface theorems state exactly which context is supplied.

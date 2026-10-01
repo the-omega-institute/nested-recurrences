@@ -13,6 +13,7 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 - [A single negative collar seed is sufficient](#a-single-negative-collar-seed-is-sufficient)
 - [Large natural-block defects with no residual selector labels](#large-natural-block-defects-with-no-residual-selector-labels)
 - [The first negative boundary has an exact two-state interface](#the-first-negative-boundary-has-an-exact-two-state-interface)
+- [Exact moving negative plateau and arithmetic closure](#exact-moving-negative-plateau-and-arithmetic-closure)
 - [Adjacent-gap parity closure and the entrance condition](#adjacent-gap-parity-closure-and-the-entrance-condition)
 - [The prescribed basin and phase in a positive collar](#the-prescribed-basin-and-phase-in-a-positive-collar)
 - [A saturated lower barrier and the exclusion of nearby proper cycles](#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)
@@ -88,8 +89,9 @@ is not needed for the universal proof.
 
 This two-seed theorem alone does not prove that suitable seeds exist for every
 width. The growing-positive-collar theorem below establishes their existence
-for every positive width. The single-seed result below extends the certified
-negative width to 17; arbitrary negative widths remain open.
+for every positive width. The single-seed result below extends the initial
+certified negative width to17; the moving-plateau induction then proves
+the exact growing negative width and all fixed negative offsets.
 These neighborhoods do not control Fibonacci-block
 centers or settle full ratio convergence.
 
@@ -290,8 +292,8 @@ be no repeated contraction or reawakening after the first update.
 formula for h>=K+2, p=Q_(h-1)(v)<v and the order h-2 is already flat at
 that smaller gap p, so q=Q_(h-2)(p)=0. The formula gives the displayed rule.
 If the defect becomes zero, it completes a width-v seed and stays zero.
-QED. The corollary does not bound the erasure order or rule out perpetual
-copying in the actual recurrence.
+QED. This corollary alone does not bound erasure. The moving-plateau theorem
+below supplies the actual boundary profile and excludes perpetual copying.
 
 **Prescribed phase without a full transient counter.** Let tau be the first
 entrance time into [A-v,A], d=C(F_j-v-1), and define the entrance flag
@@ -339,15 +341,207 @@ it is not an additional independent stored label. A path certificate can
 establish the flag within the proved logarithmic capture bound. Its profile
 queries and validation cost are separate resources.
 
-This does not prove eventual extinction at every negative gap. Unlike the
+This local theorem alone does not prove extinction at every negative gap. Unlike the
 positive boundary, the exact depth reads the larger gap v+1:
 d=A-Q_j(v+1). Its parity and the entrance flag still require actual sequence
-information beyond the flat smaller-gap premise. Finite checks find p=1,
-q=0, and entrance flag 1 in the 24 nonzero boundary contexts through order30;
-these are observations, not uniform laws. The complete minimum interface
+information beyond the flat smaller-gap premise. The moving-plateau induction
+below proves the actual unit-amplitude boundary, zero transfer, entrance
+flag1 and exact depth parity. The 24 nonzero boundary contexts through
+order30 corroborate those laws. The complete minimum interface
 away from qualified collars, uniform dispersion, and full convergence remain
 open. [Recorded evidence](verification/collar-check.json) separates these
 finite checks from the general propagation and boundary proofs.
+
+### Exact moving negative plateau and arithmetic closure
+
+The entrance premise can be proved by propagating top-plateau contiguity
+together with a defect upper barrier. No monotonicity of the positive
+defects is required. For example the finite base below has consecutive
+positive defects6 and5.
+
+**Moving-plateau theorem.** Put
+
+$$
+L_k=\lfloor2k/3\rfloor-3.
+$$
+
+For every k>=6, throughout the full closed block F_(k-1)<=n<=F_k,
+
+$$
+\boxed{C(n)=F_{k-1}\quad\Longleftrightarrow\quad F_k-L_k\le n\le F_k.}
+$$
+
+For k>=7, its positive defects also satisfy the shelf barrier
+
+$$
+1\le Q_k(r)\le\max(1,r-L_k-1)
+\qquad(L_k<r\le F_{k-2}). \tag{N.1}
+$$
+
+Consequently every fixed negative gap v is exact from the explicit order
+
+$$
+K_-(v)=\max\bigl(6,\lceil3(v+3)/2\rceil\bigr).
+$$
+
+**Finite base.** A width3 negative seed is flat at order9:
+C(31)=C(32)=C(33)=C(34)=21. At order10 the full-block gap profile is
+
+```text
+Q_10(0..21) =
+0,0,0,0,1,1,1,1,2,2,3,4,6,5,6,8,9,9,10,11,12,13.
+```
+
+It has top width3 and satisfies (N.1). The infinite induction uses only
+these25 distinct scalar values at indices31..55 in addition to the
+established global golden bounds, capture and cycle-entry theorem.
+Literal evaluation, full-orbit evaluation and Brent evaluation agree
+through55. The same small prefix checks the stated widths at orders6..9
+and their shelf barriers at orders7..9. Single-seed propagation makes
+all lower-child gaps0..3 flat at every order at least9.
+
+**Induction step.** Let k>=11 and assume the preceding full-block plateau
+is contiguous with width L=L_(k-1), and obeys (N.1). Its size gives
+L+2<F_(k-3). Write A=F_(k-1), B=F_(k-2), and n=F_k-v,
+with 0<=v<=F_(k-2).
+Intersected capture puts any periodic split at A-r, with
+
+$$
+0\le r\le\min(v,F_{k-3}),\qquad
+0\le q=v-r\le F_{k-4}.
+$$
+
+These are the full natural child blocks. In gap coordinates the map is
+r -> v-Q_(k-1)(r), and the actual scalar defect is
+
+$$
+Q_k(v)=Q_{k-1}(r)+Q_{k-2}(q). \tag{N.2}
+$$
+
+First consider every v>=L+2 in the current full block. At any captured
+gap r>L the shelf bound gives
+
+$$
+v-Q_{k-1}(r)\ge
+v-\max(1,r-L-1)\ge L+1.
+$$
+
+A gap r<=L maps to v. If v exceeds the preceding natural block, that
+image cannot be periodic. Otherwise all its subsequent periodic iterates
+remain above L by the displayed inequality, so cannot return to r<=L.
+Thus every cycle excludes the preceding top plateau. It also excludes
+gap v: a predecessor of v would require zero preceding defect, hence a
+gap at most L. Every selected periodic gap therefore satisfies
+
+$$
+L+1\le r\le v-1,\qquad q\ge1.
+$$
+
+The first term of (N.2) is positive. All these current gaps have positive
+defect, so there can be no top-plateau holes beyond the next boundary.
+For r>=L+2, the shelf bound and the anchor-drop bound give
+
+$$
+Q_k(v)\le(r-L-1)+(q-1)=v-L-2.
+$$
+
+For r=L+1 the first defect is exactly1. If q=1 the lower defect is0.
+If q>=2 the flat lower gaps0..3 and the anchor-drop bound give
+Q_(k-2)(q)<=q-2: this is immediate for q=2,3, and follows from
+floor(2q/3)<=q-2 for q>=4. Hence
+
+$$
+Q_k(L+2)=1,\qquad
+1\le Q_k(v)\le v-L-2\quad(v\ge L+3). \tag{N.3}
+$$
+
+Now let v=L+1. The preceding profile is flat below v and has defect1
+at v, so its unique captured cycle is {A-v,A-v+1}. The preceding
+top plateau starts at A-L. No exterior x<A-v has C(x)=B: within the
+preceding block this follows from contiguity, and below that block the
+upper cap is strictly smaller than B. Thus the first capture cannot
+occur at A-v. Its even entrance time and entrance flag1 follow from
+the boundary phase theorem.
+
+The already established adjacent value in (N.3) gives the exact depth
+
+$$
+d=C(F_k-v-1)=A-Q_k(v+1)=A-1.
+$$
+
+The copy phase occurs exactly when d is odd, equivalently when A is
+even, or k=1 mod3. Its defect is1; the other phase has defect0.
+The smaller gaps0..L remain flat by single-seed propagation. Therefore
+
+$$
+L_k=L+\mathbf1_{\{k\not\equiv1\pmod3\}}.
+$$
+
+Starting at L_10=3 this is exactly floor(2k/3)-3. When the width stays L,
+(N.3) and the boundary defect1 imply the new shelf barrier. When it
+increases to L+1, (N.3) gives defect1 at its new first nonzero gap and
+the stronger bound v-(L+1)-1 thereafter. This closes the simultaneous
+induction for contiguity, width and barrier. The size condition holds
+at k=11 and persists because the width grows by at most one per order.
+QED.
+
+**Actual selected split and recursive closure.** For k>=11 put
+L=L_(k-1). At every 0<=v<=L the unique cycle is the fixed point A-v.
+At v=L+1 it is the proper two-cycle {A-v,A-v+1}, with selected split
+
+$$
+g=
+\begin{cases}
+A-v,&k\equiv1\pmod3,\\
+A-v+1,&k\not\equiv1\pmod3.
+\end{cases}
+$$
+
+In particular a newly added exact-value endpoint has a proper two-cycle;
+scalar exactness does not make that inner orbit a fixed point.
+
+For every gap in the actual plateau0<=v<=L_k, set
+delta=1 when v=L_(k-1)+1 and delta=0 otherwise. Its child gaps are
+
+$$
+r=v-\delta,\qquad q=\delta,
+$$
+
+at anchor orders k-1 and k-2. They satisfy r<=L_(k-1) and
+q<=L_(k-2). Thus the whole moving negative plateau is closed under
+actual arithmetic descent, stopping at orders9/10. For any row word
+of length five whose gaps lie in this plateau, every child selector and
+its boundary shift follow from the supplied order and gap word.
+Zero residual basin, phase or child-selector labels suffice; the empty
+label is the exact conditional minimum. The finite boundary table,
+order/gap encoding and certification costs remain separate resources.
+This does not give a minimum interface in the intervening wide arches.
+
+In natural-block coordinates, take h=k-1 and a cyclic five-row gap word
+v_i. Put d_i=delta(v_i), u_i=F_(h-1)-v_i. Its parent parameter is
+A_i=F_h-v_(i+1). The child offsets and parameters are explicitly
+
+$$
+\begin{aligned}
+\rho_i&=F_{h-2}-v_i+d_i,&\sigma_i&=F_{h-3}-d_i,\\
+\alpha_i&=F_{h-1}-v_{i+1}+d_{i+1},&
+\beta_i&=F_{h-2}-d_{i+1}.
+\end{aligned}
+$$
+
+Their sum is A_i. The first and second child profiles are constant at
+F_(h-3) and F_(h-4), respectively, so these formulas certify the whole
+row-indexed descent. At k=30, gaps(0,1,8,16,17) include the newly added
+two-cycle endpoint and have total natural defect606923; the five selectors
+still need zero residual labels with their context supplied.
+
+The checker exhausts shelf-profile functional graphs and scalar upper
+readouts, rechecks the small premises literally, and checks all complete
+blocks and arithmetic selected rows through order30 with the independently
+agreeing832074-term prefix. The infinite conclusion comes from the induction,
+not from extrapolating the observed widths. This establishes the actual
+entrance premise in the next section; its larger abstract parity envelope
+remains useful for separating conditional state counts from actual histories.
 
 ### Adjacent-gap parity closure and the entrance condition
 
@@ -488,7 +682,8 @@ $$
 Equivalently, the conditional exact negative width grows at least as
 17+floor((k-M)/6). The domain condition holds at the width18 base and
 continues to hold as each six-order increment increases Fibonacci size
-faster than the gap. The universal entrance premise is still open.
+faster than the gap. The moving-plateau theorem above proves this entrance
+premise for actual C and supplies the stronger exact width floor(2k/3)-3.
 
 **What perpetual copying would require.** Without assuming this premise,
 a perpetually surviving gap-v defect must have an entrance flag0 at least
@@ -508,12 +703,12 @@ least1/5 (at least1/4 for p>1). Proving global top-plateau contiguity would
 exclude these holes and is one sufficient route. The weaker path-based
 entrance property, or a suitable bound on their recurrence, also suffices.
 
-Complete finite blocks through order30 have contiguous top plateaus, and
-all checked nonzero boundary entrances have flag1. Neither observation
-establishes the universal entrance property. The envelope theorem and state
-minima are proved; arbitrary negative-width extinction and the full actual-C
-recursive minimum remain open. None of these fixed-width results supplies
-the uniform dispersion estimate in wide arches.
+The preceding moving-plateau induction proves actual top contiguity,
+the entrance property and every fixed negative width. Its qualified first
+boundary has p=R=1, so the general envelope's three classes are not a minimum
+for those actual histories. Complete finite blocks through order30 and
+nonzero boundary entrances corroborate the proof. The full actual-C recursive
+minimum remains open, as does uniform dispersion in wide arches.
 
 ### The prescribed basin and phase in a positive collar
 
@@ -884,9 +1079,9 @@ L_j=32+2\left\lfloor\frac{j-23}{6}\right\rfloor
 $$
 
 In particular, every finite positive width R eventually has two consecutive
-exact seed collars, with the previously certified negative width 12.
-This answers the positive-width seed-existence question. It does not
-establish arbitrary negative widths or full ratio convergence.
+exact seed collars. The moving-plateau theorem supplies all negative widths.
+This answers fixed-width seed existence on both sides; full ratio convergence
+remains open.
 
 **Growing actual selector domain.** Put W_j=max(32,G(L_j)), using the
 ordinary Hofstadter G. The whole closed natural profile obeys
