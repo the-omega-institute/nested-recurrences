@@ -388,7 +388,8 @@ This gives a larger infinite domain, still of width O(k) at F_k;
 it is not a uniform inequality over the interiors of whole blocks.
 
 This proof connects arithmetic recursive closure to Benoît Cloitre's
-dispersion route. In the extended family every complementary gap is at most4, so the
+dispersion route. In the extended family every complementary gap is at most4,
+so the
 proportional-split cancellation of M cannot occur. In wider blocks,
 large complementary gaps can approach that cancellation ratio; controlling
 their accumulated variance still requires new actual-profile restrictions.
