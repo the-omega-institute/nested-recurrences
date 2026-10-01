@@ -1,6 +1,7 @@
 """Corroborate the proved Fibonacci collar consequences by exact computation."""
 
 import bisect
+from functools import lru_cache
 import hashlib
 from itertools import product
 import json
@@ -519,6 +520,136 @@ def saturated_profile_audit(sequence, periods, splits, fibonacci):
                 scope='General two-scale saturation induction plus a minimum/maximum cycle argument. The36 extra seeds and earlier exact collar seeds are finite premises; all-start and selected-cycle checks are corroboration. The extended endpoint rule proves actual basin and phase on offsets1..32, with possible odd entry at the lower endpoint when t=32. Recursive nonautonomous windows in0..32 have arithmetic splits, but the spatial period bound applies only to autonomous constant-parameter cycles. No wider-arch phase classification or full minimum closure theorem is claimed.')
 
 
+def negative_adjacent_transitions(amplitude, adjacent):
+    if amplitude == 1:
+        return {1} if adjacent == 1 else {adjacent, 0, 1}
+    return {0, 1, amplitude} if adjacent == 1 else {0, adjacent}
+
+
+def parity_envelope_partition(transitions):
+    classes = {adjacent: adjacent % 2 for adjacent in transitions}
+    while True:
+        signatures = {adjacent: (adjacent % 2, tuple(sorted({classes[following]
+                                                            for following in successors})))
+                      for adjacent, successors in transitions.items()}
+        labels = {signature: label for label, signature in enumerate(sorted(set(signatures.values())))}
+        refined = {adjacent: labels[signature] for adjacent, signature in signatures.items()}
+        if all((classes[first] == classes[second]) == (refined[first] == refined[second])
+               for first in transitions for second in transitions):
+            return refined
+        classes = refined
+
+
+def parity_clock_longest_path(transitions, positive_only=False):
+    @lru_cache(None)
+    def continuation(phase, adjacent):
+        following_phase = (phase + 1) % 3
+        paths = [continuation(following_phase, following)
+                 for following in sorted(transitions[adjacent])
+                 if following % 2 == int(following_phase == 1)
+                 and (not positive_only or following > 0)]
+        longest = max(paths, key=len, default=())
+        return ((phase, adjacent),) + longest
+    paths = [continuation(phase, adjacent) for phase in range(3) for adjacent in transitions
+             if adjacent % 2 == int(phase == 1) and (not positive_only or adjacent > 0)]
+    return max(paths, key=len)
+
+
+def negative_adjacent_gap_audit(sequence, fibonacci):
+    amplitude_contexts = 0
+    profile_contexts = 0
+    partition_counts = set()
+    maximum_survival = {1: 0, 2: 0}
+    maximum_positive_survival = 0
+    for gap in range(3, 65):
+        width = gap + 1
+        cap = 2 * width // 3
+        assert cap < gap
+        for amplitude in range(1, 2 * gap // 3 + 1):
+            transitions = {}
+            for adjacent in range(cap + 1):
+                profile = [0] * gap + [amplitude, adjacent]
+                cycles = capped_profile_cycles(profile, width)
+                assert all(width - point < gap for cycle in cycles for point in cycle)
+                actual_readouts = {profile[point] for cycle in cycles for point in cycle}
+                expected = negative_adjacent_transitions(amplitude, adjacent)
+                assert actual_readouts == expected
+                transitions[adjacent] = actual_readouts
+                profile_contexts += 1
+            classes = parity_envelope_partition(transitions)
+            expected_classes = {adjacent: (0 if adjacent % 2 == 0 else 1 if adjacent == 1 else 2)
+                                if amplitude == 1 else adjacent % 2 for adjacent in transitions}
+            assert all((classes[first] == classes[second])
+                       == (expected_classes[first] == expected_classes[second])
+                       for first in transitions for second in transitions)
+            count = len(set(classes.values()))
+            assert count == (3 if amplitude == 1 and cap >= 3 else 2)
+            partition_counts.add((amplitude == 1, count))
+            trace = parity_clock_longest_path(transitions)
+            positive_trace = parity_clock_longest_path(transitions, positive_only=True)
+            bound = 4 if amplitude == 1 else 3
+            assert len(trace) <= bound and len(positive_trace) <= 3
+            maximum_survival[1 if amplitude == 1 else 2] = max(
+                maximum_survival[1 if amplitude == 1 else 2], len(trace))
+            maximum_positive_survival = max(maximum_positive_survival, len(positive_trace))
+            amplitude_contexts += 1
+    assert maximum_survival == {1: 4, 2: 3} and maximum_positive_survival == 3
+    sharp_unit_trace = parity_clock_longest_path({adjacent: negative_adjacent_transitions(1, adjacent)
+                                                for adjacent in range(4)})
+    sharp_larger_trace = parity_clock_longest_path({adjacent: negative_adjacent_transitions(2, adjacent)
+                                                  for adjacent in range(4)})
+    assert len(sharp_unit_trace) == 4 and len(sharp_larger_trace) == 3
+    actual_rows = []
+    for order in range(7, 31):
+        for gap in range(3, min(129, fibonacci[order - 3])):
+            if not all(sequence[fibonacci[order - 1] - smaller] == fibonacci[order - 2]
+                       for smaller in range(gap)):
+                continue
+            amplitude = fibonacci[order - 2] - sequence[fibonacci[order - 1] - gap]
+            if not amplitude:
+                continue
+            adjacent = fibonacci[order - 2] - sequence[fibonacci[order - 1] - gap - 1]
+            assert 0 <= adjacent < gap and 0 < amplitude < gap
+            if not all(sequence[fibonacci[order - 2] - smaller] == fibonacci[order - 3]
+                       for smaller in {1, amplitude, adjacent}):
+                continue
+            index = fibonacci[order] - gap - 1
+            next_adjacent = fibonacci[order - 1] - sequence[index]
+            assert next_adjacent in negative_adjacent_transitions(amplitude, adjacent)
+            trajectory, transient, period = full_orbit(sequence, index)
+            profile = [0] * gap + [amplitude, adjacent]
+            expected_cycles = {frozenset(cycle) for cycle in capped_profile_cycles(profile, gap + 1)}
+            actual_cycle = frozenset(fibonacci[order - 1] - point for point in trajectory[transient:])
+            assert actual_cycle in expected_cycles
+            actual_rows.append(dict(order=order, gap=gap, adjacent_index=index, amplitude=amplitude,
+                                    preceding_adjacent_defect=adjacent, next_adjacent_defect=next_adjacent,
+                                    selected_adjacent_period=period))
+    suffix_rows = []
+    suffix_vertices = 0
+    for order in range(5, 31):
+        top = fibonacci[order - 1]
+        stop = fibonacci[order]
+        first = next(index for index in range(top, stop + 1) if sequence[index] == top)
+        assert all(sequence[index] == top for index in range(first, stop + 1))
+        assert all(sequence[index] != top for index in range(top, first))
+        suffix_vertices += stop - top + 1
+        if order >= 6:
+            assert stop - first == 2 * order // 3 - 3
+        suffix_rows.append(dict(order=order, first_top_index=first, top_value=top, negative_width=stop - first))
+    return dict(abstract_gaps_inclusive=[3, 64], amplitude_contexts=amplitude_contexts,
+                capped_profile_contexts=profile_contexts,
+                parity_partition_types=[list(row) for row in sorted(partition_counts)],
+                unit_amplitude_maximum_clock_survival=maximum_survival[1],
+                larger_amplitude_maximum_clock_survival=maximum_survival[2],
+                positive_adjacent_only_maximum_clock_survival=maximum_positive_survival,
+                sharp_unit_amplitude_trace=[list(row) for row in sharp_unit_trace],
+                sharp_larger_amplitude_trace=[list(row) for row in sharp_larger_trace],
+                actual_adjacent_contexts=actual_rows,
+                complete_top_suffix_orders_inclusive=[5, 30], top_suffix_vertices=suffix_vertices,
+                top_suffix_rows=suffix_rows,
+                scope='Complete adjacent-gap cycle/readout envelope, exact parity-trace quotient and clock obstruction are general proofs with supplied flat lower profiles and amplitude. Three/two states count envelope parity continuations, not actual-C graph memory or numeric adjacent defects. Conditional widening requires the actual lower-endpoint entrance to be avoided; finite top suffixes and entrances do not prove this universal premise. Zero adjacent defects are allowed. A perpetual boundary copy would force recurring path-witnessed cap holes. No global limit/dispersion or Lean claim.')
+
+
 def negative_collar_boundary_audit(sequence, splits, fibonacci):
     abstract_contexts = 0
     abstract_start_depth_checks = 0
@@ -689,6 +820,7 @@ def negative_collar_boundary_audit(sequence, splits, fibonacci):
                 arithmetic_selected_five_window=arithmetic_window_witness,
                 nonzero_actual_boundary_rows=positive_rows,
                 literal_witnesses=literal_witnesses, literal_endpoint_updates=literal_updates,
+                adjacent_gap_parity=negative_adjacent_gap_audit(sequence, fibonacci),
                 scope='Single-negative-seed propagation and first-boundary copy-or-contract/readout-phase proofs are general. Seeds reuse the independently agreeing F30+34 full-orbit/Brent prefix. Finite observations p=1,q=0,entrance flag1 and width growth are not uniform laws; arbitrary negative widths, full recursive minimum, dispersion and convergence remain open. Conditional phase-state minima exclude supplied context and its certification cost.')
 
 

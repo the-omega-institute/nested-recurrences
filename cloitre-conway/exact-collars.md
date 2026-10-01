@@ -13,6 +13,7 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 - [A single negative collar seed is sufficient](#a-single-negative-collar-seed-is-sufficient)
 - [Large natural-block defects with no residual selector labels](#large-natural-block-defects-with-no-residual-selector-labels)
 - [The first negative boundary has an exact two-state interface](#the-first-negative-boundary-has-an-exact-two-state-interface)
+- [Adjacent-gap parity closure and the entrance condition](#adjacent-gap-parity-closure-and-the-entrance-condition)
 - [The prescribed basin and phase in a positive collar](#the-prescribed-basin-and-phase-in-a-positive-collar)
 - [A saturated lower barrier and the exclusion of nearby proper cycles](#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)
 - [Every fixed positive offset eventually becomes linear](#every-fixed-positive-offset-eventually-becomes-linear)
@@ -347,6 +348,172 @@ these are observations, not uniform laws. The complete minimum interface
 away from qualified collars, uniform dispersion, and full convergence remain
 open. [Recorded evidence](verification/collar-check.json) separates these
 finite checks from the general propagation and boundary proofs.
+
+### Adjacent-gap parity closure and the entrance condition
+
+The larger-gap depth read can be closed as a finite **parity envelope**.
+This envelope allows every periodic phase at the adjacent physical index;
+it does not assume that all those choices are realized by actual C.
+It gives a precise sufficient entrance condition for negative-collar widening.
+
+**Adjacent-gap theorem.** Let j>=7 and 3<=v with w=v+1<F_(j-3).
+At n=F_j-w, let the preceding profile Q_(j-1) be flat at gaps r<v,
+with defect p>0 at v and defect R at w. Suppose Q_(j-2) is flat at
+all gaps below v. The anchor-drop bounds give
+
+$$
+p\le\lfloor2v/3\rfloor<v,\qquad
+0\le R\le\lfloor2(v+1)/3\rfloor<v.
+$$
+
+In gap coordinates the adjacent inner map is
+
+$$
+r\longmapsto
+\begin{cases}
+w,&r<v,\\
+w-p,&r=v,\\
+w-R,&r=w.
+\end{cases}
+$$
+
+Its complete cycle and scalar-readout classification is:
+
+| p | R | Cycles in gap coordinates | Possible next adjacent defect |
+|---|---|---|---|
+| 1 | 0 | Fixed points v and w | 0 or 1 |
+| 1 | 1 | Fixed point v | 1 |
+| 1 | >1 | Fixed point v; two-cycle {w,w-R} | 0, 1, or R |
+| >1 | 0 | Fixed point w | 0 |
+| >1 | 1 | Three-cycle {w,v,w-p} | 0, 1, or p |
+| >1 | >1 | Two-cycle {w,w-R} | 0 or R |
+
+**Proof.** Every gap below v maps to w. The two exceptional images therefore
+give exactly the displayed cycles, including every starting state. All their
+complementary child gaps are among 0,1,p,R and are below v, so the lower
+child contributes zero defect. The scalar readout is just the preceding
+profile's defect at the selected periodic gap, giving the last column. QED.
+
+**Minimum observable states for this envelope.** Fix p and the allowed
+range 0<=R<=floor(2(v+1)/3). Observe current parity and all possible future
+parity words under the last column, without supplying the Fibonacci clock.
+For p=1 and v>=4, the exact equivalence classes are
+
+$$
+\text{even }R,\qquad R=1,\qquad\text{odd }R\ge3.
+$$
+
+Their class transitions are, respectively,
+
+```text
+even -> even or one
+one -> one
+other odd -> other odd, even, or one.
+```
+
+The even class includes zero. Every permitted class transition lifts from
+every concrete member of its source class, so this quotient is reverse
+complete for parity traces. The two odd classes have the same current
+parity but differ after one step: an odd R>=3 can produce even parity,
+whereas R=1 cannot. Even and odd classes differ immediately. Thus three
+observable states are sufficient and necessary. When v=3 there is no
+admissible odd R>=3, leaving two states.
+
+For p>1, all even R are equivalent and all odd R are equivalent. Their
+transitions are `even -> even` and `odd -> odd or even`, with every edge
+lifting from every source member, including R=1. The distinct current
+parities prove the exact two-state minimum. These minima concern this
+transition envelope, not the smaller, still unclassified set of actual-C
+histories or the exact numerical adjacent defect.
+
+**Clock obstruction.** Suppose a width-(v-1) negative seed is known at
+order K>=6, v<F_(K-2). While the gap-v defect has not erased after K+1,
+the absorbing-tail result gives one constant amplitude p. Write
+R_h=Q_h(v+1). At every h>=K+2 the adjacent-gap theorem applies, since
+the smaller lower gaps have propagated from the seed. If the entrance
+flag for the gap-v orbit is 1, persistence requires its copy phase and
+therefore an odd depth. Since d=F_(h-1)-R_h, this forces
+
+$$
+R_h\bmod2=
+\begin{cases}
+1,&h\equiv1\pmod3,\\
+0,&h\equiv0\text{ or }2\pmod3.
+\end{cases}
+$$
+
+The envelope cannot support more than four consecutive values with these
+parities when p=1, or more than three when p>1.
+
+**Proof.** For p=1, an even R may remain even or move to the absorbing
+state R=1. An odd R>=3 may remain odd, move to an even value, or move to1.
+The longest clock-compatible history starts at residue1 with odd R>=3,
+moves to an even value at residue2, stays even at residue0, then moves
+to1 at residue1. The next required even parity is impossible. Starting
+in either other class, or at another clock residue, shortens this bound.
+The concrete envelope path `3,0,0,1` shows the four-value bound is sharp
+when v>=4. For p>1, once R becomes even it stays even. There can be at
+most one odd segment followed by an even segment; the clock allows at
+most three successive values. The path `1,0,0` at residues1,2,0 attains
+that bound. These are envelope witnesses, not actual-C orbit claims. QED.
+
+With the clock supplied and persistence under consideration, parity is
+already fixed. Only p=1 at residue1 may need the additional Boolean
+qualification `R=1` to distinguish future envelope continuations. The two
+odd classes have different next-step possibilities, so that Boolean cannot
+be omitted there when both classes are allowed. For p>1 no extra amplitude
+class is needed for this parity-survival diagnostic. This is separate from
+the combined phase bit needed for the current scalar readout.
+
+**Conditional widening theorem.** Under the seed and domain conditions above,
+suppose the entrance flag is 1 whenever the gap-v boundary has a nonzero
+preceding defect, for all orders h>=K+2. Then Q_h(v)=0 for every h>=K+6.
+If the amplitude after the first update is greater than1, K+5 suffices.
+
+**Proof.** If the defect survives through K+6, it has one positive amplitude
+at all five orders K+2,...,K+6. All five entrance flags are1, so the
+clock obstruction forbids their five successive adjacent parities. Erasure
+must occur by K+6, and the resulting complete width-v seed is absorbing.
+For amplitude greater than1, four successive values already contradict the
+three-value bound. QED.
+
+If this entrance property holds for every qualified boundary from some
+order H onward, set M=max(30,H). The proved width17 base and induction give
+
+$$
+C(F_k-v)=F_{k-1}\quad
+\text{for }v\ge17,\quad k\ge M+6(v-17).
+$$
+
+Equivalently, the conditional exact negative width grows at least as
+17+floor((k-M)/6). The domain condition holds at the width18 base and
+continues to hold as each six-order increment increases Fibonacci size
+faster than the gap. The universal entrance premise is still open.
+
+**What perpetual copying would require.** Without assuming this premise,
+a perpetually surviving gap-v defect must have an entrance flag0 at least
+once in every five consecutive orders above K+1; if p>1, every four orders
+suffice. Each such flag gives an actual cap-hole witness: the preceding
+exterior point x<A-v satisfies
+
+$$
+C(x)=B=C(A),\qquad C(A-v)=B-p<B,
+\qquad A=F_{h-1},\ B=F_{h-2}.
+$$
+
+Indeed its next image is exactly the lower entrance endpoint A-v, forcing
+the displayed equality. Thus a failure of fixed-width extinction needs
+recurring holes on the prescribed entrance paths, with order density at
+least1/5 (at least1/4 for p>1). Proving global top-plateau contiguity would
+exclude these holes and is one sufficient route. The weaker path-based
+entrance property, or a suitable bound on their recurrence, also suffices.
+
+Complete finite blocks through order30 have contiguous top plateaus, and
+all checked nonzero boundary entrances have flag1. Neither observation
+establishes the universal entrance property. The envelope theorem and state
+minima are proved; arbitrary negative-width extinction and the full actual-C
+recursive minimum remain open. None of these fixed-width results supplies
+the uniform dispersion estimate in wide arches.
 
 ### The prescribed basin and phase in a positive collar
 
