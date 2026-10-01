@@ -1559,6 +1559,152 @@ already provide uniform branch and prescribed-phase information; the new
 C theorem establishes the recursive coordinate class, while that comparable
 compression remains open.
 
+### Sharing selectors at repeated physical indices
+
+Recursive windows have an additional exact restriction that costs no new
+coordinate: equal parent offsets refer to the same physical integer and must
+have the same selected split. If `u_i=u_h`, then `r_i=r_h` and `q_i=q_h`.
+The independent Cartesian domains used for the earlier gap theorem can
+therefore be too large after descent. This restriction uses the deterministic
+definition of C; it does not require an orbit-phase calculation.
+
+Write `c_i` for the physical-index label of row i. Within one profile order
+these labels can simply be the offsets u_i. Assume equal labels have the same
+candidate domain R_c and lower profile H_c, and restrict words by
+`r_i=r_h` whenever `c_i=c_h`. The alpha map is still
+
+```text
+alpha_i = r_(i+1) + H_(c_i)(r_i).
+```
+
+Its parameter entries also agree whenever the ordered parent-input pairs
+`(c_i,c_(i+1))` agree. Store one alpha value per distinct directed pair and
+recover the full word from the already supplied parent labels. This removes
+duplicate parameter entries as well as duplicate selector choices; no edge
+labels need to be added. A nonconstant binary five-window has at most four
+such pairs, while a constant window has one. This is exact sharing, not a
+claim that the remaining parameter entries are all independent or minimal.
+
+**Shared-row gap theorem.** An alpha collision between two such words exists
+if and only if there is a nonzero closed gap word d_i with:
+
+1. Each edge `d_i -> d_(i+1)` has a witness r,s in R_(c_i) satisfying
+   `s-r=d_i` and `H_(c_i)(r)-H_(c_i)(s)=d_(i+1)`.
+2. Whenever `c_i=c_h`, both `d_i=d_h` and
+   `d_(i+1)=d_(h+1)` hold, with indices read modulo p.
+
+**Proof.** Subtract the alpha equations of a collision and put
+`d_i=s_i-r_i`. A zero gap would propagate around the entire window, so all
+gaps are nonzero. Sharing both words gives the equality of incoming gaps;
+sharing their profile values gives equality of outgoing gaps. This proves
+necessity. Conversely, choose one edge-witness pair for each physical label.
+Both its gap and its outgoing gap are identical at every occurrence of that
+label, so reuse this pair at all its rows. The two resulting words obey the
+sharing restriction and have equal alpha at every row by the edge equation.
+They are distinct. This proves reverse completeness. QED.
+
+Thus the original signed-gap alphabet is sufficient: impose equality on the
+gap positions for repeated rows and their successors. Independent edge
+witnesses must be replaced by one witness per physical label. Keeping only
+one unconstrained path per endpoint can lose this condition; the checker
+retains the assignments to the equality classes while constructing paths.
+The existing odd-window bound `0<|d_i|<=floor(E/2)` remains valid.
+
+**Finite sign obstruction.** Form equality classes of row positions by merging
+both i with h and i+1 with h+1 whenever `c_i=c_h`. For each row whose profile
+is nondecreasing on its candidates, join its incoming and outgoing classes
+by an undirected edge. If this graph is not bipartite, the shared alpha map
+is injective. There are at most p vertices, hence at most five for a five-window,
+with no defect-budget bound needed.
+
+**Proof.** In a collision every class has a nonzero gap. A nondecreasing
+profile makes the signs of its incoming and outgoing gaps opposite:
+`d_(i+1)=H_c(r_i)-H_c(s_i)` has the opposite sign to `d_i=s_i-r_i`;
+zero outgoing gaps are impossible. The gap signs would therefore give a
+two-colouring of the graph. A self-loop or any odd undirected cycle
+contradicts that colouring. QED.
+
+This is a sufficient criterion, not an exact replacement for the numerical
+gap relations when the sign graph is bipartite. It can prove inverse
+uniqueness with only some candidate profiles nondecreasing, because sharing
+identifies gap positions. Profile-domain verification and the parameter word
+are still supplied context. The small qualitative graph does not give a
+complete finite-state classification of C or a selected-orbit certificate.
+
+The independent candidate count now falls from `product_i |R_(c_i)|` to
+`product_c |R_c|`. Given alpha and the same supplied profile/candidate context,
+the exact conditional seed budget uses the maximum fiber on this restricted
+domain. Empty or singleton fibers need no inverse branch label. These are
+conditional inverse statements: they do not certify that a surviving word
+has the prescribed basin and phase. Sharing between different tree nodes,
+including alternative Fibonacci representations of a boundary index, also
+requires additional consistency; this theorem handles one aligned window.
+
+**Two-label theorem.** For an odd cyclic window with at most two distinct
+physical labels, a shared-row collision exists exactly when the sets
+
+$$
+S_c=\{s-r\ne0:r,s\in R_c,\ H_c(r)-H_c(s)=s-r\}
+$$
+
+have a common element. In particular the alpha map is injective if the
+profile is nondecreasing on the candidate domain of either label. A parent
+defect of zero or one supplies that monotonicity under the existing integer
+defect boxes.
+
+**Proof.** With one label all row gaps already agree. With two labels let
+their shared gaps be d_a and d_b. If either label is followed by both labels,
+the outgoing-gap equality forces d_a=d_b. If each label instead has a unique
+successor, the cyclic word containing both labels must alternate; it would
+have even length. Thus odd length again forces every gap to be the same d.
+Every row then needs a self-loop edge `d -> d`, exactly the common-element
+condition. The shared-row gap theorem proves sufficiency. A nondecreasing
+profile cannot supply a self-loop at a nonzero gap. Finally, when
+`0<=r-H_c(r)<=1`, two increasing integer candidates differ in their profile
+values by at least `(s-r)-1>=0`. QED.
+
+This removes a genuine part of the sufficient seed budget at n=196. Its
+order-nine child has offsets `(16,11,11,16,11)` and defects `(4,1,1,4,1)`.
+Both distinct offsets have four candidates. Independent rows would allow
+`4^5=1024` words, while sharing allows only `4^2=16`. The two-label theorem
+proves injectivity without enumeration because offset 11 has defect one.
+Given its first-child alpha `(15,15,16,15,16)`, the reconstructed word is
+`(9,8,8,9,8)`. The defect-residue rule allowed a three-bit sufficient seed
+label (`E=11`, modulus 6); no seed label is needed in this shared domain.
+The three distinct directed parent pairs `(16,11),(11,11),(11,16)` carry
+alpha values `(15,15,16)`, which reconstruct the five entries. The supplied
+parameter data shrink from five entries to three; their validity proof is
+still required.
+
+The [maintained checker](verification/selector_payload_check.py) tests all
+52 equality partitions of a five-window against complete consistent alpha
+fibers for small shared capped profiles. It also descends every prescribed
+period-five orbit through n=4096: 147 roots give 12,208 distinct internal
+contexts, of which 11,534 have repeated rows. Sharing reduces 437 raw
+collision pairs to three pairs in two contexts. These are finite counts,
+not a universal separation theorem.
+The sign obstruction certifies 11,404 of the repeated-row contexts, including
+299 with a descending candidate row, so requiring every profile restriction
+to be nondecreasing would miss some certified cases. The two-label
+small-defect rule applies to 2,398 contexts. Across all 12,208 internal
+contexts, directed-pair sharing recovers 61,040 alpha entries from 52,479
+stored entries; this counts scalar entries, not their bit cost or minimum
+proof size.
+
+For a concrete remaining collision, an order-fourteen descendant of n=2012
+has offsets `(101,104,101,99,106)`. The two words
+
+```text
+(51,56,51,64,49),       (53,54,53,62,48)
+```
+
+both respect repeated rows and have alpha `(102,101,110,104,97)`. They
+remain valid profile-value decompositions but neither is the actual word,
+which is `(53,54,53,53,55)`. At offset 99 the only periodic candidate is 53,
+so that local periodicity check excludes both. The distinction is useful:
+sharing is necessary family information and gives exact inverse reductions,
+while periodicity and prescribed selection still have separate roles.
+
 ### A conserved budget for multiscale inverse labels
 
 Defect conservation gives more than termination. Consider the selected

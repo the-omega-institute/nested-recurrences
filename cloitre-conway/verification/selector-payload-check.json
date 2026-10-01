@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_sha256": "5deb2a7ffb800768315f6fe3b9dba07d2a59d8a4594d96377dde033a6215961c",
+  "source_sha256": "3ffe78ff04e3c277251d6e7d4948f439b137a2e2f034e53b9590c890cad377cc",
   "scope": "Exact public three-block selector audit, recursive nonautonomous window descent and conserved conditional seed-label budgets. Row-local Cartesian decompositions remain distinct from actual selected splits and their proof costs.",
   "period_five_payloads": 13,
   "parent_rows": 65,
@@ -178,6 +178,460 @@
     "correct_value": 134,
     "wrong_value_without_alignment": 131,
     "scope": "A stored canonical cycle needs entry alignment. One total selected-phase residue suffices once the prescribed basin and phase certificate are verified."
+  },
+  "shared_physical_selector_consistency": {
+    "prefix_limit": 4096,
+    "distinct_internal_contexts": 12208,
+    "counts": {
+      "binary_small_defect_certificates": 2398,
+      "consistent_collision_contexts": 2,
+      "consistent_collision_fibers": 3,
+      "consistent_collision_pairs": 3,
+      "monotone_sign_certificates": 11404,
+      "parameter_entries_after_edge_sharing": 52479,
+      "parameter_entries_before_sharing": 61040,
+      "raw_collision_contexts": 26,
+      "raw_collision_fibers": 437,
+      "raw_collision_pairs": 437,
+      "repeated_contexts": 11534,
+      "selected_five_roots": 147,
+      "sign_certificates_with_a_descending_candidate_row": 299
+    },
+    "exhaustive_abstract_check": {
+      "partitions": 52,
+      "contexts": 1716,
+      "direct_consistent_words": 142428,
+      "binary_contexts": 528,
+      "scope": "Every five-row equality partition and every shared capped profile on widths zero through three: complete consistent alpha fibers match all constrained gap words, with independently reconstructed collision witnesses. Binary rows reduce exactly to common self-loop gaps."
+    },
+    "witnesses": {
+      "0": {
+        "root_index": 1296,
+        "profile_order": 12,
+        "offsets": [
+          37,
+          48,
+          37,
+          48,
+          46
+        ],
+        "candidate_sets": [
+          [
+            13,
+            14,
+            15,
+            17,
+            26,
+            28,
+            31,
+            33,
+            34
+          ],
+          [
+            20,
+            26,
+            27,
+            30,
+            34,
+            39,
+            41
+          ],
+          [
+            13,
+            14,
+            15,
+            17,
+            26,
+            28,
+            31,
+            33,
+            34
+          ],
+          [
+            20,
+            26,
+            27,
+            30,
+            34,
+            39,
+            41
+          ],
+          [
+            20,
+            22,
+            24,
+            25,
+            28,
+            33,
+            34
+          ]
+        ],
+        "alpha": [
+          42,
+          38,
+          43,
+          48,
+          38
+        ],
+        "raw_fiber": [
+          [
+            14,
+            30,
+            15,
+            30,
+            25
+          ],
+          [
+            17,
+            26,
+            17,
+            27,
+            24
+          ]
+        ],
+        "consistent_fiber": [],
+        "periodic_candidates": [
+          [
+            13
+          ],
+          [
+            27
+          ],
+          [
+            13
+          ],
+          [
+            27
+          ],
+          [
+            22,
+            25
+          ]
+        ],
+        "actually_selected_word": [
+          13,
+          27,
+          13,
+          27,
+          22
+        ],
+        "complete_consistent_gap_words": []
+      },
+      "2": {
+        "root_index": 2012,
+        "profile_order": 14,
+        "offsets": [
+          101,
+          104,
+          101,
+          99,
+          106
+        ],
+        "candidate_sets": [
+          [
+            46,
+            50,
+            51,
+            53,
+            56,
+            57,
+            62,
+            77
+          ],
+          [
+            54,
+            56,
+            62,
+            77,
+            80,
+            88
+          ],
+          [
+            46,
+            50,
+            51,
+            53,
+            56,
+            57,
+            62,
+            77
+          ],
+          [
+            47,
+            49,
+            53,
+            62,
+            64
+          ],
+          [
+            48,
+            49,
+            52,
+            55,
+            56,
+            58,
+            63,
+            80,
+            88,
+            89
+          ]
+        ],
+        "alpha": [
+          102,
+          101,
+          110,
+          104,
+          97
+        ],
+        "raw_fiber": [
+          [
+            51,
+            56,
+            51,
+            64,
+            49
+          ],
+          [
+            53,
+            54,
+            53,
+            62,
+            48
+          ]
+        ],
+        "consistent_fiber": [
+          [
+            51,
+            56,
+            51,
+            64,
+            49
+          ],
+          [
+            53,
+            54,
+            53,
+            62,
+            48
+          ]
+        ],
+        "periodic_candidates": [
+          [
+            53
+          ],
+          [
+            54,
+            56
+          ],
+          [
+            53
+          ],
+          [
+            53
+          ],
+          [
+            55,
+            56,
+            58
+          ]
+        ],
+        "actually_selected_word": [
+          53,
+          54,
+          53,
+          53,
+          55
+        ],
+        "complete_consistent_gap_words": [
+          [
+            -2,
+            2,
+            -2,
+            2,
+            1
+          ],
+          [
+            2,
+            -2,
+            2,
+            -2,
+            -1
+          ]
+        ]
+      },
+      "1": {
+        "root_index": 2186,
+        "profile_order": 13,
+        "offsets": [
+          79,
+          82,
+          77,
+          79,
+          87
+        ],
+        "candidate_sets": [
+          [
+            33,
+            37,
+            42,
+            43,
+            44,
+            60,
+            62,
+            66
+          ],
+          [
+            43,
+            45,
+            48,
+            50,
+            51
+          ],
+          [
+            38,
+            41,
+            47,
+            48,
+            50,
+            56
+          ],
+          [
+            33,
+            37,
+            42,
+            43,
+            44,
+            60,
+            62,
+            66
+          ],
+          [
+            40,
+            48,
+            59,
+            60,
+            64,
+            67
+          ]
+        ],
+        "alpha": [
+          84,
+          89,
+          84,
+          100,
+          93
+        ],
+        "raw_fiber": [
+          [
+            42,
+            51,
+            47,
+            42,
+            67
+          ],
+          [
+            44,
+            48,
+            50,
+            43,
+            64
+          ]
+        ],
+        "consistent_fiber": [
+          [
+            42,
+            51,
+            47,
+            42,
+            67
+          ]
+        ],
+        "periodic_candidates": [
+          [
+            42,
+            43
+          ],
+          [
+            43,
+            45
+          ],
+          [
+            38,
+            41
+          ],
+          [
+            42,
+            43
+          ],
+          [
+            48
+          ]
+        ],
+        "actually_selected_word": [
+          42,
+          45,
+          38,
+          42,
+          48
+        ],
+        "complete_consistent_gap_words": []
+      }
+    },
+    "binary_child_at_196": {
+      "profile_order": 9,
+      "offsets": [
+        16,
+        11,
+        11,
+        16,
+        11
+      ],
+      "defects": [
+        4,
+        1,
+        1,
+        4,
+        1
+      ],
+      "first_child_alpha": [
+        15,
+        15,
+        16,
+        15,
+        16
+      ],
+      "distinct_parent_edges": [
+        [
+          16,
+          11
+        ],
+        [
+          11,
+          11
+        ],
+        [
+          11,
+          16
+        ]
+      ],
+      "edge_parameters": [
+        15,
+        15,
+        16
+      ],
+      "actual_first_child_offsets": [
+        9,
+        8,
+        8,
+        9,
+        8
+      ],
+      "independent_cartesian_words": 1024,
+      "consistent_words": 16,
+      "defect_residue_sufficient_bits": 3,
+      "consistent_inverse_seed_bits": 0
+    },
+    "scope": "Actual recursive descendants of every prescribed period-five orbit through 4096, deduplicated by profile order and aligned offsets. Sharing removes 434 of 437 collision pairs, but three survive in two contexts; none of these counts is an order-uniform theorem or a basin/phase certificate."
   },
   "higher_order_seed_witness": {
     "index": 7739,

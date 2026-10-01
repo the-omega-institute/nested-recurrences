@@ -187,6 +187,268 @@ def minimum_gap_tests(sets, profile, periodic, bound):
     return result
 
 
+def shared_word(word, labels):
+    representatives = {}
+    for label, value in zip(labels, word):
+        if label in representatives and representatives[label] != value:
+            return False
+        representatives[label] = value
+    return True
+
+
+def shared_gap_classes(labels):
+    length = len(labels)
+    classes = list(range(length))
+
+    def representative(position):
+        while classes[position] != position:
+            position = classes[position]
+        return position
+
+    for position in range(length):
+        for earlier in range(position):
+            if labels[position] != labels[earlier]:
+                continue
+            for first, second in ((position, earlier),
+                                  ((position + 1) % length, (earlier + 1) % length)):
+                classes[representative(first)] = representative(second)
+    return tuple(representative(position) for position in range(length))
+
+
+def shared_monotone_obstruction(sets, profile, labels):
+    classes = shared_gap_classes(labels)
+    edges = set()
+    for phase, values in enumerate(sets):
+        if all(profile[first] <= profile[second] for first, second in zip(values, values[1:])):
+            edges.add(tuple(sorted((classes[phase], classes[(phase + 1) % len(labels)]))))
+    neighbours = defaultdict(set)
+    for first, second in edges:
+        neighbours[first].add(second)
+        neighbours[second].add(first)
+    colours = {}
+    for start in neighbours:
+        if start in colours:
+            continue
+        colours[start] = 0
+        stack = [start]
+        while stack:
+            point = stack.pop()
+            for following in neighbours[point]:
+                if following in colours:
+                    if colours[following] == colours[point]:
+                        return True
+                else:
+                    colours[following] = 1 - colours[point]
+                    stack.append(following)
+    return False
+
+
+def shared_gap_words(sets, profile, labels, bound):
+    length = len(labels)
+    classes = shared_gap_classes(labels)
+    assert all(sets[position] == sets[earlier]
+               for position in range(length) for earlier in range(position)
+               if labels[position] == labels[earlier])
+    transitions = [gap_transitions(values, profile, bound) for values in sets]
+    result = {}
+
+    def extend(path, assigned):
+        position = len(path) - 1
+        for following in sorted(transitions[position].get(path[-1], ())):
+            if position == length - 1:
+                if following != path[0]:
+                    continue
+                left, right = [], []
+                pairs = {}
+                for phase, values in enumerate(sets):
+                    label = labels[phase]
+                    if label not in pairs:
+                        pairs[label] = next((first, second) for first in values for second in values
+                                            if second - first == path[phase]
+                                            and profile[first] - profile[second]
+                                            == path[(phase + 1) % length])
+                    first, second = pairs[label]
+                    left.append(first)
+                    right.append(second)
+                result[tuple(path)] = (tuple(left), tuple(right))
+                continue
+            group = classes[position + 1]
+            if group in assigned and assigned[group] != following:
+                continue
+            extend((*path, following), {**assigned, group: following})
+
+    for start in sorted(transitions[0]):
+        extend((start,), {classes[0]: start})
+    return result
+
+
+def row_partitions(length):
+    if length == 0:
+        yield ()
+        return
+    for prefix in row_partitions(length - 1):
+        for label in range(max(prefix, default=-1) + 2):
+            yield (*prefix, label)
+
+
+def shared_row_completeness_examples():
+    contexts = 0
+    direct_words = 0
+    binary_contexts = 0
+    patterns = tuple(row_partitions(5))
+    assert len(patterns) == 52
+    for scale in range(4):
+        values = tuple(range(scale + 1))
+        for profile in product(*(range(point + 1) for point in values)):
+            self_gaps = {second - first for first in values for second in values
+                         if first != second and profile[first] - profile[second] == second - first}
+            for labels in patterns:
+                classes = max(labels) + 1
+                images = defaultdict(list)
+                for choices in product(values, repeat=classes):
+                    word = tuple(choices[label] for label in labels)
+                    alpha = tuple(word[(phase + 1) % 5] + profile[word[phase]]
+                                  for phase in range(5))
+                    images[alpha].append(word)
+                    direct_words += 1
+                gaps = set()
+                for words in images.values():
+                    for left, right in combinations(words, 2):
+                        difference = tuple(second - first for first, second in zip(left, right))
+                        gaps.update((difference, tuple(-value for value in difference)))
+                graph = shared_gap_words((values,) * 5, profile, labels, scale)
+                assert set(graph) == gaps
+                if shared_monotone_obstruction((values,) * 5, profile, labels):
+                    assert not graph
+                for left, right in graph.values():
+                    assert shared_word(left, labels) and shared_word(right, labels)
+                    assert tuple(left[(phase + 1) % 5] + profile[left[phase]] for phase in range(5)) == tuple(
+                        right[(phase + 1) % 5] + profile[right[phase]] for phase in range(5))
+                if classes <= 2:
+                    assert set(graph) == {(gap,) * 5 for gap in self_gaps}
+                    binary_contexts += 1
+                contexts += 1
+    return dict(partitions=52, contexts=contexts, direct_consistent_words=direct_words,
+                binary_contexts=binary_contexts,
+                scope='Every five-row equality partition and every shared capped profile on widths zero through three: complete consistent alpha fibers match all constrained gap words, with independently reconstructed collision witnesses. Binary rows reduce exactly to common self-loop gaps.')
+
+
+def shared_selector_audit():
+    limit = 4096
+    sequence, _, periods, selected_splits = generate(limit)
+    assert sequence == brent_generate(limit)
+    fibonacci = fibonacci_values(limit + 1)
+    seen = set()
+    counts = Counter()
+    examples = {}
+    for index in range(3, limit + 1):
+        if periods[index] != 5:
+            continue
+        counts['selected_five_roots'] += 1
+        order = max(height for height, anchor in enumerate(fibonacci) if anchor <= index) - 1
+        trajectory, transient, _ = full_orbit(sequence, index)
+        root = canonical_cycle(tuple(point - fibonacci[order] for point in trajectory[transient:]))
+        stack = [(order, root)]
+        while stack:
+            order, offsets = stack.pop()
+            if order <= 5 or (order, offsets) in seen:
+                continue
+            seen.add((order, offsets))
+            actual = tuple(selected_splits[fibonacci[order] + offset] - fibonacci[order - 1]
+                           for offset in offsets)
+            assert shared_word(actual, offsets)
+            actual_profile = tuple(sequence[fibonacci[order - 1] + split] - fibonacci[order - 2]
+                                   for split in actual)
+            actual_alpha = tuple(actual[(phase + 1) % 5] + actual_profile[phase]
+                                 for phase in range(5))
+            edge_parameters = {}
+            for phase, parameter in enumerate(actual_alpha):
+                edge = (offsets[phase], offsets[(phase + 1) % 5])
+                assert edge_parameters.setdefault(edge, parameter) == parameter
+            counts['parameter_entries_before_sharing'] += 5
+            counts['parameter_entries_after_edge_sharing'] += len(edge_parameters)
+            stack.extend(((order - 1, actual),
+                          (order - 2, tuple(offset - split for offset, split in zip(offsets, actual)))))
+            if len(set(offsets)) == 5:
+                continue
+            sets = candidate_sets(sequence, fibonacci[order], fibonacci[order - 1],
+                                  fibonacci[order - 2], fibonacci[order - 3], offsets)
+            sets = [tuple(split for split in values
+                          if max(0, offset - fibonacci[order - 3]) <= split
+                          <= min(offset, fibonacci[order - 2]))
+                    for offset, values in zip(offsets, sets)]
+            profile = {split: sequence[fibonacci[order - 1] + split] - fibonacci[order - 2]
+                       for split in range(max(offsets) + 1)}
+            defects = tuple(offset - sequence[fibonacci[order] + offset] + fibonacci[order - 1]
+                            for offset in offsets)
+            binary_certificate = len(set(offsets)) <= 2 and min(defects) <= 1
+            counts['binary_small_defect_certificates'] += binary_certificate
+            sign_certificate = shared_monotone_obstruction(sets, profile, offsets)
+            counts['monotone_sign_certificates'] += sign_certificate
+            counts['sign_certificates_with_a_descending_candidate_row'] += sign_certificate and any(
+                profile[first] > profile[second] for values in sets
+                for first, second in zip(values, values[1:]))
+            fibers = alpha_collision_fibers(sets, profile)
+            counts['repeated_contexts'] += 1
+            counts['raw_collision_contexts'] += bool(fibers)
+            counts['raw_collision_fibers'] += len(fibers)
+            counts['raw_collision_pairs'] += sum(math.comb(len(words), 2) for words in fibers.values())
+            shared_context = False
+            for alpha, words in sorted(fibers.items()):
+                retained = [word for word in sorted(words) if shared_word(word, offsets)]
+                if binary_certificate or sign_certificate:
+                    assert len(retained) <= 1
+                counts['consistent_collision_fibers'] += len(retained) > 1
+                counts['consistent_collision_pairs'] += math.comb(len(retained), 2)
+                shared_context |= len(retained) > 1
+                category = str(min(len(retained), 2))
+                if category not in examples:
+                    graph = shared_gap_words(sets, profile, offsets, sum(defects) // 2)
+                    expected_gaps = set()
+                    for collision_words in fibers.values():
+                        consistent = [word for word in collision_words if shared_word(word, offsets)]
+                        for left, right in combinations(consistent, 2):
+                            gap = tuple(second - first for first, second in zip(left, right))
+                            expected_gaps.update((gap, tuple(-value for value in gap)))
+                    assert set(graph) == expected_gaps
+                    periodic = [periodic_profile_candidates(values, profile, offset)
+                                for values, offset in zip(sets, offsets)]
+                    examples[category] = dict(root_index=index, profile_order=order, offsets=list(offsets),
+                                              candidate_sets=[list(values) for values in sets],
+                                              alpha=list(alpha), raw_fiber=[list(word) for word in sorted(words)],
+                                              consistent_fiber=[list(word) for word in retained],
+                                              periodic_candidates=[list(values) for values in periodic],
+                                              actually_selected_word=list(actual),
+                                              complete_consistent_gap_words=[list(word) for word in sorted(graph)])
+            counts['consistent_collision_contexts'] += shared_context
+    assert counts['raw_collision_pairs'] == 437 and counts['consistent_collision_pairs'] == 3
+    assert counts['selected_five_roots'] == 147 and counts['consistent_collision_contexts'] == 2
+    offsets = (16, 11, 11, 16, 11)
+    order = 9
+    sets = candidate_sets(sequence, fibonacci[order], fibonacci[order - 1],
+                          fibonacci[order - 2], fibonacci[order - 3], offsets)
+    sets = [tuple(split for split in values
+                  if max(0, offset - fibonacci[order - 3]) <= split
+                  <= min(offset, fibonacci[order - 2]))
+            for offset, values in zip(offsets, sets)]
+    assert all(len(values) == 4 for values in sets)
+    profile = {split: sequence[fibonacci[order - 1] + split] - fibonacci[order - 2]
+               for split in range(max(offsets) + 1)}
+    assert all(profile[first] <= profile[second] for first, second in zip(sets[1], sets[1][1:]))
+    assert shared_gap_words(sets, profile, offsets, 5) == {}
+    assert seed_fiber(sets, profile, (15, 15, 16, 15, 16)) == [(9, 8, 8, 9, 8)]
+    return dict(prefix_limit=limit, distinct_internal_contexts=len(seen), counts=dict(sorted(counts.items())),
+                exhaustive_abstract_check=shared_row_completeness_examples(), witnesses=examples,
+                binary_child_at_196=dict(profile_order=order, offsets=list(offsets), defects=[4, 1, 1, 4, 1],
+                                         first_child_alpha=[15, 15, 16, 15, 16],
+                                         distinct_parent_edges=[[16, 11], [11, 11], [11, 16]],
+                                         edge_parameters=[15, 15, 16],
+                                         actual_first_child_offsets=[9, 8, 8, 9, 8],
+                                         independent_cartesian_words=1024, consistent_words=16,
+                                         defect_residue_sufficient_bits=3, consistent_inverse_seed_bits=0),
+                scope='Actual recursive descendants of every prescribed period-five orbit through 4096, deduplicated by profile order and aligned offsets. Sharing removes 434 of 437 collision pairs, but three survive in two contexts; none of these counts is an order-uniform theorem or a basin/phase certificate.')
+
+
 def gap_automaton_certificate(sets, profile, periodic, defects, expected):
     bound = sum(defects) // 2
     assert all(0 <= split - profile[split] <= defect
@@ -1336,6 +1598,7 @@ def main():
             "abstract_periodic_collision": abstract_periodic_collision(),
         },
         "phase_alignment_witness": phase_alignment_witness(),
+        "shared_physical_selector_consistency": shared_selector_audit(),
         "higher_order_seed_witness": higher_order_seed_witness(),
         "higher_order_profile_cover_witness": higher_order_cover_witness(),
         "collision_pair_completeness": collision_pair_completeness_examples(),
