@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_sha256": "83650c06084bd960e78d22879e6f617e4b8f75552251ac5d15ec8af449108ce6",
+  "source_sha256": "37ac0728f7b3cae67306395474edd10b00ead0af2154c83b958dbfe2644cb9dc",
   "scope": "Exact public three-block selector audit, recursive nonautonomous window descent and conserved conditional seed-label budgets. Row-local Cartesian decompositions remain distinct from actual selected splits and their proof costs.",
   "period_five_payloads": 13,
   "parent_rows": 65,
@@ -4532,6 +4532,353 @@
         }
       },
       "scope": "Exact four-generation Bellman lower bounds with prescribed-start basin context supplied. Choices are relaxed per occurrence, not an exact globally shared minimum. All bounds are finite; no uniform dispersion theorem is claimed."
+    },
+    "additive_dispersion_policies": {
+      "indices_inclusive": [
+        144,
+        131071
+      ],
+      "positive_defect_roots": 130891,
+      "endpoint_probes": 618019140,
+      "greedy_generations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "greedy_ratio_minima": [
+        {
+          "generations": 1,
+          "defect_power": 2,
+          "index": 125952,
+          "order": 26,
+          "defect": 1662,
+          "split": 77846,
+          "variance": "42164104921/14852025755422949376",
+          "ratio": "42164104921/2586054042718236"
+        },
+        {
+          "generations": 1,
+          "defect_power": 4,
+          "index": 125952,
+          "order": 26,
+          "defect": 1662,
+          "split": 77846,
+          "variance": "42164104921/14852025755422949376",
+          "ratio": "4645051457352564736/49606335160931882511"
+        },
+        {
+          "generations": 2,
+          "defect_power": 2,
+          "index": 4558,
+          "order": 19,
+          "defect": 133,
+          "split": 2822,
+          "variance": "426671580353753/6951041001070653240",
+          "ratio": "3208056995141/44499266205030"
+        },
+        {
+          "generations": 2,
+          "defect_power": 4,
+          "index": 302,
+          "order": 13,
+          "defect": 20,
+          "split": 184,
+          "variance": "7638775/18708494112",
+          "ratio": "6966868351/328204800"
+        },
+        {
+          "generations": 3,
+          "defect_power": 2,
+          "index": 11631,
+          "order": 21,
+          "defect": 251,
+          "split": 7169,
+          "variance": "634159580830651936873265/2792391234803283382697641824",
+          "ratio": "634159580830651936873265/1300437838655748320652384"
+        },
+        {
+          "generations": 3,
+          "defect_power": 4,
+          "index": 326,
+          "order": 13,
+          "defect": 19,
+          "split": 196,
+          "variance": "11399000329/5181176904288",
+          "ratio": "302860039741201/1588355215062"
+        },
+        {
+          "generations": 4,
+          "defect_power": 2,
+          "index": 1384,
+          "order": 16,
+          "defect": 72,
+          "split": 841,
+          "variance": "1261233567928603/395233338602502400",
+          "ratio": "1261233567928603/1069661546553600"
+        },
+        {
+          "generations": 4,
+          "defect_power": 4,
+          "index": 191,
+          "order": 12,
+          "defect": 13,
+          "split": 114,
+          "variance": "219880607/29694074760",
+          "ratio": "8021464423967/23247511560"
+        }
+      ],
+      "finite_greedy_four_step_quadratic_kappa_one_verified": true,
+      "full_domain_audit": {
+        "indices_inclusive": [
+          8,
+          4096
+        ],
+        "admissible_splits": 44425,
+        "optimal_four_step_positive_roots": 3936,
+        "minimum_optimal_quartic_ratio": {
+          "index": 330,
+          "order": 13,
+          "defect": 19,
+          "variance": "8625226/1957472055",
+          "ratio": "6261914076000/15616756393"
+        }
+      },
+      "witnesses": [
+        {
+          "index": 185,
+          "value": 127,
+          "defect": 13,
+          "extreme_candidates": [
+            114,
+            114
+          ],
+          "greedy_split": 114,
+          "child_values": [
+            79,
+            48
+          ],
+          "actual_split": 114,
+          "in_prescribed_cycle": true,
+          "is_periodic": true,
+          "one_step_variance": "2401/277017150",
+          "four_step_variance": "7067608/696444525"
+        },
+        {
+          "index": 191,
+          "value": 131,
+          "defect": 13,
+          "extreme_candidates": [
+            114,
+            118
+          ],
+          "greedy_split": 114,
+          "child_values": [
+            79,
+            52
+          ],
+          "actual_split": 118,
+          "in_prescribed_cycle": false,
+          "is_periodic": false,
+          "one_step_variance": "30899/29111838",
+          "four_step_variance": "219880607/29694074760"
+        },
+        {
+          "index": 3054,
+          "value": 2016,
+          "defect": 128,
+          "extreme_candidates": [
+            1810,
+            1971
+          ],
+          "greedy_split": 1971,
+          "child_values": [
+            1313,
+            703
+          ],
+          "actual_split": 1839,
+          "in_prescribed_cycle": false,
+          "is_periodic": false,
+          "one_step_variance": "1293912841/553032489033",
+          "four_step_variance": "87494729697270092702721751607561/9447906778319218928112399064452120"
+        },
+        {
+          "index": 4590,
+          "value": 2967,
+          "defect": 130,
+          "extreme_candidates": [
+            2726,
+            2931
+          ],
+          "greedy_split": 2726,
+          "child_values": [
+            1737,
+            1230
+          ],
+          "actual_split": 2749,
+          "in_prescribed_cycle": false,
+          "is_periodic": false,
+          "one_step_variance": "53627906929/26763144519600",
+          "four_step_variance": "3473537151501537603444451747/635088451267676991897709078500"
+        },
+        {
+          "index": 5980,
+          "value": 3916,
+          "defect": 220,
+          "extreme_candidates": [
+            3565,
+            3865
+          ],
+          "greedy_split": 3865,
+          "child_values": [
+            2505,
+            1411
+          ],
+          "actual_split": 3595,
+          "in_prescribed_cycle": false,
+          "is_periodic": false,
+          "one_step_variance": "20007819601/11692899831600",
+          "four_step_variance": "33220553881217266581727/5546777830007466091639600"
+        },
+        {
+          "index": 18785,
+          "value": 12001,
+          "defect": 391,
+          "extreme_candidates": [
+            11606,
+            11606
+          ],
+          "greedy_split": 11606,
+          "child_values": [
+            7412,
+            4589
+          ],
+          "actual_split": 11606,
+          "in_prescribed_cycle": true,
+          "is_periodic": true,
+          "one_step_variance": "742460256/4900243575684275",
+          "four_step_variance": "558208107123345302227588959092441/1085878670359628663455749175836271800"
+        },
+        {
+          "index": 125952,
+          "value": 79505,
+          "defect": 1662,
+          "extreme_candidates": [
+            77846,
+            77846
+          ],
+          "greedy_split": 77846,
+          "child_values": [
+            49136,
+            30369
+          ],
+          "actual_split": 77846,
+          "in_prescribed_cycle": true,
+          "is_periodic": true,
+          "one_step_variance": "42164104921/14852025755422949376",
+          "four_step_variance": "12199539139051334265344855976382514942976684693355245827/22535471960852733087673219056165272229462833114852958928896"
+        }
+      ],
+      "upper_cap_unique_split_knees": [
+        {
+          "order": 6,
+          "index": 11,
+          "unique_split": 7
+        },
+        {
+          "order": 7,
+          "index": 18,
+          "unique_split": 11
+        },
+        {
+          "order": 8,
+          "index": 29,
+          "unique_split": 18
+        },
+        {
+          "order": 9,
+          "index": 47,
+          "unique_split": 29
+        },
+        {
+          "order": 10,
+          "index": 76,
+          "unique_split": 47
+        },
+        {
+          "order": 11,
+          "index": 123,
+          "unique_split": 76
+        },
+        {
+          "order": 12,
+          "index": 199,
+          "unique_split": 123
+        },
+        {
+          "order": 13,
+          "index": 322,
+          "unique_split": 199
+        },
+        {
+          "order": 14,
+          "index": 521,
+          "unique_split": 322
+        },
+        {
+          "order": 15,
+          "index": 843,
+          "unique_split": 521
+        },
+        {
+          "order": 16,
+          "index": 1364,
+          "unique_split": 843
+        }
+      ],
+      "upper_cap_maximal_dispersion_counterexamples": [
+        {
+          "order": 20,
+          "index": 9349,
+          "value": 6765,
+          "relative_defect": "987/9349",
+          "maximal_four_step_variance": "10629981149/1677602019445237381188",
+          "quartic_ratio": "929100756980947349/18214918456798542442108068"
+        },
+        {
+          "order": 30,
+          "index": 1149851,
+          "value": 832040,
+          "relative_defect": "121393/1149851",
+          "maximal_four_step_variance": "19777276586493851/714219604750812238566808963974393612",
+          "quartic_ratio": "26148671052027244001512286051/117306805936831496536787004899320101006386412"
+        },
+        {
+          "order": 40,
+          "index": 141422324,
+          "value": 102334155,
+          "relative_defect": "3732588/35355581",
+          "maximal_four_step_variance": "18397791780705087285137/152032553343509981765631527034521729296308446078544",
+          "quartic_ratio": "22997554472498602427795621323137000857/23608090133299959601365026498327856372007891082320069996498944"
+        },
+        {
+          "order": 60,
+          "index": 2139295485799,
+          "value": 1548008755920,
+          "relative_defect": "225851433717/2139295485799",
+          "maximal_four_step_variance": "127366176040721613814872398402190899/55110737147332818396989016155447190662523429186147662377882117214997844845209988",
+          "quartic_ratio": "582902153135729170285591317754255018161340653293812389082499/31331852827751227224487928314053267281058705325313559471387527268997098363888629009930592856579055748"
+        },
+        {
+          "order": 90,
+          "index": 3980154972736918051,
+          "value": 2880067194370816120,
+          "relative_defect": "420196140727489673/3980154972736918051",
+          "maximal_four_step_variance": "820241488582775116459455827251815116549702020850537851/4252464263115686625702753255696978598726223505207381268857446779804031266153448702383372309440692915796423675976512429644412",
+          "quartic_ratio": "12993965131390579506416677421881996053158478268029248579884896838339227364038755130861186451/8368525530392526678872248497127532341173700211672201961126716485663860072883199140052158869441407690501854225885679710221609261733396785020824432425416881692"
+        }
+      ],
+      "scope": "Additive value-preserving policies need neither basin nor prescribed phase. Endpoint monotonicity certifies a greedy local maximum; full Bellman optimization is separate. Finite greedy quadratic support is not a global rate or an actual-selected dispersion theorem. Upper-cap knees refute automatic maximal dispersion from geometric and terminal premises alone."
     },
     "uniform_bounds": {
       "knee": "lambda_j(F_(j-2)) >= ceil(F_(j-3)/3) once F_j+F_(j-2)>=16384",

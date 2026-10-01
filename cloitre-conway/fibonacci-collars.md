@@ -3240,3 +3240,213 @@ all-periodic ratio is2179271359290201381/104713624505000000,
 approximately20.812, at2778. These are minima over the stated finite
 range, not estimates of a uniform constant. They show quantitatively
 why basin qualification strengthens the available lower envelope.
+
+### Additive dispersion policies without orbit qualification
+
+The asymptotic problem permits more freedom than reconstructing the
+original nested recurrence. Once actual C values are established, a
+different value-preserving decomposition tree can prove facts about
+those same values. Its split need not be a periodic point, belong to
+the prescribed basin, or agree with the prescribed depth phase.
+
+At a closed state (j,N), put A=F_(j-1), B=F_(j-2), S=A+B and define
+
+$$
+\mathcal R_j(N)=\{a:\ A\le a\le S,\quad B\le N-a\le A,
+                         \quad C(a)+C(N-a)=C(N)\}.
+$$
+
+This set is nonempty because it contains the actual selected endpoint.
+Every child is strictly smaller than N. Preserve inherited order labels,
+including Fibonacci endpoint aliases, and stop at orders4/5 as before.
+An admissible policy chooses any member of R at each occurrence; it may
+depend on the previous choices and on the remaining horizon.
+
+**Policy martingales.** Under every such policy, choose its two children
+with probabilities a/N,(N-a)/N. Then Z=(C(N)-alpha*N)/N and X=F_j/N
+remain exact martingales, with the same bounded variance budget for X.
+The proof uses only the scalar sum and the Fibonacci anchor sum, not the
+inner dynamics. Even if repeated physical indices use different choices,
+their scalar C value is unchanged, so both conditional identities hold.
+
+Define the standard finite-horizon Bellman maximum
+
+$$
+\mathcal M_0(j,N)=0,
+$$
+
+$$
+\mathcal M_m(j,N)=\max_{a\in\mathcal R_j(N)}
+\left[v(j,N;a)+\frac aN\mathcal M_{m-1}(j-1,a)
+                  +\frac{N-a}{N}\mathcal M_{m-1}(j-2,N-a)\right].
+$$
+
+It is attained and equals the greatest accumulated X variance over
+m-generation admissible occurrence trees. Indeed, after the root
+choice, the two finite subtree optima can be attained independently;
+induction gives the displayed formula. In particular M_m>=actual V_m.
+This upper envelope of possible variance serves a lower-bound criterion
+by selecting a policy that attains it.
+
+**Adaptive dispersion criterion.** Suppose fixed m>=1,q>=1,kappa>0
+and J exist such that every closed actual-value context of order j>=J
+satisfies
+
+$$
+\mathcal M_m(j,N)\ge\kappa
+                   \left(\frac{C(N)-G(N)}N\right)^q.
+$$
+
+Then
+
+$$
+C(n)-\alpha n=O\left(\frac n{(\log n)^{1/q}}\right).
+$$
+
+**Proof.** For a root of order j, use L=floor(j/(4m)) consecutive
+m-generation blocks. At each block start choose an M_m maximizing
+policy, decreasing the remaining horizon along that block. All visited
+orders stay at least floor(j/2), so the inequality applies for large j.
+The X variance budget is at most1. The Z martingale and
+`0<=G(N)-alpha*N<alpha` imply at every block start
+
+$$
+\mathbb E\frac{C(N)-G(N)}N
+\ge Z_0-\frac\alpha{F_{\lfloor j/2\rfloor}}.
+$$
+
+Conditional accumulated variance in that block is its attained M_m.
+Sum over blocks and apply Jensen for q>=1 to obtain
+
+$$
+L\kappa\max\left(Z_0-\frac\alpha{F_{\lfloor j/2\rfloor}},0\right)^q
+\le1.
+$$
+
+Fibonacci growth gives the conclusion. The block policies may be
+time-dependent; conditional martingale identities and orthogonality
+still apply. QED.
+
+For q=4 this is a sufficient route to Cloitre's proposed upper rate
+without proving his actual-selected dispersion inequality. For q=2 it
+would give a stronger square-root logarithmic upper rate, but no uniform
+q=2 or q=4 policy inequality is proved here. A finite greedy experiment
+cannot settle either exponent or the matching maxima lower bound.
+
+**Only extreme value-valid candidates are needed for a local maximum.**
+Let ell=min R_j(N), h=max R_j(N). Then
+
+$$
+\mathcal M_1(j,N)=\max(v(j,N;\ell),v(j,N;h)).
+$$
+
+To prove this, put z=a/N,p=A/S. The variance is
+`(S/N)^2*(z-p)^2/(z*(1-z))`. The derivative of its final factor is
+
+$$
+\frac{(z-p)(p(1-z)+(1-p)z)}{z^2(1-z)^2}.
+$$
+
+The second factor in the numerator is positive for0<z<1. Thus variance
+decreases to its unique minimum at z=p and then increases. Every
+candidate between ell and h has variance at most their maximum, even
+when R is non-contiguous. Choose the larger endpoint variance, breaking
+ties by the larger index, to define a greedy policy. This maximizes
+one-step variance; it need not maximize M_m for m>1.
+
+For certifying a lower bound, even extremality is unnecessary. One
+value-valid geometric split with
+
+$$
+2|AN-Sa|\ge(C(N)-G(N))^2
+$$
+
+already certifies v>=(D/N)^4, since a(N-a)<=N^2/4. More generally a
+factor c on the right certifies kappa=c^2. Thus an existential scalar
+sum, child-block membership and integer mismatch witness can replace
+basin and phase certificates for this asymptotic contract. Proving such
+witnesses uniformly, or providing certified multi-generation policies,
+still requires the actual C profiles. This does not recover the original
+selector or establish the full minimum recursive closure interface.
+
+**Actual policies can leave every inner cycle.** At N=3054 the greedy
+split is1971 instead of the actual1839. Both preserve C(3054)=2016;
+the child values are C(1971)=1313 and C(1083)=703. This alternative is
+not a periodic point of T_3054, as the all-start graph check verifies.
+Its admissibility for this proof rests on the scalar sum and the
+two child blocks. The actual recurrence and its selected endpoint have
+not been redefined.
+
+This freedom is specific to an additive scalar recursion. Campbell's
+sequence has b(5)=2, whereas the four complementary sums b(a)+b(5-a)
+are4,3,3,4. It admits no additive policy at that index. Its ternary
+endpoint/phase templates remain the appropriate cross-family interface;
+the common reflection description alone does not transfer this argument.
+
+**Why maximal dispersion is still an additional premise.** The upper-cap
+family U supplies a stronger obstruction than its rounded tenth-offset
+example. Take the knee N_j=F_j+F_(j-2). Then U(N_j)=F_j and
+write A=F_(j-1), B=F_(j-2), D=F_(j-3), E=F_(j-4), so D+E=B.
+For a geometrically valid split a=A+r, scalar preservation requires
+
+$$
+\min(r,D)+\min(B-r,E)=B=D+E.
+$$
+
+Both terms must attain their caps, forcing r=D. Thus there is exactly
+one admissible split, to N_(j-1)=A+D and N_(j-2)=B+E. Every subsequent
+node is another knee. Its split determinant is
+
+$$
+Ab-Ba=AB-(A+B)D=(-1)^{j-1},
+$$
+
+by the Fibonacci Cassini identity. Every one-step variance is therefore
+1/(N_j^2*N_(j-1)*N_(j-2)). For any fixed m,
+
+$$
+\mathcal M_m^U(j,N_j)=O(F_j^{-4}),\qquad
+\frac{U(N_j)-G(N_j)}{N_j}
+\longrightarrow\frac1{1+\alpha^2}-\alpha>0.
+$$
+
+No admissible policy can repair this family: its choices at every knee
+are forced. It has the known geometric descent and terminal values,
+but violates actual nesting and actual global upper envelopes. Thus
+maximization removes orbit qualification from the *sufficient proof
+contract*, while geometric/terminal data alone still cannot supply the
+required inequality. Further properties of actual C must be used.
+
+**Exact finite policy evidence.** On every one of the130891 positive-defect
+roots144..131071, the greedy policy's four-generation variance satisfies
+
+$$
+V_4^{\mathrm{greedy}}(j,N)\ge\left(\frac{C(N)-G(N)}N\right)^2.
+$$
+
+The finite minimum ratio is1261233567928603/1069661546553600,
+approximately1.17910, at N=1384. Its minimum quartic ratio is
+8021464423967/23247511560, approximately345.046, at191. These are
+exact rational finite statements. The stronger quadratic observation
+motivates checking a q=2 policy criterion alongside q=4; neither is
+a uniform theorem or a proved global rate.
+The three-generation greedy quadratic ratio is below1 at11631
+(approximately0.487651); thus the four-generation kappa1 finite
+observation is not justified by simply shortening the horizon. A
+different constant or policy remains a separate question.
+
+For the one-step greedy maximum, kappa1 already fails at125952:
+R_26(125952)={77846}, D=1662, and the quartic ratio is
+4645051457352564736/49606335160931882511, approximately0.0936383.
+Thus allowing every scalar-valid geometric split does not make a
+one-step kappa1 proof automatic. Further generations materially change
+the finite bound.
+
+Through4096, all44425 scalar-valid geometric splits are enumerated
+independently, checking that the extremal candidates maximize local
+variance. Full four-generation Bellman maxima are computed and dominate
+the greedy variance on all3936 positive-defect roots144..4096.
+The checker also verifies the unique upper-cap knee split through
+order16 and its maximal-variance counterexamples at orders20,30,40,60,90.
+No prescribed-orbit or global-closure theorem is inferred from these
+policy experiments.

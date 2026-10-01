@@ -2268,6 +2268,140 @@ def four_generation_dispersion_audit(sequence, selected_splits, fibonacci):
                 scope='Exact finite support for the proposed actual-C quartic dispersion inequality, not a uniform proof or decay exponent. Rounded proportional upper-cap descent is an explicit geometric counterfamily with nonvanishing relative defect and vanishing four-generation variance; it is not the nested C recurrence.')
 
 
+def additive_policy_audit(sequence, selected_splits, fibonacci):
+    greedy = {}
+    extremes = {}
+    complete_domains = {}
+    probes = 0
+    complete_candidates = 0
+    for index in range(fibonacci[6], len(sequence)):
+        order = bisect_right(fibonacci, index) - 1
+        lower = max(fibonacci[order - 1], index - fibonacci[order - 1])
+        upper = min(fibonacci[order], index - fibonacci[order - 2])
+        left = lower
+        while left <= upper and sequence[left] + sequence[index - left] != sequence[index]:
+            left += 1
+        assert left <= upper
+        right = upper
+        while right >= lower and sequence[right] + sequence[index - right] != sequence[index]:
+            right -= 1
+        assert right >= lower
+        assert left <= selected_splits[index] <= right
+        probes += left - lower + upper - right + 2
+        extremes[index] = left, right
+        greedy[index] = max({left, right}, key=lambda point: (
+            split_variance(order, index, point, fibonacci), point))
+        if index <= 4096:
+            candidates = tuple(point for point in range(lower, upper + 1)
+                               if sequence[point] + sequence[index - point] == sequence[index])
+            assert extremes[index] == (candidates[0], candidates[-1])
+            assert split_variance(order, index, greedy[index], fibonacci) == max(
+                split_variance(order, index, point, fibonacci) for point in candidates)
+            complete_domains[index] = candidates
+            complete_candidates += len(candidates)
+    @lru_cache(None)
+    def policy_variance(order, index, steps, optimal=False):
+        if not steps or order <= 5:
+            return Fraction(0)
+        candidates = complete_domains[index] if optimal else (greedy[index],)
+        assert all(fibonacci[order - 1] <= point <= fibonacci[order]
+                   and fibonacci[order - 2] <= index - point <= fibonacci[order - 1]
+                   and sequence[point] + sequence[index - point] == sequence[index]
+                   for point in candidates)
+        return max(split_variance(order, index, point, fibonacci)
+                   + Fraction(point, index) * policy_variance(order - 1, point, steps - 1, optimal)
+                   + Fraction(index - point, index) * policy_variance(order - 2, index - point, steps - 1, optimal)
+                   for point in candidates)
+    minima = {}
+    tested = 0
+    witnesses = []
+    optimal_roots = 0
+    for index in range(fibonacci[12], len(sequence)):
+        defect = sequence[index] - g_closed(index)
+        if not defect:
+            continue
+        order = bisect_right(fibonacci, index) - 1
+        for steps in (1, 2, 3, 4):
+            total = policy_variance(order, index, steps)
+            for power in (2, 4):
+                ratio = total / Fraction(defect, index) ** power
+                key = steps, power
+                if key not in minima or ratio < Fraction(minima[key]['ratio']):
+                    minima[key] = dict(index=index, order=order, defect=defect,
+                                       split=greedy[index], variance=str(total), ratio=str(ratio))
+        if index <= 4096:
+            optimal = policy_variance(order, index, 4, True)
+            assert optimal >= policy_variance(order, index, 4)
+            optimal_roots += 1
+            ratio = optimal / Fraction(defect, index) ** 4
+            key = 'optimal4', 4
+            if key not in minima or ratio < Fraction(minima[key]['ratio']):
+                minima[key] = dict(index=index, order=order, defect=defect,
+                                   variance=str(optimal), ratio=str(ratio))
+        if index in (185, 191, 3054, 4590, 5980, 18785, 125952):
+            point = greedy[index]
+            trajectory, transient, _ = full_orbit(sequence, index)
+            periodic_points = {point for cycle in all_cycles(sequence, index) for point in cycle}
+            witnesses.append(dict(index=index, value=sequence[index], defect=defect,
+                                  extreme_candidates=list(extremes[index]), greedy_split=point,
+                                  child_values=[sequence[point], sequence[index - point]],
+                                  actual_split=selected_splits[index],
+                                  in_prescribed_cycle=point in trajectory[transient:],
+                                  is_periodic=point in periodic_points,
+                                  one_step_variance=str(policy_variance(order, index, 1)),
+                                  four_step_variance=str(policy_variance(order, index, 4))))
+        tested += 1
+    policy_variance.cache_clear()
+    arithmetic_fibonacci = fibonacci_values(10 ** 100)
+    unique_knees = []
+    for order in range(6, 17):
+        anchor = arithmetic_fibonacci[order]
+        first_anchor = arithmetic_fibonacci[order - 1]
+        second_anchor = arithmetic_fibonacci[order - 2]
+        third_anchor = arithmetic_fibonacci[order - 3]
+        fourth_anchor = arithmetic_fibonacci[order - 4]
+        admitted = [offset for offset in range(max(0, second_anchor - third_anchor), second_anchor + 1)
+                    if min(offset, third_anchor) + min(second_anchor - offset, fourth_anchor) == second_anchor]
+        assert admitted == [third_anchor]
+        unique_knees.append(dict(order=order, index=anchor + second_anchor,
+                                 unique_split=first_anchor + third_anchor))
+    @lru_cache(None)
+    def upper_knee_variance(order, steps):
+        if not steps:
+            return Fraction(0)
+        index = arithmetic_fibonacci[order] + arithmetic_fibonacci[order - 2]
+        first = arithmetic_fibonacci[order - 1] + arithmetic_fibonacci[order - 3]
+        second = arithmetic_fibonacci[order - 2] + arithmetic_fibonacci[order - 4]
+        mismatch = arithmetic_fibonacci[order - 1] * second - arithmetic_fibonacci[order - 2] * first
+        assert abs(mismatch) == 1 and first + second == index
+        return (split_variance(order, index, first, arithmetic_fibonacci)
+                + Fraction(first, index) * upper_knee_variance(order - 1, steps - 1)
+                + Fraction(second, index) * upper_knee_variance(order - 2, steps - 1))
+    counterexamples = []
+    for order in (20, 30, 40, 60, 90):
+        index = arithmetic_fibonacci[order] + arithmetic_fibonacci[order - 2]
+        value = arithmetic_fibonacci[order]
+        defect = value - g_closed(index)
+        total = upper_knee_variance(order, 4)
+        counterexamples.append(dict(order=order, index=index, value=value,
+                                    relative_defect=str(Fraction(defect, index)),
+                                    maximal_four_step_variance=str(total),
+                                    quartic_ratio=str(total / Fraction(defect, index) ** 4)))
+    assert Fraction(counterexamples[-1]['quartic_ratio']) < Fraction(1, 10 ** 60)
+    return dict(indices_inclusive=[fibonacci[12], len(sequence) - 1], positive_defect_roots=tested,
+                endpoint_probes=probes, greedy_generations=[1, 2, 3, 4],
+                greedy_ratio_minima=[dict(generations=steps, defect_power=power, **minima[(steps, power)])
+                                     for steps in (1, 2, 3, 4) for power in (2, 4)],
+                finite_greedy_four_step_quadratic_kappa_one_verified=Fraction(minima[(4, 2)]['ratio']) >= 1,
+                full_domain_audit=dict(indices_inclusive=[fibonacci[6], 4096],
+                                       admissible_splits=complete_candidates,
+                                       optimal_four_step_positive_roots=optimal_roots,
+                                       minimum_optimal_quartic_ratio=minima[('optimal4', 4)]),
+                witnesses=witnesses, upper_cap_unique_split_knees=unique_knees,
+                upper_cap_maximal_dispersion_counterexamples=counterexamples,
+                scope='Additive value-preserving policies need neither basin nor prescribed phase. Endpoint monotonicity certifies a greedy local maximum; full Bellman optimization is separate. Finite greedy quadratic support is not a global rate or an actual-selected dispersion theorem. Upper-cap knees refute automatic maximal dispersion from geometric and terminal premises alone.')
+
+
 def unbounded_defect_audit():
     sequence, _, _, selected_splits = generate(131071)
     assert sequence == brent_generate(131071)
@@ -2332,6 +2466,7 @@ def unbounded_defect_audit():
                 selected_phase_readouts=phase_readout_audit(sequence, selected_splits, fibonacci),
                 four_generation_dispersion=four_generation_dispersion_audit(sequence, selected_splits, fibonacci),
                 phase_free_dispersion=phase_free_dispersion_audit(sequence, selected_splits, fibonacci),
+                additive_dispersion_policies=additive_policy_audit(sequence, selected_splits, fibonacci),
                 uniform_bounds=dict(knee='lambda_j(F_(j-2)) >= ceil(F_(j-3)/3) once F_j+F_(j-2)>=16384',
                                     centre='E/p >= 2*F_(k-1)/5-F_(k-3) at n=2*F_(k-1), F_(k-1)>=16384'),
                 upper_cap_geometric_family=dict(profile='Q_j(u)=min(u,F_(j-2))',
