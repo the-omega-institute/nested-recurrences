@@ -1,209 +1,50 @@
 # Research status
 
-Updated 2026-10-01. [Reading guide](README.md)
+Updated 2026-10-01. [Project home](README.md) · [Definitions and context](GENERAL.md)
 
-## Completed results
+## Established results
 
-| Result | Verification scope | Read |
+| Subject | Result and proof scope | Read |
 |---|---|---|
-| Campbell: totality, explicit power-of-three formula, sharp four-step transient, periods 1 or 2, dilation identity and ratio extrema | Written proof; exact symbolic arithmetic and independent sequence checks; closure checker records six parity/domain endpoint templates (five distinct affine maps) and parity phase | [Three-page PDF](campbell/note.pdf) · [Proof certificate](campbell/verification/proof-check.json) |
-| Campbell's FIB scale diagnostic has finite-horizon state bound L<=4K+4 and minimum autonomous state-memory order Theta(log L)=Theta(log log N); full graph recognition inherits an Omega(L) state lower bound, with matching bit order for nondeterministic recognition | General quantitative pumping and algebraic-norm proof from the proved ternary law; a trie gives O(L^2) diagnostic states and finite branch/scale matchers give O(L^2) graph-NFA states. Exact canonical, literal level-set, spectral pumping and trie audits corroborate. This measures autonomous control states, excluding read-only table size and free context clocks; it does not give a deterministic full-graph decoder or a Cloitre graph lower bound | [Scale-memory obstruction](cloitre-conway/fibonacci-collars.md#a-quantitative-scale-memory-obstruction-from-campbells-ternary-law) · [Closure evidence](cloitre-conway/verification/closure-interface-check.json) |
-| Cloitre: totality, elementary 3/5 and 3/4 bounds, split separation and entry into the eventual cycle at the prescribed depth | Written arguments with explicit finite initial cases | [Foundations](cloitre-conway/proof.md) |
-| Cloitre: rational envelope for every n>=131072 | Propagation proof plus exact finite seed certificate | [Propagation](cloitre-conway/proof.md#3-finite-window-propagation-and-explicit-infinite-bounds) |
-| Cloitre: C>=G, exact equality set, Fibonacci identities and landing, block upper cap, liminf C(n)/n=1/phi | Computer-assisted theorem: exact finite base followed by general induction and cycle capture | [Global golden structure](cloitre-conway/golden-proof.md) |
-| Cloitre: all-cycle period bound at F_k+t, exact +/-2 identities, five-offset cycle classification and uniform convergence in sublinear Fibonacci neighborhoods | Consequences of the global theorem; no additional finite premise | [Fibonacci collars](cloitre-conway/fibonacci-collars.md) |
-| Cloitre: capture distance contracts by at most 2/3 every two steps; capture takes `O(log n)` steps; intersecting all Fibonacci anchor bounds gives width `min(t,F_(k-3),F_(k-1)-t)`; globally `limsup (mu+period)/n<=(3-sqrt(5))/4` | General proof from G, the exact equality set and the cap; 130 small-anchor floor checks introduce no sequence premise. All-start and prescribed-orbit checks are corroboration. An abstract monotone profile with defects 0/1 has linear interior tails even with a fixed identity collar; full C landing in wide arches remains open | [Quantitative capture](cloitre-conway/fibonacci-collars.md#quantitative-capture-and-a-short-exterior-certificate) · [Anchor intersection](cloitre-conway/fibonacci-collars.md#intersecting-the-anchor-bounds) · [Exact check](cloitre-conway/verification/collar-check.json) |
-| Cloitre: three-window certificates, exact finite-window characterization of the tail supremum, and C(n)/n<=8900/13459 for all n>=349525 | General propagation theorem plus independently reproduced window [349525,1048574] | [Limsup certificates](cloitre-conway/golden-proof.md#8-shorter-certificates-and-the-global-limsup) |
-| Defect-plateau return certificates: two verified constant-defect intervals give an exact translation run, its exit time and selected-depth endpoint; the abstract linear tail has a two-block certificate | General written proof; exhaustive all-start/depth tests for capped profiles on domains of width at most five; exact selected-split replay through n=131071; n=248 eight-step run compressed into one block; large abstract examples use integer arithmetic without building the long orbit. No uniform short C certificate is proved | [Return certificates](cloitre-conway/fibonacci-collars.md#defect-plateau-return-certificates) · [Exact check](cloitre-conway/verification/collar-check.json) |
-| Cloitre: C(F_k+t)=F_(k-1)+max(0,t) for k>=23 and -12<=t<=32; complete fixed-point/two-cycle classification for k>=24 | Two-collar induction using 90 exact seed values at orders 23 and 24; all-start graph diagnostics are corroboration | [Exact collars](cloitre-conway/fibonacci-collars.md#6-exact-collars-propagate-from-two-seeds) |
-| Cloitre: for k>=24 and 1<=t<=32, the prescribed basin is the outermost two-cycle and the endpoint is F_(k-1)+t if this is odd, otherwise F_(k-1). All recursive row windows in offsets 0..32 have arithmetic child splits above finite boundary orders22/23 | General saturation/separation/entry-parity proof; 96 selected endpoints corroborated by literal iteration, and 66 finite boundary records checked. At t=32 first entry can be at the lower endpoint at odd time. The earlier1..21 proof needs no extra saturation seeds; no wider-arch phase rule is claimed | [Selected collar phase](cloitre-conway/fibonacci-collars.md#the-prescribed-basin-and-phase-in-a-positive-collar) · [Full-width extension](cloitre-conway/fibonacci-collars.md#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles) · [Exact check](cloitre-conway/verification/collar-check.json) |
-| Cloitre: P_j(u)>=min(u,32) on every closed natural block at j>=23. At n=F_k+t, k>=24, every proper p-cycle lies in max(33,t-F_(k-3))<=u<=min(t-32,F_(k-2)); hence p<=t-64 and a five-cycle needs t>=69 | Two-scale saturation induction adds 36 exact seed values; the spatial theorem follows from cycle extrema and is sharp for abstract capped/saturated profiles. Checked 4375 abstract profiles, 102 additional all-start graphs and 53,779 selected proper C cycles, including 4753 five-cycles. This supplies a family domain for the translated five-window interface, not an actual C sharpness or wider-arch phase theorem | [Saturated barrier and cycle exclusion](cloitre-conway/fibonacci-collars.md#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles) · [Exact check](cloitre-conway/verification/collar-check.json) |
-| Cloitre: every fixed positive offset u is eventually linear, with K(u)=23+3(u-32)+(u-32 mod2) for u>=33. Exact collar width L_j grows as j/3; W_j=max(32,G(L_j)) gives an unbounded arithmetic selected-phase domain and proper p-cycles require t>=2W_(k-1)+p | General one-offset induction: surviving defects copy two orders below and actual phase restricts copies by Fibonacci parity; all copy histories die. Offset extinction adds no seed premises; the growing phase domain also uses the separately certified width32 barrier. Local split and finite extinction checks, plus independent evaluation through 832074 and literal new-threshold checks, are corroboration. This proves seed existence for every positive width with negative width12; arbitrary negative widths, wider five-cycle closure and full convergence remain open | [Growing positive collars](cloitre-conway/fibonacci-collars.md#every-fixed-positive-offset-eventually-becomes-linear) · [Exact check](cloitre-conway/verification/collar-check.json) |
-| Cloitre: exact Fibonacci profile renormalization and nonpositive defect cocycle; first period-five arch certificate at n=196 | Direct consequence of cycle capture and the upper cap; exact finite orbit/profile arithmetic | [Profile dynamics](cloitre-conway/fibonacci-collars.md#7-fibonacci-profile-renormalization-and-defect-dynamics) |
-| Five legal Zeckendorf patterns: exact scalar interaction coordinate; every fixed legal window/context has zero C interaction at sufficiently high Fibonacci anchors, with explicit threshold. Lowest window is additive for every order j>=23 | Corollary of the proved growing positive collar; 3125 exact functions reconstructed and twenty actual window responses checked. Scalar additivity does not determine an inner basin or depth phase, and digit patterns are distinct from a period-five orbit | [Local interaction](cloitre-conway/fibonacci-collars.md#five-legal-bit-patterns-and-eventual-vanishing-of-a-local-interaction) · [Exact check](cloitre-conway/verification/collar-check.json) |
-| Five-window closure interface: compressed one-scale payload, cross-scale child selectors and selected phase | Exact alternating closure and centroid identities; 13 public period-five words reconstructed; 57/65 parent rows have split ambiguity, 56/65 individual candidate sets are non-contiguous, all 69,064 row-local selector combinations are replayed, the two lower-map parameters satisfy `alpha_i+beta_i=t` on all 65 rows, `alpha` is injective on all 69,064 row-local combinations, and each child-split/alpha/beta parameterization adds five affine directions in the finite 13-payload rank audit; Campbell ternary endpoint templates checked by the 12-row arithmetic certificate | [Five-window interface](cloitre-conway/fibonacci-collars.md#8-five-window-closure-interface) · [Selector audit](cloitre-conway/verification/selector-payload-check.json) |
-| Common reflection-window closure theorem: generic payload dimension is `p+1` including scale, with odd/even fixed-point/translation closure; the five-window needs five extra coordinates after `t` | Exact symbolic affine verification for `p=1,...,8`; Campbell's `p=2` compression is recorded as a family-specific endpoint-template relation | [Common closure theorem](cloitre-conway/fibonacci-collars.md#9-common-closure-theorem-and-generic-minimality) · [Exact check](cloitre-conway/verification/closure-interface-check.json) |
-| Inverse selector interface: alpha and one admissible seed reconstruct the whole word; the conditional fixed-width branch budget is `ceil(log_2 M)` for maximum fiber size `M`; odd-window collisions require a descending profile secant | General written argument; 13 public selected words reconstructed; a complete two-word fiber at n=7739 disproves global alpha injectivity and the fixed mod-5 seed refinement | [Seed reconstruction](cloitre-conway/fibonacci-collars.md#seed-reconstruction-and-the-remaining-branch-information) · [Witness check](cloitre-conway/verification/selector-payload-check.json) |
-| Defect-box seed theorem for odd windows: alpha plus `r_0 mod (floor(sum e_i/2)+1)` reconstructs the word; rotating the explicit seed interval sharpens the fiber bound; defects also give nondecreasing profile covers | General written proof; interval checked on all 69,064 public Cartesian words; adaptive decoding of 13 selected words and both n=7739 witnesses; exact abstract sharpness and even-window counterexample. A four-class candidate-set witness at n=12898 refutes a uniform three-class cover. The defect-derived budget grows at least linearly at Fibonacci knees, without implying growing fibers | [Defect budget](cloitre-conway/fibonacci-collars.md#a-universal-seed-label-from-the-parent-defect-budget) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| Local cycle-admissibility refinement preserves actual child selectors; the n=7739 collision words are transient and are both excluded; periodicity alone does not imply general inverse injectivity | General domain-refinement argument; all 13 public selected words preserved; first-row witness trajectories and every coordinate checked against full-domain cycles; an explicit abstract shared-profile five-cycle has two locally fixed inverse words with equal alpha | [Cycle refinement](cloitre-conway/fibonacci-collars.md#local-cycle-admissibility-and-what-it-does-not-prove) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| Minimum periodicity tests: collision-pair masks give an exact criterion for qualified inverse injectivity; collision-word masks characterize the stronger raw-image uniqueness | General conditional theorem; exhaustive small pair-path/Cartesian comparison; complete C fibers at n=11342 and n=28996. The latter needs one tested row for qualified injectivity and two for raw uniqueness; four other periodic rows still leave a collision. The contexts rule out any single fixed pivot. No universal adaptive-test bound is proved | [Minimum cycle checks](cloitre-conway/fibonacci-collars.md#minimal-periodicity-checks-for-inverse-reconstruction) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| Exact signed-gap quotient: alpha collisions correspond in both directions to closed layered walks; odd-window defect budget E bounds each layer to at most `2*floor(E/2)` states | General Cartesian-context proof and reverse reconstruction; 132 small qualification contexts checked against full fibers. At n=28996 an eight-state graph gives a hand-checkable proof that row 1 is sufficient for qualified injectivity; both C witness minima match complete-fiber enumeration. State count and periodicity data remain context-dependent | [Gap graph](cloitre-conway/fibonacci-collars.md#a-bounded-gap-automaton-with-reverse-completeness) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| Minimum primitive-cycle defect: a proper integer reflection-defect cycle of period p>=3 needs total E>=p; odd p at even offset needs E>=p+1 | General connected-cycle and integer-spacing proof; sharp capped-profile constructions for every p>=3. Twenty constructions at p=3,...,12 and 13,505 selected C cycles through n=28996 corroborate the argument; C attains E=p at n=68, period 4. This does not bound defect budgets across scales | [Defect cost](cloitre-conway/fibonacci-collars.md#minimum-defect-cost-of-a-proper-cycle) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| Recursive window representation: allow a parameter A_i at each row; actual selected children remain in natural blocks at orders j-1,j-2, their parameters add to A_i, and row alignment is inherited | General theorem from intersected capture and the profile identity; no extra carry or rotation coordinates. Every branch reaches profile orders 4 or 5 within j-5 edges. Exact replay of 13 public five-window roots and 40 boundary words gives 2,509 nodes, 1,281 leaves and 159 literal selected-point checks. Uniform branch bounds, total certificate size and selected-value proof compression remain open | [Recursive windows](cloitre-conway/fibonacci-collars.md#recursive-windows-with-a-parameter-at-every-row) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| Multiscale inverse-label budget: for an odd root window at profile order j with total defect E, each frontier needs at most floor(E/2) seed bits, and the whole tree at most `(j-5)*floor(E/2)` | General conserved-defect proof, conditional on local alpha words and profile/candidate contexts; second children need no separate seed. All 962 odd internal nodes decode by adaptive residues. At n=196 the summed sufficient labels use 29 bits versus the proved bound 66; this excludes parameter words, context proofs and selected phases, and is not a minimum for the whole certificate | [Conserved budget](cloitre-conway/fibonacci-collars.md#a-conserved-budget-for-multiscale-inverse-labels) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| Repeated physical indices share selectors and parameters on repeated directed input pairs; their exact gap quotient imposes equality on incoming and outgoing gaps. A nonbipartite monotonicity sign graph proves inverse uniqueness with at most five vertices, independent of E. An odd two-label window collides exactly on common self-loop gaps | General proofs and reverse reconstruction; all 52 five-row equality partitions checked against complete small fibers. At n=196 one two-label child needs no seed, versus the defect rule's three-bit sufficient allowance, and alpha shrinks from five entries to three. Every prescribed five-cycle through 4096 gives 12,208 distinct internal contexts; sharing reduces 437 collision pairs to three in two contexts. The surviving n=2012 collision is excluded by periodicity at one row. Context, alpha and actual basin/phase proof costs remain separate | [Shared-row theorem](cloitre-conway/fibonacci-collars.md#sharing-selectors-at-repeated-physical-indices) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| Cross-window absolute parameters satisfy K_(N,M)=s(M)+C(s(N)); a bipartite forest has exact universal linear rank `2|V|-c`, and one seed per strong selector component reconstructs its joint assignment. Network gap relations have reverse completeness | General proofs, 512 independent rational rank checks and 954 complete small-fiber comparisons. For the same fixed layout through 4096, 2,308 forest entries recover 6,514 physical-edge and 61,040 row entries. All 37 selector components are jointly injective on supplied geometric/value domains: 10 singleton, 14 additional sign and 13 exact gap certificates; conditional joint branch bits are zero. The edge 489->476 separates the n=2012 local collision. Layout, domain/profile and actual basin/phase proof costs are excluded; forest rank is not C-specific minimum information | [Shared network](cloitre-conway/fibonacci-collars.md#a-shared-parameter-network-and-its-forest-basis) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| Generative shared descent: geometric splits have child fractions in `[3/11,8/11]`; total distinct root mass R gives `D<=B-8+floor(11R/(3B))` and an `O(sqrt(R) log N)` structural code with no supplied child layout, profile table or parameter graph | General mass-cut and prefix-free coding proofs; 55,408 complete small layouts and 905,301 histogram cache nodes independently checked. Saved root/header packets replay from the first eight terms alone. The n=196 root plus five-cycle has a 112-bit body; the 147-root family has 9,427 bits generating all earlier windows and parameters. Four existing knees replay, including N=103682 with 424 internal indices and 2,577 bits despite 6,870 marked leaves. Root headers and selected-validity proof costs are separate; n=11 shows a shared periodic same-basin endpoint can have the wrong phase | [Generative code](cloitre-conway/fibonacci-collars.md#generating-the-layout-from-a-sublinear-shared-descent-code) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| Seven-symbol terminal code: the actual profile defect counts marked leaves; positioned letters recover all internal arithmetic selector/parameter data, and a generating coefficient counts every geometrically legal tree | General forward and reverse geometry proof; exact support interval and three-coordinate histogram reconstruction. Worst-case full geometric capacity is Theta(F_j), even with zero defect or a fixed histogram. Coefficient ordinals checked against all 28,284 words through order nine; 65 actual rows recover 2,815 internal splits. At n=196 joint geometric capacity is 158 bits, conditional on root offsets/defects, with profile consistency and selected-orbit proof costs excluded. This is a geometric-class minimum, not C's family-specific minimum | [Terminal code](cloitre-conway/fibonacci-collars.md#seven-terminal-symbols-and-the-full-geometric-selector-code) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| Actual defects grow linearly at Fibonacci knees; every cycle at n=2F_(k-1) has a linearly growing mean defect. Full convergence is exactly a uniform marked-leaf occupation law | General consequences of the existing 2/3 envelope, capture and the terminal identity; four knee samples and complete cycle graphs at n=35422,57314,92736 corroborate. The consistent upper-cap profile has geometric descent and the same leaves but fails prescribed nesting at n=11. Neither unbounded defect nor a seven-letter code proves unbounded inverse fibers or a global finite-state classification | [Growing defects and occupation](cloitre-conway/fibonacci-collars.md#growing-actual-defects-and-the-remaining-occupation-problem) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| Selected-phase interface requires prescribed-start basin and entry alignment: for canonical position `j` of the entry point, use `j+d-mu mod p` | Exact n=196 certificate: phase from entry is 3, canonical selected phase is 4, correct split 118 gives C(196)=134; ignoring alignment selects 117 and gives 131 | [Selected-value closure](cloitre-conway/fibonacci-collars.md#8-five-window-closure-interface) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| Conditional phase minimum: a certified cycle/readout word has M current-value classes, d minimal continued-output states, and p states for exact index output; d is the output word's cyclic period and d-M future steps suffice to distinguish states | General cyclic-word and refinement proof. All9840 ternary words through length8 and every selected cycle through131071 checked. Actual3054 attains M2,d5,horizon3;1354 has a constant three-cycle readout,5980 a period-two readout on a four-cycle. Supplied basin/table and deriving the actual phase remain separate costs | [Minimum phase interface](cloitre-conway/fibonacci-collars.md#the-exact-minimum-phase-interface-depends-on-the-readout) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| Size-biased selected descent gives two exact martingales and a rational local variance; a uniform actual-C quartic four-generation dispersion bound would imply the conjectured upper decay rate. Shared upper-cap descent with rounded proportional splits refutes deriving that bound from geometric/terminal closure alone | General identities, conditional Jensen/variance-budget proof and explicit infinite geometric counterfamily. Exact rational finite actual check for144..131071 supports kappa1; the uniform inequality and a matching lower bound remain unproved. Counterfamily violates prescribed nesting and is not actual C | [Dispersion criterion and missing selection constraint](cloitre-conway/fibonacci-collars.md#size-biased-martingales-and-the-four-generation-dispersion-criterion) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| Local-variance fibers have at most two split indices, forcing every odd p-cycle to retain all p continued-variance states; every five-cycle has at least three current variance classes. A scalar-value quotient may lose this information | General quadratic/involution proof; exact rational fibers checked in1472 small positive-anchor contexts and every prescribed cycle through131071. Actual1354/5980 compress scalar outputs but have3/4 distinct local variances. This is a conditional one-step readout result, not a V_4 quotient or an independent-bit lower bound | [Readout-dependent minimum](cloitre-conway/fibonacci-collars.md#the-exact-minimum-phase-interface-depends-on-the-readout) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| Basin-aware Bellman envelopes B_m<=Q_m<=actual V_m provide a sufficient dispersion criterion without choosing the precise depth phase. An exact upper-cap trace shows that scalar validity and periodicity do not certify the correct basin | General induction and occurrence-tree minimum; shared-selector and supplied-context costs remain separate. Exact four-generation checks for144..131071 support kappa1 even for B_4, with finite minimum ratio101.197 at4590. Uniform B/Q inequalities remain open. All-periodic comparison through4096 has a smaller minimum20.812 | [Phase-free lower envelope](cloitre-conway/fibonacci-collars.md#a-phase-free-lower-bound-from-the-prescribed-basin) · [Exact basin obstruction](cloitre-conway/fibonacci-collars.md#size-biased-martingales-and-the-four-generation-dispersion-criterion) |
-| Any scalar-valid geometric policy preserves both martingales; a uniform finite-horizon maximal dispersion inequality suffices for decay without basin or depth-phase certificates. Local variance maxima need only the two extreme admissible indices | General policy/Bellman/Jensen proof and extremal-variance derivative. Exact greedy four-generation check for all130891 positive-defect roots144..131071 supports the stronger quadratic kappa1 bound, minimum1.17910 at1384; this is finite only. Complete domain comparison through4096 and transient value-valid witnesses checked. Upper-cap knees have unique additive splits and vanishing maximal variance, disproving automatic dispersion from geometry/terminal data | [Adaptive additive policy criterion](cloitre-conway/fibonacci-collars.md#additive-dispersion-policies-without-orbit-qualification) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
-| First three Fibonacci-arch reverse-completeness audits: all starting states for 144<=n<=609 | 466 functional graphs, 174,983 vertices, exact per-block cycle histograms, and 13 period-five payloads; the first block has its unique period-five graph at n=196 | [Finite five-window certificate](cloitre-conway/verification/five-window-check.json) |
-| Arbitrarily late actual prefixes, the exact golden equality set, saturation, all proved fixed collars and inherited certified ratio envelopes do not force convergence or a uniform maximal-policy dispersion bound | General construction and proof of explicit guarded proportional extensions W_J, J>=25. Each has liminf ratio 1/phi and a knee subsequence with a strictly larger limit. J25/J26 checked through2^20, 8,382,465 consecutive-carry contexts exhausted, arithmetic knees checked through order90. First prescribed-nesting failures are75067/121460. These are scalar extensions, not actual C counterexamples; actual negative collars beyond12 and actual convergence remain open | [Nonconvergent extensions](cloitre-conway/fibonacci-collars.md#finite-prefixes-and-exact-collars-do-not-force-convergence) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
+| Campbell's recurrence | Complete power-of-three formula; sharp four-step transient; periods 1 or 2; dilation identity; ratio extrema 2/5 and 3/4. Written proof with exact symbolic and independent sequence checks. | [Proof PDF](campbell/note.pdf) |
+| Conway foundations | Totality, elementary 3/5 and 3/4 bounds, prescribed-depth cycle entry, and propagation of finite-window ratio bounds. | [Foundations](cloitre-conway/proof.md) |
+| Global golden structure | C>=G, exact equality set, Fibonacci identities and landing, block upper cap, and liminf C(n)/n=1/phi. Computer-assisted induction with explicit finite premises. The shorter-window certificate gives C(n)/n<=8900/13459 for n>=349525. | [Global proof](cloitre-conway/golden-proof.md) |
+| Fibonacci neighborhoods | All-cycle capture and period bounds, exact nearby dynamics, and convergence in sublinear-width neighborhoods. Exact values for -12<=t<=32 propagate from finite seeds; every fixed positive offset eventually becomes linear, with an explicit threshold. | [Orbit bounds](cloitre-conway/fibonacci-collars.md) · [Exact collars](cloitre-conway/exact-collars.md) |
+| Five-window interfaces | Exact profile identities, closure equations, and conditional minimum phase states for a specified output. Inverse reconstruction and shared recursive codes have stated geometric and profile qualification requirements. These are not a complete minimum interface for actual C. | [Closure](cloitre-conway/five-window-closure.md) · [Inverse reconstruction](cloitre-conway/inverse-reconstruction.md) · [Recursive descent](cloitre-conway/recursive-descent.md) |
+| Asymptotic reduction | Two exact size-biased martingales and a proved conditional decay implication. Basin lower envelopes and scalar-valid split policies give sufficient routes to the missing dispersion inequality. Finite tests support these routes; the uniform inequality remains open. | [Martingales and dispersion](cloitre-conway/dispersion.md) |
+| Limits of static information | Explicit scalar extensions can preserve any actual finite prefix, the golden bounds, equality set, and all proved fixed collars, yet fail to converge. These are alternative extensions, not counterexamples to the prescribed recurrence. | [Nonconvergent extensions](cloitre-conway/dispersion.md#finite-prefixes-and-exact-collars-do-not-force-convergence) |
+| Campbell in Fibonacci encoding | Through L canonical five-windows, an autonomous K-state DFA/NFA recognizing 5b(n)=2n must satisfy L<=4K+4. Minimum control-memory order is Theta(log L)=Theta(log log N), with horizon-specific tables whose size is excluded. This does not prove a Cloitre lower bound or a deterministic full-graph decoder. | [Scale-memory theorem](campbell/scale-memory.md) |
 
-Here G(n)=floor((n+1)/phi). The equality set is exactly
+Proof notes state the precise domains, thresholds, finite premises, and
+verification scope. No Lean validation is claimed. Historical conjecture
+labels in saved experiment reports describe their original scope; the notes
+give current theorem status.
 
-$$
-\{F_j,F_j+1:j\ge2\}\cup\{F_j-1:j\ge3\text{ odd}\}\cup\{11,24,25,59\},
-$$
+## Open questions and next steps
 
-with F_0=0,F_1=1. The four exceptional indices are part of the theorem.
-The older zero-set containment and Fibonacci landing problems are resolved.
-
-The global golden proof uses a base through 65535 and the seed window
-[16384,131071]. The larger F_36 experiment is corroboration, not a premise.
-The [carry and infinite-set arithmetic lemma](cloitre-conway/landing.md)
-supplies an ingredient of the induction; it also documents numerical corrections.
-
-## Next research questions
-
-1. **Full ratio convergence.** The liminf is 1/phi. To prove a full limit,
-   control the limsup between Fibonacci anchors, especially the centers of
-   the arches. The collar theorem covers offsets o(F_k), not offsets of order F_k.
-   Explicit nonconvergent extensions now show that arbitrarily long actual
-   prefixes, every proved fixed collar, the exact golden equality set and
-   all certified ratio envelopes cannot by themselves close this step.
-   Find a global actual-profile or selected-dynamics restriction that
-   excludes the guarded proportional family; its first J25 failure at75067
-   occurs in a different inner basin despite matching the scalar prefix.
-   The new W(M)=max(C(m)/m: M<=m<3M) is exactly the tail supremum, and is
-   nonincreasing for M>=21846. Its proved limit is the limsup; proving that
-   limit equals 1/phi remains open. The certified upper bound is now
-   8900/13459=0.6612675533100527..., improved from 103088/155677.
-2. **Arch profiles and inner dynamics.** The defect identity gives a two-scale
-   renormalization skeleton, while the first period-five arch supplies a local
-   branch certificate. Determine whether arch defect trees admit finitely many
-   certified local types and a reverse completeness map. Count the
-   scale/position resources explicitly: Campbell already
-   requires growing autonomous FIB memory despite its period-two collapse.
-   Its diagnostic and nondeterministic graph-recognition bit order is known;
-   deterministic graph decoding and a corresponding actual-C lower bound
-   remain separate problems. A free external clock can hide this resource.
-   Establish a decay rate
-   only after obtaining
-   global control; study whether cycle periods are unbounded and bound interior
-   transients in wide arches. Exterior capture now has a logarithmic bound;
-   fixed-width neighborhoods have logarithmic full landing, while the global
-   joint orbit budget is at most `((3-sqrt(5))/4)*n+O(log n)`. The claimed
-   0.087 +/-0.5% sampled stability was not
-   reproduced; see the [decay audit](cloitre-conway/landing.md#4-reproducible-finite-audit).
-   Every fixed positive width now has proved exact seed collars, using the
-   one-offset extinction theorem; arbitrary negative widths beyond12 remain
-   open. The positive exact width grows with Fibonacci order, but still
-   covers only a vanishing fraction of each full block.
-   Exact return blocks now distinguish a long literal transient from a long
-   certificate: paired defect plateaus yield arithmetic translations, with
-   a two-block certificate for the abstract linear-tail example. C's finite
-   plateau audit gives limited compression; seek larger verified return cells
-   rather than assuming a short transient or a bounded plateau itinerary.
-   For the inverse selector interface, control the defect-derived seed interval
-   or descending profile branches across orders. The adaptive defect modulus
-   gives a universal arithmetic label, but its size is not uniformly bounded;
-   the n=7739 witness rules out a fixed mod-5 shortcut. Establish whether the
-   actually selected alpha tuples have stronger uniqueness than arbitrary
-   legal row-local decomposition witnesses. Separate row-local decomposition,
-   lower-cycle membership, prescribed-start basin and selected lower phase.
-   Periodicity narrows the candidate domain but the abstract counterexample
-   shows that a family-specific inverse theorem still needs more information.
-   The exact coordinate-test criterion now distinguishes qualified injectivity
-   from the stronger uniqueness against raw candidates. At n=28996 one row
-   suffices for the first claim, while two are necessary for the second.
-   Seek a uniform context-dependent qualification bound; a single fixed
-   coordinate already fails on the two public C witnesses. The complete
-   lower graph and the cost of certifying its collision exclusions remain
-   part of the context, not free bits removed from the affine payload.
-   The signed-gap quotient now gives an exact reverse-complete test without
-   listing alpha fibers. Seek recursive certificates for its edge relations
-   and qualification predicates, with controlled context size. The proper-cycle
-   bound E>=p is a lower bound; it does not supply the missing uniform upper
-   bound on the gap alphabet or prove an adaptive single-row theorem.
-   The recursive coordinate class is now closed under descent by allowing
-   row-dependent parameters. Intersected capture keeps both actual children
-   in their natural lower blocks; no independent carry word or child row
-   rotation is needed. Structural termination does not bound the binary
-   tree's total size or certify a recovered raw word's prescribed selections.
-   Seek recursive edge/qualification certificates inside this class, keeping
-   its inherited row clock separate from each physical orbit's selected phase.
-   Conserved defects now bound residual seed labels across the whole tree by
-   `(j-5)*floor(E/2)`, and by floor(E/2) on each frontier. This controls one
-   source of branch proliferation but excludes parameter/context and phase
-   proof costs. Seek compression of those remaining data, rather than treating
-   the conditional bit bound as a total certificate bound.
-   The positioned terminal code now recovers all arithmetic selector data,
-   while its coefficient counts only the larger geometric class. Shared
-   profile consistency and prescribed orbit selection must still be proved.
-   Actual defects grow linearly at the Fibonacci knees, so a uniform E bound
-   is unavailable. Seek arithmetic compression of leaf positions and the
-   occupation deficit instead; histograms recover values but can lose selected
-   phases, as the explicit n=15 example shows.
-   Repeated physical indices now share their selector, with an exact constrained
-   gap test and a two-label odd-window criterion. This eliminates some inverse
-   seed labels without adding a coordinate. Sharing alone still leaves three
-   collision pairs in two audited descendant contexts; next incorporate
-   consistency between tree nodes and certified periodic/basin/phase restrictions.
-   Sharing is now expressed between windows in absolute physical coordinates.
-   A bipartite forest removes all universal linear parameter redundancy, and
-   the fixed audited joint network has no inverse collisions. Its physical
-   layout is supplied: an alternative selector may change that layout under
-   descent. Recover the layout and selected-validity proofs by arithmetic
-   family rules, keeping their costs separate from the zero conditional seed
-   count and the forest's scalar-entry rank.
-   A generative first-visit code now includes that child layout and its value
-   table, with a proved O(sqrt(R) log N) structural upper bound from globally
-   shared balanced splits. The encoded endpoints still need prescribed
-   iteration proofs: the n=11 counterexample passes periodicity and basin
-   but has the wrong phase. Seek arithmetic phase rules and phase-independent
-   value certificates to avoid a pointwise predecessor-depth chain. Keep
-   these proof costs and the uniform marked occupation law in the objective.
-   In the positive collar 0..32, order mod 3 and offset parity now generate
-   actual selected splits above finite boundary orders22/23, with the basin
-   and phase proved. Extend such arithmetic rules into wider arch windows;
-   the collar itself has no distinct five-cycle and does not resolve their
-   general closure or the global occupation deficit.
-   A saturated profile barrier now constrains every autonomous proper cycle
-   to the interior domain33<=u<=t-32, intersected with geometric capture.
-   Use the exact shift v=u-32,tau=t-64 in wider five-window inverse tests;
-   the affine rank is unchanged but impossible positions are excluded.
-   This autonomous cycle bound does not constrain the inherited clock of
-   nonautonomous child windows. Their actual selector rules remain the target.
-   The growing gate W_j=max(32,G(L_j)) now eliminates independent selectors
-   and actual phase labels on a domain of width proportional to the order.
-   Use it as a proved qualification at each row, tracking the boundary as
-   descent lowers its order. Seek stronger width growth and phase residues
-   outside this gate; its necessary Boolean extinction graph is not a
-   reverse-complete classification of all actual C histories.
-   The dispersion target now admits a phase-free sufficient criterion:
-   prove a uniform quartic bound for the worst phase in the prescribed-start
-   basin, or its scalar-value-qualified subset. Finite four-generation
-   checks through131071 support even the larger domain. Exact phase is
-   required for continued local-variance readout on every odd cycle, but
-   may be bypassed when proving a lower envelope. Seek arithmetic basin
-   certificates and a uniform defect-to-dispersion inequality; supplied
-   basin/profile tables are still part of the full interface cost.
-   For an asymptotic proof, consider the weaker existential policy contract:
-   certify a scalar-valid geometric split tree with enough dispersion,
-   without reconstructing its inner orbit. Greedy four-generation finite
-   tests even support a quadratic defect bound; a uniform policy theorem
-   for either power remains open. The upper-cap knee counterfamily shows
-   that this cannot follow from geometry and terminal values alone.
-   Keep this proof interface distinct from the original selected-recursion
-   closure minimum and Campbell's nonadditive endpoint contract.
-3. **Shifted Conway/Mallows variants.** The proposed inequalities relative to G
-   and Fibonacci anchors are finite observations through 2^20 under the stated
-   initial conditions, not universal theorems. See the [family audit](cloitre-conway/verification/landing-audit.json).
-4. **Literature and proof consolidation.** Review related recurrences and
-   priority before preparing a manuscript. Formalization is an optional
-   separate milestone; no Lean theorem is currently claimed.
+1. **Global convergence and decay for actual C.** Prove a uniform dispersion
+   inequality using restrictions on actual profiles or their selected dynamics.
+   The conditional quartic criterion yields an upper error rate
+   O(n/(log n)^(1/4)); proving that criterion and a matching lower bound for
+   maxima are separate open tasks. Long finite prefixes and exact collars
+   alone do not force convergence.
+2. **The full minimum recursive interface.** Count scale, position, profile,
+   branch qualification, and phase resources together. Local output-state
+   minima assume the surrounding context is supplied. Prove an actual-C
+   interface beyond the exact Fibonacci collars rather than treating the
+   five digit labels or a geometric cycle certificate as sufficient.
+3. **Dynamics in wide arches.** Control periods, landing times, and actual
+   selectors in Fibonacci-block centers. The orbit bounds and saturated
+   barriers restrict this domain but do not settle it.
+4. **Related families and consolidation.** Shifted Conway/Mallows laws remain
+   finite observations under their stated initial conditions. Review the
+   literature before preparing a manuscript. Formalization is a separate
+   possible milestone.
 
 ## Reproducibility and maintenance
 
-The [verifier](scripts/verify.py) replays the exact committed evidence;
-[main instructions](README.md#optional-reproduce-the-computations) explain how.
-Proofs and current status are maintained in place. Necessary programs and
-evidence live in `verification/` subdirectories; intermediate experiments and
-draft variants do not accumulate in the public tree. Earlier stages remain
-available in Git history.
+[CONTRIBUTING.md](CONTRIBUTING.md) explains the eight reproduction checks and
+the branch → pull request → review → merge workflow. Current proofs are
+maintained by subject. Code and compact evidence live in verification
+directories; intermediate experiments and correspondence stay outside the
+public tree. Superseded stages are retained in Git history.

@@ -5,6 +5,9 @@ initial b-sequence to John M. Campbell and the variable-depth Conway candidate
 to Benoît Cloitre. Preserve the unsigned Campbell note; a paper author list
 has not been established here.
 
+Read GENERAL.md for context and CONTRIBUTING.md for the PR workflow. Use the
+Conway guide's topic map instead of appending unrelated work to a single note.
+
 Keep written proofs, computer-assisted theorems, finite observations and open
 conjectures distinct. State indexing and initial conditions exactly. Never
 promote a checked prefix into a theorem without an independent propagation or
@@ -23,9 +26,12 @@ from current theorem status. Formalization is a separate research decision,
 not a prerequisite for every update.
 
 The user explicitly authorized creation and timely synchronization of this
-repository on 2026-09-30. After substantive research changes, update STATUS.md,
-the relevant proofs and evidence, run the appropriate checks, then commit and
-push the authorized results. Fetch first and reconcile concurrent changes.
+repository on 2026-09-30, and a PR-only workflow on 2026-10-01. Fetch first and
+reconcile concurrent changes. Develop work on focused branches, with isolated
+worktrees as needed; do not commit or push research directly to main. Update
+STATUS.md, the relevant proofs and evidence, run the appropriate checks, and
+review the complete diff. Open a PR and merge ready, verified work into the
+existing main branch. The user authorized these merges; no dev branch is needed.
 Update the corresponding private collaboration record
 with the exact public commit and remaining proof questions. Report push failures.
 
