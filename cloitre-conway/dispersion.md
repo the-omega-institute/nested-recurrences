@@ -20,6 +20,7 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 - [Diophantine dispersion in cube-root Fibonacci neighborhoods](#diophantine-dispersion-in-cube-root-fibonacci-neighborhoods)
 - [Additive dispersion policies without orbit qualification](#additive-dispersion-policies-without-orbit-qualification)
 - [Finite prefixes and exact collars do not force convergence](#finite-prefixes-and-exact-collars-do-not-force-convergence)
+- [Exact small-cap closure still does not force convergence](#exact-small-cap-closure-still-does-not-force-convergence)
 
 ### Size-biased martingales and the four-generation dispersion criterion
 
@@ -1287,3 +1288,210 @@ contexts through4096 are exhausted, and huge knee values and selected
 splits through order90 are checked by exact arithmetic. The nonconvergence
 and arbitrary-prefix conclusions have independent written proofs; they
 are not extrapolations from those finite tests.
+
+### Exact small-cap closure still does not force convergence
+
+The moving top plateau excludes W_J above. The stronger obstruction here
+preserves that plateau, all four exact cap sublevels, their actual local
+selection rules, and the cap-budget and cap-dependent dispersion bounds.
+Those premises still do not imply convergence. This is an assigned additive
+extension, not another solution of Cloitre's prescribed recurrence.
+
+**Theorem.** For every J>=26 there is an integer-valued H_J agreeing with C
+through F_J, with a shared geometric additive split at every later index,
+such that:
+
+1. G<=H_J<=U, the exact G-equality set is unchanged, and H_J(F_k)=F_(k-1).
+   Every certified actual ratio envelope is inherited when its threshold
+   is at most F_(J-2).
+2. On every full closed upper-anchor block k>=21, the cap sublevels0..3
+   and their values are exactly those of C. The four subsequent positions
+   also agree with C and have cap4. On newly extended blocks, the actual
+   prescribed iteration under H_J selects the same arithmetic endpoints
+   as C throughout the cap0..3 domain.
+3. The quadratic cap budget, bounded-cap ratio convergence, and the linear
+   and logarithmic cap-dependent dispersion theorems apply to its assigned
+   geometric descent, with their existing domains and constants. All fixed
+   positive and negative collars eventually have their exact C values.
+4. Nevertheless liminf H_J(N)/N=alpha and its Fibonacci-knee ratios tend
+   to alpha+Delta_J with Delta_J>0. At those knees every fixed-horizon
+   assigned variance tends to zero while the relative golden defect stays
+   positive. Thus no uniform fixed-horizon dispersion bound follows from
+   these combined premises.
+
+The asserted sublevels include both Fibonacci endpoint aliases. Only
+statement2 claims agreement with prescribed nesting outside the original
+prefix; high-cap splits remain assigned choices.
+
+**Construction.** Use the widths L_k,R_k,S_k,Z_k and exact shift delta_k(v)
+from [the cap0..3 theorem](exact-collars.md#two-higher-cap-levels-and-their-phase-selected-closure).
+Put H_J(N)=C(N) for N<=F_J. At a later index use the unique upper order
+F_(k-1)<N<=F_k and write
+
+$$
+A=F_{k-1},\quad B=F_{k-2},\quad H=F_{k-3},\quad
+v=F_k-N,\quad d_k=Z_k-Z_{k-1}\in\{3,4\}.
+$$
+
+Choose a first child a by the following ordered rule, and set
+H_J(N)=H_J(a)+H_J(N-a):
+
+- If v<=Z_k, take a=A-v+delta_k(v).
+- If Z_k<v<=Z_k+4, take a=A-v+d_k.
+- Otherwise consider floor(BN/A) and ceil(BN/A). Admit a candidate a
+  only if its G carry is nonnegative and
+  `[B-H_J(a)]+[H-H_J(N-a)]>=4`. Among admitted candidates choose
+  the closest to BN/A, breaking a tie by the larger a.
+- If none is admitted and v<=H+d_k, take a=A-v+d_k.
+- In the remaining case take a=B if its G carry is nonnegative, and
+  a=B+1 otherwise.
+
+All children are earlier physical indices. No branch depends on a future
+value, and repeated occurrences of an index use the same split.
+For k>=27, the size bounds Z_k+4<H, L_(k-2)>=4 and F_(k-4)-1>=4
+hold at the first order and persist; these keep the displayed strip and
+transport children inside their closed blocks.
+
+**Totality and profile preservation.** The first two branches have
+child gaps r=v-delta,q=delta with delta<=4. In the small-cap branch,
+the exact arithmetic selector has first cap e and second cap0. For the
+four-point strip write v=Z_k+w,1<=w<=4. Its first gap is
+Z_(k-1)+w and its second gap is d_k<=4. The first child has cap4 and
+the second cap0; this agrees with actual C by the level3 shelf theorem.
+The seed contains the required full profiles at orders J-1 and J.
+
+For an interior index both neighboring proportional integers are geometric,
+by the consecutive-Fibonacci inequalities proved for W_J. They satisfy
+B<=a<=A and H<=N-a<=B. At v=0 the first branch supplies the unique
+Fibonacci split. If no proportional candidate is admitted, the transport
+branch has a>=B and first gap
+`v-d_k>Z_(k-1)+4`, so its first cap is at least4; its second cap is0.
+The final branch is geometric: v>H+d_k gives N<2B-d_k, while N>A
+gives N-B>=H+1. The consecutive-carry lemma supplies B or B+1.
+Their first caps are F_(k-4) or F_(k-4)-1, both at least4.
+Here H_J(B)=H and H_J(B+1)=H+1 are inductive endpoint identities;
+their propagation is checked below. Every branch is therefore defined,
+and every outside-band value has cap at least4.
+
+The geometric upper-cap inequality used for W_J gives H_J<=U in every
+branch. For G, the first two branches equal C; the proportional and final
+branches use nonnegative carry. In a transport branch, its second child
+B-d_k has value H and golden defect at least1. Every G carry is at least
+-1, so G<=H_J also follows there. Additivity gives exact nonnegative
+integer child-cap conservation. These steps prove the full profile
+classification and the bounds simultaneously by induction on N.
+
+**Equality set and endpoint identities.** In a nonnegative-carry branch,
+equality with G requires two golden-zero children and zero carry. For a
+proportional split the determinant bound |BN-Aa|<=A excludes mixed
+lower/upper anchor pairs by the argument for W_J. The lower pairs give
+N=A,A+1,A+2, with positive carry at A+2; upper pairs give only the
+already copied upper-anchor zeros. In particular at N=A+1 the closest
+candidate is a=B+1,b=H, has inherited cap H-1>=4 and carry0, and gives
+H_J(A+1)=B+1. The identity H_J(F_k)=F_(k-1) follows from v=0.
+
+For a transport split its first child lies in
+`[B,A-Z_(k-1)-5]`; its only possible golden zeros are B,B+1.
+If it is not zero, its golden defect and the second child's defect are
+both at least1, so even a carry -1 leaves a positive parent defect.
+If it is B+epsilon,epsilon in{0,1}, then N=2B-d_k+epsilon and
+the assigned value is 2H+epsilon. Binet's identity
+`alpha B=H+(-1)^(k-1)*alpha^(k-2)` gives
+G(N)<=2H-1 for d_k>=3,k>=27, so equality is again impossible.
+In the final branch the second child is below B-4; its only possible
+golden zeros are H,H+1. Thus only the same lower pairs can occur.
+The copied bands agree with C. This proves the complete equality set
+and the endpoint identities required in the preceding induction.
+
+**Actual low-cap selection and inherited closure.** At v<=Z_k, capture
+uses only G, U and Fibonacci values. Its local gap domain is0..v;
+the lower profile there agrees with C because
+`Z_k<=Z_(k-1)+4`. Every fixed point and frontier two-cycle is therefore
+the same. For a frontier, full sublevel classification gives exactly
+the exterior side inequalities used in the original phase proof. The
+predecessor H_J(N-1)=C(N-1) is copied through the four-point strip,
+so the depth parity is the same as well. The capture budget is at most
+4k+v+1<8k, whereas the depth is at least B>8k for k>=27.
+Thus the prescribed iteration actually reaches and selects the stated
+endpoint under H_J; this is not an assumption about its high-cap choices.
+The same arithmetic five-row closure and phase-free small-cap variance
+kernel apply without alteration.
+In particular the entire
+[persistent canonical interaction family](exact-collars.md#a-persistent-interaction-on-canonical-index-words)
+has the same five readouts, interaction coefficient1, root endpoints and
+inherited first-child signal under H_J: those roots and their descendants
+have cap0 or1. Matching this feature interaction therefore does not supply
+the missing global condition either.
+
+The [cap-budget proof](recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level)
+uses just exact zero support and geometric integer cap conservation;
+its finite small blocks are unchanged. The linear and logarithmic
+dispersion inductions additionally use the same arithmetic cap0..3 kernel.
+They therefore apply to the assigned descent of H_J. Their cap-dependent
+horizon, constants and order thresholds remain part of each conclusion.
+
+For positive natural offsets, the saturation proof for W_J uses only
+geometry and addition, and gives
+`H_J(F_j+u)-F_(j-1)>=min(u,32)` for j>=23. Hence offsets0..32
+are exactly linear. For any fixed u choose K>=J+2 with F_(K-2)>=u+4.
+At natural orders h>=K and offsets at most u, every geometric candidate
+has inherited cap sum at least F_(h-2)-u>=4. A nonnegative-carry nearest
+candidate is therefore admitted. Its child offsets are at most
+`(2/3)*u+1`. After d steps they are at most `(2/3)^d*u+3`.
+Choosing d with `(2/3)^d*u<=29` and starting at j>=K+2d puts every
+descendant into the copied linear band before an order falls below K.
+Recombination proves the eventual exact positive collar. Every fixed
+negative gap lies eventually in the moving zero plateau. Ratio envelopes
+are size-weighted averages of unchanged prefix leaves, as for W_J.
+
+**Knee obstruction.** Put N_j=F_j+F_(j-2). Its upper gap is
+F_(j-3)>Z_(j+1)+4 for j>=J. The nearest proportional split is N_(j-1),
+with determinant of absolute value1 and zero G carry. Both actual seed
+knees at orders J-2,J-1 lie beyond their cap3 bands; their inherited caps
+are at least4. Hence the nearest knee split is admitted, and induction gives
+
+$$
+H_J(N_j)=H_J(N_{j-1})+H_J(N_{j-2})\quad(j\ge J).
+$$
+
+The inherited cap sum also obeys this Fibonacci recurrence, so it never
+drops below the admission threshold. The positive seed golden defects
+D_h=C(N_h)-G(N_h) give
+
+$$
+\frac{H_J(N_j)}{N_j}\longrightarrow\alpha+
+\frac{D_{J-1}+\alpha D_{J-2}}{N_{J-1}+\alpha N_{J-2}}
+=\alpha+\Delta_J>\alpha.
+$$
+
+The anchors and G lower bound give liminf alpha. On a knee descent of any
+fixed length t, all nodes are knees at orders j,j-1,...,j-2(t-1).
+Each local variance has numerator1 and denominator N^2ab, so it is
+O_t(N_j^(-4)). Size-biased probabilities sum to1 at each level; therefore
+the accumulated assigned V_t is O_t(N_j^(-4)). This explicitly refutes a
+fixed-horizon bound by any positive power of the relative golden defect
+for this family. It does not refute such a bound for actual C. QED.
+
+**Independent audit and a recurrence failure.** The
+[selector checker](verification/selector_payload_check.py) tests J26 through
+2^20 against actual C, verifies both fallback constructions independently
+of whether the main rule chooses them, checks actual low-cap selected
+endpoints under H_J, and replays the first discrepancy by literal nesting.
+At N=121460 the assigned split75067 gives H_J(N)=75089, whereas
+depth75091 selects75025 and gives75092. The prefix through121459 agrees
+with C. This is a concrete failure of high-cap prescribed nesting.
+The knee seed values42202,68155 give the limit
+
+$$
+\frac{68155+\alpha\,42202}{103682+\alpha\,64079}
+=0.657691108044\ldots>\alpha.
+$$
+
+Finite arithmetic checks through order90 corroborate the knee admission
+and variance identities; all infinite assertions above have written proofs.
+The obstruction identifies a necessary use of actual orbit restrictions
+outside the small-cap domain, not a sufficient full recursive interface.
+Campbell's completed power-of-three formula supplies endpoints and parity
+at every index; its nonadditive recurrence does not have this integer
+two-child cap flow. That family remains a comparison for a complete
+selector interface, rather than a recipient of this counterconstruction.
