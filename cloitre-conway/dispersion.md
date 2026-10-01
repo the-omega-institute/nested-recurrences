@@ -19,6 +19,7 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 - [A logarithmic horizon from one retained child](#a-logarithmic-horizon-from-one-retained-child)
 - [Diophantine dispersion in cube-root Fibonacci neighborhoods](#diophantine-dispersion-in-cube-root-fibonacci-neighborhoods)
 - [Additive dispersion policies without orbit qualification](#additive-dispersion-policies-without-orbit-qualification)
+- [Two-split moment policies and cycle-average dispersion](#two-split-moment-policies-and-cycle-average-dispersion)
 - [Finite prefixes and exact collars do not force convergence](#finite-prefixes-and-exact-collars-do-not-force-convergence)
 - [Exact small-cap closure still does not force convergence](#exact-small-cap-closure-still-does-not-force-convergence)
 
@@ -891,7 +892,7 @@ m-generation blocks. At each block start choose an M_m maximizing
 policy, decreasing the remaining horizon along that block. All visited
 orders stay at least floor(j/2), so the inequality applies for large j.
 The X variance budget is at most1. The Z martingale and
-`0<=G(N)-alpha*N<alpha` imply at every block start
+`-alpha^2<G(N)-alpha*N<alpha` imply at every block start
 
 $$
 \mathbb E\frac{C(N)-G(N)}N
@@ -1033,6 +1034,269 @@ The checker also verifies the unique upper-cap knee split through
 order16 and its maximal-variance counterexamples at orders20,30,40,60,90.
 No prescribed-orbit or global-closure theorem is inferred from these
 policy experiments.
+
+### Two-split moment policies and cycle-average dispersion
+
+There is a larger sufficient interface for the asymptotic problem.
+A random split need only preserve or increase the scalar value **in
+expectation**. Individual choices may have a different complementary
+sum from C(N). The golden-defect orbit equations then give a quadratic
+cycle-average certificate, and a local linear program reduces any
+successful mixture to at most two splits.
+
+This is a proof policy for the already defined C. It does not replace
+its prescribed endpoint, determine C(N) from unknown children, or close
+the full recursive evaluation interface. Five digit labels do not
+supply the scalar profiles and context used below.
+
+**Moment-admissible policies.** At a closed state (j,N), let K_j(N)
+be all geometrically captured splits:
+
+$$
+K_j(N)=\{a:A\le a\le S,\ B\le N-a\le A\},
+\quad A=F_{j-1},\ B=F_{j-2},\ S=A+B.
+$$
+
+Put H(a)=C(a)+C(N-a). Choose weights w_a>=0 with
+
+$$
+\sum_a w_a=1,\qquad \sum_a w_a H(a)\ge C(N). \tag{M.1}
+$$
+
+After choosing a, descend to a or N-a with the usual size-biased
+probabilities. Preserve inherited labels and stop at orders4/5.
+The selected actual split makes (M.1) feasible at every internal state.
+
+Then X=F_j/N is still a martingale, and
+Z=(C(N)-alpha*N)/N is a submartingale. Indeed, every fixed split has
+conditional mean X equal to S/N, whereas the mean Z is
+`[sum(w_a*H(a))-alpha*N]/N`. If equality holds in (M.1), Z is a
+martingale. The conditional X variance is exactly
+
+$$
+\sum_a w_a\,v(j,N;a), \tag{M.2}
+$$
+
+since all splits have the same conditional X mean. There is no additional
+variance from randomizing between those means.
+
+Define E_0=0, with the same stopping convention as V, and
+
+$$
+E_m(j,N)=\max_{w\text{ satisfying (M.1)}}\sum_{a\in K_j(N)}w_a
+\left[v(j,N;a)+\frac aN E_{m-1}(j-1,a)
+                  +\frac{N-a}N E_{m-1}(j-2,N-a)\right]. \tag{M.3}
+$$
+
+Finite backward induction gives an attaining policy. In particular
+E_m>=M_m>=V_m, where M is the preceding scalar-valid Bellman maximum.
+If fixed m>=1,q>=1,kappa>0,J exist with
+
+$$
+E_m(j,N)\ge\kappa\left(\frac{C(N)-G(N)}N\right)^q
+\quad\text{for every closed actual-value state with }j\ge J, \tag{M.4}
+$$
+
+then C(n)-alpha*n=O(n/(log n)^(1/q)). The previous block proof applies:
+X has the same bounded total variance; the submartingale now gives
+E[Z at a block start]>=Z_0, which is the direction that proof needs.
+The upper rounding inequality G(N)-alpha*N<alpha gives the same
+lower bound on E[(C(N)-G(N))/N], and Jensen and L disjoint blocks
+finish the argument. This is a conditional theorem, not a verification
+of (M.4) or of a global rate.
+
+**At most two splits suffice, sharply.** More generally, supply any finite
+table of geometric splits, scalar readouts H_a and rational rewards R_a,
+with some H_a>=C(N). The maximum of sum(w_a R_a) under (M.1) is
+attained by either one split with H_a>=C(N), or two splits with
+
+$$
+H_-<C(N)<H_+,\qquad
+w_- =\frac{H_+-C(N)}{H_+-H_-},\qquad w_+=1-w_-. \tag{M.5}
+$$
+
+**Proof.** This is a compact finite linear program. An extreme optimum
+with a slack moment constraint has one positive coordinate. With a
+binding moment constraint it has at most two: three positive coordinates
+admit a nonzero perturbation preserving both normalization and the moment,
+so cannot form a vertex. A two-coordinate vertex must strictly bracket
+the target; an endpoint equality reduces to one coordinate. QED.
+
+Apply this to the bracketed reward in (M.3), at every occurrence and
+remaining horizon. Thus two splits suffice even for an optimal
+multi-generation policy. For a supplied five-phase table there are only
+five singleton and ten pair options. The readouts, rewards and target
+determine an optimizer by exact comparison, with a fixed tie rule;
+no additional phase or option label is needed in this supplied-table
+model. The weights are derived from the integer readouts. This is not
+a minimum total recursive payload or a random-bit sampling bound.
+The readout tables, parent value, scales, domains and actual qualifications
+remain resources. Each derived weight has O(log N)-bit integer numerator
+and denominator. Comparing multi-generation rewards also needs their
+exact rational representations; the support bound is not a full optimizer
+memory bound. One need not supply basin or depth-phase certificates for
+geometrically qualified alternatives.
+
+An actual five-cycle makes the two-support bound necessary. At N=313,
+the canonical prescribed cycle and its scalar readout are
+
+$$
+(182,190,185,186,191),\qquad H=(210,211,213,204,214),\qquad C(313)=211.
+$$
+
+Only phase190 individually preserves211. Among all single phases with
+H>=211, phase185 has the greatest local variance. Mixing phase182
+with weight2/3 and phase185 with weight1/3 preserves211 exactly and
+has still larger variance:
+
+$$
+\frac{71476778683}{27655598472320}
+>\frac{3869089}{2319905920}
+>\frac{321602}{1144767765}.
+$$
+
+Direct enumeration of the five singleton and ten pair options verifies
+that this mixture is optimal on that table. This is a conditional
+two-support minimum on the supplied cycle, not a claim about all
+geometric alternatives at N313.
+
+A hand-checkable optimality certificate uses S=233,A=144 in (9.22).
+Write v_182,v_185 for the two supporting variances and set
+L(H)=v_182+(H-210)(v_185-v_182)/3. The slope is negative, and
+direct substitution of the five indices shows v(x)<=L(H(x)) at every
+phase, with equality at182 and185. Every admissible mixture therefore
+has mean variance at most L(mean H)<=L(211), and the displayed mixture
+attains it. This proves optimality without assuming a numerical solver.
+Uniform sampling of this cycle has mean readout1052/5<211 and fails
+(M.1); the two-point mixture therefore also repairs a failed uniform
+mean condition.
+
+**An adjacent-phase quadratic identity.** For every captured pair
+x,y=N-C(x) in a closed block j>=6, set
+
+$$
+M(x)=AN-Sx,\quad p=A/S,\quad \sigma=A^2-SB\in\{-1,1\},
+\quad d(x)=C(x)-G(x).
+$$
+
+Then
+
+$$
+A M(x)+S M(y)=S^2 C(x)-ASx+\sigma N. \tag{M.6}
+$$
+
+Moreover their geometric split variances satisfy
+
+$$
+v(j,N;x)+v(j,N;y)\ge\frac1{10}\left(\frac{d(x)}N\right)^2. \tag{M.7}
+$$
+
+Neither scalar readout has to equal C(N) for (M.7).
+
+**Proof.** Equation (M.6) is substitution of y=N-C(x). Put
+h=C(x)-p*x+sigma*N/S^2, so p M(x)+M(y)=S h. Since
+v(j,N;x)>=4M(x)^2/N^4, Cauchy-Schwarz gives
+
+$$
+v(j,N;x)+v(j,N;y)
+\ge\frac{4S^2 h^2}{N^4(1+p^2)}\ge\frac{h^2}{N^2}. \tag{M.8}
+$$
+
+Here p<=5/8, N/S<=1+p, and (1+p)^2(1+p^2)<4. Correct
+golden rounding has -alpha^2<G(x)-alpha*x<alpha.
+Also |alpha-p|=alpha^j/S, x<=S, alpha^j<1/16,
+alpha^2<2/5 and N/S^2<=13/64, for j>=6. Consequently
+
+$$
+h>d(x)-\frac25-\frac1{16}-\frac{13}{64}
+=d(x)-\frac{213}{320}.
+$$
+
+For integral d(x)>=1, this is at least (107/320)d(x), whose
+squared coefficient exceeds1/10. For d(x)=0, (M.7) is simply
+nonnegativity. This proves the bound. QED.
+
+**Cycle-average certificate.** For any actual captured cycle
+x_0,...,x_(ell-1), sum (M.7) around it to obtain
+
+$$
+\frac1\ell\sum_i v(j,N;x_i)
+\ge\frac1{20\ell}\sum_i\left(\frac{d(x_i)}N\right)^2. \tag{M.9}
+$$
+
+If its supplied scalar table and first-child defects satisfy
+
+$$
+\frac1\ell\sum_i H(x_i)\ge C(N),\qquad
+\frac1\ell\sum_i d(x_i)\ge\theta\,[C(N)-G(N)] \tag{M.10}
+$$
+
+for theta>=0, uniform phase sampling is moment-admissible and Jensen gives
+
+$$
+E_1(j,N)\ge\frac{\theta^2}{20}
+             \left(\frac{C(N)-G(N)}N\right)^2. \tag{M.11}
+$$
+
+The two-split optimizer on that cycle attains at least this variance.
+For theta=1/2 the constant is1/80, independent of period and cap size.
+One can reconstruct an odd cycle using its
+[ordered golden-defect word](inverse-reconstruction.md#golden-defect-words-give-a-uniform-cyclic-decoder),
+then qualify its actual points, complementary values and (M.10).
+Those qualifications are additional information; uniqueness alone does
+not supply the mean conditions.
+
+The obstruction is visible even on a proper two-cycle. At N11213,
+the prescribed cycle is (6930,6868), its scalar readouts are (7030,7024),
+and C(11213)=7030. Condition (M.1) forces probability1 on6930 when
+restricted to this cycle. Its first-child defects are62,38 and the
+parent defect is100, but the high-variance second phase has a lower
+scalar readout. The cycle-policy quadratic ratio is only
+11/119924000. This finite small ratio is not an infinite counterexample
+to (M.4); it identifies why a cycle-average inequality alone is insufficient.
+
+There is an actual obstruction even in the full geometric domain at
+N125952. All4560 geometric readouts lie in[79210,79505], the actual
+value is79505, and only split77846 attains it. Thus (M.1) forces that
+split under every mixture. Its one-step quartic ratio is
+4645051457352564736/49606335160931882511<1, as in the earlier
+scalar-valid witness. The larger moment domain still does not give a
+one-step kappa1 criterion automatically; further generations or a
+different constant remain necessary.
+
+The upper-cap U counterfamily above is also an infinite obstruction to
+the enlarged moment criterion. At every knee N_j, every geometric scalar
+sum is at most U(N_j), and only the unique knee split attains it.
+Thus (M.1) forces all probability onto that split. Consequently
+E_m^U=M_m^U=O(F_j^(-4)) for each fixed m, while its relative golden
+defect has a positive limit. Random mixtures do not replace the missing
+actual-profile restrictions. This concerns U, not the actual C sequence.
+
+Campbell's endpoint recurrence does not have this scalar moment interface.
+At N5, b(5)=2 but all four complementary sums are4,3,3,4; even
+randomization cannot have mean b(5) in an additive martingale.
+Its exact endpoint/parity interface is separate.
+An inequality-only additive submartingale would be feasible there, but
+the Cloitre criterion relies on its proved nonnegative golden defects,
+which Campbell does not have; no Campbell rate follows from this comparison.
+
+The [checker](verification/selector_payload_check.py) compares the
+two-support optimizer with an independent full-simplex grid in small
+integer tables, checks the actual witnesses by literal endpoint iteration,
+and audits (M.6)--(M.11) over independently evaluated selected cycles.
+These computations corroborate the written theorems. The mean conditions
+fail at some actual roots; no uniform occupation, (M.4), global limit
+or decay exponent is asserted.
+
+The finite census through131071 checks677836 adjacent-phase pairs at
+131064 roots. Conditions (M.10) with theta=1/2 certify73864 positive-
+defect roots, including3661 proper five-cycles and block interiors;
+this is not a universal density theorem. Exact four-generation cycle
+policies through4096 improve on the scalar-valid cycle maximum at1881
+of3936 positive-defect roots. Their minimum quadratic ratio is
+1677629509156595629/2454936662461732020, at1886, below1.
+The broader geometric policy domain is separate and contains the
+previous scalar-valid policies; neither finite comparison proves (M.4).
 
 ### Finite prefixes and exact collars do not force convergence
 

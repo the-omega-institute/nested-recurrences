@@ -337,3 +337,11 @@ The shared [selector checker](../cloitre-conway/verification/selector_payload_ch
 independently evaluates Campbell's first32 terms by literal iteration and
 checks the displayed three-solution inverse. The sharpness statement
 follows directly from the three equations at N=5, without extrapolation.
+
+The [two-split moment policy](../cloitre-conway/dispersion.md#two-split-moment-policies-and-cycle-average-dispersion)
+is a different asymptotic contract for Cloitre's additive readout. Even
+its exact-mean variant fails for Campbell at N5: b(5)=2, while all
+four complementary sums are4,3,3,4, so no mixture has mean2.
+The inequality-only variant would be feasible, but Campbell lacks the
+nonnegative golden-defect hypothesis used by the Cloitre criterion.
+Short cycles alone do not transfer its global rate argument.

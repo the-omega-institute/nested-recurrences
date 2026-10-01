@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_sha256": "8d9403c02f779f7cdc48deefadebc73a55b58156a73840603ecf156722f31311",
+  "source_sha256": "49c35462de2313bf2ff018c16a82cee1131a125aa211e25a90dbbe62b1095674",
   "scope": "Exact public three-block selector audit, recursive nonautonomous window descent and conserved conditional seed-label budgets. Row-local Cartesian decompositions remain distinct from actual selected splits and their proof costs.",
   "period_five_payloads": 13,
   "parent_rows": 65,
@@ -3830,6 +3830,188 @@
       "campbell_literal_updates": 298,
       "floor_evaluations": 9670456,
       "scope": "Conditional golden-defect reconstruction; odd uniqueness and even three-candidate bound are written infinite theorems. Independent full-orbit/Brent prefix supports these finite checks. Point defects and actual basin/depth are not constructed by the decoder."
+    },
+    "moment_dispersion": {
+      "synthetic_simplex": {
+        "contexts": 7525,
+        "grid_denominator": 12,
+        "full_simplex_grid_points": 183881,
+        "lengths": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "infeasible_contexts": 1733,
+        "attaining_two_support_contexts": 588,
+        "scope": "Independent full-simplex grid includes supports of size3/4. Integer readout differences divide12, so every two-support extreme optimum is present; exact rational objective and feasibility match."
+      },
+      "selected_limit": 131071,
+      "selected_root_counts": {
+        "mean_retains_half": 129079,
+        "mean_scalar_submartingale": 74066,
+        "positive_quadratic_certificates": 73864,
+        "roots": 131064
+      },
+      "adjacent_phase_checks": 677836,
+      "qualified_period_histogram": {
+        "1": 15462,
+        "2": 19926,
+        "3": 5107,
+        "4": 7757,
+        "5": 3661,
+        "6": 4680,
+        "7": 2571,
+        "8": 3145,
+        "9": 1859,
+        "10": 2030,
+        "11": 1329,
+        "12": 1267,
+        "13": 846,
+        "14": 927,
+        "15": 560,
+        "16": 574,
+        "17": 390,
+        "18": 394,
+        "19": 281,
+        "20": 224,
+        "21": 177,
+        "22": 157,
+        "23": 101,
+        "24": 104,
+        "25": 73,
+        "26": 62,
+        "27": 42,
+        "28": 27,
+        "29": 17,
+        "30": 23,
+        "31": 19,
+        "32": 25,
+        "33": 8,
+        "34": 13,
+        "35": 6,
+        "36": 5,
+        "38": 6,
+        "40": 5,
+        "42": 1,
+        "43": 1,
+        "45": 1,
+        "46": 1
+      },
+      "maximum_certified_interior_golden_defect": {
+        "index": 97394,
+        "order": 25,
+        "golden_defect": 4366,
+        "period": 1,
+        "mean_readout": "64559",
+        "target": 64559,
+        "mean_first_defect": "2679",
+        "mean_variance": "15432239948605489/21575662211339560324",
+        "distance_to_nearest_anchor": 22369
+      },
+      "witnesses": [
+        {
+          "index": 313,
+          "target": 211,
+          "selected_split": 190,
+          "golden_defect": 17,
+          "cycle": [
+            182,
+            190,
+            185,
+            186,
+            191
+          ],
+          "readouts": [
+            210,
+            211,
+            213,
+            204,
+            214
+          ],
+          "variances": [
+            "3553778/1167888449",
+            "321602/1144767765",
+            "3869089/2319905920",
+            "501126/385703953",
+            "323761/2282873638"
+          ],
+          "optimal_variance": "71476778683/27655598472320",
+          "support": [
+            {
+              "split": 182,
+              "weight": "2/3"
+            },
+            {
+              "split": 185,
+              "weight": "1/3"
+            }
+          ],
+          "individually_scalar_valid_maximum": "321602/1144767765",
+          "nonnegative_drift_singleton_maximum": "3869089/2319905920",
+          "affine_optimality_certificate": {
+            "slope": "-40500589/88356544640",
+            "intercept": "274625717801/2765559847232"
+          }
+        },
+        {
+          "index": 11213,
+          "target": 7030,
+          "selected_split": 6930,
+          "golden_defect": 100,
+          "cycle": [
+            6868,
+            6930
+          ],
+          "readouts": [
+            7024,
+            7030
+          ],
+          "variances": [
+            "460792519489/3752007618758740",
+            "55/7539104347978"
+          ],
+          "optimal_variance": "55/7539104347978",
+          "support": [
+            {
+              "split": 6930,
+              "weight": "1"
+            }
+          ],
+          "individually_scalar_valid_maximum": "55/7539104347978",
+          "nonnegative_drift_singleton_maximum": "55/7539104347978"
+        }
+      ],
+      "four_generation_cycle_policy": {
+        "limit": 4096,
+        "positive_roots": 3936,
+        "strict_improvements_over_scalar_valid": 1881,
+        "optimal_support_histogram": {
+          "1": 8334,
+          "2": 496
+        },
+        "minimum_quadratic_ratio": {
+          "index": 1886,
+          "variance": "6710518036626382516/4510433826771555241845",
+          "ratio": "1677629509156595629/2454936662461732020",
+          "scalar_variance": "6710518036626382516/4510433826771555241845",
+          "actual_variance": "16348627373319931/11331073600578755595"
+        }
+      },
+      "upper_cap_knee_contexts": 618,
+      "actual_geometric_moment_bottleneck": {
+        "index": 125952,
+        "target": 79505,
+        "geometric_splits": 4560,
+        "readout_range": [
+          79210,
+          79505
+        ],
+        "only_moment_admissible_split": 77846,
+        "golden_defect": 1662,
+        "quartic_ratio": "4645051457352564736/49606335160931882511"
+      },
+      "scope": "Written paired and cycle-average quadratic bounds plus moment-submartingale decay criterion and sharp two-support conditional optimizer. Finite audits verify supplied mean conditions, not a uniform global inequality; original selector is unchanged."
     },
     "selected_phase_readouts": {
       "abstract_ternary_output_words": 9840,
