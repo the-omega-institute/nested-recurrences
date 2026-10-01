@@ -1,6 +1,6 @@
 {
   "status": "Exact two-collar seeds and finite corroboration; fibonacci-collars.md Sections 1-4 use golden-proof.md, and Section 6 adds the recorded seed premises; no Lean formalization.",
-  "source_sha256": "878c6f14942a2fb43bad9399cdba54ccf02ca581b2f99d3c57521855aed74aa5",
+  "source_sha256": "1ee19fecaa022867ee59029d757d7fc491c1ac4f646fd47f024aa09b199a7930",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -1208,6 +1208,1036 @@
       }
     ],
     "scope": "The uniform basin and phase rule follows from the proved cap, exact equality set and linear collar, not these finite checks. Floor checks beyond the sequence prefix use integer square roots only. Boundary records are finite actual iterations, not a uniform phase rule at orders22/23. No global five-cycle phase theorem or minimum complete proof size is claimed."
+  },
+  "saturated_fibonacci_profiles": {
+    "width": 32,
+    "universal_profile_orders": "j >= 23",
+    "profile_lower_bound": "P_j(u) >= min(u,32) on the entire closed natural block",
+    "additional_seed_value_count": 36,
+    "seeds": [
+      {
+        "order": 23,
+        "offsets_inclusive": [
+          33,
+          50
+        ],
+        "relative_values": [
+          32,
+          34,
+          35,
+          36,
+          36,
+          38,
+          39,
+          40,
+          38,
+          39,
+          43,
+          44,
+          42,
+          43,
+          47,
+          48,
+          46,
+          50
+        ]
+      },
+      {
+        "order": 24,
+        "offsets_inclusive": [
+          33,
+          50
+        ],
+        "relative_values": [
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50
+        ]
+      }
+    ],
+    "arithmetic_floor_orders_inclusive": [
+      23,
+      480
+    ],
+    "arithmetic_floor_offset": 51,
+    "profile_rows": [
+      {
+        "order": 23,
+        "offsets_inclusive": [
+          0,
+          17711
+        ],
+        "whole_closed_block": true
+      },
+      {
+        "order": 24,
+        "offsets_inclusive": [
+          0,
+          28657
+        ],
+        "whole_closed_block": true
+      },
+      {
+        "order": 25,
+        "offsets_inclusive": [
+          0,
+          46368
+        ],
+        "whole_closed_block": true
+      },
+      {
+        "order": 26,
+        "offsets_inclusive": [
+          0,
+          9678
+        ],
+        "whole_closed_block": false
+      }
+    ],
+    "abstract_cycle_bound": {
+      "exhaustive_capped_saturated_profiles": 4375,
+      "proper_cycles_checked": 282,
+      "saturation_widths": [
+        0,
+        4
+      ],
+      "maximum_scale_rule": "width+5",
+      "sharp_spatial_and_defect_examples": [
+        {
+          "width": 0,
+          "scale": 3,
+          "cycle": [
+            2,
+            1,
+            3
+          ],
+          "defect_cost": 3
+        },
+        {
+          "width": 0,
+          "scale": 4,
+          "cycle": [
+            1,
+            3,
+            2,
+            4
+          ],
+          "defect_cost": 4
+        },
+        {
+          "width": 0,
+          "scale": 5,
+          "cycle": [
+            3,
+            2,
+            4,
+            1,
+            5
+          ],
+          "defect_cost": 5
+        },
+        {
+          "width": 0,
+          "scale": 6,
+          "cycle": [
+            1,
+            5,
+            2,
+            4,
+            3,
+            6
+          ],
+          "defect_cost": 6
+        },
+        {
+          "width": 0,
+          "scale": 7,
+          "cycle": [
+            4,
+            3,
+            5,
+            2,
+            6,
+            1,
+            7
+          ],
+          "defect_cost": 7
+        },
+        {
+          "width": 0,
+          "scale": 8,
+          "cycle": [
+            1,
+            7,
+            2,
+            6,
+            3,
+            5,
+            4,
+            8
+          ],
+          "defect_cost": 8
+        },
+        {
+          "width": 0,
+          "scale": 9,
+          "cycle": [
+            5,
+            4,
+            6,
+            3,
+            7,
+            2,
+            8,
+            1,
+            9
+          ],
+          "defect_cost": 9
+        },
+        {
+          "width": 0,
+          "scale": 10,
+          "cycle": [
+            1,
+            9,
+            2,
+            8,
+            3,
+            7,
+            4,
+            6,
+            5,
+            10
+          ],
+          "defect_cost": 10
+        },
+        {
+          "width": 0,
+          "scale": 11,
+          "cycle": [
+            6,
+            5,
+            7,
+            4,
+            8,
+            3,
+            9,
+            2,
+            10,
+            1,
+            11
+          ],
+          "defect_cost": 11
+        },
+        {
+          "width": 0,
+          "scale": 12,
+          "cycle": [
+            1,
+            11,
+            2,
+            10,
+            3,
+            9,
+            4,
+            8,
+            5,
+            7,
+            6,
+            12
+          ],
+          "defect_cost": 12
+        },
+        {
+          "width": 1,
+          "scale": 5,
+          "cycle": [
+            3,
+            2,
+            4
+          ],
+          "defect_cost": 3
+        },
+        {
+          "width": 1,
+          "scale": 6,
+          "cycle": [
+            2,
+            4,
+            3,
+            5
+          ],
+          "defect_cost": 4
+        },
+        {
+          "width": 1,
+          "scale": 7,
+          "cycle": [
+            4,
+            3,
+            5,
+            2,
+            6
+          ],
+          "defect_cost": 5
+        },
+        {
+          "width": 1,
+          "scale": 8,
+          "cycle": [
+            2,
+            6,
+            3,
+            5,
+            4,
+            7
+          ],
+          "defect_cost": 6
+        },
+        {
+          "width": 1,
+          "scale": 9,
+          "cycle": [
+            5,
+            4,
+            6,
+            3,
+            7,
+            2,
+            8
+          ],
+          "defect_cost": 7
+        },
+        {
+          "width": 1,
+          "scale": 10,
+          "cycle": [
+            2,
+            8,
+            3,
+            7,
+            4,
+            6,
+            5,
+            9
+          ],
+          "defect_cost": 8
+        },
+        {
+          "width": 1,
+          "scale": 11,
+          "cycle": [
+            6,
+            5,
+            7,
+            4,
+            8,
+            3,
+            9,
+            2,
+            10
+          ],
+          "defect_cost": 9
+        },
+        {
+          "width": 1,
+          "scale": 12,
+          "cycle": [
+            2,
+            10,
+            3,
+            9,
+            4,
+            8,
+            5,
+            7,
+            6,
+            11
+          ],
+          "defect_cost": 10
+        },
+        {
+          "width": 1,
+          "scale": 13,
+          "cycle": [
+            7,
+            6,
+            8,
+            5,
+            9,
+            4,
+            10,
+            3,
+            11,
+            2,
+            12
+          ],
+          "defect_cost": 11
+        },
+        {
+          "width": 1,
+          "scale": 14,
+          "cycle": [
+            2,
+            12,
+            3,
+            11,
+            4,
+            10,
+            5,
+            9,
+            6,
+            8,
+            7,
+            13
+          ],
+          "defect_cost": 12
+        },
+        {
+          "width": 32,
+          "scale": 67,
+          "cycle": [
+            34,
+            33,
+            35
+          ],
+          "defect_cost": 3
+        },
+        {
+          "width": 32,
+          "scale": 68,
+          "cycle": [
+            33,
+            35,
+            34,
+            36
+          ],
+          "defect_cost": 4
+        },
+        {
+          "width": 32,
+          "scale": 69,
+          "cycle": [
+            35,
+            34,
+            36,
+            33,
+            37
+          ],
+          "defect_cost": 5
+        },
+        {
+          "width": 32,
+          "scale": 70,
+          "cycle": [
+            33,
+            37,
+            34,
+            36,
+            35,
+            38
+          ],
+          "defect_cost": 6
+        },
+        {
+          "width": 32,
+          "scale": 71,
+          "cycle": [
+            36,
+            35,
+            37,
+            34,
+            38,
+            33,
+            39
+          ],
+          "defect_cost": 7
+        },
+        {
+          "width": 32,
+          "scale": 72,
+          "cycle": [
+            33,
+            39,
+            34,
+            38,
+            35,
+            37,
+            36,
+            40
+          ],
+          "defect_cost": 8
+        },
+        {
+          "width": 32,
+          "scale": 73,
+          "cycle": [
+            37,
+            36,
+            38,
+            35,
+            39,
+            34,
+            40,
+            33,
+            41
+          ],
+          "defect_cost": 9
+        },
+        {
+          "width": 32,
+          "scale": 74,
+          "cycle": [
+            33,
+            41,
+            34,
+            40,
+            35,
+            39,
+            36,
+            38,
+            37,
+            42
+          ],
+          "defect_cost": 10
+        },
+        {
+          "width": 32,
+          "scale": 75,
+          "cycle": [
+            38,
+            37,
+            39,
+            36,
+            40,
+            35,
+            41,
+            34,
+            42,
+            33,
+            43
+          ],
+          "defect_cost": 11
+        },
+        {
+          "width": 32,
+          "scale": 76,
+          "cycle": [
+            33,
+            43,
+            34,
+            42,
+            35,
+            41,
+            36,
+            40,
+            37,
+            39,
+            38,
+            44
+          ],
+          "defect_cost": 12
+        }
+      ],
+      "scope": "Complete small capped/saturated profile enumeration and abstract sharp constructions. These profiles are not claimed to be C or to satisfy its recurrence."
+    },
+    "proper_cycle_offset_domain": "33 <= u <= t-32",
+    "intersected_proper_cycle_domain": "max(33,t-F_(k-3)) <= u <= min(t-32,F_(k-2))",
+    "proper_period_bound": "p <= t-64 for every p>=3, k>=24",
+    "five_cycle_requires_offset_at_least": 69,
+    "all_start_extra_graph_offsets": [
+      33,
+      66
+    ],
+    "all_start_extra_graphs": 102,
+    "all_start_extra_vertices": 8259671,
+    "selected_proper_cycles_checked": 53779,
+    "selected_five_cycles_checked": 4753,
+    "first_selected_five_per_order": [
+      {
+        "order": 24,
+        "index": 47625,
+        "offset": 1257,
+        "cycle_offsets": [
+          643,
+          631,
+          632,
+          633,
+          639
+        ]
+      },
+      {
+        "order": 25,
+        "index": 78036,
+        "offset": 3011,
+        "cycle_offsets": [
+          1515,
+          1537,
+          1512,
+          1526,
+          1527
+        ]
+      },
+      {
+        "order": 26,
+        "index": 123617,
+        "offset": 2224,
+        "cycle_offsets": [
+          1130,
+          1101,
+          1138,
+          1102,
+          1133
+        ]
+      }
+    ],
+    "extended_selected_phase_offsets": [
+      1,
+      32
+    ],
+    "additional_phase_orbits": [
+      {
+        "order": 24,
+        "offset": 22,
+        "transient": 14,
+        "entry_offset": 22,
+        "selected_offset": 22
+      },
+      {
+        "order": 24,
+        "offset": 23,
+        "transient": 14,
+        "entry_offset": 23,
+        "selected_offset": 0
+      },
+      {
+        "order": 24,
+        "offset": 24,
+        "transient": 14,
+        "entry_offset": 24,
+        "selected_offset": 24
+      },
+      {
+        "order": 24,
+        "offset": 25,
+        "transient": 14,
+        "entry_offset": 25,
+        "selected_offset": 0
+      },
+      {
+        "order": 24,
+        "offset": 26,
+        "transient": 14,
+        "entry_offset": 26,
+        "selected_offset": 26
+      },
+      {
+        "order": 24,
+        "offset": 27,
+        "transient": 14,
+        "entry_offset": 27,
+        "selected_offset": 0
+      },
+      {
+        "order": 24,
+        "offset": 28,
+        "transient": 14,
+        "entry_offset": 28,
+        "selected_offset": 28
+      },
+      {
+        "order": 24,
+        "offset": 29,
+        "transient": 14,
+        "entry_offset": 29,
+        "selected_offset": 0
+      },
+      {
+        "order": 24,
+        "offset": 30,
+        "transient": 14,
+        "entry_offset": 30,
+        "selected_offset": 30
+      },
+      {
+        "order": 24,
+        "offset": 31,
+        "transient": 14,
+        "entry_offset": 31,
+        "selected_offset": 0
+      },
+      {
+        "order": 24,
+        "offset": 32,
+        "transient": 13,
+        "entry_offset": 0,
+        "selected_offset": 32
+      },
+      {
+        "order": 25,
+        "offset": 22,
+        "transient": 14,
+        "entry_offset": 22,
+        "selected_offset": 0
+      },
+      {
+        "order": 25,
+        "offset": 23,
+        "transient": 14,
+        "entry_offset": 23,
+        "selected_offset": 23
+      },
+      {
+        "order": 25,
+        "offset": 24,
+        "transient": 14,
+        "entry_offset": 24,
+        "selected_offset": 0
+      },
+      {
+        "order": 25,
+        "offset": 25,
+        "transient": 14,
+        "entry_offset": 25,
+        "selected_offset": 25
+      },
+      {
+        "order": 25,
+        "offset": 26,
+        "transient": 14,
+        "entry_offset": 26,
+        "selected_offset": 0
+      },
+      {
+        "order": 25,
+        "offset": 27,
+        "transient": 14,
+        "entry_offset": 27,
+        "selected_offset": 27
+      },
+      {
+        "order": 25,
+        "offset": 28,
+        "transient": 14,
+        "entry_offset": 28,
+        "selected_offset": 0
+      },
+      {
+        "order": 25,
+        "offset": 29,
+        "transient": 14,
+        "entry_offset": 29,
+        "selected_offset": 29
+      },
+      {
+        "order": 25,
+        "offset": 30,
+        "transient": 14,
+        "entry_offset": 30,
+        "selected_offset": 0
+      },
+      {
+        "order": 25,
+        "offset": 31,
+        "transient": 14,
+        "entry_offset": 31,
+        "selected_offset": 31
+      },
+      {
+        "order": 25,
+        "offset": 32,
+        "transient": 14,
+        "entry_offset": 32,
+        "selected_offset": 0
+      },
+      {
+        "order": 26,
+        "offset": 22,
+        "transient": 14,
+        "entry_offset": 22,
+        "selected_offset": 22
+      },
+      {
+        "order": 26,
+        "offset": 23,
+        "transient": 14,
+        "entry_offset": 23,
+        "selected_offset": 0
+      },
+      {
+        "order": 26,
+        "offset": 24,
+        "transient": 14,
+        "entry_offset": 24,
+        "selected_offset": 24
+      },
+      {
+        "order": 26,
+        "offset": 25,
+        "transient": 14,
+        "entry_offset": 25,
+        "selected_offset": 0
+      },
+      {
+        "order": 26,
+        "offset": 26,
+        "transient": 14,
+        "entry_offset": 26,
+        "selected_offset": 26
+      },
+      {
+        "order": 26,
+        "offset": 27,
+        "transient": 14,
+        "entry_offset": 27,
+        "selected_offset": 0
+      },
+      {
+        "order": 26,
+        "offset": 28,
+        "transient": 14,
+        "entry_offset": 28,
+        "selected_offset": 28
+      },
+      {
+        "order": 26,
+        "offset": 29,
+        "transient": 14,
+        "entry_offset": 29,
+        "selected_offset": 0
+      },
+      {
+        "order": 26,
+        "offset": 30,
+        "transient": 14,
+        "entry_offset": 30,
+        "selected_offset": 30
+      },
+      {
+        "order": 26,
+        "offset": 31,
+        "transient": 14,
+        "entry_offset": 31,
+        "selected_offset": 0
+      },
+      {
+        "order": 26,
+        "offset": 32,
+        "transient": 14,
+        "entry_offset": 32,
+        "selected_offset": 32
+      }
+    ],
+    "additional_literal_selected_updates": 2088712,
+    "additional_boundary_records": [
+      {
+        "order": 22,
+        "offset": 22,
+        "value": 10968,
+        "selected_split": 10946
+      },
+      {
+        "order": 22,
+        "offset": 23,
+        "value": 10969,
+        "selected_split": 10969
+      },
+      {
+        "order": 22,
+        "offset": 24,
+        "value": 10970,
+        "selected_split": 10946
+      },
+      {
+        "order": 22,
+        "offset": 25,
+        "value": 10971,
+        "selected_split": 10971
+      },
+      {
+        "order": 22,
+        "offset": 26,
+        "value": 10972,
+        "selected_split": 10946
+      },
+      {
+        "order": 22,
+        "offset": 27,
+        "value": 10973,
+        "selected_split": 10973
+      },
+      {
+        "order": 22,
+        "offset": 28,
+        "value": 10974,
+        "selected_split": 10946
+      },
+      {
+        "order": 22,
+        "offset": 29,
+        "value": 10975,
+        "selected_split": 10975
+      },
+      {
+        "order": 22,
+        "offset": 30,
+        "value": 10976,
+        "selected_split": 10946
+      },
+      {
+        "order": 22,
+        "offset": 31,
+        "value": 10977,
+        "selected_split": 10977
+      },
+      {
+        "order": 22,
+        "offset": 32,
+        "value": 10978,
+        "selected_split": 10946
+      },
+      {
+        "order": 23,
+        "offset": 22,
+        "value": 17733,
+        "selected_split": 17733
+      },
+      {
+        "order": 23,
+        "offset": 23,
+        "value": 17734,
+        "selected_split": 17711
+      },
+      {
+        "order": 23,
+        "offset": 24,
+        "value": 17735,
+        "selected_split": 17735
+      },
+      {
+        "order": 23,
+        "offset": 25,
+        "value": 17736,
+        "selected_split": 17711
+      },
+      {
+        "order": 23,
+        "offset": 26,
+        "value": 17737,
+        "selected_split": 17737
+      },
+      {
+        "order": 23,
+        "offset": 27,
+        "value": 17738,
+        "selected_split": 17711
+      },
+      {
+        "order": 23,
+        "offset": 28,
+        "value": 17739,
+        "selected_split": 17739
+      },
+      {
+        "order": 23,
+        "offset": 29,
+        "value": 17740,
+        "selected_split": 17711
+      },
+      {
+        "order": 23,
+        "offset": 30,
+        "value": 17741,
+        "selected_split": 17741
+      },
+      {
+        "order": 23,
+        "offset": 31,
+        "value": 17742,
+        "selected_split": 17711
+      },
+      {
+        "order": 23,
+        "offset": 32,
+        "value": 17743,
+        "selected_split": 17743
+      }
+    ],
+    "wider_collar_failure_witnesses": [
+      {
+        "order": 24,
+        "offset": 33,
+        "index": 46401,
+        "cycle_offsets": [
+          1,
+          32
+        ],
+        "transient": 15,
+        "actual_depth": 28689,
+        "linear_depth_prediction": 28689,
+        "actual_selected_offset": 1,
+        "collar_selected_offset_prediction": 0,
+        "root_value": 28690,
+        "cycle_value_outputs": [
+          28690,
+          28690
+        ]
+      },
+      {
+        "order": 25,
+        "offset": 42,
+        "index": 75067,
+        "cycle_offsets": [
+          42,
+          0
+        ],
+        "transient": 14,
+        "actual_depth": 46409,
+        "linear_depth_prediction": 46409,
+        "actual_selected_offset": 0,
+        "collar_selected_offset_prediction": 0,
+        "root_value": 46407,
+        "cycle_value_outputs": [
+          46410,
+          46407
+        ]
+      },
+      {
+        "order": 25,
+        "offset": 43,
+        "index": 75068,
+        "cycle_offsets": [
+          43,
+          0
+        ],
+        "transient": 14,
+        "actual_depth": 46407,
+        "linear_depth_prediction": 46410,
+        "actual_selected_offset": 0,
+        "collar_selected_offset_prediction": 43,
+        "root_value": 46411,
+        "cycle_value_outputs": [
+          46411,
+          46411
+        ]
+      }
+    ],
+    "scope": "General two-scale saturation induction plus a minimum/maximum cycle argument. The36 extra seeds and earlier exact collar seeds are finite premises; all-start and selected-cycle checks are corroboration. The extended endpoint rule proves actual basin and phase on offsets1..32, with possible odd entry at the lower endpoint when t=32. Recursive nonautonomous windows in0..32 have arithmetic splits, but the spatial period bound applies only to autonomous constant-parameter cycles. No wider-arch phase classification or full minimum closure theorem is claimed."
   },
   "quantitative_capture": {
     "anchor_drop_formula": "F_(j-1)-C(F_j-d) <= floor(2*d/3), j>=5, 1<=d<F_j",

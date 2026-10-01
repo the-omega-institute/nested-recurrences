@@ -320,6 +320,205 @@ def selected_collar_phase_audit(sequence, splits, fibonacci, zeros):
                 scope='The uniform basin and phase rule follows from the proved cap, exact equality set and linear collar, not these finite checks. Floor checks beyond the sequence prefix use integer square roots only. Boundary records are finite actual iterations, not a uniform phase rule at orders22/23. No global five-cycle phase theorem or minimum complete proof size is claimed.')
 
 
+def capped_profile_cycles(profile, scale):
+    completed = set()
+    cycles = []
+    for start in range(scale + 1):
+        if start in completed:
+            continue
+        positions = {}
+        path = []
+        point = start
+        while point not in completed and point not in positions:
+            positions[point] = len(path)
+            path.append(point)
+            point = scale - profile[point]
+            assert 0 <= point <= scale
+        if point in positions:
+            cycles.append(tuple(path[positions[point]:]))
+        completed.update(path)
+    return cycles
+
+
+def saturated_profile_abstract_audit():
+    contexts = 0
+    proper_cycles = 0
+    for width in range(5):
+        for scale in range(width + 6):
+            for profile in product(*(range(min(point, width), point + 1)
+                                     for point in range(scale + 1))):
+                for cycle in capped_profile_cycles(profile, scale):
+                    if len(cycle) >= 3:
+                        assert min(cycle) > width and max(cycle) <= scale - width
+                        assert len(cycle) <= scale - 2 * width
+                        proper_cycles += 1
+                contexts += 1
+    sharp = []
+    for width in (0, 1, 32):
+        for period in range(3, 13):
+            if period % 2:
+                centred = tuple(value for amplitude in range(1, period, 2)
+                                for value in (amplitude, -amplitude)) + (period,)
+            else:
+                centred = tuple(value for amplitude in range(period - 2, 0, -2)
+                                for value in (-amplitude, amplitude)) + (0, period)
+            cycle = tuple(width + (period + value) // 2 for value in centred)
+            scale = 2 * width + period
+            profile = list(range(scale + 1))
+            for position, point in enumerate(cycle):
+                profile[point] = scale - cycle[(position + 1) % period]
+            assert all(min(point, width) <= value <= point for point, value in enumerate(profile))
+            assert len(set(cycle)) == period and min(cycle) == width + 1
+            assert max(cycle) == scale - width and len(cycle) == scale - 2 * width
+            assert all(scale - profile[point] == cycle[(position + 1) % period]
+                       for position, point in enumerate(cycle))
+            cost = sum(point - profile[point] for point in cycle)
+            assert cost == period
+            sharp.append(dict(width=width, scale=scale, cycle=list(cycle), defect_cost=cost))
+    return dict(exhaustive_capped_saturated_profiles=contexts, proper_cycles_checked=proper_cycles,
+                saturation_widths=[0, 4], maximum_scale_rule='width+5',
+                sharp_spatial_and_defect_examples=sharp,
+                scope='Complete small capped/saturated profile enumeration and abstract sharp constructions. These profiles are not claimed to be C or to satisfy its recurrence.')
+
+
+def saturated_profile_audit(sequence, periods, splits, fibonacci):
+    width = 32
+    seeds = []
+    for order in (23, 24):
+        values = [sequence[fibonacci[order] + offset] - fibonacci[order - 1]
+                  for offset in range(33, 51)]
+        assert min(values) >= width
+        seeds.append(dict(order=order, offsets_inclusive=[33, 50], relative_values=values))
+    arithmetic_fibonacci = fibonacci_values(10 ** 100)
+    arithmetic_orders = []
+    for order in range(23, len(arithmetic_fibonacci) - 1):
+        assert g_closed(arithmetic_fibonacci[order] + 51) >= arithmetic_fibonacci[order - 1] + width
+        arithmetic_orders.append(order)
+    profile_rows = []
+    for order in range(23, len(fibonacci)):
+        anchor = fibonacci[order]
+        if anchor >= len(sequence):
+            break
+        stop = min(fibonacci[order + 1], len(sequence) - 1)
+        assert all(sequence[point] - fibonacci[order - 1] >= min(point - anchor, width)
+                   for point in range(anchor, stop + 1))
+        profile_rows.append(dict(order=order, offsets_inclusive=[0, stop - anchor],
+                                 whole_closed_block=stop == fibonacci[order + 1]))
+    extra_phases = []
+    literal_updates = 0
+    all_start_graphs = 0
+    all_start_vertices = 0
+    for order in range(24, len(fibonacci)):
+        if fibonacci[order] + 66 >= len(sequence):
+            break
+        anchor = fibonacci[order - 1]
+        for offset in range(33, 67):
+            index = fibonacci[order] + offset
+            cycles = all_cycles(sequence, index, (anchor, anchor + offset))
+            assert all(len(cycle) <= 2 for cycle in cycles)
+            all_start_graphs += 1
+            all_start_vertices += index - 1
+        for offset in range(22, 33):
+            index = fibonacci[order] + offset
+            trajectory, transient, period = full_orbit(sequence, index)
+            entry = trajectory[transient] - anchor
+            assert period == 2 and set(trajectory[transient:]) == {anchor, anchor + offset}
+            assert (entry == offset and transient % 2 == 0) or (entry == 0 and transient % 2 == 1)
+            if offset < width:
+                assert entry == offset and transient % 2 == 0
+            expected = anchor + offset if (anchor + offset) % 2 else anchor
+            argument = index - 1
+            depth = sequence[index - 1]
+            for iteration in range(depth):
+                argument = index - sequence[argument]
+            assert argument == expected == splits[index]
+            literal_updates += depth
+            extra_phases.append(dict(order=order, offset=offset, transient=transient,
+                                     entry_offset=entry, selected_offset=expected - anchor))
+    selected_proper_cycles = 0
+    selected_five_cycles = 0
+    first_five_per_order = {}
+    for index in range(fibonacci[24], len(sequence)):
+        if periods[index] < 3:
+            continue
+        order = bisect.bisect_right(fibonacci, index) - 1
+        offset = index - fibonacci[order]
+        trajectory, transient, period = full_orbit(sequence, index)
+        cycle = tuple(point - fibonacci[order - 1] for point in trajectory[transient:])
+        assert min(cycle) > width and max(cycle) <= offset - width
+        assert period <= offset - 2 * width
+        lower = max(width + 1, offset - fibonacci[order - 3])
+        upper = min(offset - width, fibonacci[order - 2])
+        assert lower <= min(cycle) <= max(cycle) <= upper
+        assert period <= upper - lower + 1
+        if period == 5:
+            selected_five_cycles += 1
+            first_five_per_order.setdefault(order, dict(order=order, index=index, offset=offset,
+                                                        cycle_offsets=list(cycle)))
+        selected_proper_cycles += 1
+    extra_boundary = []
+    for order in (22, 23):
+        for offset in range(22, 33):
+            index = fibonacci[order] + offset
+            argument = index - 1
+            for iteration in range(sequence[index - 1]):
+                argument = index - sequence[argument]
+            assert argument == splits[index]
+            literal_updates += sequence[index - 1]
+            extra_boundary.append(dict(order=order, offset=offset, value=sequence[index],
+                                       selected_split=argument))
+    boundary_failures = []
+    for order, offset, expected_index in ((24, 33, 46401), (25, 42, 75067), (25, 43, 75068)):
+        index = fibonacci[order] + offset
+        assert index == expected_index
+        anchor = fibonacci[order - 1]
+        trajectory, transient, period = full_orbit(sequence, index)
+        cycle = trajectory[transient:]
+        depth = sequence[index - 1]
+        argument = index - 1
+        for iteration in range(depth):
+            argument = index - sequence[argument]
+        assert argument == splits[index] and period == 2
+        literal_updates += depth
+        outputs = [sequence[point] + sequence[index - point] for point in cycle]
+        predicted = anchor + offset if (anchor + offset) % 2 else anchor
+        boundary_failures.append(dict(order=order, offset=offset, index=index,
+                                      cycle_offsets=[point - anchor for point in cycle],
+                                      transient=transient, actual_depth=depth,
+                                      linear_depth_prediction=anchor + offset - 1,
+                                      actual_selected_offset=argument - anchor,
+                                      collar_selected_offset_prediction=predicted - anchor,
+                                      root_value=sequence[index], cycle_value_outputs=outputs))
+    assert boundary_failures[0]['cycle_offsets'] == [1, 32]
+    assert boundary_failures[0]['actual_selected_offset'] == 1
+    assert len(set(boundary_failures[0]['cycle_value_outputs'])) == 1
+    assert boundary_failures[1]['cycle_offsets'] == [42, 0]
+    assert boundary_failures[1]['cycle_value_outputs'] == [46410, 46407]
+    assert boundary_failures[2]['actual_depth'] == 46407
+    assert boundary_failures[2]['linear_depth_prediction'] == 46410
+    assert boundary_failures[2]['actual_selected_offset'] == 0
+    assert boundary_failures[2]['collar_selected_offset_prediction'] == 43
+    return dict(width=width, universal_profile_orders='j >= 23',
+                profile_lower_bound='P_j(u) >= min(u,32) on the entire closed natural block',
+                additional_seed_value_count=36, seeds=seeds,
+                arithmetic_floor_orders_inclusive=[arithmetic_orders[0], arithmetic_orders[-1]],
+                arithmetic_floor_offset=51, profile_rows=profile_rows,
+                abstract_cycle_bound=saturated_profile_abstract_audit(),
+                proper_cycle_offset_domain='33 <= u <= t-32',
+                intersected_proper_cycle_domain='max(33,t-F_(k-3)) <= u <= min(t-32,F_(k-2))',
+                proper_period_bound='p <= t-64 for every p>=3, k>=24',
+                five_cycle_requires_offset_at_least=69,
+                all_start_extra_graph_offsets=[33, 66], all_start_extra_graphs=all_start_graphs,
+                all_start_extra_vertices=all_start_vertices,
+                selected_proper_cycles_checked=selected_proper_cycles,
+                selected_five_cycles_checked=selected_five_cycles,
+                first_selected_five_per_order=list(first_five_per_order.values()),
+                extended_selected_phase_offsets=[1, 32], additional_phase_orbits=extra_phases,
+                additional_literal_selected_updates=literal_updates, additional_boundary_records=extra_boundary,
+                wider_collar_failure_witnesses=boundary_failures,
+                scope='General two-scale saturation induction plus a minimum/maximum cycle argument. The36 extra seeds and earlier exact collar seeds are finite premises; all-start and selected-cycle checks are corroboration. The extended endpoint rule proves actual basin and phase on offsets1..32, with possible odd entry at the lower endpoint when t=32. Recursive nonautonomous windows in0..32 have arithmetic splits, but the spatial period bound applies only to autonomous constant-parameter cycles. No wider-arch phase classification or full minimum closure theorem is claimed.')
+
+
 def main():
     if not __debug__:
         raise SystemExit('Run without -O; assertions perform the checks.')
@@ -537,6 +736,7 @@ def main():
             classification_witnesses=stable_graph_witnesses,
         ),
         selected_positive_collar_phase=selected_collar_phase_audit(sequence, splits, fibonacci, zeros),
+        saturated_fibonacci_profiles=saturated_profile_audit(sequence, periods, splits, fibonacci),
         quantitative_capture=dict(
             anchor_drop_formula='F_(j-1)-C(F_j-d) <= floor(2*d/3), j>=5, 1<=d<F_j',
             anchor_drop_base=anchor_drop_base,

@@ -600,6 +600,168 @@ parameter formulas against actual selected splits and values. Additional
 floor checks at Fibonacci scales near 10^100 use integer square roots and
 introduce no new sequence premise.
 
+### A saturated lower barrier and the exclusion of nearby proper cycles
+
+The linear collar can be strengthened to a lower bound on the **entire**
+positive natural block. This adds a position constraint to a proper
+five-cycle and extends the arithmetic selected-endpoint rule.
+
+**Saturation propagation theorem.** Let K>=6 and let W be an integer
+with 0<=W<=F_(K-2). Suppose the two profiles at j=K,K+1 satisfy
+
+$$
+P_j(u):=C(F_j+u)-F_{j-1}\ge\min(u,W)
+\qquad(0\le u\le F_{j-1}).
+$$
+
+Then the same bound holds for every j>=K on its closed natural block.
+The upper cap also gives P_j(u)<=u, so P_j(u)=u for 0<=u<=W.
+
+**Proof.** At the upper endpoint u=F_(j-1), Fibonacci landing gives
+P_j(u)=F_(j-2)>=W. For all other offsets use the selected split
+u=r+q in the two closed lower natural blocks. The established profile
+identity and induction give
+
+$$
+P_j(u)=P_{j-1}(r)+P_{j-2}(q)
+\ge\min(r,W)+\min(q,W)\ge\min(r+q,W).
+$$
+
+This proves the induction. It uses the actual recurrence and its capture
+bounds, without requiring a particular selected phase. QED.
+
+**Certified barrier.** The theorem holds with K=23 and W=32. Offsets
+0..32 in the two seeds are already the certified exact collars. The
+additional finite premises are only the **36 values** at offsets 33..50
+in orders 23 and 24, each with relative value at least 32. The least is 32,
+at F_23+33. For every j>=23 the Fibonacci identity gives
+
+$$
+\alpha(F_j+52)-F_{j-1}=52\alpha-(-\alpha)^j>32,
+$$
+
+since alpha>0.618 and alpha^23<0.0001. Thus G(F_j+51)>=F_(j-1)+32,
+and monotonicity of G covers every larger offset in either seed. This
+certifies their whole closed blocks without checking all their entries.
+The propagation theorem proves
+
+$$
+\boxed{\min(u,32)\le P_j(u)\le u
+\quad(j\ge23,\ 0\le u\le F_{j-1}).}
+$$
+
+The new finite premises are checked in the existing independently agreeing
+full-orbit and Brent prefix; no larger prefix is needed. The lower bound
+does not assert that P_j is monotone beyond the collar.
+
+**Spatial cycle theorem.** Let an integer profile H on a cycle's domain
+satisfy min(u,W)<=H(u)<=u, and let the transition be u -> t-H(u).
+Every cycle of period p>=3 lies in
+
+$$
+W+1\le u\le t-W,\qquad p\le t-2W.
+$$
+
+**Proof.** Let m and M be the minimum and maximum cycle points. If m<=W,
+then H(m)=m and H(u)>=m at every cycle point. Consequently
+M=t-m. A predecessor v of m satisfies H(v)=t-m=M, while
+H(v)<=v<=M. Hence v=M and H(M)=M. The two extremal points map to
+each other, contradicting period at least three. Thus m>W. Every cycle
+point now has H(u)>=W, so its image is at most t-W. The integer interval
+{W+1,...,t-W} contains t-2W points, proving the period bound. QED.
+
+For C, take n=F_k+t with k>=24 and 0<=t<F_(k-1). Intersected capture
+already places every cycle point x=F_(k-1)+u in the natural domain of
+P_(k-1). Combining its geometry with the saturated barrier shows that
+every proper cycle lies in
+
+$$
+\max(33,t-F_{k-3})\le u\le\min(t-32,F_{k-2}).
+$$
+
+Its period is bounded by the number of integers in this intersection,
+and in particular by t-64. Therefore offsets 0..66 have only fixed points
+and two-cycles, and a five-cycle requires **t>=69**. This is a universal
+exclusion near high-order anchors, not an assertion that a C five-cycle
+exists at the first permitted offset.
+
+The spatial bound is sharp in the abstract capped/saturated class.
+For any W>=0 and p>=3 set t=2W+p. If p is odd, choose centred labels
+`(1,-1,3,-3,...,p-2,-(p-2),p)`; if p is even, use
+`(-(p-2),p-2,-(p-4),p-4,...,-2,2,0,p)`. Put
+u_i=W+(p+z_i)/2 and H(u_i)=t-u_(i+1), using H(u)=u elsewhere.
+The u_i permute {W+1,...,W+p}, every adjacent pair sums to at least t,
+and H(u_i)>=W. Thus the profile has the required bounds and a genuine
+p-cycle with p=t-2W. Its total defect is also exactly p. These examples
+are not claimed to satisfy C's recurrence.
+
+**Extended actual selector theorem.** For k>=24 and **1<=t<=32**, the
+prescribed cycle is the outermost pair {A,A+t}, A=F_(k-1), and
+the endpoint is still A+t when A+t is odd, otherwise A. For t<32,
+first entry is at A+t at an even time. At t=32, it may instead enter
+at A at an odd time; the same selected-endpoint formula holds.
+
+**Proof.** Below A, C(x)<=B=F_(k-2). Above A+t but within the lower
+linear collar, C(x)>B+t. Above that collar the new barrier gives
+C(x)>=B+32; beyond its natural block, monotonicity of G and Fibonacci
+landing give the same lower bound. Thus high exterior points map below A
+when t<32, or to at most A when t=32; low exterior points map to at
+least A+t. Until entry the sides alternate. Entry is therefore at A+t
+at an even time or, only when t=32, at A at an odd time. Both cases
+generate the outer pair. On that pair, even orbit clocks have value A+t
+and odd clocks have value A. The exact depth d=A+t-1 is after entry,
+giving the claimed selection by its parity. QED.
+
+The recursive-window consequence above now applies to all offsets 0..32:
+order mod 3 and offset parity determine the actual high-order splits,
+and the two boundary orders 22/23 need 66 fixed input records in total.
+The child parameter formulas remain valid at orders>=25. This phase
+extension uses the 36 new lower-barrier premises; the earlier 1..21 theorem
+did not need them.
+
+For a genuine five-cycle, the known barrier supplies an exact shifted
+interface. Set v_i=u_i-32, tau=t-64 and
+Q(v)=P_(k-1)(32+v)-32. On the available natural domain, 0<=Q(v)<=v,
+v_(i+1)=tau-Q(v_i), and every v_i is a positive integer at most tau.
+The defect word is unchanged. All alternating closure, centroid and
+reverse gap identities apply after this translation. The generic affine
+dimension is unchanged; the improvement is a proved family domain, which
+excludes impossible positions before inverse reconstruction. Recursive
+child windows with varying row parameters are nonautonomous, so the
+spatial period theorem must not be applied to their row clock.
+
+Three actual boundary examples distinguish the remaining information:
+
+- At n=F_24+33=46401, the prescribed cycle has offsets (1,32), transient 15
+  and selected offset 1. Extending the collar endpoint formula would predict
+  offset 0. Thus the first offset beyond 32 already needs a different basin
+  rule. Both cycle phases nevertheless give the same root value 28690;
+  value reconstruction and selected-layout reconstruction are different tasks.
+- At n=F_25+42=75067, the cycle offsets are (42,0), both with zero local
+  defect, but their candidate root values are 46410 and 46407. The prescribed
+  depth 46409 selects the lower endpoint and gives 46407=F_24+39.
+  Its complementary child has P_23(42)=39. A pure reflection cycle does
+  not make the root value phase independent across two different lower orders.
+- At n=F_25+43=75068, that nonlinear predecessor changes the actual depth
+  to 46407, whereas the linear prediction is 46410. The prescribed cycle is
+  still the outer pair (43,0), entered at time 14, but the selected offset is 0
+  rather than the 43 predicted by the collar parity formula. Here the basin
+  is correct and the missing information is the depth parity.
+
+All three endpoints are checked by literal prescribed iteration. They show
+why a wider closure interface must track basin, the relevant depth residue
+and whether cycle phases have equivalent outputs separately. Short cycles
+and zero cycle defects alone do not supply those data.
+
+The checker exhausts 4375 small capped/saturated profiles, checks 282 proper
+cycles and 30 sharp constructions, and corroborates the C domain bound on
+53,779 selected proper cycles through 131071, including 4753 five-cycles.
+An additional 102 all-start graphs at offsets 33..66 contain 8,259,671 vertices
+and have no period above two. Literal iteration verifies the 33 additional
+phase cases at orders 24..26, including lower-endpoint odd entry at
+F_24+32, and 22 additional boundary records. Full convergence, the wider-arch
+prescribed phase and the minimum complete five-window interface remain open.
+
 ## 7. Fibonacci profile renormalization and defect dynamics
 
 The collar formula has a useful two-scale form that also explains why the
