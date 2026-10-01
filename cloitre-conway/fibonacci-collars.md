@@ -1357,6 +1357,75 @@ five-cycles are all nonconstant: their numbers of distinct outputs2,3,4,5
 occur2,64,1128,6178 times. This is finite evidence, not a theorem that
 every actual C five-cycle requires five continued-output states.
 
+**Variance distinguishes more phases.** The readout needed for a dispersion
+proof can have a larger behavior quotient than the scalar root value.
+Fix N and positive anchors A=F_(j-1), B=F_(j-2), and read the one-step
+size-biased variance at a candidate split a:
+
+$$
+v(a)=\frac{(AN-(A+B)a)^2}{N^2a(N-a)},\qquad 0<a<N.
+$$
+
+Every variance value has at most two candidate indices. Indeed, setting
+v(a)=w gives the nonzero quadratic
+
+$$
+((A+B)^2+wN^2)a^2-(2AN(A+B)+wN^3)a+A^2N^2=0.
+$$
+
+The second root is described by the exact involution
+
+$$
+\iota(a)=\frac{A^2N(N-a)}{A^2(N-a)+B^2a}.
+$$
+
+For distinct a,c, equality of the variances is equivalent to
+
+$$
+A^2N(a+c-N)=(A^2-B^2)ac.
+$$
+
+Consequently a p-cycle's local-variance word has at least ceil(p/2)
+current-output classes. If its primitive output period is d, each value
+repeats at least p/d times, so p/d<=2. For odd p this forces d=p;
+for even p the only possibilities are p and p/2. The same odd-period
+conclusion holds when the readout is the pair `(H_i,v(x_i))`.
+In particular, **every five-cycle needs all five continued local-variance
+states**, even if H were constant; at most two future steps distinguish
+them. This is a conditional readout minimum with the cycle supplied,
+not a claim that five independent phase labels must be stored.
+
+The actual n=1354 three-cycle has three distinct local variances,
+
+```text
+197254805/162044967924,
+649383289/807342866868,
+126810121/201463095240,
+```
+
+although all three scalar outputs are900. At n=3054 and5980 the local
+variances are all distinct, so their current variance readout already
+separates all five and four phases. The two-state scalar quotient at5980
+cannot recover that variance. This concerns the one-step variance along
+the inner cycle; a scalar total V_4 includes descendant contributions
+and is not covered by this two-root argument.
+
+Even a linear reflection pair usually retains this distinction. For j>=4,
+if N=A+B+t with 0<t<A+B and distinct reflection mates have a+c=2A+t,
+equal variance would imply `(A+B)*ac=A^2*N`, after cancelling A-B.
+Since consecutive Fibonacci numbers are coprime, this forces A+B to
+divide t, a contradiction. In the proved collar k>=25,1<=t<=32,
+both endpoints A,A+t have the same scalar output A+t, but
+
+$$
+v(A)=\frac{At^2}{N^2(B+t)},\qquad
+v(A+t)=\frac{Bt^2}{N^2(A+t)}
+$$
+
+are unequal. The collar parity rule still derives the actual endpoint
+arithmetically. Thus the sharper readout does not introduce an unavoidable
+stored bit on this arithmetic domain.
+
 ## 9. Common closure theorem and generic minimality
 
 The preceding interface can be stated independently of the source recurrence.
@@ -3024,6 +3093,59 @@ selection, as proved above. It also does not satisfy all global C envelopes.
 This counterexample isolates a missing use of actual selected-orbit
 constraints; it does not refute Cloitre's conjecture for actual C.
 
+**An exact basin obstruction in that counterfamily.** The rounded family
+also shows that correct numeric values and periodicity can admit the wrong
+dispersion phase. For its upper-cap profile U, choose j>=12 and
+
+$$
+F_{j-5}+1\le u\le F_{j-4},\qquad N=F_j+u,
+$$
+
+and write A=F_(j-1), B=F_(j-2), D=F_(j-3). From the prescribed start,
+the clocks0 through8 under T_(N,U)(x)=N-U(x) are exactly
+
+$$
+N-1,\ B+1,\ 2B+u-1,\ B+u,\ 2B,\ 2D+u,\ A+u,\ A,\ A+u.
+$$
+
+To check every arrow, the U-values at the first eight points are,
+respectively,
+
+$$
+A+u-1,\ D+1,\ A,\ D+u,\ B+F_{j-4},\ B,\ B+u,\ B.
+$$
+
+These follow directly from U(F_h+w)=F_(h-1)+min(w,F_(h-2)).
+The lower bound on u caps the value at2B+u-1; at2D+u the cap
+follows from `2F_(j-5)+1>F_(j-4)`. The other points lie in the
+displayed linear pieces. At u=F_(j-4),2D+u=A, so entry may already
+occur at clock5; the claim is entry by clock6. The prescribed depth
+U(N-1)=A+u-1 is at least6, and selects A+u at even clocks and A
+at odd clocks.
+
+Yet every point A+r,0<=r<=u, is periodic, since
+`T_(N,U)(A+r)=A+u-r`; and every such split gives the same numeric
+root value U(A+r)+U(B+u-r)=A+u. The rounded proportional r at
+u=floor(F_j/10),j>=12, lies strictly between0 andu, in a different
+cycle from the prescribed outer pair. Its value certificate and
+periodicity therefore do not certify the prescribed-start basin.
+This tenth offset satisfies the required interval: F_j-10F_(j-5)
+has the Fibonacci recurrence with values14,23 at orders12,13, hence
+is at least14 thereafter; and F_j=5F_(j-4)+3F_(j-5)<10F_(j-4).
+Since u>=14 and 1/2<A/F_j<2/3, its rounded r is strictly interior.
+For example, j=12,u=14,N=158 gives
+
+```text
+157 -> 56 -> 123 -> 69 -> 110 -> 82 -> 103 -> 89 -> 103.
+```
+
+The depth102 selects103; the rounded split98 is in the separate
+cycle(94,98). Both give U(158)=103. Along the tenth-offset family,
+the outer pair's local variances stay bounded away from zero, while
+the rounded geometric four-generation variance tends to zero.
+This strengthens the basin obstruction within U; it remains a
+counterfamily to weaker premises, not a counterexample for actual C.
+
 **Finite actual check.** Exact rational arithmetic verifies (9.24) with
 kappa1 for every positive-defect root144<=N<=131071. The smallest ratio
 V_4/(D/N)^4 occurs at N=469 and equals
@@ -3033,3 +3155,88 @@ generating huge recurrence prefixes; at order90 its quartic ratio is
 less than10^(-29). Finite actual support is encouraging, but cannot replace
 the uniform inequality. Proving that inequality would connect the
 selected-value interface to a quantitative occupation estimate.
+
+### A phase-free lower bound from the prescribed basin
+
+For proving a lower bound, exact selected phase can be avoided by taking
+the worst phase in a certified basin. This is a different contract from
+recovering the actual split or all future variance readouts.
+
+Let Gamma_N be the eventual cycle reached from the prescribed start N-1
+under the actual T_N(x)=N-C(x). Supply this cycle and the actual C values
+on the relevant contexts. For a closed-block state (j,N), define
+
+$$
+\mathcal B_0(j,N)=0,
+$$
+
+$$
+\mathcal B_m(j,N)=\min_{a\in\Gamma_N}
+\left[v(j,N;a)+\frac aN\mathcal B_{m-1}(j-1,a)
+                  +\frac{N-a}{N}\mathcal B_{m-1}(j-2,N-a)\right],
+$$
+
+where v(j,N;a) is (9.22) evaluated at a and N-a; stop at orders4/5.
+Let Gamma_N^C be the subset satisfying C(a)+C(N-a)=C(N), and define
+Q by the same recurrence with Gamma_N^C in place of Gamma_N.
+The actual selected endpoint belongs to Gamma_N^C. The closed-block
+capture theorem puts all these candidates in the two inherited child
+blocks, including endpoint aliases. Therefore both recurrences are defined.
+
+**Bellman lower-envelope theorem.** For every m and supplied actual context,
+
+$$
+\mathcal B_m(j,N)\le\mathcal Q_m(j,N)\le V_m(j,N).
+$$
+
+**Proof.** At depth0 all three quantities are zero. Inductively, restricting
+Gamma_N to Gamma_N^C and replacing child B by their larger Q values
+can only increase the minimum. Evaluating the Q minimum at the actual
+selected endpoint, then replacing child Q by their larger actual V,
+gives exactly (9.23). This proves both inequalities. All weights are
+nonnegative. QED.
+
+Each envelope is the exact minimum over its permitted occurrence trees:
+after choosing a root phase, its two subtree minima are attained
+independently. Different occurrences of the same physical integer may
+choose different phases, even at different remaining depths. Thus this
+is a relaxation of globally shared actual descent; it is not an exact
+minimum over globally shared selectors. Sharing constraints can only
+raise the minimum. Q preserves the scalar C identity at every chosen
+split; the larger B domain does not require that identity.
+
+A uniform lower bound
+
+$$
+\mathcal B_4(j,N)\ge\kappa\left(\frac{C(N)-G(N)}N\right)^4
+$$
+
+would be a stronger sufficient condition for (9.24), and the same is
+true with Q in its place. Neither condition is proved uniformly.
+They require no exact predecessor-depth residue for selecting a phase
+once the basin tables are supplied. Building and certifying those tables,
+their scalar profiles and their recursive context is still part of the
+full interface problem. The conditional local-variance phase minimum
+above does not prevent this lower-bound strategy.
+
+The maintained checker verifies B_4<=Q_4<=V_4 and the stronger finite
+bound B_4>=(D/N)^4 for all130891 positive-defect roots144..131071.
+The finite minima over this entire range are:
+
+| Four-generation quantity | Minimum ratio to (D/N)^4 | Root N |
+|---|---:|---:|
+| All phases of the prescribed-start basin, B_4 | 101.197 | 4590 |
+| Basin phases preserving the actual scalar value, Q_4 | 140.919 | 302 |
+| Actual depth-selected descent, V_4 | 167.376 | 469 |
+
+These rounded decimals summarize exact rational evidence. The first
+minimum is62668211167781606281392909/619272222475981140335360;
+the second is3659008386849973/25965324000000.
+The checker also computes the weaker all-periodic
+relaxation through4096, replacing Gamma_N by every periodic point of T_N.
+In144..4096, the minimum basin ratio B_4/(D/N)^4 is
+9279338934951/86736329680, approximately106.983, at191. The minimum
+all-periodic ratio is2179271359290201381/104713624505000000,
+approximately20.812, at2778. These are minima over the stated finite
+range, not estimates of a uniform constant. They show quantitatively
+why basin qualification strengthens the available lower envelope.

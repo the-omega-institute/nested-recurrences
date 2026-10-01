@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_sha256": "af023dd346c4812fc7cd337cf94c23a5dbe93129d8b0b9f7bfa99fd6191f1913",
+  "source_sha256": "83650c06084bd960e78d22879e6f617e4b8f75552251ac5d15ec8af449108ce6",
   "scope": "Exact public three-block selector audit, recursive nonautonomous window descent and conserved conditional seed-label budgets. Row-local Cartesian decompositions remain distinct from actual selected splits and their proof costs.",
   "period_five_payloads": 13,
   "parent_rows": 65,
@@ -3643,6 +3643,13 @@
           "output_period": 2,
           "current_output_classes": 2,
           "minimum_distinguishing_horizon": 0,
+          "local_variances": [
+            "49/3630",
+            "1/3388"
+          ],
+          "variance_output_period": 2,
+          "variance_output_classes": 2,
+          "variance_distinguishing_horizon": 0,
           "complementary_marked_counts": [
             1,
             0
@@ -3669,6 +3676,16 @@
           "output_period": 5,
           "current_output_classes": 5,
           "minimum_distinguishing_horizon": 0,
+          "local_variances": [
+            "48841/22365315",
+            "1681/21897120",
+            "6845/4456256",
+            "22201/22192443",
+            "12769/22098804"
+          ],
+          "variance_output_period": 5,
+          "variance_output_classes": 5,
+          "variance_distinguishing_horizon": 0,
           "complementary_marked_counts": [
             11,
             12,
@@ -3694,6 +3711,14 @@
           "output_period": 1,
           "current_output_classes": 1,
           "minimum_distinguishing_horizon": 0,
+          "local_variances": [
+            "197254805/162044967924",
+            "649383289/807342866868",
+            "126810121/201463095240"
+          ],
+          "variance_output_period": 3,
+          "variance_output_classes": 3,
+          "variance_distinguishing_horizon": 0,
           "complementary_marked_counts": [
             77,
             77,
@@ -3721,6 +3746,16 @@
           "output_period": 5,
           "current_output_classes": 2,
           "minimum_distinguishing_horizon": 3,
+          "local_variances": [
+            "4596704401/5215762989585",
+            "2871566569/5199681054672",
+            "3605642209/5207060976957",
+            "48427681/64320744465",
+            "10704963/21385582064"
+          ],
+          "variance_output_period": 5,
+          "variance_output_classes": 5,
+          "variance_distinguishing_horizon": 0,
           "complementary_marked_counts": [
             51,
             49,
@@ -3748,6 +3783,15 @@
           "output_period": 2,
           "current_output_classes": 2,
           "minimum_distinguishing_horizon": 0,
+          "local_variances": [
+            "284428225/490579762608",
+            "25090081/47874235500",
+            "170786307169/306525668420400",
+            "3568321/8475214800"
+          ],
+          "variance_output_period": 4,
+          "variance_output_classes": 4,
+          "variance_distinguishing_horizon": 0,
           "complementary_marked_counts": [
             467,
             454,
@@ -3770,6 +3814,13 @@
           "output_period": 1,
           "current_output_classes": 1,
           "minimum_distinguishing_horizon": 0,
+          "local_variances": [
+            "89862652441/121642434108453566",
+            "32171803225/121561257797925552"
+          ],
+          "variance_output_period": 2,
+          "variance_output_classes": 2,
+          "variance_distinguishing_horizon": 0,
           "complementary_marked_counts": [
             0,
             0
@@ -3790,6 +3841,13 @@
           "output_period": 2,
           "current_output_classes": 2,
           "minimum_distinguishing_horizon": 0,
+          "local_variances": [
+            "81793152/161720428779811",
+            "1203594/6226735210345"
+          ],
+          "variance_output_period": 2,
+          "variance_output_classes": 2,
+          "variance_distinguishing_horizon": 0,
           "complementary_marked_counts": [
             3,
             0
@@ -3839,6 +3897,19 @@
           "count": 6
         }
       ],
+      "variance_fiber_checks": {
+        "positive_anchor_contexts": 1472,
+        "equal_variance_pairs": 1256,
+        "scope": "Exact integer fibers and rational involution checks; the general two-point fiber bound is proved separately."
+      },
+      "variance_period_five_census": [
+        {
+          "current_output_classes": 5,
+          "distinguishing_horizon": 0,
+          "count": 7372
+        }
+      ],
+      "variance_period_compressions": [],
       "scope": "Exact conditional cyclic-output minimum: one current readout has M classes, autonomous future readout has d states, and exact index readout has p states. These are distinct contracts; derived phase arithmetic can remove an independent label. Finite selected-cycle census does not prove that every C five-cycle is nonconstant."
     },
     "four_generation_dispersion": {
@@ -3903,8 +3974,564 @@
           "quartic_ratio": "722989335329744846310376457172318906351639933339014193705490362641637920007468542304617377437101942981669953842784918648031651166052/338584330196457978851986387192625374528650860076781404343345984730681564861113708440253137450658288847325313627110140429205732555195602529940419039812592901410375"
         }
       ],
+      "upper_cap_prescribed_basin_traces": [
+        {
+          "order": 12,
+          "index": 158,
+          "offset": 14,
+          "trace": [
+            157,
+            56,
+            123,
+            69,
+            110,
+            82,
+            103,
+            89,
+            103
+          ],
+          "depth": 102,
+          "prescribed_split": 103,
+          "rounded_split": 98,
+          "rounded_cycle": [
+            94,
+            98
+          ]
+        },
+        {
+          "order": 13,
+          "index": 256,
+          "offset": 23,
+          "trace": [
+            255,
+            90,
+            200,
+            112,
+            178,
+            133,
+            167,
+            144,
+            167
+          ],
+          "depth": 166,
+          "prescribed_split": 167,
+          "rounded_split": 158,
+          "rounded_cycle": [
+            153,
+            158
+          ]
+        },
+        {
+          "order": 20,
+          "index": 7441,
+          "offset": 676,
+          "trace": [
+            7440,
+            2585,
+            5843,
+            3260,
+            5168,
+            3870,
+            4857,
+            4181,
+            4857
+          ],
+          "depth": 4856,
+          "prescribed_split": 4857,
+          "rounded_split": 4599,
+          "rounded_cycle": [
+            4439,
+            4599
+          ]
+        },
+        {
+          "order": 30,
+          "index": 915244,
+          "offset": 83204,
+          "trace": [
+            915243,
+            317812,
+            718825,
+            401015,
+            635622,
+            476040,
+            597433,
+            514229,
+            597433
+          ],
+          "depth": 597432,
+          "prescribed_split": 597433,
+          "rounded_split": 565652,
+          "rounded_cycle": [
+            546010,
+            565652
+          ]
+        },
+        {
+          "order": 60,
+          "index": 1702809631512,
+          "offset": 154800875592,
+          "trace": [
+            1702809631511,
+            591286729880,
+            1337374335349,
+            746087605471,
+            1182573459758,
+            885671467916,
+            1111522901633,
+            956722026041,
+            1111522901633
+          ],
+          "depth": 1111522901632,
+          "prescribed_split": 1111522901633,
+          "rounded_split": 1052394228645,
+          "rounded_cycle": [
+            1015850699029,
+            1052394228645
+          ]
+        },
+        {
+          "order": 90,
+          "index": 3168073913807897732,
+          "offset": 288006719437081612,
+          "trace": [
+            3168073913807897731,
+            1100087778366101932,
+            2488182276169285473,
+            1388094497803183543,
+            2200175556732203862,
+            1647789994714306128,
+            2067986135441795801,
+            1779979416004714189,
+            2067986135441795801
+          ],
+          "depth": 2067986135441795800,
+          "prescribed_split": 2067986135441795801,
+          "rounded_split": 1957977357605185608,
+          "rounded_cycle": [
+            1889988193841324382,
+            1957977357605185608
+          ]
+        }
+      ],
       "one_step_formula": "(F_(j-1)*(N-a)-F_(j-2)*a)^2/(N^2*a*(N-a))",
       "scope": "Exact finite support for the proposed actual-C quartic dispersion inequality, not a uniform proof or decay exponent. Rounded proportional upper-cap descent is an explicit geometric counterfamily with nonvanishing relative defect and vanishing four-generation variance; it is not the nested C recurrence."
+    },
+    "phase_free_dispersion": {
+      "indices_inclusive": [
+        144,
+        131071
+      ],
+      "positive_defect_roots": 130891,
+      "inherited_closed_block_contexts": 131084,
+      "generations_checked": 4,
+      "finite_kappa_one_verified": true,
+      "global_minima": {
+        "basin": {
+          "index": 4590,
+          "order": 19,
+          "defect": 130,
+          "variance": "297455447656796798389/4568078537287286251426560",
+          "ratio": "62668211167781606281392909/619272222475981140335360"
+        },
+        "value_qualified": {
+          "index": 302,
+          "order": 13,
+          "defect": 20,
+          "variance": "160475785573/59203535252400",
+          "ratio": "3659008386849973/25965324000000"
+        },
+        "actual": {
+          "index": 469,
+          "order": 14,
+          "defect": 28,
+          "variance": "4203191023879/1976723474707800",
+          "ratio": "18868124506192831/112729162291200"
+        }
+      },
+      "per_order_minima": [
+        {
+          "order": 12,
+          "basin": {
+            "index": 191,
+            "order": 12,
+            "defect": 13,
+            "variance": "254360871/110788419280",
+            "ratio": "9279338934951/86736329680"
+          },
+          "value_qualified": {
+            "index": 191,
+            "order": 12,
+            "defect": 13,
+            "variance": "203163221/66473051568",
+            "ratio": "7411597465301/52041797808"
+          },
+          "actual": {
+            "index": 196,
+            "order": 12,
+            "defect": 13,
+            "variance": "2519183/568172640",
+            "ratio": "48388467064/211208595"
+          }
+        },
+        {
+          "order": 13,
+          "basin": {
+            "index": 302,
+            "order": 13,
+            "defect": 20,
+            "variance": "160475785573/59203535252400",
+            "ratio": "3659008386849973/25965324000000"
+          },
+          "value_qualified": {
+            "index": 302,
+            "order": 13,
+            "defect": 20,
+            "variance": "160475785573/59203535252400",
+            "ratio": "3659008386849973/25965324000000"
+          },
+          "actual": {
+            "index": 302,
+            "order": 13,
+            "defect": 20,
+            "variance": "36994641151/10764279136800",
+            "ratio": "843514812883951/4720968000000"
+          }
+        },
+        {
+          "order": 14,
+          "basin": {
+            "index": 494,
+            "order": 14,
+            "defect": 30,
+            "variance": "3078987993947/1835433484513200",
+            "ratio": "187845978522712523/1523034636750000"
+          },
+          "value_qualified": {
+            "index": 469,
+            "order": 14,
+            "defect": 28,
+            "variance": "4203191023879/1976723474707800",
+            "ratio": "18868124506192831/112729162291200"
+          },
+          "actual": {
+            "index": 469,
+            "order": 14,
+            "defect": 28,
+            "variance": "4203191023879/1976723474707800",
+            "ratio": "18868124506192831/112729162291200"
+          }
+        },
+        {
+          "order": 15,
+          "basin": {
+            "index": 736,
+            "order": 15,
+            "defect": 38,
+            "variance": "125003510018743/148290871184601600",
+            "ratio": "8464237670389126016/71351513113068825"
+          },
+          "value_qualified": {
+            "index": 814,
+            "order": 15,
+            "defect": 46,
+            "variance": "2313877693603577/1014436498826076480",
+            "ratio": "383291526067738926473/1713749701283968320"
+          },
+          "actual": {
+            "index": 814,
+            "order": 15,
+            "defect": 46,
+            "variance": "2313877693603577/1014436498826076480",
+            "ratio": "383291526067738926473/1713749701283968320"
+          }
+        },
+        {
+          "order": 16,
+          "basin": {
+            "index": 1253,
+            "order": 16,
+            "defect": 70,
+            "variance": "50150748841898771/41466320652925818720",
+            "ratio": "1606880143643278521611/12941643723019200000"
+          },
+          "value_qualified": {
+            "index": 1318,
+            "order": 16,
+            "defect": 76,
+            "variance": "1455429216714000395381/921603840345581656939200",
+            "ratio": "632065255663772805706456061/4424944552588818653875200"
+          },
+          "actual": {
+            "index": 1318,
+            "order": 16,
+            "defect": 76,
+            "variance": "63330702032427079465697/34099342092786521306750400",
+            "ratio": "27503320609344464497442358857/163722948445786290193382400"
+          }
+        },
+        {
+          "order": 17,
+          "basin": {
+            "index": 1886,
+            "order": 17,
+            "defect": 88,
+            "variance": "28489359683516682523/38830640276698024744080",
+            "ratio": "25334134609207526416895227/163667282727931951288320"
+          },
+          "value_qualified": {
+            "index": 2034,
+            "order": 17,
+            "defect": 108,
+            "variance": "8395028261458893932/4788849981368732559525",
+            "ratio": "26799028967642154154427/121512052154708226900"
+          },
+          "actual": {
+            "index": 2041,
+            "order": 17,
+            "defect": 108,
+            "variance": "135133012417219776175369/74417426477663508135972075",
+            "ratio": "562921022299176494437987311289/2430433034946096194448403200"
+          }
+        },
+        {
+          "order": 18,
+          "basin": {
+            "index": 3236,
+            "order": 18,
+            "defect": 166,
+            "variance": "57257152164899238893557/40324630821581514671783520",
+            "ratio": "37473718206035418770294078917/182753517074703968770647270"
+          },
+          "value_qualified": {
+            "index": 3236,
+            "order": 18,
+            "defect": 166,
+            "variance": "23940511909370008488341057029/11593791957226338580002390108000",
+            "ratio": "15668610174956392525457943345396949/52543723606306547285600881701750"
+          },
+          "actual": {
+            "index": 3472,
+            "order": 18,
+            "defect": 182,
+            "variance": "4821657923885958888067/2122453955984993203372800",
+            "ratio": "74137812237670503862918192/246404329136671561530675"
+          }
+        },
+        {
+          "order": 19,
+          "basin": {
+            "index": 4590,
+            "order": 19,
+            "defect": 130,
+            "variance": "297455447656796798389/4568078537287286251426560",
+            "ratio": "62668211167781606281392909/619272222475981140335360"
+          },
+          "value_qualified": {
+            "index": 5139,
+            "order": 19,
+            "defect": 255,
+            "variance": "18435798463860592515162536766346/9954205644577851991250730381904875",
+            "ratio": "6010826166955571444236108649836216186/19675468219175030478851866643671875"
+          },
+          "actual": {
+            "index": 5139,
+            "order": 19,
+            "defect": 255,
+            "variance": "45376873796640539676599028500908/24007201848687760684781173274005875",
+            "ratio": "14794721309530478196698023851464545228/47452599822716249978407443081796875"
+          }
+        },
+        {
+          "order": 20,
+          "basin": {
+            "index": 7368,
+            "order": 20,
+            "defect": 209,
+            "variance": "37645372688231682965022286811/381241227140836084540639479309120",
+            "ratio": "61929403295880399495628547077526208/406042814063873658019599050313085"
+          },
+          "value_qualified": {
+            "index": 7547,
+            "order": 20,
+            "defect": 256,
+            "variance": "361448295097797629363410709/789972024952472837279997432240",
+            "ratio": "20587086086578935015356320705351181/59569351650039010697415292354560"
+          },
+          "actual": {
+            "index": 7490,
+            "order": 20,
+            "defect": 239,
+            "variance": "2805455784622824482092342151/7662689332033753515271101672960",
+            "ratio": "4014957909768339686934403160849875/11369022335884668597161489651808"
+          }
+        },
+        {
+          "order": 21,
+          "basin": {
+            "index": 11993,
+            "order": 21,
+            "defect": 355,
+            "variance": "4006658514386665624072832621995495/26591527169772481336492993663353375072",
+            "ratio": "115257180753506018997651848251130902923851/587260810819961219405813385259634796000"
+          },
+          "value_qualified": {
+            "index": 14370,
+            "order": 21,
+            "defect": 710,
+            "variance": "1068487963388097856324399911522707/442646752303615654938832280581789800",
+            "ratio": "2206394521269557042276339760897132751083/5447247907947042386549958099442140200"
+          },
+          "actual": {
+            "index": 14370,
+            "order": 21,
+            "defect": 710,
+            "variance": "1068487963388097856324399911522707/442646752303615654938832280581789800",
+            "ratio": "2206394521269557042276339760897132751083/5447247907947042386549958099442140200"
+          }
+        },
+        {
+          "order": 22,
+          "basin": {
+            "index": 18844,
+            "order": 22,
+            "defect": 384,
+            "variance": "5083716895461399787241588587047492976333/72425909434637720266919597075305388959405440",
+            "ratio": "112825577677477380867541728379998863367598938493/277174122272806971705618236838114569842851840"
+          },
+          "value_qualified": {
+            "index": 23682,
+            "order": 22,
+            "defect": 1106,
+            "variance": "46610252972642061034763660623987304639/20272236161324460565677113950097172557760",
+            "ratio": "6535190056522256048042328861017271336562154559/13521517042255248794556938132321198511949760"
+          },
+          "actual": {
+            "index": 22877,
+            "order": 22,
+            "defect": 1086,
+            "variance": "21312810980405762779938274285781/8262837660381670178238251882867580",
+            "ratio": "11154211565624835263563554027420869682749/21960912265353333933547051638818896320"
+          }
+        },
+        {
+          "order": 23,
+          "basin": {
+            "index": 30239,
+            "order": 23,
+            "defect": 563,
+            "variance": "4234109520936319410518377477670831923027481/110824790043234430386139700684561111940465456480",
+            "ratio": "3871657555942859693314421483173450496091222230282201/12176869356890394427571990128229919887898010915680"
+          },
+          "value_qualified": {
+            "index": 34711,
+            "order": 23,
+            "defect": 1546,
+            "variance": "163490111158531109619866586990604132/76334180337648059569618614006239644365",
+            "ratio": "49245409019509399153383307221470545589337193/90482118927663786689278583426018747220660"
+          },
+          "actual": {
+            "index": 34711,
+            "order": 23,
+            "defect": 1546,
+            "variance": "163490111158531109619866586990604132/76334180337648059569618614006239644365",
+            "ratio": "49245409019509399153383307221470545589337193/90482118927663786689278583426018747220660"
+          }
+        },
+        {
+          "order": 24,
+          "basin": {
+            "index": 48512,
+            "order": 24,
+            "defect": 764,
+            "variance": "48076079115979628782801328894941815581888909/1710170705521720863937036547143270943670817896960",
+            "ratio": "14142865572451184349164268920418994855932118584666112/30947427269775139925163201895139843492024310824805"
+          },
+          "value_qualified": {
+            "index": 58812,
+            "order": 24,
+            "defect": 2723,
+            "variance": "36789481187133965690725866814612172700109607041/13945196820469781756724762444066732668969965121640",
+            "ratio": "84832897632787355158278035178190874921689482174049808736/147771968062286220709627166892455103280271099356438015"
+          },
+          "actual": {
+            "index": 58812,
+            "order": 24,
+            "defect": 2723,
+            "variance": "36789481187133965690725866814612172700109607041/13945196820469781756724762444066732668969965121640",
+            "ratio": "84832897632787355158278035178190874921689482174049808736/147771968062286220709627166892455103280271099356438015"
+          }
+        },
+        {
+          "order": 25,
+          "basin": {
+            "index": 95639,
+            "order": 25,
+            "defect": 4269,
+            "variance": "50623268768428400641708841023527545740550019766740381/21783638608971058164721109949283846952938555205076222560",
+            "ratio": "17149697860739555606159651252654746201030682719234557903011863/29295520965046155305643576520855422901388865777395292245280"
+          },
+          "value_qualified": {
+            "index": 97834,
+            "order": 25,
+            "defect": 4390,
+            "variance": "432969555287037419814233802050110324112422416796763227/167137151858190442297639542457104834901039505251594214112",
+            "ratio": "1036041110608738455001991481233101614027618589268832948840452803/1621404844515896268595682239835783372506493363732482193580000"
+          },
+          "actual": {
+            "index": 97834,
+            "order": 25,
+            "defect": 4390,
+            "variance": "432969555287037419814233802050110324112422416796763227/167137151858190442297639542457104834901039505251594214112",
+            "ratio": "1036041110608738455001991481233101614027618589268832948840452803/1621404844515896268595682239835783372506493363732482193580000"
+          }
+        },
+        {
+          "order": 26,
+          "basin": {
+            "index": 125843,
+            "order": 26,
+            "defect": 1564,
+            "variance": "206071395478757832772178882064497863990964431/12747695835248307719860576502964637673361154789560",
+            "ratio": "3263441545383864934097133447803232303037462303090175719/4816377971679556211485703066410624685674811322071040"
+          },
+          "value_qualified": {
+            "index": 130824,
+            "order": 26,
+            "defect": 3134,
+            "variance": "1153742860371844716842478787780283189021157115847/2105149097470123117139554660662520586517197633016960",
+            "ratio": "1851207710100244083788689406986710531602999698826929744938/1112436570891373722662345184118242557978039605683181115"
+          },
+          "actual": {
+            "index": 130824,
+            "order": 26,
+            "defect": 3134,
+            "variance": "16913462271139528186489372030948002098952630015542579/28210451959121601342910714877321387680314335111734779360",
+            "ratio": "36184067046773246012829227524349452549081524647264607532884888/19876557898545050479879198611165460026600900339162360392495"
+          }
+        }
+      ],
+      "all_periodic_comparison": {
+        "indices_inclusive": [
+          144,
+          4096
+        ],
+        "minima": {
+          "basin": {
+            "index": 191,
+            "defect": 13,
+            "variance": "254360871/110788419280",
+            "ratio": "9279338934951/86736329680"
+          },
+          "all_periodic": {
+            "index": 2778,
+            "defect": 70,
+            "variance": "1129553536861/134628034814568000",
+            "ratio": "2179271359290201381/104713624505000000"
+          }
+        }
+      },
+      "scope": "Exact four-generation Bellman lower bounds with prescribed-start basin context supplied. Choices are relaxed per occurrence, not an exact globally shared minimum. All bounds are finite; no uniform dispersion theorem is claimed."
     },
     "uniform_bounds": {
       "knee": "lambda_j(F_(j-2)) >= ceil(F_(j-3)/3) once F_j+F_(j-2)>=16384",

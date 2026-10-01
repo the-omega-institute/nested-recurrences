@@ -1955,6 +1955,41 @@ def cyclic_readout_summary(outputs):
     return output_period, classes, horizon
 
 
+def split_variance(order, index, split, fibonacci):
+    complement = index - split
+    mismatch = fibonacci[order - 1] * complement - fibonacci[order - 2] * split
+    return Fraction(mismatch * mismatch, index * index * split * complement)
+
+
+def variance_fiber_audit():
+    contexts = 0
+    paired_indices = 0
+    for first_anchor in range(1, 9):
+        for second_anchor in range(1, 9):
+            for index in range(3, 26):
+                fibers = defaultdict(list)
+                for split in range(1, index):
+                    complement = index - split
+                    mismatch = first_anchor * complement - second_anchor * split
+                    value = Fraction(mismatch * mismatch, index * index * split * complement)
+                    fibers[value].append(split)
+                    partner = Fraction(first_anchor ** 2 * index * complement,
+                                       first_anchor ** 2 * complement + second_anchor ** 2 * split)
+                    partner_complement = index - partner
+                    partner_mismatch = first_anchor * partner_complement - second_anchor * partner
+                    assert partner_mismatch ** 2 / (index ** 2 * partner * partner_complement) == value
+                assert max(map(len, fibers.values())) <= 2
+                for fiber in fibers.values():
+                    if len(fiber) == 2:
+                        first, second = fiber
+                        assert (first_anchor ** 2 * index * (first + second - index)
+                                == (first_anchor ** 2 - second_anchor ** 2) * first * second)
+                        paired_indices += 1
+                contexts += 1
+    return dict(positive_anchor_contexts=contexts, equal_variance_pairs=paired_indices,
+                scope='Exact integer fibers and rational involution checks; the general two-point fiber bound is proved separately.')
+
+
 def phase_readout_audit(sequence, selected_splits, fibonacci):
     abstract_words = 0
     for length in range(1, 9):
@@ -1962,6 +1997,7 @@ def phase_readout_audit(sequence, selected_splits, fibonacci):
             cyclic_readout_summary(outputs)
             abstract_words += 1
     census = Counter()
+    variance_census = Counter()
     witnesses = []
     for index in range(3, len(sequence)):
         trajectory, transient, period = full_orbit(sequence, index)
@@ -1969,6 +2005,12 @@ def phase_readout_audit(sequence, selected_splits, fibonacci):
         outputs = tuple(sequence[point] + sequence[index - point] for point in cycle)
         output_period, classes, horizon = cyclic_readout_summary(outputs)
         census[(period, output_period, classes, horizon)] += 1
+        order = bisect_right(fibonacci, index) - 1
+        variances = tuple(split_variance(order, index, point, fibonacci) for point in cycle)
+        variance_period, variance_classes, variance_horizon = cyclic_readout_summary(variances)
+        assert max(Counter(variances).values()) <= 2
+        assert variance_period in ({period} if period % 2 else {period, period // 2})
+        variance_census[(period, variance_period, variance_classes, variance_horizon)] += 1
         phase = cycle.index(trajectory[transient]) + sequence[index - 1] - transient
         assert outputs[phase % output_period] == sequence[index]
         if index in (11, 196, 1354, 3054, 5980, 46401, 75067):
@@ -1976,11 +2018,14 @@ def phase_readout_audit(sequence, selected_splits, fibonacci):
             for iteration in range(sequence[index - 1]):
                 point = index - sequence[point]
             assert point == selected_splits[index]
-            order = bisect_right(fibonacci, index) - 1
             baseline = fibonacci[order - 1] + index - fibonacci[order]
             witnesses.append(dict(index=index, cycle=list(cycle), outputs=list(outputs),
                                   output_period=output_period, current_output_classes=classes,
                                   minimum_distinguishing_horizon=horizon,
+                                  local_variances=[str(value) for value in variances],
+                                  variance_output_period=variance_period,
+                                  variance_output_classes=variance_classes,
+                                  variance_distinguishing_horizon=variance_horizon,
                                   complementary_marked_counts=[baseline - value for value in outputs],
                                   selected_phase=phase % period, selected_value=sequence[index]))
     delayed = next(row for row in witnesses if row['index'] == 3054)
@@ -2000,7 +2045,112 @@ def phase_readout_audit(sequence, selected_splits, fibonacci):
                                                       current_output_classes=key[2], count=count)
                                                  for key, count in sorted(census.items())
                                                  if 1 < key[1] < key[0]],
+                variance_fiber_checks=variance_fiber_audit(),
+                variance_period_five_census=[dict(current_output_classes=key[2],
+                                                 distinguishing_horizon=key[3], count=count)
+                                            for key, count in sorted(variance_census.items()) if key[0] == 5],
+                variance_period_compressions=[dict(orbit_period=key[0], output_period=key[1],
+                                                  current_output_classes=key[2], count=count)
+                                             for key, count in sorted(variance_census.items())
+                                             if key[1] < key[0]],
                 scope='Exact conditional cyclic-output minimum: one current readout has M classes, autonomous future readout has d states, and exact index readout has p states. These are distinct contracts; derived phase arithmetic can remove an independent label. Finite selected-cycle census does not prove that every C five-cycle is nonconstant.')
+
+
+def phase_free_dispersion_audit(sequence, selected_splits, fibonacci):
+    cycles = {}
+    qualified = {}
+    local_values = {}
+    for index in range(fibonacci[6], len(sequence)):
+        trajectory, transient, period = full_orbit(sequence, index)
+        cycle = tuple(trajectory[transient:])
+        assert len(cycle) == period and selected_splits[index] in cycle
+        cycles[index] = cycle
+        qualified[index] = tuple(point for point in cycle
+                                 if sequence[point] + sequence[index - point] == sequence[index])
+        assert selected_splits[index] in qualified[index]
+    contexts = [(order, index) for order in range(6, len(fibonacci) - 1)
+                for index in range(fibonacci[order], min(fibonacci[order + 1], len(sequence) - 1) + 1)]
+    for order, index in contexts:
+        assert all(fibonacci[order - 1] <= point <= fibonacci[order]
+                   and fibonacci[order - 2] <= index - point <= fibonacci[order - 1]
+                   for point in cycles[index])
+        local_values[(order, index)] = tuple(split_variance(order, index, point, fibonacci)
+                                             for point in cycles[index])
+    previous = {}
+    for steps in range(1, 5):
+        current = {}
+        for order, index in contexts:
+            candidates = []
+            value_candidates = []
+            actual_value = None
+            for point, local in zip(cycles[index], local_values[(order, index)]):
+                complement = index - point
+                first_values = previous.get((order - 1, point), (Fraction(0),) * 3)
+                second_values = previous.get((order - 2, complement), (Fraction(0),) * 3)
+                if steps > 1:
+                    assert order - 1 <= 5 or (order - 1, point) in previous
+                    assert order - 2 <= 5 or (order - 2, complement) in previous
+                basin_value = local + Fraction(point, index) * first_values[0] + Fraction(complement, index) * second_values[0]
+                candidates.append(basin_value)
+                if point in qualified[index]:
+                    value_candidates.append(local + Fraction(point, index) * first_values[1]
+                                            + Fraction(complement, index) * second_values[1])
+                if point == selected_splits[index]:
+                    actual_value = (local + Fraction(point, index) * first_values[2]
+                                    + Fraction(complement, index) * second_values[2])
+            result = min(candidates), min(value_candidates), actual_value
+            assert result[0] <= result[1] <= result[2]
+            current[(order, index)] = result
+        previous = current
+    minima = {}
+    tested = 0
+    for index in range(fibonacci[12], len(sequence)):
+        defect = sequence[index] - g_closed(index)
+        if not defect:
+            continue
+        order = bisect_right(fibonacci, index) - 1
+        scale = Fraction(defect, index) ** 4
+        for name, total in zip(('basin', 'value_qualified', 'actual'), previous[(order, index)]):
+            ratio = total / scale
+            assert ratio >= 1
+            for key in ((name, order), (name, None)):
+                if key not in minima or ratio < Fraction(minima[key]['ratio']):
+                    minima[key] = dict(index=index, order=order, defect=defect,
+                                       variance=str(total), ratio=str(ratio))
+        tested += 1
+    periodic_limit = 4096
+    periodic_points = {index: tuple(point for cycle in all_cycles(sequence, index) for point in cycle)
+                       for index in range(fibonacci[6], periodic_limit + 1)}
+    @lru_cache(None)
+    def periodic_variance(order, index, steps):
+        if not steps or order <= 5:
+            return Fraction(0)
+        return min(split_variance(order, index, point, fibonacci)
+                   + Fraction(point, index) * periodic_variance(order - 1, point, steps - 1)
+                   + Fraction(index - point, index) * periodic_variance(order - 2, index - point, steps - 1)
+                   for point in periodic_points[index])
+    comparison = {}
+    for index in range(fibonacci[12], periodic_limit + 1):
+        defect = sequence[index] - g_closed(index)
+        if not defect:
+            continue
+        order = bisect_right(fibonacci, index) - 1
+        scale = Fraction(defect, index) ** 4
+        periodic_total = periodic_variance(order, index, 4)
+        assert periodic_total <= previous[(order, index)][0]
+        for name, total in (('basin', previous[(order, index)][0]), ('all_periodic', periodic_total)):
+            ratio = total / scale
+            if name not in comparison or ratio < Fraction(comparison[name]['ratio']):
+                comparison[name] = dict(index=index, defect=defect, variance=str(total), ratio=str(ratio))
+    return dict(indices_inclusive=[fibonacci[12], len(sequence) - 1], positive_defect_roots=tested,
+                inherited_closed_block_contexts=len(contexts), generations_checked=4,
+                finite_kappa_one_verified=True,
+                global_minima={name: minima[(name, None)] for name in ('basin', 'value_qualified', 'actual')},
+                per_order_minima=[dict(order=order, **{name: minima[(name, order)]
+                                                     for name in ('basin', 'value_qualified', 'actual')})
+                                  for order in sorted({key[1] for key in minima if key[1] is not None})],
+                all_periodic_comparison=dict(indices_inclusive=[fibonacci[12], periodic_limit], minima=comparison),
+                scope='Exact four-generation Bellman lower bounds with prescribed-start basin context supplied. Choices are relaxed per occurrence, not an exact globally shared minimum. All bounds are finite; no uniform dispersion theorem is claimed.')
 
 
 def four_generation_dispersion_audit(sequence, selected_splits, fibonacci):
@@ -2010,8 +2160,7 @@ def four_generation_dispersion_audit(sequence, selected_splits, fibonacci):
             return Fraction(0)
         first = selected_splits[index]
         second = index - first
-        mismatch = fibonacci[order - 1] * second - fibonacci[order - 2] * first
-        local = Fraction(mismatch * mismatch, index * index * first * second)
+        local = split_variance(order, index, first, fibonacci)
         return (local + Fraction(first, index) * variance(order - 1, first, steps - 1)
                 + Fraction(second, index) * variance(order - 2, second, steps - 1))
 
@@ -2077,11 +2226,44 @@ def four_generation_dispersion_audit(sequence, selected_splits, fibonacci):
                                   defect=defect, relative_defect=str(Fraction(defect, index)),
                                   variance=str(total), quartic_ratio=str(ratio)))
     assert Fraction(abstract_rows[-1]['quartic_ratio']) < Fraction(1, 10 ** 29)
+    basin_traces = []
+    for order in (12, 13, 20, 30, 60, 90):
+        anchor = arithmetic_fibonacci[order]
+        first_anchor = arithmetic_fibonacci[order - 1]
+        second_anchor = arithmetic_fibonacci[order - 2]
+        third_anchor = arithmetic_fibonacci[order - 3]
+        for offset in sorted({arithmetic_fibonacci[order - 5] + 1,
+                              anchor // 10, arithmetic_fibonacci[order - 4]}):
+            assert arithmetic_fibonacci[order - 5] + 1 <= offset <= arithmetic_fibonacci[order - 4]
+            index = anchor + offset
+            trace = [index - 1]
+            for iteration in range(8):
+                point = trace[-1]
+                point_order = bisect_right(arithmetic_fibonacci, point) - 1
+                trace.append(index - upper_value(point_order, point))
+            assert trace == [index - 1, second_anchor + 1, 2 * second_anchor + offset - 1,
+                             second_anchor + offset, 2 * second_anchor, 2 * third_anchor + offset,
+                             first_anchor + offset, first_anchor, first_anchor + offset]
+            depth = upper_value(order, index - 1)
+            assert depth == first_anchor + offset - 1 and depth >= 6
+            selected = first_anchor + offset if depth % 2 == 0 else first_anchor
+            rounded = rounded_split(index)
+            assert first_anchor < rounded < first_anchor + offset
+            rounded_complement = first_anchor + offset - (rounded - first_anchor)
+            rounded_order = bisect_right(arithmetic_fibonacci, rounded) - 1
+            complement_order = bisect_right(arithmetic_fibonacci, rounded_complement) - 1
+            assert index - upper_value(rounded_order, rounded) == rounded_complement
+            assert index - upper_value(complement_order, rounded_complement) == rounded
+            if offset == anchor // 10:
+                basin_traces.append(dict(order=order, index=index, offset=offset, trace=trace,
+                                         depth=depth, prescribed_split=selected, rounded_split=rounded,
+                                         rounded_cycle=sorted({rounded, rounded_complement})))
     variance.cache_clear()
     return dict(actual_indices_inclusive=[fibonacci[12], len(sequence) - 1],
                 positive_defect_roots_checked=tested, zero_defect_roots=zero_defects,
                 exact_finite_kappa_one_verified=True, minimum_quartic_ratio=minimum_row,
                 abstract_rounded_upper_cap_examples=abstract_rows,
+                upper_cap_prescribed_basin_traces=basin_traces,
                 one_step_formula='(F_(j-1)*(N-a)-F_(j-2)*a)^2/(N^2*a*(N-a))',
                 scope='Exact finite support for the proposed actual-C quartic dispersion inequality, not a uniform proof or decay exponent. Rounded proportional upper-cap descent is an explicit geometric counterfamily with nonvanishing relative defect and vanishing four-generation variance; it is not the nested C recurrence.')
 
@@ -2149,6 +2331,7 @@ def unbounded_defect_audit():
     return dict(knee_examples=knees, generated_knee_codes=knee_codes, all_cycle_centre_examples=centres,
                 selected_phase_readouts=phase_readout_audit(sequence, selected_splits, fibonacci),
                 four_generation_dispersion=four_generation_dispersion_audit(sequence, selected_splits, fibonacci),
+                phase_free_dispersion=phase_free_dispersion_audit(sequence, selected_splits, fibonacci),
                 uniform_bounds=dict(knee='lambda_j(F_(j-2)) >= ceil(F_(j-3)/3) once F_j+F_(j-2)>=16384',
                                     centre='E/p >= 2*F_(k-1)/5-F_(k-3) at n=2*F_(k-1), F_(k-1)>=16384'),
                 upper_cap_geometric_family=dict(profile='Q_j(u)=min(u,F_(j-2))',

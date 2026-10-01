@@ -14,6 +14,7 @@ or programming knowledge is needed.
 | Read the complete solution of Campbell's example | **[Three-page proof (PDF)](campbell/note.pdf)** |
 | Read the main theorem for Cloitre's example | **[Global golden structure](cloitre-conway/golden-proof.md)** |
 | Understand cycles and convergence near Fibonacci indices | **[Fibonacci collars](cloitre-conway/fibonacci-collars.md)** |
+| Follow the proposed decay proof and its remaining inequality | **[Martingales and dispersion](cloitre-conway/fibonacci-collars.md#size-biased-martingales-and-the-four-generation-dispersion-criterion)** · **[Basin lower bound without choosing a phase](cloitre-conway/fibonacci-collars.md#a-phase-free-lower-bound-from-the-prescribed-basin)** |
 | Understand how quickly an orbit enters a Fibonacci neighborhood | **[Quantitative capture](cloitre-conway/fibonacci-collars.md#quantitative-capture-and-a-short-exterior-certificate)** |
 | See how long orbit runs can be checked by arithmetic blocks | **[Return certificates](cloitre-conway/fibonacci-collars.md#defect-plateau-return-certificates)** |
 | See the common five-window closure interface and the exact conditional phase minimum | **[Closure theorem](cloitre-conway/fibonacci-collars.md#9-common-closure-theorem-and-generic-minimality)** · **[Phase readout](cloitre-conway/fibonacci-collars.md#the-exact-minimum-phase-interface-depends-on-the-readout)** |
@@ -66,6 +67,10 @@ gives a concrete route to a decay bound through two exact martingales.
 Its implication is proved and finite actual checks support it, but the
 uniform dispersion inequality remains open. A shared geometric counterfamily
 shows why the actual nested orbit selection must enter that proof.
+Taking the worst phase in the prescribed-start basin gives a proved lower
+envelope, supported by exact finite checks through131071. This is a route
+to the missing inequality that does not require the precise depth phase;
+the basin and its profiles still need certification across all orders.
 
 **Still open:** full convergence of C(n)/n, its decay rate, and the growth
 of periods and landing times away from Fibonacci neighborhoods.
