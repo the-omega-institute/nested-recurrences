@@ -50,6 +50,11 @@ conjectures remain finite observations. No Lean formalization is included.
 3. **Inner dynamics between Fibonacci indices.** Control periods,
    landing times, and selected phases in the wider block interiors.
 
+An [explicit nonconvergent extension](cloitre-conway/dispersion.md#exact-small-cap-closure-still-does-not-force-convergence)
+preserves arbitrarily late actual prefixes, exact small-cap closure and
+cap-dependent dispersion. These premises alone do not prove convergence;
+actual nesting outside those neighborhoods must also be used.
+
 ## Encoding comparison and related families
 
 The encoding comparison asks how much memory is needed to recognize values

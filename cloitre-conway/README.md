@@ -47,6 +47,8 @@ indices, and then establish a decay rate.
    neighborhoods, including a
    [logarithmic cap-dependent horizon](dispersion.md#a-logarithmic-horizon-from-one-retained-child),
    provide partial progress.
+   A [nonconvergent extension](dispersion.md#exact-small-cap-closure-still-does-not-force-convergence)
+   explains why exact small-cap closure alone does not finish the proof.
 
 All notes can be read in your browser, without installing software.
 The programs and JSON files are optional evidence, not part of this route.

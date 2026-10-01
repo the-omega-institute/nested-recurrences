@@ -1,7 +1,7 @@
 """Audit ordinal encodings of the five Fibonacci child-split selectors."""
 
 from collections import Counter, defaultdict
-from bisect import bisect_right
+from bisect import bisect_left, bisect_right
 from fractions import Fraction
 from functools import lru_cache
 import hashlib
@@ -12,6 +12,7 @@ from pathlib import Path
 import sys
 
 from conway_explore import brent_generate, full_orbit, generate, g_closed
+from collar_check import higher_cap_shift, higher_cap_width
 from five_window_check import all_cycles, canonical_cycle, fibonacci_values
 
 
@@ -2573,6 +2574,219 @@ def proportional_extension_audit(sequence):
                 scope='Written infinite extensions agree with arbitrarily late actual prefixes, have G/cap/zero-set/saturation/eventual-fixed-collar structure but positive knee defect density and nonconvergent ratios. The new exact moving top-plateau law excludes every cutoff J>=26 at the first subsequent complete block; arithmetic checks through order90 corroborate that infinite exclusion. Numeric cases J25/J26 corroborate through2^20. These are not the actual nested C sequence; excluding this counterfamily does not prove uniform dispersion.')
 
 
+def profile_preserving_fallback(index, order, fibonacci, golden=None):
+    anchor, first_anchor, second_anchor, lower_anchor = (
+        fibonacci[order - offset] for offset in range(4))
+    gap = anchor - index
+    increment = higher_cap_width(order, 3) - higher_cap_width(order - 1, 3)
+    if gap <= lower_anchor + increment:
+        return first_anchor - gap + increment, 'transport'
+    golden_value = g_closed if golden is None else golden.__getitem__
+    split = second_anchor
+    if golden_value(split) + golden_value(index - split) < golden_value(index):
+        split += 1
+    return split, 'lower_anchor'
+
+
+def profile_preserving_split(index, fibonacci, values, golden=None):
+    order = bisect_left(fibonacci, index)
+    anchor, first_anchor, second_anchor, lower_anchor = (
+        fibonacci[order - offset] for offset in range(4))
+    gap = anchor - index
+    width = higher_cap_width(order, 3)
+    increment = width - higher_cap_width(order - 1, 3)
+    if gap <= width:
+        return first_anchor - gap + higher_cap_shift(order, gap), 'low_cap'
+    if gap <= width + 4:
+        return first_anchor - gap + increment, 'strip4'
+    center = second_anchor * index // first_anchor
+    golden_value = g_closed if golden is None else golden.__getitem__
+    admitted = []
+    for candidate in (center, center + 1):
+        assert second_anchor <= candidate <= first_anchor
+        assert lower_anchor <= index - candidate <= second_anchor
+        cap = second_anchor - values[candidate] + lower_anchor - values[index - candidate]
+        carry = golden_value(candidate) + golden_value(index - candidate) - golden_value(index)
+        if cap >= 4 and carry >= 0:
+            admitted.append(candidate)
+    if admitted:
+        split = min(admitted, key=lambda point: (abs(second_anchor * index - first_anchor * point), -point))
+        return split, 'nearest'
+    return profile_preserving_fallback(index, order, fibonacci, golden)
+
+
+def profile_preserving_extension_audit(sequence):
+    limit = 1048576
+    cutoff_order = 26
+    fibonacci = fibonacci_values(limit + 1)
+    cutoff = fibonacci[cutoff_order]
+    actual, _, _, actual_splits = generate(limit)
+    assert actual[:len(sequence)] == sequence
+    values = sequence[:cutoff + 1]
+    golden = [g_closed(index) for index in range(limit + 1)]
+    equality_set = {11, 24, 25, 59}
+    for order in range(2, len(fibonacci)):
+        equality_set.update((fibonacci[order], fibonacci[order] + 1))
+        if order % 2:
+            equality_set.add(fibonacci[order] - 1)
+    branch_counts = Counter()
+    fallback_counts = Counter()
+    fallback_witnesses = {}
+    low_profile_checks = strip_checks = cap_budget_checks = 0
+    first_difference = None
+    for index in range(cutoff + 1, limit + 1):
+        order = bisect_left(fibonacci, index)
+        anchor, first_anchor, second_anchor, lower_anchor = (
+            fibonacci[order - offset] for offset in range(4))
+        gap = anchor - index
+        split, kind = profile_preserving_split(index, fibonacci, values, golden)
+        complement = index - split
+        assert second_anchor <= split <= first_anchor and lower_anchor <= complement <= second_anchor
+        value = values[split] + values[complement]
+        defect = first_anchor - value
+        assert defect == second_anchor - values[split] + lower_anchor - values[complement]
+        assert golden[index] <= value <= min(first_anchor, index - lower_anchor)
+        assert (value == golden[index]) == (index in equality_set)
+        expected = next((level for level in range(4)
+                         if gap <= higher_cap_width(order, level)), None)
+        assert (defect <= 3) == (expected is not None)
+        if expected is not None:
+            assert defect == expected and value == actual[index]
+            low_profile_checks += 1
+        width = higher_cap_width(order, 3)
+        if width < gap <= width + 4:
+            assert defect == 4 and value == actual[index]
+            strip_checks += 1
+        if defect:
+            budget = (order - 2) ** 2 // 3 - 3 * order + 30
+            assert gap <= defect * budget
+            cap_budget_checks += 1
+        else:
+            assert gap <= higher_cap_width(order, 0)
+        natural_order = bisect_right(fibonacci, index) - 1
+        natural_offset = index - fibonacci[natural_order]
+        assert value - fibonacci[natural_order - 1] >= min(natural_offset, 32)
+        assert 22877 * value <= 15225 * index
+        if gap > width + 4:
+            alternative, fallback_kind = profile_preserving_fallback(index, order, fibonacci, golden)
+            other = index - alternative
+            alternative_value = values[alternative] + values[other]
+            assert second_anchor <= alternative <= first_anchor and lower_anchor <= other <= second_anchor
+            assert first_anchor - alternative_value >= 4
+            assert golden[index] <= alternative_value <= min(first_anchor, index - lower_anchor)
+            if alternative_value == golden[index]:
+                assert index == first_anchor + 1
+            if fallback_kind == 'transport':
+                increment = width - higher_cap_width(order - 1, 3)
+                assert other == second_anchor - increment
+                assert values[other] - golden[other] >= 1
+            fallback_counts[fallback_kind] += 1
+            if fallback_kind not in fallback_witnesses:
+                fallback_witnesses[fallback_kind] = dict(index=index, split=alternative,
+                                                       value=alternative_value, cap=first_anchor - alternative_value)
+        values.append(value)
+        branch_counts[kind] += 1
+        if value != actual[index] and first_difference is None:
+            first_difference = dict(index=index, extension_value=value, actual_value=actual[index],
+                                    extension_split=split, actual_split=actual_splits[index],
+                                    child_values=[values[split], values[complement]])
+    index = first_difference['index']
+    point = index - 1
+    depth = values[index - 1]
+    for iteration in range(depth):
+        point = index - values[point]
+    nested_value = values[point] + values[index - point]
+    trajectory, transient, period = full_orbit(values, index)
+    assert point == trajectory[transient + (depth - transient) % period]
+    assert nested_value == actual[index] != values[index]
+    first_difference.update(prescribed_depth=depth, prescribed_split=point, nested_value=nested_value,
+                            transient=transient, period=period, prescribed_cycle=trajectory[transient:])
+    low_selected_checks = 0
+    literal_updates = depth
+    for order in range(cutoff_order + 1, len(fibonacci)):
+        if fibonacci[order] > limit:
+            break
+        for gap in range(higher_cap_width(order, 3) + 1):
+            index = fibonacci[order] - gap
+            trajectory, transient, period = full_orbit(values, index)
+            depth = values[index - 1]
+            expected = fibonacci[order - 1] - gap + higher_cap_shift(order, gap)
+            selected = trajectory[transient + (depth - transient) % period]
+            assert transient + period <= 4 * order + gap + 1 < 8 * order < depth
+            assert selected == expected == actual_splits[index]
+            assert values[selected] + values[index - selected] == values[index] == actual[index]
+            if gap == higher_cap_width(order, 3):
+                point = index - 1
+                for iteration in range(depth):
+                    point = index - values[point]
+                assert point == selected
+                literal_updates += depth
+            low_selected_checks += 1
+    large_fibonacci = fibonacci_values(10 ** 100)
+    knee_values = {}
+    seeds = []
+    for order in (cutoff_order - 2, cutoff_order - 1):
+        index = large_fibonacci[order] + large_fibonacci[order - 2]
+        knee_values[order] = values[index]
+        cap = large_fibonacci[order] - values[index]
+        golden_defect = values[index] - golden[index]
+        assert cap >= 4 and golden_defect > 0
+        seeds.append(dict(order=order, index=index, value=values[index], cap=cap, golden_defect=golden_defect))
+    knees = []
+    for order in range(cutoff_order, 91):
+        index = large_fibonacci[order] + large_fibonacci[order - 2]
+        split = large_fibonacci[order - 1] + large_fibonacci[order - 3]
+        complement = index - split
+        cap_anchor = large_fibonacci[order]
+        first_anchor = large_fibonacci[order - 1]
+        second_anchor = large_fibonacci[order - 2]
+        assert abs(first_anchor * index - cap_anchor * split) == 1
+        assert g_closed(index) == split and g_closed(split) + g_closed(complement) == g_closed(index)
+        assert large_fibonacci[order - 3] > higher_cap_width(order + 1, 3) + 4
+        inherited_cap = first_anchor - knee_values[order - 1] + second_anchor - knee_values[order - 2]
+        assert inherited_cap >= 8
+        knee_values[order] = knee_values[order - 1] + knee_values[order - 2]
+        assert cap_anchor - knee_values[order] == inherited_cap
+        if index <= limit:
+            split_checked, kind = profile_preserving_split(index, fibonacci, values, golden)
+            assert kind == 'nearest' and split_checked == split and values[index] == knee_values[order]
+        if order in (26, 27, 30, 40, 60, 90):
+            knees.append(dict(order=order, index=index, value=knee_values[order], cap=inherited_cap,
+                              relative_golden_defect=str(Fraction(knee_values[order] - g_closed(index), index))))
+
+    @lru_cache(None)
+    def knee_variance(order, steps):
+        if not steps:
+            return Fraction(0)
+        assert order >= cutoff_order
+        index = large_fibonacci[order] + large_fibonacci[order - 2]
+        split = large_fibonacci[order - 1] + large_fibonacci[order - 3]
+        complement = index - split
+        return (split_variance(order, index, split, large_fibonacci)
+                + Fraction(split, index) * knee_variance(order - 1, steps - 1)
+                + Fraction(complement, index) * knee_variance(order - 2, steps - 1))
+
+    dispersion_witnesses = []
+    for order in (40, 60, 90):
+        index = large_fibonacci[order] + large_fibonacci[order - 2]
+        relative = Fraction(knee_values[order] - g_closed(index), index)
+        variance = knee_variance(order, 4)
+        dispersion_witnesses.append(dict(order=order, index=index, assigned_four_step_variance=str(variance),
+                                        relative_golden_defect=str(relative), quartic_ratio=str(variance / relative ** 4)))
+    assert Fraction(dispersion_witnesses[-1]['quartic_ratio']) < Fraction(1, 10 ** 60)
+    return dict(cutoff_order=cutoff_order, identical_actual_prefix_inclusive=[1, cutoff],
+                independently_checked_seed_through=len(sequence) - 1, extension_checked_inclusive=[cutoff + 1, limit],
+                branch_counts=dict(sorted(branch_counts.items())), low_profile_checks=low_profile_checks,
+                copied_cap4_strip_checks=strip_checks, exact_golden_zero_set_verified=True,
+                cap_budget_checks=cap_budget_checks, saturated_width=32,
+                fallback_candidate_checks=dict(sorted(fallback_counts.items())),
+                fallback_witnesses=fallback_witnesses, actual_low_cap_prescribed_selection_checks=low_selected_checks,
+                first_nested_failure=first_difference, literal_endpoint_updates=literal_updates,
+                knee_seeds=seeds, arithmetic_knees=knees, assigned_dispersion_witnesses=dispersion_witnesses,
+                profile_source_sha256=hashlib.sha256(Path(__file__).with_name('collar_check.py').read_bytes()).hexdigest(),
+                scope='Written infinite H_J extensions for J>=26 retain arbitrary actual prefixes, exact cap0..3 profiles and local prescribed selection, four cap4 positions, geometric cap conservation, cap budgets and cap-dependent dispersion but have nonconvergent knee ratios. J26 finite audit through2^20 checks actual profiles, equality set, both fallback options and low-cap prescribed endpoints. Assigned high-cap splits fail the original recurrence; no global C convergence or minimum-interface claim.')
+
+
 def unbounded_defect_audit():
     sequence, _, _, selected_splits = generate(131071)
     assert sequence == brent_generate(131071)
@@ -2639,6 +2853,7 @@ def unbounded_defect_audit():
                 phase_free_dispersion=phase_free_dispersion_audit(sequence, selected_splits, fibonacci),
                 additive_dispersion_policies=additive_policy_audit(sequence, selected_splits, fibonacci),
                 proportional_extensions=proportional_extension_audit(sequence),
+                profile_preserving_extensions=profile_preserving_extension_audit(sequence),
                 uniform_bounds=dict(knee='lambda_j(F_(j-2)) >= ceil(F_(j-3)/3) once F_j+F_(j-2)>=16384',
                                     centre='E/p >= 2*F_(k-1)/5-F_(k-3) at n=2*F_(k-1), F_(k-1)>=16384'),
                 upper_cap_geometric_family=dict(profile='Q_j(u)=min(u,F_(j-2))',

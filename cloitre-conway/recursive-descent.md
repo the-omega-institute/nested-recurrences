@@ -237,6 +237,10 @@ number of generations. It proves a quadratic bound, allowing every
 scalar-valid geometric high-cap split without entrance or phase data.
 This sufficient information for dispersion does not select the actual
 child indices required by the decoder below.
+An [explicit nonconvergent extension](dispersion.md#exact-small-cap-closure-still-does-not-force-convergence)
+preserves these cap budgets, the exact cap0..3 closure and their local
+prescribed selection. Global convergence still requires actual orbit
+restrictions beyond that domain.
 
 The [one-child transfer theorem](dispersion.md#a-logarithmic-horizon-from-one-retained-child)
 shortens the sufficient variance horizon to O(log(e+1)), with a

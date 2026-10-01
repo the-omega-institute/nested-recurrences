@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_sha256": "e3ce5f7951df63940f959fdc03e565fcb6827568dd9e6008fac4b89a489db018",
+  "source_sha256": "c1cc6cc5eb11528c0cb5612e9360c620e87864ae05c219278f7c9bf04b047d36",
   "scope": "Exact public three-block selector audit, recursive nonautonomous window descent and conserved conditional seed-label budgets. Row-local Cartesian decompositions remain distinct from actual selected splits and their proof costs.",
   "period_five_payloads": 13,
   "parent_rows": 65,
@@ -5166,6 +5166,154 @@
       ],
       "upper_envelope": "15225/22877 for N>=16384; any certified actual C envelope is inherited when F_(J-2) is beyond its threshold",
       "scope": "Written infinite extensions agree with arbitrarily late actual prefixes, have G/cap/zero-set/saturation/eventual-fixed-collar structure but positive knee defect density and nonconvergent ratios. The new exact moving top-plateau law excludes every cutoff J>=26 at the first subsequent complete block; arithmetic checks through order90 corroborate that infinite exclusion. Numeric cases J25/J26 corroborate through2^20. These are not the actual nested C sequence; excluding this counterfamily does not prove uniform dispersion."
+    },
+    "profile_preserving_extensions": {
+      "cutoff_order": 26,
+      "identical_actual_prefix_inclusive": [
+        1,
+        121393
+      ],
+      "independently_checked_seed_through": 131071,
+      "extension_checked_inclusive": [
+        121394,
+        1048576
+      ],
+      "branch_counts": {
+        "low_cap": 285,
+        "nearest": 926879,
+        "strip4": 16,
+        "transport": 3
+      },
+      "low_profile_checks": 285,
+      "copied_cap4_strip_checks": 16,
+      "exact_golden_zero_set_verified": true,
+      "cap_budget_checks": 927116,
+      "saturated_width": 32,
+      "fallback_candidate_checks": {
+        "lower_anchor": 467839,
+        "transport": 459043
+      },
+      "fallback_witnesses": {
+        "lower_anchor": {
+          "index": 121394,
+          "split": 75025,
+          "value": 75026,
+          "cap": 46367
+        },
+        "transport": {
+          "index": 150047,
+          "split": 75025,
+          "value": 92736,
+          "cap": 28657
+        }
+      },
+      "actual_low_cap_prescribed_selection_checks": 285,
+      "first_nested_failure": {
+        "index": 121460,
+        "extension_value": 75089,
+        "actual_value": 75092,
+        "extension_split": 75067,
+        "actual_split": 75025,
+        "child_values": [
+          46407,
+          28682
+        ],
+        "prescribed_depth": 75091,
+        "prescribed_split": 75025,
+        "nested_value": 75092,
+        "transient": 14,
+        "period": 2,
+        "prescribed_cycle": [
+          75092,
+          75025
+        ]
+      },
+      "literal_endpoint_updates": 1224926,
+      "knee_seeds": [
+        {
+          "order": 24,
+          "index": 64079,
+          "value": 42202,
+          "cap": 4166,
+          "golden_defect": 2599
+        },
+        {
+          "order": 25,
+          "index": 103682,
+          "value": 68155,
+          "cap": 6870,
+          "golden_defect": 4076
+        }
+      ],
+      "arithmetic_knees": [
+        {
+          "order": 26,
+          "index": 167761,
+          "value": 110357,
+          "cap": 11036,
+          "relative_golden_defect": "6675/167761"
+        },
+        {
+          "order": 27,
+          "index": 271443,
+          "value": 178512,
+          "cap": 17906,
+          "relative_golden_defect": "10751/271443"
+        },
+        {
+          "order": 30,
+          "index": 1149851,
+          "value": 756250,
+          "cap": 75790,
+          "relative_golden_defect": "45603/1149851"
+        },
+        {
+          "order": 40,
+          "index": 141422324,
+          "value": 93012205,
+          "cap": 9321950,
+          "relative_golden_defect": "2804201/70711162"
+        },
+        {
+          "order": 60,
+          "index": 2139295485799,
+          "value": 1406995618490,
+          "cap": 141013137430,
+          "relative_golden_defect": "84838296287/2139295485799"
+        },
+        {
+          "order": 90,
+          "index": 3980154972736918051,
+          "value": 2617712534208651770,
+          "cap": 262354660162164350,
+          "relative_golden_defect": "157841480565325323/3980154972736918051"
+        }
+      ],
+      "assigned_dispersion_witnesses": [
+        {
+          "order": 40,
+          "index": 141422324,
+          "assigned_four_step_variance": "18397791780705087285137/152032553343509981765631527034521729296308446078544",
+          "relative_golden_defect": "2804201/70711162",
+          "quartic_ratio": "22997554472498602427795621323137000857/470042588562744488850259429687396493668448189376325415405469"
+        },
+        {
+          "order": 60,
+          "index": 2139295485799,
+          "assigned_four_step_variance": "127366176040721613814872398402190899/55110737147332818396989016155447190662523429186147662377882117214997844845209988",
+          "relative_golden_defect": "84838296287/2139295485799",
+          "quartic_ratio": "582902153135729170285591317754255018161340653293812389082499/623824496150514832204870039337140291956853400638325586141843135117160791516145532675391898041788868"
+        },
+        {
+          "order": 90,
+          "index": 3980154972736918051,
+          "assigned_four_step_variance": "820241488582775116459455827251815116549702020850537851/4252464263115686625702753255696978598726223505207381268857446779804031266153448702383372309440692915796423675976512429644412",
+          "relative_golden_defect": "157841480565325323/3980154972736918051",
+          "quartic_ratio": "12993965131390579506416677421881996053158478268029248579884896838339227364038755130861186451/166619294786676245261493775985485915866639402757913680017756175206239074430685798517320935619357374331171779329492261193570783136751455669351406924898032092"
+        }
+      ],
+      "profile_source_sha256": "f04885d2605b41761490ff45226008bfb109da006cbcf09c996ea4e4bd738da7",
+      "scope": "Written infinite H_J extensions for J>=26 retain arbitrary actual prefixes, exact cap0..3 profiles and local prescribed selection, four cap4 positions, geometric cap conservation, cap budgets and cap-dependent dispersion but have nonconvergent knee ratios. J26 finite audit through2^20 checks actual profiles, equality set, both fallback options and low-cap prescribed endpoints. Assigned high-cap splits fail the original recurrence; no global C convergence or minimum-interface claim."
     },
     "uniform_bounds": {
       "knee": "lambda_j(F_(j-2)) >= ceil(F_(j-3)/3) once F_j+F_(j-2)>=16384",
