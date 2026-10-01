@@ -238,6 +238,14 @@ scalar-valid geometric high-cap split without entrance or phase data.
 This sufficient information for dispersion does not select the actual
 child indices required by the decoder below.
 
+The [one-child transfer theorem](dispersion.md#a-logarithmic-horizon-from-one-retained-child)
+shortens the sufficient variance horizon to O(log(e+1)), with a
+cap-dependent constant. At a positive-cap branch, one child has at
+most half the parent cap. The parent's local variance controls the gap
+ratio if only that child is retained. Thus each candidate dispersion
+certificate needs one weighted spine per row; full two-child window
+reconstruction remains a different information requirement.
+
 **A compact local selector interface.** For sufficiently high k at
 fixed m, mP_k<=F_(k-4). Let K(m) be the first k>=11 satisfying
 this inequality; it then persists. Indeed P_(k+1)<=3P_k/2,
