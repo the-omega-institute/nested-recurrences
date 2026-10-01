@@ -360,6 +360,15 @@ that interface to Cloitre requires deriving its profile values as well;
 matching short periods alone does not supply them. The construction is a
 local-profile obstruction, not an asserted alternative actual C sequence.
 
+The [generated actual cap4 band](../cloitre-conway/exact-collars.md#a-propagated-cap4-band-generates-its-own-profiles)
+now supplies those responses arithmetically in an initial Cloitre region.
+Its [canonical family](../cloitre-conway/exact-collars.md#a-canonical-cap4-window-reaches-the-next-fibonacci-digit)
+has an affine numerical child map but nonzero joint coefficients in the
+child's canonical digits; their Fibonacci weights cancel. A short-period
+or affine numerical interface can therefore retain nonlinear digit
+readouts. Both the new Cloitre interface and Campbell's formula derive
+their scoped arithmetic data; the wider Cloitre profile problem stays open.
+
 The shared [selector checker](../cloitre-conway/verification/selector_payload_check.py)
 independently evaluates Campbell's first32 terms by literal iteration and
 checks the displayed three-solution inverse. The sharpness statement

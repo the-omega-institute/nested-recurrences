@@ -1470,5 +1470,9 @@ qualified cap4 tail root in those blocks, with a profile adapter that rejects
 queries outside J. It also checks the model profiles, collisions and
 neighbor maps at orders24..120. The infinite arguments above use the
 existing shelf and zero-plateau theorems and add no finite induction premise.
-For actual recursive closure, the next step is to derive these profile
-responses from the nesting, not from phase or low-cap membership alone.
+The [propagated cap4 band](exact-collars.md#a-propagated-cap4-band-generates-its-own-profiles)
+now generates the actual profiles on0..4K-19 from a certified finite seed,
+and derives their descendants without supplied profile responses. In the
+displayed K30,gap92 example it forces the actual seed response to4,
+excluding the modeled10..15. Outside that generated band, deriving the
+actual profiles remains part of the full recursive-interface question.

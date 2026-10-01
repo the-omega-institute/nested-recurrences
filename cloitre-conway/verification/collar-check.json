@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "ec751fa6a58ae7d96c4f48948155bed6ff769495e64e5cd5c1214389f5fac570",
+  "source_sha256": "2f4fb053c3ebc3d15ac2e5342fe192cba9286f852b3b8778436165388dfe7b6b",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -5071,6 +5071,355 @@
               }
             ]
           }
+        },
+        "cap4_generated_band": {
+          "base_order": 22,
+          "base_gap_interval_inclusive": [
+            50,
+            69
+          ],
+          "base_cap4_value": 10942,
+          "base_selected_shifts": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            8,
+            4
+          ],
+          "propagated_width": "4K-19, K>=22; a certified initial band, not the full cap4 support",
+          "arithmetic_projection_orders_inclusive": [
+            23,
+            120
+          ],
+          "arithmetic_projection_cases": 316252,
+          "synthetic_completion_graph_orders_inclusive": [
+            23,
+            60
+          ],
+          "synthetic_completion_graphs": 3801,
+          "actual_band_orders_inclusive": [
+            23,
+            30
+          ],
+          "actual_cap4_roots": 187,
+          "actual_first_spine_states": 1057,
+          "actual_basin_phases": 193,
+          "basin_quadratic_constant": "1/25",
+          "minimum_basin_quadratic_ratio": "20693110201/135715152409",
+          "actual_model_seed_exclusion": {
+            "order": 30,
+            "root": 831948,
+            "gap": 92,
+            "value": 514225,
+            "depth": 514225,
+            "selected": 514141,
+            "selected_gap": 88,
+            "period": 1,
+            "transient": 14,
+            "seed_query_cap": 4,
+            "scope": "Actual nesting fixes the PR22 model seed response at4; its hypothetical responses10..15 are excluded at this actual index."
+          },
+          "finite_canonical_window": {
+            "order": 26,
+            "gap": 68,
+            "base": 121325,
+            "values": [
+              75021,
+              75021,
+              75021,
+              75021,
+              75022
+            ],
+            "selected_child_offsets": [
+              4,
+              6,
+              7,
+              8,
+              10
+            ],
+            "one_edge_alphabet": [
+              0,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              10
+            ],
+            "one_edge_label_bits": 4,
+            "selected_child_digits_F2_through_F6": [
+              [
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                1,
+                0,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                1,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                1,
+                0,
+                0,
+                1
+              ]
+            ],
+            "selected_child_digit_interactions": [
+              0,
+              1,
+              1,
+              -1,
+              0
+            ],
+            "selected_child_offset_interaction": 0,
+            "inherited_pattern_spine_rows": [
+              {
+                "order": 26,
+                "gaps": [
+                  68,
+                  66,
+                  65,
+                  63,
+                  61
+                ],
+                "inherited_scalar_interaction": 1,
+                "distinct_physical_indices": 5
+              },
+              {
+                "order": 25,
+                "gaps": [
+                  64,
+                  62,
+                  61,
+                  60,
+                  58
+                ],
+                "inherited_scalar_interaction": 1,
+                "distinct_physical_indices": 5
+              },
+              {
+                "order": 24,
+                "gaps": [
+                  60,
+                  58,
+                  57,
+                  56,
+                  55
+                ],
+                "inherited_scalar_interaction": 1,
+                "distinct_physical_indices": 5
+              },
+              {
+                "order": 23,
+                "gaps": [
+                  56,
+                  54,
+                  53,
+                  53,
+                  52
+                ],
+                "inherited_scalar_interaction": 1,
+                "distinct_physical_indices": 4
+              },
+              {
+                "order": 22,
+                "gaps": [
+                  52,
+                  50,
+                  50,
+                  50,
+                  49
+                ],
+                "inherited_scalar_interaction": 1,
+                "distinct_physical_indices": 3
+              }
+            ]
+          },
+          "symbolic_canonical_family_rows": [
+            {
+              "fibonacci_order": 19,
+              "gap": 4181,
+              "anchor_order": 1260,
+              "root_cap_defects": [
+                4,
+                4,
+                4,
+                4,
+                3
+              ],
+              "selected_child_offsets": [
+                4,
+                6,
+                7,
+                8,
+                10
+              ],
+              "one_edge_alphabet": [
+                0,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                10
+              ],
+              "one_edge_label_bits": 4,
+              "persistent_inherited_interaction": 1
+            },
+            {
+              "fibonacci_order": 79,
+              "gap": 14472334024676221,
+              "anchor_order": 4341700207402872,
+              "root_cap_defects": [
+                4,
+                4,
+                4,
+                4,
+                3
+              ],
+              "selected_child_offsets": [
+                4,
+                6,
+                7,
+                8,
+                10
+              ],
+              "one_edge_alphabet": [
+                0,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                10
+              ],
+              "one_edge_label_bits": 4,
+              "persistent_inherited_interaction": 1
+            },
+            {
+              "fibonacci_order": 139,
+              "gap": 50095301248058391139327916261,
+              "anchor_order": 15028590374417517341798374884,
+              "root_cap_defects": [
+                4,
+                4,
+                4,
+                4,
+                3
+              ],
+              "selected_child_offsets": [
+                4,
+                6,
+                7,
+                8,
+                10
+              ],
+              "one_edge_alphabet": [
+                0,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                10
+              ],
+              "one_edge_label_bits": 4,
+              "persistent_inherited_interaction": 1
+            },
+            {
+              "fibonacci_order": 199,
+              "gap": 173402521172797813159685037284371942044301,
+              "anchor_order": 52020756351839343947905511185311582613296,
+              "root_cap_defects": [
+                4,
+                4,
+                4,
+                4,
+                3
+              ],
+              "selected_child_offsets": [
+                4,
+                6,
+                7,
+                8,
+                10
+              ],
+              "one_edge_alphabet": [
+                0,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                10
+              ],
+              "one_edge_label_bits": 4,
+              "persistent_inherited_interaction": 1
+            }
+          ],
+          "symbolic_inherited_pattern_states": 120,
+          "canonical_child_numeric_map": "4+2*x1+3*x2+4*x3; interaction0",
+          "canonical_child_digit_interactions_F2_through_F6": [
+            0,
+            1,
+            1,
+            -1,
+            0
+          ],
+          "canonical_family_terminal_gaps_at_order22": [
+            50,
+            50,
+            50,
+            50,
+            49
+          ],
+          "literal_endpoint_updates": 1108167,
+          "scope": "The certified20-value base band propagates by the cap3 shelf; profile values, selected shifts and descendants are arithmetic to order22. The canonical family m=19 mod60 has a persistent interaction and a nine-symbol one-edge alphabet including F6. Symbolic rows do not directly evaluate C at huge Fibonacci orders; four-bit label packing is not an independent selector-input lower bound. Full cap4 support, wide-block profiles, high-cap allocations and uniform dispersion remain open."
         },
         "scope": "Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open."
       },
