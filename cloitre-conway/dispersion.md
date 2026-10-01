@@ -1436,7 +1436,10 @@ geometry and addition, and gives
 are exactly linear. For any fixed u choose K>=J+2 with F_(K-2)>=u+4.
 At natural orders h>=K and offsets at most u, every geometric candidate
 has inherited cap sum at least F_(h-2)-u>=4. A nonnegative-carry nearest
-candidate is therefore admitted. Its child offsets are at most
+candidate is therefore admitted. For a positive offset, the upper gap
+is beyond Z_(h+1)+4: it is at least F_(h-3)+4, with
+F_(h-3)>Z_(h+1) at these orders. Thus no copied-band branch preempts
+the nearest rule. Its child offsets are at most
 `(2/3)*u+1`. After d steps they are at most `(2/3)^d*u+3`.
 Choosing d with `(2/3)^d*u<=29` and starting at j>=K+2d puts every
 descendant into the copied linear band before an order falls below K.
