@@ -285,6 +285,16 @@ are all fixed points, and the signal persists along arithmetic first-child
 descent. Both constructions concern the same five digit patterns, with
 different recurrence laws and different higher-context interfaces.
 
+The [qualified additive window and direct descendant decoder](../cloitre-conway/exact-collars.md#additive-canonical-windows-and-a-direct-descendant-decoder)
+make the comparison more precise. Cloitre's cap0/1 first spine has an exact
+gap formula obtained by projection onto nested intervals; canonical carries
+follow from its supplied order and gap. Campbell's displayed strip law uses
+the ternary scale and whole-context parity instead. Neither construction
+turns the five current feature labels into a context-free recursive state.
+For Cloitre, adding the unit digit completes the first edge, but a second or
+third edge already changes the higher canonical context. These semantic
+coordinates are not independent bit costs when their context derives them.
+
 The checker generates18 contexts at q3..8 from the recurrence, checks
 all90 canonical words, verifies every selected endpoint by literal
 iteration, and compares against the proved formula. A separate literal

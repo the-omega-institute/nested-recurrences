@@ -2447,6 +2447,158 @@ def persistent_canonical_interaction_audit():
                 scope='Infinite canonical-index interaction follows from the unit-sublevel theorem and telescoping Zeckendorf identities. The explicit first family member and inherited-label first spines are independently checked. Root interaction does not imply a long orbit or a residual selector label; terminal signal persistence does not prove uniform dispersion because its size-biased first-spine probability tends to zero.')
 
 
+def unit_first_spine_gap(initial_order, initial_gap, target_order):
+    assert 19 <= target_order <= initial_order
+    assert 0 <= initial_gap <= unit_defect_width(initial_order)
+    if initial_gap <= negative_plateau_width(initial_order):
+        return min(initial_gap, negative_plateau_width(target_order))
+    return max(negative_plateau_width(target_order) + 1,
+               min(initial_gap - initial_order + target_order,
+                   unit_defect_width(target_order)))
+
+
+def canonical_additive_carry_audit():
+    legal_words = []
+    for digits in product((0, 1), repeat=4):
+        if any(first * second for first, second in zip(digits, digits[1:])):
+            continue
+        offset = sum(digit * weight for digit, weight in zip(digits, (1, 2, 3, 5)))
+        legal_words.append((offset, digits))
+    legal_words.sort()
+    assert [offset for offset, digits in legal_words] == list(range(8))
+    interpolated_tables = 0
+    for values in product((0, 1), repeat=8):
+        baseline = values[0]
+        singleton = [values[offset] - baseline for offset in (1, 2, 3, 5)]
+        interactions = [values[4] - values[1] - values[3] + baseline,
+                        values[6] - values[1] - values[5] + baseline,
+                        values[7] - values[2] - values[5] + baseline]
+        coefficients = [baseline, *singleton, *interactions]
+        for offset, digits in legal_words:
+            unit, first, middle, last = digits
+            features = (1, *digits, unit * middle, unit * last, first * last)
+            assert sum(coefficient * feature for coefficient, feature
+                       in zip(coefficients, features)) == values[offset]
+        interpolated_tables += 1
+    jump_cases = 0
+    for initial_order in range(20, 181):
+        for initial_gap in range(unit_defect_width(initial_order) + 1):
+            gap = initial_gap
+            for target_order in range(initial_order, 18, -1):
+                assert gap == unit_first_spine_gap(initial_order, initial_gap, target_order)
+                if target_order > 19:
+                    gap -= unit_defect_shift(target_order, gap)
+                jump_cases += 1
+    fibonacci = fibonacci_values(1000)
+    context_orders = range(8, 15)
+    anchor_orders = [(3 * (fibonacci[order] - 3) + 1) // 2 for order in context_orders]
+    while len(fibonacci) <= max(anchor_orders) + 1:
+        fibonacci.append(fibonacci[-1] + fibonacci[-2])
+    arithmetic_rows = []
+    canonical_words = 0
+    for context_order, anchor_order in zip(context_orders, anchor_orders):
+        gap = fibonacci[context_order]
+        context = fibonacci[anchor_order] - gap
+        assert negative_plateau_width(anchor_order) == gap - 6
+        assert negative_plateau_width(anchor_order - 1) == gap - 7 >= 14
+        assert negative_plateau_width(anchor_order + 1) < gap <= unit_defect_width(anchor_order + 1)
+        assert unit_defect_shift(anchor_order + 1, gap) == 1
+        high = canonical_fibonacci_indices(context, fibonacci)
+        assert min(high) >= 7
+        for offset, digits in legal_words:
+            indices = canonical_fibonacci_indices(context + offset, fibonacci)
+            low = tuple(order for order in range(5, 1, -1) if digits[order - 2])
+            assert indices == high + low
+            assert unit_defect_shift(anchor_order, gap - offset) == int(offset < 7)
+            unit, first, middle, last = digits
+            assert unit * last + first * last == int(offset >= 6)
+            canonical_words += 1
+        exit_depth = 2 if gap % 2 else 3
+        joint_offsets = [gap - unit_first_spine_gap(anchor_order, gap - 7, anchor_order - depth)
+                         for depth in range(exit_depth + 1)]
+        assert joint_offsets == [7] * exit_depth + [8]
+        root = fibonacci[anchor_order + 1] - gap
+        scalar = fibonacci[anchor_order] - 1
+        defect = scalar - g_closed(root)
+        split = fibonacci[anchor_order] - gap
+        complement = fibonacci[anchor_order - 1]
+        numerator = complement * root - fibonacci[anchor_order] * split
+        assert 2 * numerator * numerator >= split * complement * defect * defect
+        arithmetic_rows.append(dict(context_order=context_order, anchor_order=anchor_order,
+                                    root_gap=gap, first_exit_depth=exit_depth,
+                                    joint_offsets=joint_offsets, predicted_golden_defect=defect,
+                                    scalar_valid_alternative_half_quadratic_bound=True))
+    witness_order = anchor_orders[0]
+    initial_gap = fibonacci[8]
+    root = fibonacci[witness_order + 1] - initial_gap
+    sequence, _, _, splits = generate(root)
+    assert sequence == brent_generate(root)
+    context = fibonacci[witness_order] - initial_gap
+    cap = fibonacci[witness_order]
+    assert sequence[root] == cap - 1 and splits[root] == context + 1
+    literal_updates = 0
+    for index in [root] + [context + offset for offset in range(8)]:
+        endpoint = index - 1
+        depth = sequence[index - 1]
+        for iteration in range(depth):
+            endpoint = index - sequence[endpoint]
+        assert endpoint == splits[index]
+        literal_updates += depth
+    table_rows = []
+    spine_rows = []
+    for offset, digits in legal_words:
+        index = context + offset
+        complement = root - index
+        readout = sequence[index] + sequence[complement]
+        assert readout == cap - 1 + int(offset >= 6)
+        assert splits[index] - (fibonacci[witness_order - 1] - initial_gap) == min(offset + 1, 7)
+        table_rows.append(dict(offset=offset, digits=''.join(map(str, digits)), index=index,
+                               complement=complement, readout=readout, selected=splits[index]))
+        inherited_defect = int(offset < 6)
+        current = index
+        for order in range(witness_order, 18, -1):
+            gap = unit_first_spine_gap(witness_order, initial_gap - offset, order)
+            assert current == fibonacci[order] - gap
+            assert fibonacci[order - 1] - sequence[current] == inherited_defect
+            spine_rows.append(dict(root_offset=offset, anchor_order=order, index=current,
+                                   gap=gap, cap_defect=inherited_defect))
+            if order > 19:
+                next_gap = unit_first_spine_gap(witness_order, initial_gap - offset, order - 1)
+                delta = gap - next_gap
+                assert splits[current] == fibonacci[order - 1] - next_gap
+                assert current - splits[current] == fibonacci[order - 2] - delta
+                assert sequence[current - splits[current]] == fibonacci[order - 3]
+                current = splits[current]
+    joint_chain = [row['index'] for row in spine_rows if row['root_offset'] == 7][:3]
+    assert joint_chain == [196404, 121379, 75012]
+    seam_base = fibonacci[25] - fibonacci[8]
+    assert min(canonical_fibonacci_indices(seam_base, fibonacci)) == 7
+    assert min(canonical_fibonacci_indices(seam_base + 8, fibonacci)) == 8
+    defect = sequence[root] - g_closed(root)
+    numerator = fibonacci[witness_order - 1] * root - cap * context
+    quadratic_ratio = Fraction(numerator * numerator,
+                               context * fibonacci[witness_order - 1] * defect * defect)
+    assert quadratic_ratio == Fraction(155142242161, 214570989189)
+    offsets = {0, 2, 3, 5, 7}
+    assert offsets | {min(offset + 1, 7) for offset in offsets} == set(range(8))
+    return dict(legal_unit_extended_words=[''.join(map(str, digits)) for offset, digits in legal_words],
+                exact_boolean_tables_reconstructed=interpolated_tables,
+                arithmetic_jump_orders_inclusive=[20, 180], arithmetic_jump_cases=jump_cases,
+                arithmetic_context_orders_inclusive=[8, 14], canonical_words_checked=canonical_words,
+                arithmetic_context_rows=arithmetic_rows,
+                actual_prefix_limit=root, full_orbit_and_brent_agree=True,
+                prefix_sha256=hashlib.sha256(','.join(map(str, sequence[1:])).encode('ascii')).hexdigest(),
+                parent=dict(index=root, value=sequence[root], selected=splits[root], depth=sequence[root - 1]),
+                actual_additive_table=table_rows, literal_selected_endpoint_updates=literal_updates,
+                actual_first_spine_rows=spine_rows, joint_seam_chain=joint_chain,
+                scalar_valid_dispersion=dict(inherited_order=witness_order, split=context,
+                                              complement=fibonacci[witness_order - 1],
+                                              golden_defect=defect, quadratic_ratio=str(quadratic_ratio),
+                                              proved_uniform_constant='1/2 on this canonical family'),
+                direct_decoder='Q=0: min(v,L_s); Q=1: max(L_s+1,min(v-K+s,R_s)), 19<=s<=K',
+                scope='Infinite additive-window qualification, unit completion and direct actual first-spine formulas follow from the proved unit-sublevel theorem. Five labels plus one-edge images need exactly eight offset labels, not stationary recursive closure or an extra memory-bit lower bound. Higher contexts change by canonical carry. Supplied order/gap/depth derives all residual selector/carry labels; wide-block minimum and uniform dispersion remain open.')
+
+
 def five_pattern_interaction_audit(sequence, fibonacci):
     patterns = ((0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1), (1, 0, 1))
     function_count = 0
@@ -2476,6 +2628,7 @@ def five_pattern_interaction_audit(sequence, fibonacci):
                 universal_lowest_window_zero_interaction_orders='all j>=23',
                 fixed_window_threshold='j>=max(3*i+7,K(F_(3*i+3)+F_(3*i+5)))',
                 persistent_canonical_context=persistent_canonical_interaction_audit(),
+                canonical_additive_carry=canonical_additive_carry_audit(),
                 scope='Interpolation is elementary; infinite fixed-window vanishing follows from the proved positive collar. The digit alphabet is not an inner period-five orbit, and scalar additivity does not certify basin or selected phase.')
 
 

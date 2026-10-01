@@ -399,6 +399,44 @@ proportional-split cancellation of M cannot occur. In wider blocks,
 large complementary gaps can approach that cancellation ratio; controlling
 their accumulated variance still requires new actual-profile restrictions.
 
+**A scalar-valid alternative on canonical interaction windows.** The
+[additive-window theorem](exact-collars.md#additive-canonical-windows-and-a-direct-descendant-decoder)
+supplies an explicit stronger policy certificate on its infinite family.
+Let t=F_m, k=ceil(3(t-3)/2), m>=8, and put
+S=F_k,A=F_(k-1),B=F_(k-2),N=F_(k+1)-t. Retain the natural-block
+label j=k. The geometric split a=S-t,b=A preserves C(N) exactly,
+although the actual prescribed split is a+1. Its one-step variance obeys
+
+$$
+\boxed{v(k,N;a)\ge\frac12\left(\frac{C(N)-G(N)}N\right)^2.} \tag{U.5}
+$$
+
+**Proof.** The additive table gives C(a)+C(b)=C(N)=S-1.
+Cassini gives the variance numerator
+AN-Sa=Bt+sigma, where sigma=A^2-SB is1 or-1.
+For k>=5, A/B lies in[3/2,5/3], as follows by induction under
+r->1+1/r. Therefore B^2/(SA)>=9/40, and
+
+$$
+v(k,N;a)=\frac{(Bt+\sigma)^2}{N^2(S-t)A}
+\ge\frac9{40}\frac{(t-1)^2}{N^2}.
+$$
+
+Writing alpha=1/phi, Fibonacci's exact error
+|S-alpha F_(k+1)|=alpha^(k+1)<alpha and
+G(N)>alpha(N+1)-1 give D=C(N)-G(N)<alpha t.
+Since alpha^2<2/5 and t>=21, for D>0 the last bound is greater than
+(9/16)(20/21)^2*(D/N)^2=(25/49)(D/N)^2, which exceeds half.
+At D=0 the result is immediate. QED.
+
+At m8, D=12 and the exact ratio v/(D/N)^2 is
+155142242161/214570989189. The collar checker verifies this selected
+alternative and the symbolic inequality on the larger arithmetic contexts;
+only the first context is regenerated as an actual C prefix.
+This removes phase qualification for a concrete scalar-valid policy and
+connects the five-pattern interaction to dispersion. It still covers a
+Fibonacci neighborhood rather than the interiors of all blocks.
+
 ### Cap-adaptive quadratic dispersion
 
 Integer cap conservation extends quadratic dispersion beyond the exact
