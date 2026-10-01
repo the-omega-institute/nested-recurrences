@@ -1,6 +1,7 @@
 """Corroborate the proved Fibonacci collar consequences by exact computation."""
 
 import bisect
+from fractions import Fraction
 from functools import lru_cache
 import hashlib
 from itertools import product
@@ -663,6 +664,207 @@ def moving_negative_plateau_audit(sequence, splits, fibonacci):
                 scope='Simultaneous top-suffix/shelf-barrier induction and boundary depth parity prove the exact moving negative plateau for actual C. Small seeds are literal/full-orbit/Brent premises; larger blocks and abstract graphs corroborate the written proof. A freshly added zero endpoint has a proper two-cycle, so scalar exactness does not imply a fixed inner cycle. Arithmetic child gaps close the moving plateau with supplied order/gap, excluding finite base-table and scale/context costs. No complete actual-C interface, wide-arch dispersion, global limit or Lean claim.')
 
 
+def unit_defect_width(order):
+    return order + (order - 1) // 3 - 6
+
+
+def unit_defect_shift(order, gap):
+    previous_zero = negative_plateau_width(order - 1)
+    previous_unit = unit_defect_width(order - 1)
+    if gap <= previous_zero:
+        return 0
+    if gap == previous_zero + 1:
+        return int(order % 3 != 1)
+    if gap <= previous_unit + 1:
+        return 1
+    assert gap == previous_unit + 2 and order % 3 == 1
+    return 2
+
+
+def unit_defect_closure_audit(sequence, splits, fibonacci):
+    base_order = 19
+    base_anchor = fibonacci[base_order]
+    base_cap = fibonacci[base_order - 1]
+    base_profile = [base_cap - sequence[base_anchor - gap]
+                    for gap in range(fibonacci[base_order - 2] + 1)]
+    literal, updates = literal_generate(base_anchor)
+    assert literal == sequence[:base_anchor + 1] == brent_generate(base_anchor)
+    assert unit_defect_width(base_order) == 19
+    for gap, defect in enumerate(base_profile):
+        assert (defect <= 1) == (gap <= unit_defect_width(base_order))
+        assert (defect == 0) == (gap <= negative_plateau_width(base_order))
+        if gap > unit_defect_width(base_order):
+            assert 2 <= defect <= max(2, gap - unit_defect_width(base_order) - 1)
+    abstract_profiles = 0
+    abstract_readouts = 0
+    for zero_width in range(3, 9):
+        for unit_width in range(zero_width + 2, zero_width + 7):
+            for extra in range(1, 10):
+                gap = unit_width + extra
+                ranges = [range(2, max(2, point - unit_width - 1) + 1)
+                          for point in range(unit_width + 1, gap + 1)]
+                for tail in product(*ranges):
+                    profile = [0] * (zero_width + 1) + [1] * (unit_width - zero_width) + list(tail)
+                    cycles = capped_profile_cycles(profile, gap)
+                    if extra == 1:
+                        assert cycles == [(unit_width,)]
+                    elif extra == 2:
+                        assert len(cycles) == 1 and set(cycles[0]) == {unit_width, unit_width + 1}
+                    else:
+                        for cycle in cycles:
+                            for selected in cycle:
+                                assert unit_width < selected <= gap - 2
+                                lower_gap = gap - selected
+                                lower_cap = 0 if lower_gap <= 9 else 2 * lower_gap // 3
+                                upper_readout = profile[selected] + lower_cap
+                                assert 2 <= upper_readout <= max(2, gap - unit_width - 3)
+                                abstract_readouts += 1
+                    abstract_profiles += 1
+    block_vertices = 0
+    selected_rows = 0
+    unit_rows = 0
+    phase_rows = 0
+    first_spine_steps = 0
+    boundary_records = []
+    dispersion_minimum = None
+    dispersion_witness = None
+    five_window_witness = None
+    for order in range(base_order, 31):
+        anchor = fibonacci[order]
+        cap = fibonacci[order - 1]
+        zero_width = negative_plateau_width(order)
+        unit_width = unit_defect_width(order)
+        for gap in range(fibonacci[order - 2] + 1):
+            defect = cap - sequence[anchor - gap]
+            assert (defect <= 1) == (gap <= unit_width)
+            if gap > unit_width:
+                assert 2 <= defect <= max(2, gap - unit_width - 1)
+            block_vertices += 1
+        if order == base_order:
+            continue
+        previous_zero = negative_plateau_width(order - 1)
+        previous_unit = unit_defect_width(order - 1)
+        assert unit_width == previous_unit + 1 + int(order % 3 == 1)
+        assert previous_unit + 3 < fibonacci[order - 3]
+        boundary_gap = previous_unit + 2
+        boundary_index = anchor - boundary_gap
+        trajectory, transient, period = full_orbit(sequence, boundary_index)
+        lower = cap - previous_unit - 1
+        upper = lower + 1
+        assert period == 2 and set(trajectory[transient:]) == {lower, upper}
+        assert all(point > upper if position % 2 == 0 else point < lower
+                   for position, point in enumerate(trajectory[:transient]))
+        assert all(point >= upper if position % 2 == 0 else point <= lower
+                   for position, point in enumerate(trajectory))
+        assert sequence[boundary_index - 1] == cap - 2
+        expected_boundary = upper if order % 3 == 1 else lower
+        assert splits[boundary_index] == expected_boundary
+        assert cap - sequence[boundary_index] == (1 if order % 3 == 1 else 2)
+        boundary_records.append(dict(order=order, gap=boundary_gap, index=boundary_index,
+                                     cycle=[lower, upper], transient=transient,
+                                     depth=sequence[boundary_index - 1], selected_split=expected_boundary,
+                                     cap_defect=cap - sequence[boundary_index]))
+        for gap in range(unit_width + 1):
+            index = anchor - gap
+            defect = int(gap > zero_width)
+            shift = unit_defect_shift(order, gap)
+            split = cap - gap + shift
+            assert splits[index] == split and sequence[index] == cap - defect
+            first_gap = gap - shift
+            assert first_gap <= previous_unit and shift <= negative_plateau_width(order - 2)
+            assert sequence[split] == fibonacci[order - 2] - defect
+            assert sequence[index - split] == fibonacci[order - 3]
+            trajectory, transient, period = full_orbit(sequence, index)
+            cycle = trajectory[transient:]
+            if gap == previous_zero + 1:
+                expected_cycle = {cap - gap, cap - gap + 1}
+            elif gap == previous_unit + 2:
+                expected_cycle = {cap - gap + 1, cap - gap + 2}
+            else:
+                expected_cycle = {split}
+            assert set(cycle) == expected_cycle
+            selected_rows += 1
+            unit_rows += defect
+            spine_order, spine_gap = order, gap
+            while spine_order >= 20:
+                spine_shift = unit_defect_shift(spine_order, spine_gap)
+                spine_gap -= spine_shift
+                spine_order -= 1
+                assert spine_gap <= unit_defect_width(spine_order)
+                assert int(spine_gap > negative_plateau_width(spine_order)) == defect
+                first_spine_steps += 1
+            golden_defect = sequence[index] - g_closed(index)
+            assert 0 <= golden_defect <= gap
+            for point in cycle:
+                complement = index - point
+                phase_shift = point - (cap - gap)
+                numerator = fibonacci[order - 2] * complement - fibonacci[order - 3] * point
+                expected_numerator = (-1) ** (order - 1) + fibonacci[order - 3] * gap - cap * phase_shift
+                assert numerator == expected_numerator
+                if gap:
+                    assert 2 * numerator >= fibonacci[order - 3] * gap
+                assert 25 * numerator ** 2 >= gap ** 2 * point * complement
+                assert 25 * numerator ** 2 >= golden_defect ** 2 * point * complement
+                if golden_defect:
+                    ratio = Fraction(numerator ** 2, point * complement * golden_defect ** 2)
+                    if dispersion_minimum is None or ratio < dispersion_minimum:
+                        dispersion_minimum = ratio
+                        dispersion_witness = dict(order=order, gap=gap, index=index,
+                                                  phase_split=point, golden_defect=golden_defect)
+                phase_rows += 1
+        if order == 28:
+            gaps = [0, 16, 17, 30, 31]
+            shifts = [unit_defect_shift(order, gap) for gap in gaps]
+            defects = [int(gap > zero_width) for gap in gaps]
+            assert shifts == [0, 0, 1, 1, 2] and defects == [0, 1, 1, 1, 1]
+            profile_order = order - 1
+            parent_parameters = []
+            first_parameters = []
+            second_parameters = []
+            for row, gap in enumerate(gaps):
+                following = (row + 1) % 5
+                index = anchor - gap
+                split = splits[index]
+                first_offset = fibonacci[profile_order - 2] - gap + shifts[row]
+                second_offset = fibonacci[profile_order - 3] - shifts[row]
+                assert split - fibonacci[profile_order - 1] == first_offset
+                assert index - split - fibonacci[profile_order - 2] == second_offset
+                parent_parameter = fibonacci[profile_order] - gaps[following] - defects[row]
+                first_parameter = (fibonacci[profile_order - 1] - gaps[following]
+                                   + shifts[following] - defects[row])
+                second_parameter = fibonacci[profile_order - 2] - shifts[following]
+                assert first_parameter + second_parameter == parent_parameter
+                first_profile = sequence[split] - fibonacci[profile_order - 2]
+                second_profile = sequence[index - split] - fibonacci[profile_order - 3]
+                assert first_profile == fibonacci[profile_order - 3] - defects[row]
+                assert second_profile == fibonacci[profile_order - 4]
+                next_first_offset = fibonacci[profile_order - 2] - gaps[following] + shifts[following]
+                next_second_offset = fibonacci[profile_order - 3] - shifts[following]
+                assert next_first_offset + first_profile == first_parameter
+                assert next_second_offset + second_profile == second_parameter
+                parent_parameters.append(parent_parameter)
+                first_parameters.append(first_parameter)
+                second_parameters.append(second_parameter)
+            five_window_witness = dict(anchor_order=order, gaps=gaps, shifts=shifts, cap_defects=defects,
+                                       parent_parameters=parent_parameters, first_parameters=first_parameters,
+                                       second_parameters=second_parameters, residual_selector_labels=0)
+    return dict(base_order=base_order, base_scalar_indices_inclusive=[fibonacci[18], base_anchor],
+                base_full_gap_positions=len(base_profile), base_zero_width=negative_plateau_width(base_order),
+                base_unit_width=unit_defect_width(base_order),
+                base_profile_sha256=hashlib.sha256(','.join(map(str, base_profile)).encode('ascii')).hexdigest(),
+                independently_literal_checked_through=base_anchor, base_literal_updates=updates,
+                unit_width_formula='R_k=k+floor((k-1)/3)-6, k>=19',
+                shelf_formula='2<=Q_k(v)<=max(2,v-R_k-1) for v>R_k, k>=19',
+                abstract_profiles=abstract_profiles, abstract_periodic_upper_readouts=abstract_readouts,
+                actual_complete_block_orders_inclusive=[19, 30], actual_block_vertices=block_vertices,
+                actual_closed_selector_rows=selected_rows, actual_unit_defect_rows=unit_rows,
+                first_child_spine_steps=first_spine_steps, boundary_records=boundary_records,
+                arithmetic_five_window=five_window_witness, all_basin_phase_variance_checks=phase_rows,
+                basin_quadratic_constant='1/25', basin_ratio_minimum=str(dispersion_minimum),
+                basin_ratio_witness=dispersion_witness,
+                scope='Finite base and abstract graph checks for the unit-sublevel/shelf induction; actual selector and single-defective-spine checks through order30. All basin phases satisfy the scoped one-step quadratic dispersion inequality in the proved Q<=1 family. No wide-block or global dispersion bound, full minimum interface or Lean claim.')
+
+
 def negative_adjacent_transitions(amplitude, adjacent):
     if amplitude == 1:
         return {1} if adjacent == 1 else {adjacent, 0, 1}
@@ -965,6 +1167,7 @@ def negative_collar_boundary_audit(sequence, splits, fibonacci):
                 literal_witnesses=literal_witnesses, literal_endpoint_updates=literal_updates,
                 adjacent_gap_parity=negative_adjacent_gap_audit(sequence, fibonacci),
                 moving_negative_plateau=moving_negative_plateau_audit(sequence, splits, fibonacci),
+                unit_defect_closure=unit_defect_closure_audit(sequence, splits, fibonacci),
                 scope='Single-negative-seed propagation and first-boundary copy-or-contract/readout-phase proofs are general. Earlier scalar seeds reuse the independently agreeing F30+34 full-orbit/Brent prefix. The separate small-seed moving-plateau induction now proves all fixed negative widths, top contiguity and the unit-amplitude actual boundary rule. Full recursive minimum, dispersion and global convergence remain open. Conditional phase-state minima exclude supplied context and its certification cost.')
 
 
