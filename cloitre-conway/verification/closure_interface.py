@@ -1,7 +1,9 @@
 """Exact checks for the generic reflection-window closure interface."""
 
 from fractions import Fraction
+import hashlib
 import json
+from pathlib import Path
 
 
 def zero(size):
@@ -97,6 +99,191 @@ def check_period(period):
     }
 
 
+def canonical_fib_word(number):
+    fibonacci = [0, 1]
+    while fibonacci[-1] <= number:
+        fibonacci.append(sum(fibonacci[-2:]))
+    digits = {}
+    remaining = number
+    for order in range(len(fibonacci) - 1, 1, -1):
+        if fibonacci[order] <= remaining:
+            digits[order] = 1
+            remaining -= fibonacci[order]
+    assert remaining == 0
+    assert all(order + 1 not in digits for order in digits)
+    patterns = {(0, 0, 0): 0, (1, 0, 0): 1, (0, 1, 0): 2,
+                (0, 0, 1): 3, (1, 0, 1): 4}
+    windows = tuple(patterns[tuple(digits.get(3 * position + offset, 0)
+                                  for offset in (3, 4, 5))]
+                    for position in range(max(digits, default=0) // 3 - 1, -1, -1))
+    return digits.get(2, 0), windows
+
+
+def fib_horner(windows):
+    digit_vectors = ((0, 0), (1, 0), (0, 1), (1, 1), (2, 1))
+    first = second = 0
+    for symbol in windows:
+        digit = digit_vectors[symbol]
+        first, second = first + 2 * second + digit[0], 2 * first + 3 * second + digit[1]
+    return first, second
+
+
+def ternary_level_number(number):
+    if number <= 0 or number % 5:
+        return False
+    remaining = number // 5
+    while remaining % 3 == 0:
+        remaining //= 3
+    return remaining == 1
+
+
+def scale_memory_audit():
+    def multiply(left, right):
+        return (left[0] * right[0] + 5 * left[1] * right[1],
+                left[0] * right[1] + left[1] * right[0])
+
+    def inverse(value):
+        norm = value[0] ** 2 - 5 * value[1] ** 2
+        assert norm
+        return value[0] / norm, -value[1] / norm
+
+    def positive(value):
+        real, radical = value
+        if not radical:
+            return real > 0
+        if real >= 0 and radical > 0:
+            return True
+        if real <= 0 and radical < 0:
+            return False
+        return (real ** 2 > 5 * radical ** 2 if real > 0
+                else 5 * radical ** 2 > real ** 2)
+
+    def absolute(value):
+        return value if positive(value) else scale(value, -1)
+
+    def projection(vector, contracting=False):
+        value = (Fraction(vector[0]) + Fraction(3, 2) * vector[1],
+                 Fraction(2, 5) * vector[0] + Fraction(7, 10) * vector[1])
+        return sub((Fraction(2 * vector[0] + 3 * vector[1]), Fraction(0)), value) if contracting else value
+
+    unity = (Fraction(1), Fraction(0))
+    expanding = [unity]
+    contracting = [unity]
+    for exponent in range(104):
+        expanding.append(multiply(expanding[-1], (Fraction(2), Fraction(1))))
+        contracting.append(multiply(contracting[-1], (Fraction(2), Fraction(-1))))
+    for symbol in range(1, 5):
+        vector = fib_horner((symbol,))
+        assert not positive(sub(unity, projection(vector)))
+        assert positive(sub(scale(unity, 8), projection(vector)))
+        assert positive(sub(unity, absolute(projection(vector, True))))
+
+    canonical_checks = 32768
+    for number in range(canonical_checks):
+        unit, windows = canonical_fib_word(number)
+        first, second = fib_horner(windows)
+        assert number == unit + 2 * first + 3 * second
+        assert not windows or windows[0]
+
+    literal_sequence = [0, 1]
+    for number in range(2, 4097):
+        point = number - 1
+        for iteration in range(literal_sequence[number - 1]):
+            point = number - literal_sequence[point]
+        literal_sequence.append(point)
+    assert all((5 * value == 2 * number) == ternary_level_number(number)
+               for number, value in enumerate(literal_sequence[1:], 1))
+
+    words = []
+    number = 5
+    while True:
+        unit, windows = canonical_fib_word(number)
+        if len(windows) > 24:
+            break
+        words.append((number, unit, windows))
+        number *= 3
+    assert {len(windows) for number, unit, windows in words} == set(range(1, 25))
+    cuts = 0
+    examples = []
+    for number, unit, windows in words:
+        for start in range(len(windows)):
+            for length in range(1, len(windows) - start + 1):
+                prefix = windows[:start]
+                block = windows[start:start + length]
+                suffix = windows[start + length:]
+                suffix_length = len(suffix)
+                prefix_vector, block_vector, suffix_vector = map(fib_horner, (prefix, block, suffix))
+                expanding_block = multiply(projection(block_vector), inverse(sub(expanding[length], unity)))
+                contracting_block = multiply(projection(block_vector, True), inverse(sub(contracting[length], unity)))
+                leading = multiply(expanding[suffix_length], add(projection(prefix_vector), expanding_block))
+                constant = sub(sub((Fraction(unit + 2 * suffix_vector[0] + 3 * suffix_vector[1]), Fraction(0)),
+                                   multiply(expanding[suffix_length], expanding_block)),
+                               multiply(contracting[suffix_length], contracting_block))
+                alternating_term = multiply(contracting[suffix_length],
+                                            add(projection(prefix_vector, True), contracting_block))
+                assert positive(leading)
+                assert not positive(sub(expanding[suffix_length], multiply(leading, expanding[1])))
+                assert not positive(sub(absolute(constant), scale(expanding[suffix_length], 11)))
+                assert positive(sub(scale(unity, 4), absolute(alternating_term)))
+                assert not positive(sub(add(absolute(constant), absolute(alternating_term)), scale(leading, 64)))
+                repetitions = 2 + (length + 5) // length
+                pumped_values = []
+                for count in (0, 1, repetitions, repetitions + 1):
+                    pumped = prefix + block * count + suffix
+                    first, second = fib_horner(pumped)
+                    value = unit + 2 * first + 3 * second
+                    spectral = add(add(multiply(leading, expanding[count * length]), constant),
+                                   multiply(alternating_term, contracting[count * length]))
+                    assert spectral == (Fraction(value), Fraction(0))
+                    if count >= repetitions:
+                        pumped_values.append(value)
+                ratio = (Fraction(pumped_values[1], pumped_values[0]), Fraction(0))
+                gap = absolute(sub(ratio, expanding[length]))
+                assert positive(sub(scale(inverse(expanding[length]), Fraction(1, 16)), gap))
+                assert not all(map(ternary_level_number, pumped_values))
+                assert len(windows) + repetitions * length <= len(windows) + 3 * length + 5
+                cuts += 1
+                if number == 45 and start == 0:
+                    examples.append(dict(number=number, block_length=length, repetitions=repetitions,
+                                         pumped_values=pumped_values,
+                                         pumped_window_lengths=[len(windows) + (repetitions - 1) * length,
+                                                                len(windows) + repetitions * length]))
+
+    tries = []
+    for horizon in (1, 2, 4, 8, 16, 24):
+        transitions = [{}]
+        accepted = set()
+        for number, unit, windows in words:
+            if len(windows) > horizon:
+                continue
+            state = 0
+            for symbol in (*windows, 5 + unit):
+                if symbol not in transitions[state]:
+                    transitions[state][symbol] = len(transitions)
+                    transitions.append({})
+                state = transitions[state][symbol]
+            accepted.add(state)
+        assert len(transitions) + 1 <= 2 * (horizon + 1) ** 2 + 2
+        tries.append(dict(window_horizon=horizon, accepted_words=len(accepted),
+                          trie_states_including_reject=len(transitions) + 1,
+                          proved_state_lower_bound=max(1, (horizon - 1) // 4)))
+        if horizon == 8:
+            for number in range(canonical_checks):
+                unit, windows = canonical_fib_word(number)
+                state = 0
+                for symbol in (*windows, 5 + unit):
+                    state = transitions[state].get(symbol, -1) if state >= 0 else -1
+                assert (state in accepted) == ternary_level_number(number)
+    return dict(canonical_numbers_checked=canonical_checks,
+                independent_literal_Campbell_level_set_inclusive=[1, 4096],
+                power_words_checked=len(words), all_window_lengths_checked=[1, 24],
+                all_window_block_cuts_checked=cuts,
+                exact_spectral_and_ratio_checks=True, pumping_examples=examples, tries=tries,
+                general_state_bound='L<=4K+4 for autonomous DFA or NFA recognition of canonical FIB words for5*3^k through L windows',
+                memory_order='Theta(log L)=Theta(log log N) for the scalar diagnostic and nondeterministic Campbell graph recognition; context clocks and read-only table size are separate',
+                scope='Written general proof supplies the infinite lower bound; exact finite arithmetic and canonical/trie checks corroborate it. No matching deterministic full-graph decoder or actual Cloitre graph lower bound is claimed.')
+
+
 def main():
     rows = [check_period(period) for period in range(1, 9)]
     five = rows[4]
@@ -110,6 +297,7 @@ def main():
     ranks = {f"p={row['period']}": row["feature_rank"] for row in rows}
     print(json.dumps({
         "status": "passed",
+        "source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "periods_checked": [row["period"] for row in rows],
         "payload_dimension_including_scale": dimensions,
         "additional_coordinates_beyond_scale": additional,
@@ -119,6 +307,7 @@ def main():
             "derived": ["u1", "u2", "u3", "u4", "e4"],
             "additional_coordinates_beyond_scale": five["additional_coordinates_beyond_scale"],
         },
+        "Campbell_FIB_scale_memory": scale_memory_audit(),
         "scope": "Exact symbolic affine closure; branch inequalities and family-specific selectors remain separate.",
     }, indent=2))
 

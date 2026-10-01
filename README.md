@@ -20,6 +20,7 @@ or programming knowledge is needed.
 | Understand how quickly an orbit enters a Fibonacci neighborhood | **[Quantitative capture](cloitre-conway/fibonacci-collars.md#quantitative-capture-and-a-short-exterior-certificate)** |
 | See how long orbit runs can be checked by arithmetic blocks | **[Return certificates](cloitre-conway/fibonacci-collars.md#defect-plateau-return-certificates)** |
 | See the common five-window closure interface and the exact conditional phase minimum | **[Closure theorem](cloitre-conway/fibonacci-collars.md#9-common-closure-theorem-and-generic-minimality)** · **[Phase readout](cloitre-conway/fibonacci-collars.md#the-exact-minimum-phase-interface-depends-on-the-readout)** |
+| See why Campbell's short cycles still require growing scale memory in FIB | **[Finite-horizon memory bound](cloitre-conway/fibonacci-collars.md#a-quantitative-scale-memory-obstruction-from-campbells-ternary-law)** |
 | Understand the extra information needed to recover child branches | **[Seed reconstruction](cloitre-conway/fibonacci-collars.md#seed-reconstruction-and-the-remaining-branch-information)** · **[Minimum cycle checks](cloitre-conway/fibonacci-collars.md#minimal-periodicity-checks-for-inverse-reconstruction)** |
 | Check inverse uniqueness with a small graph and a hand-worked example | **[Gap graph and reverse completeness](cloitre-conway/fibonacci-collars.md#a-bounded-gap-automaton-with-reverse-completeness)** |
 | See the minimum total defect needed for a proper cycle | **[Cycle defect cost](cloitre-conway/fibonacci-collars.md#minimum-defect-cost-of-a-proper-cycle)** |
@@ -44,6 +45,16 @@ existing email thread; there is no need to learn GitHub Issues or pull requests.
 formula organized by powers of three. The prescribed inner orbit reaches a
 fixed point or two-cycle after at most four transient steps. The ratio has
 liminf 2/5 and limsup 3/4.
+
+The [scale-memory theorem](cloitre-conway/fibonacci-collars.md#a-quantitative-scale-memory-obstruction-from-campbells-ternary-law)
+also quantifies an obstruction to using a fixed autonomous FIB five-window
+recognizer across both families. Already the simple level set
+5b(n)=2n, exactly n=5*3^k, requires at least (L-4)/4 states through
+L windows. Its minimum control-memory order is Theta(log L), or
+Theta(log log N) at numerical horizon N, allowing a separate transition
+table for each horizon. Short inner cycles do not remove
+this representation cost. Supplied length/position clocks and lookup tables
+are separate resources; exact Cloitre graph recognition remains open.
 
 **Cloitre's recurrence.** The [global proof](cloitre-conway/golden-proof.md)
 establishes the Hofstadter G lower bound, the exact equality set (including

@@ -7,6 +7,7 @@ Updated 2026-10-01. [Reading guide](README.md)
 | Result | Verification scope | Read |
 |---|---|---|
 | Campbell: totality, explicit power-of-three formula, sharp four-step transient, periods 1 or 2, dilation identity and ratio extrema | Written proof; exact symbolic arithmetic and independent sequence checks; closure checker records six parity/domain endpoint templates (five distinct affine maps) and parity phase | [Three-page PDF](campbell/note.pdf) · [Proof certificate](campbell/verification/proof-check.json) |
+| Campbell's FIB scale diagnostic has finite-horizon state bound L<=4K+4 and minimum autonomous state-memory order Theta(log L)=Theta(log log N); full graph recognition inherits an Omega(L) state lower bound, with matching bit order for nondeterministic recognition | General quantitative pumping and algebraic-norm proof from the proved ternary law; a trie gives O(L^2) diagnostic states and finite branch/scale matchers give O(L^2) graph-NFA states. Exact canonical, literal level-set, spectral pumping and trie audits corroborate. This measures autonomous control states, excluding read-only table size and free context clocks; it does not give a deterministic full-graph decoder or a Cloitre graph lower bound | [Scale-memory obstruction](cloitre-conway/fibonacci-collars.md#a-quantitative-scale-memory-obstruction-from-campbells-ternary-law) · [Closure evidence](cloitre-conway/verification/closure-interface-check.json) |
 | Cloitre: totality, elementary 3/5 and 3/4 bounds, split separation and entry into the eventual cycle at the prescribed depth | Written arguments with explicit finite initial cases | [Foundations](cloitre-conway/proof.md) |
 | Cloitre: rational envelope for every n>=131072 | Propagation proof plus exact finite seed certificate | [Propagation](cloitre-conway/proof.md#3-finite-window-propagation-and-explicit-infinite-bounds) |
 | Cloitre: C>=G, exact equality set, Fibonacci identities and landing, block upper cap, liminf C(n)/n=1/phi | Computer-assisted theorem: exact finite base followed by general induction and cycle capture | [Global golden structure](cloitre-conway/golden-proof.md) |
@@ -76,7 +77,13 @@ supplies an ingredient of the induction; it also documents numerical corrections
 2. **Arch profiles and inner dynamics.** The defect identity gives a two-scale
    renormalization skeleton, while the first period-five arch supplies a local
    branch certificate. Determine whether arch defect trees admit finitely many
-   certified local types and a reverse completeness map. Establish a decay rate
+   certified local types and a reverse completeness map. Count the
+   scale/position resources explicitly: Campbell already
+   requires growing autonomous FIB memory despite its period-two collapse.
+   Its diagnostic and nondeterministic graph-recognition bit order is known;
+   deterministic graph decoding and a corresponding actual-C lower bound
+   remain separate problems. A free external clock can hide this resource.
+   Establish a decay rate
    only after obtaining
    global control; study whether cycle periods are unbounded and bound interior
    transients in wide arches. Exterior capture now has a logarithmic bound;

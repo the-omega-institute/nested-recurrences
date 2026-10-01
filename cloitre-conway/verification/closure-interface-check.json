@@ -1,6 +1,16 @@
 {
   "status": "passed",
-  "periods_checked": [1, 2, 3, 4, 5, 6, 7, 8],
+  "source_sha256": "0360d54011c0b05797f9eb784b4d8b3d0266cf0138195056547272767693c4de",
+  "periods_checked": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
   "payload_dimension_including_scale": {
     "p=1": 2,
     "p=2": 3,
@@ -32,9 +42,118 @@
     "p=8": 9
   },
   "five_window_payload": {
-    "input": ["t", "u0", "e0", "e1", "e2", "e3"],
-    "derived": ["u1", "u2", "u3", "u4", "e4"],
+    "input": [
+      "t",
+      "u0",
+      "e0",
+      "e1",
+      "e2",
+      "e3"
+    ],
+    "derived": [
+      "u1",
+      "u2",
+      "u3",
+      "u4",
+      "e4"
+    ],
     "additional_coordinates_beyond_scale": 5
+  },
+  "Campbell_FIB_scale_memory": {
+    "canonical_numbers_checked": 32768,
+    "independent_literal_Campbell_level_set_inclusive": [
+      1,
+      4096
+    ],
+    "power_words_checked": 31,
+    "all_window_lengths_checked": [
+      1,
+      24
+    ],
+    "all_window_block_cuts_checked": 3352,
+    "exact_spectral_and_ratio_checks": true,
+    "pumping_examples": [
+      {
+        "number": 45,
+        "block_length": 1,
+        "repetitions": 8,
+        "pumped_values": [
+          1089155,
+          4613733
+        ],
+        "pumped_window_lengths": [
+          10,
+          11
+        ]
+      },
+      {
+        "number": 45,
+        "block_length": 2,
+        "repetitions": 5,
+        "pumped_values": [
+          4613733,
+          82790071
+        ],
+        "pumped_window_lengths": [
+          11,
+          13
+        ]
+      },
+      {
+        "number": 45,
+        "block_length": 3,
+        "repetitions": 4,
+        "pumped_values": [
+          20065168,
+          1525216789
+        ],
+        "pumped_window_lengths": [
+          12,
+          15
+        ]
+      }
+    ],
+    "tries": [
+      {
+        "window_horizon": 1,
+        "accepted_words": 1,
+        "trie_states_including_reject": 4,
+        "proved_state_lower_bound": 1
+      },
+      {
+        "window_horizon": 2,
+        "accepted_words": 2,
+        "trie_states_including_reject": 7,
+        "proved_state_lower_bound": 1
+      },
+      {
+        "window_horizon": 4,
+        "accepted_words": 5,
+        "trie_states_including_reject": 19,
+        "proved_state_lower_bound": 1
+      },
+      {
+        "window_horizon": 8,
+        "accepted_words": 10,
+        "trie_states_including_reject": 50,
+        "proved_state_lower_bound": 1
+      },
+      {
+        "window_horizon": 16,
+        "accepted_words": 21,
+        "trie_states_including_reject": 184,
+        "proved_state_lower_bound": 3
+      },
+      {
+        "window_horizon": 24,
+        "accepted_words": 31,
+        "trie_states_including_reject": 379,
+        "proved_state_lower_bound": 5
+      }
+    ],
+    "general_state_bound": "L<=4K+4 for autonomous DFA or NFA recognition of canonical FIB words for5*3^k through L windows",
+    "memory_order": "Theta(log L)=Theta(log log N) for the scalar diagnostic and nondeterministic Campbell graph recognition; context clocks and read-only table size are separate",
+    "scope": "Written general proof supplies the infinite lower bound; exact finite arithmetic and canonical/trie checks corroborate it. No matching deterministic full-graph decoder or actual Cloitre graph lower bound is claimed."
   },
   "scope": "Exact symbolic affine closure; branch inequalities and family-specific selectors remain separate."
 }
