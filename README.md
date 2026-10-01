@@ -24,7 +24,7 @@ or programming knowledge is needed.
 | See how repeated inputs can eliminate inverse branch labels | **[Shared selectors and the two-label theorem](cloitre-conway/fibonacci-collars.md#sharing-selectors-at-repeated-physical-indices)** |
 | Understand sharing between windows and a basis for their parameters | **[Shared network and forest basis](cloitre-conway/fibonacci-collars.md#a-shared-parameter-network-and-its-forest-basis)** |
 | See how child layouts and values can be recovered without a C table | **[Sublinear shared descent code](cloitre-conway/fibonacci-collars.md#generating-the-layout-from-a-sublinear-shared-descent-code)** |
-| Determine actual selected endpoints and exclude nearby five-cycles | **[Saturated profiles and arithmetic phase](cloitre-conway/fibonacci-collars.md#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)** |
+| Read growing exact collars, phase rules and nearby cycle exclusions | **[Growing positive collars](cloitre-conway/fibonacci-collars.md#every-fixed-positive-offset-eventually-becomes-linear)** · **[Saturated profiles](cloitre-conway/fibonacci-collars.md#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)** |
 | See a complete geometric selector code and the remaining real-orbit constraint | **[Seven terminal symbols](cloitre-conway/fibonacci-collars.md#seven-terminal-symbols-and-the-full-geometric-selector-code)** · **[Growing defects and occupation](cloitre-conway/fibonacci-collars.md#growing-actual-defects-and-the-remaining-occupation-problem)** |
 | See what is proved and what remains open | **[Current status](STATUS.md)** |
 
@@ -53,6 +53,12 @@ The maintained notes now also give a shorter finite-certificate theorem and
 the improved global upper bound 8900/13459 for n>=349525, together with exact
 values and complete nearby cycles in the band -12<=t<=32 for all high-order
 Fibonacci indices. See [current status](STATUS.md) for the thresholds and evidence.
+
+The [growing positive collar theorem](cloitre-conway/fibonacci-collars.md#every-fixed-positive-offset-eventually-becomes-linear)
+now proves the exact linear value at every fixed positive offset for all
+sufficiently large orders, with an explicit threshold. Arithmetic selected
+endpoints are also proved on a domain whose width grows with the order.
+The wider Fibonacci-block centers remain open.
 
 **Still open:** full convergence of C(n)/n, its decay rate, and the growth
 of periods and landing times away from Fibonacci neighborhoods.

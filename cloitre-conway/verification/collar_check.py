@@ -519,6 +519,116 @@ def saturated_profile_audit(sequence, periods, splits, fibonacci):
                 scope='General two-scale saturation induction plus a minimum/maximum cycle argument. The36 extra seeds and earlier exact collar seeds are finite premises; all-start and selected-cycle checks are corroboration. The extended endpoint rule proves actual basin and phase on offsets1..32, with possible odd entry at the lower endpoint when t=32. Recursive nonautonomous windows in0..32 have arithmetic splits, but the spatial period bound applies only to autonomous constant-parameter cycles. No wider-arch phase classification or full minimum closure theorem is claimed.')
 
 
+def positive_collar_extinction_audit(sequence, fibonacci):
+    local_contexts = 0
+    periodic_splits = 0
+    for offset in range(1, 13):
+        for first_top, second_top in product(range(1, offset + 1), repeat=2):
+            first = tuple(range(offset)) + (first_top,)
+            second = tuple(range(offset)) + (second_top,)
+            for cycle in capped_profile_cycles(first, offset):
+                for split in cycle:
+                    value = first[split] + second[offset - split]
+                    if value < offset:
+                        assert split == 0 and first_top == offset and second_top < offset
+                        assert value == second_top
+                    periodic_splits += 1
+            local_contexts += 1
+    extinction_rows = []
+    for offset_parity in (0, 1):
+        for base_mod in range(3):
+            states = set(product((0, 1), repeat=2))
+            last_positive = 1
+            transitions = []
+            for step in range(2, 10):
+                phase_allows = ((base_mod + step) % 3 != 1) if offset_parity else ((base_mod + step) % 3 == 1)
+                following = set()
+                for earlier, previous in states:
+                    following.add((previous, 0))
+                    if earlier and not previous and phase_allows:
+                        following.add((previous, 1))
+                states = following
+                if any(previous for earlier, previous in states):
+                    last_positive = step
+                transitions.append(dict(step=step, states=[list(state) for state in sorted(states)]))
+            expected = ((2, 4, 3), (6, 5, 4))[offset_parity][base_mod]
+            assert last_positive + 1 == expected and states == {(0, 0)}
+            extinction_rows.append(dict(offset_parity=offset_parity, base_order_mod3=base_mod,
+                                         first_uniform_linear_step=expected, state_trace=transitions))
+    conditional_rows = 0
+    conditional_nonzero_rows = []
+    for order in range(6, len(fibonacci) - 1):
+        for offset in range(1, 129):
+            if fibonacci[order] + offset >= len(sequence):
+                break
+            if not all(sequence[fibonacci[height] + point] == fibonacci[height - 1] + point
+                       for height in (order - 2, order - 1, order) for point in range(offset)):
+                continue
+            defects = [fibonacci[height - 1] + offset - sequence[fibonacci[height] + offset]
+                       for height in (order - 2, order - 1, order)]
+            assert all(defect >= 0 for defect in defects)
+            if defects[-1]:
+                assert defects[-1] == defects[0] and defects[1] == 0
+                assert (fibonacci[order - 1] + offset) % 2 == 0
+                conditional_nonzero_rows.append(dict(order=order, offset=offset, defect=defects[-1]))
+            conditional_rows += 1
+    threshold_rows = []
+    threshold = 23
+    for offset in range(33, 1001):
+        increment = ((2, 4, 3), (6, 5, 4))[offset % 2][threshold % 3]
+        threshold += increment
+        expected = 23 + 3 * (offset - 32) + (offset - 32) % 2
+        assert threshold == expected
+        threshold_rows.append((offset, threshold))
+    higher_limit = fibonacci[30] + 34
+    higher_sequence, _, _, higher_splits = generate(higher_limit)
+    assert higher_sequence == brent_generate(higher_limit)
+    higher_cases = []
+    literal_updates = 0
+    for offset, orders in ((33, range(27, 31)), (34, range(29, 31))):
+        for order in orders:
+            index = fibonacci[order] + offset
+            assert higher_sequence[index] == fibonacci[order - 1] + offset
+            point = index - 1
+            depth = higher_sequence[index - 1]
+            for iteration in range(depth):
+                point = index - higher_sequence[point]
+            assert point == higher_splits[index]
+            literal_updates += depth
+            higher_cases.append(dict(order=order, offset=offset, index=index,
+                                     value=higher_sequence[index], selected_offset=point - fibonacci[order - 1]))
+    width_rows = []
+    arithmetic_fibonacci = fibonacci_values(10 ** 100)
+    for order in range(23, len(arithmetic_fibonacci) - 1):
+        quotient, remainder = divmod(order - 23, 6)
+        linear_width = 32 + 2 * quotient + (remainder >= 4)
+        barrier_width = max(32, g_closed(linear_width))
+        assert barrier_width <= linear_width <= arithmetic_fibonacci[order - 2]
+        if order >= 25:
+            previous_quotient, previous_remainder = divmod(order - 24, 6)
+            previous_linear_width = 32 + 2 * previous_quotient + (previous_remainder >= 4)
+            lower_quotient, lower_remainder = divmod(order - 25, 6)
+            lower_linear_width = 32 + 2 * lower_quotient + (lower_remainder >= 4)
+            assert max(32, g_closed(previous_linear_width)) <= lower_linear_width
+        assert g_closed(arithmetic_fibonacci[order] + linear_width + 1) >= (
+            arithmetic_fibonacci[order - 1] + g_closed(linear_width))
+        if order in (23, 27, 29, 87, 100, 479):
+            width_rows.append(dict(order=order, linear_width=linear_width,
+                                   saturated_width=barrier_width))
+    return dict(local_capped_split_contexts=local_contexts, periodic_split_witnesses=periodic_splits,
+                extinction_table=extinction_rows, finite_conditional_C_rows=conditional_rows,
+                finite_nonzero_persistence_rows=conditional_nonzero_rows,
+                threshold_formula='K(u)=23+3*(u-32)+(u-32 mod2), u>=33',
+                threshold_offsets_checked=[33, 1000], threshold_last=list(threshold_rows[-1]),
+                higher_prefix_limit=higher_limit,
+                higher_prefix_sha256=hashlib.sha256(','.join(map(str, higher_sequence[1:])).encode('ascii')).hexdigest(),
+                higher_full_orbit_and_brent_agree=True, higher_literal_endpoint_updates=literal_updates,
+                higher_threshold_cases=higher_cases, arithmetic_width_examples=width_rows,
+                growing_linear_width='L_j=32+2*floor((j-23)/6)+indicator((j-23 mod6)>=4)',
+                growing_saturated_width='W_j=max(32,G(L_j))',
+                scope='General offset induction from the already certified0..32 collar and a necessary defect-persistence/phase rule. Finite Boolean paths are exhaustive for the rule envelope, not reverse-complete actual C histories. Every fixed positive width eventually has a proved exact collar; arbitrary negative widths and global ratio convergence remain open. Additional independent numerical checks stay within the previously published2^20 range, while the infinite conclusion comes from the extinction proof.')
+
+
 def main():
     if not __debug__:
         raise SystemExit('Run without -O; assertions perform the checks.')
@@ -737,6 +847,7 @@ def main():
         ),
         selected_positive_collar_phase=selected_collar_phase_audit(sequence, splits, fibonacci, zeros),
         saturated_fibonacci_profiles=saturated_profile_audit(sequence, periods, splits, fibonacci),
+        growing_positive_collars=positive_collar_extinction_audit(sequence, fibonacci_values(10 ** 6)),
         quantitative_capture=dict(
             anchor_drop_formula='F_(j-1)-C(F_j-d) <= floor(2*d/3), j>=5, 1<=d<F_j',
             anchor_drop_base=anchor_drop_base,

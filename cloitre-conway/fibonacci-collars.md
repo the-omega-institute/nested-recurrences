@@ -491,9 +491,11 @@ enumerates every starting state in all 45 graphs at order k=24 as independent
 finite corroboration. The two seed collars are premises; that graph enumeration
 is not needed for the universal proof.
 
-This theorem propagates any width whose two seeds satisfy the stated profile;
-it does not prove that suitable seeds exist for every width. A fixed band still
-does not control Fibonacci-block centers or settle full ratio convergence.
+This two-seed theorem alone does not prove that suitable seeds exist for every
+width. The growing-positive-collar theorem below establishes their existence
+for every positive width with the already proved negative width 12; arbitrary
+negative widths remain open. These neighborhoods do not control Fibonacci-block
+centers or settle full ratio convergence.
 
 ### The prescribed basin and phase in a positive collar
 
@@ -761,6 +763,157 @@ and have no period above two. Literal iteration verifies the 33 additional
 phase cases at orders 24..26, including lower-endpoint odd entry at
 F_24+32, and 22 additional boundary records. Full convergence, the wider-arch
 prescribed phase and the minimum complete five-window interface remain open.
+
+### Every fixed positive offset eventually becomes linear
+
+The fixed-width seed condition can now be advanced by one offset at a time.
+A defect at the new offset can only persist by copying the same defect
+from two orders below. The actual selected phase restricts that copy by
+Fibonacci parity, and this restriction eventually kills every such chain.
+This is an infinite proof, not an extrapolation from larger seed searches.
+
+**One-offset persistence lemma.** Fix u>=1 and K>=6, with
+u<=F_(K-2). Suppose
+
+$$
+P_h(v)=v\qquad(h\ge K,\ 0\le v<u).
+$$
+
+Write D_h=u-P_h(u)>=0. For every j>=K+2, a surviving defect satisfies
+
+$$
+D_j>0\Longrightarrow
+\left\{
+\begin{aligned}
+D_j&=D_{j-2}>0,\\
+D_{j-1}&=0,\\
+F_{j-1}+u&\text{ is even}.
+\end{aligned}
+\right.
+$$
+
+**Proof.** Capture places the actual selected split at F_(j-1)+r,
+0<=r<=u. At every interior offset v<u the preceding profile is the
+identity. At its last offset put p=P_(j-1)(u). The cap gives p<=u,
+and G(F_(j-1)+1)=F_(j-2)+1 gives p>=1 by monotonicity of G.
+
+If p<u, the captured map sends 0 to u and sends u to u-p in
+{1,...,u-1}. All interior points follow the reflection v -> u-v.
+Neither 0 nor u is periodic: no point maps to 0, since every profile value
+is strictly below u. The prescribed depth is on a cycle, so0<r<u.
+Both child offsets are smaller than u, and their proved profiles give
+P_j(u)=r+(u-r)=u. Thus a surviving defect requires p=u, or D_(j-1)=0.
+
+In that case the whole captured interval is reflection. If r>0, its
+first child has profile value r, including r=u, and its complementary
+offset is smaller than u. Again P_j(u)=u. The only remaining case is
+r=0, giving P_j(u)=P_(j-2)(u), hence D_j=D_(j-2).
+
+It remains to use the prescribed phase. Write A=F_(j-1), B=F_(j-2).
+For x<A the cap gives C(x)<=B; for x>A monotonicity of G gives
+C(x)>=G(A+1)=B+1. Exterior sides relative to [A,A+u] therefore alternate
+until entry. If the selected split is A, the prescribed cycle is the
+outer pair {A,A+u}, so first entry is A+u at an even clock or A at an
+odd clock. On that pair, even clocks select A+u and odd clocks select A.
+The exact depth is C(F_j+u-1)=A+u-1 by the smaller-offset hypothesis.
+Selection of A consequently requires A+u even. QED.
+
+**Finite extinction.** If u is even, a defect copy is allowed only at
+j=1 mod 3. If u is odd, it is allowed only at j=0 or 2 mod 3.
+No new defect can appear; every surviving value is copied along steps
+of two. Three such steps visit all order classes and include a forbidden
+class. The first order after which all possible copies have died is:
+
+| K mod 3 | Increment when u is even | Increment when u is odd |
+|---:|---:|---:|
+| 0 | 2 | 6 |
+| 1 | 4 | 5 |
+| 2 | 3 | 4 |
+
+For example, when K=2 mod 3 and u is odd, the value at K+2 is zero.
+The value at K+3 may copy the second initial defect, but K+4 copies
+the already zero value at K+2, and K+5 is forbidden. All later values
+are zero. When K=0 mod 3 and u is even, both first updates K+2,K+3
+are forbidden and the whole tail is zero. The other table entries follow
+by the same two-step copy check. The table is exact for this necessary
+rule envelope; it is not a claim that every permitted history occurs in C.
+
+**Growing positive collar theorem.** Define K(u)=23 for 0<=u<=32, and
+
+$$
+K(u)=23+3(u-32)+((u-32)\bmod2)\qquad(u\ge33).
+$$
+
+Then for every fixed u>=0 and every j>=K(u),
+
+$$
+\boxed{C(F_j+u)=F_{j-1}+u.}
+$$
+
+**Proof.** The certified band 0..32 starts the induction. Its threshold 23
+has order class 2. The next odd offset needs four more orders, giving
+class 0; the next even offset needs two more, restoring class 2. These
+increments alternate, yielding exactly the displayed formula. The size
+condition u<=F_(K-2) holds at u=33 and is preserved as K rises by at
+least two at each new offset. Apply the persistence lemma and extinction
+table successively. No additional sequence seeds are required. QED.
+
+Equivalently, for j>=23 the exact positive collar has the proved width
+
+$$
+L_j=32+2\left\lfloor\frac{j-23}{6}\right\rfloor
++\mathbf1_{\{(j-23)\bmod6\ge4\}}.
+$$
+
+In particular, every finite positive width R eventually has two consecutive
+exact seed collars, with the previously certified negative width 12.
+This answers the positive-width seed-existence question. It does not
+establish arbitrary negative widths or full ratio convergence.
+
+**Growing actual selector domain.** Put W_j=max(32,G(L_j)), using the
+ordinary Hofstadter G. The whole closed natural profile obeys
+
+$$
+\min(u,W_j)\le P_j(u)\le u\qquad(j\ge23).
+$$
+
+For u<=L_j this follows from its exact value. For u>=L_j+1, the
+Fibonacci floor identity gives
+G(F_j+u)-F_(j-1)>=G(L_j): the extra alpha between
+alpha(L_j+2)-(-alpha)^j and alpha(L_j+1) exceeds the tiny signed error.
+Combine this bound with the already proved saturated width 32. The displayed
+formula gives L_j<=F_(j-2), first at j=23 and then by its growth of at
+most one per order, so the domains fit inside their natural blocks.
+Thus W_j/j tends to alpha/3, so these domains grow without bound.
+
+At n=F_k+t, k>=24, every 1<=t<=W_(k-1) has the proved outer prescribed
+cycle and selected endpoint A+t if A+t is odd, otherwise A.
+The saturation/entry proof above applies with W=W_(k-1); the exact depth
+is available because W_(k-1)<=L_(k-1)<=L_k. A proper p-cycle instead
+requires t>=2W_(k-1)+p, with the corresponding interior spatial domain.
+These are growing family domains computable from the order, rather than
+additional row selectors, basin labels or phase residues.
+
+For recursive windows the arithmetic gate applies separately at a row of
+order j when its offset is at most W_(j-1). At j>=25 both lower profile
+values are known too, since W_(j-1)<=L_(j-2). The same child parameter
+formulas alpha_i=r_i+r_(i+1) and beta_i=q_i+q_(i+1) therefore apply.
+Descent lowers the order and
+can leave this growing gate. The remaining boundary depends on the offset;
+it must not be treated as the fixed 66-record boundary of the width 32 case.
+The general five-window inverse and prescribed-phase questions outside
+the gate remain open. Campbell's ternary templates provide the comparison:
+its arithmetic rules cover whole ternary sectors, while the present exact
+C domains have width of order log(F_j), not a fixed fraction of F_j.
+
+The checker exhausts local capped top-value pairs and all periodic split
+witnesses, verifies all six finite extinction envelopes, and checks the
+threshold recurrence through u=1000. Conditional persistence is also
+checked directly in the small C prefix. Independent full-orbit and Brent
+evaluation through 832074, within the already published 2^20 range, checks
+the first new thresholds u=33 at orders 27..30 and u=34 at orders 29..30;
+their selected endpoints are rechecked by literal iteration. These are
+corroboration of the infinite argument, not its finite premises.
 
 ## 7. Fibonacci profile renormalization and defect dynamics
 

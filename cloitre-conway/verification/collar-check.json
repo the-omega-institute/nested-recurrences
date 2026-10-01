@@ -1,6 +1,6 @@
 {
   "status": "Exact two-collar seeds and finite corroboration; fibonacci-collars.md Sections 1-4 use golden-proof.md, and Section 6 adds the recorded seed premises; no Lean formalization.",
-  "source_sha256": "1ee19fecaa022867ee59029d757d7fc491c1ac4f646fd47f024aa09b199a7930",
+  "source_sha256": "5bb00e5e1bfc3500243729571de657eb2091883547e928e4eed6ac0c365023b0",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -2238,6 +2238,689 @@
       }
     ],
     "scope": "General two-scale saturation induction plus a minimum/maximum cycle argument. The36 extra seeds and earlier exact collar seeds are finite premises; all-start and selected-cycle checks are corroboration. The extended endpoint rule proves actual basin and phase on offsets1..32, with possible odd entry at the lower endpoint when t=32. Recursive nonautonomous windows in0..32 have arithmetic splits, but the spatial period bound applies only to autonomous constant-parameter cycles. No wider-arch phase classification or full minimum closure theorem is claimed."
+  },
+  "growing_positive_collars": {
+    "local_capped_split_contexts": 650,
+    "periodic_split_witnesses": 5590,
+    "extinction_table": [
+      {
+        "offset_parity": 0,
+        "base_order_mod3": 0,
+        "first_uniform_linear_step": 2,
+        "state_trace": [
+          {
+            "step": 2,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 3,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 4,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 5,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 6,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 7,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 8,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 9,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "offset_parity": 0,
+        "base_order_mod3": 1,
+        "first_uniform_linear_step": 4,
+        "state_trace": [
+          {
+            "step": 2,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 3,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ]
+            ]
+          },
+          {
+            "step": 4,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 5,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 6,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 7,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 8,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 9,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "offset_parity": 0,
+        "base_order_mod3": 2,
+        "first_uniform_linear_step": 3,
+        "state_trace": [
+          {
+            "step": 2,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 3,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 4,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 5,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 6,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 7,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 8,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 9,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "offset_parity": 1,
+        "base_order_mod3": 0,
+        "first_uniform_linear_step": 6,
+        "state_trace": [
+          {
+            "step": 2,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 3,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 4,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 5,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ]
+            ]
+          },
+          {
+            "step": 6,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 7,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 8,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 9,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "offset_parity": 1,
+        "base_order_mod3": 1,
+        "first_uniform_linear_step": 5,
+        "state_trace": [
+          {
+            "step": 2,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 3,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 4,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ]
+            ]
+          },
+          {
+            "step": 5,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 6,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 7,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 8,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 9,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "offset_parity": 1,
+        "base_order_mod3": 2,
+        "first_uniform_linear_step": 4,
+        "state_trace": [
+          {
+            "step": 2,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 3,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ]
+            ]
+          },
+          {
+            "step": 4,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 5,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 6,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 7,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 8,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "step": 9,
+            "states": [
+              [
+                0,
+                0
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "finite_conditional_C_rows": 267,
+    "finite_nonzero_persistence_rows": [
+      {
+        "order": 8,
+        "offset": 3,
+        "defect": 1
+      },
+      {
+        "order": 14,
+        "offset": 5,
+        "defect": 1
+      },
+      {
+        "order": 20,
+        "offset": 17,
+        "defect": 1
+      },
+      {
+        "order": 23,
+        "offset": 33,
+        "defect": 1
+      }
+    ],
+    "threshold_formula": "K(u)=23+3*(u-32)+(u-32 mod2), u>=33",
+    "threshold_offsets_checked": [
+      33,
+      1000
+    ],
+    "threshold_last": [
+      1000,
+      2927
+    ],
+    "higher_prefix_limit": 832074,
+    "higher_prefix_sha256": "1883c92e7cb13673590d41c33e82c4775241812e1c13260ae014faa137a0a33f",
+    "higher_full_orbit_and_brent_agree": true,
+    "higher_literal_endpoint_updates": 1982085,
+    "higher_threshold_cases": [
+      {
+        "order": 27,
+        "offset": 33,
+        "index": 196451,
+        "value": 121426,
+        "selected_offset": 0
+      },
+      {
+        "order": 28,
+        "offset": 33,
+        "index": 317844,
+        "value": 196451,
+        "selected_offset": 33
+      },
+      {
+        "order": 29,
+        "offset": 33,
+        "index": 514262,
+        "value": 317844,
+        "selected_offset": 0
+      },
+      {
+        "order": 30,
+        "offset": 33,
+        "index": 832073,
+        "value": 514262,
+        "selected_offset": 0
+      },
+      {
+        "order": 29,
+        "offset": 34,
+        "index": 514263,
+        "value": 317845,
+        "selected_offset": 34
+      },
+      {
+        "order": 30,
+        "offset": 34,
+        "index": 832074,
+        "value": 514263,
+        "selected_offset": 34
+      }
+    ],
+    "arithmetic_width_examples": [
+      {
+        "order": 23,
+        "linear_width": 32,
+        "saturated_width": 32
+      },
+      {
+        "order": 27,
+        "linear_width": 33,
+        "saturated_width": 32
+      },
+      {
+        "order": 29,
+        "linear_width": 34,
+        "saturated_width": 32
+      },
+      {
+        "order": 87,
+        "linear_width": 53,
+        "saturated_width": 33
+      },
+      {
+        "order": 100,
+        "linear_width": 57,
+        "saturated_width": 35
+      },
+      {
+        "order": 479,
+        "linear_width": 184,
+        "saturated_width": 114
+      }
+    ],
+    "growing_linear_width": "L_j=32+2*floor((j-23)/6)+indicator((j-23 mod6)>=4)",
+    "growing_saturated_width": "W_j=max(32,G(L_j))",
+    "scope": "General offset induction from the already certified0..32 collar and a necessary defect-persistence/phase rule. Finite Boolean paths are exhaustive for the rule envelope, not reverse-complete actual C histories. Every fixed positive width eventually has a proved exact collar; arbitrary negative widths and global ratio convergence remain open. Additional independent numerical checks stay within the previously published2^20 range, while the infinite conclusion comes from the extinction proof."
   },
   "quantitative_capture": {
     "anchor_drop_formula": "F_(j-1)-C(F_j-d) <= floor(2*d/3), j>=5, 1<=d<F_j",
