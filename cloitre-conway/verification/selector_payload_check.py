@@ -851,6 +851,275 @@ def recursive_window_audit(sequence, selected_splits, fibonacci, roots):
                 scope='Exact recursive nonautonomous windows with inherited row alignment. Child parameters add to the parent row parameter; all selected offsets stay in the two natural lower Fibonacci blocks, including endpoints. Leaf evaluations use indices at most eight. This certifies the recursive representation, not a uniform branch alphabet, minimal total certificate size, or an independent algorithm for choosing the splits.')
 
 
+def terminal_orders(order):
+    if order <= 5:
+        return (order,)
+    return terminal_orders(order - 2) + terminal_orders(order - 1)
+
+
+def terminal_tables(orders):
+    tables = [None] * (len(orders) + 1)
+    tables[-1] = {(0, 0): 1}
+    for position in range(len(orders) - 1, -1, -1):
+        capacity = orders[position] - 2
+        counts = defaultdict(int)
+        for (offset, defect), count in tables[position + 1].items():
+            for value in range(capacity + 1):
+                counts[(offset + value, defect + (value == capacity))] += count
+        tables[position] = dict(counts)
+    return tables
+
+
+def rank_terminal_word(orders, tables, word):
+    offset = sum(word)
+    defect = sum(value == order - 2 for order, value in zip(orders, word))
+    ordinal = 0
+    for position, (order, value) in enumerate(zip(orders, word)):
+        capacity = order - 2
+        assert 0 <= value <= capacity
+        for smaller in range(value):
+            ordinal += tables[position + 1].get((offset - smaller,
+                                                 defect - (smaller == capacity)), 0)
+        offset -= value
+        defect -= value == capacity
+    assert (offset, defect) == (0, 0)
+    return ordinal
+
+
+def unrank_terminal_word(orders, tables, offset, defect, ordinal):
+    assert 0 <= ordinal < tables[0].get((offset, defect), 0)
+    word = []
+    for position, order in enumerate(orders):
+        capacity = order - 2
+        for value in range(capacity + 1):
+            count = tables[position + 1].get((offset - value,
+                                             defect - (value == capacity)), 0)
+            if ordinal < count:
+                word.append(value)
+                offset -= value
+                defect -= value == capacity
+                break
+            ordinal -= count
+        else:
+            raise AssertionError('Terminal ordinal has no continuation.')
+    assert (offset, defect, ordinal) == (0, 0, 0)
+    return tuple(word)
+
+
+def terminal_tree(order, word, fibonacci):
+    position = 0
+    records = []
+
+    def rebuild(height):
+        nonlocal position
+        if height <= 5:
+            offset = word[position]
+            position += 1
+            assert 0 <= offset <= height - 2
+            return offset, int(offset == height - 2)
+        complement, second_defect = rebuild(height - 2)
+        split, first_defect = rebuild(height - 1)
+        offset = split + complement
+        defect = first_defect + second_defect
+        assert 0 <= offset <= fibonacci[height - 1]
+        assert max(0, offset - fibonacci[height - 3]) <= split <= min(offset, fibonacci[height - 2])
+        records.append((height, offset, defect, split))
+        return offset, defect
+
+    root = rebuild(order)
+    assert position == len(word)
+    return root, records
+
+
+def terminal_code_audit(sequence, selected_splits, fibonacci, roots):
+    table_cache = {order: (terminal_orders(order), terminal_tables(terminal_orders(order)))
+                   for order in range(6, 14)}
+    exhaustive_words = 0
+    support_pairs = 0
+    histogram_contexts = 0
+    histogram_constraints = [[1, 1, 1, 0, 0, 0, 0], [0, 0, 0, 1, 1, 1, 1],
+                             [0, 1, 2, 0, 1, 2, 3], [0, 0, 1, 0, 0, 0, 1]]
+    assert affine_rank(histogram_constraints) == 4
+    for order, (orders, tables) in table_cache.items():
+        first_count, second_count = fibonacci[order - 5], fibonacci[order - 4]
+        assert orders.count(4) == first_count and orders.count(5) == second_count
+        assert len(orders) == fibonacci[order - 3]
+        assert sum(tables[0].values()) == 3 ** first_count * 4 ** second_count
+        for offset in range(fibonacci[order - 1] + 1):
+            lower = max(0, offset - fibonacci[order - 2])
+            upper = min(fibonacci[order - 3], offset // 2, (offset + first_count) // 3)
+            assert {defect for (value, defect) in tables[0] if value == offset} == set(range(lower, upper + 1))
+        support_pairs += len(tables[0])
+        if order > 9:
+            continue
+        direct = Counter()
+        for word in product(*(range(height - 1) for height in orders)):
+            key = (sum(word), sum(value == height - 2 for height, value in zip(orders, word)))
+            ordinal = rank_terminal_word(orders, tables, word)
+            assert ordinal == direct[key]
+            assert unrank_terminal_word(orders, tables, *key, ordinal) == word
+            assert terminal_tree(order, word, fibonacci)[0] == key
+            direct[key] += 1
+            exhaustive_words += 1
+        assert direct == tables[0]
+        by_histogram = Counter()
+        for first_marked in range(first_count + 1):
+            for first_single in range(first_count - first_marked + 1):
+                first_zero = first_count - first_marked - first_single
+                for second_marked in range(second_count + 1):
+                    for second_double in range(second_count - second_marked + 1):
+                        for second_single in range(second_count - second_marked - second_double + 1):
+                            second_zero = second_count - second_marked - second_double - second_single
+                            counts = (first_zero, first_single, first_marked,
+                                      second_zero, second_single, second_double, second_marked)
+                            offset = first_single + 2 * first_marked + second_single + 2 * second_double + 3 * second_marked
+                            defect = first_marked + second_marked
+                            assert first_marked == defect - second_marked
+                            assert first_single == offset - 2 * defect - second_marked - second_single - 2 * second_double
+                            assert first_zero == first_count - offset + defect + 2 * second_marked + second_single + 2 * second_double
+                            ways = math.factorial(first_count) * math.factorial(second_count)
+                            ways //= math.prod(math.factorial(count) for count in counts)
+                            by_histogram[(offset, defect)] += ways
+                            histogram_contexts += 1
+        assert by_histogram == tables[0]
+    actual_rows = 0
+    reconstructed_internal_rows = 0
+    examples = []
+    for order, offsets, parameters in roots:
+        orders, tables = table_cache[order]
+        choices = []
+        ordinals = []
+        histograms = []
+        for offset in offsets:
+            stack = [(order, offset)]
+            word = []
+            while stack:
+                height, value = stack.pop()
+                if height <= 5:
+                    word.append(value)
+                    continue
+                split = selected_splits[fibonacci[height] + value] - fibonacci[height - 1]
+                stack.extend(((height - 1, split), (height - 2, value - split)))
+            defect = offset - sequence[fibonacci[order] + offset] + fibonacci[order - 1]
+            assert defect == sum(value == height - 2 for height, value in zip(orders, word))
+            assert sum(word) == offset
+            ordinal = rank_terminal_word(orders, tables, word)
+            decoded = unrank_terminal_word(orders, tables, offset, defect, ordinal)
+            assert decoded == tuple(word)
+            recovered, records = terminal_tree(order, decoded, fibonacci)
+            assert recovered == (offset, defect)
+            for height, value, cost, split in records:
+                assert value - cost == sequence[fibonacci[height] + value] - fibonacci[height - 1]
+                assert split == selected_splits[fibonacci[height] + value] - fibonacci[height - 1]
+                reconstructed_internal_rows += 1
+            actual_rows += 1
+            choices.append(tables[0][(offset, defect)])
+            ordinals.append(ordinal)
+            counts = Counter(zip(orders, word))
+            histograms.append([counts[(height, value)] for height in (4, 5)
+                               for value in range(height - 1)])
+        examples.append(dict(profile_order=order, offsets=list(offsets),
+                             leaf_order_counts=[orders.count(4), orders.count(5)],
+                             geometric_tree_counts=choices, tree_ordinals=ordinals,
+                             joint_fixed_width_bits=(math.prod(choices) - 1).bit_length(),
+                             terminal_histograms=histograms))
+    shared_histogram_words = ((2, 0, 0), (0, 0, 2))
+    assert terminal_orders(7) == (5, 4, 5)
+    assert len({tuple(sorted(zip(terminal_orders(7), word))) for word in shared_histogram_words}) == 1
+    assert {terminal_tree(7, word, fibonacci)[0] for word in shared_histogram_words} == {(2, 0)}
+    alternatives = []
+    for word in shared_histogram_words:
+        _, records = terminal_tree(7, word, fibonacci)
+        assert all(value - cost == sequence[fibonacci[height] + value] - fibonacci[height - 1]
+                   for height, value, cost, split in records)
+        assert all(split == selected_splits[fibonacci[height] + value] - fibonacci[height - 1]
+                   for height, value, cost, split in records[:-1])
+        alternatives.append(fibonacci[6] + records[-1][3])
+    assert alternatives == [8, 10] and selected_splits[15] == 8
+    trajectory, transient, period = full_orbit(sequence, 15)
+    assert trajectory[transient:] == [8, 10] and transient == 3 and period == 2
+    assert sequence[14] == 9
+    return dict(leaf_alphabet=['4:0', '4:1', '4:2', '5:0', '5:1', '5:2', '5:3'],
+                generating_function='(1+z+z^2*w)^F_(j-5) * (1+z+z^2+z^3*w)^F_(j-4)',
+                support_interval='max(0,u-F_(j-2)) <= E <= min(F_(j-3),floor(u/2),floor((u+F_(j-5))/3))',
+                coefficient_support_pairs_checked=support_pairs, exhaustive_geometric_words=exhaustive_words,
+                histogram_constraint_rank=4, free_histogram_coordinates=3,
+                histogram_multiplicities_checked=histogram_contexts,
+                actual_selected_tree_rows=actual_rows, reconstructed_internal_rows=reconstructed_internal_rows,
+                five_window_codes=examples,
+                histogram_phase_witness=dict(index=15, words=[list(word) for word in shared_histogram_words],
+                                             admissible_splits=alternatives, actually_selected_split=8,
+                                             child_parameters=[0, 4], cycle=[8, 10], transient=3, depth=9,
+                                             common_value=sequence[15]),
+                scope='Exact seven-symbol coding of full geometric selector trees. Coefficient ordinals recover all internal offsets and formal profile values; actual codes are checked against C and its selected splits. Geometric multiplicities exclude shared-profile consistency and prescribed-orbit validity; they are not minimum code sizes for the narrower C family.')
+
+
+def unbounded_defect_audit():
+    sequence, _, _, _ = generate(131071)
+    assert sequence == brent_generate(131071)
+    fibonacci = fibonacci_values(131072)
+    knees = []
+    for order in range(22, 26):
+        index = fibonacci[order] + fibonacci[order - 2]
+        cost = fibonacci[order] - sequence[index]
+        lower = (fibonacci[order - 3] + 2) // 3
+        assert sequence[index] * 3 <= 2 * index
+        assert cost >= lower
+        knees.append(dict(profile_order=order, index=index, defect=cost, lower_bound=lower))
+    centres = []
+    for order in range(23, 26):
+        anchor, width = fibonacci[order - 1], fibonacci[order - 3]
+        index = 2 * anchor
+        cycles = all_cycles(sequence, index)
+        minimum = None
+        histogram = Counter()
+        for cycle in cycles:
+            assert all(anchor <= point <= anchor + width for point in cycle)
+            assert all(sequence[point] * 3 <= 2 * point for point in cycle)
+            cost = 2 * sum(point - anchor for point in cycle) - len(cycle) * width
+            assert 5 * cost >= len(cycle) * (2 * anchor - 5 * width)
+            histogram[len(cycle)] += 1
+            mean = Fraction(cost, len(cycle))
+            minimum = mean if minimum is None else min(minimum, mean)
+        centres.append(dict(index=index, cycles=len(cycles), period_histogram=dict(sorted(histogram.items())),
+                            minimum_mean_defect=str(minimum),
+                            lower_bound_mean=str(Fraction(2 * anchor - 5 * width, 5))))
+    for order in range(6, 15):
+        for offset in range(fibonacci[order - 1] + 1):
+            split = min(fibonacci[order - 2], max(0, offset - fibonacci[order - 4]))
+            complement = offset - split
+            assert max(0, offset - fibonacci[order - 3]) <= split <= min(offset, fibonacci[order - 2])
+            assert min(split, fibonacci[order - 3]) + min(complement, fibonacci[order - 4]) == min(offset, fibonacci[order - 2])
+    assert sequence[11] == 7
+    upper_values = [0, 1]
+    for index in range(2, 12):
+        height = 3
+        while fibonacci[height + 1] <= index:
+            height += 1
+        upper_values.append(min(index - fibonacci[height - 2], fibonacci[height]))
+    assert upper_values[:11] == sequence[:11] and upper_values[11] == 8
+    upper_selected = None
+    upper_nested_value = None
+    for index in range(3, 12):
+        point = index - 1
+        for iteration in range(upper_values[index - 1]):
+            point = index - upper_values[point]
+        value = upper_values[point] + upper_values[index - point]
+        if index < 11:
+            assert value == upper_values[index]
+        else:
+            upper_selected, upper_nested_value = point, value
+    assert (upper_selected, upper_nested_value) == (6, 7)
+    return dict(knee_examples=knees, all_cycle_centre_examples=centres,
+                uniform_bounds=dict(knee='lambda_j(F_(j-2)) >= ceil(F_(j-3)/3) once F_j+F_(j-2)>=16384',
+                                    centre='E/p >= 2*F_(k-1)/5-F_(k-3) at n=2*F_(k-1), F_(k-1)>=16384'),
+                upper_cap_geometric_family=dict(profile='Q_j(u)=min(u,F_(j-2))',
+                                                 split='r=min(F_(j-2),max(0,u-F_(j-4)))',
+                                                 first_recurrence_failure=11, claimed_value=8,
+                                                 actual_nested_value=7, prescribed_split=6),
+                scope='General lower bounds follow from the previously proved C(m)<=2m/3 envelope and cycle capture. Actual profile defects grow linearly along Fibonacci knees; every centre cycle has linearly growing mean defect. The upper-cap family has consistent geometric descent and the same small leaves but fails prescribed nested selection; no global convergence follows from geometric closure alone.')
+
+
 def main():
     limit = 609
     fibonacci = fibonacci_values(limit + 1)
@@ -1073,6 +1342,8 @@ def main():
         "periodic_pivot_witnesses": periodic_pivot_witnesses(),
         "recursive_parameter_windows": recursive_window_audit(sequence, selected_splits, fibonacci,
                                                                recursive_roots),
+        "terminal_selector_codes": terminal_code_audit(sequence, selected_splits, fibonacci, recursive_roots),
+        "unbounded_profile_defects": unbounded_defect_audit(),
         "affine_parameter_rank": {
             "payload_rows": len(payloads),
             "parent_features": "(t, five offsets, five nonnegative defects, 1)",

@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_sha256": "99a3df79af8731ecbe8639d960e86bb9ecbbfeac381c0ea5505e4f721d0325e7",
+  "source_sha256": "5deb2a7ffb800768315f6fe3b9dba07d2a59d8a4594d96377dde033a6215961c",
   "scope": "Exact public three-block selector audit, recursive nonautonomous window descent and conserved conditional seed-label budgets. Row-local Cartesian decompositions remain distinct from actual selected splits and their proof costs.",
   "period_five_payloads": 13,
   "parent_rows": 65,
@@ -1420,6 +1420,1121 @@
       }
     ],
     "scope": "Exact recursive nonautonomous windows with inherited row alignment. Child parameters add to the parent row parameter; all selected offsets stay in the two natural lower Fibonacci blocks, including endpoints. Leaf evaluations use indices at most eight. This certifies the recursive representation, not a uniform branch alphabet, minimal total certificate size, or an independent algorithm for choosing the splits."
+  },
+  "terminal_selector_codes": {
+    "leaf_alphabet": [
+      "4:0",
+      "4:1",
+      "4:2",
+      "5:0",
+      "5:1",
+      "5:2",
+      "5:3"
+    ],
+    "generating_function": "(1+z+z^2*w)^F_(j-5) * (1+z+z^2+z^3*w)^F_(j-4)",
+    "support_interval": "max(0,u-F_(j-2)) <= E <= min(F_(j-3),floor(u/2),floor((u+F_(j-5))/3))",
+    "coefficient_support_pairs_checked": 4799,
+    "exhaustive_geometric_words": 28284,
+    "histogram_constraint_rank": 4,
+    "free_histogram_coordinates": 3,
+    "histogram_multiplicities_checked": 722,
+    "actual_selected_tree_rows": 65,
+    "reconstructed_internal_rows": 2815,
+    "five_window_codes": [
+      {
+        "profile_order": 11,
+        "offsets": [
+          26,
+          31,
+          27,
+          28,
+          29
+        ],
+        "leaf_order_counts": [
+          8,
+          13
+        ],
+        "geometric_tree_counts": [
+          10790503416,
+          5989964552,
+          1387256156,
+          8399358032,
+          404160380
+        ],
+        "tree_ordinals": [
+          10711130548,
+          1089950638,
+          303895554,
+          8334870931,
+          61506528
+        ],
+        "joint_fixed_width_bits": 158,
+        "terminal_histograms": [
+          [
+            3,
+            1,
+            4,
+            4,
+            2,
+            6,
+            1
+          ],
+          [
+            3,
+            0,
+            5,
+            2,
+            2,
+            8,
+            1
+          ],
+          [
+            5,
+            0,
+            3,
+            2,
+            1,
+            10,
+            0
+          ],
+          [
+            4,
+            0,
+            4,
+            3,
+            1,
+            8,
+            1
+          ],
+          [
+            5,
+            0,
+            3,
+            1,
+            1,
+            11,
+            0
+          ]
+        ]
+      },
+      {
+        "profile_order": 12,
+        "offsets": [
+          34,
+          44,
+          35,
+          39,
+          40
+        ],
+        "leaf_order_counts": [
+          13,
+          21
+        ],
+        "geometric_tree_counts": [
+          22222795947716484,
+          81943094076316200,
+          2732246078110440,
+          76575942401516415,
+          636942247089400
+        ],
+        "tree_ordinals": [
+          22109515117514376,
+          81920744446953716,
+          2614256454923637,
+          76557696024510276,
+          259024643606741
+        ],
+        "joint_fixed_width_bits": 268,
+        "terminal_histograms": [
+          [
+            7,
+            0,
+            6,
+            10,
+            1,
+            9,
+            1
+          ],
+          [
+            7,
+            0,
+            6,
+            5,
+            2,
+            12,
+            2
+          ],
+          [
+            10,
+            0,
+            3,
+            6,
+            1,
+            14,
+            0
+          ],
+          [
+            6,
+            1,
+            6,
+            8,
+            2,
+            9,
+            2
+          ],
+          [
+            9,
+            1,
+            3,
+            4,
+            1,
+            16,
+            0
+          ]
+        ]
+      },
+      {
+        "profile_order": 12,
+        "offsets": [
+          35,
+          42,
+          41,
+          36,
+          46
+        ],
+        "leaf_order_counts": [
+          13,
+          21
+        ],
+        "geometric_tree_counts": [
+          2732246078110440,
+          105317241406880360,
+          391368754546740,
+          31565582647487343,
+          20219596651816380
+        ],
+        "tree_ordinals": [
+          2614256454923637,
+          105258768898126862,
+          370506349085021,
+          31558789473106004,
+          20095104461675846
+        ],
+        "joint_fixed_width_bits": 266,
+        "terminal_histograms": [
+          [
+            10,
+            0,
+            3,
+            6,
+            1,
+            14,
+            0
+          ],
+          [
+            6,
+            0,
+            7,
+            7,
+            2,
+            10,
+            2
+          ],
+          [
+            9,
+            1,
+            3,
+            4,
+            0,
+            17,
+            0
+          ],
+          [
+            7,
+            0,
+            6,
+            9,
+            2,
+            8,
+            2
+          ],
+          [
+            7,
+            0,
+            6,
+            3,
+            3,
+            14,
+            1
+          ]
+        ]
+      },
+      {
+        "profile_order": 12,
+        "offsets": [
+          38,
+          43,
+          41,
+          39,
+          46
+        ],
+        "leaf_order_counts": [
+          13,
+          21
+        ],
+        "geometric_tree_counts": [
+          6805862455450120,
+          52809123675672000,
+          391368754546740,
+          76575942401516415,
+          20219596651816380
+        ],
+        "tree_ordinals": [
+          6382486097549371,
+          52494961491127529,
+          370506349085021,
+          76557696024510276,
+          20095104461675846
+        ],
+        "joint_fixed_width_bits": 267,
+        "terminal_histograms": [
+          [
+            9,
+            0,
+            4,
+            5,
+            2,
+            14,
+            0
+          ],
+          [
+            7,
+            0,
+            6,
+            5,
+            2,
+            13,
+            1
+          ],
+          [
+            9,
+            1,
+            3,
+            4,
+            0,
+            17,
+            0
+          ],
+          [
+            6,
+            1,
+            6,
+            8,
+            2,
+            9,
+            2
+          ],
+          [
+            7,
+            0,
+            6,
+            3,
+            3,
+            14,
+            1
+          ]
+        ]
+      },
+      {
+        "profile_order": 12,
+        "offsets": [
+          38,
+          46,
+          41,
+          42,
+          47
+        ],
+        "leaf_order_counts": [
+          13,
+          21
+        ],
+        "geometric_tree_counts": [
+          6805862455450120,
+          20219596651816380,
+          391368754546740,
+          105317241406880360,
+          523091969493660
+        ],
+        "tree_ordinals": [
+          6382486097549371,
+          20095104461675846,
+          370506349085021,
+          105258768898126862,
+          489591243123216
+        ],
+        "joint_fixed_width_bits": 261,
+        "terminal_histograms": [
+          [
+            9,
+            0,
+            4,
+            5,
+            2,
+            14,
+            0
+          ],
+          [
+            7,
+            0,
+            6,
+            3,
+            3,
+            14,
+            1
+          ],
+          [
+            9,
+            1,
+            3,
+            4,
+            0,
+            17,
+            0
+          ],
+          [
+            6,
+            0,
+            7,
+            7,
+            2,
+            10,
+            2
+          ],
+          [
+            8,
+            0,
+            5,
+            2,
+            1,
+            18,
+            0
+          ]
+        ]
+      },
+      {
+        "profile_order": 12,
+        "offsets": [
+          41,
+          45,
+          46,
+          44,
+          47
+        ],
+        "leaf_order_counts": [
+          13,
+          21
+        ],
+        "geometric_tree_counts": [
+          391368754546740,
+          67153727928432600,
+          20219596651816380,
+          81943094076316200,
+          523091969493660
+        ],
+        "tree_ordinals": [
+          370506349085021,
+          66501148333904859,
+          20095104461675846,
+          81920744446953716,
+          489591243123216
+        ],
+        "joint_fixed_width_bits": 264,
+        "terminal_histograms": [
+          [
+            9,
+            1,
+            3,
+            4,
+            0,
+            17,
+            0
+          ],
+          [
+            6,
+            0,
+            7,
+            5,
+            2,
+            13,
+            1
+          ],
+          [
+            7,
+            0,
+            6,
+            3,
+            3,
+            14,
+            1
+          ],
+          [
+            7,
+            0,
+            6,
+            5,
+            2,
+            12,
+            2
+          ],
+          [
+            8,
+            0,
+            5,
+            2,
+            1,
+            18,
+            0
+          ]
+        ]
+      },
+      {
+        "profile_order": 13,
+        "offsets": [
+          26,
+          29,
+          28,
+          27,
+          30
+        ],
+        "leaf_order_counts": [
+          21,
+          34
+        ],
+        "geometric_tree_counts": [
+          27583404419487473541,
+          1082800297619840680576,
+          121995151099955518824,
+          183461635076288658100,
+          1422222190818067513944
+        ],
+        "tree_ordinals": [
+          10968958409204577192,
+          822992125429441367472,
+          44787670350033167896,
+          167973775804299869522,
+          1240908411357311904645
+        ],
+        "joint_fixed_width_bits": 339,
+        "terminal_histograms": [
+          [
+            15,
+            5,
+            1,
+            24,
+            1,
+            9,
+            0
+          ],
+          [
+            16,
+            2,
+            3,
+            22,
+            3,
+            9,
+            0
+          ],
+          [
+            15,
+            5,
+            1,
+            23,
+            1,
+            10,
+            0
+          ],
+          [
+            17,
+            1,
+            3,
+            23,
+            2,
+            9,
+            0
+          ],
+          [
+            16,
+            3,
+            2,
+            22,
+            1,
+            11,
+            0
+          ]
+        ]
+      },
+      {
+        "profile_order": 13,
+        "offsets": [
+          60,
+          73,
+          63,
+          68,
+          69
+        ],
+        "leaf_order_counts": [
+          21,
+          34
+        ],
+        "geometric_tree_counts": [
+          7082360321155176173969689980,
+          12665494175005230314814021600,
+          1408789386762893482633710930,
+          27929274906040495628838258600,
+          6644039714245758822383792
+        ],
+        "tree_ordinals": [
+          7081718626963802627306568986,
+          12519821333019646558721472635,
+          1405811995192127549730837973,
+          27909031592082521201400673089,
+          1480072802826415038129910
+        ],
+        "joint_fixed_width_bits": 454,
+        "terminal_histograms": [
+          [
+            12,
+            1,
+            8,
+            12,
+            3,
+            17,
+            2
+          ],
+          [
+            10,
+            0,
+            11,
+            8,
+            3,
+            21,
+            2
+          ],
+          [
+            14,
+            0,
+            7,
+            9,
+            2,
+            22,
+            1
+          ],
+          [
+            10,
+            1,
+            10,
+            11,
+            3,
+            16,
+            4
+          ],
+          [
+            14,
+            1,
+            6,
+            5,
+            2,
+            27,
+            0
+          ]
+        ]
+      },
+      {
+        "profile_order": 13,
+        "offsets": [
+          67,
+          73,
+          70,
+          74,
+          69
+        ],
+        "leaf_order_counts": [
+          21,
+          34
+        ],
+        "geometric_tree_counts": [
+          4854895169598821701761259710,
+          12665494175005230314814021600,
+          28808068854885363579121484250,
+          9708263816118566496587333100,
+          6644039714245758822383792
+        ],
+        "tree_ordinals": [
+          4831666635802629523471571734,
+          12519821333019646558721472635,
+          28786433339741165741500841110,
+          2378313365871162814744431295,
+          1480072802826415038129910
+        ],
+        "joint_fixed_width_bits": 456,
+        "terminal_histograms": [
+          [
+            12,
+            1,
+            8,
+            9,
+            2,
+            21,
+            2
+          ],
+          [
+            10,
+            0,
+            11,
+            8,
+            3,
+            21,
+            2
+          ],
+          [
+            9,
+            2,
+            10,
+            10,
+            4,
+            16,
+            4
+          ],
+          [
+            10,
+            0,
+            11,
+            7,
+            4,
+            21,
+            2
+          ],
+          [
+            14,
+            1,
+            6,
+            5,
+            2,
+            27,
+            0
+          ]
+        ]
+      },
+      {
+        "profile_order": 13,
+        "offsets": [
+          73,
+          76,
+          74,
+          75,
+          78
+        ],
+        "leaf_order_counts": [
+          21,
+          34
+        ],
+        "geometric_tree_counts": [
+          12665494175005230314814021600,
+          10636442599484768238853232400,
+          9708263816118566496587333100,
+          28425042135686374316719627200,
+          10553911422877723888283638800
+        ],
+        "tree_ordinals": [
+          12519821333019646558721472635,
+          2463872101200354933748544569,
+          2378313365871162814744431295,
+          27654135944072023523294640493,
+          10349766523139333810190828523
+        ],
+        "joint_fixed_width_bits": 468,
+        "terminal_histograms": [
+          [
+            10,
+            0,
+            11,
+            8,
+            3,
+            21,
+            2
+          ],
+          [
+            9,
+            0,
+            12,
+            7,
+            4,
+            21,
+            2
+          ],
+          [
+            10,
+            0,
+            11,
+            7,
+            4,
+            21,
+            2
+          ],
+          [
+            8,
+            1,
+            12,
+            10,
+            3,
+            16,
+            5
+          ],
+          [
+            8,
+            2,
+            11,
+            8,
+            2,
+            20,
+            4
+          ]
+        ]
+      },
+      {
+        "profile_order": 13,
+        "offsets": [
+          77,
+          81,
+          82,
+          79,
+          83
+        ],
+        "leaf_order_counts": [
+          21,
+          34
+        ],
+        "geometric_tree_counts": [
+          1141290745761519124328084892,
+          10924528163486400895482707400,
+          1941414076293542128854930816,
+          13051215340656031526892572700,
+          369411906709423450257950520
+        ],
+        "tree_ordinals": [
+          1130312962312119759770193269,
+          10606878360364219285878130909,
+          1902020812077543169342042800,
+          12741303392098513394287962629,
+          363246521314369351536290436
+        ],
+        "joint_fixed_width_bits": 456,
+        "terminal_histograms": [
+          [
+            11,
+            0,
+            10,
+            5,
+            3,
+            24,
+            2
+          ],
+          [
+            8,
+            0,
+            13,
+            7,
+            3,
+            20,
+            4
+          ],
+          [
+            9,
+            0,
+            12,
+            5,
+            3,
+            23,
+            3
+          ],
+          [
+            9,
+            0,
+            12,
+            7,
+            3,
+            20,
+            4
+          ],
+          [
+            10,
+            0,
+            11,
+            4,
+            2,
+            25,
+            3
+          ]
+        ]
+      },
+      {
+        "profile_order": 13,
+        "offsets": [
+          81,
+          94,
+          88,
+          84,
+          93
+        ],
+        "leaf_order_counts": [
+          21,
+          34
+        ],
+        "geometric_tree_counts": [
+          10924528163486400895482707400,
+          428763754719017631875508300,
+          6311507843755732388658240,
+          8070405583229327010486246300,
+          915904767837993022408704
+        ],
+        "tree_ordinals": [
+          10606878360364219285878130909,
+          428509496406546827576715257,
+          6206536424011801833627905,
+          8062710329969724388485355436,
+          889649313985244644425961
+        ],
+        "joint_fixed_width_bits": 437,
+        "terminal_histograms": [
+          [
+            8,
+            0,
+            13,
+            7,
+            3,
+            20,
+            4
+          ],
+          [
+            6,
+            0,
+            15,
+            5,
+            3,
+            17,
+            9
+          ],
+          [
+            9,
+            1,
+            11,
+            2,
+            2,
+            27,
+            3
+          ],
+          [
+            8,
+            0,
+            13,
+            7,
+            2,
+            19,
+            6
+          ],
+          [
+            9,
+            0,
+            12,
+            1,
+            1,
+            28,
+            4
+          ]
+        ]
+      },
+      {
+        "profile_order": 13,
+        "offsets": [
+          93,
+          96,
+          99,
+          94,
+          103
+        ],
+        "leaf_order_counts": [
+          21,
+          34
+        ],
+        "geometric_tree_counts": [
+          915904767837993022408704,
+          69623270218726984045404768,
+          445640036282026559029980,
+          428763754719017631875508300,
+          207249463037336481975360
+        ],
+        "tree_ordinals": [
+          889649313985244644425961,
+          68819054152409719264779553,
+          444954369951617573824720,
+          428509496406546827576715257,
+          207165858160404972575616
+        ],
+        "joint_fixed_width_bits": 410,
+        "terminal_histograms": [
+          [
+            9,
+            0,
+            12,
+            1,
+            1,
+            28,
+            4
+          ],
+          [
+            5,
+            1,
+            15,
+            3,
+            4,
+            20,
+            7
+          ],
+          [
+            6,
+            1,
+            14,
+            1,
+            2,
+            25,
+            6
+          ],
+          [
+            6,
+            0,
+            15,
+            5,
+            3,
+            17,
+            9
+          ],
+          [
+            6,
+            1,
+            14,
+            1,
+            1,
+            23,
+            9
+          ]
+        ]
+      }
+    ],
+    "histogram_phase_witness": {
+      "index": 15,
+      "words": [
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2
+        ]
+      ],
+      "admissible_splits": [
+        8,
+        10
+      ],
+      "actually_selected_split": 8,
+      "child_parameters": [
+        0,
+        4
+      ],
+      "cycle": [
+        8,
+        10
+      ],
+      "transient": 3,
+      "depth": 9,
+      "common_value": 10
+    },
+    "scope": "Exact seven-symbol coding of full geometric selector trees. Coefficient ordinals recover all internal offsets and formal profile values; actual codes are checked against C and its selected splits. Geometric multiplicities exclude shared-profile consistency and prescribed-orbit validity; they are not minimum code sizes for the narrower C family."
+  },
+  "unbounded_profile_defects": {
+    "knee_examples": [
+      {
+        "profile_order": 22,
+        "index": 24476,
+        "defect": 1597,
+        "lower_bound": 1394
+      },
+      {
+        "profile_order": 23,
+        "index": 39603,
+        "defect": 2546,
+        "lower_bound": 2255
+      },
+      {
+        "profile_order": 24,
+        "index": 64079,
+        "defect": 4166,
+        "lower_bound": 3649
+      },
+      {
+        "profile_order": 25,
+        "index": 103682,
+        "defect": 6870,
+        "lower_bound": 5904
+      }
+    ],
+    "all_cycle_centre_examples": [
+      {
+        "index": 35422,
+        "cycles": 2,
+        "period_histogram": {
+          "1": 1,
+          "17": 1
+        },
+        "minimum_mean_defect": "7891/17",
+        "lower_bound_mean": "1597/5"
+      },
+      {
+        "index": 57314,
+        "cycles": 3,
+        "period_histogram": {
+          "2": 1,
+          "3": 1,
+          "11": 1
+        },
+        "minimum_mean_defect": "749",
+        "lower_bound_mean": "2584/5"
+      },
+      {
+        "index": 92736,
+        "cycles": 3,
+        "period_histogram": {
+          "2": 3
+        },
+        "minimum_mean_defect": "1291",
+        "lower_bound_mean": "4181/5"
+      }
+    ],
+    "uniform_bounds": {
+      "knee": "lambda_j(F_(j-2)) >= ceil(F_(j-3)/3) once F_j+F_(j-2)>=16384",
+      "centre": "E/p >= 2*F_(k-1)/5-F_(k-3) at n=2*F_(k-1), F_(k-1)>=16384"
+    },
+    "upper_cap_geometric_family": {
+      "profile": "Q_j(u)=min(u,F_(j-2))",
+      "split": "r=min(F_(j-2),max(0,u-F_(j-4)))",
+      "first_recurrence_failure": 11,
+      "claimed_value": 8,
+      "actual_nested_value": 7,
+      "prescribed_split": 6
+    },
+    "scope": "General lower bounds follow from the previously proved C(m)<=2m/3 envelope and cycle capture. Actual profile defects grow linearly along Fibonacci knees; every centre cycle has linearly growing mean defect. The upper-cap family has consistent geometric descent and the same small leaves but fails prescribed nested selection; no global convergence follows from geometric closure alone."
   },
   "affine_parameter_rank": {
     "payload_rows": 13,

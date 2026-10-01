@@ -1612,3 +1612,182 @@ The recursive audit checks the bound at every depth and decodes each odd
 internal node with its adaptive residue, after the geometric candidate
 restriction (9.5). This makes the multiscale inverse budget independently
 testable alongside the row-aligned window representation.
+
+### Seven terminal symbols and the full geometric selector code
+
+The tree has a fixed shape: an order-j node has children of orders j-1 and
+j-2, stopping at four and five. For j>=6 its leaf counts are
+
+```text
+a=F_(j-5) leaves of order 4,    b=F_(j-4) leaves of order 5.
+```
+
+There are a+b=F_(j-3) leaves per row. At order four the offset v is 0,1,2
+and `P_4(v)=(0,1,1)`; at order five v is 0,1,2,3 and
+`P_5(v)=(0,1,2,2)`. These are just the defining values through eight.
+Consequently the leaf alphabet consists of seven pairs `(height,v)`, and
+the leaf defect is one exactly at `(4,2)` or `(5,3)`, zero otherwise.
+
+**Terminal-code theorem.** In the actual selected tree of `F_j+u`, the
+sum of leaf offsets is u, and
+
+$$
+\lambda_j(u):=u-P_j(u)
+=\#\{\text{leaves labelled }(4,2)\text{ or }(5,3)\}. \tag{9.9}
+$$
+
+This follows by induction from offset and defect additivity. To recover
+the entire arithmetic selector tree, retain the positions of the terminal
+letters in a fixed traversal, not just their histogram. For definiteness
+visit the j-2 child before the j-1 child. Every internal offset is the sum
+over its descendant leaf offsets; its profile is offset minus the number
+of marked descendants. Thus the positioned leaf word recovers all splits
+and, for aligned window rows, every alpha/beta parameter word.
+
+There is an exact reverse statement for the **geometric** code class. Assign
+any permitted offset to each leaf of the fixed shape and sum upward. Each
+subtree's maximum offset is its natural-block bound F_(h-1). The child sums
+therefore satisfy (9.5) at every internal node. Conversely, every tree obeying
+this geometry gives one such positioned leaf word. This is a bijection.
+The class does not yet impose equality of profile values at repeated physical
+indices or the actual prescribed-orbit choice. Actual C trees satisfy those
+additional conditions; the geometric code alone is not their proof.
+
+Let E be the number of marked leaves. The exact number of geometric codes
+with given j,u,E is
+
+$$
+N_j(u,E)=[z^u w^E]
+(1+z+z^2w)^a(1+z+z^2+z^3w)^b. \tag{9.10}
+$$
+
+Hence the full geometric tree, including its internal parameter data, has
+conditional fixed-width capacity `ceil(log_2 N_j(u,E))` bits. Ordering the
+words lexicographically gives a lossless ordinal code; suffix coefficient
+counts decode it without enumerating all words. For a p-row window with the
+root offsets and defects fixed, the geometric code count is the product of
+the p coefficients. This is the exact minimum for the stated geometric class,
+not a minimum for the narrower C family after its profile and phase constraints.
+
+The coefficient is positive exactly for the consecutive integer interval
+
+$$
+\max(0,u-F_{j-2})\le E\le
+\min\left(F_{j-3},\left\lfloor\frac u2\right\rfloor,
+\left\lfloor\frac{u+a}3\right\rfloor\right). \tag{9.11}
+$$
+
+**Proof of support.** Write x,y for marked order-four/five leaves, so
+x+y=E. Their minimum offset cost is 2E+y. The unmarked leaves supply every
+integer from zero to `(a-x)+2(b-y)`. Thus the maximum total offset is
+`a+2b+E=F_(j-2)+E`, independent of x,y. Minimize y subject to the available
+leaf counts: `y=max(0,E-a)`. Feasibility is exactly
+`0<=E<=a+b` and `2E+max(0,E-a)<=u<=F_(j-2)+E`, which rearranges to
+(9.11). The converse assigns the remaining offset among the unmarked leaves
+and uses the reverse geometric construction. QED.
+
+The seven histogram counts themselves have only three free coordinates once
+j,u,E are known. In the order `(4,0),(4,1),(4,2),(5,0),(5,1),(5,2),(5,3)`,
+write them as `(h0,h1,h2,k0,k1,k2,k3)`. Choosing y=k3,z=k2,v=k1 gives
+
+```text
+h2=E-y,       h1=u-2E-y-v-2z,
+h0=a-u+E+2y+v+2z,       k0=b-y-z-v.
+```
+
+Keep choices for which every count is nonnegative. The four independent
+constraints are the two leaf-type totals, total offset and marked count.
+For one histogram the positional multiplicity is
+`a!/(h0!h1!h2!) * b!/(k0!k1!k2!k3!)`. Summing these multiplicities gives
+(9.10); a histogram still omits the positional ordinal.
+
+A small actual C example separates value data from selected-tree data.
+At n=15=F_7+2, leaf order is `(5,4,5)`. The words `(2,0,0)` and `(0,0,2)`
+have the same histogram and zero defect. They give root splits 8 and 10;
+all their lower internal splits are the actual selected ones and their
+arithmetic profiles agree with C. Both root splits lie on the cycle `[8,10]`
+and both give `C(15)=10`. The prescribed depth is 9 and entry time is 3,
+so the actual split is 8. Their first child parameters are 0 and 4. Thus
+even zero residual inverse bits do not make an unspecified parameter word
+free; the histogram determines the value here but not the prescribed split.
+
+The checker compares coefficient counts, ordinal encoding and reverse tree
+reconstruction with all 28,284 geometric words through order nine, and
+checks support through order thirteen. It encodes/decodes the 65 actual
+public five-window rows, recovering all 2,815 internal split rows. At n=196
+the five geometric code coefficients have joint capacity 158 bits, conditional
+on the root offsets and defects. This includes internal arithmetic parameter
+data, whereas the earlier 29-bit sufficient seed budget assumes those local
+parameter words and contexts are supplied. Neither figure measures selected
+validity proof costs or the minimum for C's more restricted family.
+
+### Growing actual defects and the remaining occupation problem
+
+The root defect budget is genuinely unbounded in C. At the Fibonacci knee
+`n=F_j+F_(j-2)`, the baseline is F_j. The already proved envelope
+`C(n)<=2n/3` for n>=16384 gives
+
+$$
+\lambda_j(F_{j-2})=F_j-C(F_j+F_{j-2})
+\ge\left\lceil\frac{F_{j-3}}3\right\rceil. \tag{9.12}
+$$
+
+It grows linearly in F_j. The sharper envelope H=8900/13459 gives, whenever
+the knee is at least 349525, the stronger bound
+`ceil((4559*F_j-8900*F_(j-2))/13459)`. These are universal consequences of
+the existing certified envelopes, not extrapolations of the leaf census.
+
+There is also a cycle-wide statement. Put `n=2b`, `b=F_(k-1)>=16384`,
+and `h=F_(k-3)`. Every inner cycle lies in `[b,b+h]`. For a period-p cycle
+with vertices x_i, sum `C(x_i)=n-x_(i+1)` and use C(x_i)<=2x_i/3:
+`sum(x_i)>=3pn/5`. Its normalized total defect is
+`E=2*sum(x_i-b)-p*h`. Therefore every such cycle satisfies
+
+$$
+\frac Ep\ge\frac{2b}5-h. \tag{9.13}
+$$
+
+The right side divided by b tends to `2/5-1/phi^2>0`. Thus the mean cycle
+defect is also forced to grow linearly at these centers, regardless of its
+period. This does not assert that proper five-cycles occur at infinitely many
+centers or that inverse fiber sizes grow. It does show that the E-based
+sufficient label/alphabet budgets cannot be uniformly bounded on the full
+recursive class. Family-specific arithmetic compression can still be smaller.
+
+Geometry and terminal consistency do not select the correct occupation.
+The existing upper-cap function U has natural profiles
+`Q_j(u)=min(u,F_(j-2))`, including the same seven terminal symbols. It has
+a globally consistent geometric split rule
+
+```text
+r=min(F_(j-2),max(0,u-F_(j-4))),       q=u-r.
+```
+
+These splits obey (9.5) and
+`Q_(j-1)(r)+Q_(j-2)(q)=Q_j(u)`. To check the identity, below
+`u=F_(j-2)` both child offsets are at or below their linear/plateau thresholds;
+above it both child profiles are on their plateaus, whose heights add to
+F_(j-2). Endpoint cases are included. Thus this family realizes the minimum
+marked count in (9.11), has the Fibonacci identities and obeys G<=U.
+But it fails the prescribed nested recurrence already at n=11: its formula
+gives U(11)=8, while depth U(10)=7 selects 6 and gives U(6)+U(5)=7.
+Its block maximum ratio tends to `(5+sqrt(5))/10`, rather than 1/phi.
+This is a counterexample to deriving the full limit from geometric closure
+and terminal data alone, not a counterexample to convergence of C.
+
+For actual C let M_j(u) be its marked-leaf count from (9.9). The Fibonacci
+identity `F_(j-1)-alpha*F_j=(-alpha)^j` gives exactly
+
+$$
+C(F_j+u)-\alpha(F_j+u)
+=(1-\alpha)u-M_j(u)+(-\alpha)^j. \tag{9.14}
+$$
+
+Consequently full ratio convergence is equivalent to the uniform occupation
+law `sup_u |M_j(u)-(1-alpha)*u|/F_j -> 0` over the natural block. Since
+C>=G already supplies the matching one-sided estimate up to a bounded
+rounding term, the unresolved direction is a sufficiently large marked
+count throughout the arch. A decay rate would require a quantitative bound
+on that occupation deficit. The positioned terminal code now identifies
+precisely where the missing selector and phase restrictions must act; seven
+symbols alone do not constitute a uniform finite-state classification.
