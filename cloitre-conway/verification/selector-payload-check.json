@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_sha256": "3ffe78ff04e3c277251d6e7d4948f439b137a2e2f034e53b9590c890cad377cc",
+  "source_sha256": "7fc3a08f3528d122218cfb966c10ce2432b1fc65c0b4a48c01c18005c11c4b0e",
   "scope": "Exact public three-block selector audit, recursive nonautonomous window descent and conserved conditional seed-label budgets. Row-local Cartesian decompositions remain distinct from actual selected splits and their proof costs.",
   "period_five_payloads": 13,
   "parent_rows": 65,
@@ -630,6 +630,416 @@
       "consistent_words": 16,
       "defect_residue_sufficient_bits": 3,
       "consistent_inverse_seed_bits": 0
+    },
+    "cross_window_network": {
+      "aligned_internal_windows": 12208,
+      "physical_indices": 1300,
+      "alpha_entries_before_sharing": 61040,
+      "distinct_absolute_edge_parameters": 6514,
+      "bipartite_components": 292,
+      "forest_parameter_entries": 2308,
+      "reconstructed_edge_parameters": 6514,
+      "reconstructed_row_parameters": 61040,
+      "gap_classes": 292,
+      "selector_components": 37,
+      "component_certificate_methods": {
+        "singleton_domain": 10,
+        "odd_sign_graph": 14,
+        "complete_gap_relations": 13
+      },
+      "component_certificates": [
+        {
+          "minimum_index": 8,
+          "maximum_index": 232,
+          "physical_indices": 212,
+          "gap_classes": 1,
+          "method": "singleton_domain",
+          "seed_index": 8,
+          "seed_candidates": 1,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 233,
+          "maximum_index": 375,
+          "physical_indices": 121,
+          "gap_classes": 1,
+          "method": "singleton_domain",
+          "seed_index": 233,
+          "seed_candidates": 1,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 377,
+          "maximum_index": 597,
+          "physical_indices": 175,
+          "gap_classes": 1,
+          "method": "singleton_domain",
+          "seed_index": 377,
+          "seed_candidates": 1,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 623,
+          "maximum_index": 924,
+          "physical_indices": 226,
+          "gap_classes": 6,
+          "method": "singleton_domain",
+          "seed_index": 667,
+          "seed_candidates": 1,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 925,
+          "maximum_index": 948,
+          "physical_indices": 11,
+          "gap_classes": 3,
+          "method": "odd_sign_graph",
+          "seed_index": 943,
+          "seed_candidates": 9,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 954,
+          "maximum_index": 970,
+          "physical_indices": 7,
+          "gap_classes": 5,
+          "method": "odd_sign_graph",
+          "seed_index": 963,
+          "seed_candidates": 10,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1033,
+          "maximum_index": 1191,
+          "physical_indices": 62,
+          "gap_classes": 21,
+          "method": "singleton_domain",
+          "seed_index": 1182,
+          "seed_candidates": 1,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1181,
+          "maximum_index": 1409,
+          "physical_indices": 169,
+          "gap_classes": 22,
+          "method": "singleton_domain",
+          "seed_index": 1229,
+          "seed_candidates": 1,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1429,
+          "maximum_index": 1454,
+          "physical_indices": 12,
+          "gap_classes": 9,
+          "method": "odd_sign_graph",
+          "seed_index": 1437,
+          "seed_candidates": 2,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1455,
+          "maximum_index": 1463,
+          "physical_indices": 5,
+          "gap_classes": 5,
+          "method": "complete_gap_relations",
+          "seed_index": 1458,
+          "seed_candidates": 5,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1465,
+          "maximum_index": 1480,
+          "physical_indices": 8,
+          "gap_classes": 6,
+          "method": "odd_sign_graph",
+          "seed_index": 1476,
+          "seed_candidates": 2,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1485,
+          "maximum_index": 1500,
+          "physical_indices": 8,
+          "gap_classes": 6,
+          "method": "odd_sign_graph",
+          "seed_index": 1490,
+          "seed_candidates": 3,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1497,
+          "maximum_index": 1515,
+          "physical_indices": 10,
+          "gap_classes": 6,
+          "method": "singleton_domain",
+          "seed_index": 1502,
+          "seed_candidates": 1,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1732,
+          "maximum_index": 1748,
+          "physical_indices": 5,
+          "gap_classes": 5,
+          "method": "odd_sign_graph",
+          "seed_index": 1741,
+          "seed_candidates": 3,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1788,
+          "maximum_index": 1799,
+          "physical_indices": 5,
+          "gap_classes": 5,
+          "method": "complete_gap_relations",
+          "seed_index": 1796,
+          "seed_candidates": 8,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1811,
+          "maximum_index": 1857,
+          "physical_indices": 21,
+          "gap_classes": 12,
+          "method": "odd_sign_graph",
+          "seed_index": 1841,
+          "seed_candidates": 4,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1851,
+          "maximum_index": 1863,
+          "physical_indices": 5,
+          "gap_classes": 5,
+          "method": "complete_gap_relations",
+          "seed_index": 1861,
+          "seed_candidates": 7,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1864,
+          "maximum_index": 1888,
+          "physical_indices": 9,
+          "gap_classes": 8,
+          "method": "complete_gap_relations",
+          "seed_index": 1886,
+          "seed_candidates": 3,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1894,
+          "maximum_index": 1955,
+          "physical_indices": 24,
+          "gap_classes": 18,
+          "method": "odd_sign_graph",
+          "seed_index": 1947,
+          "seed_candidates": 5,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1941,
+          "maximum_index": 1962,
+          "physical_indices": 5,
+          "gap_classes": 5,
+          "method": "complete_gap_relations",
+          "seed_index": 1946,
+          "seed_candidates": 2,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1957,
+          "maximum_index": 1972,
+          "physical_indices": 5,
+          "gap_classes": 5,
+          "method": "complete_gap_relations",
+          "seed_index": 1972,
+          "seed_candidates": 2,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1975,
+          "maximum_index": 1983,
+          "physical_indices": 5,
+          "gap_classes": 5,
+          "method": "complete_gap_relations",
+          "seed_index": 1975,
+          "seed_candidates": 6,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 1996,
+          "maximum_index": 2053,
+          "physical_indices": 22,
+          "gap_classes": 14,
+          "method": "singleton_domain",
+          "seed_index": 2041,
+          "seed_candidates": 1,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 2021,
+          "maximum_index": 2048,
+          "physical_indices": 5,
+          "gap_classes": 5,
+          "method": "singleton_domain",
+          "seed_index": 2048,
+          "seed_candidates": 1,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 2050,
+          "maximum_index": 2114,
+          "physical_indices": 33,
+          "gap_classes": 21,
+          "method": "singleton_domain",
+          "seed_index": 2079,
+          "seed_candidates": 1,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 2084,
+          "maximum_index": 2177,
+          "physical_indices": 34,
+          "gap_classes": 23,
+          "method": "odd_sign_graph",
+          "seed_index": 2088,
+          "seed_candidates": 2,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 2182,
+          "maximum_index": 2202,
+          "physical_indices": 8,
+          "gap_classes": 6,
+          "method": "complete_gap_relations",
+          "seed_index": 2187,
+          "seed_candidates": 6,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 2195,
+          "maximum_index": 2221,
+          "physical_indices": 8,
+          "gap_classes": 6,
+          "method": "odd_sign_graph",
+          "seed_index": 2220,
+          "seed_candidates": 3,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 2225,
+          "maximum_index": 2261,
+          "physical_indices": 28,
+          "gap_classes": 8,
+          "method": "odd_sign_graph",
+          "seed_index": 2251,
+          "seed_candidates": 2,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 2264,
+          "maximum_index": 2275,
+          "physical_indices": 5,
+          "gap_classes": 5,
+          "method": "complete_gap_relations",
+          "seed_index": 2272,
+          "seed_candidates": 8,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 2274,
+          "maximum_index": 2304,
+          "physical_indices": 13,
+          "gap_classes": 11,
+          "method": "complete_gap_relations",
+          "seed_index": 2295,
+          "seed_candidates": 5,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 2309,
+          "maximum_index": 2316,
+          "physical_indices": 5,
+          "gap_classes": 5,
+          "method": "complete_gap_relations",
+          "seed_index": 2312,
+          "seed_candidates": 9,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 2326,
+          "maximum_index": 2336,
+          "physical_indices": 5,
+          "gap_classes": 5,
+          "method": "complete_gap_relations",
+          "seed_index": 2333,
+          "seed_candidates": 5,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 2366,
+          "maximum_index": 2384,
+          "physical_indices": 9,
+          "gap_classes": 8,
+          "method": "complete_gap_relations",
+          "seed_index": 2373,
+          "seed_candidates": 4,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 2385,
+          "maximum_index": 2401,
+          "physical_indices": 5,
+          "gap_classes": 5,
+          "method": "odd_sign_graph",
+          "seed_index": 2385,
+          "seed_candidates": 3,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 2426,
+          "maximum_index": 2439,
+          "physical_indices": 5,
+          "gap_classes": 5,
+          "method": "odd_sign_graph",
+          "seed_index": 2435,
+          "seed_candidates": 4,
+          "actual_parameter_fiber_size": 1
+        },
+        {
+          "minimum_index": 2467,
+          "maximum_index": 2476,
+          "physical_indices": 5,
+          "gap_classes": 5,
+          "method": "odd_sign_graph",
+          "seed_index": 2469,
+          "seed_candidates": 2,
+          "actual_parameter_fiber_size": 1
+        }
+      ],
+      "conditional_joint_inverse_branch_bits": 0,
+      "cross_node_witness": {
+        "source_index": 489,
+        "singleton_source_split": 292,
+        "source_split_value": 197,
+        "target_index": 476,
+        "edge_parameter": 483,
+        "recovered_target_split": 286,
+        "recovered_normalized_offset": 53,
+        "excluded_local_offsets": [
+          64,
+          62
+        ]
+      },
+      "independent_completeness": {
+        "bipartite_rank_contexts": 512,
+        "strongly_connected_profile_contexts": 954,
+        "direct_joint_words": 24030,
+        "scope": "Every subgraph of a 3-by-3 bipartite parameter graph has forest size equal to independently computed rational rank; every strongly connected directed graph on up to three named vertices with small shared capped profiles has exact gap reconstruction and seed decoding checked against complete Cartesian fibers."
+      },
+      "scope": "A fixed physical-label layout of the 147 selected five-cycle roots through 4096 and their internal descendants. All 37 joint selector components are injective on the supplied independent canonical geometric/value domains: singleton, sign or complete finite gap certificates cover every parameter image. Forest size is the universal linear parameter rank, not C-specific minimum code size. Layout, profile/domain, basin/phase and validity proof costs remain excluded."
     },
     "scope": "Actual recursive descendants of every prescribed period-five orbit through 4096, deduplicated by profile order and aligned offsets. Sharing removes 434 of 437 collision pairs, but three survive in two contexts; none of these counts is an order-uniform theorem or a basin/phase certificate."
   },

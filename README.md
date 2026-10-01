@@ -22,6 +22,7 @@ or programming knowledge is needed.
 | See the minimum total defect needed for a proper cycle | **[Cycle defect cost](cloitre-conway/fibonacci-collars.md#minimum-defect-cost-of-a-proper-cycle)** |
 | Understand recursive descent and its extra inverse-label budget | **[Recursive windows](cloitre-conway/fibonacci-collars.md#recursive-windows-with-a-parameter-at-every-row)** · **[Conserved branch budget](cloitre-conway/fibonacci-collars.md#a-conserved-budget-for-multiscale-inverse-labels)** |
 | See how repeated inputs can eliminate inverse branch labels | **[Shared selectors and the two-label theorem](cloitre-conway/fibonacci-collars.md#sharing-selectors-at-repeated-physical-indices)** |
+| Understand sharing between windows and a basis for their parameters | **[Shared network and forest basis](cloitre-conway/fibonacci-collars.md#a-shared-parameter-network-and-its-forest-basis)** |
 | See a complete geometric selector code and the remaining real-orbit constraint | **[Seven terminal symbols](cloitre-conway/fibonacci-collars.md#seven-terminal-symbols-and-the-full-geometric-selector-code)** · **[Growing defects and occupation](cloitre-conway/fibonacci-collars.md#growing-actual-defects-and-the-remaining-occupation-problem)** |
 | See what is proved and what remains open | **[Current status](STATUS.md)** |
 

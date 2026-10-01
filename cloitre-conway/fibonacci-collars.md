@@ -1705,6 +1705,165 @@ so that local periodicity check excludes both. The distinction is useful:
 sharing is necessary family information and gives exact inverse reductions,
 while periodicity and prescribed selection still have separate roles.
 
+### A shared parameter network and its forest basis
+
+Sharing can be imposed between windows, rather than only between rows of
+one window. The useful coordinates are absolute physical indices. Let s(N)
+denote the prescribed inner endpoint used to compute C(N). At a row of an
+order-j window, put `N=F_j+u_i` and `M=F_j+u_(i+1)`. Then
+
+$$
+K_{NM}:=\alpha_i+F_j=s(M)+C(s(N)). \tag{9.15}
+$$
+
+Indeed `r_i=s(N)-F_(j-1)` and
+`P_(j-1)(r_i)=C(s(N))-F_(j-2)`, while the next row contributes
+`r_(i+1)=s(M)-F_(j-1)`. Their sum differs from the right side of (9.15)
+by F_j. Thus repeated physical edges share K even across different
+Fibonacci representations. The known anchors supply the normalization;
+no new carry coordinate is needed.
+
+Fix a finite collection of labelled cyclic windows. Form a directed graph G
+whose vertices are their physical indices and whose edges are their directed
+row transitions. Each edge lies on a closed walk, so every weak component
+is strongly connected: the closed walk returns along every edge, giving
+paths in both directions along a weakly connecting chain. Supply a
+nonempty candidate domain D_N for each physical index, intersecting its
+physical domains across occurrences. For actual C, the canonical natural
+block gives its geometric/value candidates, including the exact anchor
+endpoints. The following statements concern this fixed graph and supplied
+profile/domain data.
+
+**Parameter forest theorem.** Make a bipartite graph B with a source copy
+and a target copy of every vertex of G, and an edge from source N to target
+M for each physical edge of G. If B has c components, all K parameters
+are recoverable from a spanning forest of B. This forest has
+`2|V(G)|-c` edges, the exact rank of the universal linear parameter map
+
+```text
+K_(N,M) = h_N + z_M.
+```
+
+This rank treats h and z as independent formal potentials. It is not a
+lower bound for the narrower nonlinear family `h_N=C(z_N)`, nor a bit
+count or a minimum full C certificate size.
+
+**Proof.** Set one potential to zero in each bipartite component. Along
+each forest edge, the known sum determines the next potential by subtraction.
+Every omitted edge is then recovered as the sum of its endpoint potentials.
+For example, a four-cycle imposes
+
+```text
+K_(N,M)+K_(P,L) = K_(N,L)+K_(P,M).
+```
+
+Longer bipartite cycles give the corresponding alternating sums. The kernel
+of the full linear map is exactly one freedom per component: add a constant
+to its source potentials and subtract that constant from its target
+potentials. Its rank is therefore the vertex count minus c. Forest edges
+are independent and attain that rank. Integer forest weights recover
+integer potentials without division. QED.
+
+The remaining translations have a precise meaning. Write h^0_N,z^0_N
+for the potentials recovered from the forest, and b_S(N),b_T(N) for the
+bipartite components containing the two copies of N. Every selector
+assignment with that parameter image has the form
+
+$$
+z_N=z^0_N+\gamma_{b_T(N)},\qquad
+C(z^0_N+\gamma_{b_T(N)})=h^0_N-\gamma_{b_S(N)},\qquad z_N\in D_N.
+\tag{9.16}
+$$
+
+Conversely these equations reconstruct an assignment with exactly the
+given edge parameters. They reduce inverse reconstruction to constrained
+integer translations; they do not assume these translations are free after
+the C equations are imposed.
+
+**One seed per component.** Given the joint parameter image and one
+admissible z value at one vertex of a strong component, propagate
+
+```text
+z_M = K_(N,M) - C(z_N)
+```
+
+along directed paths. Every vertex is reached. Check its domain and every
+edge, including alternative paths. This reconstructs the whole component
+or rejects the seed. Thus one seed per shared component suffices, even if
+that component contains many windows. Its conditional minimum branch label
+is determined by the complete joint fibers, not the separate local fibers.
+
+There is also an exact reverse-complete collision test on this network.
+For each source N, merge all its successors into one gap class; take the
+transitive closure of these equalities. Let g(N) be the class of N, and
+o(N) the common class of its successors. In a component, two assignments
+with a common parameter image are distinct exactly when there are nonzero
+integer class gaps d satisfying, at every N,
+
+$$
+\exists r,s\in D_N:\quad
+s-r=d_{g(N)},\qquad C(r)-C(s)=d_{o(N)}. \tag{9.17}
+$$
+
+**Proof.** Subtract (9.15). A zero gap propagates forward to every vertex
+of a strong component, making the assignments equal there. Otherwise all
+gaps are nonzero. All successors of a source have the same outgoing gap,
+giving the class constraints and (9.17). Conversely choose one witness
+pair per physical N in (9.17). Every edge then has equal K in the two
+assignments, and each physical index uses the same pair at all occurrences.
+This proves reverse completeness. QED.
+
+A singleton domain therefore proves joint injectivity throughout its
+component: its gap is zero and propagates. The monotonicity sign obstruction
+also extends to the network classes. In components not certified by either
+rule, the complete finite relations in (9.17) can be tested by constraint
+propagation and exhaustive branching. Removing unsupported values is safe;
+branching over every remaining value preserves completeness.
+
+**Finite joint inverse theorem.** Use the same 147 prescribed five-cycle
+roots through 4096 and all their internal descendant windows as above.
+Their 12,208 windows contain 1,300 physical indices and 6,514 distinct
+absolute edges. The bipartite graph has 292 components, so **2,308 forest
+parameters recover all 61,040 row parameters**, conditional on this supplied
+layout. The actual forest is decoded independently and every recovered edge
+and Fibonacci normalization is checked.
+
+All 37 selector components have injective joint parameter maps on their
+supplied independent canonical geometric/value domains. Ten are certified
+by singleton domains, fourteen further components by the sign graph, and
+the remaining thirteen by complete empty nonzero-gap searches. Thus this
+joint inverse needs **zero branch-label bits**, for every parameter image
+in this finite context. Independent seed enumeration also recovers the
+actual joint assignment uniquely in each component. No periodicity
+qualification is needed for this particular joint inverse theorem.
+
+The n=2012 local collision has a short cross-window separation. Its offset-99
+row has physical index N=476. Elsewhere in the supplied network, N=489 has
+the singleton domain D_489={292}. The edge 489 -> 476 has K=483 and C(292)=197,
+so it forces `s(476)=483-197=286`, normalized offset 53. The two local
+collision words instead use offsets 64 and 62 at that row, hence physical
+splits 297 and 295. They cannot share the same full parameter image. This
+uses a shared parameter constraint and the supplied value domain, rather
+than an extra local phase label.
+
+The checker independently verifies forest ranks for all 512 subgraphs of a
+3-by-3 bipartite graph using rational elimination. It checks network gaps
+and one-seed decoding against complete Cartesian fibers in 954 small
+strongly connected profile contexts, comprising 24,030 assignments. The
+general forest and gap proofs are distinct from the finite C premises.
+
+The conditioning matters. This fixes a bag of physical row labels. A
+different candidate selector assignment may generate a different child
+layout under descent. Neither the forest theorem nor the finite joint
+inverse encodes that missing layout, its profile/domain proofs, or the
+prescribed basin and phase. Even the actual stored forest is a scalar-entry
+count, not a total information minimum. Campbell's proved ternary endpoint
+templates provide such layouts and selections by uniform arithmetic rules;
+the comparable C-family rules and the marked-leaf occupation estimate
+remain open. The next target is to recover the layout arithmetically while
+retaining this shared interface, rather than treating supplied labels as
+free total certificate data.
+
 ### A conserved budget for multiscale inverse labels
 
 Defect conservation gives more than termination. Consider the selected

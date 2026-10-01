@@ -341,6 +341,7 @@ def shared_selector_audit():
     seen = set()
     counts = Counter()
     examples = {}
+    network_parameters = {}
     for index in range(3, limit + 1):
         if periods[index] != 5:
             continue
@@ -365,6 +366,11 @@ def shared_selector_audit():
             for phase, parameter in enumerate(actual_alpha):
                 edge = (offsets[phase], offsets[(phase + 1) % 5])
                 assert edge_parameters.setdefault(edge, parameter) == parameter
+                physical_edge = tuple(fibonacci[order] + offset for offset in edge)
+                absolute_parameter = parameter + fibonacci[order]
+                assert absolute_parameter == (selected_splits[physical_edge[1]]
+                                               + sequence[selected_splits[physical_edge[0]]])
+                assert network_parameters.setdefault(physical_edge, absolute_parameter) == absolute_parameter
             counts['parameter_entries_before_sharing'] += 5
             counts['parameter_entries_after_edge_sharing'] += len(edge_parameters)
             stack.extend(((order - 1, actual),
@@ -446,7 +452,313 @@ def shared_selector_audit():
                                          actual_first_child_offsets=[9, 8, 8, 9, 8],
                                          independent_cartesian_words=1024, consistent_words=16,
                                          defect_residue_sufficient_bits=3, consistent_inverse_seed_bits=0),
+                cross_window_network=cross_window_network_audit(sequence, selected_splits, fibonacci,
+                                                                network_parameters, len(seen)),
                 scope='Actual recursive descendants of every prescribed period-five orbit through 4096, deduplicated by profile order and aligned offsets. Sharing removes 434 of 437 collision pairs, but three survive in two contexts; none of these counts is an order-uniform theorem or a basin/phase certificate.')
+
+
+def connected_components(neighbours):
+    unseen = set(neighbours)
+    result = []
+    while unseen:
+        start = min(unseen)
+        reached = {start}
+        stack = [start]
+        while stack:
+            point = stack.pop()
+            for following in neighbours[point] - reached:
+                reached.add(following)
+                stack.append(following)
+        unseen -= reached
+        result.append(tuple(sorted(reached)))
+    return result
+
+
+def parameter_forest(parameters):
+    neighbours = defaultdict(set)
+    weights = {}
+    for (source, target), parameter in sorted(parameters.items()):
+        first, second = ('source', source), ('target', target)
+        neighbours[first].add(second)
+        neighbours[second].add(first)
+        weights[first, second] = weights[second, first] = parameter
+    potentials = {}
+    forest = []
+    components = connected_components(neighbours)
+    for component in components:
+        start = component[0]
+        potentials[start] = 0
+        stack = [start]
+        while stack:
+            point = stack.pop()
+            for following in sorted(neighbours[point]):
+                weight = weights[point, following]
+                if following not in potentials:
+                    potentials[following] = weight - potentials[point]
+                    stack.append(following)
+                    source, target = ((point[1], following[1]) if point[0] == 'source'
+                                      else (following[1], point[1]))
+                    forest.append((source, target, weight))
+                else:
+                    assert potentials[point] + potentials[following] == weight
+    assert len(forest) == len(neighbours) - len(components)
+    assert all(potentials['source', source] + potentials['target', target] == parameter
+               for (source, target), parameter in parameters.items())
+    return forest, potentials, len(components)
+
+
+def network_gap_classes(successors):
+    representatives = {point: point for point in successors}
+
+    def representative(point):
+        while representatives[point] != point:
+            point = representatives[point]
+        return point
+
+    for targets in successors.values():
+        target_list = sorted(targets)
+        for target in target_list[1:]:
+            representatives[representative(target)] = representative(target_list[0])
+    return {point: representative(point) for point in representatives}
+
+
+def network_gap_assignments(component, domains, profile, successors, classes):
+    relations = []
+    allowed = {}
+    for point in component:
+        source = classes[point]
+        target = classes[min(successors[point])]
+        relation = {(second - first, profile[first] - profile[second])
+                    for first in domains[point] for second in domains[point]
+                    if first != second and profile[first] != profile[second]}
+        relations.append((source, target, relation))
+        differences = {first for first, second in relation}
+        allowed[source] = allowed.get(source, differences) & differences
+    answers = []
+
+    def search(candidate):
+        candidate = {point: set(values) for point, values in candidate.items()}
+        changed = True
+        while changed:
+            changed = False
+            for source, target, relation in relations:
+                retained = {(first, second) for first, second in relation
+                            if first in candidate[source] and second in candidate[target]
+                            and (source != target or first == second)}
+                for point, values in ((source, {first for first, second in retained}),
+                                      (target, {second for first, second in retained})):
+                    following = candidate[point] & values
+                    if not following:
+                        return
+                    changed |= following != candidate[point]
+                    candidate[point] = following
+        undecided = [point for point in candidate if len(candidate[point]) > 1]
+        if not undecided:
+            answers.append({point: next(iter(values)) for point, values in candidate.items()})
+            return
+        point = min(undecided, key=lambda item: (len(candidate[item]), item))
+        for value in sorted(candidate[point]):
+            search({**candidate, point: {value}})
+
+    search(allowed)
+    return answers
+
+
+def decode_network_seed(component, domains, profile, successors, parameters, start, seed):
+    if seed not in domains[start]:
+        return None
+    assignment = {start: seed}
+    stack = [start]
+    while stack:
+        source = stack.pop()
+        for target in sorted(successors[source]):
+            value = parameters[source, target] - profile[assignment[source]]
+            if value not in domains[target] or (target in assignment and assignment[target] != value):
+                return None
+            if target not in assignment:
+                assignment[target] = value
+                stack.append(target)
+    assert set(assignment) == set(component)
+    return assignment
+
+
+def cross_window_completeness_examples():
+    rank_contexts = 0
+    for mask in range(1 << 9):
+        edges = [(position // 3, position % 3) for position in range(9) if mask & (1 << position)]
+        parameters = {(source, target): 7 * source + 3 * target + 2 for source, target in edges}
+        forest, _, _ = parameter_forest(parameters)
+        matrix = [[int(source == point) for point in range(3)]
+                  + [int(target == point) for point in range(3)] for source, target in edges]
+        assert (affine_rank(matrix) if matrix else 0) == len(forest)
+        reconstructed = parameter_forest({(source, target): value for source, target, value in forest})[1]
+        assert all(reconstructed['source', source] + reconstructed['target', target] == value
+                   for (source, target), value in parameters.items())
+        rank_contexts += 1
+    gap_contexts = 0
+    direct_words = 0
+    for mask in range(1, 1 << 9):
+        edges = [(position // 3, position % 3) for position in range(9) if mask & (1 << position)]
+        vertices = sorted({point for edge in edges for point in edge})
+        successors = {point: set() for point in vertices}
+        for source, target in edges:
+            successors[source].add(target)
+        if any(not values for values in successors.values()):
+            continue
+        reached = {vertices[0]}
+        stack = [vertices[0]]
+        while stack:
+            source = stack.pop()
+            for target in successors[source] - reached:
+                reached.add(target)
+                stack.append(target)
+        if reached != set(vertices):
+            continue
+        if any(not any(target == point for source, target in edges) for point in vertices):
+            continue
+        reverse = {point: {source for source, target in edges if target == point} for point in vertices}
+        reverse_reached = {vertices[0]}
+        stack = [vertices[0]]
+        while stack:
+            source = stack.pop()
+            for target in reverse[source] - reverse_reached:
+                reverse_reached.add(target)
+                stack.append(target)
+        if reverse_reached != set(vertices):
+            continue
+        classes = network_gap_classes(successors)
+        for profile in product(range(1), range(2), range(3)):
+            domains = {point: (0, 1, 2) for point in vertices}
+            images = defaultdict(list)
+            for values in product(range(3), repeat=len(vertices)):
+                assignment = dict(zip(vertices, values))
+                image = tuple(assignment[target] + profile[assignment[source]] for source, target in edges)
+                images[image].append(assignment)
+                direct_words += 1
+            expected_gaps = set()
+            for words in images.values():
+                for left, right in combinations(words, 2):
+                    gap = tuple(right[point] - left[point] for point in vertices)
+                    assert all(gap)
+                    expected_gaps.update((gap, tuple(-value for value in gap)))
+            actual = network_gap_assignments(vertices, domains, profile, successors, classes)
+            assert {tuple(answer[classes[point]] for point in vertices) for answer in actual} == expected_gaps
+            for answer in actual:
+                left, right = {}, {}
+                for point in vertices:
+                    gap, following = answer[classes[point]], answer[classes[min(successors[point])]]
+                    left[point], right[point] = next((first, second) for first in domains[point]
+                                                   for second in domains[point]
+                                                   if second - first == gap
+                                                   and profile[first] - profile[second] == following)
+                assert all(left[target] + profile[left[source]] == right[target] + profile[right[source]]
+                           for source, target in edges)
+            for image, assignments in images.items():
+                parameters = dict(zip(edges, image))
+                decoded = [answer for seed in domains[vertices[0]]
+                           if (answer := decode_network_seed(vertices, domains, profile, successors,
+                                                              parameters, vertices[0], seed)) is not None]
+                assert {tuple(answer[point] for point in vertices) for answer in decoded} == {
+                    tuple(answer[point] for point in vertices) for answer in assignments}
+            gap_contexts += 1
+    return dict(bipartite_rank_contexts=rank_contexts, strongly_connected_profile_contexts=gap_contexts,
+                direct_joint_words=direct_words,
+                scope='Every subgraph of a 3-by-3 bipartite parameter graph has forest size equal to independently computed rational rank; every strongly connected directed graph on up to three named vertices with small shared capped profiles has exact gap reconstruction and seed decoding checked against complete Cartesian fibers.')
+
+
+def cross_window_network_audit(sequence, selected_splits, fibonacci, parameters, window_count):
+    successors = defaultdict(set)
+    neighbours = defaultdict(set)
+    for source, target in parameters:
+        successors[source].add(target)
+        neighbours[source].add(target)
+        neighbours[target].add(source)
+    components = connected_components(neighbours)
+    classes = network_gap_classes(successors)
+    domains = {}
+    for point in sorted(successors):
+        order = max(height for height, anchor in enumerate(fibonacci) if anchor <= point)
+        offset = point - fibonacci[order]
+        values = candidate_sets(sequence, fibonacci[order], fibonacci[order - 1],
+                                fibonacci[order - 2], fibonacci[order - 3], (offset,))[0]
+        domains[point] = tuple(fibonacci[order - 1] + value for value in values
+                              if max(0, offset - fibonacci[order - 3]) <= value
+                              <= min(offset, fibonacci[order - 2]))
+        assert selected_splits[point] in domains[point]
+    forest, potentials, bipartite_components = parameter_forest(parameters)
+    shifts = {}
+    for point in successors:
+        shift = selected_splits[point] - potentials['target', point]
+        assert shifts.setdefault(classes[point], shift) == shift
+    assert all(sequence[selected_splits[point]]
+               == potentials['source', point] - shifts[classes[min(successors[point])]]
+               for point in successors)
+    decoded_potentials = parameter_forest({(source, target): value for source, target, value in forest})[1]
+    assert all(decoded_potentials['source', source] + decoded_potentials['target', target] == value
+               for (source, target), value in parameters.items())
+    sign_neighbours = defaultdict(set)
+    for source, targets in successors.items():
+        values = domains[source]
+        if all(sequence[first] <= sequence[second] for first, second in zip(values, values[1:])):
+            target = min(targets)
+            first, second = classes[source], classes[target]
+            sign_neighbours[first].add(second)
+            sign_neighbours[second].add(first)
+    certificates = []
+    for component in components:
+        start = min(component, key=lambda point: (len(domains[point]), point))
+        reached = {start}
+        stack = [start]
+        while stack:
+            source = stack.pop()
+            for target in successors[source] - reached:
+                reached.add(target)
+                stack.append(target)
+        assert reached == set(component)
+        fixed = len(domains[start]) == 1
+        colours = {}
+        odd = False
+        for point in sorted({classes[point] for point in component}):
+            if point in colours:
+                continue
+            colours[point] = 0
+            stack = [point]
+            while stack:
+                source = stack.pop()
+                for target in sign_neighbours[source]:
+                    if target in colours:
+                        odd |= colours[source] == colours[target]
+                    else:
+                        colours[target] = 1 - colours[source]
+                        stack.append(target)
+        method = 'singleton_domain' if fixed else 'odd_sign_graph' if odd else 'complete_gap_relations'
+        if not fixed and not odd:
+            assert network_gap_assignments(component, domains, sequence, successors, classes) == []
+        fibers = [decoded for seed in domains[start]
+                  if (decoded := decode_network_seed(component, domains, sequence, successors,
+                                                     parameters, start, seed)) is not None]
+        assert len(fibers) == 1
+        assert all(fibers[0][point] == selected_splits[point] for point in component)
+        certificates.append(dict(minimum_index=min(component), maximum_index=max(component),
+                                 physical_indices=len(component), gap_classes=len({classes[point] for point in component}),
+                                 method=method, seed_index=start, seed_candidates=len(domains[start]),
+                                 actual_parameter_fiber_size=1))
+    assert domains[489] == (292,) and parameters[489, 476] == 483
+    assert sequence[292] == 197 and selected_splits[476] == 286
+    assert len(successors) == 1300 and len(parameters) == 6514 and len(forest) == 2308
+    assert len(components) == 37 and bipartite_components == 292
+    return dict(aligned_internal_windows=window_count, physical_indices=len(successors),
+                alpha_entries_before_sharing=5 * window_count, distinct_absolute_edge_parameters=len(parameters),
+                bipartite_components=bipartite_components, forest_parameter_entries=len(forest),
+                reconstructed_edge_parameters=len(parameters), reconstructed_row_parameters=5 * window_count,
+                gap_classes=len(set(classes.values())), selector_components=len(components),
+                component_certificate_methods=dict(Counter(item['method'] for item in certificates)),
+                component_certificates=certificates, conditional_joint_inverse_branch_bits=0,
+                cross_node_witness=dict(source_index=489, singleton_source_split=292, source_split_value=197,
+                                        target_index=476, edge_parameter=483, recovered_target_split=286,
+                                        recovered_normalized_offset=53, excluded_local_offsets=[64, 62]),
+                independent_completeness=cross_window_completeness_examples(),
+                scope='A fixed physical-label layout of the 147 selected five-cycle roots through 4096 and their internal descendants. All 37 joint selector components are injective on the supplied independent canonical geometric/value domains: singleton, sign or complete finite gap certificates cover every parameter image. Forest size is the universal linear parameter rank, not C-specific minimum code size. Layout, profile/domain, basin/phase and validity proof costs remain excluded.')
 
 
 def gap_automaton_certificate(sets, profile, periodic, defects, expected):
