@@ -1,41 +1,41 @@
 # Nested recurrences
 
-What happens when a recursive sequence decides how deeply to recurse using
-its own earlier values? This project studies two examples proposed by
-John M. Campbell and Benoît Cloitre. We seek exact formulas, a description
-of their inner cycles, and proofs of their long-term behavior.
+This project studies sequences whose earlier values determine how deeply
+the next term recurses. John M. Campbell and Benoît Cloitre proposed the
+two examples below. We study their exact values, inner cycles, and
+long-term behavior.
 
-**Campbell's example is solved by an explicit formula. Cloitre's Conway-type
-example has a proved golden-ratio structure; its full limit and decay rate
-remain open.**
+**Campbell's example has a complete solution. For Cloitre's example, the
+main open question is whether the ratio of each term to its index converges
+to the reciprocal of the golden ratio.**
 
 ## Read the mathematics
 
-Everything here can be read in your browser, without installing software or
-having a GitHub account. Start with either example:
+Start with **[What are we studying?](GENERAL.md)** for the definitions and
+motivation, then choose a reading route:
 
-- **[Campbell's recurrence](campbell/README.md)** — definition and complete
-  solution, with a **[three-page proof PDF](campbell/note.pdf)**.
-- **[Cloitre's Conway-type recurrence](cloitre-conway/README.md)** — definition,
-  main results, and a guided route to the open limit question.
+- **[Campbell: the complete solution](campbell/README.md)** — explicit formula
+  and short inner cycles; **[read the three-page proof PDF](campbell/note.pdf)**.
+- **[Cloitre: the golden-ratio problem](cloitre-conway/README.md)** — what is
+  proved, the main proof, and the remaining convergence question.
 
-For context, read **[What are we studying?](GENERAL.md)**. For a compact account
-of what is proved and what remains open, read **[Research status](STATUS.md)**.
+**[Results and open questions](STATUS.md)** gives an overview of both examples.
+Detailed arguments and their finite premises live in the linked proof notes.
 
-Click a document link to read it, then use your browser's Back button to return.
-If the PDF preview does not load, use GitHub's download-arrow button.
-You can ignore the Code button and the source-file list.
+All reading links work in your browser; no installation or GitHub account is
+needed. If the PDF preview does not load, use its download-arrow button.
+The source programs and JSON evidence are optional for readers.
 
 ## Work on the project
 
-The public default branch contains reviewed proofs and reproducible evidence.
-New work is developed in **pull requests** and merged when ready. Intermediate
-experiments and correspondence stay outside the public tree; earlier versions
-remain available in Git history.
+The default branch, **main**, presents reviewed results by mathematical topic.
+Work in progress belongs in **pull requests**; ready work is checked and merged.
+Scratch experiments, alternate drafts, and correspondence stay outside the
+public tree. Earlier versions remain available in Git history.
 
-See **[Contribution and verification guide](CONTRIBUTING.md)** for the workflow
-and the command that reproduces the computations. Mathematical comments can
-also be shared in our existing discussion; using GitHub is optional.
+See **[Contributing and verification](CONTRIBUTING.md)** for the PR workflow
+and reproduction command. Mathematical comments are also welcome in the
+existing collaboration thread; using GitHub is optional.
 
 The current results are written proofs and computer-assisted proofs with
 explicit finite certificates. This repository does not currently contain
