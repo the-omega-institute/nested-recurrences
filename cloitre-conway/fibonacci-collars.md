@@ -208,8 +208,94 @@ is exactly `2*(m-W)-1`. For W=0, `mu+period=2m+1`, attaining the interval's
 cardinality; for W=32, a fixed identity collar still leaves linearly long
 interior transients as m grows. This is an abstract profile counterexample,
 not a C instance. It shows that bounded defects, monotone branches and small
-periods do not by themselves compress the basin certificate. A stronger
-interior bound must use additional family information.
+periods do not by themselves bound the number of individual basin transitions.
+A stronger interior-time bound must use additional family information. The
+following return certificate distinguishes this time bound from the size of
+a proof that encodes many transitions arithmetically.
+
+### Defect-plateau return certificates
+
+Long transients need not require long certificates. Let `Psi(u)=t-H(u)` on
+an invariant integer domain, and write `lambda(u)=u-H(u)`. Suppose the
+verified profile has constant defect a on an interval A and constant defect
+b on an interval B. The paired return cell is
+
+$$
+K=A\cap[t+a-\max B,\ t+a-\min B]. \tag{1.6}
+$$
+
+For every u in K, the first image is `t-u+a` in B, so
+
+$$
+\Psi^2(u)=u+b-a. \tag{1.7}
+$$
+
+Put `v=b-a` and `K=[L,U]`. If v is positive, the first exit from K under
+these paired steps occurs after
+`q=floor((U-u)/v)+1` pairs; if v is negative, after
+`q=floor((u-L)/(-v))+1` pairs. In either case
+
+```text
+Psi^(2*j)(u)   = u+j*v,              0<=j<=q,
+Psi^(2*j+1)(u) = t+a-u-j*v,          0<=j<q.
+```
+
+Every starting point for those q pairs is in K. The last endpoint may lie
+outside K, but its last pair is still certified. For a smaller requested
+depth D, use only `min(q,floor(D/2))` pairs and, if necessary, one further
+literal step. If v is zero, `Psi^2(u)=u` immediately: the point is fixed
+when `Psi(u)=u`, otherwise it lies on a two-cycle. These formulas prove the
+entire run from two checked defect intervals, its start and one integer
+division. The run length is derived from those data, rather than an extra
+independent phase or branch coordinate.
+
+One can concatenate these blocks, and record the exact number of elapsed
+iterations. Revisiting the same block-boundary state certifies a cycle whose
+length is the difference of the two elapsed times; reduce the remaining
+depth modulo that length. At a zero-drift cell only parity remains. This
+computes the exact selected point at the prescribed depth, preserving entry
+alignment even when some literal path states were not individually stored.
+The profile intervals must themselves be verified; endpoint values alone do
+not establish constant defect throughout an interval.
+
+For the abstract long-tail profile above, A is `[W+1,m]`, B is
+`[m+1,2m]`, a=1 and b=0. Thus K=A, v=-1 and q=m-W. One translation block
+from m reaches W after 2q steps, followed by the certified reflection pair
+`(W,2m-W)`. The first cycle entry occurs one step earlier, at time 2q-1.
+For any depth D the selected point is exactly
+
+```text
+max(W,m-D/2)             if D is even,
+min(2m-W,m+(D+1)/2)      if D is odd.
+```
+
+The orbit can therefore have a linear transient and still have a certificate
+with two blocks, independently of m; its integer parameters require
+`O(log m+log(D+1))` bits. The earlier linear-tail example rules out a short
+literal path, not a short arithmetic certificate. Campbell's endpoint
+templates likewise supply arithmetic basin and phase information. For C,
+the three Fibonacci core shapes determine the domain, but do not determine
+its defect intervals or a short sequence of return blocks.
+
+A genuine C witness occurs at n=248. Using `d(x)=x-C(x)` on the inner
+state domain, d=56 on `[157,160]` and d=55 on `[144,148]`. The paired cell
+is `[157,160]`; its drift is -1. From 160, four pairs reach 156:
+
+```text
+160 -> 144 -> 159 -> 145 -> 158 -> 146 -> 157 -> 147 -> 156.
+```
+
+The prescribed depth is C(247)=158, and the complete block certificate in
+the [verifier evidence](verification/collar-check.json) selects 156, agreeing
+with the independent full-orbit evaluator. The verifier checks every selected
+split through n=131071, as well as all starts and depths through `2*t+7`
+for every capped integer profile on `[0,t]`, `0<=t<=5`. It also checks the
+two-block abstract formula at m=`10^12` and `10^18+7` without constructing
+the long orbit. In the finite C audit only 581 indices admit a nontrivial
+plateau jump, and the longest observed jump is four pairs. This audit gives
+limited compression from constant defect plateaus; it proves no uniform
+short C certificate. Larger certified return relations remain an open part
+of recursive closure.
 
 ## 2. Two additional Fibonacci identities
 

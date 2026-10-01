@@ -2,6 +2,7 @@
 
 import bisect
 import hashlib
+from itertools import product
 import json
 from pathlib import Path
 
@@ -19,6 +20,135 @@ def capture_pair_budget(distance):
         distance = 2 * distance // 3
         pairs += 1
     return pairs
+
+
+def defect_plateau_bounds(profile):
+    lower = [0] * len(profile)
+    upper = [0] * len(profile)
+    first = 0
+    for following in range(1, len(profile) + 1):
+        if (following < len(profile)
+                and following - profile[following] == first - profile[first]):
+            continue
+        for point in range(first, following):
+            lower[point], upper[point] = first, following - 1
+        first = following
+    return lower, upper
+
+
+def plateau_return_cell(scale, point, profile, bounds, domain):
+    lower, upper = bounds
+    domain_lower, domain_upper = domain
+    following = scale - profile[point]
+    assert domain_lower <= following <= domain_upper
+    first_defect = point - profile[point]
+    second_defect = following - profile[following]
+    first_lower = max(lower[point], domain_lower)
+    first_upper = min(upper[point], domain_upper)
+    second_lower = max(lower[following], domain_lower)
+    second_upper = min(upper[following], domain_upper)
+    cell_lower = max(first_lower, scale + first_defect - second_upper)
+    cell_upper = min(first_upper, scale + first_defect - second_lower)
+    assert cell_lower <= point <= cell_upper
+    drift = second_defect - first_defect
+    exit_pairs = None
+    if drift > 0:
+        exit_pairs = (cell_upper - point) // drift + 1
+    elif drift < 0:
+        exit_pairs = (point - cell_lower) // -drift + 1
+    return following, cell_lower, cell_upper, drift, exit_pairs
+
+
+def plateau_iterate(scale, start, depth, profile, bounds, domain):
+    point = start
+    remaining = depth
+    visited = {}
+    blocks = []
+    while remaining:
+        if point in visited:
+            period = visited[point] - remaining
+            assert period > 0
+            skipped = remaining // period * period
+            if skipped:
+                blocks.append(dict(kind='cycle', start=point, steps=skipped, period=period))
+                remaining -= skipped
+                if not remaining:
+                    break
+        else:
+            visited[point] = remaining
+        if remaining == 1:
+            following = scale - profile[point]
+            blocks.append(dict(kind='step', start=point, end=following, steps=1))
+            point = following
+            break
+        following, cell_lower, cell_upper, drift, exit_pairs = plateau_return_cell(
+            scale, point, profile, bounds, domain)
+        if not drift:
+            endpoint = following if remaining % 2 else point
+            blocks.append(dict(kind='reflection', start=point, partner=following,
+                               end=endpoint, steps=remaining))
+            point = endpoint
+            break
+        pairs = min(exit_pairs, remaining // 2)
+        endpoint = point + pairs * drift
+        blocks.append(dict(kind='translation', start=point, end=endpoint,
+                           cell=[cell_lower, cell_upper], drift=drift, pairs=pairs,
+                           steps=2 * pairs))
+        point = endpoint
+        remaining -= 2 * pairs
+        assert domain[0] <= point <= domain[1]
+    assert sum(block['steps'] for block in blocks) == depth
+    return point, blocks
+
+
+def plateau_return_audit(sequence, splits):
+    abstract_profiles = 0
+    literal_iterations = 0
+    for scale in range(6):
+        for profile in product(*(range(point + 1) for point in range(scale + 1))):
+            bounds = defect_plateau_bounds(profile)
+            for start in range(scale + 1):
+                point = start
+                for depth in range(2 * scale + 8):
+                    endpoint, _ = plateau_iterate(scale, start, depth, profile, bounds, (0, scale))
+                    assert endpoint == point
+                    point = scale - profile[point]
+                    literal_iterations += 1
+            abstract_profiles += 1
+    bounds = defect_plateau_bounds(sequence)
+    translation_runs = 0
+    translated_pairs = 0
+    indices_with_jump = 0
+    longest_jump = None
+    witness = None
+    for index in range(3, len(sequence)):
+        depth = sequence[index - 1]
+        endpoint, blocks = plateau_iterate(index, index - 1, depth, sequence,
+                                           bounds, (1, index - 1))
+        assert endpoint == splits[index]
+        jumps = [block for block in blocks
+                 if block['kind'] == 'translation' and block['pairs'] > 1]
+        translation_runs += len(jumps)
+        translated_pairs += sum(block['pairs'] for block in jumps)
+        indices_with_jump += bool(jumps)
+        for block in jumps:
+            if longest_jump is None or block['pairs'] > longest_jump['block']['pairs']:
+                longest_jump = dict(index=index, depth=depth, block=block)
+        if index == 248:
+            witness = dict(index=index, depth=depth, selected_split=endpoint, blocks=blocks)
+            assert endpoint == 156 and depth == 158
+            assert any(block['start'] == 160 and block['end'] == 156
+                       and block['pairs'] == 4 for block in jumps)
+    return dict(abstract_capped_profiles=abstract_profiles,
+                all_start_literal_depth_checks=literal_iterations,
+                abstract_scales=[0, 5], abstract_depths='0 through 2*scale+7',
+                conway_indices=[3, len(sequence) - 1],
+                conway_selected_splits_checked=len(sequence) - 3,
+                indices_with_nontrivial_translation=indices_with_jump,
+                nontrivial_translation_runs=translation_runs,
+                pairs_in_those_runs=translated_pairs, longest_observed_jump=longest_jump,
+                conway_certificate=witness,
+                scope='Exact-depth evaluation by paired defect plateaus and witnessed returns, independently compared with full-orbit selected splits; bounds are clipped to the prior prefix. This does not prove a uniform short certificate or a complete multiscale profile description.')
 
 
 def interior_tail_examples():
@@ -45,10 +175,34 @@ def interior_tail_examples():
             if zero_width == 0:
                 assert len(trajectory) == width + 1
             contexts += 1
+    compressed_examples = []
+    for zero_width in (0, 32):
+        for centre in (10 ** 12, 10 ** 18 + 7):
+            width = 2 * centre
+            profile = {centre: centre - 1, centre + 1: centre + 1,
+                       zero_width: zero_width, width - zero_width: width - zero_width}
+            lower = {centre: zero_width + 1, centre + 1: centre + 1,
+                     zero_width: 0, width - zero_width: centre + 1}
+            upper = {centre: centre, centre + 1: width,
+                     zero_width: zero_width, width - zero_width: width}
+            for depth in (10 * centre + 2, 10 * centre + 3):
+                endpoint, blocks = plateau_iterate(width, centre, depth, profile,
+                                                   (lower, upper), (0, width))
+                assert endpoint == (width - zero_width if depth % 2 else zero_width)
+                assert len(blocks) == 2
+                assert blocks[0]['pairs'] == centre - zero_width
+                assert blocks[0]['cell'] == [zero_width + 1, centre]
+                assert blocks[0]['drift'] == -1 and blocks[0]['end'] == zero_width
+                assert blocks[1]['kind'] == 'reflection'
+                compressed_examples.append(dict(collar_width=zero_width, centre=centre,
+                                                depth=depth, endpoint=endpoint, blocks=blocks))
     return dict(contexts_checked=contexts,
                 profile_rule='H(u)=u-1 for W<u<=m; H(u)=u otherwise, on 0<=u<=2m, m>W',
                 zero_defect_collar_widths=[0, 32], start='u=m',
                 transient_formula='2*(m-W)-1', terminal_cycle='(2m-W,W)', period=2,
+                paired_translation_cell='[W+1,m]', drift=-1,
+                run_length_pairs='m-W',
+                compressed_large_integer_examples=compressed_examples,
                 scope='Abstract shared profile, not a C example. Nondecreasing capped profiles, defects in {0,1}, a fixed identity collar and period two do not imply short interior transients. W=0 attains mu+period=interval cardinality.')
 
 
@@ -329,6 +483,7 @@ def main():
                                                trajectory=sharp_trajectory, preperiod=sharp_preperiod),
             scope='General argument uses the proved G bound, equality set and cap; the 130 small-anchor cases are exact G-floor/equality-set arithmetic, not new sequence premises. Larger orbit checks are corroboration. Logarithmic capture is not logarithmic full landing in arbitrary wide arches.',
             interior_tail_counterexample=interior_tail_examples(),
+            plateau_return_certificates=plateau_return_audit(sequence, splits),
         ),
         full_ratio_convergence='open; sublinear-neighborhood convergence is proved separately',
     )

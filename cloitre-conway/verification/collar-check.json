@@ -1,6 +1,6 @@
 {
   "status": "Exact two-collar seeds and finite corroboration; fibonacci-collars.md Sections 1-4 use golden-proof.md, and Section 6 adds the recorded seed premises; no Lean formalization.",
-  "source_sha256": "a8fef2bcc62094c7851c27dffca60842fe3068b1ea41ae368c07bdecba8f6cd8",
+  "source_sha256": "195dcdc7b6d4ff947f67ad4bcb260ca58e417800594f47d8663dc7359cb664de",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -592,7 +592,324 @@
       "transient_formula": "2*(m-W)-1",
       "terminal_cycle": "(2m-W,W)",
       "period": 2,
+      "paired_translation_cell": "[W+1,m]",
+      "drift": -1,
+      "run_length_pairs": "m-W",
+      "compressed_large_integer_examples": [
+        {
+          "collar_width": 0,
+          "centre": 1000000000000,
+          "depth": 10000000000002,
+          "endpoint": 0,
+          "blocks": [
+            {
+              "kind": "translation",
+              "start": 1000000000000,
+              "end": 0,
+              "cell": [
+                1,
+                1000000000000
+              ],
+              "drift": -1,
+              "pairs": 1000000000000,
+              "steps": 2000000000000
+            },
+            {
+              "kind": "reflection",
+              "start": 0,
+              "partner": 2000000000000,
+              "end": 0,
+              "steps": 8000000000002
+            }
+          ]
+        },
+        {
+          "collar_width": 0,
+          "centre": 1000000000000,
+          "depth": 10000000000003,
+          "endpoint": 2000000000000,
+          "blocks": [
+            {
+              "kind": "translation",
+              "start": 1000000000000,
+              "end": 0,
+              "cell": [
+                1,
+                1000000000000
+              ],
+              "drift": -1,
+              "pairs": 1000000000000,
+              "steps": 2000000000000
+            },
+            {
+              "kind": "reflection",
+              "start": 0,
+              "partner": 2000000000000,
+              "end": 2000000000000,
+              "steps": 8000000000003
+            }
+          ]
+        },
+        {
+          "collar_width": 0,
+          "centre": 1000000000000000007,
+          "depth": 10000000000000000072,
+          "endpoint": 0,
+          "blocks": [
+            {
+              "kind": "translation",
+              "start": 1000000000000000007,
+              "end": 0,
+              "cell": [
+                1,
+                1000000000000000007
+              ],
+              "drift": -1,
+              "pairs": 1000000000000000007,
+              "steps": 2000000000000000014
+            },
+            {
+              "kind": "reflection",
+              "start": 0,
+              "partner": 2000000000000000014,
+              "end": 0,
+              "steps": 8000000000000000058
+            }
+          ]
+        },
+        {
+          "collar_width": 0,
+          "centre": 1000000000000000007,
+          "depth": 10000000000000000073,
+          "endpoint": 2000000000000000014,
+          "blocks": [
+            {
+              "kind": "translation",
+              "start": 1000000000000000007,
+              "end": 0,
+              "cell": [
+                1,
+                1000000000000000007
+              ],
+              "drift": -1,
+              "pairs": 1000000000000000007,
+              "steps": 2000000000000000014
+            },
+            {
+              "kind": "reflection",
+              "start": 0,
+              "partner": 2000000000000000014,
+              "end": 2000000000000000014,
+              "steps": 8000000000000000059
+            }
+          ]
+        },
+        {
+          "collar_width": 32,
+          "centre": 1000000000000,
+          "depth": 10000000000002,
+          "endpoint": 32,
+          "blocks": [
+            {
+              "kind": "translation",
+              "start": 1000000000000,
+              "end": 32,
+              "cell": [
+                33,
+                1000000000000
+              ],
+              "drift": -1,
+              "pairs": 999999999968,
+              "steps": 1999999999936
+            },
+            {
+              "kind": "reflection",
+              "start": 32,
+              "partner": 1999999999968,
+              "end": 32,
+              "steps": 8000000000066
+            }
+          ]
+        },
+        {
+          "collar_width": 32,
+          "centre": 1000000000000,
+          "depth": 10000000000003,
+          "endpoint": 1999999999968,
+          "blocks": [
+            {
+              "kind": "translation",
+              "start": 1000000000000,
+              "end": 32,
+              "cell": [
+                33,
+                1000000000000
+              ],
+              "drift": -1,
+              "pairs": 999999999968,
+              "steps": 1999999999936
+            },
+            {
+              "kind": "reflection",
+              "start": 32,
+              "partner": 1999999999968,
+              "end": 1999999999968,
+              "steps": 8000000000067
+            }
+          ]
+        },
+        {
+          "collar_width": 32,
+          "centre": 1000000000000000007,
+          "depth": 10000000000000000072,
+          "endpoint": 32,
+          "blocks": [
+            {
+              "kind": "translation",
+              "start": 1000000000000000007,
+              "end": 32,
+              "cell": [
+                33,
+                1000000000000000007
+              ],
+              "drift": -1,
+              "pairs": 999999999999999975,
+              "steps": 1999999999999999950
+            },
+            {
+              "kind": "reflection",
+              "start": 32,
+              "partner": 1999999999999999982,
+              "end": 32,
+              "steps": 8000000000000000122
+            }
+          ]
+        },
+        {
+          "collar_width": 32,
+          "centre": 1000000000000000007,
+          "depth": 10000000000000000073,
+          "endpoint": 1999999999999999982,
+          "blocks": [
+            {
+              "kind": "translation",
+              "start": 1000000000000000007,
+              "end": 32,
+              "cell": [
+                33,
+                1000000000000000007
+              ],
+              "drift": -1,
+              "pairs": 999999999999999975,
+              "steps": 1999999999999999950
+            },
+            {
+              "kind": "reflection",
+              "start": 32,
+              "partner": 1999999999999999982,
+              "end": 1999999999999999982,
+              "steps": 8000000000000000123
+            }
+          ]
+        }
+      ],
       "scope": "Abstract shared profile, not a C example. Nondecreasing capped profiles, defects in {0,1}, a fixed identity collar and period two do not imply short interior transients. W=0 attains mu+period=interval cardinality."
+    },
+    "plateau_return_certificates": {
+      "abstract_capped_profiles": 873,
+      "all_start_literal_depth_checks": 88968,
+      "abstract_scales": [
+        0,
+        5
+      ],
+      "abstract_depths": "0 through 2*scale+7",
+      "conway_indices": [
+        3,
+        131071
+      ],
+      "conway_selected_splits_checked": 131069,
+      "indices_with_nontrivial_translation": 581,
+      "nontrivial_translation_runs": 739,
+      "pairs_in_those_runs": 1576,
+      "longest_observed_jump": {
+        "index": 248,
+        "depth": 158,
+        "block": {
+          "kind": "translation",
+          "start": 160,
+          "end": 156,
+          "cell": [
+            157,
+            160
+          ],
+          "drift": -1,
+          "pairs": 4,
+          "steps": 8
+        }
+      },
+      "conway_certificate": {
+        "index": 248,
+        "depth": 158,
+        "selected_split": 156,
+        "blocks": [
+          {
+            "kind": "translation",
+            "start": 247,
+            "end": 192,
+            "cell": [
+              247,
+              247
+            ],
+            "drift": -55,
+            "pairs": 1,
+            "steps": 2
+          },
+          {
+            "kind": "translation",
+            "start": 192,
+            "end": 168,
+            "cell": [
+              192,
+              192
+            ],
+            "drift": -24,
+            "pairs": 1,
+            "steps": 2
+          },
+          {
+            "kind": "translation",
+            "start": 168,
+            "end": 160,
+            "cell": [
+              168,
+              168
+            ],
+            "drift": -8,
+            "pairs": 1,
+            "steps": 2
+          },
+          {
+            "kind": "translation",
+            "start": 160,
+            "end": 156,
+            "cell": [
+              157,
+              160
+            ],
+            "drift": -1,
+            "pairs": 4,
+            "steps": 8
+          },
+          {
+            "kind": "reflection",
+            "start": 156,
+            "partner": 147,
+            "end": 156,
+            "steps": 144
+          }
+        ]
+      },
+      "scope": "Exact-depth evaluation by paired defect plateaus and witnessed returns, independently compared with full-orbit selected splits; bounds are clipped to the prior prefix. This does not prove a uniform short certificate or a complete multiscale profile description."
     }
   },
   "full_ratio_convergence": "open; sublinear-neighborhood convergence is proved separately"
