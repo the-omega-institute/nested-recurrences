@@ -901,6 +901,76 @@ also records this actual counterexample rather than assuming an
 arbitrary-level interval law. Wide-block closure and uniform dispersion
 remain open.
 
+**Direct descent through cap3.** Write W_(0,s)=L_s, W_(1,s)=R_s,
+W_(2,s)=S_s and W_(3,s)=Z_s. Let K>=21, 0<=v<=Z_K, and
+e=Q_K(v). For the actual first-child spine n_s=F_s-v_s, 21<=s<=K,
+
+$$
+v_s=\begin{cases}
+\min(v,L_s),&e=0,\\
+\max(W_{e-1,s}+1,\min(v-e(K-s),W_{e,s})),&1\le e\le3.
+\end{cases} \tag{H.7}
+$$
+
+This extends the [unit-spine decoder](#additive-canonical-windows-and-a-direct-descendant-decoder)
+with the higher finite boundary order21. No intermediate phase or carry
+labels are supplied. For1<=e<=3, the displayed selector table is precisely
+projection of v_s-e onto[W_(e-1,s-1)+1,W_(e,s-1)]. Translate by e*s:
+the lower endpoint increases by0 or1 as s decreases, and the upper
+endpoint decreases by0 or1, since the lower width increments are e-1
+or e and the upper increments are e or e+1. These intervals are nested.
+Their projections compose, proving(H.7). Defect preservation and zero
+second-child defects follow from(H.6). The case e0 is the previous
+nested-minimum argument. This is a direct arithmetic descendant formula,
+rather than a classification of cap4 supports by an interval.
+
+**Cap4 still has a single defective spine.** For K>=22, throughout the
+full closed gap block, Q_K(v)=4 implies that its actual selected children
+have cap defects(4,0). Thus cap4 descends along one first-child spine
+down to the finite order21 boundary, despite its noncontiguous support.
+
+**Proof.** Put W=Z_(K-1). Since Q_K(v)=4, v>Z_K. If v=W+4,
+this is the excluded upper frontier of the cap3 theorem: the prescribed
+phase has first cap4 and complementary gap3, in the zero plateau.
+The case can occur only when K!=1 mod3. Otherwise v>=W+5.
+On the captured gap graph r->v-Q_(K-1)(r), every gap r<=W maps
+above W, because its defect is at most3. For r>W, the proved shelf
+bound Q_(K-1)(r)<=max(4,r-W-1), together with r<=v, makes the
+image at least W+1. Hence every cycle lies above W and every cycle
+point has first-child cap at least4. The selected scalar identity
+4=e_1+e_2, with nonnegative child caps, forces e_1=4,e_2=0.
+The first child remains in its inherited closed block, so repeat at
+every order above21. No interval law or new finite premise is used. QED.
+
+**A periodic seed determines the cap4 selector.** Supply K,v, qualification
+Q_K(v)=4, and the lower profile Q_(K-1) on the captured gap interval.
+The seed r_0=v-4 belongs to the actual selected cycle. Iterate
+r->v-Q_(K-1)(r) from r_0 until its first return. The last gap before
+return is the actual selected gap r, so the split is F_(K-1)-r.
+
+Indeed the selected point has first cap4, so its successor gap is v-4.
+On a cycle the map is injective; two different cycle points cannot have
+the same cap, since they would have the same successor. Any scalar-valid
+cycle phase in the tail case must have first cap4 and second cap0, so
+it is unique even across cycles: each such cycle contains the same seed.
+At the exceptional two-cycle frontier its two scalar caps are3 and4,
+again giving a unique cap4 phase. This proves the decoder without a
+supplied entrance, predecessor depth or phase label. It uses at most v+1
+profile queries, with a counter and current gap occupying O(log(v+2))
+working bits. The supplied profile, order/gap and cap4 qualification costs
+are separate. Zero residual labels are the exact conditional minimum;
+the parent cap alone does not construct or certify its profile.
+
+The cap4 selected shift need not be4: independently checked examples have
+shifts8 and9, and proper two- or three-cycles. Single-defect allocation
+therefore does not imply a fixed orbit or constant-gap descent.
+For the genuinely branched obstruction and its five-cycle counterpart,
+see [defect allocation and phase information](recursive-descent.md#actual-defect-allocation-and-phase-information).
+The checker compares(H.7) with iterated shifts and actual descendants,
+tests every cap4 root in complete blocks22..30, and reconstructs its
+selected phase from the new periodic seed. The infinite conclusions follow
+from the existing cap3 shelf/selector theorem, not from these computations.
+
 ### Adjacent-gap parity closure and the entrance condition
 
 The larger-gap depth read can be closed as a finite **parity envelope**.

@@ -439,6 +439,28 @@ Fibonacci neighborhood rather than the interiors of all blocks.
 
 ### Cap-adaptive quadratic dispersion
 
+**Cap4 has a one-generation certificate despite support holes.** For K>=22
+and N=F_K-v with Q_K(v)=4, the
+[cap4 single-spine theorem](exact-collars.md#two-higher-cap-levels-and-their-phase-selected-closure)
+forces a zero-cap second child. Since v>Z_K, the zero-child bound(A.4)
+below applies immediately, giving, at inherited natural order j=K-1,
+
+$$
+v(j,N)\ge\frac{v^2}{100N^2}
+       \ge\frac1{100}\left(\frac{C(N)-G(N)}N\right)^2. \tag{A.0}
+$$
+
+The last inequality uses the global cap and G's1-Lipschitz property,
+which give C(N)-G(N)<=v. Combining the earlier cap0..3 basin bound
+with this result gives the actual selected one-step constant1/100 on
+the entire Q<=4 domain at K>=22. No cap4 interval support is assumed.
+In the cap4 tail case, every cycle readout is at most C(N), with exactly
+one equality phase. Hence cycle-restricted lower-mean policies are forced
+onto that phase, yet it already has the displayed quadratic certificate.
+The exceptional cap3 upper frontier is handled by its explicit two-cycle.
+This local rigidity differs from the unresolved high-cap scalar maxima;
+it does not establish uniform dispersion in all block interiors.
+
 Integer cap conservation extends quadratic dispersion beyond the exact
 cap-defect0..3 profiles. The number of generations now depends on the
 parent cap defect. A stopped lower envelope needs no high-cap basin or
