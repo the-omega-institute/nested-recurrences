@@ -20,6 +20,7 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 - [A saturated lower barrier and the exclusion of nearby proper cycles](#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)
 - [Every fixed positive offset eventually becomes linear](#every-fixed-positive-offset-eventually-becomes-linear)
 - [Five legal bit patterns and eventual vanishing of a local interaction](#five-legal-bit-patterns-and-eventual-vanishing-of-a-local-interaction)
+- [A persistent interaction on canonical index words](#a-persistent-interaction-on-canonical-index-words)
 
 ## 6. Exact collars propagate from two seeds
 
@@ -1400,3 +1401,118 @@ basin/depth interface answer different questions. The checker records the
 twenty lowest-window responses at orders7..26, reconstructs3125 exact
 five-pattern functions, and verifies the four high-order linear responses
 inside its existing independently checked prefix.
+
+#### A persistent interaction on canonical index words
+
+The fixed low window also has an infinite family of growing higher
+contexts with nonzero interaction. These are canonical words of the
+actual indices n, with the same higher digits in all five choices.
+
+**Persistent-interaction theorem.** For every m>=8, put
+
+$$
+t=F_m,\qquad k_m=\left\lceil\frac{3(F_m-3)}2\right\rceil,
+\qquad h_m=F_{k_m}-F_m,
+\qquad w(x)=2x_1+3x_2+5x_3.
+$$
+
+Let A=F_(k_m-1), B=F_(k_m-2), and s(x)=x_1x_3 on the five legal
+patterns. Then
+
+$$
+\boxed{C(h_m+w(x))=A-1+s(x),\qquad\kappa(h_m)=1.} \tag{I.1}
+$$
+
+All five prescribed root basins are fixed points. Their actual split and
+complementary argument are
+
+$$
+g(x)=A-t+w(x)+1-s(x),\qquad
+b(x)=B-1+s(x). \tag{I.2}
+$$
+
+Thus the split-index interaction is-1 and the complementary-index
+interaction is1, even though no root phase label is needed.
+
+**Proof of the shared canonical context.** We have k_m>=m+2. Telescoping
+F_j=F_(j+1)-F_(j-1) gives
+
+$$
+F_k-F_m=
+\begin{cases}
+F_{k-1}+F_{k-3}+\cdots+F_{m+1},&k-m\text{ even},\\
+F_{k-1}+F_{k-3}+\cdots+F_{m+2}+F_{m-1},&k-m\text{ odd}.
+\end{cases}
+$$
+
+Each sum is nonadjacent, with its lowest digit at order at least m-1>=7.
+The unit digit F_2 and the separator F_6 therefore remain0. Adding any
+of0,2,3,5,7 changes exactly the F_3,F_4,F_5 window; its digits and the
+shared higher context are nonadjacent. This is the canonical representation
+of each actual integer h_m+w(x).
+
+**Proof of the readout and root dynamics.** The choice of k_m gives
+
+$$
+L_{k_m}=t-6,\qquad k_m\not\equiv1\pmod3,
+\qquad R_{k_m}\ge2t-13\ge t.
+$$
+
+Here k_m>=27 and t>=21. The five upper-anchor gaps are
+t,t-2,t-3,t-5,t-7. The first four lie in the unit region
+L_k<v<=R_k; the joint gap t-7 lies in the zero region. The
+[unit-sublevel theorem](#the-unit-defect-sublevel-set-and-its-arithmetic-spine)
+gives (I.1). Also L_(k-1)=L_k-1 and R_k=R_(k-1)+1.
+The first four gaps lie in the fixed unit region, with shift1; the
+joint gap equals L_(k-1), with shift0. This proves that all five
+basins are fixed points and gives (I.2). QED.
+
+**Recursive persistence with inherited pattern labels.** Starting at
+n_0(x)=h_m+w(x), repeatedly take the actual first child n_(d+1)(x)=g(n_d(x)).
+For every0<=d<=k_m-19,
+
+$$
+C(n_d(x))=F_{k_m-d-1}-1+s(x). \tag{I.3}
+$$
+
+Indeed the cap defect1-s(x) is preserved on the first-child spine by
+the unit-family theorem. All second-child scalar readouts are constant
+across the five rows at each such step. Hence the interaction remains1
+throughout this marked descent, down to the finite order19 boundary.
+The labels in (I.3) are inherited root patterns; descendant integers
+need not share a literal canonical low window.
+
+If each row is normalized by its common Fibonacci cap F_(k_m-d-1),
+the interaction is1/F_(k_m-d-1). It tends to0 at the root as m grows,
+but at the moving depth d=k_m-19 it is always1/F_18=1/2584.
+This is cap normalization, rather than the different readout C(n)/n.
+Under size-biased child selection, the probability of reaching that
+first-spine terminal telescopes to n_(k_m-19)(x)/n_0(x), at most
+F_19/h_m, which tends to0. A global dispersion argument must still
+account for that decreasing path weight.
+
+**What the four training patterns determine.** On empty and singleton
+patterns s(x)=0, so their four scalar observations do not determine the
+fifth interpolation coefficient. In the model
+b(h)+a_1(h)x_1+a_2(h)x_2+a_3(h)x_3+kappa(h)s(x), every data-loss gradient
+with respect to kappa is0 on those four patterns. The recurrence proof
+determines kappa=1 for this family; those observations alone do not.
+An additive fit predicts A-1 at the joint pattern, with exact error1.
+Once a joint sample is included, holding the other four coefficients
+at their observed values gives squared loss (kappa-1)^2/2 and update
+kappa_new=(1-eta)kappa+eta. The missing coefficient becomes identifiable.
+
+Moreover, a single context-independent kappa cannot represent actual C
+on all canonical windows, even with arbitrary context-dependent baseline
+and singleton coefficients: the earlier positive-anchor family has
+kappa=0, whereas (I.1) supplies kappa=1 at infinitely many growing
+contexts. Scalar interaction, root-cycle complexity, and the conditional
+selector payload are therefore separate quantities.
+
+The first context is m=8,k=27,h=196397. Its five actual values are
+(121392,121392,121392,121392,121393). The checker independently regenerates
+throughF_27=196418 with full-orbit and Brent evaluation, checks every root
+endpoint literally, verifies the shared canonical words and all fixed
+basins, and follows the five first spines to order19. Larger arithmetic
+contexts check the telescoping identity and theorem qualifications; their
+C values are consequences of the proof, not new evaluated prefixes.
