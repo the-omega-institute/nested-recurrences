@@ -15,6 +15,7 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 - [Size-biased martingales and the four-generation dispersion criterion](#size-biased-martingales-and-the-four-generation-dispersion-criterion)
 - [A phase-free lower bound from the prescribed basin](#a-phase-free-lower-bound-from-the-prescribed-basin)
 - [Quadratic basin dispersion in the unit-defect family](#quadratic-basin-dispersion-in-the-unit-defect-family)
+- [Cap-adaptive quadratic dispersion](#cap-adaptive-quadratic-dispersion)
 - [Diophantine dispersion in cube-root Fibonacci neighborhoods](#diophantine-dispersion-in-cube-root-fibonacci-neighborhoods)
 - [Additive dispersion policies without orbit qualification](#additive-dispersion-policies-without-orbit-qualification)
 - [Finite prefixes and exact collars do not force convergence](#finite-prefixes-and-exact-collars-do-not-force-convergence)
@@ -394,6 +395,178 @@ so the
 proportional-split cancellation of M cannot occur. In wider blocks,
 large complementary gaps can approach that cancellation ratio; controlling
 their accumulated variance still requires new actual-profile restrictions.
+
+### Cap-adaptive quadratic dispersion
+
+Integer cap conservation extends quadratic dispersion beyond the exact
+cap-defect0..3 profiles. The number of generations now depends on the
+parent cap defect. A stopped lower envelope needs no high-cap basin or
+depth-selection information: it allows every scalar-valid geometric split
+until reaching a zero-child split or the arithmetic low-cap family.
+
+**Theorem.** Let N=F_k-v, 0<=v<=F_(k-2), and put
+e=Q_k(v)=F_(k-1)-C(N). Set
+
+$$
+t(e)=\max(1,e-2),\qquad K(e)=22+2\max(0,e-3).
+$$
+
+For k>=K(e), actual selected descent with inherited natural label k-1
+satisfies
+
+$$
+\boxed{V_{t(e)}(k-1,N)\ge\frac1{100}\left(\frac vN\right)^2
+                 \ge\frac1{100}\left(\frac{C(N)-G(N)}N\right)^2.}
+\tag{A.1}
+$$
+
+Thus for every fixed cap bound m>=0, horizon max(1,m-2) suffices
+at k>=22+2max(0,m-3), on the entire cap sublevel, including holes.
+In particular,
+
+$$
+k\ge28,\quad Q_k(v)\le6
+\quad\Longrightarrow\quad
+V_4(k-1,N)\ge\frac1{100}\left(\frac{C(N)-G(N)}N\right)^2.
+\tag{A.2}
+$$
+
+This also gives the quartic sufficient inequality on that sublevel.
+It does not establish a fixed-horizon bound at unbounded cap defects,
+or a global convergence or decay rate.
+
+**A local bound when a child cap is zero.** At any order h>=22 put
+A=F_(h-1), B=F_(h-2), H=F_(h-3), and write a=A-r, b=B-q,
+where r+q=u and N'=F_h-u. A geometrically valid split has both
+children in their inherited closed blocks. Suppose it preserves the
+actual scalar sum and at least one child cap defect is zero.
+
+If u<=Z_h=3h+floor((h-1)/3)-24 and the split is in the prescribed
+basin, the earlier cap-defect0..3 theorem already gives
+v(h-1,N';a)>=u^2/(25N'^2). For u>Z_h no basin assumption is needed.
+The exact zero-support law places a zero-cap first-child gap at
+r<=L_(h-1), or a zero-cap second-child gap at q<=L_(h-2), where
+L_s=floor(2s/3)-3. Direct integer arithmetic gives
+
+$$
+Z_h+1\ge4L_{h-1}+4\qquad(h\ge22).
+\tag{A.3}
+$$
+
+Indeed, writing h=3s,3s+1,3s+2, the difference between the two
+sides is respectively 2s-12,2s-12,2s-9, all nonnegative in this range.
+Thus the zero child's gap is at most(u-4)/4. The variance numerator is
+
+$$
+M=Bb-Ha=(-1)^{h-1}+Hu-Aq
+             =(-1)^{h-1}-Bu+Ar.
+$$
+
+Use H<=B<=2H, A<=3H and N'<=5H. If q is the zero-cap gap,
+M>=Hu-3Hq-1>=Hu/4. If r is the zero-cap gap,
+M<=1-Hu+3Hr<=-Hu/4. Since ab<=N'^2/4,
+
+$$
+v(h-1,N';a)=\frac{M^2}{N'^2ab}
+\ge\frac{u^2}{100N'^2}.
+\tag{A.4}
+$$
+
+For a parent cap e>3, the exact sublevel theorem forces u>Z_h;
+therefore every scalar-valid zero-child split obeys (A.4). At e<=3,
+use any phase of the arithmetic prescribed basin and the earlier
+stronger bound. These are the two stopping cases.
+
+**Integer branching gives a finite stopping frontier.** Actual child
+cap defects e_1,e_2 are nonnegative integers with e_1+e_2=e.
+Stop at a node of cap at most3, or at a split with a zero-cap child,
+and include its one-step variance. Before stopping, both child caps
+are positive, so each is at most e-1. Starting at cap e>3, every path
+therefore stops at depth at most e-3 and makes at most e-2 splits.
+For e<=3 it makes one split. The order drops by at most two per
+generation, so k>=K(e) keeps every stopping node at order at least22.
+
+The upper-anchor gap ratio Y=u/N' is itself an exact martingale:
+
+$$
+\frac a{N'}\frac ra+\frac b{N'}\frac qb=\frac u{N'}.
+\tag{A.5}
+$$
+
+Let w_l be the size-biased probability of a stopping node and
+Y_l its gap ratio before its final split. This bounded-depth frontier
+has sum_l w_l=1 and sum_l w_lY_l=v/N. By (A.4) and the low-cap
+bound, its total expected final-step variance is at least
+
+$$
+\frac1{100}\sum_l w_lY_l^2
+\ge\frac1{100}\left(\frac vN\right)^2.
+$$
+
+Earlier conditional variances are nonnegative. The stopped sum is
+therefore bounded above by V_t(e), proving the first inequality in
+(A.1). The global cap and the 1-Lipschitz G give
+0<=C(N)-G(N)<=G(F_k)-G(F_k-v)<=v, proving the second. QED.
+The gap martingale uses the upper anchors, while V uses the previously
+defined natural-anchor martingale X. Their inherited labels must both
+be preserved; no endpoint recanonicalization is made.
+
+**A sufficient interface without high-cap orbit qualification.** The
+same proof applies to a larger stopped class. At cap e>3 allow every
+geometric split satisfying C(a)+C(b)=C(N'), regardless of whether it
+is periodic or in the prescribed basin. Stop if a child cap is zero;
+otherwise recurse into both children. At cap e<=3 use any phase of
+the arithmetic prescribed basin, take one variance step and stop.
+Its scalar readout need not equal C(N') at this final step: cap
+conservation is only used before this stopping case, and (A.5) remains
+true for the final geometric split.
+
+The exact minimum A(h,N') over this class obeys the same lower bound.
+This can also be proved by induction on e: a zero-child option uses
+(A.4); a two-positive-child option uses the two inductive bounds and
+the weighted-square inequality in (A.5). The low-cap arithmetic kernel
+starts the induction. Evaluating every minimum at the actual selected
+split shows
+
+$$
+\frac1{100}(u/N')^2\le\mathcal A(h,N')
+\le V_{t(e)}(h-1,N').
+\tag{A.6}
+$$
+
+The minimum permits independent choices at repeated occurrences; a
+globally shared actual selector is included in this larger class. No
+high-cap predecessor, exterior entrance, cycle or phase certificate is
+needed for this dispersion contract. Actual scalar values, geometric
+child blocks, cap conservation and the proved low-cap basin kernel
+remain required. This relaxation does not reconstruct the original
+selected children or settle their full minimum interface. Campbell's
+nonadditive recurrence does not have this integer two-child cap flow;
+its modular endpoint interface remains the relevant comparison.
+
+The [checker](verification/collar_check.py) computes the stopped minimum
+over all scalar-valid geometric high-cap options at qualifying roots,
+checks the arithmetic low-cap kernel against full inner orbits, and
+compares the envelope with exact actual accumulated variance. Literal
+prescribed-depth witnesses independently check the selected splits.
+The infinite argument adds no new finite sequence premise; it inherits
+the established cap conservation, zero-support and cap0..3 theorems.
+
+The exact finite audit covers821 qualifying roots at orders22..30,
+with22397 geometric candidate tests,5949 zero-child stopping options
+and5416 two-positive-child options. Its567 low-cap contexts are checked
+against full inner graphs. The minimum envelope ratio to(v/N)^2 is
+49874948929/740731548887, at k26,v73,N121320; this finite minimum
+is above1/100 but is not claimed as a uniform best constant.
+Among the minimizing high-cap choices,247 are nonperiodic points of
+the inner map. At N46312 the relaxed minimizing split is28625,
+while the actual split is28604. This verifies that the envelope does
+not quietly retain high-cap periodicity or basin qualification.
+The finite qualifying roots have cap defects0,1,2,3,4,7; there are
+no qualifying cap5/6 witnesses in this range. The theorem for those
+levels follows from the general integer induction, not numerical
+examples. Two selected high-cap witnesses are checked by542875 literal
+updates; full-orbit and Brent prefixes agree through832074.
 
 ### Diophantine dispersion in cube-root Fibonacci neighborhoods
 

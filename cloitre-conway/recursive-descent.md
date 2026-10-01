@@ -228,6 +228,16 @@ The right side is O(mk^2/F_k). The conclusion also holds for growing
 m=m_k whenever m_k k^2=o(F_k). This is a consequence for bounded
 cap sublevels, not a proof that the full sequence stays in such levels.
 
+Integer conservation in (C.2) has a separate
+[dispersion consequence](dispersion.md#cap-adaptive-quadratic-dispersion).
+Before encountering a zero-cap child or cap at most3, both positive
+child caps are strictly smaller than the parent. A stopped lower envelope
+therefore reaches the arithmetic low-cap kernel in a cap-dependent
+number of generations. It proves a quadratic bound, allowing every
+scalar-valid geometric high-cap split without entrance or phase data.
+This sufficient information for dispersion does not select the actual
+child indices required by the decoder below.
+
 **A compact local selector interface.** For sufficiently high k at
 fixed m, mP_k<=F_(k-4). Let K(m) be the first k>=11 satisfying
 this inequality; it then persists. Indeed P_(k+1)<=3P_k/2,

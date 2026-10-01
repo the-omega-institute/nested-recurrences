@@ -47,6 +47,9 @@ indices, and then establish a decay rate.
    uniform dispersion inequality is still open.
    Phase-free bounds hold in the exact small-defect family and throughout
    [cube-root Fibonacci neighborhoods](dispersion.md#diophantine-dispersion-in-cube-root-fibonacci-neighborhoods).
+   [Integer cap flow](dispersion.md#cap-adaptive-quadratic-dispersion) also
+   gives a quadratic bound at a cap-dependent horizon, with four generations
+   sufficient for cap defects at most6.
 
 All notes can be read in your browser, without installing software.
 The programs and JSON files are optional evidence, not part of this route.
@@ -67,6 +70,7 @@ Choose the topic you need; there is no need to read every note in order.
 | Where can a bounded cap defect occur, and what selects its children? | [Cap budget and local interface](recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level) | Exact zero plateau; certified exterior entrance |
 | Can a certified local selector be decoded without large Fibonacci registers? | [Modular symbolic decoder](recursive-descent.md#a-modular-symbolic-selector-with-small-working-memory) | Read-only profiles; actual predecessor and certified entrance |
 | What would prove a global decay rate, and why are static collars insufficient? | [Martingales and dispersion](dispersion.md) | Profile identity and additive child blocks |
+| Can dispersion be certified without high-cap entrance or phase information? | [Cap-adaptive stopping envelope](dispersion.md#cap-adaptive-quadratic-dispersion) | Integer cap conservation; exact zero support; arithmetic cap0..3 basins |
 | How much autonomous memory does canonical five-window recognition require? | [Cloitre bounded-cap graphs](five-window-closure.md#exact-state-bit-order-for-every-bounded-cap-graph) · [Cap diagnostic](five-window-closure.md#autonomous-memory-of-the-actual-top-plateau-diagnostic) · [Campbell scale memory](../campbell/scale-memory.md) | Quadratic cap budget; moving zero plateau; Campbell's explicit formula |
 | When does a canonical window have a persistent feature interaction? | [Cloitre family](exact-collars.md#a-persistent-interaction-on-canonical-index-words) · [Campbell comparison](../campbell/scale-memory.md#five-pattern-interaction-on-ternary-scale-interiors) | Unit-defect arithmetic descent; ternary formula |
 | What arithmetic supports the global induction and shifted-family tests? | [Supporting arithmetic and audit](landing.md) | Foundations |
