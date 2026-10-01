@@ -103,9 +103,14 @@ def collision_pair_completeness_examples():
                     words_checked += 1
                 direct = {alpha: words for alpha, words in direct.items() if len(words) > 1}
                 assert alpha_collision_fibers(sets, profile) == direct
+                allowed = [tuple(value for value in values if (value + phase) % 2 == 0)
+                           for phase in range(length)]
+                assert minimum_gap_tests(sets, profile, allowed, scale) == minimum_periodicity_tests(
+                    direct, allowed)
                 contexts += 1
-    return dict(contexts=contexts, cartesian_words=words_checked, window_lengths=[1, 2, 3, 5],
-                scope='Exhaustive small shared capped profiles, independently comparing the closed pair-path algorithm with direct Cartesian alpha fibers.')
+    return dict(contexts=contexts, cartesian_words=words_checked, gap_qualification_contexts=contexts,
+                window_lengths=[1, 2, 3, 5],
+                scope='Exhaustive small shared capped profiles: direct Cartesian fibers match pair paths, and the two gap-quotient qualification minima match collision-mask minima for alternating-value qualifications.')
 
 
 def minimum_periodicity_tests(fibers, periodic):
@@ -127,6 +132,171 @@ def minimum_periodicity_tests(fibers, periodic):
                 result[label] = dict(minimum=size, coordinates=[list(subset) for subset in good])
                 break
     return result
+
+
+def gap_transitions(values, profile, bound, allowed=(), mode='raw'):
+    admitted = set(allowed)
+    transitions = defaultdict(set)
+    for first in values:
+        if mode != 'raw' and first not in admitted:
+            continue
+        for second in values:
+            if mode == 'both' and second not in admitted:
+                continue
+            gap = second - first
+            following = profile[first] - profile[second]
+            if 0 < abs(gap) <= bound and 0 < abs(following) <= bound:
+                transitions[gap].add(following)
+    return dict(transitions)
+
+
+def closed_gap_paths(transitions, bound):
+    result = {}
+    for start in sorted(transitions[0]):
+        if not start or abs(start) > bound:
+            continue
+        paths = {start: (start,)}
+        for relation in transitions:
+            following_paths = {}
+            for point, path in sorted(paths.items()):
+                for following in sorted(relation.get(point, ())):
+                    following_paths.setdefault(following, (*path, following))
+            paths = following_paths
+        if start in paths:
+            result[start] = paths[start]
+    return result
+
+
+def minimum_gap_tests(sets, profile, periodic, bound):
+    raw = [gap_transitions(values, profile, bound) for values in sets]
+    result = {}
+    for label, mode in (('raw_unique', 'first'), ('restricted_injective', 'both')):
+        qualified = [gap_transitions(values, profile, bound, allowed, mode)
+                     for values, allowed in zip(sets, periodic)]
+        result[label] = dict(minimum=None, coordinates=[])
+        for size in range(len(sets) + 1):
+            good = []
+            for coordinates in combinations(range(len(sets)), size):
+                relations = [qualified[phase] if phase in coordinates else relation
+                             for phase, relation in enumerate(raw)]
+                if not closed_gap_paths(relations, bound):
+                    good.append(list(coordinates))
+            if good:
+                result[label] = dict(minimum=size, coordinates=good)
+                break
+    return result
+
+
+def gap_automaton_certificate(sets, profile, periodic, defects, expected):
+    bound = sum(defects) // 2
+    assert all(0 <= split - profile[split] <= defect
+               for values, defect in zip(sets, defects) for split in values)
+    assert minimum_gap_tests(sets, profile, periodic, bound) == expected
+    raw = [gap_transitions(values, profile, bound) for values in sets]
+    both = [gap_transitions(values, profile, bound, allowed, 'both')
+            for values, allowed in zip(sets, periodic)]
+    first = [gap_transitions(values, profile, bound, allowed, 'first')
+             for values, allowed in zip(sets, periodic)]
+    paths = closed_gap_paths(raw, bound)
+    certificates = []
+    for label, qualified in (('raw_unique', first), ('restricted_injective', both)):
+        for coordinates in expected[label]['coordinates']:
+            relations = [qualified[phase] if phase in coordinates else relation
+                         for phase, relation in enumerate(raw)]
+            assert closed_gap_paths(relations, bound) == {}
+            certificates.append(dict(claim=label, coordinates=coordinates, closed_paths=0))
+    start = next(point for point in sorted(paths) if point > 0)
+    gap_path = paths[start]
+    left, right = [], []
+    for values, gap, following in zip(sets, gap_path, gap_path[1:]):
+        pair = next((first, second) for first in values for second in values
+                    if second - first == gap and profile[first] - profile[second] == following)
+        left.append(pair[0])
+        right.append(pair[1])
+    alpha = tuple(left[(phase + 1) % len(sets)] + profile[left[phase]]
+                  for phase in range(len(sets)))
+    assert alpha == tuple(right[(phase + 1) % len(sets)] + profile[right[phase]]
+                          for phase in range(len(sets)))
+    return dict(defect_sum=sum(defects), absolute_gap_bound=bound,
+                signed_state_capacity=2 * bound,
+                raw_edge_counts=[sum(map(len, relation.values())) for relation in raw],
+                both_periodic_edge_counts=[sum(map(len, relation.values())) for relation in both],
+                first_periodic_edge_counts=[sum(map(len, relation.values())) for relation in first],
+                raw_closed_start_gaps=sorted(paths), qualification_certificates=certificates,
+                reconstructed_collision=dict(gap_path=list(gap_path), left=left, right=right,
+                                              alpha=list(alpha)),
+                scope='Exact signed-gap quotient and reverse reconstruction. Odd defect boxes bound every collision gap; qualified matrix products have empty diagonal. This certifies inverse properties without enumerating alpha fibers, but its state budget is context-dependent.')
+
+
+def primitive_cycle_defect_cost(sequence):
+    sharp_examples = []
+    for length in range(3, 13):
+        half = length // 2
+        for parity in (0, 1):
+            scale = 4 * length + parity
+            if length % 2 and parity:
+                centred = [value for positive in range(1, length, 2)
+                           for value in (positive, -positive)] + [length]
+            elif length % 2:
+                centred = [value for positive in range(2 * half, 0, -2)
+                           for value in (-positive, positive)] + [2 * half + 2]
+            else:
+                centred = [value for positive in range(length - 1, 1, -2)
+                           for value in (-positive, positive)] + [-1, length + 1]
+                if not parity:
+                    centred = [value + (1 if value > 0 else -1) for value in centred]
+            offsets = [(scale + value) // 2 for value in centred]
+            assert len(offsets) == length and len(set(offsets)) == length
+            assert all((scale + value) % 2 == 0 for value in centred)
+            profile = list(range(scale + 1))
+            for phase, offset in enumerate(offsets):
+                profile[offset] = scale - offsets[(phase + 1) % length]
+            assert all(0 <= value <= point for point, value in enumerate(profile))
+            defects = [offset - profile[offset] for offset in offsets]
+            expected = length + (length % 2 and not parity)
+            assert sum(defects) == expected
+            ordered = sorted(offsets)
+            assert all(ordered[position - 1] + ordered[length - position - 1] >= scale
+                       for position in range(1, (length - 1) // 2 + 1))
+            assert all(scale - profile[offset] == offsets[(phase + 1) % length]
+                       for phase, offset in enumerate(offsets))
+            sharp_examples.append(dict(period=length, scale_parity=parity,
+                                       attained_defect_sum=sum(defects)))
+    checked = 0
+    period_histogram = Counter()
+    minimum = None
+    fibonacci = fibonacci_values(len(sequence) + 1)
+    order = 6
+    for index in range(8, len(sequence)):
+        while fibonacci[order + 1] <= index:
+            order += 1
+        trajectory, transient, period = full_orbit(sequence, index)
+        if period < 3:
+            continue
+        scale = index - fibonacci[order]
+        anchor = fibonacci[order - 1]
+        offsets = [point - anchor for point in trajectory[transient:]]
+        defects = [offset + offsets[(phase + 1) % period] - scale
+                   for phase, offset in enumerate(offsets)]
+        assert min(defects) >= 0
+        total = sum(defects)
+        assert total >= period + (period % 2 and scale % 2 == 0)
+        ordered = sorted(offsets)
+        assert all(ordered[position - 1] + ordered[period - position - 1] >= scale
+                   for position in range(1, (period - 1) // 2 + 1))
+        checked += 1
+        period_histogram[period] += 1
+        ratio = Fraction(total, period)
+        if minimum is None or ratio < Fraction(minimum['defect_sum'], minimum['period']):
+            minimum = dict(index=index, period=period, offset=scale,
+                           cycle_offsets=offsets, defect_sum=total)
+    return dict(abstract_sharp_contexts=sharp_examples,
+                selected_conway_indices=[8, len(sequence) - 1],
+                selected_cycles_of_period_at_least_three=checked,
+                period_histogram=dict(sorted(period_histogram.items())),
+                minimum_observed_mean_defect=minimum,
+                bound='sum(e_i)>=period for every proper cycle of period>=3; odd period and even offset require at least period+1',
+                scope='General sorted-vertex cut proof. Sharpness examples are capped abstract profiles, not C instances; selected C cycles are finite corroboration.')
 
 
 def periodic_pivot_witnesses():
@@ -163,12 +333,30 @@ def periodic_pivot_witnesses():
                   if projections[phase].isdisjoint(periodic[phase])]
         assert pivots == ([3] if index == 11342 else [])
         tests = minimum_periodicity_tests(fibers, periodic)
+        defects = [lower + offset - sequence[anchor + offset] for offset in offsets]
+        gap_certificate = gap_automaton_certificate(sets, profile, periodic, defects, tests)
         if index == 11342:
             assert tests['raw_unique'] == dict(minimum=1, coordinates=[[3]])
             assert tests['restricted_injective'] == dict(minimum=1, coordinates=[[3], [4]])
         else:
             assert tests['raw_unique'] == dict(minimum=2, coordinates=[[1, 3]])
             assert tests['restricted_injective'] == dict(minimum=1, coordinates=[[1]])
+            assert periodic[1] == (17, 24, 25)
+            pivot_relation = gap_transitions(sets[1], profile, 4, periodic[1], 'both')
+            assert pivot_relation == {-1: {1}, 1: {-1}}
+            unit_relations = []
+            for phase in (2, 3, 4):
+                relation = gap_transitions(sets[phase], profile, 4)
+                assert relation[-1] == {1} and relation[1] == {-1}
+                unit_relations.append(dict(position=phase, negative_gap_outputs=[1],
+                                           positive_gap_outputs=[-1]))
+            first_relation = gap_transitions(sets[0], profile, 4)
+            assert first_relation[1] == {-2, -1} and first_relation[-1] == {1, 2}
+            gap_certificate['hand_check'] = dict(pivot=1, periodic_candidates=list(periodic[1]),
+                                                 qualified_pivot_edges=[[-1, 1], [1, -1]],
+                                                 successor_unit_edges=unit_relations,
+                                                 final_positive_gap_outputs=[-2, -1],
+                                                 final_negative_gap_outputs=[1, 2])
         selected = tuple(selected_splits[anchor + offset] - lower for offset in offsets)
         selected_alpha = tuple(selected[(phase + 1) % 5] + profile[selected[phase]]
                                for phase in range(5))
@@ -212,8 +400,10 @@ def periodic_pivot_witnesses():
                            actual_word=list(selected),
                            selected_alpha=list(selected_alpha), sample_alpha=list(sample_alpha),
                            sample_fiber=[list(word) for word in sample], sample_periodicity=flags,
-                           one_test_raw_competitor=raw_competitor))
-    return dict(contexts=result, qualification='Minimum coordinate counts distinguish injectivity after the periodicity restrictions from the stronger raw-image uniqueness. The n=28996 context needs one check for the former and two for the latter; four other periodic coordinates still leave a collision. The two contexts together rule out any single fixed coordinate for restricted injectivity. Universal bounded adaptive-test existence for C remains open.')
+                           one_test_raw_competitor=raw_competitor,
+                           gap_automaton=gap_certificate))
+    return dict(contexts=result, primitive_cycle_defect_cost=primitive_cycle_defect_cost(sequence),
+                qualification='Minimum coordinate counts distinguish injectivity after the periodicity restrictions from the stronger raw-image uniqueness. The n=28996 context needs one check for the former and two for the latter; four other periodic coordinates still leave a collision. The two contexts together rule out any single fixed coordinate for restricted injectivity. Universal bounded adaptive-test existence for C remains open.')
 
 
 def defect_seed_interval(alpha, defects):

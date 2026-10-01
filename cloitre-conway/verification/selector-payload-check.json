@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_sha256": "c77ecc455bf0ad38da78f239bb5a76f9c67e64f7ac8e33d087c24dd18ea05ba2",
+  "source_sha256": "5667c258754f8364d1b3d73e0e6b4f094144b3a074bab61f609c3258ee01477a",
   "scope": "Exact public three-block selector audit; row-local Cartesian independence is checked, while lower-window closure constraints remain separate.",
   "period_five_payloads": 13,
   "parent_rows": 65,
@@ -349,13 +349,14 @@
   "collision_pair_completeness": {
     "contexts": 132,
     "cartesian_words": 28380,
+    "gap_qualification_contexts": 132,
     "window_lengths": [
       1,
       2,
       3,
       5
     ],
-    "scope": "Exhaustive small shared capped profiles, independently comparing the closed pair-path algorithm with direct Cartesian alpha fibers."
+    "scope": "Exhaustive small shared capped profiles: direct Cartesian fibers match pair paths, and the two gap-quotient qualification minima match collision-mask minima for alternating-value qualifications."
   },
   "periodic_pivot_witnesses": {
     "contexts": [
@@ -457,7 +458,100 @@
             true
           ]
         ],
-        "one_test_raw_competitor": null
+        "one_test_raw_competitor": null,
+        "gap_automaton": {
+          "defect_sum": 28,
+          "absolute_gap_bound": 14,
+          "signed_state_capacity": 28,
+          "raw_edge_counts": [
+            70,
+            84,
+            56,
+            52,
+            84
+          ],
+          "both_periodic_edge_counts": [
+            4,
+            16,
+            2,
+            0,
+            0
+          ],
+          "first_periodic_edge_counts": [
+            22,
+            32,
+            17,
+            5,
+            14
+          ],
+          "raw_closed_start_gaps": [
+            -6,
+            -4,
+            -3,
+            -2,
+            -1,
+            1,
+            2,
+            3,
+            4,
+            6
+          ],
+          "qualification_certificates": [
+            {
+              "claim": "raw_unique",
+              "coordinates": [
+                3
+              ],
+              "closed_paths": 0
+            },
+            {
+              "claim": "restricted_injective",
+              "coordinates": [
+                3
+              ],
+              "closed_paths": 0
+            },
+            {
+              "claim": "restricted_injective",
+              "coordinates": [
+                4
+              ],
+              "closed_paths": 0
+            }
+          ],
+          "reconstructed_collision": {
+            "gap_path": [
+              1,
+              -1,
+              1,
+              1,
+              -2,
+              1
+            ],
+            "left": [
+              58,
+              110,
+              79,
+              131,
+              124
+            ],
+            "right": [
+              59,
+              109,
+              80,
+              132,
+              122
+            ],
+            "alpha": [
+              168,
+              188,
+              210,
+              247,
+              176
+            ]
+          },
+          "scope": "Exact signed-gap quotient and reverse reconstruction. Odd defect boxes bound every collision gap; qualified matrix products have empty diagonal. This certifies inverse properties without enumerating alpha fibers, but its state budget is context-dependent."
+        }
       },
       {
         "index": 28996,
@@ -593,9 +687,294 @@
               true
             ]
           ]
+        },
+        "gap_automaton": {
+          "defect_sum": 9,
+          "absolute_gap_bound": 4,
+          "signed_state_capacity": 8,
+          "raw_edge_counts": [
+            16,
+            12,
+            8,
+            10,
+            8
+          ],
+          "both_periodic_edge_counts": [
+            12,
+            2,
+            8,
+            2,
+            8
+          ],
+          "first_periodic_edge_counts": [
+            14,
+            6,
+            8,
+            6,
+            8
+          ],
+          "raw_closed_start_gaps": [
+            -1,
+            1
+          ],
+          "qualification_certificates": [
+            {
+              "claim": "raw_unique",
+              "coordinates": [
+                1,
+                3
+              ],
+              "closed_paths": 0
+            },
+            {
+              "claim": "restricted_injective",
+              "coordinates": [
+                1
+              ],
+              "closed_paths": 0
+            }
+          ],
+          "reconstructed_collision": {
+            "gap_path": [
+              1,
+              -2,
+              2,
+              -2,
+              -1,
+              1
+            ],
+            "left": [
+              57,
+              25,
+              88,
+              45,
+              56
+            ],
+            "right": [
+              58,
+              23,
+              90,
+              43,
+              55
+            ],
+            "alpha": [
+              81,
+              113,
+              133,
+              98,
+              113
+            ]
+          },
+          "scope": "Exact signed-gap quotient and reverse reconstruction. Odd defect boxes bound every collision gap; qualified matrix products have empty diagonal. This certifies inverse properties without enumerating alpha fibers, but its state budget is context-dependent.",
+          "hand_check": {
+            "pivot": 1,
+            "periodic_candidates": [
+              17,
+              24,
+              25
+            ],
+            "qualified_pivot_edges": [
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                -1
+              ]
+            ],
+            "successor_unit_edges": [
+              {
+                "position": 2,
+                "negative_gap_outputs": [
+                  1
+                ],
+                "positive_gap_outputs": [
+                  -1
+                ]
+              },
+              {
+                "position": 3,
+                "negative_gap_outputs": [
+                  1
+                ],
+                "positive_gap_outputs": [
+                  -1
+                ]
+              },
+              {
+                "position": 4,
+                "negative_gap_outputs": [
+                  1
+                ],
+                "positive_gap_outputs": [
+                  -1
+                ]
+              }
+            ],
+            "final_positive_gap_outputs": [
+              -2,
+              -1
+            ],
+            "final_negative_gap_outputs": [
+              1,
+              2
+            ]
+          }
         }
       }
     ],
+    "primitive_cycle_defect_cost": {
+      "abstract_sharp_contexts": [
+        {
+          "period": 3,
+          "scale_parity": 0,
+          "attained_defect_sum": 4
+        },
+        {
+          "period": 3,
+          "scale_parity": 1,
+          "attained_defect_sum": 3
+        },
+        {
+          "period": 4,
+          "scale_parity": 0,
+          "attained_defect_sum": 4
+        },
+        {
+          "period": 4,
+          "scale_parity": 1,
+          "attained_defect_sum": 4
+        },
+        {
+          "period": 5,
+          "scale_parity": 0,
+          "attained_defect_sum": 6
+        },
+        {
+          "period": 5,
+          "scale_parity": 1,
+          "attained_defect_sum": 5
+        },
+        {
+          "period": 6,
+          "scale_parity": 0,
+          "attained_defect_sum": 6
+        },
+        {
+          "period": 6,
+          "scale_parity": 1,
+          "attained_defect_sum": 6
+        },
+        {
+          "period": 7,
+          "scale_parity": 0,
+          "attained_defect_sum": 8
+        },
+        {
+          "period": 7,
+          "scale_parity": 1,
+          "attained_defect_sum": 7
+        },
+        {
+          "period": 8,
+          "scale_parity": 0,
+          "attained_defect_sum": 8
+        },
+        {
+          "period": 8,
+          "scale_parity": 1,
+          "attained_defect_sum": 8
+        },
+        {
+          "period": 9,
+          "scale_parity": 0,
+          "attained_defect_sum": 10
+        },
+        {
+          "period": 9,
+          "scale_parity": 1,
+          "attained_defect_sum": 9
+        },
+        {
+          "period": 10,
+          "scale_parity": 0,
+          "attained_defect_sum": 10
+        },
+        {
+          "period": 10,
+          "scale_parity": 1,
+          "attained_defect_sum": 10
+        },
+        {
+          "period": 11,
+          "scale_parity": 0,
+          "attained_defect_sum": 12
+        },
+        {
+          "period": 11,
+          "scale_parity": 1,
+          "attained_defect_sum": 11
+        },
+        {
+          "period": 12,
+          "scale_parity": 0,
+          "attained_defect_sum": 12
+        },
+        {
+          "period": 12,
+          "scale_parity": 1,
+          "attained_defect_sum": 12
+        }
+      ],
+      "selected_conway_indices": [
+        8,
+        28996
+      ],
+      "selected_cycles_of_period_at_least_three": 13505,
+      "period_histogram": {
+        "3": 2445,
+        "4": 3517,
+        "5": 1576,
+        "6": 1837,
+        "7": 918,
+        "8": 910,
+        "9": 523,
+        "10": 557,
+        "11": 323,
+        "12": 265,
+        "13": 172,
+        "14": 159,
+        "15": 90,
+        "16": 78,
+        "17": 48,
+        "18": 31,
+        "19": 19,
+        "20": 8,
+        "21": 8,
+        "22": 8,
+        "23": 3,
+        "24": 3,
+        "25": 1,
+        "26": 3,
+        "28": 1,
+        "30": 2
+      },
+      "minimum_observed_mean_defect": {
+        "index": 68,
+        "period": 4,
+        "offset": 13,
+        "cycle_offsets": [
+          9,
+          6,
+          8,
+          5
+        ],
+        "defect_sum": 4
+      },
+      "bound": "sum(e_i)>=period for every proper cycle of period>=3; odd period and even offset require at least period+1",
+      "scope": "General sorted-vertex cut proof. Sharpness examples are capped abstract profiles, not C instances; selected C cycles are finite corroboration."
+    },
     "qualification": "Minimum coordinate counts distinguish injectivity after the periodicity restrictions from the stronger raw-image uniqueness. The n=28996 context needs one check for the former and two for the latter; four other periodic coordinates still leave a collision. The two contexts together rule out any single fixed coordinate for restricted injectivity. Universal bounded adaptive-test existence for C remains open."
   },
   "affine_parameter_rank": {

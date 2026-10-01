@@ -1303,3 +1303,149 @@ uniform adaptive qualification bound from the recursive Fibonacci profiles
 remains open. Campbell's endpoint templates determine his basin and phase
 from the arithmetic family; here the missing family theorem is now separated
 from the exact conditional inverse test.
+
+### A bounded gap automaton with reverse completeness
+
+The collision test has an exact quotient that does not enumerate alpha fibers.
+For a finite window of length p, define a directed relation at position i:
+
+```text
+d -> v   if there are r,s in R_i with
+d=s-r != 0 and v=H_i(r)-H_i(s) != 0.
+```
+
+**Gap theorem.** There is a nontrivial alpha collision exactly when these p
+relations admit a closed layered walk `d_0 -> ... -> d_p=d_0`.
+
+**Proof.** A collision gives differences `d_i=s_i-r_i`. If one difference
+were zero, its alpha equation would force the next to be zero, and repeating
+around the window would make the two words equal. Thus every difference is
+nonzero. Subtracting the alpha equations gives
+`d_(i+1)=H_i(r_i)-H_i(s_i)`, hence the walk.
+Conversely, choose an ordered witness pair `(r_i,s_i)` independently for each
+edge of a closed walk. The paired differences then satisfy
+
+```text
+s_(i+1)-r_(i+1) = H_i(r_i)-H_i(s_i).
+```
+
+Thus `s_(i+1)+H_i(s_i)=r_(i+1)+H_i(r_i)` at every position, including the
+closing edge. The chosen words have equal alpha and distinct coordinates.
+This proves reverse completeness; the quotient creates no false collisions.
+It uses the raw Cartesian candidate context. Additional cross-row constraints
+would have to be incorporated before applying the reverse implication. QED.
+
+For odd p under the defect boxes, put `E=sum(e_i)` and `D=floor(E/2)`.
+The rotated seed intervals (9.1) contain both seeds of any collision and have
+diameter at most D. Therefore every collision satisfies `0<|d_i|<=D`.
+Keep only the common signed-gap alphabet
+
+```text
+G = {-D,...,-1,1,...,D}.
+```
+
+There are at most 2D gap states per layer, independently of the number of
+Cartesian words. Restricting both ends of every edge to G preserves every
+collision. On this alphabet form the Boolean transfer matrices M_i. The
+alpha map is injective exactly when the product `M_0*...*M_(p-1)` has empty
+diagonal, with matrix multiplication over the Boolean semiring. When D=0
+there are no nonzero gap states and the inverse is already unique.
+
+The minimum-qualification criteria above can be checked on the same graph:
+
+- At a tested position, require **both** edge-witness coordinates to be
+  periodic to test injectivity after qualifications.
+- Require only the **first** coordinate to be periodic to test whether any
+  retained word still has a raw competitor. Signed gaps keep track of which
+  word is marked; this relation need not be symmetric under `d -> -d`.
+
+The corresponding product must have empty diagonal. Testing the 32 subsets
+of a five-window gives the exact minimum without computing the raw fibers.
+The graph tests all alpha images simultaneously; it does not by itself decode
+a specified alpha. After certification, use the seed reconstruction. Its
+state bound and the profile/periodicity data remain context-dependent, so
+this is not a global finite alphabet for C.
+
+This is the reusable reverse-completeness step of the Trureturing period-five
+classification: obtain exact legal edges and prove that every closed code
+reconstructs the object being tested. Here the object is a collision pair,
+and the alphabet consists of signed integer differences, rather than the
+three global Tribonacci gap types. No identity between the two systems is
+assumed. In an identity profile every edge is `d -> -d`: odd length cannot
+close at a nonzero gap, while even length can. The zero-defect even-window
+example therefore still requires family information, which Campbell's
+endpoint templates provide in his recurrence.
+
+For n=28996, the parent defect word is `(1,4,0,4,0)`, so E=9, D=4 and G
+has only eight states. The five raw relations have 16,12,8,10,8 edges,
+representing all 27,264,384 raw words and their possible alpha collisions.
+There is also a short hand check of its optimal single qualified row:
+
+1. The periodic candidates in row 1 are `(17,24,25)`. Under the gap bound
+   D=4 only 24 and 25 can form a distinct qualified pair, so `d_1=+/-1`
+   and `d_2=-d_1`.
+2. Row 2 has zero defect, giving `d_3=-d_2=d_1`. At unit gap row 3 also
+   has exactly the transition `d_4=-d_3=-d_1`.
+3. Row 4 has zero defect, hence `d_0=-d_4=d_1`. Row 0 has defect at most
+   one; its profile is nondecreasing on the candidates, and its nonzero
+   output gap has the opposite sign from d_0. It cannot equal d_1=d_0.
+
+Thus no qualified closed gap walk exists. Every small relation and the
+periodic candidate set used here is checked in the maintained verifier.
+The raw graph does have closed walks, and the reverse procedure reconstructs
+their collision words. At n=11342 the same construction uses 28 signed states.
+Both gap-based minima agree with the independent complete-fiber certificates.
+
+### Minimum defect cost of a proper cycle
+
+There is a further universal restriction on the parent budget. Let
+`u_0,...,u_(p-1)` be distinct integers forming a reflection-defect cycle
+`u_(i+1)=t-u_i+e_i`, with `e_i>=0` and p>=3. Then
+
+$$
+E=\sum_i e_i\ge p. \tag{9.2}
+$$
+
+For odd p and even t, E is even and the stronger bound is E>=p+1.
+These bounds are sharp among capped integer profiles. In particular a proper
+five-cycle needs E>=5, or E>=6 at even offset t. Its mean offset is at least
+`t/2+1/2`, and at even t at least `t/2+3/5`, by the centroid identity.
+The statement excludes periods one and two, which can have zero defects.
+
+**Proof.** Sort the vertices as `v_1<...<v_p`. For every
+`1<=j<=floor((p-1)/2)`, one must have
+
+$$
+v_j+v_{p-j}\ge t. \tag{9.3}
+$$
+
+Otherwise the lowest j vertices have all their cycle neighbours in the
+highest j vertices. The former require 2j incidences; these use the entire
+degree-two capacity of the latter, separating their union from the nonempty
+middle set. This contradicts the connected proper cycle.
+
+Put `y_j=2*v_j-t`. The y's are distinct integers of the same parity, separated
+by at least two, and `E=sum(y_j)`. If p=2m+1, the m inequalities (9.3) pair
+all y's except y_p into nonnegative sums. The middle pair has nonnegative
+sum and unequal entries, so `y_(m+1)>=1`. Consequently
+`E>=y_p>=1+2m=p`. If p=2m, m>=2, (9.3) instead leaves y_m and y_p unpaired.
+Its last inequality and `y_(m-1)<=y_m-2` imply `y_(m+1)>=2-y_m`, so
+`E>=y_m+y_p>=2+2(m-1)=p`. Finally `E=2*sum(v_j)-p*t` gives the parity
+refinement for odd p. QED.
+
+For sharpness choose t large enough, and set the centred cycle offsets
+`z_i=2*u_i-t`. For odd p and odd t use
+`(1,-1,3,-3,...,p-2,-(p-2),p)`; its total defect is p. For odd p and even t
+use `(-(p-1),p-1,-(p-3),p-3,...,-2,2,p+1)`, with total p+1. For even p and
+odd t use `(-(p-1),p-1,-(p-3),p-3,...,-1,p+1)`, with total p; for even t
+subtract one from its negative entries and add one to its positive entries.
+At each vertex set `H(u_i)=t-u_(i+1)` and use H(u)=u elsewhere. These give
+nonnegative capped profiles and proper cycles of the stated cost. They are
+abstract constructions, not instances of C.
+
+The verifier checks these sharp constructions for p=3,...,12 and both offset
+parities, and corroborates (9.2) on 13,505 selected C cycles through n=28996.
+C itself attains E=p at n=68: t=13, cycle offsets `(9,6,8,5)` and defects
+`(2,1,0,1)`. The defect-cost theorem constrains primitive cycle types and their
+centroids; it does not bound E across Fibonacci orders or prove full ratio
+convergence.
