@@ -23,6 +23,7 @@ conditional decoding resource is distinct from autonomous FIB recognition.
 
 - [A quantitative scale-memory obstruction from Campbell's ternary law](#a-quantitative-scale-memory-obstruction-from-campbells-ternary-law)
 - [Five-pattern interaction on ternary scale interiors](#five-pattern-interaction-on-ternary-scale-interiors)
+- [Golden-defect words and the period-two interface](#golden-defect-words-and-the-period-two-interface)
 
 ### A quantitative scale-memory obstruction from Campbell's ternary law
 
@@ -289,3 +290,50 @@ all90 canonical words, verifies every selected endpoint by literal
 iteration, and compares against the proved formula. A separate literal
 prefix supplies an evaluator cross-check. These calculations corroborate
 the universal strip/truncation argument; they are not its premise.
+
+### Golden-defect words and the period-two interface
+
+The [golden-defect cyclic decoder](../cloitre-conway/inverse-reconstruction.md#golden-defect-words-give-a-uniform-cyclic-decoder)
+also applies to Campbell's inner map. Set G(x)=floor((x+1)/phi) and
+write d_i=b(x_i)-G(x_i). Supply the ordered integer word d_i and the
+root N. Then the coordinates of a proposed closed orbit satisfy
+
+$$
+x_{i+1}=N-d_i-G(x_i).
+$$
+
+The diagnostic golden floor can be extended to all integers during
+bisection, while b remains defined only at positive indices. The defect
+integers may be negative: Campbell's values are not bounded below by G.
+The decoder theorem permits signed constants and signed defects.
+
+For a fixed point the inverse is unique. For an even word there are at
+most three raw solutions, at consecutive initial indices. Thus a supplied
+period-two defect word needs at most two seed bits before actual-value
+and proper-period checks. This is a numeric inverse bound, not an
+autonomous recognition theorem or a method for obtaining the defect word.
+
+**Sharp shared example.** At N=5 the two sequences have the same earlier
+values (1,1,2,3)=G(1),...,G(4). The ordered word d=(0,0) admits exactly
+
+$$
+(x_0,x_1)=(2,4),\quad(3,3),\quad(4,2).
+$$
+
+All three satisfy actual scalar-value qualification. Requiring proper
+period2 removes the fixed word (3,3), leaving two oriented phases.
+Campbell's prescribed start is4, its depth is b(4)=3, and its selected
+endpoint is2. The [complete formula](note.pdf) supplies the actual basin
+and parity information; the golden word by itself retains a phase choice.
+
+This contrasts with an odd Cloitre child window: supplying its ordered
+golden defects and alpha parameters leaves no numeric branch choice.
+It does not remove the cost of supplying those integers or of verifying
+actual nesting. The scale-memory obstruction above therefore remains a
+separate result: a small residual phase label with clocks and defects
+supplied does not imply bounded autonomous memory in Fibonacci encoding.
+
+The shared [selector checker](../cloitre-conway/verification/selector_payload_check.py)
+independently evaluates Campbell's first32 terms by literal iteration and
+checks the displayed three-solution inverse. The sharpness statement
+follows directly from the three equations at N=5, without extrapolation.

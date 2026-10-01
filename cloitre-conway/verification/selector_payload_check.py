@@ -39,6 +39,194 @@ def is_contiguous(values):
     return list(values) == list(range(values[0], values[-1] + 1))
 
 
+def signed_golden_floor(index):
+    if index >= -1:
+        return g_closed(index)
+    return -g_closed(-index - 2) - 1
+
+
+def decode_golden_word(constants, lower, upper):
+    assert constants and lower <= upper
+    evaluations = 0
+
+    def trajectory(seed):
+        nonlocal evaluations
+        word = [seed]
+        for constant in constants:
+            word.append(constant - signed_golden_floor(word[-1]))
+            evaluations += 1
+        return word
+
+    first, stop = lower, upper + 1
+    while first < stop:
+        midpoint = (first + stop) // 2
+        if trajectory(midpoint)[-1] <= midpoint:
+            stop = midpoint
+        else:
+            first = midpoint + 1
+    candidates = []
+    extra = 0 if len(constants) % 2 else 2
+    for seed in range(first, min(upper, first + extra) + 1):
+        word = trajectory(seed)
+        if word[-1] != seed:
+            break
+        candidates.append(tuple(word[:-1]))
+    return candidates, evaluations
+
+
+def golden_decoder_synthetic_audit():
+    eta_lower = Fraction(61803398874989484820, 10 ** 20)
+    eta_upper = eta_lower + Fraction(1, 10 ** 20)
+    assert eta_lower ** 2 + eta_lower < 1 < eta_upper ** 2 + eta_upper
+    for index in range(-128, 129):
+        endpoints = (eta_lower * (index + 1), eta_upper * (index + 1))
+        assert math.floor(endpoints[0]) == math.floor(endpoints[1]) == signed_golden_floor(index)
+    contexts = infeasible = signed_intermediates = evaluations = 0
+    cardinalities = Counter()
+    for length in range(1, 7):
+        for constants in product((-1, 2, 5), repeat=length):
+            exhaustive = []
+            for seed in range(-8, 13):
+                word = [seed]
+                for constant in constants:
+                    word.append(constant - signed_golden_floor(word[-1]))
+                signed_intermediates += any(point <= 0 for point in word)
+                if word[-1] == seed:
+                    exhaustive.append(tuple(word[:-1]))
+            decoded, queries = decode_golden_word(constants, -8, 12)
+            assert decoded == exhaustive
+            assert len(decoded) <= (1 if length % 2 else 3)
+            assert not decoded or is_contiguous([word[0] for word in decoded])
+            assert queries <= length * ((12 - (-8) + 2).bit_length() + 3)
+            contexts += 1
+            infeasible += not decoded
+            evaluations += queries
+            cardinalities[len(decoded)] += 1
+    assert contexts == 1092 and infeasible and signed_intermediates
+    return dict(contexts=contexts, signed_floor_rational_checks=257,
+                seed_interval=[-8, 12], constants=[-1, 2, 5], lengths=list(range(1, 7)),
+                infeasible_contexts=infeasible, trials_with_nonpositive_indices=signed_intermediates,
+                candidate_histogram=dict(sorted(cardinalities.items())), floor_evaluations=evaluations)
+
+
+def golden_decoder_orbit_audit(sequence, selected_splits, fibonacci):
+    selected_periods = Counter()
+    raw_cardinalities = Counter()
+    odd_traces = five_traces = evaluations = 0
+    maximum_five_horizon = 0
+    sharp_five_trace = None
+
+    def check_cycle(index, cycle, lower, upper):
+        nonlocal odd_traces, five_traces, evaluations, maximum_five_horizon, sharp_five_trace
+        defects = tuple(sequence[point] - g_closed(point) for point in cycle)
+        constants = tuple(index - defect for defect in defects)
+        decoded, queries = decode_golden_word(constants, lower, upper)
+        assert tuple(cycle) in decoded
+        assert all(lower <= point <= upper for point in cycle)
+        evaluations += queries
+        if len(cycle) % 2:
+            assert decoded == [tuple(cycle)]
+            period, classes, horizon = cyclic_readout_summary(defects)
+            assert period == len(cycle)
+            odd_traces += 1
+            if len(cycle) == 5:
+                assert classes >= 2 and horizon <= 3
+                five_traces += 1
+                maximum_five_horizon = max(maximum_five_horizon, horizon)
+                if horizon == 3 and sharp_five_trace is None:
+                    canonical = canonical_cycle(tuple(cycle))
+                    sharp_five_trace = dict(root=index, cycle=canonical,
+                                            defects=[sequence[point] - g_closed(point) for point in canonical],
+                                            additional_observation_horizon=horizon)
+        else:
+            assert len(decoded) <= 3
+        qualified = [word for word in decoded if len(set(word)) == len(word)
+                     and all(1 <= point < index and sequence[point] - g_closed(point) == defect
+                             for point, defect in zip(word, defects))]
+        assert tuple(cycle) in qualified
+        return len(decoded)
+
+    order = 6
+    for index in range(8, len(sequence)):
+        while fibonacci[order + 1] <= index:
+            order += 1
+        anchor, lower_anchor, baseline = (fibonacci[order], fibonacci[order - 1],
+                                         fibonacci[order - 2])
+        lower = max(lower_anchor, index - lower_anchor)
+        upper = min(anchor, index - baseline)
+        start = selected_splits[index]
+        cycle = []
+        visited = set()
+        point = start
+        while point not in visited:
+            visited.add(point)
+            cycle.append(point)
+            point = index - sequence[point]
+        assert point == start
+        raw_count = check_cycle(index, cycle, lower, upper)
+        selected_periods[len(cycle)] += 1
+        raw_cardinalities[raw_count] += 1
+    all_start_periods = Counter()
+    for index in range(3, 610):
+        for cycle in all_cycles(sequence, index):
+            check_cycle(index, cycle, 1, index - 1)
+            all_start_periods[len(cycle)] += 1
+    assert all_start_periods[5] == 13
+    assert sharp_five_trace['root'] == 513
+    assert sharp_five_trace['cycle'] == (306, 309, 307, 308, 311)
+    assert sharp_five_trace['defects'] == [15, 15, 15, 12, 15]
+    alpha = (605, 678, 576, 520, 518)
+    offsets = (498, 512, 500, 503, 513)
+    physical_anchor, baseline = fibonacci[18], fibonacci[17]
+    parent_anchor = fibonacci[19]
+    sets = candidate_sets(sequence, parent_anchor, physical_anchor, baseline, fibonacci[16], offsets)
+    profile = {split: sequence[physical_anchor + split] - baseline for values in sets for split in values}
+    collision = seed_fiber(sets, profile, alpha)
+    assert collision == [(255, 368, 344, 255, 283), (260, 364, 341, 258, 274)]
+    collision_defects = []
+    for word in collision:
+        physical = tuple(physical_anchor + split for split in word)
+        defects = tuple(sequence[point] - g_closed(point) for point in physical)
+        constants = tuple(physical_anchor + parameter + baseline - defect
+                          for parameter, defect in zip(alpha, defects))
+        decoded, queries = decode_golden_word(constants, physical_anchor + sets[0][0],
+                                              physical_anchor + sets[0][-1])
+        assert decoded == [physical]
+        collision_defects.append(defects)
+        evaluations += queries
+    assert collision_defects[0] != collision_defects[1]
+    campbell = [0, 1]
+    literal_updates = 0
+    for index in range(2, 33):
+        point = index - 1
+        for iteration in range(campbell[index - 1]):
+            assert 1 <= point < index
+            point = index - campbell[point]
+            literal_updates += 1
+        campbell.append(point)
+    assert campbell[1:5] == sequence[1:5] == [g_closed(point) for point in range(1, 5)]
+    sharp, queries = decode_golden_word((5, 5), 1, 4)
+    assert sharp == [(2, 4), (3, 3), (4, 2)]
+    assert campbell[4] == 3 and campbell[5] == 2
+    evaluations += queries
+    return dict(selected_roots=len(sequence) - 8, prefix_limit=len(sequence) - 1,
+                selected_period_histogram=dict(sorted(selected_periods.items())),
+                selected_raw_candidate_histogram=dict(sorted(raw_cardinalities.items())),
+                all_start_limit=609, all_start_period_histogram=dict(sorted(all_start_periods.items())),
+                odd_full_period_traces=odd_traces, proper_five_traces=five_traces,
+                maximum_five_additional_observation_horizon=maximum_five_horizon,
+                sharp_five_observation_example=sharp_five_trace,
+                alpha_collision=dict(index=7739, alpha=alpha, offset_words=collision,
+                                     physical_anchor=physical_anchor, baseline=baseline,
+                                     golden_defect_words=collision_defects, residual_seed_bits=0),
+                sharp_even_example=dict(root=5, defects=[0, 0], raw_words=sharp,
+                                        proper_two_phase_words=[word for word in sharp if word[0] != word[1]],
+                                        campbell_selected_endpoint=campbell[5], campbell_depth=campbell[4]),
+                campbell_literal_limit=32, campbell_literal_updates=literal_updates,
+                floor_evaluations=evaluations,
+                scope='Conditional golden-defect reconstruction; odd uniqueness and even three-candidate bound are written infinite theorems. Independent full-orbit/Brent prefix supports these finite checks. Point defects and actual basin/depth are not constructed by the decoder.')
+
+
 def seed_fiber(sets, profile, alpha):
     result = []
     for seed in sets[0]:
@@ -2848,6 +3036,7 @@ def unbounded_defect_audit():
             upper_selected, upper_nested_value = point, value
     assert (upper_selected, upper_nested_value) == (6, 7)
     return dict(knee_examples=knees, generated_knee_codes=knee_codes, all_cycle_centre_examples=centres,
+                golden_defect_decoder=golden_decoder_orbit_audit(sequence, selected_splits, fibonacci),
                 selected_phase_readouts=phase_readout_audit(sequence, selected_splits, fibonacci),
                 four_generation_dispersion=four_generation_dispersion_audit(sequence, selected_splits, fibonacci),
                 phase_free_dispersion=phase_free_dispersion_audit(sequence, selected_splits, fibonacci),
@@ -2877,6 +3066,7 @@ def main():
     reconstructed_parent_transitions = 0
     complementary_lower_map_rows = 0
     row_local_combinations_checked = 0
+    golden_child_evaluations = 0
     affine_parent_features = []
     affine_split_features = []
     affine_alpha_features = []
@@ -2942,6 +3132,14 @@ def main():
                     seed_lower, seed_upper = defect_seed_interval(alpha_vector, defects)
                     assert seed_lower <= combination[0] <= seed_upper
                     assert seed_upper - seed_lower < sum(defects) // 2 + 1
+                    golden_defects = [sequence[lower_anchor + split] - g_closed(lower_anchor + split)
+                                      for split in combination]
+                    constants = [lower_anchor + parameter + child_anchor - defect
+                                 for parameter, defect in zip(alpha_vector, golden_defects)]
+                    decoded, queries = decode_golden_word(constants, lower_anchor + sets[0][0],
+                                                          lower_anchor + sets[0][-1])
+                    assert decoded == [tuple(lower_anchor + split for split in combination)]
+                    golden_child_evaluations += queries
                     row_local_combinations_checked += 1
                 product_size = math.prod(lengths)
                 assert len(alpha_images) == product_size
@@ -3071,6 +3269,15 @@ def main():
             "qualification": "Exact odd-window argument; the interval is checked on all public row-local combinations. The modulus is a sufficient arithmetic label, not the minimum fiber cardinality.",
         },
         "abstract_defect_box_examples": defect_box_examples(),
+        "golden_child_decoder": {
+            "row_local_combinations_checked": row_local_combinations_checked,
+            "floor_evaluations": golden_child_evaluations,
+            "maximum_raw_candidates": 1,
+            "residual_seed_bits": 0,
+            "synthetic_signed_audit": golden_decoder_synthetic_audit(),
+            "formula": "z_(i+1) = L_(i+1) + alpha_i + B_i - d_i - Ghat(z_i)",
+            "qualification": "Ordered alpha, anchors and point golden defects are supplied; actual values, candidate domains and prescribed selection remain separate qualifications."
+        },
         "local_cycle_refinement": {
             "retained_candidate_positions": local_cycle_candidate_count,
             "periodic_cartesian_combinations": periodic_cartesian_combinations,
