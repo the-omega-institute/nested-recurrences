@@ -15,6 +15,7 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 - [The first negative boundary has an exact two-state interface](#the-first-negative-boundary-has-an-exact-two-state-interface)
 - [Exact moving negative plateau and arithmetic closure](#exact-moving-negative-plateau-and-arithmetic-closure)
 - [The unit-defect sublevel set and its arithmetic spine](#the-unit-defect-sublevel-set-and-its-arithmetic-spine)
+- [Two higher cap levels and their phase-selected closure](#two-higher-cap-levels-and-their-phase-selected-closure)
 - [Adjacent-gap parity closure and the entrance condition](#adjacent-gap-parity-closure-and-the-entrance-condition)
 - [The prescribed basin and phase in a positive collar](#the-prescribed-basin-and-phase-in-a-positive-collar)
 - [A saturated lower barrier and the exclusion of nearby proper cycles](#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)
@@ -733,6 +734,171 @@ The checker exhausts abstract shelf graphs, checks every complete block
 agreeing832074-term prefix. This supplies finite premises and corroboration;
 the infinite statements follow from the induction above. Wide-block
 interfaces and uniform global dispersion remain open.
+
+### Two higher cap levels and their phase-selected closure
+
+The same simultaneous sublevel/shelf induction extends beyond a unit
+cap defect. It needs a lower-child gap bound and an exact boundary clock;
+contiguity at an arbitrary cap level is not an assumption we can omit.
+
+Put S_k=floor(8k/3)-18 and Z_k=3k+floor((k-1)/3)-24.
+Throughout the full closed-block gap domain0<=v<=F_(k-2),
+
+$$
+\boxed{Q_k(v)\le2\iff v\le S_k\quad(k\ge20),\qquad
+       Q_k(v)\le3\iff v\le Z_k\quad(k\ge21).} \tag{H.1}
+$$
+
+The corresponding outside shelves are
+
+$$
+m+1\le Q_k(v)\le\max(m+1,v-W_{m,k}-1)\quad(v>W_{m,k}), \tag{H.2}
+$$
+
+where W_(2,k)=S_k and W_(3,k)=Z_k. Combined with the earlier
+zero/unit theorem, the profiles are exactly0,1,2,3 on the consecutive
+bands ending at L_k,R_k,S_k,Z_k, for k>=21.
+
+**Finite premises.** The independently regenerated full block at
+order20 has S_20=35 and satisfies the level2 shelf; the full block
+at order21 has Z_21=45 and satisfies the level3 shelf. They contain
+2585 and4182 gap positions, respectively. Literal, full-orbit and
+Brent evaluations agree through F_21=10946. The
+[checker](verification/collar_check.py) records the whole-profile hashes
+and the literal update count in [the evidence](verification/collar-check.json).
+These full-block premises, rather than a list of nearby values, start
+the infinite inductions.
+
+**Lower-child bound.** At order ell>=19,
+
+$$
+Q_\ell(q)\le\max(0,q-6), \tag{H.3a}
+$$
+
+on its natural gap block: gaps0..6 are flat; gaps7..17 have defect
+at most1 by the unit theorem; for q>=18 use the anchor-drop bound
+Q_ell(q)<=floor(2q/3)<=q-6. After proving level2, at ell>=20 we also have
+
+$$
+Q_\ell(q)\le\max(0,q-8). \tag{H.3b}
+$$
+
+Here gaps0..8 are flat; q=9 has defect at most1; gaps10..23
+have defect at most2 since S_ell>=35; and q>=24 uses
+floor(2q/3)<=q-8. Thus for m=2 at k>=21, and m=3 at k>=22,
+the lower-child bound is Q_(k-2)(q)<=max(0,q-(2m+2)).
+
+**Shelf propagation.** Write A=F_(k-1), B=F_(k-2),
+W=W_(m,k-1), and S=W_(m-1,k-1). Assume the preceding levelm
+sublevel is exactly0..W, its outside shelf is (H.2), and
+its last constant band S<r<=W has defectm. We have W-S>=m+1
+and W+m+2<F_(k-3). The captured gap map remains
+
+$$
+r\mapsto v-Q_{k-1}(r),\qquad
+Q_k(v)=Q_{k-1}(r)+Q_{k-2}(v-r)
+$$
+
+at the actual selected periodic gap. Consider v>=W+m+2. Gaps
+r<=W map above W; for r>W the shelf and r<=v imply the next
+gap is at least W+1. A displayed image outside the captured natural
+child block cannot be periodic. Hence every cycle lies above W,
+and every cycle point obeys r<=v-m-1, q=v-r>=m+1.
+
+If r>=W+m+2, its first defect is at most r-W-1, and (H.3)
+gives the lower defect at most q-m-1. Their sum is at most
+v-W-m-2. Otherwise r=W+j with1<=j<=m+1; the first defect is
+exactlym+1 and the sum is at most
+max(m+1,q-m-1)<=max(m+1,v-W-m-2). Therefore
+
+$$
+m+1\le Q_k(v)\le\max(m+1,v-W-m-2),\qquad
+Q_k(W+m+2)=m+1. \tag{H.4}
+$$
+
+**Interior and phase-selected boundary.** For S+m+1<=v<=W+m,
+the unique captured cycle is the fixed gap v-m, in the preceding
+constant-m band. Every point in that band maps there. Earlier bands
+map above S+1; any tail points map to v-m-1. If that last gap equals
+S, its next image is S+2 in the constant band; otherwise it is already
+in that band. This proves capture at the stated fixed point. The
+complementary gap ism<=3 and is flat, so Q_k(v)=m.
+The earlier levelm-1 theorem supplies the smaller gaps, including
+its excluded upper boundary when it lies just below this interior.
+
+At v=W+m+1 the unique cycle has physical points
+
+$$
+a_0=A-W-1,\qquad a_1=A-W,
+$$
+
+with scalar cap defects m+1 andm, respectively. Its complementary
+gaps m andm+1 are flat. Sublevel contiguity gives
+x>a_1=>C(x)>=B-m=>T_n(x)<=a_0 and
+x<a_0=>C(x)<=B-m-1=>T_n(x)>=a_1. Below the preceding child
+block use its strictly smaller global cap; above it use G(A+1)=B+1.
+Starting at n-1 above a_1, exterior sides alternate. Thus a_1 is
+at even clocks and a_0 at odd clocks upon either first entrance.
+The prescribed depth reaches this cycle and, by (H.4), is exactly
+
+$$
+d=A-(m+1).
+$$
+
+It selects defectm precisely when A=m+1 mod2. Consequently
+
+$$
+W_{m,k}=W_{m,k-1}+m+\varepsilon_m(k),\qquad
+\varepsilon_m(k)=\mathbf1_{\{F_{k-1}\equiv m+1\pmod2\}}. \tag{H.5}
+$$
+
+For m2 this is increment2 at k=1mod3 and3 otherwise; for m3
+it is4 at k=1mod3 and3 otherwise. With the finite premises these
+recurrences give exactly S_k and Z_k. In either boundary choice,
+(H.4) and the boundary value imply (H.2) at the new width.
+All size and band-separation conditions hold at the first induction
+steps and persist. This proves both full-block classifications. QED.
+
+**Actual selectors and five-row closure.** For k>=22 and v<=Z_k,
+let L,R,S,Z denote the four widths at order k-1. The exact shift is
+
+| Gap | Selected shift delta |
+|---|---:|
+|0<=v<=L|0|
+|v=L+1|1 if k!=1mod3, otherwise0|
+|L+2<=v<=R+1|1|
+|v=R+2|2 if k=1mod3, otherwise1|
+|R+3<=v<=S+2|2|
+|v=S+3|3 if k!=1mod3, otherwise2|
+|S+4<=v<=Z+3|3|
+|v=Z+4, admitted only at k=1mod3|4|
+
+The split is g=F_(k-1)-v+delta, with child gaps r=v-delta and
+q=delta. If e=Q_k(v) in{0,1,2,3}, then
+
+$$
+Q_{k-1}(r)=e,\qquad Q_{k-2}(q)=0. \tag{H.6}
+$$
+
+The same single first-child spine therefore preserves every cap defect
+through3. For any cyclic five-row gap word in this domain, the unit
+family's displayed parent/child parameter formulas apply verbatim with
+e_i in{0,1,2,3} and these shifts d_i in{0,1,2,3,4}. They close
+the actual row-indexed descent to finite boundary orders20/21.
+With order and gaps supplied, zero additional selector labels remain;
+the order/gap encoding and finite boundary tables are separate costs.
+At k28, gaps(0,16,31,56,69) have defects(0,1,1,2,3) and
+shifts(0,0,2,2,4), including both admitted and excluded two-cycle
+frontiers. Scalar defect need not equal the shift.
+
+Every basin phase has shift at most4, so the
+[quadratic dispersion bound](dispersion.md#quadratic-basin-dispersion-in-the-unit-defect-family)
+extends to this whole family. Higher cap levels are not inferred from
+these two inductions: at order20, Q_20(55)=5 while Q_20(57)=4,
+so the level4 sublevel is already noncontiguous. The supporting audit
+also records this actual counterexample rather than assuming an
+arbitrary-level interval law. Wide-block closure and uniform dispersion
+remain open.
 
 ### Adjacent-gap parity closure and the entrance condition
 

@@ -367,8 +367,28 @@ minimum ratio to (D/N)^2 is recorded exactly as a rational number in
 [the evidence](verification/collar-check.json); it is corroboration,
 not an estimate of a global constant.
 
+**Extension through cap defect3.** The
+[higher-cap theorem](exact-collars.md#two-higher-cap-levels-and-their-phase-selected-closure)
+extends (U.4), with the same constant1/25, to every k>=22 and
+0<=v<=Z_k=3k+floor((k-1)/3)-24. All phases of the unique basin
+have delta in{0,1,2,3,4}. A nonzero shift1 requires v>=12;
+shift2 requires v>=23; shift3 requires v>=41; and shift4
+requires v>=49. These follow from the four frontier cycles at
+the first eligible order22 and the fixed bands between them.
+In particular v>=6delta+2 whenever delta>=1. Thus
+
+$$
+M\ge H(v-3\delta)-1\ge Hv/2,
+$$
+
+using H>=2, and the previous argument applies to every phase.
+The checker verifies all basin phases through order30, including
+excluded boundary phases with a different parent scalar readout.
+This gives a larger infinite domain, still of width O(k) at F_k;
+it is not a uniform inequality over the interiors of whole blocks.
+
 This proof connects arithmetic recursive closure to Benoît Cloitre's
-dispersion route. Here every complementary gap is at most2, so the
+dispersion route. In the extended family every complementary gap is at most4, so the
 proportional-split cancellation of M cannot occur. In wider blocks,
 large complementary gaps can approach that cancellation ratio; controlling
 their accumulated variance still requires new actual-profile restrictions.
