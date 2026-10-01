@@ -26,9 +26,15 @@ The same domain has a proved
 [quadratic basin dispersion bound](dispersion.md#quadratic-basin-dispersion-in-the-unit-defect-family).
 Full context costs and dispersion in the wider block interiors remain open.
 
+The [higher-cap theorem](exact-collars.md#two-higher-cap-levels-and-their-phase-selected-closure)
+extends those arithmetic selectors through cap defect3. The general
+cap-budget theorem below confines every bounded cap level to a polynomial
+Fibonacci neighborhood, even when its support has holes.
+
 ## Contents
 
 - [Recursive windows with a parameter at every row](#recursive-windows-with-a-parameter-at-every-row)
+- [A quadratic enclosure for every bounded cap level](#a-quadratic-enclosure-for-every-bounded-cap-level)
 - [Sharing selectors at repeated physical indices](#sharing-selectors-at-repeated-physical-indices)
 - [A shared parameter network and its forest basis](#a-shared-parameter-network-and-its-forest-basis)
 - [Generating the layout from a sublinear shared descent code](#generating-the-layout-from-a-sublinear-shared-descent-code)
@@ -152,6 +158,160 @@ labels above the seed boundary. Its natural defects F_(j-3)-v_i grow without
 bound. This is an actual-C example in which the sufficient defect budget
 does not measure a necessary branch-information cost; the scale, row clock,
 and collar qualification remain supplied context.
+
+### A quadratic enclosure for every bounded cap level
+
+The upper-anchor cap defect is different from the natural profile defect
+used later in the inverse-label budget. Let
+
+$$
+Q_k(v)=F_{k-1}-C(F_k-v),\qquad0\le v\le F_{k-2}.
+$$
+
+Define P_9=13 and, for k>=10,
+
+$$
+P_k=\left\lfloor\frac{(k-2)^2}3\right\rfloor-3k+30.
+$$
+
+**Cap-budget theorem.** On every full closed block at k>=9,
+
+$$
+Q_k(v)=0\ \Longrightarrow\ v\le L_k=\lfloor2k/3\rfloor-3,
+\qquad
+Q_k(v)>0\ \Longrightarrow\boxed{v\le Q_k(v)P_k}. \tag{C.1}
+$$
+
+Since L_k<=P_k, for every integer m>=1 the entire sublevel Q_k<=m
+is contained in0..mP_k, regardless of any holes. The enclosure is
+O(mk^2), rather than an exact support classification.
+
+**Proof.** The zero case is the proved moving-plateau theorem.
+At orders9/10 the full gap lengths are13/21, so positive integral
+defects prove (C.1) immediately; there is no new finite sequence premise.
+For k>=11, the closed-block capture and scalar identity give actual
+child gaps r,q in their natural blocks and child cap defects e_1,e_2 with
+
+$$
+v=r+q,\qquad e=Q_k(v)=e_1+e_2,\qquad e_1,e_2\ge0. \tag{C.2}
+$$
+
+The budget satisfies
+
+$$
+P_k=P_{k-1}+L_{k-2}\ge P_{k-2}+L_{k-1}. \tag{C.3}
+$$
+
+The equality follows from
+sum_(j=0)^M floor(2j/3)=floor(M^2/3). The inequality is immediate
+at k11; subsequently P_(k-1)-P_(k-2)=L_(k-3)>=3, whereas
+L_(k-1)-L_(k-2)<=1.
+If both child defects are positive, induction gives
+v<=e_1P_(k-1)+e_2P_(k-2)<=eP_k. If only e_1 is positive,
+v<=eP_(k-1)+L_(k-2)<=eP_k, since e>=1. If only e_2 is
+positive, use v<=L_(k-1)+eP_(k-2)<=eP_k. These are all cases
+when e>0. QED.
+
+Thus for v>L_k we have Q_k(v)>=ceil(v/P_k). For fixed m,
+all indices with cap defect at mostm approach the golden ratio
+uniformly over that entire sublevel. More precisely, if F_k>mP_k,
+write alpha=1/phi. Since
+F_(k-1)-alpha F_k=(-1)^k alpha^k, (C.1) gives
+
+$$
+\left|\frac{C(F_k-v)}{F_k-v}-\alpha\right|
+\le\frac{m(\alpha P_k+1)+\alpha^k}{F_k-mP_k}. \tag{C.4}
+$$
+
+The right side is O(mk^2/F_k). The conclusion also holds for growing
+m=m_k whenever m_k k^2=o(F_k). This is a consequence for bounded
+cap sublevels, not a proof that the full sequence stays in such levels.
+
+**A compact local selector interface.** For sufficiently high k at
+fixed m, mP_k<=F_(k-4). Let K(m) be the first k>=11 satisfying
+this inequality; it then persists. Indeed P_(k+1)<=3P_k/2,
+because P_k>=2L_(k-1), while F_(k-3)>=3F_(k-4)/2. Exponential
+Fibonacci growth ensures K(m) exists. The inequality P_k>=2L_(k-1)
+starts at k10 and persists because L increases by at most1 whereas
+P increases by at least3. In particular K(4)=17.
+
+For any qualified root N=F_k-v with2<=v<=mP_k, supply the two
+lower cap-profile tables Q_(k-1),Q_(k-2) on gaps0..v and the
+predecessor cap defect z=Q_k(v+1). The depth is d=F_(k-1)-z.
+Also supply a certified first-entry pair (mu,r_0): at clockmu the
+prescribed orbit first enters I=[F_(k-1)-v,F_(k-1)] at
+F_(k-1)-r_0. Put
+
+$$
+\Omega_v(r)=v-Q_{k-1}(r),\qquad
+r_d=\Omega_v^{\,d-\mu}(r_0). \tag{C.5}
+$$
+
+The anchor-drop bound0<=Q_(k-1)(r)<=floor(2r/3) makes0..v
+invariant. Therefore the actual split and parent defect are exactly
+
+$$
+g=F_{k-1}-r_d,\qquad
+Q_k(v)=Q_{k-1}(r_d)+Q_{k-2}(v-r_d). \tag{C.6}
+$$
+
+All children lie in the two supplied natural blocks. A functional-graph
+walk of at most v+1 distinct gaps determines the transient and period;
+integer division then evaluates the exact, possibly enormous depth.
+The prescribed depth reaches the cycle by the established global theorem.
+The same tables recover both child profiles and the row-indexed parameters
+of any five-row word; the second parameter word is derived by subtraction.
+They do not require a single-spine assumption: positive cap defects may
+split between two children while preserving (C.2).
+
+The period and number of candidate selected gaps are at mostv+1<=mP_k+1.
+With the cycle supplied, a selected-gap label uses at most
+ceil(log_2(mP_k+1)) bits; its exact readout quotient can be smaller.
+The paired exterior contraction bounds mu by twice the pair budget
+from dist(N-1,I), hence mu=O(k). The numerical inputs z,r_0,mu
+therefore use O(log m+log k) bits per distinct physical root.
+For five roots the order is unchanged. The two profile tables cost
+O(mk^2 log(mk)) bits; Fibonacci arithmetic, root indices, and verification
+of the exterior trace are separate resources. This is a conditional
+selector interface, not an autonomous recognizer or a global minimum.
+
+**Why the entrance certificate remains explicit.** With A=F_(k-1),
+B=F_(k-2), J=F_(k-4), the first two prescribed points are
+
+$$
+x_1=B-v+z,\qquad
+x_2=A+J-v+Q_{k-2}(v-z). \tag{C.7}
+$$
+
+Usually x_2>A, outside the supplied negative-window profiles.
+Starting (C.5) at clock2 would therefore give a wrong orbit.
+The decoder uses the certified entrance clock and point; a theorem
+deriving them from local tables alone would require a further argument.
+
+**A nonconstant three-phase obstruction.** An actual cap4 root
+is k24,v83,N46285. Its cycle, in increasing physical order, is
+
+```text
+28578 -> 28582 -> 28583 -> 28578.
+```
+
+The three scalar cap readouts are8,9,4, respectively. The actual
+depth28648 selects28583 and gives C(N)=28653. On this supplied
+cycle, unrestricted scalar or selected-gap readout has exactly three
+phase classes, requiring2 fixed-width bits. Even clocks0,2,4 from
+the same cycle start already give all three outputs, so parity is
+insufficient for that contract. These clock choices are not three
+alternative prescribed depths at this physical index. If the cap4
+qualification itself is supplied, only the readout4 is compatible;
+it would be incorrect to count2 additional phase bits again in that
+smaller qualified contract.
+
+The checker verifies (C.1)/(C.2) on all complete blocks9..30,
+reconstructs actual small-cap roots through this local interface, and
+checks selected endpoints literally. It also records the full finite
+level4 supports with their holes; their exact infinite classification
+remains open. [Evidence](verification/collar-check.json) distinguishes
+the general proof from those finite support and phase witnesses.
 
 ### Sharing selectors at repeated physical indices
 

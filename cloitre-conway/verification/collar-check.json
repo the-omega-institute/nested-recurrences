@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "372f2253e79c92ed390fcc38cd6389864953e39af80ece136119b08602c8c65e",
+  "source_sha256": "f8942ad7c04c0387833c9fc1e1e15912ff545db51b48b3fd2fc81ff6ff47b6bf",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -4663,6 +4663,357 @@
         }
       ],
       "scope": "Independent full-block finite premises and abstract shelf graphs support the written phase-selected level2/3 induction. Arithmetic supplied-order/gap selectors close cap-defect0..3 along one first-child spine to base20/21; context/table costs separate. All basin phases satisfy the scoped quadratic bound. Actual level4 holes forbid arbitrary-level extrapolation; no global dispersion, convergence, full-interface minimum or Lean claim."
+    },
+    "bounded_cap_interface": {
+      "budget_formula": "P9=13; Pk=floor((k-2)^2/3)-3k+30 for k>=10",
+      "no_new_sequence_premise": true,
+      "arithmetic_orders_inclusive": [
+        11,
+        1000
+      ],
+      "sufficient_local_thresholds": {
+        "1": 13,
+        "2": 15,
+        "3": 16,
+        "4": 17,
+        "5": 18,
+        "6": 18,
+        "7": 19,
+        "8": 19,
+        "9": 20,
+        "10": 20,
+        "11": 20,
+        "12": 20,
+        "13": 21,
+        "14": 21,
+        "15": 21,
+        "16": 21,
+        "17": 21,
+        "18": 21,
+        "19": 22,
+        "20": 22,
+        "21": 22,
+        "22": 22,
+        "23": 22,
+        "24": 22,
+        "25": 22,
+        "26": 22,
+        "27": 23,
+        "28": 23,
+        "29": 23,
+        "30": 23,
+        "31": 23,
+        "32": 23,
+        "33": 23,
+        "34": 23,
+        "35": 23,
+        "36": 23,
+        "37": 23,
+        "38": 23,
+        "39": 24,
+        "40": 24,
+        "41": 24,
+        "42": 24,
+        "43": 24,
+        "44": 24,
+        "45": 24,
+        "46": 24,
+        "47": 24,
+        "48": 24,
+        "49": 24,
+        "50": 24,
+        "51": 24,
+        "52": 24,
+        "53": 24,
+        "54": 24,
+        "55": 24,
+        "56": 24,
+        "57": 25,
+        "58": 25,
+        "59": 25,
+        "60": 25,
+        "61": 25,
+        "62": 25,
+        "63": 25,
+        "64": 25
+      },
+      "full_block_orders_inclusive": [
+        9,
+        30
+      ],
+      "block_positions": 832041,
+      "actual_conservation_checks": 832005,
+      "child_budget_branch_counts": {
+        "both_positive": 830250,
+        "first_only": 1528,
+        "second_only": 0,
+        "both_zero": 227
+      },
+      "actual_cap4_supports": [
+        {
+          "order": 19,
+          "full_block_checked": true,
+          "first_width": 50,
+          "maximum_gap": 50,
+          "holes": [],
+          "bound": 276
+        },
+        {
+          "order": 20,
+          "full_block_checked": true,
+          "first_width": 54,
+          "maximum_gap": 59,
+          "holes": [
+            55,
+            56,
+            58
+          ],
+          "bound": 312
+        },
+        {
+          "order": 21,
+          "full_block_checked": true,
+          "first_width": 63,
+          "maximum_gap": 65,
+          "holes": [
+            64
+          ],
+          "bound": 348
+        },
+        {
+          "order": 22,
+          "full_block_checked": true,
+          "first_width": 69,
+          "maximum_gap": 69,
+          "holes": [],
+          "bound": 388
+        },
+        {
+          "order": 23,
+          "full_block_checked": true,
+          "first_width": 74,
+          "maximum_gap": 77,
+          "holes": [
+            75,
+            76
+          ],
+          "bound": 432
+        },
+        {
+          "order": 24,
+          "full_block_checked": true,
+          "first_width": 78,
+          "maximum_gap": 83,
+          "holes": [
+            79,
+            80,
+            82
+          ],
+          "bound": 476
+        },
+        {
+          "order": 25,
+          "full_block_checked": true,
+          "first_width": 87,
+          "maximum_gap": 89,
+          "holes": [
+            88
+          ],
+          "bound": 524
+        },
+        {
+          "order": 26,
+          "full_block_checked": true,
+          "first_width": 93,
+          "maximum_gap": 95,
+          "holes": [
+            94
+          ],
+          "bound": 576
+        },
+        {
+          "order": 27,
+          "full_block_checked": true,
+          "first_width": 97,
+          "maximum_gap": 103,
+          "holes": [
+            98,
+            101,
+            102
+          ],
+          "bound": 628
+        },
+        {
+          "order": 28,
+          "full_block_checked": true,
+          "first_width": 105,
+          "maximum_gap": 109,
+          "holes": [
+            106
+          ],
+          "bound": 684
+        },
+        {
+          "order": 29,
+          "full_block_checked": true,
+          "first_width": 109,
+          "maximum_gap": 116,
+          "holes": [
+            110,
+            114,
+            115
+          ],
+          "bound": 744
+        },
+        {
+          "order": 30,
+          "full_block_checked": true,
+          "first_width": 117,
+          "maximum_gap": 124,
+          "holes": [
+            118,
+            119,
+            121,
+            122,
+            123
+          ],
+          "bound": 804
+        }
+      ],
+      "actual_local_selector_rows": 1082,
+      "exterior_trace_points": 11522,
+      "maximum_entrance": {
+        "order": 27,
+        "gap": 2,
+        "clock": 14,
+        "pair_bound": 54,
+        "start_gap": 2
+      },
+      "three_phase_witness": {
+        "order": 24,
+        "gap": 83,
+        "index": 46285,
+        "cycle": [
+          28578,
+          28582,
+          28583
+        ],
+        "cap_readouts": [
+          8,
+          9,
+          4
+        ],
+        "actual_depth": 28648,
+        "actual_split": 28583,
+        "actual_value": 28653,
+        "entrance_clock": 10,
+        "entrance_gap": 67,
+        "local_transient": 1,
+        "unrestricted_readout_classes": 3,
+        "unrestricted_fixed_width_bits": 2,
+        "even_clock_readouts": [
+          8,
+          4,
+          9
+        ],
+        "qualified_cap4_readout_classes": 1
+      },
+      "literal_endpoint_rows": [
+        {
+          "order": 19,
+          "gap": 50,
+          "index": 4131,
+          "depth": 2579,
+          "selected_split": 2542,
+          "value": 2580
+        },
+        {
+          "order": 19,
+          "gap": 54,
+          "index": 4127,
+          "depth": 2575,
+          "selected_split": 2539,
+          "value": 2575
+        },
+        {
+          "order": 20,
+          "gap": 55,
+          "index": 6710,
+          "depth": 4173,
+          "selected_split": 4130,
+          "value": 4176
+        },
+        {
+          "order": 20,
+          "gap": 57,
+          "index": 6708,
+          "depth": 4172,
+          "selected_split": 4132,
+          "value": 4177
+        },
+        {
+          "order": 24,
+          "gap": 83,
+          "index": 46285,
+          "depth": 28648,
+          "selected_split": 28583,
+          "value": 28653
+        }
+      ],
+      "literal_selected_updates": 42147,
+      "five_row_witness": {
+        "order": 19,
+        "gaps": [
+          0,
+          10,
+          20,
+          40,
+          54
+        ],
+        "shifts": [
+          0,
+          0,
+          2,
+          4,
+          9
+        ],
+        "first_cap_defects": [
+          0,
+          1,
+          2,
+          4,
+          8
+        ],
+        "second_cap_defects": [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "parent_parameters": [
+          2574,
+          2563,
+          2542,
+          2526,
+          2575
+        ],
+        "first_parameters": [
+          1587,
+          1578,
+          1559,
+          1548,
+          1589
+        ],
+        "second_parameters": [
+          987,
+          985,
+          983,
+          978,
+          986
+        ]
+      },
+      "scope": "General full-block cap-budget induction uses the proved zero plateau and actual two-child conservation, without a new finite sequence premise. Fixed-cap sublevels have polynomial gap enclosure and a conditional local-table/entrance decoder. The finite level4 holes, three-phase readouts and branching witness are actual C, not infinite support or dispersion laws. Tables, predecessor/exterior qualification, exact Fibonacci arithmetic and autonomous memory are separate costs; cap4 qualification already collapses the displayed scalar phase fiber."
     },
     "scope": "Single-negative-seed propagation and first-boundary copy-or-contract/readout-phase proofs are general. Earlier scalar seeds reuse the independently agreeing F30+34 full-orbit/Brent prefix. The separate small-seed moving-plateau induction now proves all fixed negative widths, top contiguity and the unit-amplitude actual boundary rule. Full recursive minimum, dispersion and global convergence remain open. Conditional phase-state minima exclude supplied context and its certification cost."
   },
