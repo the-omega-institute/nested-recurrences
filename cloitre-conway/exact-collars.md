@@ -22,8 +22,8 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 - [A saturated lower barrier and the exclusion of nearby proper cycles](#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)
 - [Every fixed positive offset eventually becomes linear](#every-fixed-positive-offset-eventually-becomes-linear)
 - [Five legal bit patterns and eventual vanishing of a local interaction](#five-legal-bit-patterns-and-eventual-vanishing-of-a-local-interaction)
-- [A persistent interaction on canonical index words](#a-persistent-interaction-on-canonical-index-words)
 - [A canonical cap4 window reaches the next Fibonacci digit](#a-canonical-cap4-window-reaches-the-next-fibonacci-digit)
+- [A persistent interaction on canonical index words](#a-persistent-interaction-on-canonical-index-words)
 - [Additive canonical windows and a direct descendant decoder](#additive-canonical-windows-and-a-direct-descendant-decoder)
 
 ## 6. Exact collars propagate from two seeds
