@@ -16,7 +16,7 @@ or programming knowledge is needed.
 | Understand cycles and convergence near Fibonacci indices | **[Fibonacci collars](cloitre-conway/fibonacci-collars.md)** |
 | Understand how quickly an orbit enters a Fibonacci neighborhood | **[Quantitative capture](cloitre-conway/fibonacci-collars.md#quantitative-capture-and-a-short-exterior-certificate)** |
 | See how long orbit runs can be checked by arithmetic blocks | **[Return certificates](cloitre-conway/fibonacci-collars.md#defect-plateau-return-certificates)** |
-| See the common five-window closure interface | **[Closure theorem](cloitre-conway/fibonacci-collars.md#9-common-closure-theorem-and-generic-minimality)** |
+| See the common five-window closure interface and the exact conditional phase minimum | **[Closure theorem](cloitre-conway/fibonacci-collars.md#9-common-closure-theorem-and-generic-minimality)** · **[Phase readout](cloitre-conway/fibonacci-collars.md#the-exact-minimum-phase-interface-depends-on-the-readout)** |
 | Understand the extra information needed to recover child branches | **[Seed reconstruction](cloitre-conway/fibonacci-collars.md#seed-reconstruction-and-the-remaining-branch-information)** · **[Minimum cycle checks](cloitre-conway/fibonacci-collars.md#minimal-periodicity-checks-for-inverse-reconstruction)** |
 | Check inverse uniqueness with a small graph and a hand-worked example | **[Gap graph and reverse completeness](cloitre-conway/fibonacci-collars.md#a-bounded-gap-automaton-with-reverse-completeness)** |
 | See the minimum total defect needed for a proper cycle | **[Cycle defect cost](cloitre-conway/fibonacci-collars.md#minimum-defect-cost-of-a-proper-cycle)** |
@@ -60,6 +60,12 @@ now proves the exact linear value at every fixed positive offset for all
 sufficiently large orders, with an explicit threshold. Arithmetic selected
 endpoints are also proved on a domain whose width grows with the order.
 The wider Fibonacci-block centers remain open.
+
+The [dispersion criterion](cloitre-conway/fibonacci-collars.md#size-biased-martingales-and-the-four-generation-dispersion-criterion)
+gives a concrete route to a decay bound through two exact martingales.
+Its implication is proved and finite actual checks support it, but the
+uniform dispersion inequality remains open. A shared geometric counterfamily
+shows why the actual nested orbit selection must enter that proof.
 
 **Still open:** full convergence of C(n)/n, its decay rate, and the growth
 of periods and landing times away from Fibonacci neighborhoods.

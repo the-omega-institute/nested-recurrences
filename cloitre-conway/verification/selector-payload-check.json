@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_sha256": "ea7726e35349c83665bcba102e9f76f2a96d33a1f68fe036c311c3cf205c91c2",
+  "source_sha256": "af023dd346c4812fc7cd337cf94c23a5dbe93129d8b0b9f7bfa99fd6191f1913",
   "scope": "Exact public three-block selector audit, recursive nonautonomous window descent and conserved conditional seed-label budgets. Row-local Cartesian decompositions remain distinct from actual selected splits and their proof costs.",
   "period_five_payloads": 13,
   "parent_rows": 65,
@@ -3623,6 +3623,289 @@
         "lower_bound_mean": "4181/5"
       }
     ],
+    "selected_phase_readouts": {
+      "abstract_ternary_output_words": 9840,
+      "selected_indices_inclusive": [
+        3,
+        131071
+      ],
+      "witnesses": [
+        {
+          "index": 11,
+          "cycle": [
+            6,
+            7
+          ],
+          "outputs": [
+            7,
+            8
+          ],
+          "output_period": 2,
+          "current_output_classes": 2,
+          "minimum_distinguishing_horizon": 0,
+          "complementary_marked_counts": [
+            1,
+            0
+          ],
+          "selected_phase": 0,
+          "selected_value": 7
+        },
+        {
+          "index": 196,
+          "cycle": [
+            115,
+            120,
+            116,
+            117,
+            118
+          ],
+          "outputs": [
+            130,
+            129,
+            132,
+            131,
+            134
+          ],
+          "output_period": 5,
+          "current_output_classes": 5,
+          "minimum_distinguishing_horizon": 0,
+          "complementary_marked_counts": [
+            11,
+            12,
+            9,
+            10,
+            7
+          ],
+          "selected_phase": 4,
+          "selected_value": 134
+        },
+        {
+          "index": 1354,
+          "cycle": [
+            805,
+            811,
+            814
+          ],
+          "outputs": [
+            900,
+            900,
+            900
+          ],
+          "output_period": 1,
+          "current_output_classes": 1,
+          "minimum_distinguishing_horizon": 0,
+          "complementary_marked_counts": [
+            77,
+            77,
+            77
+          ],
+          "selected_phase": 1,
+          "selected_value": 900
+        },
+        {
+          "index": 3054,
+          "cycle": [
+            1835,
+            1846,
+            1841,
+            1839,
+            1848
+          ],
+          "outputs": [
+            2016,
+            2018,
+            2018,
+            2016,
+            2018
+          ],
+          "output_period": 5,
+          "current_output_classes": 2,
+          "minimum_distinguishing_horizon": 3,
+          "complementary_marked_counts": [
+            51,
+            49,
+            49,
+            51,
+            49
+          ],
+          "selected_phase": 3,
+          "selected_value": 2016
+        },
+        {
+          "index": 5980,
+          "cycle": [
+            3595,
+            3600,
+            3597,
+            3610
+          ],
+          "outputs": [
+            3916,
+            3929,
+            3916,
+            3929
+          ],
+          "output_period": 2,
+          "current_output_classes": 2,
+          "minimum_distinguishing_horizon": 0,
+          "complementary_marked_counts": [
+            467,
+            454,
+            467,
+            454
+          ],
+          "selected_phase": 0,
+          "selected_value": 3916
+        },
+        {
+          "index": 46401,
+          "cycle": [
+            28658,
+            28689
+          ],
+          "outputs": [
+            28690,
+            28690
+          ],
+          "output_period": 1,
+          "current_output_classes": 1,
+          "minimum_distinguishing_horizon": 0,
+          "complementary_marked_counts": [
+            0,
+            0
+          ],
+          "selected_phase": 0,
+          "selected_value": 28690
+        },
+        {
+          "index": 75067,
+          "cycle": [
+            46368,
+            46410
+          ],
+          "outputs": [
+            46407,
+            46410
+          ],
+          "output_period": 2,
+          "current_output_classes": 2,
+          "minimum_distinguishing_horizon": 0,
+          "complementary_marked_counts": [
+            3,
+            0
+          ],
+          "selected_phase": 0,
+          "selected_value": 46407
+        }
+      ],
+      "selected_cycles_checked": 131069,
+      "constant_readout_period_counts": {
+        "1": 15516,
+        "2": 2089,
+        "3": 7
+      },
+      "period_five_census": [
+        {
+          "current_output_classes": 2,
+          "distinguishing_horizon": 3,
+          "count": 2
+        },
+        {
+          "current_output_classes": 3,
+          "distinguishing_horizon": 1,
+          "count": 40
+        },
+        {
+          "current_output_classes": 3,
+          "distinguishing_horizon": 2,
+          "count": 24
+        },
+        {
+          "current_output_classes": 4,
+          "distinguishing_horizon": 1,
+          "count": 1128
+        },
+        {
+          "current_output_classes": 5,
+          "distinguishing_horizon": 0,
+          "count": 6178
+        }
+      ],
+      "nonconstant_period_compressions": [
+        {
+          "orbit_period": 4,
+          "output_period": 2,
+          "current_output_classes": 2,
+          "count": 6
+        }
+      ],
+      "scope": "Exact conditional cyclic-output minimum: one current readout has M classes, autonomous future readout has d states, and exact index readout has p states. These are distinct contracts; derived phase arithmetic can remove an independent label. Finite selected-cycle census does not prove that every C five-cycle is nonconstant."
+    },
+    "four_generation_dispersion": {
+      "actual_indices_inclusive": [
+        144,
+        131071
+      ],
+      "positive_defect_roots_checked": 130891,
+      "zero_defect_roots": 37,
+      "exact_finite_kappa_one_verified": true,
+      "minimum_quartic_ratio": {
+        "index": 469,
+        "order": 14,
+        "defect": 28,
+        "variance": "4203191023879/1976723474707800",
+        "ratio": "18868124506192831/112729162291200"
+      },
+      "abstract_rounded_upper_cap_examples": [
+        {
+          "order": 20,
+          "index": 7441,
+          "value": 4857,
+          "defect": 258,
+          "relative_defect": "258/7441",
+          "variance": "3884015270249/5501628661042704960",
+          "quartic_ratio": "215052025694491621769/440258235441385743360"
+        },
+        {
+          "order": 30,
+          "index": 915244,
+          "value": 597433,
+          "defect": 31781,
+          "relative_defect": "521/15004",
+          "variance": "9368605925950022409291761/251862650970088169310933764924314752",
+          "quartic_ratio": "10877744275089054053329965306049641242/425157960203322969448464543618857118492069"
+        },
+        {
+          "order": 40,
+          "index": 112567570,
+          "value": 73479401,
+          "defect": 3908817,
+          "relative_defect": "3908817/112567570",
+          "variance": "804284252720954522740104796390629606015926011/306186772580993370042635761724622353333713629135413639078250",
+          "quartic_ratio": "370598326552338697133734435608091897632604780939212807641960/205120233796518830766420472484143070023730808741714672958696463651907"
+        },
+        {
+          "order": 60,
+          "index": 1702809631512,
+          "value": 1111522901633,
+          "defect": 59128672988,
+          "relative_defect": "710647/20465478",
+          "variance": "31660087906383022239841698139313356261233624564797581762280483/2946188485183928827889682210835845364632167226170672393538546945213028292624950875600",
+          "quartic_ratio": "1027954441828631072844207446741996314879903623332327339241773331593021148242558769/139075431562856233888742921376476903108470810999659317919179943097429070278324472074439154773410175"
+        },
+        {
+          "order": 90,
+          "index": 3168073913807897732,
+          "value": 2067986135441795801,
+          "defect": 110008777836610193,
+          "relative_defect": "969323029/27914926996",
+          "variance": "531792716133848054927689291145421738121594782033973508383844523477698786290720249525649786101709920237/171296784627916698552413248993597000094093818060625557946948807080753159577566018087496437792820882609528371099059691976530230047176056000",
+          "quartic_ratio": "722989335329744846310376457172318906351639933339014193705490362641637920007468542304617377437101942981669953842784918648031651166052/338584330196457978851986387192625374528650860076781404343345984730681564861113708440253137450658288847325313627110140429205732555195602529940419039812592901410375"
+        }
+      ],
+      "one_step_formula": "(F_(j-1)*(N-a)-F_(j-2)*a)^2/(N^2*a*(N-a))",
+      "scope": "Exact finite support for the proposed actual-C quartic dispersion inequality, not a uniform proof or decay exponent. Rounded proportional upper-cap descent is an explicit geometric counterfamily with nonvanishing relative defect and vanishing four-generation variance; it is not the nested C recurrence."
+    },
     "uniform_bounds": {
       "knee": "lambda_j(F_(j-2)) >= ceil(F_(j-3)/3) once F_j+F_(j-2)>=16384",
       "centre": "E/p >= 2*F_(k-1)/5-F_(k-3) at n=2*F_(k-1), F_(k-1)>=16384"

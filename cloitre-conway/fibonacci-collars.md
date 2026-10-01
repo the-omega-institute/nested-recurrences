@@ -1188,7 +1188,10 @@ information when a local recursion is closed:
 Each item has a separate role. The defects determine the normalized transition;
 the child splits make the certificate inductive; and the phase connects an
 arbitrary periodic cycle to the prescribed value `C(n)`. Omitting any one of
-these leaves one of those three conclusions undetermined.
+these generically leaves one of those three conclusions undetermined.
+A family-specific arithmetic rule may recover it from other context;
+a certified phase-independent readout may remove phase selection from
+the numeric-value task. The exact conditional distinction is proved below.
 
 For the first arch, `n=196=F_12+52`, the exact payload is:
 
@@ -1257,6 +1260,102 @@ The recursive extension below keeps a separate parameter at every row. It
 closes the representation under descent without claiming that a child word
 is an autonomous lower period-five orbit. A uniform small branch alphabet and
 short selected-value certificates remain open.
+
+### The exact minimum phase interface depends on the readout
+
+Fix an actual inner cycle of length p, in its transition order
+`x_0,...,x_(p-1)`, with T_n(x_i)=x_(i+1). Suppose the cycle, its
+readout table and the prescribed-start basin have been certified. For C
+put H_i=C(x_i)+C(n-x_i); for Campbell's recurrence the readout is x_i.
+This section compares three precise contracts, keeping their supplied
+context separate from the cost of establishing it.
+
+**Cyclic-output minimum.** Let M be the number of distinct H_i, and let d
+be the least positive cyclic shift preserving the whole output word:
+
+$$
+d=\min\{s\ge1:H_{i+s}=H_i\text{ for every }i\}.
+$$
+
+Then d divides p. A single current output has M classes, while an
+autonomous system that advances one inner step and reads every subsequent
+H has exactly d minimal states. Its phase is the cycle position modulo d.
+If the readout includes the current index x_i, the minimum is instead p.
+
+**Proof.** Shifts preserving the cyclic word form a subgroup of Z/pZ,
+whose least positive generator d divides p. Two phases have the same
+entire future output exactly when their difference is a preserving shift,
+or exactly when they agree modulo d. This gives a well-defined d-state
+rotation and readout. Every other deterministic implementation must keep
+these future-distinguishable phases separate. Exact index readout already
+distinguishes all p phases at the current step. QED.
+
+Once first entry is certified at canonical position q and clock mu, and
+the prescribed depth is D>=mu, the numeric-output phase is
+
+$$
+(q+D-\mu)\bmod d.
+$$
+
+With the word supplied, a fixed-width label for one output requires
+ceil(log_2 M) bits, and a state label for arbitrary continued output
+requires ceil(log_2 d) bits. These conditional capacities are not a lower
+bound on extra data for actual C: an arithmetic rule can derive the
+selected label from other context. They also do not include basin, table
+or depth/entry certificates. In Campbell's period-two cycles the index
+word has d=2; its ternary formulas derive the chosen phase arithmetically.
+
+**Delayed distinction.** Comparing the current output and at most d-M
+future steps already separates all d behavior classes. Indeed the current
+partition has M classes; refinement by the next-step partition is strict
+until it has d classes. A step that gives no refinement is permanently
+stable. Each strict step adds at least one class, proving the bound.
+For a five-cycle, either H is constant and d=1, or d=5. If the word has
+only two distinct values, three future steps always suffice, and may be
+necessary.
+
+**Actual witnesses.** At n=3054 the canonical cycle is
+
+```text
+(1835,1846,1841,1839,1848),
+H=(2016,2018,2018,2016,2018).
+```
+
+There are two current output classes but five continued-output states.
+Phases one and two currently give2018, but their next outputs are2018
+and2016. Phases two and four agree on their current and next two outputs
+`(2018,2016,2018)`, and differ at the third future step. Thus the bound
+d-M=3 is attained. A one-bit current-output label cannot be updated
+autonomously to preserve this five-cycle's future readouts.
+
+Compression does occur in other actual cycles. At n=1354 the cycle
+`(805,811,814)` has constant H=(900,900,900), so its numeric readout needs
+no phase distinction. At n=5980 the canonical four-cycle
+`(3595,3600,3597,3610)` has H=(3916,3929,3916,3929), so its numeric
+future needs only the phase modulo two. Exact split readout still needs
+three and four states, respectively.
+
+On a positive Fibonacci arch n=F_k+t, x_i=F_(k-1)+u_i, this is also an
+occupation test. If M_j(v)=v-P_j(v) denotes the nonnegative marked count,
+put
+
+$$
+m_i=M_{k-1}(u_i)+M_{k-2}(t-u_i).
+$$
+
+The exact child-value identity gives H_i=F_(k-1)+t-m_i. Thus equal
+complementary marked counts are precisely the phases that give the same
+current root value; the cyclic period of this marked-count word determines
+the minimum continued-output phase interface. Constancy erases the value's
+phase dependence, without identifying different selected child layouts.
+
+The checker exhausts9840 ternary output words of lengths1..8, comparing
+cyclic periods with independent next-step partition refinement. It also
+checks every prescribed cycle through131071 and replays the displayed
+witness endpoints literally. In that finite range the7372 selected
+five-cycles are all nonconstant: their numbers of distinct outputs2,3,4,5
+occur2,64,1128,6178 times. This is finite evidence, not a theorem that
+every actual C five-cycle requires five continued-output states.
 
 ## 9. Common closure theorem and generic minimality
 
@@ -2787,3 +2886,150 @@ count throughout the arch. A decay rate would require a quantitative bound
 on that occupation deficit. The positioned terminal code now identifies
 precisely where the missing selector and phase restrictions must act; seven
 symbols alone do not constitute a uniform finite-state classification.
+
+### Size-biased martingales and the four-generation dispersion criterion
+
+A dispersion route suggested by Benoît Cloitre can be expressed entirely
+in the same selected child interface. The martingale identities and the
+conditional decay implication below are exact. The required uniform
+dispersion inequality for actual C remains open.
+
+Start at a closed natural-block state (j,N), F_j<=N<=F_(j+1), and stop
+at profile orders4 or5. At every internal node use its actual selected
+children a and b=N-a, carrying labels j-1,j-2. The closed-block capture
+theorem puts them in those two natural blocks. Choose the first child
+with probability a/N and the second with probability b/N. Preserve these
+inherited labels: recomputing a canonical order at a Fibonacci endpoint
+would change the next variable and invalidate its displayed identity.
+
+With alpha=1/phi, define the two path variables
+
+$$
+Z=\frac{C(N)-\alpha N}{N},\qquad X=\frac{F_j}{N}.
+$$
+
+**Martingale and exact local variance.** Both Z and X are martingales.
+For Z, the conditional expectation is
+`[C(a)+C(b)-alpha*(a+b)]/N=Z`. For X it is
+`[F_(j-1)+F_(j-2)]/N=X`. In the stopped tree X lies in[3/5,1], so
+the sum of its expected conditional variances is bounded independently
+of the root. In particular the bound1 suffices below.
+
+Writing A=F_(j-1), B=F_(j-2), the one-step variance is exactly
+
+$$
+v(j,N)=\frac{(Ab-Ba)^2}{N^2ab}. \tag{9.22}
+$$
+
+Indeed the two child readouts are A/a and B/b, with probabilities a/N
+and b/N; the two-point variance is their squared difference times ab/N^2.
+For N=F_j+u and a=A+r, the numerator is the square of
+`A*u-F_j*r`. It measures the selected split's deviation from a proportional
+Fibonacci split, rather than the cycle's defect sum alone.
+
+Define V_0=0 and, away from the terminal orders, define recursively
+
+$$
+V_m(j,N)=v(j,N)+\frac aN V_{m-1}(j-1,a)
+                       +\frac bN V_{m-1}(j-2,b). \tag{9.23}
+$$
+
+This is the accumulated variance over m generations; by martingale
+orthogonality it also equals E[(X_m-X_0)^2]. Stop terms at orders4/5.
+Although v is positive at every nonanchor internal N, positivity alone
+does not give a scale-independent dispersion bound. In fact v=0 would
+give F_j dividing N, since consecutive Fibonacci numbers are coprime;
+the natural-block interval then forces N=F_j.
+
+**Conditional quartic decay theorem.** Suppose there exist kappa>0 and
+J such that every sufficiently high actual selected context satisfies
+
+$$
+V_4(j,N)\ge\kappa\left(\frac{C(N)-G(N)}N\right)^4
+\qquad(j\ge J). \tag{9.24}
+$$
+
+Then
+
+$$
+C(n)-\alpha n=O\left(\frac n{(\log n)^{1/4}}\right).
+$$
+
+**Proof.** At a root of order j take L=floor(j/16) successive four-generation
+blocks, with j large enough that j/2>=J. Every encountered order remains
+at least floor(j/2), because one generation lowers it by at most two.
+Thus every index is at least F_floor(j/2). Write
+epsilon_j=alpha/F_floor(j/2) and D(N)=C(N)-G(N)>=0. Since
+`G(N)-alpha*N<alpha`, the martingale identity for Z gives at each block
+start
+
+$$
+\mathbb E\frac{D(N)}N\ge Z_0-\epsilon_j.
+$$
+
+Jensen's inequality, (9.24), and the disjoint accumulated variance budget
+therefore give
+
+$$
+L\kappa\,\max(Z_0-\epsilon_j,0)^4\le1.
+$$
+
+Consequently Z_0<=epsilon_j+(L*kappa)^(-1/4). The Fibonacci growth law
+gives epsilon_j=O(n^(-1/2)) and L of order log n. QED. This proves the
+implication; it supplies neither (9.24) nor a matching lower bound for
+the maxima, so it does not establish the conjectured order or exponent.
+
+**Why geometric closure is insufficient.** There is an explicit globally
+shared counterfamily to deriving (9.24) from the Fibonacci child geometry,
+the terminal values and these martingale identities alone. Use the upper-cap
+value U(N)=F_(j-1)+Q_j(u), Q_j(u)=min(u,F_(j-2)), discussed above.
+In the linear part, set r to the nearest integer to
+`F_(j-1)*u/F_j`, if
+
+$$
+u\le F_{j-2},\qquad 0\le r\le F_{j-3},\qquad
+0\le u-r\le F_{j-4}.
+$$
+
+Otherwise use its already proved split
+`r=min(F_(j-2),max(0,u-F_(j-4)))`. Select a=F_(j-1)+r and b=N-a.
+Use the canonical order to define this choice once per physical N;
+Fibonacci endpoint aliases obey the same split. In the rounded case both
+child profiles are linear and their offsets sum to u, so U(a)+U(b)=U(N).
+The fallback has the same identity. Thus this is shared geometric descent
+with the original terminal values, and both martingales hold with U.
+
+Now take N_j=F_j+floor(F_j/10). For any fixed number of generations, all
+visited indices have the form
+
+$$
+N'=\frac{11}{10}F_h+O(1),
+$$
+
+with h differing from j by a bounded amount. This follows by rounding
+error induction; the ratios of the Fibonacci child weights are less than
+one, so a bounded-depth accumulated rounding error stays bounded. For
+large j the displayed split inequalities have a margin proportional to
+F_h, so all these top splits use the rounded case. Each X then differs
+from10/11 by O(1/F_j), proving V_4(j,N_j)=O(F_j^(-2)). But
+
+$$
+\frac{U(N_j)-G(N_j)}{N_j}\longrightarrow\frac{1-\alpha}{11}>0.
+$$
+
+Indeed U(N_j)=N_j-F_(j-2) in this linear part and F_(j-2)/F_j tends
+to1-alpha. No positive uniform kappa can satisfy (9.24) for this family.
+It is not the nested C sequence: at11 its value8 fails the actual depth
+selection, as proved above. It also does not satisfy all global C envelopes.
+This counterexample isolates a missing use of actual selected-orbit
+constraints; it does not refute Cloitre's conjecture for actual C.
+
+**Finite actual check.** Exact rational arithmetic verifies (9.24) with
+kappa1 for every positive-defect root144<=N<=131071. The smallest ratio
+V_4/(D/N)^4 occurs at N=469 and equals
+18868124506192831/112729162291200, approximately167.376. The checker
+also verifies the rounded counterfamily at orders20,30,40,60,90 without
+generating huge recurrence prefixes; at order90 its quartic ratio is
+less than10^(-29). Finite actual support is encouraging, but cannot replace
+the uniform inequality. Proving that inequality would connect the
+selected-value interface to a quantitative occupation estimate.

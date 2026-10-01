@@ -3,6 +3,7 @@
 from collections import Counter, defaultdict
 from bisect import bisect_right
 from fractions import Fraction
+from functools import lru_cache
 import hashlib
 import json
 from itertools import combinations, product
@@ -10,7 +11,7 @@ import math
 from pathlib import Path
 import sys
 
-from conway_explore import brent_generate, full_orbit, generate
+from conway_explore import brent_generate, full_orbit, generate, g_closed
 from five_window_check import all_cycles, canonical_cycle, fibonacci_values
 
 
@@ -1931,6 +1932,160 @@ def terminal_code_audit(sequence, selected_splits, fibonacci, roots):
                 scope='Exact seven-symbol coding of full geometric selector trees. Coefficient ordinals recover all internal offsets and formal profile values; actual codes are checked against C and its selected splits. Geometric multiplicities exclude shared-profile consistency and prescribed-orbit validity; they are not minimum code sizes for the narrower C family.')
 
 
+def cyclic_readout_summary(outputs):
+    length = len(outputs)
+    output_period = next(shift for shift in range(1, length + 1)
+                         if length % shift == 0 and all(
+                             outputs[position] == outputs[(position + shift) % length]
+                             for position in range(length)))
+    classes = len(set(outputs))
+    horizon = next(depth for depth in range(length) if len({
+        tuple(outputs[(position + step) % length] for step in range(depth + 1))
+        for position in range(length)}) == output_period)
+    assert horizon <= output_period - classes
+    labels = tuple(outputs)
+    for depth in range(horizon + 1):
+        residuals = {tuple(outputs[(position + step) % length] for step in range(depth + 1))
+                     for position in range(length)}
+        assert len(set(labels)) == len(residuals)
+        following = {}
+        labels = tuple(following.setdefault((labels[position], labels[(position + 1) % length]),
+                                            len(following)) for position in range(length))
+    assert len(set(labels)) == output_period
+    return output_period, classes, horizon
+
+
+def phase_readout_audit(sequence, selected_splits, fibonacci):
+    abstract_words = 0
+    for length in range(1, 9):
+        for outputs in product(range(3), repeat=length):
+            cyclic_readout_summary(outputs)
+            abstract_words += 1
+    census = Counter()
+    witnesses = []
+    for index in range(3, len(sequence)):
+        trajectory, transient, period = full_orbit(sequence, index)
+        cycle = canonical_cycle(tuple(trajectory[transient:]))
+        outputs = tuple(sequence[point] + sequence[index - point] for point in cycle)
+        output_period, classes, horizon = cyclic_readout_summary(outputs)
+        census[(period, output_period, classes, horizon)] += 1
+        phase = cycle.index(trajectory[transient]) + sequence[index - 1] - transient
+        assert outputs[phase % output_period] == sequence[index]
+        if index in (11, 196, 1354, 3054, 5980, 46401, 75067):
+            point = index - 1
+            for iteration in range(sequence[index - 1]):
+                point = index - sequence[point]
+            assert point == selected_splits[index]
+            order = bisect_right(fibonacci, index) - 1
+            baseline = fibonacci[order - 1] + index - fibonacci[order]
+            witnesses.append(dict(index=index, cycle=list(cycle), outputs=list(outputs),
+                                  output_period=output_period, current_output_classes=classes,
+                                  minimum_distinguishing_horizon=horizon,
+                                  complementary_marked_counts=[baseline - value for value in outputs],
+                                  selected_phase=phase % period, selected_value=sequence[index]))
+    delayed = next(row for row in witnesses if row['index'] == 3054)
+    assert delayed['outputs'] == [2016, 2018, 2018, 2016, 2018]
+    assert (delayed['current_output_classes'], delayed['output_period'],
+            delayed['minimum_distinguishing_horizon']) == (2, 5, 3)
+    return dict(abstract_ternary_output_words=abstract_words,
+                selected_indices_inclusive=[3, len(sequence) - 1], witnesses=witnesses,
+                selected_cycles_checked=sum(census.values()),
+                constant_readout_period_counts={str(period): sum(count for key, count in census.items()
+                                                                 if key[:2] == (period, 1))
+                                                for period in (1, 2, 3)},
+                period_five_census=[dict(current_output_classes=key[2],
+                                        distinguishing_horizon=key[3], count=count)
+                                   for key, count in sorted(census.items()) if key[0] == 5],
+                nonconstant_period_compressions=[dict(orbit_period=key[0], output_period=key[1],
+                                                      current_output_classes=key[2], count=count)
+                                                 for key, count in sorted(census.items())
+                                                 if 1 < key[1] < key[0]],
+                scope='Exact conditional cyclic-output minimum: one current readout has M classes, autonomous future readout has d states, and exact index readout has p states. These are distinct contracts; derived phase arithmetic can remove an independent label. Finite selected-cycle census does not prove that every C five-cycle is nonconstant.')
+
+
+def four_generation_dispersion_audit(sequence, selected_splits, fibonacci):
+    @lru_cache(None)
+    def variance(order, index, steps):
+        if not steps or order <= 5:
+            return Fraction(0)
+        first = selected_splits[index]
+        second = index - first
+        mismatch = fibonacci[order - 1] * second - fibonacci[order - 2] * first
+        local = Fraction(mismatch * mismatch, index * index * first * second)
+        return (local + Fraction(first, index) * variance(order - 1, first, steps - 1)
+                + Fraction(second, index) * variance(order - 2, second, steps - 1))
+
+    tested = 0
+    zero_defects = 0
+    minimum = None
+    minimum_row = None
+    for index in range(fibonacci[12], len(sequence)):
+        order = bisect_right(fibonacci, index) - 1
+        defect = sequence[index] - g_closed(index)
+        if not defect:
+            zero_defects += 1
+            continue
+        total = variance(order, index, 4)
+        ratio = total / Fraction(defect, index) ** 4
+        assert ratio >= 1
+        if minimum is None or ratio < minimum:
+            minimum = ratio
+            minimum_row = dict(index=index, order=order, defect=defect,
+                               variance=str(total), ratio=str(ratio))
+        tested += 1
+    arithmetic_fibonacci = fibonacci_values(10 ** 100)
+
+    def upper_value(order, index):
+        return (arithmetic_fibonacci[order - 1]
+                + min(index - arithmetic_fibonacci[order], arithmetic_fibonacci[order - 2]))
+
+    def rounded_split(index):
+        order = bisect_right(arithmetic_fibonacci, index) - 1
+        offset = index - arithmetic_fibonacci[order]
+        denominator = arithmetic_fibonacci[order]
+        candidate = (2 * arithmetic_fibonacci[order - 1] * offset + denominator) // (2 * denominator)
+        if (offset <= arithmetic_fibonacci[order - 2]
+                and candidate <= arithmetic_fibonacci[order - 3]
+                and offset - candidate <= arithmetic_fibonacci[order - 4]):
+            split_offset = candidate
+        else:
+            split_offset = min(arithmetic_fibonacci[order - 2],
+                               max(0, offset - arithmetic_fibonacci[order - 4]))
+        return arithmetic_fibonacci[order - 1] + split_offset
+
+    @lru_cache(None)
+    def abstract_variance(order, index, steps):
+        if not steps:
+            return Fraction(0)
+        first = rounded_split(index)
+        second = index - first
+        assert arithmetic_fibonacci[order - 1] <= first <= arithmetic_fibonacci[order]
+        assert arithmetic_fibonacci[order - 2] <= second <= arithmetic_fibonacci[order - 1]
+        assert upper_value(order, index) == upper_value(order - 1, first) + upper_value(order - 2, second)
+        mismatch = arithmetic_fibonacci[order - 1] * second - arithmetic_fibonacci[order - 2] * first
+        local = Fraction(mismatch * mismatch, index * index * first * second)
+        return (local + Fraction(first, index) * abstract_variance(order - 1, first, steps - 1)
+                + Fraction(second, index) * abstract_variance(order - 2, second, steps - 1))
+
+    abstract_rows = []
+    for order in (20, 30, 40, 60, 90):
+        index = arithmetic_fibonacci[order] + arithmetic_fibonacci[order] // 10
+        defect = upper_value(order, index) - g_closed(index)
+        total = abstract_variance(order, index, 4)
+        ratio = total / Fraction(defect, index) ** 4
+        abstract_rows.append(dict(order=order, index=index, value=upper_value(order, index),
+                                  defect=defect, relative_defect=str(Fraction(defect, index)),
+                                  variance=str(total), quartic_ratio=str(ratio)))
+    assert Fraction(abstract_rows[-1]['quartic_ratio']) < Fraction(1, 10 ** 29)
+    variance.cache_clear()
+    return dict(actual_indices_inclusive=[fibonacci[12], len(sequence) - 1],
+                positive_defect_roots_checked=tested, zero_defect_roots=zero_defects,
+                exact_finite_kappa_one_verified=True, minimum_quartic_ratio=minimum_row,
+                abstract_rounded_upper_cap_examples=abstract_rows,
+                one_step_formula='(F_(j-1)*(N-a)-F_(j-2)*a)^2/(N^2*a*(N-a))',
+                scope='Exact finite support for the proposed actual-C quartic dispersion inequality, not a uniform proof or decay exponent. Rounded proportional upper-cap descent is an explicit geometric counterfamily with nonvanishing relative defect and vanishing four-generation variance; it is not the nested C recurrence.')
+
+
 def unbounded_defect_audit():
     sequence, _, _, selected_splits = generate(131071)
     assert sequence == brent_generate(131071)
@@ -1992,6 +2147,8 @@ def unbounded_defect_audit():
             upper_selected, upper_nested_value = point, value
     assert (upper_selected, upper_nested_value) == (6, 7)
     return dict(knee_examples=knees, generated_knee_codes=knee_codes, all_cycle_centre_examples=centres,
+                selected_phase_readouts=phase_readout_audit(sequence, selected_splits, fibonacci),
+                four_generation_dispersion=four_generation_dispersion_audit(sequence, selected_splits, fibonacci),
                 uniform_bounds=dict(knee='lambda_j(F_(j-2)) >= ceil(F_(j-3)/3) once F_j+F_(j-2)>=16384',
                                     centre='E/p >= 2*F_(k-1)/5-F_(k-3) at n=2*F_(k-1), F_(k-1)>=16384'),
                 upper_cap_geometric_family=dict(profile='Q_j(u)=min(u,F_(j-2))',
