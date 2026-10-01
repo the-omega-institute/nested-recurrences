@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_sha256": "c1cc6cc5eb11528c0cb5612e9360c620e87864ae05c219278f7c9bf04b047d36",
+  "source_sha256": "8d9403c02f779f7cdc48deefadebc73a55b58156a73840603ecf156722f31311",
   "scope": "Exact public three-block selector audit, recursive nonautonomous window descent and conserved conditional seed-label budgets. Row-local Cartesian decompositions remain distinct from actual selected splits and their proof costs.",
   "period_five_payloads": 13,
   "parent_rows": 65,
@@ -60,6 +60,44 @@
     ],
     "even_zero_defect_contexts": 13,
     "scope": "Abstract position-dependent profiles, not C parent-cycle examples; odd bound is attained and even zero-defect fibers grow with the domain."
+  },
+  "golden_child_decoder": {
+    "row_local_combinations_checked": 69064,
+    "floor_evaluations": 1832655,
+    "maximum_raw_candidates": 1,
+    "residual_seed_bits": 0,
+    "synthetic_signed_audit": {
+      "contexts": 1092,
+      "signed_floor_rational_checks": 257,
+      "seed_interval": [
+        -8,
+        12
+      ],
+      "constants": [
+        -1,
+        2,
+        5
+      ],
+      "lengths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "infeasible_contexts": 26,
+      "trials_with_nonpositive_indices": 22694,
+      "candidate_histogram": {
+        "0": 26,
+        "1": 1013,
+        "2": 50,
+        "3": 3
+      },
+      "floor_evaluations": 38463
+    },
+    "formula": "z_(i+1) = L_(i+1) + alpha_i + B_i - d_i - Ghat(z_i)",
+    "qualification": "Ordered alpha, anchors and point golden defects are supplied; actual values, candidate domains and prescribed selection remain separate qualifications."
   },
   "local_cycle_refinement": {
     "retained_candidate_positions": 99,
@@ -3623,6 +3661,176 @@
         "lower_bound_mean": "4181/5"
       }
     ],
+    "golden_defect_decoder": {
+      "selected_roots": 131064,
+      "prefix_limit": 131071,
+      "selected_period_histogram": {
+        "1": 15514,
+        "2": 37936,
+        "3": 10035,
+        "4": 15631,
+        "5": 7372,
+        "6": 9651,
+        "7": 5203,
+        "8": 6326,
+        "9": 3688,
+        "10": 4091,
+        "11": 2605,
+        "12": 2642,
+        "13": 1793,
+        "14": 1829,
+        "15": 1168,
+        "16": 1176,
+        "17": 796,
+        "18": 785,
+        "19": 534,
+        "20": 486,
+        "21": 337,
+        "22": 319,
+        "23": 220,
+        "24": 208,
+        "25": 146,
+        "26": 142,
+        "27": 82,
+        "28": 68,
+        "29": 45,
+        "30": 53,
+        "31": 38,
+        "32": 38,
+        "33": 20,
+        "34": 24,
+        "35": 13,
+        "36": 14,
+        "37": 5,
+        "38": 9,
+        "39": 3,
+        "40": 8,
+        "42": 4,
+        "43": 2,
+        "45": 1,
+        "46": 2,
+        "48": 1,
+        "52": 1
+      },
+      "selected_raw_candidate_histogram": {
+        "1": 98428,
+        "2": 26600,
+        "3": 6036
+      },
+      "all_start_limit": 609,
+      "all_start_period_histogram": {
+        "1": 375,
+        "2": 802,
+        "3": 39,
+        "4": 38,
+        "5": 13,
+        "6": 7,
+        "7": 1
+      },
+      "odd_full_period_traces": 50048,
+      "proper_five_traces": 7385,
+      "maximum_five_additional_observation_horizon": 3,
+      "sharp_five_observation_example": {
+        "root": 513,
+        "cycle": [
+          306,
+          309,
+          307,
+          308,
+          311
+        ],
+        "defects": [
+          15,
+          15,
+          15,
+          12,
+          15
+        ],
+        "additional_observation_horizon": 3
+      },
+      "alpha_collision": {
+        "index": 7739,
+        "alpha": [
+          605,
+          678,
+          576,
+          520,
+          518
+        ],
+        "offset_words": [
+          [
+            255,
+            368,
+            344,
+            255,
+            283
+          ],
+          [
+            260,
+            364,
+            341,
+            258,
+            274
+          ]
+        ],
+        "physical_anchor": 2584,
+        "baseline": 1597,
+        "golden_defect_words": [
+          [
+            79,
+            106,
+            108,
+            79,
+            88
+          ],
+          [
+            80,
+            112,
+            107,
+            86,
+            89
+          ]
+        ],
+        "residual_seed_bits": 0
+      },
+      "sharp_even_example": {
+        "root": 5,
+        "defects": [
+          0,
+          0
+        ],
+        "raw_words": [
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        "proper_two_phase_words": [
+          [
+            2,
+            4
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        "campbell_selected_endpoint": 2,
+        "campbell_depth": 3
+      },
+      "campbell_literal_limit": 32,
+      "campbell_literal_updates": 298,
+      "floor_evaluations": 9670456,
+      "scope": "Conditional golden-defect reconstruction; odd uniqueness and even three-candidate bound are written infinite theorems. Independent full-orbit/Brent prefix supports these finite checks. Point defects and actual basin/depth are not constructed by the decoder."
+    },
     "selected_phase_readouts": {
       "abstract_ternary_output_words": 9840,
       "selected_indices_inclusive": [

@@ -11,6 +11,7 @@ itself certify the actual prescribed-start basin.
 ## Contents
 
 - [Seed reconstruction and the remaining branch information](#seed-reconstruction-and-the-remaining-branch-information)
+- [Golden-defect words give a uniform cyclic decoder](#golden-defect-words-give-a-uniform-cyclic-decoder)
 - [A universal seed label from the parent defect budget](#a-universal-seed-label-from-the-parent-defect-budget)
 - [Local cycle admissibility and what it does not prove](#local-cycle-admissibility-and-what-it-does-not-prove)
 - [Minimal periodicity checks for inverse reconstruction](#minimal-periodicity-checks-for-inverse-reconstruction)
@@ -118,6 +119,147 @@ four points. The public verifier also constructs a four-part nondecreasing
 partition of the entire 18-element candidate set, so its minimum is exactly
 four. This refutes a uniform three-class cover; it does not refute binary
 alpha fibers, and it does not prove a uniform four-class cover.
+
+### Golden-defect words give a uniform cyclic decoder
+
+There is a different supplied-data interface that avoids searching a whole
+lower profile. Write a scalar value as G(z)+d, where d is its golden defect.
+If the ordered defect at each row is supplied, the unknown index occurs
+only inside the monotone golden floor. For a five-window this makes the
+cyclic inverse unique, regardless of the size of the defects. The defect
+integers themselves and their actual-C qualification remain resources.
+
+**Cyclic decoder theorem.** Set eta=1/phi and extend only the diagnostic
+floor to integers by
+
+$$
+\widehat G(z)=\lfloor\eta(z+1)\rfloor\quad(z\in\mathbb Z).
+$$
+
+It agrees with G at positive indices; this extension does not define C at
+nonpositive indices. Given an ordered integer word c_0,...,c_(ell-1),
+consider closed integer words
+
+$$
+z_{i+1}=c_i-\widehat G(z_i),\qquad z_\ell=z_0. \tag{G.1}
+$$
+
+In any declared finite interval for z_0:
+
+- If ell is odd, there is at most one closed word: zero residual seed bits.
+- If ell is even, there are at most three closed words. Their initial
+  indices lie in three consecutive integers, so at most two residual
+  seed bits suffice before further qualification.
+- All raw candidates can be found with O(ell log(W+2)) golden-floor
+  evaluations, where W is the width of the initial interval. Candidate
+  membership, actual values, proper period, basin and phase are then checked.
+
+Arbitrary candidate sets at later rows can only remove words. These are
+conditional numeric inverse bounds, not a minimum total payload theorem.
+
+**Proof.** Every map z->c_i-Ghat(z) is nonincreasing and 1-Lipschitz on
+integers. For a separation delta>=3,
+
+$$
+|\widehat G(z+\delta)-\widehat G(z)|
+\le\lceil\eta\delta\rceil\le\delta-1, \tag{G.2}
+$$
+
+because eta<2/3. Thus a cyclic pair of solutions cannot start at distance
+at least3: its distance shrinks at the first step and cannot increase
+afterward. At odd ell the composite map F is nonincreasing, and two
+distinct fixed points would reverse their own strict order, which is
+impossible. At even ell, F is nondecreasing and 1-Lipschitz; hence F(z)-z
+is nonincreasing. Its zero set is an integer interval, and (G.2) limits
+that interval to at most three integers. The same difference is strictly
+decreasing at odd ell. Binary search for its first nonpositive value,
+test equality, and test at most the next two seeds. Each composite
+evaluation uses ell floor operations. Signed provisional indices are
+allowed during this search; the declared positive row domains are checked
+on the resulting words, not assumed during a bisection trial. QED.
+
+**Application to the actual child inverse.** Use the existing profile
+definition P(r)=C(L+r)-B, not the natural defect P(r)-r. More generally
+allow supplied row anchors L_i,B_i and parameters
+
+$$
+\alpha_i=r_{i+1}+C(L_i+r_i)-B_i.
+$$
+
+Supply the ordered golden-defect word
+d_i=C(L_i+r_i)-G(L_i+r_i). With z_i=L_i+r_i, its physical inverse is
+
+$$
+z_{i+1}=L_{i+1}+\alpha_i+B_i-d_i-G(z_i). \tag{G.3}
+$$
+
+This is (G.1). In particular every five-row child inverse has at most one
+numeric solution given alpha, the anchor words and d. No branch ordinal,
+profile-cover itinerary or large defect-dependent seed residue is needed
+in this supplied-data model. The higher-order alpha collision above has
+different ordered golden-defect words for its two solutions; each decodes
+uniquely once its own word is supplied.
+Explicitly, its common physical anchor is L=2584 and baseline B=1597;
+the two ordered words are (79,106,108,79,88) and (80,112,107,86,89).
+Their separation concerns the row-local inverses: the earlier periodicity
+check still excludes both as actual selected child words.
+
+After reconstruction, verify row candidate membership, the actual equation
+C(z_i)=G(z_i)+d_i, complementary scalar sums, repeated physical-index
+consistency and selected validity. A wrong supplied defect word can produce
+a perfectly closed geometric candidate. This decoder does not certify
+that the candidate is the actual prescribed split.
+
+**Application to an inner orbit and its phase readout.** For a fixed root N
+and a proposed ordered orbit-defect word d_i=C(x_i)-G(x_i), put c_i=N-d_i.
+Equation (G.1) reconstructs its orbit positions. An odd orbit-defect word
+therefore fixes the numeric starting phase whenever it is feasible. On
+every proper odd cycle, the golden-defect trace has the full cycle period:
+a nontrivial rotation preserving that trace would give a second starting
+point solving the same ordered inverse, contradicting uniqueness.
+
+For a proper five-cycle at least two defect values occur. The existing
+[cyclic-readout refinement bound](five-window-closure.md#the-exact-minimum-phase-interface-depends-on-the-readout)
+then distinguishes its five phases after at most three additional defect
+observations, that is, a block of at most four consecutive observations.
+The observations require actual scalar values. This conditional phase
+diagnostic does not identify the prescribed entrance or provide those
+observations from five digit labels alone.
+
+The four-observation bound is attained by an actual cycle at N=513:
+its canonical positions are (306,309,307,308,311), and its golden-defect
+trace is (15,15,15,12,15). Two starting phases have the same first three
+observations (15,15,15); all five blocks of four observations are distinct.
+Thus three observations cannot always replace four in this readout model.
+
+**Even sharpness and Campbell.** At N=5 both actual C and Campbell's b have
+the common earlier values (1,1,2,3)=G(1),...,G(4). The length-two defect
+word (0,0) admits exactly the closed words (2,4),(3,3),(4,2) in1..4.
+Thus the even three-candidate bound and two-bit worst-case label are sharp
+in the stated raw cyclic model. If proper period2 is supplied, only the
+first and last remain, requiring one phase bit. Campbell's actual start4
+and depth b(4)=3 select2. Its complete ternary templates supply that
+selection; the golden word alone does not. See the
+[cross-family comparison](../campbell/scale-memory.md#golden-defect-words-and-the-period-two-interface).
+
+**Information and validation contract.** The decoder uses only the golden
+floor to reconstruct coordinates, replacing full lower-profile lookup by
+the supplied point-defect word. It does not construct or prove that word.
+For a five-row problem with input magnitudes bounded by O(N), ordinary
+integer registers and the supplied integer words use O(log N) bits; this
+is distinct from the smaller working-bit modular selector that assumes
+read-only tables. The defects can grow, and autonomous recognition,
+table construction, actual basin/phase certification and the total minimum
+recursive interface remain separate questions.
+
+The [checker](verification/selector_payload_check.py) independently compares
+bisection with exhaustive signed-index search, decodes all69064 public
+row-local child combinations, verifies the higher-order collision with its
+two different defect words, and reconstructs actual selected cycles from
+an independently evaluated prefix. All-start small-block cycles additionally
+check the odd phase-period conclusion and proper five-cycle observation
+bound. The infinite bounds follow from monotonicity and (G.2), not from
+extrapolating the finite census.
 
 ### A universal seed label from the parent defect budget
 
