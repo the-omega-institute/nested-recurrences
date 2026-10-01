@@ -8,8 +8,12 @@ Parity and the power-of-three scale are explicit mathematical premises.
 
 from fractions import Fraction as Q
 from itertools import product
+import hashlib
 import json
 from math import gcd, lcm
+from pathlib import Path
+
+from explore import candidate, orbit, orbit_value
 
 
 def affine(n=0, s=0, c=0):
@@ -240,6 +244,92 @@ def check_closure_interface():
     return templates, row_groups
 
 
+def check_five_pattern_interaction():
+    limit = 16 * 3 ** 8 + 7
+    fibonacci = [0, 1]
+    while fibonacci[-1] <= limit:
+        fibonacci.append(fibonacci[-1] + fibonacci[-2])
+
+    def indices(value):
+        remainder = value
+        result = []
+        for order in range(len(fibonacci) - 1, 1, -1):
+            if fibonacci[order] <= remainder:
+                result.append(order)
+                remainder -= fibonacci[order]
+        assert remainder == 0
+        assert all(first - second >= 2 for first, second in zip(result, result[1:]))
+        return tuple(result)
+
+    low_values = []
+    for bits in product((0, 1), repeat=5):
+        if any(first and second for first, second in zip(bits, bits[1:])):
+            continue
+        low_values.append(sum(fibonacci[order] * bit for order, bit in zip(range(2, 7), bits)))
+    assert set(low_values) == set(range(13))
+    sequence = [0, 1]
+    for index in range(2, limit + 1):
+        trajectory, transient, period = orbit(sequence, index)
+        sequence.append(orbit_value(trajectory, transient, period, sequence[index - 1]))
+    for index in range(2, limit - 1):
+        assert sequence[index + 2] - sequence[index] in (0, 2)
+    literal_limit = 16 * 3 ** 3 + 7
+    literal = [0, 1]
+    literal_updates = 0
+    for index in range(2, literal_limit + 1):
+        point = index - 1
+        for iteration in range(literal[index - 1]):
+            point = index - literal[point]
+            literal_updates += 1
+        literal.append(point)
+    assert literal == sequence[:literal_limit + 1]
+    offsets = (0, 2, 3, 5, 7)
+    patterns = ((0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1), (1, 0, 1))
+    rows = []
+    literal_endpoints = 0
+    for exponent in range(3, 9):
+        scale = 3 ** (exponent + 1)
+        for multiplier in (10, 14, 16):
+            target = multiplier * 3 ** exponent
+            high_indices = tuple(order for order in indices(target) if order >= 7)
+            context = sum(fibonacci[order] for order in high_indices)
+            removed = target - context
+            assert 0 <= removed <= 12 and min(high_indices) >= 7
+            assert all(indices(context + offset) == high_indices +
+                       tuple(order for order in (5, 4, 3) if pattern[order - 3])
+                       for pattern, offset in zip(patterns, offsets))
+            interval = (3, 4) if multiplier == 10 else (4, 5) if multiplier == 14 else (5, 6)
+            assert interval[0] * scale <= context <= context + 7 < interval[1] * scale
+            values = []
+            root_periods = []
+            for offset in offsets:
+                index = context + offset
+                point = index - 1
+                for iteration in range(sequence[index - 1]):
+                    point = index - sequence[point]
+                    literal_endpoints += 1
+                assert point == sequence[index] == candidate(index)
+                _, _, period = orbit(sequence, index)
+                assert period <= 2
+                root_periods.append(period)
+                values.append(point)
+            interaction = values[4] - values[1] - values[3] + values[0]
+            expected = (-2 if multiplier == 10 else 0 if multiplier == 14 else 2) * (-1) ** context
+            assert interaction == expected
+            rows.append(dict(exponent=exponent, multiplier=multiplier, scale=scale,
+                             context=context, removed_low_value=removed, parity=context % 2,
+                             values=values, interaction=interaction, root_periods=root_periods))
+    assert {row['interaction'] for row in rows} == {-2, 0, 2}
+    return dict(maximum_removed_low_value=12, independently_literal_prefix=literal_limit,
+                literal_prefix_updates=literal_updates, orbit_prefix_limit=limit,
+                prefix_sha256=hashlib.sha256(','.join(map(str, sequence[1:])).encode('ascii')).hexdigest(),
+                actual_contexts=len(rows), canonical_words_checked=5 * len(rows),
+                same_parity_increment_pairs_checked=limit - 3,
+                coefficient_readout_class_count=3,
+                literal_selected_endpoint_updates=literal_endpoints, contexts=rows,
+                scope='Universal strip/parity interaction laws follow from the proved ternary formula and bounded canonical truncation. The18 contexts are independently generated from the recurrence, with literal endpoints and a literal prefix; they do not supply an infinite premise or claim constant autonomous scale memory.')
+
+
 if __name__ == '__main__':
     check_elimination()
     check_small()
@@ -263,5 +353,7 @@ if __name__ == '__main__':
             phase='parity of n; no independent five-phase selector',
             qualification='The six labels are distinct parity/domain templates; five affine endpoint maps occur because the even- and odd-low plateau labels share the same map on different domains. The explicit formula derives the applicable label from n and its power-of-three scale.'
         ),
+        five_pattern_interaction=check_five_pattern_interaction(),
+        source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         scope='arithmetic certificate for the written induction, not Lean verification',
     ), indent=2))

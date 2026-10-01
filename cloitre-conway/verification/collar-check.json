@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "d6d027620ae7a336a98f09ca6137c63fa19075ea89bc6fd4f9a87d8fdac1467d",
+  "source_sha256": "8bc015afcaf808ee0f5eae9bbddb7d4ab04df12f15b4202581ec793148d6c057",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -4568,6 +4568,404 @@
     ],
     "universal_lowest_window_zero_interaction_orders": "all j>=23",
     "fixed_window_threshold": "j>=max(3*i+7,K(F_(3*i+3)+F_(3*i+5)))",
+    "persistent_canonical_context": {
+      "arithmetic_context_orders_inclusive": [
+        8,
+        14
+      ],
+      "canonical_words_checked": 35,
+      "arithmetic_context_rows": [
+        {
+          "context_order": 8,
+          "anchor_order": 27,
+          "anchor_gap": 21,
+          "zero_width": 15,
+          "unit_width": 29,
+          "high_digit_count": 10,
+          "lowest_high_digit": 7,
+          "context_bit_length": 18,
+          "predicted_interaction": 1
+        },
+        {
+          "context_order": 9,
+          "anchor_order": 47,
+          "anchor_gap": 34,
+          "zero_width": 28,
+          "unit_width": 56,
+          "high_digit_count": 19,
+          "lowest_high_digit": 10,
+          "context_bit_length": 32,
+          "predicted_interaction": 1
+        },
+        {
+          "context_order": 10,
+          "anchor_order": 78,
+          "anchor_gap": 55,
+          "zero_width": 49,
+          "unit_width": 97,
+          "high_digit_count": 34,
+          "lowest_high_digit": 11,
+          "context_bit_length": 53,
+          "predicted_interaction": 1
+        },
+        {
+          "context_order": 11,
+          "anchor_order": 129,
+          "anchor_gap": 89,
+          "zero_width": 83,
+          "unit_width": 165,
+          "high_digit_count": 59,
+          "lowest_high_digit": 12,
+          "context_bit_length": 89,
+          "predicted_interaction": 1
+        },
+        {
+          "context_order": 12,
+          "anchor_order": 212,
+          "anchor_gap": 144,
+          "zero_width": 138,
+          "unit_width": 276,
+          "high_digit_count": 100,
+          "lowest_high_digit": 13,
+          "context_bit_length": 147,
+          "predicted_interaction": 1
+        },
+        {
+          "context_order": 13,
+          "anchor_order": 345,
+          "anchor_gap": 233,
+          "zero_width": 227,
+          "unit_width": 453,
+          "high_digit_count": 166,
+          "lowest_high_digit": 14,
+          "context_bit_length": 239,
+          "predicted_interaction": 1
+        },
+        {
+          "context_order": 14,
+          "anchor_order": 561,
+          "anchor_gap": 377,
+          "zero_width": 371,
+          "unit_width": 741,
+          "high_digit_count": 274,
+          "lowest_high_digit": 13,
+          "context_bit_length": 389,
+          "predicted_interaction": 1
+        }
+      ],
+      "arithmetic_scope": "Canonical Zeckendorf identities, legal seams and proved unit-family qualifications; no direct C evaluation at the large arithmetic contexts.",
+      "actual_prefix_limit": 196418,
+      "full_orbit_and_brent_agree": true,
+      "prefix_sha256": "c4693d6c9541098ea6420f35be97083582f4db67c2247b357b60ee34bb097ad4",
+      "actual_root_rows": [
+        {
+          "pattern": "000",
+          "index": 196397,
+          "value": 121392,
+          "canonical_indices": [
+            26,
+            24,
+            22,
+            20,
+            18,
+            16,
+            14,
+            12,
+            10,
+            7
+          ],
+          "depth": 121392,
+          "transient": 13,
+          "period": 1,
+          "selected_split": 121373
+        },
+        {
+          "pattern": "100",
+          "index": 196399,
+          "value": 121392,
+          "canonical_indices": [
+            26,
+            24,
+            22,
+            20,
+            18,
+            16,
+            14,
+            12,
+            10,
+            7,
+            3
+          ],
+          "depth": 121392,
+          "transient": 13,
+          "period": 1,
+          "selected_split": 121375
+        },
+        {
+          "pattern": "010",
+          "index": 196400,
+          "value": 121392,
+          "canonical_indices": [
+            26,
+            24,
+            22,
+            20,
+            18,
+            16,
+            14,
+            12,
+            10,
+            7,
+            4
+          ],
+          "depth": 121392,
+          "transient": 14,
+          "period": 1,
+          "selected_split": 121376
+        },
+        {
+          "pattern": "001",
+          "index": 196402,
+          "value": 121392,
+          "canonical_indices": [
+            26,
+            24,
+            22,
+            20,
+            18,
+            16,
+            14,
+            12,
+            10,
+            7,
+            5
+          ],
+          "depth": 121392,
+          "transient": 14,
+          "period": 1,
+          "selected_split": 121378
+        },
+        {
+          "pattern": "101",
+          "index": 196404,
+          "value": 121393,
+          "canonical_indices": [
+            26,
+            24,
+            22,
+            20,
+            18,
+            16,
+            14,
+            12,
+            10,
+            7,
+            5,
+            3
+          ],
+          "depth": 121393,
+          "transient": 13,
+          "period": 1,
+          "selected_split": 121379
+        }
+      ],
+      "literal_selected_endpoint_updates": 606961,
+      "actual_first_spine_steps": 40,
+      "inherited_pattern_spine_rows": [
+        {
+          "anchor_order": 27,
+          "gaps": [
+            21,
+            19,
+            18,
+            16,
+            14
+          ],
+          "cap": 121393,
+          "values": [
+            121392,
+            121392,
+            121392,
+            121392,
+            121393
+          ],
+          "interaction": 1,
+          "cap_normalized_interaction": "1/121393"
+        },
+        {
+          "anchor_order": 26,
+          "gaps": [
+            20,
+            18,
+            17,
+            15,
+            14
+          ],
+          "cap": 75025,
+          "values": [
+            75024,
+            75024,
+            75024,
+            75024,
+            75025
+          ],
+          "interaction": 1,
+          "cap_normalized_interaction": "1/75025"
+        },
+        {
+          "anchor_order": 25,
+          "gaps": [
+            19,
+            17,
+            16,
+            14,
+            13
+          ],
+          "cap": 46368,
+          "values": [
+            46367,
+            46367,
+            46367,
+            46367,
+            46368
+          ],
+          "interaction": 1,
+          "cap_normalized_interaction": "1/46368"
+        },
+        {
+          "anchor_order": 24,
+          "gaps": [
+            18,
+            16,
+            15,
+            14,
+            13
+          ],
+          "cap": 28657,
+          "values": [
+            28656,
+            28656,
+            28656,
+            28656,
+            28657
+          ],
+          "interaction": 1,
+          "cap_normalized_interaction": "1/28657"
+        },
+        {
+          "anchor_order": 23,
+          "gaps": [
+            17,
+            15,
+            14,
+            13,
+            12
+          ],
+          "cap": 17711,
+          "values": [
+            17710,
+            17710,
+            17710,
+            17710,
+            17711
+          ],
+          "interaction": 1,
+          "cap_normalized_interaction": "1/17711"
+        },
+        {
+          "anchor_order": 22,
+          "gaps": [
+            16,
+            14,
+            13,
+            12,
+            11
+          ],
+          "cap": 10946,
+          "values": [
+            10945,
+            10945,
+            10945,
+            10945,
+            10946
+          ],
+          "interaction": 1,
+          "cap_normalized_interaction": "1/10946"
+        },
+        {
+          "anchor_order": 21,
+          "gaps": [
+            15,
+            13,
+            12,
+            12,
+            11
+          ],
+          "cap": 6765,
+          "values": [
+            6764,
+            6764,
+            6764,
+            6764,
+            6765
+          ],
+          "interaction": 1,
+          "cap_normalized_interaction": "1/6765"
+        },
+        {
+          "anchor_order": 20,
+          "gaps": [
+            14,
+            12,
+            11,
+            11,
+            10
+          ],
+          "cap": 4181,
+          "values": [
+            4180,
+            4180,
+            4180,
+            4180,
+            4181
+          ],
+          "interaction": 1,
+          "cap_normalized_interaction": "1/4181"
+        },
+        {
+          "anchor_order": 19,
+          "gaps": [
+            13,
+            11,
+            10,
+            10,
+            9
+          ],
+          "cap": 2584,
+          "values": [
+            2583,
+            2583,
+            2583,
+            2583,
+            2584
+          ],
+          "interaction": 1,
+          "cap_normalized_interaction": "1/2584"
+        }
+      ],
+      "terminal_first_spine_probabilities": [
+        "4168/196397",
+        "4170/196399",
+        "4171/196400",
+        "4171/196402",
+        "1043/49101"
+      ],
+      "persistent_interaction_formula": "k_m=ceil(3*(F_m-3)/2), h_m=F_(k_m)-F_m; C(h_m+w(x))=F_(k_m-1)-1+x1*x3, m>=8",
+      "all_root_basins_fixed": true,
+      "descendant_interaction": 1,
+      "cap_normalized_terminal_interaction": "1/2584",
+      "scope": "Infinite canonical-index interaction follows from the unit-sublevel theorem and telescoping Zeckendorf identities. The explicit first family member and inherited-label first spines are independently checked. Root interaction does not imply a long orbit or a residual selector label; terminal signal persistence does not prove uniform dispersion because its size-biased first-spine probability tends to zero."
+    },
     "scope": "Interpolation is elementary; infinite fixed-window vanishing follows from the proved positive collar. The digit alphabet is not an inner period-five orbit, and scalar additivity does not certify basin or selected phase."
   },
   "quantitative_capture": {

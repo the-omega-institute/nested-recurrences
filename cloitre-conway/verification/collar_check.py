@@ -1369,6 +1369,7 @@ def persistent_canonical_interaction_audit():
     current_indices = root_indices[:]
     first_spine_steps = 0
     spine_rows = []
+    spine_weights = [Fraction(1)] * 5
     for order in range(witness_order, 18, -1):
         cap = fibonacci[order - 1]
         values = [sequence[index] for index in current_indices]
@@ -1378,20 +1379,22 @@ def persistent_canonical_interaction_audit():
         gaps = [fibonacci[order] - index for index in current_indices]
         assert all(gap <= unit_defect_width(order) for gap in gaps)
         spine_rows.append(dict(anchor_order=order, gaps=gaps, cap=cap, values=values,
-                               interaction=1, normalized_interaction=str(Fraction(1, cap))))
+                               interaction=1, cap_normalized_interaction=str(Fraction(1, cap))))
         if order == 19:
             break
         following_indices = []
-        for index, gap in zip(current_indices, gaps):
+        for row, (index, gap) in enumerate(zip(current_indices, gaps)):
             shift = unit_defect_shift(order, gap)
             split = cap - gap + shift
             assert split == splits[index]
             assert sequence[index - split] == fibonacci[order - 3]
             following_indices.append(split)
+            spine_weights[row] *= Fraction(split, index)
             first_spine_steps += 1
         current_indices = following_indices
     spine_probabilities = [str(Fraction(terminal, root))
                            for terminal, root in zip(current_indices, root_indices)]
+    assert spine_probabilities == [str(weight) for weight in spine_weights]
     assert all(terminal <= fibonacci[19] for terminal in current_indices)
     return dict(arithmetic_context_orders_inclusive=[8, 14], canonical_words_checked=canonical_words,
                 arithmetic_context_rows=arithmetic_rows,
@@ -1403,7 +1406,7 @@ def persistent_canonical_interaction_audit():
                 terminal_first_spine_probabilities=spine_probabilities,
                 persistent_interaction_formula='k_m=ceil(3*(F_m-3)/2), h_m=F_(k_m)-F_m; C(h_m+w(x))=F_(k_m-1)-1+x1*x3, m>=8',
                 all_root_basins_fixed=True, descendant_interaction=1,
-                normalized_terminal_interaction=str(Fraction(1, fibonacci[18])),
+                cap_normalized_terminal_interaction=str(Fraction(1, fibonacci[18])),
                 scope='Infinite canonical-index interaction follows from the unit-sublevel theorem and telescoping Zeckendorf identities. The explicit first family member and inherited-label first spines are independently checked. Root interaction does not imply a long orbit or a residual selector label; terminal signal persistence does not prove uniform dispersion because its size-biased first-spine probability tends to zero.')
 
 

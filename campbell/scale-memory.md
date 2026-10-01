@@ -15,6 +15,7 @@ cross-family closure question.
 ## Contents
 
 - [A quantitative scale-memory obstruction from Campbell's ternary law](#a-quantitative-scale-memory-obstruction-from-campbells-ternary-law)
+- [Five-pattern interaction on ternary scale interiors](#five-pattern-interaction-on-ternary-scale-interiors)
 
 ### A quantitative scale-memory obstruction from Campbell's ternary law
 
@@ -209,3 +210,75 @@ correspondence, the exact Campbell level set on a finite prefix, and the
 pumped-number obstruction for every window-block cut in a declared set of
 actual powers-of-three words. Those checks corroborate this general proof;
 they are not the premise for its lower bound.
+
+### Five-pattern interaction on ternary scale interiors
+
+The same five legal canonical window patterns have a scalar interaction
+in Campbell's family, despite its inner periods being at most two.
+For a canonical higher context h with all digits below F_7 removed,
+write f_h(x)=b(h+2x_1+3x_2+5x_3) and
+
+$$
+\kappa_b(h)=b(h+7)-b(h+2)-b(h+5)+b(h).
+$$
+
+**Strip/parity theorem.** Let s be a power of three and suppose all
+five arguments lie in the same indicated interval. Then
+
+| Interval | Even-argument slope | Odd-argument slope | Interaction |
+|---|---:|---:|---|
+|[3s,4s)|1|0|-2(-1)^h|
+|[4s,5s)|0|0|0|
+|[5s,6s)|0|1|2(-1)^h|
+
+**Proof.** In these intervals the even branch is min(n-s,3s) and
+the odd branch is max(2s,n-3s), using the same scale s. If h is even,
+b(h+7)-b(h+5) is twice the odd slope, whereas b(h+2)-b(h) is twice
+the even slope. If h is odd these roles reverse. Their difference
+gives the table. QED.
+
+**Infinite shared canonical contexts.** For q>=3 and
+lambda in{10,14,16}, expand lambda*3^q canonically and retain only its
+digits at F_7 and above; call the resulting integer h_(lambda,q).
+The removed lower contribution is between0 and12. The remaining
+higher word is canonical, its unit digit and F_6 separator are0,
+and adding0,2,3,5,7 changes only the legal F_3,F_4,F_5 window.
+
+Put s=3^(q+1). For lambda10,14,16 respectively, the whole window lies
+in[3s,4s),[4s,5s),[5s,6s): its distance from every relevant endpoint
+exceeds the possible12-unit truncation and7-unit addition because3^q>=27.
+The table therefore applies for every q>=3. All three context families
+grow without bound; the first and third have absolute interaction2,
+and the middle has interaction0. No window-independent interaction
+coefficient can represent all these readouts, even if the baseline and
+singleton coefficients depend arbitrarily on the higher context.
+
+**Exact current-coefficient classes.** For every n>=2,
+b(n+2)-b(n) is0 or2. This follows from the explicit formula: each
+parity branch alternates linear slope1 and flat segments, with continuous
+joins. The even breakpoints4s,6s are even; the odd breakpoints5s,9s
+are odd, so a two-step sample crosses no intermediate kink.
+Thus every canonical higher context has kappa in{-2,0,2}; the checked
+contexts realize all three values: h=7286,377,267 give-2,0,2,
+respectively. Equivalence of higher contexts for
+the current coefficient readout has exactly three classes. This is a
+readout quotient, without a claim that it is closed under word continuation.
+
+The displayed strip formula also uses the parity of h.
+The parity is determined by the whole higher word, not its unit digit:
+F_j is even exactly when j=0mod3. The strip/parity formula treats the
+ternary scale as supplied context. The autonomous-memory theorem above
+states its separate recognition contract; a coefficient-only memory
+bound would require another argument.
+
+The [Cloitre construction](../cloitre-conway/exact-collars.md#a-persistent-interaction-on-canonical-index-words)
+has interaction1 on an infinite canonical family whose five root basins
+are all fixed points, and the signal persists along arithmetic first-child
+descent. Both constructions concern the same five digit patterns, with
+different recurrence laws and different higher-context interfaces.
+
+The checker generates18 contexts at q3..8 from the recurrence, checks
+all90 canonical words, verifies every selected endpoint by literal
+iteration, and compares against the proved formula. A separate literal
+prefix supplies an evaluator cross-check. These calculations corroborate
+the universal strip/truncation argument; they are not its premise.

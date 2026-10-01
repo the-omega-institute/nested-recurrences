@@ -1434,7 +1434,9 @@ $$
 Thus the split-index interaction is-1 and the complementary-index
 interaction is1, even though no root phase label is needed.
 
-**Proof of the shared canonical context.** We have k_m>=m+2. Telescoping
+**Proof of the shared canonical context.** For m>=8, F_m>=m+3, so
+k_m>=3m/2>=m+2. Also h_m>=F_(k_m-1) tends to infinity.
+Telescoping
 F_j=F_(j+1)-F_(j-1) gives
 
 $$
@@ -1476,8 +1478,8 @@ C(n_d(x))=F_{k_m-d-1}-1+s(x). \tag{I.3}
 $$
 
 Indeed the cap defect1-s(x) is preserved on the first-child spine by
-the unit-family theorem. All second-child scalar readouts are constant
-across the five rows at each such step. Hence the interaction remains1
+the unit-family theorem. At every step above order19, all second-child
+scalar readouts are constant across the five rows. Hence the interaction remains1
 throughout this marked descent, down to the finite order19 boundary.
 The labels in (I.3) are inherited root patterns; descendant integers
 need not share a literal canonical low window.
