@@ -964,6 +964,11 @@ the parent cap alone does not construct or certify its profile.
 The cap4 selected shift need not be4: independently checked examples have
 shifts8 and9, and proper two- or three-cycles. Single-defect allocation
 therefore does not imply a fixed orbit or constant-gap descent.
+At N17643 the parent cap is4 but an inner phase has cap8; at N46285
+an inner phase has cap9. These follow from the selected shifts8,9:
+each shift is the first cap at the preceding cycle point. Thus closure
+of the selected children does not restrict every inner lookup to cap4.
+The supplied lower profile must cover those additional queries as well.
 For the genuinely branched obstruction and its five-cycle counterpart,
 see [defect allocation and phase information](recursive-descent.md#actual-defect-allocation-and-phase-information).
 The checker compares(H.7) with iterated shifts and actual descendants,
