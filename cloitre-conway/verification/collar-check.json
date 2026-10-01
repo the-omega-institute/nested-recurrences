@@ -1,6 +1,6 @@
 {
   "status": "Exact two-collar seeds and finite corroboration; fibonacci-collars.md Sections 1-4 use golden-proof.md, and Section 6 adds the recorded seed premises; no Lean formalization.",
-  "source_sha256": "195dcdc7b6d4ff947f67ad4bcb260ca58e417800594f47d8663dc7359cb664de",
+  "source_sha256": "878c6f14942a2fb43bad9399cdba54ccf02ca581b2f99d3c57521855aed74aa5",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -468,6 +468,746 @@
         ]
       }
     ]
+  },
+  "selected_positive_collar_phase": {
+    "universal_orders": "k >= 24",
+    "offsets_inclusive": [
+      1,
+      21
+    ],
+    "selected_endpoint_rule": "A+t if A+t is odd; A otherwise, A=F_(k-1)",
+    "prescribed_basin": "Outermost two-cycle {A,A+t}; first entry is A+t at an even time",
+    "exact_floor_offsets": [
+      33,
+      34,
+      35
+    ],
+    "exact_floor_values_relative_to_lower_anchor": [
+      21,
+      21,
+      22
+    ],
+    "arithmetic_only_floor_orders_inclusive": [
+      24,
+      480
+    ],
+    "checked_orbits": 63,
+    "orbit_rows": [
+      {
+        "order": 24,
+        "offset": 1,
+        "transient": 14,
+        "entry_offset": 1,
+        "selected_offset": 0
+      },
+      {
+        "order": 24,
+        "offset": 2,
+        "transient": 14,
+        "entry_offset": 2,
+        "selected_offset": 2
+      },
+      {
+        "order": 24,
+        "offset": 3,
+        "transient": 14,
+        "entry_offset": 3,
+        "selected_offset": 0
+      },
+      {
+        "order": 24,
+        "offset": 4,
+        "transient": 14,
+        "entry_offset": 4,
+        "selected_offset": 4
+      },
+      {
+        "order": 24,
+        "offset": 5,
+        "transient": 14,
+        "entry_offset": 5,
+        "selected_offset": 0
+      },
+      {
+        "order": 24,
+        "offset": 6,
+        "transient": 14,
+        "entry_offset": 6,
+        "selected_offset": 6
+      },
+      {
+        "order": 24,
+        "offset": 7,
+        "transient": 14,
+        "entry_offset": 7,
+        "selected_offset": 0
+      },
+      {
+        "order": 24,
+        "offset": 8,
+        "transient": 14,
+        "entry_offset": 8,
+        "selected_offset": 8
+      },
+      {
+        "order": 24,
+        "offset": 9,
+        "transient": 14,
+        "entry_offset": 9,
+        "selected_offset": 0
+      },
+      {
+        "order": 24,
+        "offset": 10,
+        "transient": 14,
+        "entry_offset": 10,
+        "selected_offset": 10
+      },
+      {
+        "order": 24,
+        "offset": 11,
+        "transient": 14,
+        "entry_offset": 11,
+        "selected_offset": 0
+      },
+      {
+        "order": 24,
+        "offset": 12,
+        "transient": 14,
+        "entry_offset": 12,
+        "selected_offset": 12
+      },
+      {
+        "order": 24,
+        "offset": 13,
+        "transient": 14,
+        "entry_offset": 13,
+        "selected_offset": 0
+      },
+      {
+        "order": 24,
+        "offset": 14,
+        "transient": 14,
+        "entry_offset": 14,
+        "selected_offset": 14
+      },
+      {
+        "order": 24,
+        "offset": 15,
+        "transient": 14,
+        "entry_offset": 15,
+        "selected_offset": 0
+      },
+      {
+        "order": 24,
+        "offset": 16,
+        "transient": 14,
+        "entry_offset": 16,
+        "selected_offset": 16
+      },
+      {
+        "order": 24,
+        "offset": 17,
+        "transient": 14,
+        "entry_offset": 17,
+        "selected_offset": 0
+      },
+      {
+        "order": 24,
+        "offset": 18,
+        "transient": 14,
+        "entry_offset": 18,
+        "selected_offset": 18
+      },
+      {
+        "order": 24,
+        "offset": 19,
+        "transient": 14,
+        "entry_offset": 19,
+        "selected_offset": 0
+      },
+      {
+        "order": 24,
+        "offset": 20,
+        "transient": 14,
+        "entry_offset": 20,
+        "selected_offset": 20
+      },
+      {
+        "order": 24,
+        "offset": 21,
+        "transient": 14,
+        "entry_offset": 21,
+        "selected_offset": 0
+      },
+      {
+        "order": 25,
+        "offset": 1,
+        "transient": 14,
+        "entry_offset": 1,
+        "selected_offset": 1
+      },
+      {
+        "order": 25,
+        "offset": 2,
+        "transient": 14,
+        "entry_offset": 2,
+        "selected_offset": 0
+      },
+      {
+        "order": 25,
+        "offset": 3,
+        "transient": 14,
+        "entry_offset": 3,
+        "selected_offset": 3
+      },
+      {
+        "order": 25,
+        "offset": 4,
+        "transient": 14,
+        "entry_offset": 4,
+        "selected_offset": 0
+      },
+      {
+        "order": 25,
+        "offset": 5,
+        "transient": 14,
+        "entry_offset": 5,
+        "selected_offset": 5
+      },
+      {
+        "order": 25,
+        "offset": 6,
+        "transient": 14,
+        "entry_offset": 6,
+        "selected_offset": 0
+      },
+      {
+        "order": 25,
+        "offset": 7,
+        "transient": 14,
+        "entry_offset": 7,
+        "selected_offset": 7
+      },
+      {
+        "order": 25,
+        "offset": 8,
+        "transient": 14,
+        "entry_offset": 8,
+        "selected_offset": 0
+      },
+      {
+        "order": 25,
+        "offset": 9,
+        "transient": 14,
+        "entry_offset": 9,
+        "selected_offset": 9
+      },
+      {
+        "order": 25,
+        "offset": 10,
+        "transient": 14,
+        "entry_offset": 10,
+        "selected_offset": 0
+      },
+      {
+        "order": 25,
+        "offset": 11,
+        "transient": 14,
+        "entry_offset": 11,
+        "selected_offset": 11
+      },
+      {
+        "order": 25,
+        "offset": 12,
+        "transient": 14,
+        "entry_offset": 12,
+        "selected_offset": 0
+      },
+      {
+        "order": 25,
+        "offset": 13,
+        "transient": 14,
+        "entry_offset": 13,
+        "selected_offset": 13
+      },
+      {
+        "order": 25,
+        "offset": 14,
+        "transient": 14,
+        "entry_offset": 14,
+        "selected_offset": 0
+      },
+      {
+        "order": 25,
+        "offset": 15,
+        "transient": 14,
+        "entry_offset": 15,
+        "selected_offset": 15
+      },
+      {
+        "order": 25,
+        "offset": 16,
+        "transient": 14,
+        "entry_offset": 16,
+        "selected_offset": 0
+      },
+      {
+        "order": 25,
+        "offset": 17,
+        "transient": 14,
+        "entry_offset": 17,
+        "selected_offset": 17
+      },
+      {
+        "order": 25,
+        "offset": 18,
+        "transient": 14,
+        "entry_offset": 18,
+        "selected_offset": 0
+      },
+      {
+        "order": 25,
+        "offset": 19,
+        "transient": 14,
+        "entry_offset": 19,
+        "selected_offset": 19
+      },
+      {
+        "order": 25,
+        "offset": 20,
+        "transient": 14,
+        "entry_offset": 20,
+        "selected_offset": 0
+      },
+      {
+        "order": 25,
+        "offset": 21,
+        "transient": 14,
+        "entry_offset": 21,
+        "selected_offset": 21
+      },
+      {
+        "order": 26,
+        "offset": 1,
+        "transient": 14,
+        "entry_offset": 1,
+        "selected_offset": 0
+      },
+      {
+        "order": 26,
+        "offset": 2,
+        "transient": 14,
+        "entry_offset": 2,
+        "selected_offset": 2
+      },
+      {
+        "order": 26,
+        "offset": 3,
+        "transient": 14,
+        "entry_offset": 3,
+        "selected_offset": 0
+      },
+      {
+        "order": 26,
+        "offset": 4,
+        "transient": 14,
+        "entry_offset": 4,
+        "selected_offset": 4
+      },
+      {
+        "order": 26,
+        "offset": 5,
+        "transient": 14,
+        "entry_offset": 5,
+        "selected_offset": 0
+      },
+      {
+        "order": 26,
+        "offset": 6,
+        "transient": 14,
+        "entry_offset": 6,
+        "selected_offset": 6
+      },
+      {
+        "order": 26,
+        "offset": 7,
+        "transient": 14,
+        "entry_offset": 7,
+        "selected_offset": 0
+      },
+      {
+        "order": 26,
+        "offset": 8,
+        "transient": 14,
+        "entry_offset": 8,
+        "selected_offset": 8
+      },
+      {
+        "order": 26,
+        "offset": 9,
+        "transient": 14,
+        "entry_offset": 9,
+        "selected_offset": 0
+      },
+      {
+        "order": 26,
+        "offset": 10,
+        "transient": 14,
+        "entry_offset": 10,
+        "selected_offset": 10
+      },
+      {
+        "order": 26,
+        "offset": 11,
+        "transient": 14,
+        "entry_offset": 11,
+        "selected_offset": 0
+      },
+      {
+        "order": 26,
+        "offset": 12,
+        "transient": 14,
+        "entry_offset": 12,
+        "selected_offset": 12
+      },
+      {
+        "order": 26,
+        "offset": 13,
+        "transient": 14,
+        "entry_offset": 13,
+        "selected_offset": 0
+      },
+      {
+        "order": 26,
+        "offset": 14,
+        "transient": 14,
+        "entry_offset": 14,
+        "selected_offset": 14
+      },
+      {
+        "order": 26,
+        "offset": 15,
+        "transient": 14,
+        "entry_offset": 15,
+        "selected_offset": 0
+      },
+      {
+        "order": 26,
+        "offset": 16,
+        "transient": 14,
+        "entry_offset": 16,
+        "selected_offset": 16
+      },
+      {
+        "order": 26,
+        "offset": 17,
+        "transient": 14,
+        "entry_offset": 17,
+        "selected_offset": 0
+      },
+      {
+        "order": 26,
+        "offset": 18,
+        "transient": 14,
+        "entry_offset": 18,
+        "selected_offset": 18
+      },
+      {
+        "order": 26,
+        "offset": 19,
+        "transient": 14,
+        "entry_offset": 19,
+        "selected_offset": 0
+      },
+      {
+        "order": 26,
+        "offset": 20,
+        "transient": 14,
+        "entry_offset": 20,
+        "selected_offset": 20
+      },
+      {
+        "order": 26,
+        "offset": 21,
+        "transient": 14,
+        "entry_offset": 21,
+        "selected_offset": 0
+      }
+    ],
+    "literal_selected_updates": 3782554,
+    "all_offset_pair_window_edges_checked": 968,
+    "finite_boundary_orders": [
+      22,
+      23
+    ],
+    "boundary_records": [
+      {
+        "order": 22,
+        "offset": 0,
+        "value": 10946,
+        "selected_split": 10946
+      },
+      {
+        "order": 22,
+        "offset": 1,
+        "value": 10947,
+        "selected_split": 10947
+      },
+      {
+        "order": 22,
+        "offset": 2,
+        "value": 10948,
+        "selected_split": 10946
+      },
+      {
+        "order": 22,
+        "offset": 3,
+        "value": 10949,
+        "selected_split": 10949
+      },
+      {
+        "order": 22,
+        "offset": 4,
+        "value": 10950,
+        "selected_split": 10946
+      },
+      {
+        "order": 22,
+        "offset": 5,
+        "value": 10951,
+        "selected_split": 10951
+      },
+      {
+        "order": 22,
+        "offset": 6,
+        "value": 10952,
+        "selected_split": 10946
+      },
+      {
+        "order": 22,
+        "offset": 7,
+        "value": 10953,
+        "selected_split": 10953
+      },
+      {
+        "order": 22,
+        "offset": 8,
+        "value": 10954,
+        "selected_split": 10946
+      },
+      {
+        "order": 22,
+        "offset": 9,
+        "value": 10955,
+        "selected_split": 10955
+      },
+      {
+        "order": 22,
+        "offset": 10,
+        "value": 10956,
+        "selected_split": 10946
+      },
+      {
+        "order": 22,
+        "offset": 11,
+        "value": 10957,
+        "selected_split": 10957
+      },
+      {
+        "order": 22,
+        "offset": 12,
+        "value": 10958,
+        "selected_split": 10946
+      },
+      {
+        "order": 22,
+        "offset": 13,
+        "value": 10959,
+        "selected_split": 10959
+      },
+      {
+        "order": 22,
+        "offset": 14,
+        "value": 10960,
+        "selected_split": 10946
+      },
+      {
+        "order": 22,
+        "offset": 15,
+        "value": 10961,
+        "selected_split": 10961
+      },
+      {
+        "order": 22,
+        "offset": 16,
+        "value": 10962,
+        "selected_split": 10946
+      },
+      {
+        "order": 22,
+        "offset": 17,
+        "value": 10963,
+        "selected_split": 10963
+      },
+      {
+        "order": 22,
+        "offset": 18,
+        "value": 10964,
+        "selected_split": 10946
+      },
+      {
+        "order": 22,
+        "offset": 19,
+        "value": 10965,
+        "selected_split": 10965
+      },
+      {
+        "order": 22,
+        "offset": 20,
+        "value": 10966,
+        "selected_split": 10946
+      },
+      {
+        "order": 22,
+        "offset": 21,
+        "value": 10967,
+        "selected_split": 10967
+      },
+      {
+        "order": 23,
+        "offset": 0,
+        "value": 17711,
+        "selected_split": 17711
+      },
+      {
+        "order": 23,
+        "offset": 1,
+        "value": 17712,
+        "selected_split": 17711
+      },
+      {
+        "order": 23,
+        "offset": 2,
+        "value": 17713,
+        "selected_split": 17713
+      },
+      {
+        "order": 23,
+        "offset": 3,
+        "value": 17714,
+        "selected_split": 17711
+      },
+      {
+        "order": 23,
+        "offset": 4,
+        "value": 17715,
+        "selected_split": 17715
+      },
+      {
+        "order": 23,
+        "offset": 5,
+        "value": 17716,
+        "selected_split": 17711
+      },
+      {
+        "order": 23,
+        "offset": 6,
+        "value": 17717,
+        "selected_split": 17717
+      },
+      {
+        "order": 23,
+        "offset": 7,
+        "value": 17718,
+        "selected_split": 17711
+      },
+      {
+        "order": 23,
+        "offset": 8,
+        "value": 17719,
+        "selected_split": 17719
+      },
+      {
+        "order": 23,
+        "offset": 9,
+        "value": 17720,
+        "selected_split": 17711
+      },
+      {
+        "order": 23,
+        "offset": 10,
+        "value": 17721,
+        "selected_split": 17721
+      },
+      {
+        "order": 23,
+        "offset": 11,
+        "value": 17722,
+        "selected_split": 17711
+      },
+      {
+        "order": 23,
+        "offset": 12,
+        "value": 17723,
+        "selected_split": 17723
+      },
+      {
+        "order": 23,
+        "offset": 13,
+        "value": 17724,
+        "selected_split": 17711
+      },
+      {
+        "order": 23,
+        "offset": 14,
+        "value": 17725,
+        "selected_split": 17725
+      },
+      {
+        "order": 23,
+        "offset": 15,
+        "value": 17726,
+        "selected_split": 17711
+      },
+      {
+        "order": 23,
+        "offset": 16,
+        "value": 17727,
+        "selected_split": 17727
+      },
+      {
+        "order": 23,
+        "offset": 17,
+        "value": 17728,
+        "selected_split": 17711
+      },
+      {
+        "order": 23,
+        "offset": 18,
+        "value": 17729,
+        "selected_split": 17729
+      },
+      {
+        "order": 23,
+        "offset": 19,
+        "value": 17730,
+        "selected_split": 17711
+      },
+      {
+        "order": 23,
+        "offset": 20,
+        "value": 17731,
+        "selected_split": 17731
+      },
+      {
+        "order": 23,
+        "offset": 21,
+        "value": 17732,
+        "selected_split": 17711
+      }
+    ],
+    "scope": "The uniform basin and phase rule follows from the proved cap, exact equality set and linear collar, not these finite checks. Floor checks beyond the sequence prefix use integer square roots only. Boundary records are finite actual iterations, not a uniform phase rule at orders22/23. No global five-cycle phase theorem or minimum complete proof size is claimed."
   },
   "quantitative_capture": {
     "anchor_drop_formula": "F_(j-1)-C(F_j-d) <= floor(2*d/3), j>=5, 1<=d<F_j",

@@ -234,6 +234,92 @@ def all_cycles(sequence, index, capture_interval=None):
     return sorted(cycles)
 
 
+def selected_collar_phase_audit(sequence, splits, fibonacci, zeros):
+    arithmetic_fibonacci = fibonacci_values(10 ** 100)
+    floor_rows = []
+    for order in range(24, len(arithmetic_fibonacci) - 1):
+        anchor = arithmetic_fibonacci[order - 1]
+        lower_anchor = arithmetic_fibonacci[order - 2]
+        assert [g_closed(anchor + offset) - lower_anchor for offset in (33, 34, 35)] == [21, 21, 22]
+        assert anchor + 33 not in candidate_zeros(arithmetic_fibonacci)
+        assert anchor + 34 not in candidate_zeros(arithmetic_fibonacci)
+        assert anchor % 2 == (order % 3 != 1)
+        floor_rows.append(order)
+    rows = []
+    literal_updates = 0
+    for order in range(24, len(fibonacci)):
+        if fibonacci[order] + 21 >= len(sequence):
+            break
+        anchor = fibonacci[order - 1]
+        lower_anchor = fibonacci[order - 2]
+        assert all(value <= lower_anchor for value in sequence[1:anchor])
+        assert anchor + 33 not in zeros and anchor + 34 not in zeros
+        assert all(sequence[point] >= lower_anchor + 22
+                   for point in range(anchor + 33, fibonacci[order] + 21))
+        for offset in range(1, 22):
+            index = fibonacci[order] + offset
+            depth = sequence[index - 1]
+            assert depth == anchor + offset - 1
+            trajectory, transient, period = full_orbit(sequence, index)
+            assert transient % 2 == 0 and trajectory[transient] == anchor + offset
+            assert period == 2 and set(trajectory[transient:]) == {anchor, anchor + offset}
+            for position, point in enumerate(trajectory[:transient]):
+                assert (point > anchor + offset) if position % 2 == 0 else (point < anchor)
+            expected = anchor + offset if (anchor + offset) % 2 else anchor
+            assert splits[index] == expected
+            argument = index - 1
+            for iteration in range(depth):
+                argument = index - sequence[argument]
+            assert argument == expected
+            literal_updates += depth
+            rows.append(dict(order=order, offset=offset, transient=transient,
+                             entry_offset=offset, selected_offset=expected - anchor))
+    window_edges = 0
+    for order in range(25, len(fibonacci)):
+        if fibonacci[order] + 21 >= len(sequence):
+            break
+        for offset, following_offset in product(range(22), repeat=2):
+            index = fibonacci[order] + offset
+            following_index = fibonacci[order] + following_offset
+            first = splits[index]
+            following_first = splits[following_index]
+            second = index - first
+            following_second = following_index - following_first
+            first_offset = first - fibonacci[order - 1]
+            following_first_offset = following_first - fibonacci[order - 1]
+            second_offset = second - fibonacci[order - 2]
+            following_second_offset = following_second - fibonacci[order - 2]
+            assert first_offset == (offset if (fibonacci[order - 1] + offset) % 2 else 0)
+            assert second_offset == offset - first_offset
+            first_parameter = following_first + sequence[first] - fibonacci[order]
+            second_parameter = following_second + sequence[second] - fibonacci[order - 1]
+            assert first_parameter == first_offset + following_first_offset
+            assert second_parameter == second_offset + following_second_offset
+            assert first_parameter + second_parameter == offset + following_offset
+            window_edges += 1
+    boundary = []
+    for order in (22, 23):
+        anchor = fibonacci[order - 1]
+        for offset in range(22):
+            index = fibonacci[order] + offset
+            argument = index - 1
+            for iteration in range(sequence[index - 1]):
+                argument = index - sequence[argument]
+            assert argument == splits[index]
+            literal_updates += sequence[index - 1]
+            boundary.append(dict(order=order, offset=offset, value=sequence[index],
+                                 selected_split=argument))
+    return dict(universal_orders='k >= 24', offsets_inclusive=[1, 21],
+                selected_endpoint_rule='A+t if A+t is odd; A otherwise, A=F_(k-1)',
+                prescribed_basin='Outermost two-cycle {A,A+t}; first entry is A+t at an even time',
+                exact_floor_offsets=[33, 34, 35], exact_floor_values_relative_to_lower_anchor=[21, 21, 22],
+                arithmetic_only_floor_orders_inclusive=[floor_rows[0], floor_rows[-1]],
+                checked_orbits=len(rows), orbit_rows=rows, literal_selected_updates=literal_updates,
+                all_offset_pair_window_edges_checked=window_edges,
+                finite_boundary_orders=[22, 23], boundary_records=boundary,
+                scope='The uniform basin and phase rule follows from the proved cap, exact equality set and linear collar, not these finite checks. Floor checks beyond the sequence prefix use integer square roots only. Boundary records are finite actual iterations, not a uniform phase rule at orders22/23. No global five-cycle phase theorem or minimum complete proof size is claimed.')
+
+
 def main():
     if not __debug__:
         raise SystemExit('Run without -O; assertions perform the checks.')
@@ -450,6 +536,7 @@ def main():
             all_start_vertices_checked=stable_graph_vertices,
             classification_witnesses=stable_graph_witnesses,
         ),
+        selected_positive_collar_phase=selected_collar_phase_audit(sequence, splits, fibonacci, zeros),
         quantitative_capture=dict(
             anchor_drop_formula='F_(j-1)-C(F_j-d) <= floor(2*d/3), j>=5, 1<=d<F_j',
             anchor_drop_base=anchor_drop_base,

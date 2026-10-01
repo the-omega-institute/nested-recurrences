@@ -24,6 +24,7 @@ or programming knowledge is needed.
 | See how repeated inputs can eliminate inverse branch labels | **[Shared selectors and the two-label theorem](cloitre-conway/fibonacci-collars.md#sharing-selectors-at-repeated-physical-indices)** |
 | Understand sharing between windows and a basis for their parameters | **[Shared network and forest basis](cloitre-conway/fibonacci-collars.md#a-shared-parameter-network-and-its-forest-basis)** |
 | See how child layouts and values can be recovered without a C table | **[Sublinear shared descent code](cloitre-conway/fibonacci-collars.md#generating-the-layout-from-a-sublinear-shared-descent-code)** |
+| Determine actual selected endpoints by a Fibonacci parity rule | **[Prescribed collar basin and phase](cloitre-conway/fibonacci-collars.md#the-prescribed-basin-and-phase-in-a-positive-collar)** |
 | See a complete geometric selector code and the remaining real-orbit constraint | **[Seven terminal symbols](cloitre-conway/fibonacci-collars.md#seven-terminal-symbols-and-the-full-geometric-selector-code)** · **[Growing defects and occupation](cloitre-conway/fibonacci-collars.md#growing-actual-defects-and-the-remaining-occupation-problem)** |
 | See what is proved and what remains open | **[Current status](STATUS.md)** |
 

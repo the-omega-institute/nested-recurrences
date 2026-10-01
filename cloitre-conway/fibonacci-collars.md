@@ -495,6 +495,111 @@ This theorem propagates any width whose two seeds satisfy the stated profile;
 it does not prove that suitable seeds exist for every width. A fixed band still
 does not control Fibonacci-block centers or settle full ratio convergence.
 
+### The prescribed basin and phase in a positive collar
+
+The complete cycle list does not by itself determine which cycle the
+prescribed start reaches. The golden lower bound and exact equality set
+give that missing information on a smaller positive band.
+
+**Selected-endpoint theorem.** Put n=F_k+t, A=F_(k-1), B=F_(k-2).
+For every k>=24 and 1<=t<=21, the orbit from n-1 first enters [A,A+t]
+at its upper endpoint A+t, at an even time. Its eventual cycle is
+exactly {A,A+t}. Its prescribed endpoint s(n) is
+
+$$
+s(F_k+t)=
+\begin{cases}
+A+t,&A+t\text{ is odd},\\
+A,&A+t\text{ is even}.
+\end{cases}
+$$
+
+**Proof.** The nondecreasing upper cap gives C(x)<=B for every x<A.
+For A+t<x<=A+32, the proved order-(k-1) collar gives
+C(x)=B+x-A>B+t. We claim the same strict separation for all x>=A+33.
+Write j=k-1>=23 and alpha=1/phi. The Fibonacci identity
+B-alpha*A=(-alpha)^j and 34alpha-21=alpha^9 give
+
+$$
+\alpha(A+34)-B=21+\alpha^9-(-\alpha)^j.
+$$
+
+This lies strictly between 21 and 22, and adding alpha once or twice shows
+G(A+33)=G(A+34)=B+21 and G(A+35)=B+22. For example
+0.618<alpha<0.619, 0.013<alpha^9<0.014 and alpha^23<0.0001
+suffice to justify all three floors. The indices A+33 and A+34 lie
+strictly between F_j+1 and F_(j+1)-1 and exceed 59, so neither belongs
+to the exact equality set Z. Hence C(A+33),C(A+34)>=B+22.
+Monotonicity of G gives C(x)>=B+22 for every x>=A+35.
+Since t<=21, C(x)>B+t throughout the high exterior x>A+t.
+
+Thus a high exterior point maps strictly below A, and a low exterior
+point maps to at least A+t. The invariant interval [A,A+t] can be
+entered only from the low side, at A+t. The start n-1 is on the high
+side. Capture guarantees eventual entry, while the exterior sides
+alternate, so its entry time mu is even. Inside the interval the collar
+makes T_n the reflection x -> 2A+t-x. The entry point A+t therefore
+generates the outermost two-cycle, even when other two-cycles or a fixed
+point are present. The prescribed depth is d=C(n-1)=A+t-1, and the
+established entry theorem gives d>=mu. Since mu is even, x_d is A+t
+when d is even and A when d is odd. This is the stated formula. QED.
+
+The exact equality set is essential for the last offset t=21: G alone
+allows equality at A+33 and A+34. This theorem claims the band 1..21;
+it does not assume the same basin or phase throughout the larger value
+collar 1..32. For -12<=t<=0 the complete classification already gives
+the unique selected fixed point A+t.
+
+**Recursive-window consequence.** Consider any aligned window, including
+a five-row window, with physical inputs F_j+u_i, 0<=u_i<=21, j>=24.
+Set r_i=s(F_j+u_i)-F_(j-1) and q_i=u_i-r_i. Every row obeys
+
+$$
+r_i=\begin{cases}
+u_i,&F_{j-1}+u_i\text{ is odd},\\
+0,&F_{j-1}+u_i\text{ is even},
+\end{cases}\qquad q_i=u_i-r_i.
+$$
+
+At u_i=0 the anchor landing theorem supplies the same result. Each
+child again has offset in 0..21, with order j-1 or j-2; the nonzero
+offset is unchanged along its carrying branch. The parity of F_(j-1)
+depends only on j mod 3: it is even exactly when j=1 mod 3. Thus
+order mod 3 and the row's offset determine every high-order child split
+and its actual selected validity, without a supplied inverse branch,
+basin or phase label. For j>=25 both child profiles are linear, so the
+row parameters of the recursive-window interface are
+
+$$
+\alpha_i=r_{i+1}+r_i,\qquad
+\beta_i=q_{i+1}+q_i,\qquad
+A_i=u_{i+1}+u_i=\alpha_i+\beta_i.
+$$
+
+Iterating these rules reaches boundary orders 22 or 23. Their selected
+splits are fixed finite data, rather than free choices at every higher
+order. The checker records all 44 boundary inputs with offsets 0..21
+and checks their literal prescribed iterations. This consequence is for
+nonautonomous row windows: the autonomous positive collar itself has
+only periods one and two, so it contains no distinct five-cycle. It
+does not classify five-cycles in the wider Fibonacci arches.
+
+This supplies an actual C counterpart to Campbell's ternary endpoint
+templates. The collar values already propagated independently of phase;
+the new statement additionally proves the prescribed endpoint and the
+arithmetic branch rule. It does not establish a minimum full certificate
+size or extend the branch rule beyond the stated band.
+
+The maintained checker compares full-orbit and Brent prefixes through
+131071, then checks all 63 cases k=24,25,26, t=1..21 by literal prescribed
+iteration. It checks the exterior separation and alternating sides, exact
+outer cycle, even entry and predicted endpoint. All these finite entry
+times happen to be 14; no uniform exact transient of 14 is asserted.
+All 968 offset-pair edges at orders 25 and 26 check the arithmetic child
+parameter formulas against actual selected splits and values. Additional
+floor checks at Fibonacci scales near 10^100 use integer square roots and
+introduce no new sequence premise.
+
 ## 7. Fibonacci profile renormalization and defect dynamics
 
 The collar formula has a useful two-scale form that also explains why the
