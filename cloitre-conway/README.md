@@ -26,6 +26,7 @@ beyond parity.
    nearby cycle classification, and ratio convergence within sublinear-width
    neighborhoods of Fibonacci indices.
 3. **[Exact collars and phases](exact-collars.md).** Wider exact bands,
+   single-seed negative propagation and its two-state boundary interface,
    saturation, the prescribed positive-collar phase, and eventual linearity
    at every fixed positive offset.
 

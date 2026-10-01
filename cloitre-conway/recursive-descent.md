@@ -126,6 +126,15 @@ already provide uniform branch and prescribed-phase information; the new
 C theorem establishes the recursive coordinate class, while that comparable
 compression remains open.
 
+At the upper edge of a natural block, the
+[single-seed negative collar](exact-collars.md#large-natural-block-defects-with-no-residual-selector-labels)
+now gives a closed arithmetic subclass: for u_i=F_(j-1)-v_i its selected
+child offsets are r_i=F_(j-2)-v_i and q_i=F_(j-3), with no residual selector
+labels above the seed boundary. Its natural defects F_(j-3)-v_i grow without
+bound. This is an actual-C example in which the sufficient defect budget
+does not measure a necessary branch-information cost; the scale, row clock,
+and collar qualification remain supplied context.
+
 ### Sharing selectors at repeated physical indices
 
 Recursive windows have an additional exact restriction that costs no new

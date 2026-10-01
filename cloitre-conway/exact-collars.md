@@ -10,6 +10,9 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 ## Contents
 
 - [6. Exact collars propagate from two seeds](#6-exact-collars-propagate-from-two-seeds)
+- [A single negative collar seed is sufficient](#a-single-negative-collar-seed-is-sufficient)
+- [Large natural-block defects with no residual selector labels](#large-natural-block-defects-with-no-residual-selector-labels)
+- [The first negative boundary has an exact two-state interface](#the-first-negative-boundary-has-an-exact-two-state-interface)
 - [The prescribed basin and phase in a positive collar](#the-prescribed-basin-and-phase-in-a-positive-collar)
 - [A saturated lower barrier and the exclusion of nearby proper cycles](#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)
 - [Every fixed positive offset eventually becomes linear](#every-fixed-positive-offset-eventually-becomes-linear)
@@ -84,9 +87,266 @@ is not needed for the universal proof.
 
 This two-seed theorem alone does not prove that suitable seeds exist for every
 width. The growing-positive-collar theorem below establishes their existence
-for every positive width with the already proved negative width 12; arbitrary
-negative widths remain open. These neighborhoods do not control Fibonacci-block
+for every positive width. The single-seed result below extends the certified
+negative width to 17; arbitrary negative widths remain open.
+These neighborhoods do not control Fibonacci-block
 centers or settle full ratio convergence.
+
+### A single negative collar seed is sufficient
+
+**Theorem.** Let K>=6 and 0<=L<F_(K-2). Suppose just one order satisfies
+
+$$
+C(F_K-v)=F_{K-1}\qquad(0\le v\le L).
+$$
+
+Then the same identities hold at every order k>=K. For every k>=K+1
+and 0<=v<=L, every orbit of T_(F_k-v) reaches the unique fixed point
+F_(k-1)-v, which is also the prescribed split. No positive collar or second
+negative seed is needed.
+
+**Proof.** Assume the collar at k-1, and put
+n=F_k-v, A=F_(k-1), B=F_(k-2). Capture puts every cycle in
+[A-v,A], and every orbit eventually enters this interval. All its points
+belong to [1,n-1] under the width hypothesis. The preceding negative collar
+gives C(A-r)=B for 0<=r<=v, so throughout the captured interval,
+
+$$
+T_n(A-r)=n-B=A-v.
+$$
+
+Thus the interval maps to the single fixed point A-v. The prescribed depth
+is already proved to reach a cycle, hence selects A-v. Its complement is
+exactly B, and the Fibonacci identity at B gives
+
+$$
+C(n)=C(A-v)+C(B)=B+F_{k-3}=A.
+$$
+
+This propagates one order at a time and proves the all-start claim. QED.
+
+**Certified widening.** The existing width-12 collar holds for k>=23.
+Only the following five additional scalar premises are needed to widen it:
+
+| New gap v | Seed order K | Index F_K-v | Checked value C(F_K-v) | Values valid at | Unique fixed cycles valid at |
+|---:|---:|---:|---:|---|---|
+| 13 | 24 | 46355 | 28657 | k>=24, 0<=v<=13 | k>=25 |
+| 14 | 26 | 121379 | 75025 | k>=26, 0<=v<=14 | k>=27 |
+| 15 | 27 | 196403 | 121393 | k>=27, 0<=v<=15 | k>=28 |
+| 16 | 29 | 514213 | 317811 | k>=29, 0<=v<=16 | k>=30 |
+| 17 | 30 | 832023 | 514229 | k>=30, 0<=v<=17 | k>=31 |
+
+At each row, all smaller gaps at that seed order are already supplied by
+the preceding row or the proved width-12 collar. The new value completes
+one full seed; the theorem propagates it to every higher order.
+The [checker](verification/collar_check.py) independently regenerates these
+values with full-orbit and Brent evaluators through F_30+34=832074, reusing
+the prefix already required by the positive-collar audit. It also records
+each whole seed collar as corroboration. In particular,
+
+$$
+C(F_k-v)=F_{k-1}\qquad(k\ge30,\ 0\le v\le17).
+$$
+
+For k>=31 the exact negative split is F_(k-1)-v. Conditional on the known
+order, gap, and proved collar, no residual basin, phase, or child-selector
+label is needed there. This does not remove the numerical scale or the cost
+of establishing the collar. Together with the existing positive result,
+the value band -17<=t<=32 is exact at k>=30; its full cycle classification
+holds at k>=31.
+
+### Large natural-block defects with no residual selector labels
+
+The negative collar also gives a concrete closed class for the
+[row-indexed recursive windows](recursive-descent.md#recursive-windows-with-a-parameter-at-every-row).
+It is useful to express the result in their positive natural-block coordinates.
+Write n=F_(h+1)-v=F_h+u, with u=F_(h-1)-v.
+If a width-L negative seed is known at order K, then for h>=K and 0<=v<=L,
+
+$$
+P_h(u)=F_{h-2},\qquad
+\lambda_h(u):=u-P_h(u)=F_{h-3}-v,
+$$
+
+and the actual split offsets in the two lower natural blocks are
+
+$$
+r=F_{h-2}-v,\qquad q=F_{h-3}.
+$$
+
+Indeed the prescribed split is F_h-v and the complement is F_(h-1).
+Their profile values are F_(h-3) and F_(h-4), whose sum is F_(h-2).
+
+For any cyclic row word v_0,...,v_(m-1) in this collar, including m=5,
+the parent and child parameter words are therefore
+
+$$
+A_i=F_h-v_{i+1},\qquad
+\alpha_i=F_{h-1}-v_{i+1},\qquad
+\beta_i=F_{h-2},\qquad \alpha_i+\beta_i=A_i.
+$$
+
+The complement child is the same Fibonacci anchor in every row; the first
+child retains its gap v_i and drops the anchor order by one. Repeating the
+arithmetic split closes this descent down to the verified seed order K,
+where the scalar values are known. The row clock is inherited. Conditional
+on h, the gap word, and this collar qualification, zero residual child-selector
+or physical-orbit phase labels suffice. No parameter word has to be guessed.
+Recovering the deeper selected splits inside the finite seed prefix, if those
+are requested, is a separate boundary-data task.
+
+Yet lambda_h(u)=F_(h-3)-v is unbounded with h, even for one fixed gap.
+Thus a large geometric defect budget can coexist with an exact arithmetic
+selector in actual C. A budget-based sufficient code must not be interpreted
+as a necessary selector cost. This complements the
+[Campbell scale-memory bound](../campbell/scale-memory.md): a short physical
+cycle can still require growing autonomous encoding memory. Both statements
+keep the scale and supplied context separate from the conditional selector
+payload. This collar class does not certify selectors in wide arch centers.
+
+### The first negative boundary has an exact two-state interface
+
+Define the nonnegative negative-side defect
+
+$$
+Q_h(r)=F_{h-1}-C(F_h-r)\qquad(0\le r<F_h).
+$$
+
+Nonnegativity follows from the nondecreasing upper cap. The proved
+[anchor-drop bound](fibonacci-collars.md#quantitative-capture-and-a-short-exterior-certificate)
+gives Q_h(r)<=floor(2r/3) for h>=5.
+
+**Boundary theorem.** Let j>=7 and 2<=v<F_(j-3). Suppose only that the
+preceding order is flat at every smaller gap:
+
+$$
+Q_{j-1}(r)=0\qquad(0\le r<v).
+$$
+
+Put A=F_(j-1), B=F_(j-2),
+p=Q_(j-1)(v), and q=Q_(j-2)(p). Then
+
+$$
+0\le p\le\lfloor2v/3\rfloor<v,
+\qquad 0\le q\le\lfloor2p/3\rfloor.
+$$
+
+If p=0, all orbits at n=F_j-v reach the fixed point A-v and Q_j(v)=0.
+If p>0, all orbits reach the unique two-cycle
+
+$$
+\{A-v,\ A-v+p\}.
+$$
+
+The two current scalar outputs, expressed as defects, are exactly
+
+$$
+Q_j(v)=
+\begin{cases}
+p,&\text{selected split }A-v,\\
+q,&\text{selected split }A-v+p.
+\end{cases}
+$$
+
+Thus one phase copies the preceding defect at gap v; the other transfers
+to gap p at the order two steps below, with strictly smaller defect q<p.
+If that lower gap is flat, q=0 and the rule is copy or erase. Erasure cannot
+be followed by reappearance: the smaller parent gaps are already flat by
+single-seed propagation from order j-1, so erasure completes a full width-v
+seed. No second basin label is needed in either case.
+
+**Proof.** In captured gap coordinates, x=A-r with 0<=r<=v, the inner map is
+
+$$
+r\longmapsto v-Q_{j-1}(r)=
+\begin{cases}
+v,&r<v,\\
+v-p,&r=v.
+\end{cases}
+$$
+
+This proves the fixed-point/two-cycle classification. If the selected gap
+is v, the first child contributes defect p and the complementary child is
+the exact anchor B, giving Q_j(v)=p. If it is v-p, the first child has
+smaller gap and is flat, while the complement is B-p and contributes q.
+The anchor-drop bound at orders j-1 and j-2 proves the two displayed
+inequalities, including q<p when p>0. QED.
+
+**Absorbing-tail corollary.** Suppose K>=6, 2<=v<F_(K-2), and the entire
+width-(v-1) negative collar is flat at order K. At the first update K+1,
+the gap-v defect either copies Q_K(v) or transfers to a strictly smaller
+defect. Thereafter, for every h>=K+2,
+
+$$
+Q_h(v)\in\{Q_{h-1}(v),0\}.
+$$
+
+Consequently the tail from K+1 either keeps one positive integer defect
+forever or copies that defect until a single permanent erasure. There can
+be no repeated contraction or reawakening after the first update.
+
+**Proof.** The width-(v-1) seed propagates to all orders h>=K. In the boundary
+formula for h>=K+2, p=Q_(h-1)(v)<v and the order h-2 is already flat at
+that smaller gap p, so q=Q_(h-2)(p)=0. The formula gives the displayed rule.
+If the defect becomes zero, it completes a width-v seed and stays zero.
+QED. The corollary does not bound the erasure order or rule out perpetual
+copying in the actual recurrence.
+
+**Prescribed phase without a full transient counter.** Let tau be the first
+entrance time into [A-v,A], d=C(F_j-v-1), and define the entrance flag
+
+$$
+\varepsilon=\mathbf1\{x_\tau>A-v\}.
+$$
+
+Then tau is even. When p>0, the actual readout is
+
+$$
+Q_j(v)=
+\begin{cases}
+p,&d\bmod2=\varepsilon,\\
+q,&d\bmod2\ne\varepsilon.
+\end{cases}
+$$
+
+**Proof.** Above A, the golden bound gives C(x)>=G(A+1)=B+1, so the
+image is strictly below A-v. Below A-v, the cap gives C(x)<=B, so the
+image is at least A-v. Exterior sides alternate until capture; the start
+n-1 is above A, so the first entrance is at an even time. If the entrance
+is A-v, the gap-v phase occurs at even clocks. Any other entrance has
+gap r<v and maps to gap v one step later, so gap v occurs at odd clocks.
+The prescribed depth reaches the cycle, making these parity statements
+applicable even if the first captured point is transient. QED.
+
+The following actual witnesses are independently replayed with exactly d
+literal iterations; their alternate outputs are computed at the other
+point of the same unique two-cycle:
+
+| j | v | n | p | q | Entrance flag | Depth d | Actual C(n) | Other phase's output |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 24 | 13 | 46355 | 1 | 0 | 1 | 28656 | 28657 | 28656 |
+| 25 | 14 | 75011 | 1 | 0 | 1 | 46367 | 46367 | 46368 |
+| 26 | 14 | 121379 | 1 | 0 | 1 | 75024 | 75025 | 75024 |
+
+**Conditional minimum.** With j,v,p,q and the flat-profile premise supplied,
+p>0 has exactly two current-value classes, two continued-output states, and
+two index-output states: the two distinct values alternate on the cycle.
+One combined selected-phase bit is sufficient and necessary for an unspecified
+cycle phase. For p=0 all three counts are one. If depth parity and a certified
+entrance flag are supplied instead, the combined bit is derived from them;
+it is not an additional independent stored label. A path certificate can
+establish the flag within the proved logarithmic capture bound. Its profile
+queries and validation cost are separate resources.
+
+This does not prove eventual extinction at every negative gap. Unlike the
+positive boundary, the exact depth reads the larger gap v+1:
+d=A-Q_j(v+1). Its parity and the entrance flag still require actual sequence
+information beyond the flat smaller-gap premise. Finite checks find p=1,
+q=0, and entrance flag 1 in the 24 nonzero boundary contexts through order30;
+these are observations, not uniform laws. The complete minimum interface
+away from qualified collars, uniform dispersion, and full convergence remain
+open. [Recorded evidence](verification/collar-check.json) separates these
+finite checks from the general propagation and boundary proofs.
 
 ### The prescribed basin and phase in a positive collar
 

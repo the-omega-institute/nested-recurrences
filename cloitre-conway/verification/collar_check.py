@@ -519,6 +519,179 @@ def saturated_profile_audit(sequence, periods, splits, fibonacci):
                 scope='General two-scale saturation induction plus a minimum/maximum cycle argument. The36 extra seeds and earlier exact collar seeds are finite premises; all-start and selected-cycle checks are corroboration. The extended endpoint rule proves actual basin and phase on offsets1..32, with possible odd entry at the lower endpoint when t=32. Recursive nonautonomous windows in0..32 have arithmetic splits, but the spatial period bound applies only to autonomous constant-parameter cycles. No wider-arch phase classification or full minimum closure theorem is claimed.')
 
 
+def negative_collar_boundary_audit(sequence, splits, fibonacci):
+    abstract_contexts = 0
+    abstract_start_depth_checks = 0
+    for gap in range(2, 33):
+        for previous_defect in range(2 * gap // 3 + 1):
+            for transfer_defect in range(2 * previous_defect // 3 + 1):
+                expected_cycle = {gap} if not previous_defect else {gap, gap - previous_defect}
+                readouts = set()
+                for start in range(gap + 1):
+                    point = start
+                    positions = {}
+                    trajectory = []
+                    while point not in positions:
+                        positions[point] = len(trajectory)
+                        trajectory.append(point)
+                        point = gap - (previous_defect if point == gap else 0)
+                    assert set(trajectory[positions[point]:]) == expected_cycle
+                    point = start
+                    entrance_flag = int(start < gap)
+                    for depth in range(2 * gap + 5):
+                        if point in expected_cycle:
+                            defect = ((previous_defect if point == gap else 0)
+                                      + (transfer_defect if gap - point == previous_defect else 0))
+                            expected = (previous_defect if depth % 2 == entrance_flag else transfer_defect)
+                            assert defect == expected
+                            readouts.add(defect)
+                            abstract_start_depth_checks += 1
+                        point = gap - (previous_defect if point == gap else 0)
+                assert len(readouts) == (2 if previous_defect else 1)
+                abstract_contexts += 1
+    seed_rows = []
+    arithmetic_window_rows = 0
+    arithmetic_window_witness = None
+    for width, order in ((13, 24), (14, 26), (15, 27), (16, 29), (17, 30)):
+        index = fibonacci[order] - width
+        anchor = fibonacci[order - 1]
+        values = [sequence[fibonacci[order] - gap] - anchor for gap in range(width + 1)]
+        assert values == [0] * (width + 1)
+        assert width < fibonacci[order - 2]
+        corroborating_orders = []
+        for height in range(order, 31):
+            assert all(sequence[fibonacci[height] - gap] == fibonacci[height - 1]
+                       for gap in range(width + 1))
+            if height > order:
+                for gap in range(width + 1):
+                    parent = fibonacci[height] - gap
+                    parent_anchor = fibonacci[height - 1]
+                    assert all(parent - sequence[parent_anchor - point] == parent_anchor - gap
+                               for point in range(gap + 1))
+                    assert splits[parent] == parent_anchor - gap
+                for length in (1, 2, 3, 5):
+                    gaps = [0, 1, width // 2, width - 1, width][:length]
+                    profile_order = height - 1
+                    parents = [fibonacci[height] - gap for gap in gaps]
+                    offsets = [parent - fibonacci[profile_order] for parent in parents]
+                    first_offsets = [splits[parent] - fibonacci[profile_order - 1] for parent in parents]
+                    second_offsets = [parent - splits[parent] - fibonacci[profile_order - 2] for parent in parents]
+                    profiles = [sequence[parent] - fibonacci[profile_order - 1] for parent in parents]
+                    assert profiles == [fibonacci[profile_order - 2]] * length
+                    assert first_offsets == [fibonacci[profile_order - 2] - gap for gap in gaps]
+                    assert second_offsets == [fibonacci[profile_order - 3]] * length
+                    parameters = []
+                    first_parameters = []
+                    second_parameters = []
+                    for row, parent in enumerate(parents):
+                        following = (row + 1) % length
+                        parameter = offsets[following] + profiles[row]
+                        first_parameter = (first_offsets[following] + sequence[splits[parent]]
+                                           - fibonacci[profile_order - 2])
+                        second_parameter = (second_offsets[following] + sequence[parent - splits[parent]]
+                                            - fibonacci[profile_order - 3])
+                        assert parameter == fibonacci[profile_order] - gaps[following]
+                        assert first_parameter == fibonacci[profile_order - 1] - gaps[following]
+                        assert second_parameter == fibonacci[profile_order - 2]
+                        assert first_parameter + second_parameter == parameter
+                        parameters.append(parameter)
+                        first_parameters.append(first_parameter)
+                        second_parameters.append(second_parameter)
+                    defects = [offset - profile for offset, profile in zip(offsets, profiles)]
+                    assert defects == [fibonacci[profile_order - 3] - gap for gap in gaps]
+                    arithmetic_window_rows += length
+                    if height == 30 and width == 16 and length == 5:
+                        arithmetic_window_witness = dict(anchor_order=height, profile_order=profile_order,
+                                                         gaps=gaps, indices=parents, offsets=offsets,
+                                                         defects=defects, total_defect=sum(defects),
+                                                         first_offsets=first_offsets, second_offsets=second_offsets,
+                                                         parent_parameters=parameters,
+                                                         first_parameters=first_parameters,
+                                                         second_parameters=second_parameters,
+                                                         selected_splits=[splits[parent] for parent in parents])
+            corroborating_orders.append(height)
+        seed_rows.append(dict(width=width, order=order, index=index, value=sequence[index],
+                              relative_seed_values=values, corroborating_orders=corroborating_orders,
+                              universal_value_orders=f'all k >= {order}, by single-seed propagation',
+                              universal_unique_fixed_cycle_orders=f'all k >= {order + 1}'))
+    conditional_contexts = 0
+    positive_rows = []
+    absorbing_tail_contexts = 0
+    for order in range(7, 31):
+        for gap in range(2, min(129, fibonacci[order - 3])):
+            if not all(sequence[fibonacci[order - 1] - smaller] == fibonacci[order - 2]
+                       for smaller in range(gap)):
+                continue
+            index = fibonacci[order] - gap
+            anchor = fibonacci[order - 1]
+            previous_defect = fibonacci[order - 2] - sequence[fibonacci[order - 1] - gap]
+            transfer_defect = fibonacci[order - 3] - sequence[fibonacci[order - 2] - previous_defect]
+            assert 0 <= previous_defect <= 2 * gap // 3 < gap
+            assert 0 <= transfer_defect <= 2 * previous_defect // 3
+            trajectory, transient, period = full_orbit(sequence, index)
+            capture = next(position for position, point in enumerate(trajectory)
+                           if anchor - gap <= point <= anchor)
+            assert capture % 2 == 0
+            assert all((point > anchor and index - sequence[point] < anchor - gap)
+                       or (point < anchor - gap and index - sequence[point] >= anchor - gap)
+                       for point in trajectory[:capture])
+            if not previous_defect:
+                assert period == 1 and trajectory[transient:] == [anchor - gap]
+                assert sequence[index] == anchor and splits[index] == anchor - gap
+            else:
+                assert period == 2
+                assert set(trajectory[transient:]) == {anchor - gap, anchor - gap + previous_defect}
+                entrance_flag = int(trajectory[capture] > anchor - gap)
+                depth = sequence[index - 1]
+                expected_defect = (previous_defect if depth % 2 == entrance_flag else transfer_defect)
+                assert sequence[index] == anchor - expected_defect
+                positive_rows.append(dict(order=order, gap=gap, index=index,
+                                          previous_defect=previous_defect, transfer_defect=transfer_defect,
+                                          capture_time=capture, entrance_flag=entrance_flag, depth=depth,
+                                          selected_gap=anchor - splits[index],
+                                          parent_defect=anchor - sequence[index]))
+            conditional_contexts += 1
+            initial_height = order - 1
+            previous = fibonacci[initial_height - 1] - sequence[fibonacci[initial_height] - gap]
+            for height in range(order, 31):
+                current = fibonacci[height - 1] - sequence[fibonacci[height] - gap]
+                if height == order:
+                    assert current in (previous, transfer_defect)
+                else:
+                    assert current in (previous, 0)
+                previous = current
+            absorbing_tail_contexts += 1
+    literal_witnesses = []
+    literal_updates = 0
+    for order, gap in ((24, 13), (25, 14), (26, 14)):
+        index = fibonacci[order] - gap
+        anchor = fibonacci[order - 1]
+        trajectory, transient, period = full_orbit(sequence, index)
+        depth = sequence[index - 1]
+        point = index - 1
+        for iteration in range(depth):
+            point = index - sequence[point]
+        literal_updates += depth
+        assert point == splits[index] and period == 2
+        other = next(vertex for vertex in trajectory[transient:] if vertex != point)
+        other_value = sequence[other] + sequence[index - other]
+        assert sequence[index] != other_value
+        literal_witnesses.append(dict(order=order, gap=gap, index=index, depth=depth,
+                                      transient=transient, cycle=list(trajectory[transient:]),
+                                      selected_split=point, value=sequence[index],
+                                      other_split=other, other_value=other_value))
+    return dict(abstract_gaps_inclusive=[2, 32], abstract_contexts=abstract_contexts,
+                abstract_start_depth_readout_checks=abstract_start_depth_checks,
+                new_scalar_seed_premises=5, whole_seed_values_corroborated=sum(row['width'] + 1 for row in seed_rows),
+                seed_rows=seed_rows, conditional_actual_contexts=conditional_contexts,
+                absorbing_tail_contexts=absorbing_tail_contexts,
+                arithmetic_selected_window_rows=arithmetic_window_rows,
+                arithmetic_selected_five_window=arithmetic_window_witness,
+                nonzero_actual_boundary_rows=positive_rows,
+                literal_witnesses=literal_witnesses, literal_endpoint_updates=literal_updates,
+                scope='Single-negative-seed propagation and first-boundary copy-or-contract/readout-phase proofs are general. Seeds reuse the independently agreeing F30+34 full-orbit/Brent prefix. Finite observations p=1,q=0,entrance flag1 and width growth are not uniform laws; arbitrary negative widths, full recursive minimum, dispersion and convergence remain open. Conditional phase-state minima exclude supplied context and its certification cost.')
+
+
 def positive_collar_extinction_audit(sequence, fibonacci):
     local_contexts = 0
     periodic_splits = 0
@@ -615,7 +788,7 @@ def positive_collar_extinction_audit(sequence, fibonacci):
         if order in (23, 27, 29, 87, 100, 479):
             width_rows.append(dict(order=order, linear_width=linear_width,
                                    saturated_width=barrier_width))
-    return dict(local_capped_split_contexts=local_contexts, periodic_split_witnesses=periodic_splits,
+    positive_report = dict(local_capped_split_contexts=local_contexts, periodic_split_witnesses=periodic_splits,
                 extinction_table=extinction_rows, finite_conditional_C_rows=conditional_rows,
                 finite_nonzero_persistence_rows=conditional_nonzero_rows,
                 threshold_formula='K(u)=23+3*(u-32)+(u-32 mod2), u>=33',
@@ -627,6 +800,7 @@ def positive_collar_extinction_audit(sequence, fibonacci):
                 growing_linear_width='L_j=32+2*floor((j-23)/6)+indicator((j-23 mod6)>=4)',
                 growing_saturated_width='W_j=max(32,G(L_j))',
                 scope='General offset induction from the already certified0..32 collar and a necessary defect-persistence/phase rule. Finite Boolean paths are exhaustive for the rule envelope, not reverse-complete actual C histories. Every fixed positive width eventually has a proved exact collar; arbitrary negative widths and global ratio convergence remain open. Additional independent numerical checks stay within the previously published2^20 range, while the infinite conclusion comes from the extinction proof.')
+    return positive_report, negative_collar_boundary_audit(higher_sequence, higher_splits, fibonacci)
 
 
 def five_pattern_interaction_audit(sequence, fibonacci):
@@ -846,8 +1020,9 @@ def main():
         stable_graph_vertices += stable_graph_index + offset - 1
         if offset in (-left_width, 0, 1, 2, right_width):
             stable_graph_witnesses.append(dict(offset=offset, cycles=actual_cycles))
+    positive_collars, negative_boundary = positive_collar_extinction_audit(sequence, fibonacci_values(10 ** 6))
     report = dict(
-        status='Exact two-collar seeds and finite corroboration; fibonacci-collars.md Sections 1-4 use golden-proof.md, and Section 6 adds the recorded seed premises; no Lean formalization.',
+        status='Exact two-collar and single-negative-seed premises, boundary readout and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states propagation and boundary proofs; no Lean formalization.',
         source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         evaluator_source_sha256=hashlib.sha256(Path(__file__).with_name('conway_explore.py').read_bytes()).hexdigest(),
         limit=limit,
@@ -878,7 +1053,8 @@ def main():
         ),
         selected_positive_collar_phase=selected_collar_phase_audit(sequence, splits, fibonacci, zeros),
         saturated_fibonacci_profiles=saturated_profile_audit(sequence, periods, splits, fibonacci),
-        growing_positive_collars=positive_collar_extinction_audit(sequence, fibonacci_values(10 ** 6)),
+        growing_positive_collars=positive_collars,
+        negative_fibonacci_boundary=negative_boundary,
         five_pattern_interaction=five_pattern_interaction_audit(sequence, fibonacci),
         quantitative_capture=dict(
             anchor_drop_formula='F_(j-1)-C(F_j-d) <= floor(2*d/3), j>=5, 1<=d<F_j',
