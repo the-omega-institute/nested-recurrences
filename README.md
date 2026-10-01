@@ -5,28 +5,27 @@ decide how deeply to recurse? This project studies two examples proposed by
 John M. Campbell and Benoît Cloitre, inspired by the nested recurrences
 discussed by Hofstadter.
 
-**Campbell's example has a complete solution. For Cloitre's example, the
-main open question is whether the ratio of each term to its index converges
-to the reciprocal of the golden ratio.**
+We have solved Campbell's example. For Cloitre's example, we have proved
+golden-ratio bounds and exact Fibonacci structure; convergence over all
+integers remains open.
 
 ## Read the mathematics
 
-**[What are we studying?](GENERAL.md)** explains the question and defines
-both sequences. Then choose one of these two routes:
+**Start with [What are we studying?](GENERAL.md)** for the definitions and
+motivation. Then choose a sequence:
 
-- **[Campbell: the complete solution](campbell/README.md)** — explicit formula
-  and short inner cycles; **[read the three-page proof PDF](campbell/note.pdf)**.
-- **[Cloitre: the golden-ratio problem](cloitre-conway/README.md)** — what is
-  proved, the main proof, and the remaining convergence question.
+| Sequence | Current result | Read next |
+|---|---|---|
+| Campbell | Complete formula; the ratio does not converge. | [Three-page proof PDF](campbell/note.pdf) · [Guide](campbell/README.md) |
+| Cloitre | Golden lower bound and Fibonacci identities; the full limit is open. | [Definition and proof route](cloitre-conway/README.md) |
 
-**[Results and open questions](STATUS.md)** separates established results
-from the problems still to solve. The current research asks what information
-determines the actual recursive choices, and whether those choices force
-Cloitre's ratio to converge.
+For a project-wide overview, read **[Results and open questions](STATUS.md)**.
+The current research asks what determines Cloitre's recursive choices and
+whether those choices force its ratio to converge.
 
-All reading links work in your browser; no installation or GitHub account is
-needed. If the PDF preview does not load, use its download-arrow button.
-The source programs and JSON evidence are optional for readers.
+No installation or GitHub account is needed to read the notes. If the PDF
+preview does not load, use its download-arrow button. Programs and JSON
+evidence sit in each sequence's `verification/` folder and are optional reading.
 
 ## Work on the project
 

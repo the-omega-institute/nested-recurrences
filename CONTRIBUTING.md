@@ -29,6 +29,11 @@ who want to change the repository or reproduce its evidence.
    Remove the completed local worktree and branch as well, after confirming
    the merge and preserving any unrelated local work.
 
+For documentation-only PRs, check relative links and anchors, review the
+rendered reading route, and confirm that mathematical claims still agree
+with the linked proofs. Reproduce the affected mathematical evidence when
+proofs, programs or finite certificates change.
+
 There is currently no `dev` branch. Creating another integration branch is
 unnecessary for this workflow. A PR records developing work; `main` presents
 the current reviewed material. Do not change shared CI or publication
