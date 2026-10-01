@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "04c92bbb551666fb3b5bc3d8db9876f73373eb650676569e8059e08b18520bcf",
+  "source_sha256": "d6d027620ae7a336a98f09ca6137c63fa19075ea89bc6fd4f9a87d8fdac1467d",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -4084,6 +4084,234 @@
         }
       ],
       "scope": "Simultaneous top-suffix/shelf-barrier induction and boundary depth parity prove the exact moving negative plateau for actual C. Small seeds are literal/full-orbit/Brent premises; larger blocks and abstract graphs corroborate the written proof. A freshly added zero endpoint has a proper two-cycle, so scalar exactness does not imply a fixed inner cycle. Arithmetic child gaps close the moving plateau with supplied order/gap, excluding finite base-table and scale/context costs. No complete actual-C interface, wide-arch dispersion, global limit or Lean claim."
+    },
+    "unit_defect_closure": {
+      "base_order": 19,
+      "base_scalar_indices_inclusive": [
+        2584,
+        4181
+      ],
+      "base_full_gap_positions": 1598,
+      "base_zero_width": 9,
+      "base_unit_width": 19,
+      "base_profile_sha256": "e4a4d6e8a2ee9168665645abec09ee682d8a8fced6323a8ba2f782ffb29a8a89",
+      "independently_literal_checked_through": 4181,
+      "base_literal_updates": 5687042,
+      "unit_width_formula": "R_k=k+floor((k-1)/3)-6, k>=19",
+      "shelf_formula": "2<=Q_k(v)<=max(2,v-R_k-1) for v>R_k, k>=19",
+      "abstract_profiles": 177450,
+      "abstract_periodic_upper_readouts": 408270,
+      "lower_gap_arithmetic_bounds_checked": 4095,
+      "actual_complete_block_orders_inclusive": [
+        19,
+        30
+      ],
+      "actual_block_vertices": 829468,
+      "actual_closed_selector_rows": 304,
+      "actual_unit_defect_rows": 146,
+      "first_child_spine_steps": 1970,
+      "boundary_records": [
+        {
+          "order": 20,
+          "gap": 21,
+          "index": 6744,
+          "cycle": [
+            4161,
+            4162
+          ],
+          "transient": 10,
+          "depth": 4179,
+          "selected_split": 4161,
+          "cap_defect": 2
+        },
+        {
+          "order": 21,
+          "gap": 22,
+          "index": 10924,
+          "cycle": [
+            6744,
+            6745
+          ],
+          "transient": 10,
+          "depth": 6763,
+          "selected_split": 6744,
+          "cap_defect": 2
+        },
+        {
+          "order": 22,
+          "gap": 23,
+          "index": 17688,
+          "cycle": [
+            10924,
+            10925
+          ],
+          "transient": 11,
+          "depth": 10944,
+          "selected_split": 10925,
+          "cap_defect": 1
+        },
+        {
+          "order": 23,
+          "gap": 25,
+          "index": 28632,
+          "cycle": [
+            17687,
+            17688
+          ],
+          "transient": 11,
+          "depth": 17709,
+          "selected_split": 17687,
+          "cap_defect": 2
+        },
+        {
+          "order": 24,
+          "gap": 26,
+          "index": 46342,
+          "cycle": [
+            28632,
+            28633
+          ],
+          "transient": 12,
+          "depth": 28655,
+          "selected_split": 28632,
+          "cap_defect": 2
+        },
+        {
+          "order": 25,
+          "gap": 27,
+          "index": 74998,
+          "cycle": [
+            46342,
+            46343
+          ],
+          "transient": 12,
+          "depth": 46366,
+          "selected_split": 46343,
+          "cap_defect": 1
+        },
+        {
+          "order": 26,
+          "gap": 29,
+          "index": 121364,
+          "cycle": [
+            74997,
+            74998
+          ],
+          "transient": 12,
+          "depth": 75023,
+          "selected_split": 74997,
+          "cap_defect": 2
+        },
+        {
+          "order": 27,
+          "gap": 30,
+          "index": 196388,
+          "cycle": [
+            121364,
+            121365
+          ],
+          "transient": 13,
+          "depth": 121391,
+          "selected_split": 121364,
+          "cap_defect": 2
+        },
+        {
+          "order": 28,
+          "gap": 31,
+          "index": 317780,
+          "cycle": [
+            196388,
+            196389
+          ],
+          "transient": 14,
+          "depth": 196416,
+          "selected_split": 196389,
+          "cap_defect": 1
+        },
+        {
+          "order": 29,
+          "gap": 33,
+          "index": 514196,
+          "cycle": [
+            317779,
+            317780
+          ],
+          "transient": 14,
+          "depth": 317809,
+          "selected_split": 317779,
+          "cap_defect": 2
+        },
+        {
+          "order": 30,
+          "gap": 34,
+          "index": 832006,
+          "cycle": [
+            514196,
+            514197
+          ],
+          "transient": 14,
+          "depth": 514227,
+          "selected_split": 514196,
+          "cap_defect": 2
+        }
+      ],
+      "arithmetic_five_window": {
+        "anchor_order": 28,
+        "gaps": [
+          0,
+          16,
+          17,
+          30,
+          31
+        ],
+        "shifts": [
+          0,
+          0,
+          1,
+          1,
+          2
+        ],
+        "cap_defects": [
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "parent_parameters": [
+          196402,
+          196400,
+          196387,
+          196386,
+          196417
+        ],
+        "first_parameters": [
+          121377,
+          121376,
+          121363,
+          121363,
+          121392
+        ],
+        "second_parameters": [
+          75025,
+          75024,
+          75024,
+          75023,
+          75025
+        ],
+        "residual_selector_labels": 0
+      },
+      "all_basin_phase_variance_checks": 318,
+      "basin_quadratic_constant": "1/25",
+      "basin_ratio_minimum": "441/1870",
+      "basin_ratio_witness": {
+        "order": 20,
+        "gap": 1,
+        "index": 6764,
+        "phase_split": 4180,
+        "golden_defect": 1
+      },
+      "scope": "Finite base and abstract graph checks for the unit-sublevel/shelf induction; actual selector and single-defective-spine checks through order30. All basin phases satisfy the scoped one-step quadratic dispersion inequality in the proved Q<=1 family. No wide-block or global dispersion bound, full minimum interface or Lean claim."
     },
     "scope": "Single-negative-seed propagation and first-boundary copy-or-contract/readout-phase proofs are general. Earlier scalar seeds reuse the independently agreeing F30+34 full-orbit/Brent prefix. The separate small-seed moving-plateau induction now proves all fixed negative widths, top contiguity and the unit-amplitude actual boundary rule. Full recursive minimum, dispersion and global convergence remain open. Conditional phase-state minima exclude supplied context and its certification cost."
   },

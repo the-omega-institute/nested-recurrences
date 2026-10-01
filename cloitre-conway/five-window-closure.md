@@ -8,6 +8,11 @@ the information needed to select an output on a known cycle. It builds on
 The phase minima are conditional on supplied context; the full recursive
 minimum remains open.
 
+For an actual recursively closed family with nonconstant outputs, see the
+[unit-defect arithmetic interface](exact-collars.md#the-unit-defect-sublevel-set-and-its-arithmetic-spine).
+Supplied order and gap words determine both frontier phases and all child
+parameters; no residual selector label is needed in that qualified family.
+
 ## Contents
 
 - [7. Fibonacci profile renormalization and defect dynamics](#7-fibonacci-profile-renormalization-and-defect-dynamics)

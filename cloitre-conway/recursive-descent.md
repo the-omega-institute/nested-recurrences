@@ -17,6 +17,15 @@ need zero residual selectors with order and gaps supplied, down to finite
 base orders9/10. Scale, gap encoding and base-table costs remain separate;
 the full actual-C minimum in wide arches is still open.
 
+The [unit-defect sublevel theorem](exact-collars.md#the-unit-defect-sublevel-set-and-its-arithmetic-spine)
+extends this actual closure to a nonconstant profile family. A cap defect1
+follows a single first-child spine, while every second child is in the zero
+plateau. Order and gaps determine shifts0,1,2 and both boundary phases,
+so zero residual selector labels still suffice down to finite orders18/19.
+The same domain has a proved
+[quadratic basin dispersion bound](dispersion.md#quadratic-basin-dispersion-in-the-unit-defect-family).
+Full context costs and dispersion in the wider block interiors remain open.
+
 ## Contents
 
 - [Recursive windows with a parameter at every row](#recursive-windows-with-a-parameter-at-every-row)
