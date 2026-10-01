@@ -1,5 +1,6 @@
 {
   "status": "passed",
+  "source_sha256": "c77ecc455bf0ad38da78f239bb5a76f9c67e64f7ac8e33d087c24dd18ea05ba2",
   "scope": "Exact public three-block selector audit; row-local Cartesian independence is checked, while lower-window closure constraints remain separate.",
   "period_five_payloads": 13,
   "parent_rows": 65,
@@ -120,6 +121,16 @@
           51
         ]
       ],
+      "minimum_periodicity_tests": {
+        "raw_unique": {
+          "minimum": null,
+          "coordinates": []
+        },
+        "restricted_injective": {
+          "minimum": null,
+          "coordinates": []
+        }
+      },
       "profile_overrides": {
         "35": 25,
         "36": 24,
@@ -334,6 +345,258 @@
       ]
     ],
     "scope": "Exact four-class lower and upper certificates for one C candidate set; refutes a universal three-class cover but does not establish a four-class uniform bound."
+  },
+  "collision_pair_completeness": {
+    "contexts": 132,
+    "cartesian_words": 28380,
+    "window_lengths": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "scope": "Exhaustive small shared capped profiles, independently comparing the closed pair-path algorithm with direct Cartesian alpha fibers."
+  },
+  "periodic_pivot_witnesses": {
+    "contexts": [
+      {
+        "index": 11342,
+        "order": 21,
+        "cycle_offsets": [
+          197,
+          202,
+          201,
+          198,
+          206
+        ],
+        "candidate_sizes": [
+          25,
+          27,
+          19,
+          25,
+          31
+        ],
+        "raw_cartesian_words": 9939375,
+        "complete_nontrivial_fibers": 279,
+        "maximum_fiber": 2,
+        "complete_nontrivial_fibers_sha256": "65a34fb90148c045804286570b6c0b541f8822dbadade6a162cfa4b0de590129",
+        "periodic_pivots": [
+          3
+        ],
+        "minimum_periodicity_tests": {
+          "raw_unique": {
+            "minimum": 1,
+            "coordinates": [
+              [
+                3
+              ]
+            ]
+          },
+          "restricted_injective": {
+            "minimum": 1,
+            "coordinates": [
+              [
+                3
+              ],
+              [
+                4
+              ]
+            ]
+          }
+        },
+        "actual_word": [
+          116,
+          97,
+          137,
+          51,
+          97
+        ],
+        "selected_alpha": [
+          211,
+          228,
+          186,
+          148,
+          207
+        ],
+        "sample_alpha": [
+          181,
+          186,
+          130,
+          161,
+          191
+        ],
+        "sample_fiber": [
+          [
+            78,
+            105,
+            87,
+            43,
+            118
+          ],
+          [
+            82,
+            101,
+            86,
+            46,
+            115
+          ]
+        ],
+        "sample_periodicity": [
+          [
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          [
+            true,
+            true,
+            true,
+            false,
+            true
+          ]
+        ],
+        "one_test_raw_competitor": null
+      },
+      {
+        "index": 28996,
+        "order": 23,
+        "cycle_offsets": [
+          166,
+          174,
+          169,
+          170,
+          173
+        ],
+        "candidate_sizes": [
+          54,
+          16,
+          49,
+          14,
+          46
+        ],
+        "raw_cartesian_words": 27264384,
+        "complete_nontrivial_fibers": 5472,
+        "maximum_fiber": 2,
+        "complete_nontrivial_fibers_sha256": "7f71caffc38b3741854e8d55c5bda5bf7c8c0415362cd50a0d1e09c2878a4439",
+        "periodic_pivots": [],
+        "minimum_periodicity_tests": {
+          "raw_unique": {
+            "minimum": 2,
+            "coordinates": [
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          "restricted_injective": {
+            "minimum": 1,
+            "coordinates": [
+              [
+                1
+              ]
+            ]
+          }
+        },
+        "actual_word": [
+          25,
+          17,
+          157,
+          13,
+          157
+        ],
+        "selected_alpha": [
+          42,
+          174,
+          170,
+          170,
+          182
+        ],
+        "sample_alpha": [
+          105,
+          94,
+          68,
+          96,
+          133
+        ],
+        "sample_fiber": [
+          [
+            57,
+            49,
+            48,
+            20,
+            76
+          ],
+          [
+            58,
+            47,
+            47,
+            21,
+            75
+          ]
+        ],
+        "sample_periodicity": [
+          [
+            true,
+            false,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            false,
+            true,
+            true,
+            true
+          ]
+        ],
+        "one_test_raw_competitor": {
+          "alpha": [
+            81,
+            113,
+            133,
+            98,
+            113
+          ],
+          "words": [
+            [
+              57,
+              25,
+              88,
+              45,
+              56
+            ],
+            [
+              58,
+              23,
+              90,
+              43,
+              55
+            ]
+          ],
+          "periodicity": [
+            [
+              true,
+              true,
+              true,
+              false,
+              false
+            ],
+            [
+              true,
+              false,
+              true,
+              false,
+              true
+            ]
+          ]
+        }
+      }
+    ],
+    "qualification": "Minimum coordinate counts distinguish injectivity after the periodicity restrictions from the stronger raw-image uniqueness. The n=28996 context needs one check for the former and two for the latter; four other periodic coordinates still leave a collision. The two contexts together rule out any single fixed coordinate for restricted injectivity. Universal bounded adaptive-test existence for C remains open."
   },
   "affine_parameter_rank": {
     "payload_rows": 13,

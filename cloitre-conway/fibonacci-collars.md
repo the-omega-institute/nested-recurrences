@@ -1215,3 +1215,91 @@ These are separate lower-row phases. A five-cycle of the parent does not make
 its child cycles period five. This is the same distinction between cycle,
 basin and selected phase that Campbell's endpoint templates resolve in his
 period-one/two family.
+
+### Minimal periodicity checks for inverse reconstruction
+
+The number of necessary orbit qualifications can be smaller than the number
+of rows. Fix the parent context, candidate sets R_i and profiles, and let
+`A(r)_i=r_(i+1)+H_i(r_i)` be the alpha map on the raw product R. Write
+`P(r)={i:r_i in R_i^per}`. For a set of tested positions S, retain
+
+```text
+R(S) = {r in R : S is a subset of P(r)}.
+```
+
+Every actual selector word lies in R(S), for every S, by cycle entry. There
+are two different inverse claims:
+
+1. **Injectivity after the tests.** Alpha is injective on R(S) exactly when,
+   for every distinct raw pair r,s with A(r)=A(s),
+   `S` is not a subset of `P(r) intersect P(s)`.
+2. **Uniqueness even against raw candidates.** Every word retained in R(S)
+   has a singleton raw alpha fiber exactly when, for every raw collision
+   word r, `S` is not a subset of P(r).
+
+The first equivalence says that at least one member of every collision pair
+must fail a tested qualification. The second says that every collision word
+must fail one. These are necessary and sufficient conditions, not estimates:
+their failure directly supplies the retained ambiguous pair or the retained
+word with a raw competitor. The minimum number of tested positions is thus
+the minimum hitting-set size for the complements of the corresponding masks.
+It can be zero in an already injective context, or no set can suffice in a
+context with locally periodic collisions, such as the abstract example above.
+
+In particular, one **adaptive pivot** j suffices for the first claim when
+no raw collision pair has both j-th coordinates periodic. It suffices for
+the second, stronger claim when no raw collision word has its j-th coordinate
+periodic. Under either certificate, alpha has at most one inverse in the
+qualified domain, so no residual inverse branch bit is needed there. Decode
+by rotating the seed reconstruction to the pivot, trying its qualified seeds,
+and checking the remaining candidate memberships and closure.
+
+This counts orbit qualifications, not the full payload dimension, the cost of
+finding the pivot, or the size of its lower-profile certificate. The pivot
+may depend on the parent context. If a decoder needs it explicitly, supply
+its position or a deterministic rule with a verified exclusion certificate.
+Prescribed basin and selected phase remain additional tasks; a qualified
+decomposition witness is not automatically the recurrence's selected word.
+
+Two exact C contexts demonstrate that this distinction matters. Positions
+below are zero-based, with the parent cycle starting at its smallest offset.
+
+| Parent index | Canonical cycle offsets | Minimum tests for qualified injectivity | Minimum tests for raw uniqueness |
+|---:|---|---|---|
+| 11342 | `(197,202,201,198,206)` | one: position 3 or 4 | one: position 3 |
+| 28996 | `(166,174,169,170,173)` | one: position 1 | two: positions 1 and 3 |
+
+The first raw product has 9,939,375 words and 279 nontrivial alpha fibers;
+the second has 27,264,384 words and 5,472 nontrivial fibers. All those fibers
+are binary. The [selector verifier](verification/selector_payload_check.py)
+enumerates them by the exact paired difference equations
+`delta_(i+1)=-(H_i(s_i)-H_i(r_i))`, checks each full fiber again by seed
+reconstruction, and independently verifies periodic candidate membership
+against all-start lower functional graphs. It also checks preservation of
+the actual selector word and replays every listed optimal qualification set.
+
+At n=28996 the two raw words
+
+```text
+(57,49,48,20,76)
+(58,47,47,21,75)
+```
+
+have equal alpha `(105,94,68,96,133)`. Both are periodic at positions
+0,2,3,4 and transient at position 1. Thus checking those four other positions
+still leaves a collision; the second row is necessary. The full fiber audit
+proves that this row alone suffices for qualified injectivity. It does not
+suffice for raw uniqueness: the alpha `(81,113,133,98,113)` has raw words
+`(57,25,88,45,56)` and `(58,23,90,43,55)`, of which the first is periodic
+at position 1 and the second is not. The qualification retains just one,
+although its raw competitor still exists. Two tested rows, 1 and 3, are
+necessary and sufficient for the stronger claim in this context.
+
+The two contexts also rule out any universal **fixed** single pivot for
+qualified injectivity: their admissible single-pivot sets `{3,4}` and `{1}`
+are disjoint. This does not rule out a context-dependent pivot for C, and
+does not claim ambiguity at an actually selected alpha tuple. Proving a
+uniform adaptive qualification bound from the recursive Fibonacci profiles
+remains open. Campbell's endpoint templates determine his basin and phase
+from the arithmetic family; here the missing family theorem is now separated
+from the exact conditional inverse test.

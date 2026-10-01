@@ -1,10 +1,12 @@
 """Audit ordinal encodings of the five Fibonacci child-split selectors."""
 
-from collections import Counter
+from collections import Counter, defaultdict
 from fractions import Fraction
+import hashlib
 import json
-from itertools import product
+from itertools import combinations, product
 import math
+from pathlib import Path
 import sys
 
 from conway_explore import brent_generate, full_orbit, generate
@@ -46,6 +48,172 @@ def seed_fiber(sets, profile, alpha):
         if len(word) == len(sets) + 1 and word[-1] == seed:
             result.append(tuple(word[:-1]))
     return result
+
+
+def alpha_collision_fibers(sets, profile):
+    difference_indices = []
+    for values in sets:
+        by_difference = defaultdict(list)
+        for first in values:
+            for second in values:
+                if first != second:
+                    by_difference[first - second].append((first, second))
+        difference_indices.append(by_difference)
+    fibers = defaultdict(set)
+    for values in difference_indices[0].values():
+        for start in values:
+            if start[0] >= start[1]:
+                continue
+            paths = [(start,)]
+            for position in range(len(sets) - 1):
+                extended = []
+                for path in paths:
+                    first, second = path[-1]
+                    difference = profile[first] - profile[second]
+                    for following in difference_indices[position + 1].get(-difference, ()):
+                        extended.append((*path, following))
+                paths = extended
+            for path in paths:
+                first, second = path[-1]
+                if start[0] - start[1] != -(profile[first] - profile[second]):
+                    continue
+                left = tuple(pair[0] for pair in path)
+                right = tuple(pair[1] for pair in path)
+                alpha = tuple(left[(position + 1) % len(sets)] + profile[left[position]]
+                              for position in range(len(sets)))
+                assert alpha == tuple(right[(position + 1) % len(sets)] + profile[right[position]]
+                                      for position in range(len(sets)))
+                fibers[alpha].update((left, right))
+    return dict(fibers)
+
+
+def collision_pair_completeness_examples():
+    contexts = 0
+    words_checked = 0
+    for scale in range(4):
+        values = tuple(range(scale + 1))
+        for profile in product(*(range(point + 1) for point in values)):
+            for length in (1, 2, 3, 5):
+                sets = (values,) * length
+                direct = defaultdict(set)
+                for word in product(*sets):
+                    alpha = tuple(word[(position + 1) % length] + profile[word[position]]
+                                  for position in range(length))
+                    direct[alpha].add(word)
+                    words_checked += 1
+                direct = {alpha: words for alpha, words in direct.items() if len(words) > 1}
+                assert alpha_collision_fibers(sets, profile) == direct
+                contexts += 1
+    return dict(contexts=contexts, cartesian_words=words_checked, window_lengths=[1, 2, 3, 5],
+                scope='Exhaustive small shared capped profiles, independently comparing the closed pair-path algorithm with direct Cartesian alpha fibers.')
+
+
+def minimum_periodicity_tests(fibers, periodic):
+    assert all(len(words) > 1 for words in fibers.values())
+    word_masks = []
+    pair_masks = []
+    for words in fibers.values():
+        masks = [tuple(split in values for split, values in zip(word, periodic)) for word in words]
+        word_masks.extend(masks)
+        pair_masks.extend(tuple(first and second for first, second in zip(left, right))
+                          for left, right in combinations(masks, 2))
+    result = {}
+    for label, masks in (('raw_unique', word_masks), ('restricted_injective', pair_masks)):
+        result[label] = dict(minimum=None, coordinates=[])
+        for size in range(len(periodic) + 1):
+            good = [subset for subset in combinations(range(len(periodic)), size)
+                    if all(any(not mask[phase] for phase in subset) for mask in masks)]
+            if good:
+                result[label] = dict(minimum=size, coordinates=[list(subset) for subset in good])
+                break
+    return result
+
+
+def periodic_pivot_witnesses():
+    sequence, _, _, selected_splits = generate(28996)
+    assert sequence == brent_generate(28996)
+    fibonacci = fibonacci_values(28997)
+    result = []
+    for index, order, offsets, sample_alpha in (
+            (11342, 21, (197, 202, 201, 198, 206), (181, 186, 130, 161, 191)),
+            (28996, 23, (166, 174, 169, 170, 173), (105, 94, 68, 96, 133))):
+        anchor, lower, child, child_lower = [fibonacci[order - shift] for shift in range(1, 5)]
+        assert all(index - sequence[anchor + offset] == anchor + offsets[(phase + 1) % 5]
+                   for phase, offset in enumerate(offsets))
+        sets = candidate_sets(sequence, anchor, lower, child, child_lower, offsets)
+        profile = {split: sequence[lower + split] - child
+                   for split in range(max(offsets) + 1)}
+        periodic = [periodic_profile_candidates(values, profile, offset)
+                    for values, offset in zip(sets, offsets)]
+        for offset, values, retained in zip(offsets, sets, periodic):
+            nodes = {point - lower for cycle in all_cycles(sequence, anchor + offset)
+                     for point in cycle}
+            assert retained == tuple(point for point in values if point in nodes)
+        fibers = alpha_collision_fibers(sets, profile)
+        assert len(fibers) == (279 if index == 11342 else 5472)
+        assert all(len(words) == 2 for words in fibers.values())
+        for alpha, words in fibers.items():
+            assert set(seed_fiber(sets, profile, alpha)) == words
+        projections = [set() for _ in range(5)]
+        for words in fibers.values():
+            for word in words:
+                for phase, split in enumerate(word):
+                    projections[phase].add(split)
+        pivots = [phase for phase in range(5)
+                  if projections[phase].isdisjoint(periodic[phase])]
+        assert pivots == ([3] if index == 11342 else [])
+        tests = minimum_periodicity_tests(fibers, periodic)
+        if index == 11342:
+            assert tests['raw_unique'] == dict(minimum=1, coordinates=[[3]])
+            assert tests['restricted_injective'] == dict(minimum=1, coordinates=[[3], [4]])
+        else:
+            assert tests['raw_unique'] == dict(minimum=2, coordinates=[[1, 3]])
+            assert tests['restricted_injective'] == dict(minimum=1, coordinates=[[1]])
+        selected = tuple(selected_splits[anchor + offset] - lower for offset in offsets)
+        selected_alpha = tuple(selected[(phase + 1) % 5] + profile[selected[phase]]
+                               for phase in range(5))
+        assert all(split in values for split, values in zip(selected, periodic))
+        for condition in tests.values():
+            for coordinates in condition['coordinates']:
+                restricted = [periodic[phase] if phase in coordinates else values
+                              for phase, values in enumerate(sets)]
+                assert alpha_collision_fibers(restricted, profile) == {}
+                assert seed_fiber(restricted, profile, selected_alpha) == [selected]
+        sample = sorted(fibers[sample_alpha])
+        flags = [[split in values for split, values in zip(word, periodic)] for word in sample]
+        raw_competitor = None
+        if index == 11342:
+            assert sample == [(78, 105, 87, 43, 118), (82, 101, 86, 46, 115)]
+            assert flags == [[False, True, True, False, False],
+                             [True, True, True, False, True]]
+        else:
+            assert sample == [(57, 49, 48, 20, 76), (58, 47, 47, 21, 75)]
+            assert flags == [[True, False, True, True, True]] * 2
+            competitor_alpha = (81, 113, 133, 98, 113)
+            competitor_words = sorted(fibers[competitor_alpha])
+            assert competitor_words == [(57, 25, 88, 45, 56), (58, 23, 90, 43, 55)]
+            competitor_flags = [[split in values for split, values in zip(word, periodic)]
+                                for word in competitor_words]
+            assert competitor_flags == [[True, True, True, False, False],
+                                        [True, False, True, False, True]]
+            raw_competitor = dict(alpha=list(competitor_alpha),
+                                  words=[list(word) for word in competitor_words],
+                                  periodicity=competitor_flags)
+        serialized = [{'alpha': list(alpha), 'words': [list(word) for word in sorted(words)]}
+                      for alpha, words in sorted(fibers.items())]
+        digest = hashlib.sha256(json.dumps(serialized, sort_keys=True,
+                                           separators=(',', ':')).encode()).hexdigest()
+        result.append(dict(index=index, order=order, cycle_offsets=list(offsets),
+                           candidate_sizes=list(map(len, sets)),
+                           raw_cartesian_words=math.prod(map(len, sets)),
+                           complete_nontrivial_fibers=len(fibers), maximum_fiber=2,
+                           complete_nontrivial_fibers_sha256=digest,
+                           periodic_pivots=pivots, minimum_periodicity_tests=tests,
+                           actual_word=list(selected),
+                           selected_alpha=list(selected_alpha), sample_alpha=list(sample_alpha),
+                           sample_fiber=[list(word) for word in sample], sample_periodicity=flags,
+                           one_test_raw_competitor=raw_competitor))
+    return dict(contexts=result, qualification='Minimum coordinate counts distinguish injectivity after the periodicity restrictions from the stronger raw-image uniqueness. The n=28996 context needs one check for the former and two for the latter; four other periodic coordinates still leave a collision. The two contexts together rule out any single fixed coordinate for restricted injectivity. Universal bounded adaptive-test existence for C remains open.')
 
 
 def defect_seed_interval(alpha, defects):
@@ -137,9 +305,13 @@ def abstract_periodic_collision():
     assert first in fiber and second in fiber
     assert all(offset - profile[split] == split
                for word in (first, second) for offset, split in zip(offsets, word))
+    tests = minimum_periodicity_tests({alpha: set(fiber)}, periodic_sets)
+    assert tests == {'raw_unique': dict(minimum=None, coordinates=[]),
+                     'restricted_injective': dict(minimum=None, coordinates=[])}
     return {"scale": scale, "parent_offsets": list(offsets), "parent_defects": list(defects),
             "alpha": list(alpha), "two_periodic_words": [list(first), list(second)],
             "complete_periodic_fiber": [list(word) for word in fiber],
+            "minimum_periodicity_tests": tests,
             "profile_overrides": {split: value for split, value in profile.items() if split != value},
             "complement_profile_overrides": {split: value for split, value in complement_profile.items()
                                              if split != value},
@@ -515,6 +687,7 @@ def main():
     assert largest["cartesian_candidate_count"] == 45696
     print(json.dumps({
         "status": "passed",
+        "source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "scope": "Exact public three-block selector audit; row-local Cartesian independence is checked, while lower-window closure constraints remain separate.",
         "period_five_payloads": len(payloads),
         "parent_rows": parent_rows,
@@ -562,6 +735,8 @@ def main():
         "phase_alignment_witness": phase_alignment_witness(),
         "higher_order_seed_witness": higher_order_seed_witness(),
         "higher_order_profile_cover_witness": higher_order_cover_witness(),
+        "collision_pair_completeness": collision_pair_completeness_examples(),
+        "periodic_pivot_witnesses": periodic_pivot_witnesses(),
         "affine_parameter_rank": {
             "payload_rows": len(payloads),
             "parent_features": "(t, five offsets, five nonnegative defects, 1)",

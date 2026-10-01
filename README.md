@@ -17,7 +17,7 @@ or programming knowledge is needed.
 | Understand how quickly an orbit enters a Fibonacci neighborhood | **[Quantitative capture](cloitre-conway/fibonacci-collars.md#quantitative-capture-and-a-short-exterior-certificate)** |
 | See how long orbit runs can be checked by arithmetic blocks | **[Return certificates](cloitre-conway/fibonacci-collars.md#defect-plateau-return-certificates)** |
 | See the common five-window closure interface | **[Closure theorem](cloitre-conway/fibonacci-collars.md#9-common-closure-theorem-and-generic-minimality)** |
-| Understand the extra information needed to recover child branches | **[Seed reconstruction and defect budget](cloitre-conway/fibonacci-collars.md#seed-reconstruction-and-the-remaining-branch-information)** |
+| Understand the extra information needed to recover child branches | **[Seed reconstruction](cloitre-conway/fibonacci-collars.md#seed-reconstruction-and-the-remaining-branch-information)** · **[Minimum cycle checks](cloitre-conway/fibonacci-collars.md#minimal-periodicity-checks-for-inverse-reconstruction)** |
 | See what is proved and what remains open | **[Current status](STATUS.md)** |
 
 Click a link to read its document, then use your browser's Back button to
