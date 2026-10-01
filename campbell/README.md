@@ -2,6 +2,25 @@
 
 [Back to the research overview](../README.md) · [Current research status](../STATUS.md)
 
+## Definition and solution
+
+Set b(1)=1. For n>=2, let T_n(x)=n-b(x), start at x_0=n-1, and put
+
+$$
+b(n)=T_n^{\,b(n-1)}(n-1).
+$$
+
+The exponent means exactly b(n-1) applications of T_n. The first terms are
+1, 1, 2, 3, 2, 3, 4, 5. For the unique power of three s in the indicated
+interval, the complete formula is
+
+$$
+\begin{aligned}
+b(n)&=\min(n-s,3s), && n\text{ even},\quad 2s\le n<6s,\\
+b(n)&=\max(2s,n-3s), && n\text{ odd},\quad 3s\le n<9s.
+\end{aligned}
+$$
+
 ## Read the proof
 
 **[Open the three-page proof (PDF)](note.pdf).** No software or GitHub account
@@ -21,6 +40,10 @@ identity and the lower and upper asymptotic ratios.
 You can send comments in the existing email thread; no GitHub workflow is
 required. For the second example, continue to the
 [Conway research guide](../cloitre-conway/README.md).
+
+For the comparison with canonical Fibonacci digit encoding, read the
+[scale-memory theorem](scale-memory.md). It quantifies why these short
+inner cycles do not give a fixed autonomous recognizer in that encoding.
 
 ## Optional computational checks
 
