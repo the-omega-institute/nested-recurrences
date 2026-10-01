@@ -11,7 +11,8 @@ who want to change the repository or reproduce its evidence.
 1. Fetch the latest default branch and develop each coherent change on its
    own branch, using an isolated worktree when other work is in progress.
 2. Keep a pull request focused on one result or one documentation change.
-   Open a draft PR for ongoing work. Explain the problem, the resulting
+   Open a draft PR when the first coherent change can be reviewed, and keep
+   unfinished arguments on that branch. Explain the problem, the resulting
    statement, and the validation performed; update that description to match
    the final scope before requesting review.
    Readers should be able to tell from the PR description which question is
@@ -28,6 +29,11 @@ who want to change the repository or reproduce its evidence.
    its completed branch. Do not push research changes directly to `main`.
    Remove the completed local worktree and branch as well, after confirming
    the merge and preserving any unrelated local work.
+
+The default branch is a reading edition: introductions, current proofs and
+compact reproducibility evidence. A draft PR is the place for an unfinished
+change; its description carries the current question and validation status.
+Do not add a second public copy of the same developing note to `main`.
 
 For documentation-only PRs, check relative links and anchors, review the
 rendered reading route, and confirm that mathematical claims still agree

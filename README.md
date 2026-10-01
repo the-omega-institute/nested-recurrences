@@ -1,42 +1,40 @@
 # Nested recurrences
 
-How much complexity can a recurrence create when its own earlier values
-decide how deeply to recurse? This project studies two examples proposed by
-John M. Campbell and Benoît Cloitre, inspired by the nested recurrences
-discussed by Hofstadter.
+A research collaboration on two recurrences proposed by John M. Campbell and
+Benoît Cloitre, inspired by the nested recurrences discussed by Hofstadter.
+In both examples, an earlier value decides how many times to repeat a lookup.
 
-We have solved Campbell's example. For Cloitre's example, we have proved
-golden-ratio bounds and exact Fibonacci structure; convergence over all
-integers remains open.
+**The main open question:** does Cloitre's sequence approach the golden-ratio
+proportion, C(n)/n -> (sqrt(5)-1)/2, over all integers? We have proved the
+lower bound and exact Fibonacci structure, but the full limit remains open.
+Campbell's example is completely solved; its ratio does not converge.
 
 ## Read the mathematics
 
-**Start with [What are we studying?](GENERAL.md)** for the definitions and
-motivation. Then choose a sequence:
+**New here? Read [What are we studying?](GENERAL.md)** for the two definitions,
+how the iteration works, and the connection to Hofstadter. Then choose a proof:
 
 | Sequence | Current result | Read next |
 |---|---|---|
-| Campbell | Complete formula; the ratio does not converge. | [Three-page proof PDF](campbell/note.pdf) · [Guide](campbell/README.md) |
-| Cloitre | Golden lower bound and Fibonacci identities; the full limit is open. | [Definition and proof route](cloitre-conway/README.md) |
+| Campbell | Complete formula; the ratio does not converge. | [Three-page proof PDF](campbell/note.pdf) |
+| Cloitre | Golden lower bound and Fibonacci identities; the full limit is open. | [Definition and main theorem](cloitre-conway/README.md) |
 
-For a project-wide overview, read **[Results and open questions](STATUS.md)**.
-The current research asks what determines Cloitre's recursive choices and
-whether those choices force its ratio to converge.
+**[Results and open questions](STATUS.md)** separates established results from
+the remaining problems. The sequence guides lead to the detailed arguments.
 
-No installation or GitHub account is needed to read the notes. If the PDF
-preview does not load, use its download-arrow button. Programs and JSON
-evidence sit in each sequence's `verification/` folder and are optional reading.
+No installation or GitHub account is needed. Click a note to read it in your
+browser; use the download-arrow button if the PDF preview does not load.
 
 ## Work on the project
 
-The default branch, **main**, presents reviewed results by mathematical topic.
-Follow work in progress in **[open pull requests](https://github.com/the-omega-institute/nested-recurrences/pulls)**.
-Completed work is checked, merged, and its branch deleted. Scratch experiments
-and correspondence stay outside the public tree.
+**[main](https://github.com/the-omega-institute/nested-recurrences/tree/main)**
+is the reviewed reading edition. Developing work belongs in
+**[pull requests](https://github.com/the-omega-institute/nested-recurrences/pulls)**:
+draft while unfinished, checked and merged when ready, then its branch removed.
 
-See **[Contributing and verification](CONTRIBUTING.md)** for the PR workflow
-and reproduction command. Mathematical comments are also welcome in the
-existing collaboration thread; using GitHub is optional.
+See **[Contributing and verification](CONTRIBUTING.md)** for that workflow and
+optional programs and evidence. Comments in the existing collaboration thread
+are welcome; using GitHub is optional.
 
 The current results are written proofs and computer-assisted proofs with
 explicit finite certificates. This repository does not currently contain

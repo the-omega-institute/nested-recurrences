@@ -60,19 +60,22 @@ A cap defect measures how far a value lies below the Fibonacci upper cap;
 a profile records the defects across a neighborhood. The linked proofs give
 exact definitions, domains and supplied inputs.
 
-| Question | Note | Starting point |
+| Topic | Read in this order | Prerequisites |
 |---|---|---|
-| Is the sequence well defined, and does its depth reach a cycle? | [Foundations](proof.md) | The definition |
-| What global golden bounds and Fibonacci identities are proved? | [Global golden structure](golden-proof.md) | Foundations and explicit finite certificates |
-| How are cycles captured near Fibonacci indices? | [Orbit bounds](fibonacci-collars.md) | Global golden structure |
-| Which nearby values, cycles, and selected phases are exact? | [Exact collars](exact-collars.md) | Capture and stated finite seeds |
-| What closes a local reflection window, and what phase information does an output need? | [Profiles and five-window closure](five-window-closure.md) | Global structure and profile identities |
-| Can candidate cycles be reconstructed and qualified? | [Inverse reconstruction](inverse-reconstruction.md), including the [unique odd-window decoder](inverse-reconstruction.md#golden-defect-words-give-a-uniform-cyclic-decoder) | Reflection-window equations; ordered golden defects for the conditional decoder |
-| What information closes recursive descent and selects its children? | [Recursive descent](recursive-descent.md), including the [cap budget](recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level), [modular decoder](recursive-descent.md#a-modular-symbolic-selector-with-small-working-memory) and [child-cap allocation seed](recursive-descent.md#actual-defect-allocation-and-phase-information) | Profiles and certified entrance for the modular decoder; parent scalar and allocation for the periodic seed |
-| What would prove a global decay rate, and what dispersion is already proved? | [Martingales and dispersion](dispersion.md), including the [logarithmic horizon](dispersion.md#a-logarithmic-horizon-from-one-retained-child) and [two-split moment policies](dispersion.md#two-split-moment-policies-and-cycle-average-dispersion) | Profile identity, additive child blocks and the stated scalar or moment conditions |
-| How much memory does canonical digit recognition require? | [Cloitre bounded-cap graphs](five-window-closure.md#exact-state-bit-order-for-every-bounded-cap-graph) · [Campbell comparison](../campbell/scale-memory.md) | Cap budget; exact plateau; Campbell's formula |
-| When does a canonical window have a persistent feature interaction, and how do its descendants change context? | [Cloitre family](exact-collars.md#a-persistent-interaction-on-canonical-index-words) · [Additive table and direct descendant decoder](exact-collars.md#additive-canonical-windows-and-a-direct-descendant-decoder) · [Campbell comparison](../campbell/scale-memory.md#five-pattern-interaction-on-ternary-scale-interiors) | Unit-defect arithmetic descent; ternary formula |
-| What arithmetic supports the global induction and shifted-family tests? | [Supporting arithmetic and audit](landing.md) | Foundations |
+| Global theorems | [Foundations](proof.md) → [Golden structure](golden-proof.md) | The definition; explicit finite certificates |
+| Fibonacci neighborhoods | [Orbit bounds](fibonacci-collars.md) → [Exact values and phases](exact-collars.md) | Global theorems; stated finite seeds |
+| Local cycles and actual recursive choices | [Five-window interface](five-window-closure.md) → [Inverse reconstruction](inverse-reconstruction.md) → [Recursive descent](recursive-descent.md) | Global structure; the supplied profiles and context in each theorem |
+| Convergence and decay | [Martingales and dispersion](dispersion.md) | Additive child blocks; the stated scalar or moment conditions |
+| Digit encoding and feature interactions | [Cloitre memory theorem](five-window-closure.md#exact-state-bit-order-for-every-bounded-cap-graph) · [Cloitre interactions](exact-collars.md#a-persistent-interaction-on-canonical-index-words) · [Campbell comparison](../campbell/scale-memory.md) | Fibonacci digits; exact neighborhood and ternary formulas |
+| Supporting arithmetic and related variants | [Landing and shifted-family audit](landing.md) | Foundations |
+
+For the current recursive-interface question, the
+[child-cap allocation theorem](recursive-descent.md#actual-defect-allocation-and-phase-information)
+replaces separate cycle and phase labels with one allocation parameter when
+the lower profiles and parent value are supplied. That parameter is derived
+at cap4; its general selection and construction of the required profiles
+remain open. The [direct descendant decoder](exact-collars.md#additive-canonical-windows-and-a-direct-descendant-decoder)
+handles a particular canonical family; it does not close the full recursion.
 
 The local interface theorems state exactly which context is supplied.
 For a bounded natural-cap domain, the
