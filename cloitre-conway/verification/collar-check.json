@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "6a7952f9ce9f063f9cf827f9fd0208cdc4200c13a90e9d87ad5e738ba0b3c499",
+  "source_sha256": "f04885d2605b41761490ff45226008bfb109da006cbcf09c996ea4e4bd738da7",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -5481,6 +5481,165 @@
         ],
         "literal_updates": 542875,
         "scope": "The written cap-adaptive stopping/induction proof uses integer child-cap conservation, the exact zero plateau and the previously proved cap0..3 basin inequality; no new infinite sequence premise. Above cap3 the stopped minimum permits every scalar-valid geometric split, without orbit, entrance or phase qualification. Low-cap finishing uses the arithmetic prescribed-basin kernel. This envelope is compared with actual accumulated variance at every qualifying bounded-cap root, preserving inherited labels. A four-generation quadratic bound follows on cap<=6, not on unbounded caps or all block interiors; no global rate or full minimum interface is proved."
+      },
+      "logarithmic_cap_dispersion": {
+        "capacity": "3*2^(t-1)",
+        "constant": "1/(25*4^(t-1))",
+        "order_threshold": "22+2(t-1)",
+        "root_orders_inclusive": [
+          22,
+          30
+        ],
+        "cap_bound": 24,
+        "actual_roots": 1418,
+        "root_cap_defect_counts": {
+          "0": 135,
+          "1": 126,
+          "2": 207,
+          "3": 99,
+          "4": 245,
+          "6": 1,
+          "8": 104,
+          "9": 75,
+          "7": 44,
+          "10": 21,
+          "11": 7,
+          "12": 5,
+          "14": 10,
+          "15": 10,
+          "16": 8,
+          "17": 20,
+          "13": 1,
+          "18": 26,
+          "19": 30,
+          "20": 33,
+          "21": 38,
+          "22": 50,
+          "23": 60,
+          "24": 63
+        },
+        "horizon_rows": {
+          "1": {
+            "roots": 567,
+            "constant": "1/25",
+            "minimum_gap_ratio": "220641316/1563422999",
+            "witness": {
+              "order": 22,
+              "gap": 23,
+              "index": 17688,
+              "cap_defect": 1,
+              "horizon": 1,
+              "minimizing_first_gap": 21,
+              "retained_child": 0,
+              "spine_height": 1,
+              "actual_split": 10925,
+              "spine_variance": "55160329/231162984120816",
+              "actual_variance": "55160329/231162984120816"
+            }
+          },
+          "2": {
+            "roots": 246,
+            "constant": "1/100",
+            "minimum_gap_ratio": "2540441714377/57869724012817",
+            "witness": {
+              "order": 24,
+              "gap": 74,
+              "index": 46294,
+              "cap_defect": 4,
+              "horizon": 2,
+              "minimizing_first_gap": 51,
+              "retained_child": 2,
+              "spine_height": 2,
+              "actual_split": 28587,
+              "spine_variance": "2540441714377/22648392683287841137",
+              "actual_variance": "303725449632293/279921069430747846860"
+            }
+          },
+          "3": {
+            "roots": 256,
+            "constant": "1/400",
+            "minimum_gap_ratio": "4964195934402035/233069472464076032",
+            "witness": {
+              "order": 26,
+              "gap": 152,
+              "index": 121241,
+              "cap_defect": 12,
+              "horizon": 3,
+              "minimizing_first_gap": 94,
+              "retained_child": 2,
+              "spine_height": 3,
+              "actual_split": 74885,
+              "spine_variance": "4964195934402035/148285005238383709004948",
+              "actual_variance": "177978467381344382587/182369129660460712285902300"
+            }
+          },
+          "4": {
+            "roots": 349,
+            "constant": "1/1600",
+            "minimum_gap_ratio": "8314368923835887179/627400837029851962000",
+            "witness": {
+              "order": 28,
+              "gap": 280,
+              "index": 317531,
+              "cap_defect": 24,
+              "horizon": 4,
+              "minimizing_first_gap": 169,
+              "retained_child": 2,
+              "spine_height": 4,
+              "actual_split": 196161,
+              "spine_variance": "33257475695343548716/3227463092665798539077663545",
+              "actual_variance": "2436403575178559987197/3243772003021329235600468038"
+            }
+          }
+        },
+        "spine_contexts": 2036,
+        "scalar_candidate_checks": 145487,
+        "geometric_one_child_transfer_checks": 36720,
+        "scalar_valid_one_child_transfer_checks": 39135,
+        "zero_child_options": 17569,
+        "retained_child_options": [
+          20793,
+          18342
+        ],
+        "arithmetic_low_cap_graph_checks": 1071,
+        "nonperiodic_minimizing_high_cap_choices": 809,
+        "nonperiodic_witness": {
+          "order": 24,
+          "gap": 56,
+          "index": 46312,
+          "cap_defect": 4,
+          "minimizing_split": 28613,
+          "retained_child": 2,
+          "actual_split": 28604
+        },
+        "literal_rows": [
+          {
+            "order": 24,
+            "gap": 56,
+            "index": 46312,
+            "cap_defect": 4,
+            "horizon": 2,
+            "split": 28604
+          },
+          {
+            "order": 26,
+            "gap": 94,
+            "index": 121299,
+            "cap_defect": 8,
+            "horizon": 3,
+            "split": 74935
+          },
+          {
+            "order": 28,
+            "gap": 153,
+            "index": 317658,
+            "cap_defect": 14,
+            "horizon": 4,
+            "split": 196275
+          }
+        ],
+        "literal_updates": 300083,
+        "scope": "The written one-child variance transfer and cap-halving induction give a logarithmic horizon, with a cap-dependent constant and order threshold. The minimum keeps only one eligible positive-cap child and discards all other descendant variance, while permitting every scalar-valid geometric high-cap split and finishing at the arithmetic cap0..3 basin kernel. It is compared with exact actual V_t at every qualifying cap<=24 root; inherited labels are preserved. Four generations suffice on cap<=24 at k>=28 with constant1/1600. This is not a uniform constant on unbounded caps, a global rate or a full minimum endpoint interface."
       },
       "scope": "General full-block cap-budget induction uses the proved zero plateau and actual two-child conservation, without a new finite sequence premise. Fixed-cap sublevels have polynomial gap enclosure and a conditional local-table/entrance decoder. The independent Diophantine proof gives phase-free quartic dispersion on cube-root collars, hence eventually on every fixed cap level; large arithmetic checks do not evaluate C. Finite level4 support holes are not an infinite support law. Tables, predecessor/exterior qualification, exact Fibonacci arithmetic and autonomous memory are separate costs; cap4 qualification already collapses the displayed scalar phase fiber. Global dispersion/convergence remain open."
     },

@@ -16,6 +16,7 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 - [A phase-free lower bound from the prescribed basin](#a-phase-free-lower-bound-from-the-prescribed-basin)
 - [Quadratic basin dispersion in the unit-defect family](#quadratic-basin-dispersion-in-the-unit-defect-family)
 - [Cap-adaptive quadratic dispersion](#cap-adaptive-quadratic-dispersion)
+- [A logarithmic horizon from one retained child](#a-logarithmic-horizon-from-one-retained-child)
 - [Diophantine dispersion in cube-root Fibonacci neighborhoods](#diophantine-dispersion-in-cube-root-fibonacci-neighborhoods)
 - [Additive dispersion policies without orbit qualification](#additive-dispersion-policies-without-orbit-qualification)
 - [Finite prefixes and exact collars do not force convergence](#finite-prefixes-and-exact-collars-do-not-force-convergence)
@@ -567,6 +568,188 @@ no qualifying cap5/6 witnesses in this range. The theorem for those
 levels follows from the general integer induction, not numerical
 examples. Two selected high-cap witnesses are checked by542875 literal
 updates; full-orbit and Brent prefixes agree through832074.
+
+### A logarithmic horizon from one retained child
+
+The linear stopping horizon above retains both positive-cap children.
+One child suffices if the parent's own variance is used to control its
+gap ratio. Integer conservation then halves the permitted cap at each
+retained step, giving a logarithmic horizon with a smaller constant.
+
+**Theorem.** For any integer t>=1, let N=F_k-v lie in the full closed
+upper-anchor block, with e=Q_k(v). If
+
+$$
+k\ge22+2(t-1),\qquad e\le3\cdot2^{t-1},
+$$
+
+then actual selected descent satisfies
+
+$$
+\boxed{V_t(k-1,N)\ge\kappa_t\left(\frac vN\right)^2
+                  \ge\kappa_t\left(\frac{C(N)-G(N)}N\right)^2,
+\qquad \kappa_t=\frac1{25\cdot4^{t-1}}.}
+\tag{L.1}
+$$
+
+Choose the least t>=1 for which e<=3*2^(t-1); its order is
+O(log(e+1)). For e>3 its capacity lies in[e,2e), so
+kappa_t>9/(100e^2); the constant has inverse-quadratic cap order.
+It depends on t. In particular
+
+$$
+k\ge28,\quad Q_k(v)\le24
+\quad\Longrightarrow\quad
+V_4(k-1,N)\ge\frac1{1600}
+                 \left(\frac{C(N)-G(N)}N\right)^2.
+\tag{L.2}
+$$
+
+The previous constant1/100 remains available at its stated linear
+horizon. Neither result proves a uniform fixed-horizon bound
+at unbounded caps or the global decay rate.
+
+**One-child transfer lemma.** Put N'=F_h-u, h>=22, u>=1,
+A=F_(h-1), B=F_(h-2), H=F_(h-3). For any geometric split
+a=A-r, b=B-q with r+q=u, let nu be its one-step natural-anchor
+variance. For either child, write w for its size divided by N' and
+y for its upper-anchor gap divided by its size. Then for
+0<theta<=1/25,
+
+$$
+\boxed{\nu+\theta w y^2\ge\frac\theta4(u/N')^2.}
+\tag{L.3}
+$$
+
+This lemma does not assume periodicity, cap conservation or scalar
+preservation. It uses the geometric child blocks, Cassini's identity
+and the order/gap domain.
+
+**Proof.** Write s=(-1)^(h-1) and
+
+$$
+M=Bb-Ha=s+Hu-Aq=s-Bu+Ar,
+\qquad \nu=\frac{M^2}{N'^2ab}.
+$$
+
+Since H>=32 and u>=1, the additive Cassini error1 is at most
+Hu/32, and also Bu/32. Consequently
+
+$$
+\frac u{N'}\le\frac{32}{31}\left(
+     \frac AB\frac a{N'}\frac ra+
+     \frac{\sqrt{ab}}B\sqrt\nu\right),
+$$
+
+$$
+\frac u{N'}\le\frac{32}{31}\left(
+     \frac AH\frac b{N'}\frac qb+
+     \frac{\sqrt{ab}}H\sqrt\nu\right).
+$$
+
+The geometric blocks give B<=a<=A, H<=b<=B, so
+a/N'<=3/4 and b/N'<=1/2. Consecutive Fibonacci ratios satisfy
+3/2<=B/H<=5/3 in this range; the recurrence maps that interval
+into itself. Thus A/B<=5/3, A/H<=8/3 and AB/H^2<=40/9.
+Weighted Cauchy--Schwarz in the first
+display therefore gives
+
+$$
+(u/N')^2\le\left(\frac{32}{31}\right)^2
+                  \left(\frac{25}{12\theta}+\frac53\right)
+                \left(\nu+\theta\frac a{N'}(r/a)^2\right).
+$$
+
+The second display gives
+
+$$
+(u/N')^2\le\left(\frac{32}{31}\right)^2
+                  \left(\frac{32}{9\theta}+\frac{40}9\right)
+                \left(\nu+\theta\frac b{N'}(q/b)^2\right).
+$$
+
+Both coefficients are at most4/theta when theta<=1/25: after
+multiplication by theta the larger is at most
+(32/31)^2*(56/15)<4,
+proving (L.3). QED. This transfers a bound from one child;
+the gap martingale alone would require both children for Jensen.
+
+**Cap-halving induction.** At t=1 the cap0..3 arithmetic basin
+theorem proves (L.1). At a larger t, if the parent already has
+cap<=3, that stronger one-step bound suffices. Otherwise consider
+its actual split. A zero-cap child gives the earlier1/100 local
+bound, at least kappa_t since t>=2. If both caps are positive,
+one has
+
+$$
+e_c\le\lfloor e/2\rfloor\le3\cdot2^{t-2}.
+$$
+
+Its inherited order is at least k-2>=22+2(t-2). The inductive
+bound gives V_(t-1) at that child at least kappa_(t-1)y^2.
+Discard the other child's nonnegative descendant variance and apply
+(L.3) with theta=kappa_(t-1). The remaining quantity is at least
+kappa_t(v/N)^2. As before 0<=C(N)-G(N)<=v gives the last
+inequality in (L.1). QED.
+
+**An exact minimum over retained spines.** A larger certificate class
+preserves this lower bound. At high cap allow every scalar-valid
+geometric split. Stop at a zero-child option; otherwise retain only
+one child whose cap is at most3*2^(t-2), assigning zero future
+variance to the other child. At least one child is eligible. At
+cap<=3 finish with one phase of the arithmetic prescribed basin.
+Its final scalar sum may differ, because no further cap induction
+uses that final step. The retained horizon decreases at every edge.
+
+The minimum L_t over all these choices satisfies
+
+$$
+\kappa_t(v/N)^2\le\mathcal L_t(k,N)\le V_t(k-1,N).
+\tag{L.4}
+$$
+
+The proof repeats the cap-halving induction for every candidate option;
+the actual split and an eligible actual child give the upper comparison.
+Each candidate certificate retains a single path of length at most t,
+including its weighted local variances, instead of both descendant trees.
+For five row-aligned roots this gives five such paths, with inherited
+labels throughout; the five roots need not form an inner five-cycle.
+Their scalar profiles and high-cap splits still
+require geometric and scalar-sum checks; no high-cap cycle, entrance
+or exact phase certificate is needed for the bound. The low-cap basin
+kernel remains required. This is sufficient information for dispersion,
+not a minimum certificate theorem or a reconstruction of actual children.
+
+Campbell's nonadditive family does not supply this two-child integer cap
+flow. Its ternary arithmetic supplies the endpoint/parity interface,
+while the additive Cloitre interface admits this retained-spine bound.
+The distinction matters when comparing what information each proof uses.
+
+The [checker](verification/collar_check.py) evaluates L_t over all
+scalar-valid geometric high-cap splits and every eligible retained child,
+checks (L.3) independently on geometric splits, and compares the minimum
+with exact actual accumulated variance. The infinite theorem adds no new
+finite sequence premise; it uses the previously proved cap0..3 and
+zero-support results with the displayed transfer lemma.
+
+Exact finite evidence covers1418 qualifying roots at orders22..30,
+with145487 geometric candidate tests and39135 eligible-child transfer
+checks. There are17569 zero-child options and1071 arithmetic low-cap
+context checks. The one-child inequality is also checked independently
+on36720 geometric cases without scalar or cap qualification. Every
+retained-spine minimum is compared with actual V_t;809 high-cap
+minimizers are nonperiodic, so no high-cap orbit qualification is hidden
+in this computation. Three actual selected endpoints have300083 literal
+updates, and full-orbit/Brent prefixes agree through832074.
+
+The four-generation finite minimum L_4/(v/N)^2 is
+8314368923835887179/627400837029851962000 at k28,v280,N317531,
+cap24. Its minimizing first gap is169 and it retains the second child;
+the actual first gap is257. This finite ratio is above1/1600;
+it is not a claimed uniform optimal constant. The qualifying finite
+cap counts are recorded separately: cap5 has no example in this range,
+while the general induction covers it. Table construction, minimum
+certificate size and global dispersion remain separate questions.
 
 ### Diophantine dispersion in cube-root Fibonacci neighborhoods
 

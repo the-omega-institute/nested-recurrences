@@ -1462,6 +1462,193 @@ def cap_adaptive_dispersion_audit(sequence, splits, fibonacci):
                 scope='The written cap-adaptive stopping/induction proof uses integer child-cap conservation, the exact zero plateau and the previously proved cap0..3 basin inequality; no new infinite sequence premise. Above cap3 the stopped minimum permits every scalar-valid geometric split, without orbit, entrance or phase qualification. Low-cap finishing uses the arithmetic prescribed-basin kernel. This envelope is compared with actual accumulated variance at every qualifying bounded-cap root, preserving inherited labels. A four-generation quadratic bound follows on cap<=6, not on unbounded caps or all block interiors; no global rate or full minimum interface is proved.')
 
 
+def logarithmic_cap_dispersion_audit(sequence, splits, fibonacci):
+    def horizon(defect):
+        depth, capacity = 1, 3
+        while defect > capacity:
+            depth += 1
+            capacity *= 2
+        return depth
+
+    def constant(depth):
+        return Fraction(1, 25 * 4 ** (depth - 1))
+
+    def local_variance(order, gap, first_gap):
+        index = fibonacci[order] - gap
+        first = fibonacci[order - 1] - first_gap
+        second = index - first
+        numerator = fibonacci[order - 2] * second - fibonacci[order - 3] * first
+        return Fraction(numerator ** 2, index ** 2 * first * second)
+
+    geometric_transfer_checks = 0
+    for order in range(22, 27):
+        for gap in range(1, 49):
+            index = fibonacci[order] - gap
+            for first_gap in range(gap + 1):
+                first = fibonacci[order - 1] - first_gap
+                second = index - first
+                variance = local_variance(order, gap, first_gap)
+                for child, child_gap in ((first, first_gap), (second, gap - first_gap)):
+                    for coefficient in (constant(1), constant(2), constant(3)):
+                        transfer = variance + coefficient * Fraction(child_gap ** 2, index * child)
+                        assert transfer >= coefficient * Fraction(gap ** 2, 4 * index ** 2)
+                        geometric_transfer_checks += 1
+    candidate_checks = 0
+    low_cap_graph_checks = 0
+    zero_child_options = 0
+    retained_child_options = [0, 0]
+    transfer_checks = 0
+    contexts = set()
+
+    @lru_cache(maxsize=None)
+    def spine_minimum(order, gap, depth):
+        nonlocal candidate_checks, low_cap_graph_checks, zero_child_options, transfer_checks
+        index = fibonacci[order] - gap
+        defect = fibonacci[order - 1] - sequence[index]
+        assert defect <= 3 * 2 ** (depth - 1) and order >= 22 + 2 * (depth - 1)
+        contexts.add((order, gap, depth))
+        options = []
+        if defect <= 3:
+            frontiers = [higher_cap_width(order - 1, level) + level + 1 for level in range(4)]
+            shifts = ([frontiers.index(gap), frontiers.index(gap) + 1] if gap in frontiers
+                      else [higher_cap_shift(order, gap)])
+            trajectory, transient, _ = full_orbit(sequence, index)
+            assert {fibonacci[order - 1] - gap + shift for shift in shifts} == set(trajectory[transient:])
+            low_cap_graph_checks += 1
+            for shift in shifts:
+                first_gap = gap - shift
+                variance = local_variance(order, gap, first_gap)
+                assert variance >= Fraction(gap ** 2, 25 * index ** 2)
+                options.append((variance, first_gap, 0, 1))
+        else:
+            assert depth >= 2 and gap > higher_cap_width(order, 3)
+            lower_gap = max(0, gap - fibonacci[order - 4])
+            upper_gap = min(gap, fibonacci[order - 3])
+            for first_gap in range(lower_gap, upper_gap + 1):
+                first = fibonacci[order - 1] - first_gap
+                second = index - first
+                first_defect = fibonacci[order - 2] - sequence[first]
+                second_defect = fibonacci[order - 3] - sequence[second]
+                candidate_checks += 1
+                if first_defect + second_defect != defect:
+                    continue
+                assert first_defect >= 0 and second_defect >= 0
+                variance = local_variance(order, gap, first_gap)
+                if first_defect == 0 or second_defect == 0:
+                    assert variance >= Fraction(gap ** 2, 100 * index ** 2)
+                    zero_child_options += 1
+                    options.append((variance, first_gap, 0, 1))
+                    continue
+                children = ((first, first_gap, first_defect, order - 1),
+                            (second, gap - first_gap, second_defect, order - 2))
+                eligible = 0
+                for side, (child, child_gap, child_defect, child_order) in enumerate(children):
+                    if child_defect > 3 * 2 ** (depth - 2):
+                        continue
+                    eligible += 1
+                    coefficient = constant(depth - 1)
+                    transfer = variance + coefficient * Fraction(child_gap ** 2, index * child)
+                    assert transfer >= constant(depth) * Fraction(gap ** 2, index ** 2)
+                    transfer_checks += 1
+                    child_result, _, _, child_height = spine_minimum(child_order, child_gap, depth - 1)
+                    option = variance + Fraction(child, index) * child_result
+                    assert option >= constant(depth) * Fraction(gap ** 2, index ** 2)
+                    retained_child_options[side] += 1
+                    options.append((option, first_gap, side + 1, child_height + 1))
+                assert eligible >= 1
+        assert options
+        result = min(options)
+        assert result[3] <= depth
+        assert result[0] >= constant(depth) * Fraction(gap ** 2, index ** 2)
+        return result
+
+    @lru_cache(maxsize=None)
+    def actual_variance(order, gap, depth):
+        if depth == 0:
+            return Fraction(0)
+        index = fibonacci[order] - gap
+        first = splits[index]
+        second = index - first
+        first_gap = fibonacci[order - 1] - first
+        second_gap = fibonacci[order - 2] - second
+        return (local_variance(order, gap, first_gap)
+                + Fraction(first, index) * actual_variance(order - 1, first_gap, depth - 1)
+                + Fraction(second, index) * actual_variance(order - 2, second_gap, depth - 1))
+
+    roots = 0
+    defect_counts = {}
+    depth_rows = {}
+    literal_rows = {}
+    nonperiodic_choices = 0
+    nonperiodic_witness = None
+    for order in range(22, 31):
+        width = min(24 * cap_gap_budget(order), fibonacci[order - 2])
+        for gap in range(width + 1):
+            index = fibonacci[order] - gap
+            defect = fibonacci[order - 1] - sequence[index]
+            depth = horizon(defect)
+            if defect > 24 or order < 22 + 2 * (depth - 1):
+                continue
+            bound, first_gap, side, height = spine_minimum(order, gap, depth)
+            actual = actual_variance(order, gap, depth)
+            assert bound <= actual
+            golden_defect = sequence[index] - g_closed(index)
+            assert 0 <= golden_defect <= gap
+            assert actual >= constant(depth) * Fraction(golden_defect ** 2, index ** 2)
+            if order >= 28:
+                assert actual_variance(order, gap, 4) >= bound
+                assert bound >= Fraction(golden_defect ** 2, 1600 * index ** 2)
+            roots += 1
+            defect_counts[str(defect)] = defect_counts.get(str(defect), 0) + 1
+            row = depth_rows.setdefault(str(depth), dict(roots=0, constant=str(constant(depth)),
+                                                        minimum_gap_ratio=None, witness=None))
+            row['roots'] += 1
+            if gap:
+                ratio = bound * Fraction(index ** 2, gap ** 2)
+                if row['minimum_gap_ratio'] is None or ratio < Fraction(row['minimum_gap_ratio']):
+                    row['minimum_gap_ratio'] = str(ratio)
+                    row['witness'] = dict(order=order, gap=gap, index=index, cap_defect=defect,
+                                          horizon=depth, minimizing_first_gap=first_gap,
+                                          retained_child=side, spine_height=height,
+                                          actual_split=splits[index], spine_variance=str(bound),
+                                          actual_variance=str(actual))
+            if defect > 3:
+                point = fibonacci[order - 1] - first_gap
+                start = point
+                visited = set()
+                while point not in visited:
+                    visited.add(point)
+                    point = index - sequence[point]
+                if point != start:
+                    nonperiodic_choices += 1
+                    if nonperiodic_witness is None:
+                        nonperiodic_witness = dict(order=order, gap=gap, index=index, cap_defect=defect,
+                                                  minimizing_split=start, retained_child=side,
+                                                  actual_split=splits[index])
+                if str(depth) not in literal_rows:
+                    literal_rows[str(depth)] = dict(order=order, gap=gap, index=index,
+                                                    cap_defect=defect, horizon=depth, split=splits[index])
+    literal_updates = 0
+    for row in literal_rows.values():
+        point = row['index'] - 1
+        for step in range(sequence[row['index'] - 1]):
+            point = row['index'] - sequence[point]
+            literal_updates += 1
+        assert point == row['split']
+    return dict(capacity='3*2^(t-1)', constant='1/(25*4^(t-1))', order_threshold='22+2(t-1)',
+                root_orders_inclusive=[22, 30], cap_bound=24, actual_roots=roots,
+                root_cap_defect_counts=defect_counts, horizon_rows=depth_rows,
+                spine_contexts=len(contexts), scalar_candidate_checks=candidate_checks,
+                geometric_one_child_transfer_checks=geometric_transfer_checks,
+                scalar_valid_one_child_transfer_checks=transfer_checks,
+                zero_child_options=zero_child_options, retained_child_options=retained_child_options,
+                arithmetic_low_cap_graph_checks=low_cap_graph_checks,
+                nonperiodic_minimizing_high_cap_choices=nonperiodic_choices,
+                nonperiodic_witness=nonperiodic_witness,
+                literal_rows=list(literal_rows.values()), literal_updates=literal_updates,
+                scope='The written one-child variance transfer and cap-halving induction give a logarithmic horizon, with a cap-dependent constant and order threshold. The minimum keeps only one eligible positive-cap child and discards all other descendant variance, while permitting every scalar-valid geometric high-cap split and finishing at the arithmetic cap0..3 basin kernel. It is compared with exact actual V_t at every qualifying cap<=24 root; inherited labels are preserved. Four generations suffice on cap<=24 at k>=28 with constant1/1600. This is not a uniform constant on unbounded caps, a global rate or a full minimum endpoint interface.')
+
+
 def cap_budget_interface_audit(sequence, splits, fibonacci):
     arithmetic_fibonacci = fibonacci[:]
     while len(arithmetic_fibonacci) <= 1000:
@@ -1719,6 +1906,7 @@ def cap_budget_interface_audit(sequence, splits, fibonacci):
                                                             + second_defects[row] for row in range(5)]),
                 modular_symbolic_selector=modular_selector_audit(sequence, splits, fibonacci),
                 cap_adaptive_dispersion=cap_adaptive_dispersion_audit(sequence, splits, fibonacci),
+                logarithmic_cap_dispersion=logarithmic_cap_dispersion_audit(sequence, splits, fibonacci),
                 scope='General full-block cap-budget induction uses the proved zero plateau and actual two-child conservation, without a new finite sequence premise. Fixed-cap sublevels have polynomial gap enclosure and a conditional local-table/entrance decoder. The independent Diophantine proof gives phase-free quartic dispersion on cube-root collars, hence eventually on every fixed cap level; large arithmetic checks do not evaluate C. Finite level4 support holes are not an infinite support law. Tables, predecessor/exterior qualification, exact Fibonacci arithmetic and autonomous memory are separate costs; cap4 qualification already collapses the displayed scalar phase fiber. Global dispersion/convergence remain open.')
 
 
