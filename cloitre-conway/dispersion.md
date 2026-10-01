@@ -1125,9 +1125,11 @@ the target; an endpoint equality reduces to one coordinate. QED.
 Apply this to the bracketed reward in (M.3), at every occurrence and
 remaining horizon. Thus two splits suffice even for an optimal
 multi-generation policy. For a supplied five-phase table there are only
-five singleton and ten pair options; a four-bit option label suffices,
-and the weight is derived from the supplied integer readouts. This is a
-conditional option capacity, not a minimum total recursive payload.
+five singleton and ten pair options. The readouts, rewards and target
+determine an optimizer by exact comparison, with a fixed tie rule;
+no additional phase or option label is needed in this supplied-table
+model. The weights are derived from the integer readouts. This is not
+a minimum total recursive payload or a random-bit sampling bound.
 The readout tables, parent value, scales, domains and actual qualifications
 remain resources. Each derived weight has O(log N)-bit integer numerator
 and denominator. Comparing multi-generation rewards also needs their
