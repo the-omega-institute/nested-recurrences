@@ -370,8 +370,9 @@ readouts. Both the new Cloitre interface and Campbell's formula derive
 their scoped arithmetic data; the wider Cloitre profile problem stays open.
 
 The [actual upper shelf](../cloitre-conway/exact-collars.md#a-bounded-upper-shelf-and-a-wider-zero-allocation-corridor)
-also bounds a fixed D-position Cloitre tail by height max(9,D), leaving
-only O(D log(D+1)) response-packing bits independently of the order.
+also bounds a fixed D-position Cloitre tail by height max(4,D) at K>=27.
+The first eight entries are generated; the remaining response packing uses
+O(max(0,D-8) log(D+1)) bits independently of the supplied order.
 It derives zero allocation in a wider corridor, but still requires the
 tail responses and parent value. Campbell's formula supplies its arithmetic
 data directly; this bounded response envelope does not yet do so for C.

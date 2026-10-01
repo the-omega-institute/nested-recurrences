@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "50d8708198420ab8ed3a3951308022b9919ff7ed5af9b722c3a6ac09f1ebe1cb",
+  "source_sha256": "32a47aae3c9c29b8f03fec3414d0b6a1cec5204c61a25cc38af8871a94cdc848",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -5429,21 +5429,37 @@
           ],
           "base_tail_values": 153,
           "base_tail_sha256": "b31eda0623a04cf285ba6a230b5056e18bfab7aeb59cb5d0f111bae672b7e0fa",
-          "literal_endpoint_updates": 4757085,
-          "shelf_formula": "4<=Q_K(v)<=max(9,v-(4K-19)) for v>4K-19, K>=24",
+          "literal_endpoint_updates": 6946284,
+          "shelf_formula": "4<=Q_K(v)<=max(9,v-(4K-19)) for K>=24; sharper max(4,v-(4K-19)) for K>=26",
+          "strengthened_base_order": 26,
+          "strengthened_base_gap_interval_inclusive": [
+            86,
+            93
+          ],
+          "strengthened_base_values": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "extended_generated_band": "Q_K(V_K+j)=4 for1<=j<=8, K>=26; first spine keeps j to order26",
           "lower_child_bound": "Q_l(q)<=max(0,q-12), l>=23",
           "lower_bound_positions": 300106,
           "symbolic_inequality_orders_inclusive": [
             25,
             100
           ],
-          "symbolic_inequalities": 552900,
+          "symbolic_inequalities": 551790,
           "synthetic_graph_orders_inclusive": [
             25,
             55
           ],
           "synthetic_graphs": 5580,
-          "synthetic_periodic_phases": 40455,
+          "synthetic_periodic_phases": 42137,
           "actual_full_block_orders_inclusive": [
             24,
             30
@@ -5638,34 +5654,117 @@
               }
             ]
           },
+          "late_canonical_five_row_word": {
+            "order": 29,
+            "gap": 110,
+            "base": 514119,
+            "cap_vector": [
+              8,
+              4,
+              4,
+              4,
+              4
+            ],
+            "root_offsets": [
+              0,
+              2,
+              3,
+              5,
+              7
+            ],
+            "residual_positions_inclusive": [
+              9,
+              13
+            ],
+            "shared_lower_tail_responses": [
+              4,
+              4,
+              4,
+              4,
+              8
+            ],
+            "selected_child_offsets": [
+              4,
+              6,
+              7,
+              9,
+              11
+            ],
+            "inherited_first_spine": [
+              {
+                "order": 29,
+                "gaps": [
+                  110,
+                  108,
+                  107,
+                  105,
+                  103
+                ],
+                "inherited_scalar_interaction": -4
+              },
+              {
+                "order": 28,
+                "gaps": [
+                  106,
+                  104,
+                  103,
+                  101,
+                  99
+                ],
+                "inherited_scalar_interaction": -4
+              },
+              {
+                "order": 27,
+                "gaps": [
+                  98,
+                  100,
+                  99,
+                  97,
+                  95
+                ],
+                "inherited_scalar_interaction": -4
+              },
+              {
+                "order": 26,
+                "gaps": [
+                  94,
+                  91,
+                  95,
+                  93,
+                  91
+                ],
+                "inherited_scalar_interaction": -4
+              }
+            ]
+          },
           "relaxed_tail_profile_capacities": [
             {
               "tail_positions": 1,
+              "relaxed_profile_words": 1,
+              "packed_bits": 0
+            },
+            {
+              "tail_positions": 5,
+              "relaxed_profile_words": 1,
+              "packed_bits": 0
+            },
+            {
+              "tail_positions": 9,
               "relaxed_profile_words": 6,
               "packed_bits": 3
             },
             {
-              "tail_positions": 5,
-              "relaxed_profile_words": 7776,
-              "packed_bits": 13
-            },
-            {
-              "tail_positions": 9,
-              "relaxed_profile_words": 10077696,
-              "packed_bits": 24
-            },
-            {
               "tail_positions": 12,
-              "relaxed_profile_words": 5079158784,
-              "packed_bits": 33
+              "relaxed_profile_words": 3024,
+              "packed_bits": 12
             },
             {
               "tail_positions": 24,
-              "relaxed_profile_words": 715109699388982689792000,
-              "packed_bits": 80
+              "relaxed_profile_words": 425757851430912000,
+              "packed_bits": 59
             }
           ],
-          "scope": "A153-value finite shelf premise propagates the full-block upper shelf. The moving tail has height max(9,D), at most D unknown profile entries and at most max(9,D)-3 periodic vertices. Actual zero-allocation selection is derived on its scoped corridor from the parent cap and lower profiles; those profiles and parent cap are not constructed by this theorem. Packing counts relaxed response words, not actual independent inputs or an optimal whole-recursion code. High-cap allocations and global dispersion/convergence remain open."
+          "scope": "A153-value order24 shelf premise propagates height9; eight order26 cap4 values sharpen the shelf to height4 and generate eight further entries. At K>=27 the moving tail has height max(4,D), at most max(0,D-8) unknown profile entries and at most max(4,D)-3 periodic vertices. Actual zero-allocation selection is derived on its scoped corridor from the parent cap and shared lower responses; residual profiles and initial tail caps remain supplied. Packing counts relaxed response words, not actual independent inputs or an optimal whole-recursion code. High-cap allocations and global dispersion/convergence remain open."
         },
         "scope": "Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open."
       },

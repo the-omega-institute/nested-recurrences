@@ -1192,7 +1192,12 @@ def cap4_generated_band_audit(sequence, splits, fibonacci):
 
 def bounded_tail_height(order, gap):
     assert order >= 24 and gap > cap4_generated_width(order)
-    return max(9, gap - cap4_generated_width(order))
+    return max(4 if order >= 26 else 9, gap - cap4_generated_width(order))
+
+
+def bounded_tail_cycle_height(order, gap):
+    assert order >= 25 and gap > cap4_generated_width(order)
+    return max(4 if order >= 27 else 9, gap - cap4_generated_width(order))
 
 
 def zero_allocation_collar_width(order):
@@ -1222,6 +1227,17 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
         assert sequence[endpoint] + sequence[root - endpoint] == sequence[root]
         base_values.append(defect)
         literal_updates += sequence[root - 1]
+    strengthened_base_values = []
+    for excess in range(1, 9):
+        root = fibonacci[26] - cap4_generated_width(26) - excess
+        assert fibonacci[25] - sequence[root] == 4
+        endpoint = root - 1
+        for iteration in range(sequence[root - 1]):
+            endpoint = root - sequence[endpoint]
+        assert endpoint == splits[root]
+        assert sequence[endpoint] + sequence[root - endpoint] == sequence[root]
+        strengthened_base_values.append(4)
+        literal_updates += sequence[root - 1]
     lower_bound_positions = 0
     for order in range(23, 29):
         for gap in range(fibonacci[order - 2] + 1):
@@ -1237,7 +1253,7 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
         frontier = higher_cap_width(order - 1, 3)
         for excess in range(1, 121):
             gap = width + excess
-            height = max(9, excess)
+            height = bounded_tail_cycle_height(order, gap)
             for point in range(frontier + 1, gap - 3):
                 complement = gap - point
                 if point <= previous_width:
@@ -1245,7 +1261,7 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
                         continue
                     upper = 4 + max(0, complement - 12)
                 else:
-                    upper = max(9, point - previous_width) + max(0, complement - 12)
+                    upper = bounded_tail_height(order - 1, point) + max(0, complement - 12)
                 assert upper <= height
                 symbolic_inequalities += 1
             if order > 55 or excess > 60:
@@ -1255,8 +1271,10 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
                 for point in range(gap + 1):
                     if point <= previous_width:
                         defect = generated_cap4_profile(order - 1, point)
+                    elif order >= 27 and point <= previous_width + 8:
+                        defect = 4
                     else:
-                        upper = min(max(9, point - previous_width),
+                        upper = min(bounded_tail_height(order - 1, point),
                                     max(4, point - frontier - 1), 2 * point // 3)
                         defect = (4 if completion_kind == 0 else upper if completion_kind == 1
                                   else 4 + (point - previous_width) % (upper - 3))
@@ -1291,6 +1309,8 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
             defect = fibonacci[order - 1] - sequence[fibonacci[order] - gap]
             if gap > width:
                 assert 4 <= defect <= bounded_tail_height(order, gap)
+            if order >= 26 and width < gap <= width + 8:
+                assert defect == 4
             full_block_positions += 1
         if order == 24:
             continue
@@ -1298,7 +1318,7 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
         period_counts = {}
         for gap in range(width + 1, bounded_tail_dispersion_width(order) + 1):
             root = fibonacci[order] - gap
-            height = bounded_tail_height(order, gap)
+            height = bounded_tail_cycle_height(order, gap)
             profile = [fibonacci[order - 2] - sequence[fibonacci[order - 1] - point]
                        for point in range(gap + 1)]
             cycles = capped_profile_cycles(profile, gap)
@@ -1396,18 +1416,66 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
                                  inherited_scalar_interaction=interaction))
         if order > 24:
             current_roots = [splits[root] for root in current_roots]
+    late_order = 29
+    late_gap = 110
+    late_base = fibonacci[late_order] - late_gap
+    late_higher_digits = set(canonical_fibonacci_indices(late_base, fibonacci))
+    assert min(late_higher_digits) >= 7
+    late_caps = [fibonacci[late_order - 1] - sequence[late_base + offset] for offset in window_offsets]
+    assert late_caps == [8, 4, 4, 4, 4]
+    late_word = [fibonacci[late_order - 2] - sequence[
+        fibonacci[late_order - 1] - cap4_generated_width(late_order - 1) - position]
+                 for position in range(9, 14)]
+    assert late_word == [4, 4, 4, 4, 8]
+    def late_shared_profile(point):
+        previous_width = cap4_generated_width(late_order - 1)
+        if point <= previous_width:
+            return generated_cap4_profile(late_order - 1, point)
+        if point <= previous_width + 8:
+            return 4
+        assert 9 <= point - previous_width <= 13
+        return late_word[point - previous_width - 9]
+    late_children = []
+    for offset, defect in zip(window_offsets, late_caps):
+        root = late_base + offset
+        assert set(canonical_fibonacci_indices(root, fibonacci)) == late_higher_digits | set(
+            canonical_fibonacci_indices(offset, fibonacci))
+        selected_gap, period = periodic_predecessor_gap(late_gap - offset,
+                                                       late_gap - offset - defect, late_shared_profile)
+        assert splits[root] == fibonacci[late_order - 1] - selected_gap
+        endpoint = root - 1
+        for iteration in range(sequence[root - 1]):
+            endpoint = root - sequence[endpoint]
+        assert endpoint == splits[root]
+        literal_updates += sequence[root - 1]
+        late_children.append(late_gap - selected_gap)
+    assert late_children == [4, 6, 7, 9, 11]
+    late_spine = []
+    current_roots = [late_base + offset for offset in window_offsets]
+    for order in range(late_order, 25, -1):
+        values = [sequence[root] for root in current_roots]
+        assert [fibonacci[order - 1] - value for value in values] == late_caps
+        interaction = values[4] - values[1] - values[3] + values[0]
+        assert interaction == -4
+        late_spine.append(dict(order=order, gaps=[fibonacci[order] - root for root in current_roots],
+                               inherited_scalar_interaction=interaction))
+        if order > 26:
+            current_roots = [splits[root] for root in current_roots]
     capacities = []
     for width in (1, 5, 9, 12, 24):
         capacity = 1
-        for position in range(1, width + 1):
-            capacity *= max(9, position) - 3
+        for position in range(9, width + 1):
+            capacity *= position - 3
         capacities.append(dict(tail_positions=width, relaxed_profile_words=capacity,
                                packed_bits=(capacity - 1).bit_length()))
     return dict(base_order=base_order, base_tail_gap_interval_inclusive=[base_width + 1, 3 * base_width - 1],
                 base_tail_values=len(base_values), base_tail_sha256=hashlib.sha256(
                     ','.join(map(str, base_values)).encode('ascii')).hexdigest(),
                 literal_endpoint_updates=literal_updates,
-                shelf_formula='4<=Q_K(v)<=max(9,v-(4K-19)) for v>4K-19, K>=24',
+                shelf_formula='4<=Q_K(v)<=max(9,v-(4K-19)) for K>=24; sharper max(4,v-(4K-19)) for K>=26',
+                strengthened_base_order=26, strengthened_base_gap_interval_inclusive=[86, 93],
+                strengthened_base_values=strengthened_base_values,
+                extended_generated_band='Q_K(V_K+j)=4 for1<=j<=8, K>=26; first spine keeps j to order26',
                 lower_child_bound='Q_l(q)<=max(0,q-12), l>=23',
                 lower_bound_positions=lower_bound_positions,
                 symbolic_inequality_orders_inclusive=[25, 100], symbolic_inequalities=symbolic_inequalities,
@@ -1426,8 +1494,14 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
                                              shared_lower_tail_responses=word,
                                              selected_child_offsets=window_children,
                                              inherited_first_spine=window_spine),
+                late_canonical_five_row_word=dict(order=late_order, gap=late_gap, base=late_base,
+                                                  cap_vector=late_caps, root_offsets=window_offsets,
+                                                  residual_positions_inclusive=[9, 13],
+                                                  shared_lower_tail_responses=late_word,
+                                                  selected_child_offsets=late_children,
+                                                  inherited_first_spine=late_spine),
                 relaxed_tail_profile_capacities=capacities,
-                scope='A153-value finite shelf premise propagates the full-block upper shelf. The moving tail has height max(9,D), at most D unknown profile entries and at most max(9,D)-3 periodic vertices. Actual zero-allocation selection is derived on its scoped corridor from the parent cap and lower profiles; those profiles and parent cap are not constructed by this theorem. Packing counts relaxed response words, not actual independent inputs or an optimal whole-recursion code. High-cap allocations and global dispersion/convergence remain open.')
+                scope='A153-value order24 shelf premise propagates height9; eight order26 cap4 values sharpen the shelf to height4 and generate eight further entries. At K>=27 the moving tail has height max(4,D), at most max(0,D-8) unknown profile entries and at most max(4,D)-3 periodic vertices. Actual zero-allocation selection is derived on its scoped corridor from the parent cap and shared lower responses; residual profiles and initial tail caps remain supplied. Packing counts relaxed response words, not actual independent inputs or an optimal whole-recursion code. High-cap allocations and global dispersion/convergence remain open.')
 
 
 def cap4_tail_query_domain(order, gap):

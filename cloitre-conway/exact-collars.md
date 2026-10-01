@@ -1120,25 +1120,52 @@ q=Q_(K-1)(t)<=M. Consequently the scalar sum is at most
 4+max(0,M-12)<=M. This proves the upper bound for the actual selected
 phase and completes the full-block induction. QED.
 
+**A sharper shelf after a second finite seed.** The eight values
+Q_26(V_26+j), 1<=j<=8, are all4; their prescribed endpoints and scalar
+outputs are independently checked literally. The already proved height9
+bound supplies Q_26(v)<=v-V_26 for v-V_26>=9. These eight additional
+values therefore start the stronger full-block theorem
+
+$$
+\boxed{4\le Q_K(v)\le\max(4,v-V_K)
+\quad(V_K<v\le F_{K-2},\ K\ge26).} \tag{E.5}
+$$
+
+The same induction applies with9 replaced by4. In the r>U case,
+q>=12 gives the stronger upper bound max(q-8,d-8)<=d; the other
+case gives4+max(0,M-12)<=M for M=max(4,d)>=4. Thus (E.5) does
+not need a new full-block computation as a premise.
+
+Those eight values also generate an exact larger band:
+Q_K(V_K+j)=4 for1<=j<=8 at every K>=26. Indeed at K>=27 every
+cycle point lies above the cap3 frontier and at gap at most
+v-4=V_(K-1)+j. The preceding extended band makes every cycle readout4,
+so the only cycle is fixed at v-4 and the complementary gap4 is flat.
+The selected first spine keeps j unchanged down to the finite order26
+boundary. No profile or phase input is needed in these eight positions.
+
 **Periodic height and profile size.** For K>=25, v=V_K+d with d>=1,
 every periodic point and its predecessor have first cap and complementary
-gap in4..M, where M=max(9,d). The first-cap readout is injective on the
+gap in4..M. Here M=max(9,d) at K25/26 and M=max(4,d) at K>=27,
+by the preceding-order shelf. The first-cap readout is injective on the
 entire periodic set: equal readouts give the same successor; two cycles
 cannot share a point, and a cycle has a unique predecessor. Thus the
 total number of periodic vertices, not just one period, is at most M-3.
 
-All their queried gaps are at most v-4=V_(K-1)+d. The preceding profile
-through V_(K-1) is arithmetic; at most d further entries remain unknown.
-For a supplied tail width D>=d with V_(K-1)+D<=F_(K-3), response j
-has the alphabet4..max(9,j), 1<=j<=D. A sufficient mixed-radix packing
-has capacity
+All their queried gaps are at most v-4=V_(K-1)+d. At K>=27 the
+preceding profile through V_(K-1)+8 is arithmetic, so at most
+max(0,d-8) further entries remain unknown. For a supplied tail width
+D>=d with V_(K-1)+D<=F_(K-3), response j has the alphabet4..j,
+9<=j<=D. A sufficient mixed-radix packing has capacity
 
 $$
-\prod_{j=1}^{D}(\max(9,j)-3),
+\prod_{j=9}^{D}(j-3),
 $$
 
-and uses the ceiling of its base-two logarithm. This is O(D log(D+1))
-bits, independent of K at fixed D. It counts a rectangular response
+with the empty product equal to1, and uses the ceiling of its base-two
+logarithm. This is O(max(0,D-8) log(D+1)) bits, independent of K at
+fixed D. The K25/26 boundary layers use at most D entries of height
+max(9,D) instead. This counts a rectangular response
 envelope; it does not assert that every word occurs in actual C or prove
 a minimum for actual independent inputs. The supplied scale, parent cap,
 finite base and materialized indices remain separate. The exact tail
@@ -1150,7 +1177,8 @@ $$
 V_K<v\le V_K+L_{K-2}, \tag{E.3}
 $$
 
-we have M<=L_(K-2), since L_23=12>=9. Every periodic phase has its
+we have M<=L_(K-2), since L_23=12>=9 and later height bounds are
+no larger. Every periodic phase has its
 second child in the actual zero plateau. Therefore the actual children
 have caps(e,0), where e=Q_K(v). Supply e and the lower profiles; the
 periodic seed v-e has a unique periodic predecessor, which is the actual
@@ -1169,12 +1197,17 @@ tail profiles at the successive orders are still required.
 **Sharing one response word across five rows.** Let five supplied gaps lie
 in0..V_K+D, with K>=25 and D<=L_(K-2). The same D responses of Q_(K-1)
 serve every row above the generated band; the earlier arithmetic decoder
-handles rows inside it. Supply each actual row cap. All selected second
+handles rows inside it. At K>=27 the first eight responses are generated,
+leaving only max(0,D-8) unknown entries. Supply actual caps only for rows
+outside the generated region.
+All selected second
 caps are0, so no second-profile word, allocation or phase labels are needed.
 The first-child gaps remain in0..V_(K-1)+D, and their caps are preserved.
 Thus one bounded tail word per eligible order supports the five-row descent;
 the response-packing cost is not multiplied by five. Constructing the words
 and initial tail caps is still outside this interface.
+For D<=8 at K>=27, the profile and selected splits are entirely arithmetic;
+no residual tail responses or caps are supplied.
 
 For a hand-checkable finite example, take K26,gap97,h=121296.
 The actual integers h+w on offsets0,2,3,5,7 share a canonical higher word.
@@ -1184,6 +1217,15 @@ Their caps are(9,4,8,4,4). One twelve-entry lower tail word,
 The inherited scalar interaction is-5 at orders26,25,24. This is a finite
 canonical example of the proved interface; it does not assert an infinite
 family with this same cap vector or fixed descendant canonical context.
+
+The sharper interface has another actual canonical example at K29,gap110,
+h=514119. Its caps are(8,4,4,4,4), and its only residual responses are
+(4,4,4,4,8) at positions9..13; the first eight are generated. This one
+word yields child offsets(4,6,7,9,11) and zero second caps for all rows.
+The numerical child map is affine, but the scalar interaction is-4 and
+persists at inherited orders29..26. The five-position rectangular profile
+envelope has30240 words, so15 bits suffice to pack it; this is not an
+independent-input minimum or a fixed descendant canonical alphabet.
 
 The [checker](verification/collar_check.py) records the explicit seed,
 full-block shelf checks, adversarial profile graphs, actual zero-allocation

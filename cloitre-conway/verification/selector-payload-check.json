@@ -5702,7 +5702,7 @@
           "quartic_ratio": "12993965131390579506416677421881996053158478268029248579884896838339227364038755130861186451/166619294786676245261493775985485915866639402757913680017756175206239074430685798517320935619357374331171779329492261193570783136751455669351406924898032092"
         }
       ],
-      "profile_source_sha256": "50d8708198420ab8ed3a3951308022b9919ff7ed5af9b722c3a6ac09f1ebe1cb",
+      "profile_source_sha256": "32a47aae3c9c29b8f03fec3414d0b6a1cec5204c61a25cc38af8871a94cdc848",
       "scope": "Written infinite H_J extensions for J>=26 retain arbitrary actual prefixes, exact cap0..3 profiles and local prescribed selection, four cap4 positions, geometric cap conservation, cap budgets and cap-dependent dispersion but have nonconvergent knee ratios. J26 finite audit through2^20 checks actual profiles, equality set, both fallback options and low-cap prescribed endpoints. Assigned high-cap splits fail the original recurrence; no global C convergence or minimum-interface claim."
     },
     "uniform_bounds": {

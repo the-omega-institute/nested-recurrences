@@ -1322,9 +1322,11 @@ The [bounded-tail theorem](exact-collars.md#a-bounded-upper-shelf-and-a-wider-ze
 derives b=0 on gaps up to4K-19+L_(K-2), K>=25, including roots above
 cap4. In that region the supplied parent cap and lower profiles determine
 the actual periodic predecessor without an allocation or entrance label.
-At fixed excess D beyond the generated band, at most D profile responses
-remain unknown, with height max(9,D). Their sufficient packing bound is
-independent of K; exact response construction and wider allocations remain open.
+At K>=27 and fixed excess D, the first eight additional responses are
+generated, leaving at most max(0,D-8) unknown entries of height max(4,D).
+Their sufficient packing bound is independent of K; exact residual-response
+construction and wider allocations remain open. The K25/26 boundary layers
+use the earlier height9 bound.
 
 ### Cap4 query profiles and the information they carry
 
