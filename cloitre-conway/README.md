@@ -43,22 +43,22 @@ indices, and then establish a decay rate.
    [exact-neighborhood note](exact-collars.md) gives exact values and phases.
 3. **[Read the remaining convergence problem](dispersion.md).** Exact
    martingale identities give a conditional decay theorem; the required
-   uniform dispersion inequality is still open. Bounds in specific
-   neighborhoods, including a
-   [logarithmic cap-dependent horizon](dispersion.md#a-logarithmic-horizon-from-one-retained-child),
-   provide partial progress.
-   A [nonconvergent extension](dispersion.md#exact-small-cap-closure-still-does-not-force-convergence)
-   explains why exact small-cap closure alone does not finish the proof.
+   uniform dispersion inequality is still open.
 
 All notes can be read in your browser, without installing software.
 The programs and JSON files are optional evidence, not part of this route.
 
 ## Technical research map
 
-Choose the topic you need; there is no need to read every note in order.
+The route above is enough to start. Expand this index when you want a
+particular theorem or are working on the recursive interface.
+
+<details>
+<summary>Show the technical topics and their prerequisites</summary>
+
 A cap defect measures how far a value lies below the Fibonacci upper cap;
-a profile records the defects across a neighborhood. Exact definitions
-and theorem hypotheses are in the linked notes.
+a profile records the defects across a neighborhood. The linked proofs give
+exact definitions, domains and supplied inputs.
 
 | Question | Note | Starting point |
 |---|---|---|
@@ -82,6 +82,8 @@ selected-split graphs have the proved state-bit order.
 A candidate geometric cycle, a finite numerical test, and an actual selected
 recursive orbit are distinct objects. The [status page](../STATUS.md) tracks
 the unresolved full-interface and asymptotic questions.
+
+</details>
 
 ## Optional computational checks
 

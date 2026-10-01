@@ -47,6 +47,9 @@ inner cycles do not give a fixed autonomous recognizer in that encoding.
 
 ## Optional computational checks
 
+<details>
+<summary>Show verification programs, evidence and PDF build instructions</summary>
+
 The [LaTeX source](note.tex), Python programs and recorded data support the PDF;
 you do not need them to read the argument. The note remains unsigned and retains
 its acknowledgements and research-practice disclosure.
@@ -88,3 +91,5 @@ pdflatex -interaction=nonstopmode -halt-on-error note.tex
 Tectonic can also compile the source. The committed PDF is the previously
 verified three-page unsigned note. The written induction and arithmetic
 certificate are distinct from Lean formalization, which is not included.
+
+</details>
