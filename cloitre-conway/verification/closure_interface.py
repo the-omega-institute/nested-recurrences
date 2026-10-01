@@ -5,6 +5,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from conway_explore import brent_generate, generate
+
 
 def zero(size):
     return (Fraction(0),) * size
@@ -284,6 +286,75 @@ def scale_memory_audit():
                 scope='Written general proof supplies the infinite lower bound; exact finite arithmetic and canonical/trie checks corroborate it. No matching deterministic full-graph decoder or actual Cloitre graph lower bound is claimed.')
 
 
+def cloitre_top_plateau_memory_audit():
+    prefix = (4, 2)
+    fooling_rows = []
+    crossed_words = 0
+    for count in (3, 4, 8, 16, 32, 64):
+        base_windows = (8 * (count + 1) - 1).bit_length()
+        base_order = 3 * base_windows + 3
+        base_width = 2 * base_windows - 1
+        fibonacci = [0, 1]
+        while len(fibonacci) <= base_order + 6 * count:
+            fibonacci.append(sum(fibonacci[-2:]))
+        assert base_width + 4 * count < fibonacci[base_order - 2]
+        suffixes = [canonical_fib_word(fibonacci[base_order] - base_width - 4 * column)
+                    for column in range(count + 1)]
+        assert all(len(windows) == base_windows for unit, windows in suffixes)
+        for row in range(count + 1):
+            for column, (unit, windows) in enumerate(suffixes):
+                gap = base_width + 4 * column
+                order = base_order + 6 * row
+                number = fibonacci[order] - gap
+                expected = prefix * row + windows
+                assert canonical_fib_word(number) == (unit, expected)
+                first, second = fib_horner(expected)
+                assert unit + 2 * first + 3 * second == number
+                assert (gap <= 2 * order // 3 - 3) == (row >= column)
+                crossed_words += 1
+        fooling_rows.append(dict(pairs=count + 1, base_order=base_order,
+                                base_windows=base_windows, horizon_windows=base_windows + 2 * count))
+    for horizon in range(12, 513):
+        count = horizon // 4
+        base_windows = (8 * (count + 1) - 1).bit_length()
+        assert base_windows + 2 * count <= horizon
+    fibonacci = [0, 1]
+    while len(fibonacci) <= 27:
+        fibonacci.append(sum(fibonacci[-2:]))
+    actual, _, _, _ = generate(fibonacci[15] - 1)
+    assert actual == brent_generate(fibonacci[15] - 1)
+    trie_rows = []
+    actual_contract_checks = 0
+    for horizon in range(1, 9):
+        numbers = {1, 4}
+        for order in range(6, 3 * horizon + 4):
+            numbers.update(fibonacci[order] - gap for gap in range(1, 2 * order // 3 - 2))
+        words = set()
+        prefixes = {()}
+        for number in numbers:
+            unit, windows = canonical_fib_word(number)
+            assert len(windows) <= horizon
+            word = windows + (5 + unit,)
+            words.add(word)
+            prefixes.update(word[:length] for length in range(1, len(word) + 1))
+        assert len(numbers) <= (3 * horizon + 3) ** 2 + 2
+        assert len(prefixes) + 1 <= (horizon + 1) * ((3 * horizon + 3) ** 2 + 2) + 2
+        if horizon <= 4:
+            for number in range(1, fibonacci[3 * horizon + 3]):
+                unit, windows = canonical_fib_word(number)
+                highest = max(order for order in range(2, len(fibonacci)) if fibonacci[order] <= number)
+                assert ((windows + (5 + unit,)) in words) == (actual[number] == fibonacci[highest])
+                actual_contract_checks += 1
+        trie_rows.append(dict(horizon_windows=horizon, accepted_words=len(words), states_including_reject=len(prefixes) + 1))
+    return dict(prefix_window_symbols=list(prefix), fooling_pair_cases=fooling_rows,
+                exact_crossed_words=crossed_words, explicit_horizon_bounds_checked_inclusive=[12, 512],
+                autonomous_DFA_NFA_state_bound='K>=floor(L/4)+1 for L>=12',
+                minimum_nonuniform_state_bit_order='Theta(log L)=Theta(log log N); N=F_(3L+3)-1',
+                prefix_trie_examples=trie_rows, small_actual_contract_checks=actual_contract_checks,
+                small_actual_evaluators_agree_through=fibonacci[15] - 1,
+                scope='Written moving-plateau theorem identifies the actual C cap language. Prefix (25,3) raises the anchor order by6 at a fixed gap; its triangular fooling set gives the general NFA/DFA lower bound. A polynomial-size finite-horizon trie matches the state-bit order, excluding table size and supplied clocks. The actual C full graph inherits a lower bound by a constant-state cap filter/projection; its matching upper bound and the complete recursive minimum remain open.')
+
+
 def main():
     rows = [check_period(period) for period in range(1, 9)]
     five = rows[4]
@@ -298,6 +369,7 @@ def main():
     print(json.dumps({
         "status": "passed",
         "source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "evaluator_source_sha256": hashlib.sha256(Path(__file__).with_name('conway_explore.py').read_bytes()).hexdigest(),
         "periods_checked": [row["period"] for row in rows],
         "payload_dimension_including_scale": dimensions,
         "additional_coordinates_beyond_scale": additional,
@@ -308,6 +380,7 @@ def main():
             "additional_coordinates_beyond_scale": five["additional_coordinates_beyond_scale"],
         },
         "Campbell_FIB_scale_memory": scale_memory_audit(),
+        "Cloitre_top_plateau_FIB_memory": cloitre_top_plateau_memory_audit(),
         "scope": "Exact symbolic affine closure; branch inequalities and family-specific selectors remain separate.",
     }, indent=2))
 

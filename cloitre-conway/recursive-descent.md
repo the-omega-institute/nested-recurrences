@@ -8,6 +8,15 @@ basis and descent code account for cross-row parameters and layouts.
 These qualified reconstruction results do not establish a uniform occupation
 or dispersion bound for actual C.
 
+An actual closed arithmetic subclass is now available on the
+[moving negative plateau](exact-collars.md#exact-moving-negative-plateau-and-arithmetic-closure).
+Its exact gap range0..floor(2k/3)-3 grows with the anchor order. Fixed-point
+rows retain their gap; the newly added two-cycle endpoint gives child gaps
+v-1 and1. Every child remains in the lower-order plateau, so five-row words
+need zero residual selectors with order and gaps supplied, down to finite
+base orders9/10. Scale, gap encoding and base-table costs remain separate;
+the full actual-C minimum in wide arches is still open.
+
 ## Contents
 
 - [Recursive windows with a parameter at every row](#recursive-windows-with-a-parameter-at-every-row)

@@ -15,6 +15,7 @@ minimum remains open.
 - [8. Five-window closure interface](#8-five-window-closure-interface)
 - [The exact minimum phase interface depends on the readout](#the-exact-minimum-phase-interface-depends-on-the-readout)
 - [9. Common closure theorem and generic minimality](#9-common-closure-theorem-and-generic-minimality)
+- [Autonomous memory of the actual top-plateau diagnostic](#autonomous-memory-of-the-actual-top-plateau-diagnostic)
 
 ## 7. Fibonacci profile renormalization and defect dynamics
 
@@ -588,3 +589,110 @@ future constraints on the two lower five-windows. It also recovers all 65
 numeric child splits from their ordinals and rechecks all 65 parent transitions,
 so the ordinal representation is sufficient for the audited recursive
 certificate.
+
+### Autonomous memory of the actual top-plateau diagnostic
+
+The [moving negative plateau](exact-collars.md#exact-moving-negative-plateau-and-arithmetic-closure)
+gives an actual-C counterpart to the
+[Campbell scale-memory obstruction](../campbell/scale-memory.md).
+Arithmetic child selectors can have zero residual labels with scale and
+gaps supplied, while an autonomous recognizer must retain growing memory.
+
+**Recognition contract.** Use the same canonical FIB encoding as the
+Campbell note: weights F_2=1,F_3=2,...; keep the unit digit at F_2 as a
+distinct terminal symbol; group higher digits into triples and read the
+five legal window letters from high to low. Highest windows are nonnull,
+and adjacent nonzero digits are forbidden at every seam. At most L windows
+encode the numerical horizon N=F_(3L+3)-1.
+
+For positive n let j be its highest nonzero Fibonacci weight, so
+F_j<=n<F_(j+1). The actual cap diagnostic accepts exactly when
+
+$$
+C(n)=F_j.
+$$
+
+A horizon-L DFA or NFA must decide this predicate on every canonical
+word with at most L windows. Its behavior beyond that horizon is free;
+its internally stored position and scale counters count as states.
+Horizon-specific transition tables are allowed and their size is excluded.
+
+**State lower bound.** Every such recognizer with K states satisfies
+
+$$
+\boxed{K\ge\lfloor L/4\rfloor+1\qquad(L\ge12).}
+$$
+
+**Proof.** Write P for the two-window prefix with high-to-low bit pattern
+`101010`, namely the letters([25],[3]). For a fixed gap v<F_(k-2), the
+canonical word of F_k-v begins at weight F_(k-1). The Fibonacci identity
+
+$$
+F_{k+6}-v=F_{k+5}+F_{k+3}+F_{k+1}+(F_k-v)
+$$
+
+shows that prefixing P increases the upper anchor order by6 while keeping
+v and the terminal unit digit unchanged. The seams remain canonical.
+
+Set T=floor(L/4)>=3 and m=ceil(log_2(8(T+1))). Then m<=2T, since
+4^T>=8(T+1), so m+2T<=L. Put k_0=3m+3, with plateau width
+L_(k_0)=2m-1. For t=0,...,T choose
+
+$$
+v_t=2m-1+4t,
+$$
+
+and let w_t be the canonical word for F_(k_0)-v_t, including its terminal
+unit symbol. These words have exactly m windows. Indeed m<=T+3,
+F_(3m+1)>=2^m>=8(T+1), and
+v_t<=6T+5<8(T+1), so v_t<F_(k_0-2).
+
+Every crossed word P^u w_t has at most m+2T<=L windows and represents
+F_(k_0+6u)-v_t in its correct natural block. The exact moving width gives
+
+$$
+P^u w_t\text{ is accepted}
+\quad\Longleftrightarrow\quad
+v_t\le L_{k_0+6u}=2m-1+4u
+\quad\Longleftrightarrow\quad t\le u.
+$$
+
+Take one accepting NFA run for each diagonal word P^t w_t and record
+its state just after P^t. Two equal states at t<u would splice the
+prefix P^t with the accepting suffix w_u, accepting a crossed word
+that must be rejected. Thus these T+1 states are distinct. This applies
+to NFAs with epsilon transitions as well, and therefore to DFAs. QED.
+
+**Matching state-bit order for this diagnostic.** In every upper-anchor
+block of order k>=6 there are exactly L_k accepted positive gaps1..L_k;
+gap0 is the next block's lower anchor and fails this cap predicate.
+Orders through3L+3 therefore contribute O(L^2) accepted words, with a
+fixed finite set of small initial cases. Their prefix trie and a reject
+state use O(L^3) states. Hence the minimum autonomous state-bit order is
+
+$$
+\Theta(\log L)=\Theta(\log\log N).
+$$
+
+This matches Campbell's diagnostic at the level of state bits, though its
+ternary level set and this linear-width Fibonacci plateau are different
+arithmetic mechanisms. The tables are nonuniform; this does not count their
+size or give a uniform algorithm for the full sequence.
+
+**Actual-C full-graph consequence.** For high-to-low synchronous canonical
+recognition of(n,C(n)), the relation y=F_j, where j is the highest input
+weight, has a fixed finite-state filter: the highest output digit is at
+the highest input position and every other output digit is zero.
+Intersect the graph automaton with this filter and project away y.
+The state count grows by a constant factor and the resulting NFA recognizes
+the cap diagnostic. Actual-C full-graph recognition consequently requires
+Omega(L) states and Omega(log L) state bits. A matching full-graph upper
+bound, deterministic decoder and complete minimum recursive interface
+remain open.
+
+The [closure checker](verification/closure_interface.py) independently
+verifies the canonical prefix identities, all crossed acceptance matrices
+at six finite horizons, and prefix-trie constructions. It checks the small
+diagnostic against independent actual evaluators. These computations
+corroborate the general fooling-set proof; supplied order/gap context and
+finite boundary tables remain separate from autonomous memory.

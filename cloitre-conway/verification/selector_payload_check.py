@@ -2485,6 +2485,24 @@ def proportional_extension_audit(sequence):
                     assert values[index] == fibonacci[order - 1]
                     negative_checks += 1
         index = first_difference['index']
+        plateau_order = cutoff_order + 1
+        outside_gap = 2 * plateau_order // 3 - 2
+        plateau_index = fibonacci[plateau_order] - outside_gap
+        plateau_split = proportional_guard_split(plateau_index, fibonacci)
+        plateau_complement = plateau_index - plateau_split
+        plateau_child_gaps = [fibonacci[cutoff_order] - plateau_split,
+                             fibonacci[cutoff_order - 1] - plateau_complement]
+        assert plateau_split <= cutoff and plateau_complement <= cutoff
+        assert sum(plateau_child_gaps) == outside_gap
+        assert all(0 <= gap <= 2 * (cutoff_order - 1) // 3 - 3 for gap in plateau_child_gaps)
+        plateau_actual = sequence
+        if plateau_index >= len(plateau_actual):
+            plateau_actual, _, _, _ = generate(plateau_index)
+            assert plateau_actual == brent_generate(plateau_index)
+        assert values[plateau_index] == fibonacci[cutoff_order] > plateau_actual[plateau_index]
+        moving_plateau_violation = dict(order=plateau_order, gap=outside_gap, index=plateau_index,
+                                       extension_value=values[plateau_index], actual_value=plateau_actual[plateau_index],
+                                       split=plateau_split, child_gaps=plateau_child_gaps)
         point = index - 1
         for iteration in range(values[index - 1]):
             point = index - values[point]
@@ -2530,11 +2548,29 @@ def proportional_extension_audit(sequence):
                           extension_checked_inclusive=[cutoff + 1, limit], first_nested_failure=first_difference,
                           exact_zero_set_verified=True, saturated_width=32,
                           positive_collar_checks=positive_checks, negative_collar_checks=negative_checks,
+                          moving_plateau_violation=moving_plateau_violation,
                           knee_seed_orders=[previous_order, current_order], knee_seed_indices=[previous_index, current_index],
                           knee_seed_values=seed_values, knee_seed_defects=seed_defects, arithmetic_knees=knees))
+    moving_plateau_contexts = []
+    for cutoff_order in range(26, 91):
+        outside_gap = 2 * (cutoff_order + 1) // 3 - 2
+        index = large_fibonacci[cutoff_order + 1] - outside_gap
+        split = proportional_guard_split(index, large_fibonacci)
+        child_gaps = [large_fibonacci[cutoff_order] - split,
+                      large_fibonacci[cutoff_order - 1] - (index - split)]
+        minimum_width = 2 * (cutoff_order - 1) // 3 - 3
+        assert sum(child_gaps) == outside_gap
+        assert 3 * max(child_gaps) <= 2 * outside_gap + 6
+        assert max(child_gaps) <= minimum_width
+        if cutoff_order in (26, 30, 40, 60, 90):
+            moving_plateau_contexts.append(dict(cutoff_order=cutoff_order, index=index,
+                                               gap=outside_gap, child_gaps=child_gaps,
+                                               minimum_actual_seed_width=minimum_width))
     return dict(consecutive_carry_contexts=carry_contexts, concrete_extensions=cases,
+                moving_plateau_exclusion_cutoff_orders_inclusive=[26, 90],
+                moving_plateau_exclusion_arithmetic_witnesses=moving_plateau_contexts,
                 upper_envelope='15225/22877 for N>=16384; any certified actual C envelope is inherited when F_(J-2) is beyond its threshold',
-                scope='Written infinite extensions agree with arbitrarily late actual prefixes, have G/cap/zero-set/saturation/fixed-collar structure but positive knee defect density and nonconvergent ratios. Numeric cases J25/J26 corroborate through2^20; huge knee values follow exact arithmetic. These are not the actual nested C sequence.')
+                scope='Written infinite extensions agree with arbitrarily late actual prefixes, have G/cap/zero-set/saturation/eventual-fixed-collar structure but positive knee defect density and nonconvergent ratios. The new exact moving top-plateau law excludes every cutoff J>=26 at the first subsequent complete block; arithmetic checks through order90 corroborate that infinite exclusion. Numeric cases J25/J26 corroborate through2^20. These are not the actual nested C sequence; excluding this counterfamily does not prove uniform dispersion.')
 
 
 def unbounded_defect_audit():

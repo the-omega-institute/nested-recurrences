@@ -1,6 +1,7 @@
 {
   "status": "passed",
-  "source_sha256": "0360d54011c0b05797f9eb784b4d8b3d0266cf0138195056547272767693c4de",
+  "source_sha256": "1292c71b3dcc920bb4040d0cd08bb3f552c0e96b0f52fcd8e84cae32c10e294a",
+  "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "periods_checked": [
     1,
     2,
@@ -154,6 +155,102 @@
     "general_state_bound": "L<=4K+4 for autonomous DFA or NFA recognition of canonical FIB words for5*3^k through L windows",
     "memory_order": "Theta(log L)=Theta(log log N) for the scalar diagnostic and nondeterministic Campbell graph recognition; context clocks and read-only table size are separate",
     "scope": "Written general proof supplies the infinite lower bound; exact finite arithmetic and canonical/trie checks corroborate it. No matching deterministic full-graph decoder or actual Cloitre graph lower bound is claimed."
+  },
+  "Cloitre_top_plateau_FIB_memory": {
+    "prefix_window_symbols": [
+      4,
+      2
+    ],
+    "fooling_pair_cases": [
+      {
+        "pairs": 4,
+        "base_order": 18,
+        "base_windows": 5,
+        "horizon_windows": 11
+      },
+      {
+        "pairs": 5,
+        "base_order": 21,
+        "base_windows": 6,
+        "horizon_windows": 14
+      },
+      {
+        "pairs": 9,
+        "base_order": 24,
+        "base_windows": 7,
+        "horizon_windows": 23
+      },
+      {
+        "pairs": 17,
+        "base_order": 27,
+        "base_windows": 8,
+        "horizon_windows": 40
+      },
+      {
+        "pairs": 33,
+        "base_order": 30,
+        "base_windows": 9,
+        "horizon_windows": 73
+      },
+      {
+        "pairs": 65,
+        "base_order": 33,
+        "base_windows": 10,
+        "horizon_windows": 138
+      }
+    ],
+    "exact_crossed_words": 5725,
+    "explicit_horizon_bounds_checked_inclusive": [
+      12,
+      512
+    ],
+    "autonomous_DFA_NFA_state_bound": "K>=floor(L/4)+1 for L>=12",
+    "minimum_nonuniform_state_bit_order": "Theta(log L)=Theta(log log N); N=F_(3L+3)-1",
+    "prefix_trie_examples": [
+      {
+        "horizon_windows": 1,
+        "accepted_words": 3,
+        "states_including_reject": 7
+      },
+      {
+        "horizon_windows": 2,
+        "accepted_words": 9,
+        "states_including_reject": 19
+      },
+      {
+        "horizon_windows": 3,
+        "accepted_words": 21,
+        "states_including_reject": 39
+      },
+      {
+        "horizon_windows": 4,
+        "accepted_words": 39,
+        "states_including_reject": 69
+      },
+      {
+        "horizon_windows": 5,
+        "accepted_words": 63,
+        "states_including_reject": 109
+      },
+      {
+        "horizon_windows": 6,
+        "accepted_words": 93,
+        "states_including_reject": 158
+      },
+      {
+        "horizon_windows": 7,
+        "accepted_words": 129,
+        "states_including_reject": 217
+      },
+      {
+        "horizon_windows": 8,
+        "accepted_words": 171,
+        "states_including_reject": 286
+      }
+    ],
+    "small_actual_contract_checks": 792,
+    "small_actual_evaluators_agree_through": 609,
+    "scope": "Written moving-plateau theorem identifies the actual C cap language. Prefix (25,3) raises the anchor order by6 at a fixed gap; its triangular fooling set gives the general NFA/DFA lower bound. A polynomial-size finite-horizon trie matches the state-bit order, excluding table size and supplied clocks. The actual C full graph inherits a lower bound by a constant-state cap filter/projection; its matching upper bound and the complete recursive minimum remain open."
   },
   "scope": "Exact symbolic affine closure; branch inequalities and family-specific selectors remain separate."
 }

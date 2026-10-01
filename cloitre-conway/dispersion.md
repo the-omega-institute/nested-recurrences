@@ -654,11 +654,40 @@ $$
 
 At k>=J+1+2d_-(v), all boundary gaps are at most12, proving
 W_J(F_k-v)=F_(k-1). These infinite collar statements concern W;
-arbitrary negative widths for actual C remain open.
+the actual moving-plateau theorem independently proves all fixed negative widths.
 In particular its lowest five legal digit-window responses are exactly
 the same as C at every anchor of order at least23: their interaction
 coefficient is zero. This static agreement does not identify the
 prescribed inner selection.
+
+**The exact moving top plateau excludes this counterfamily.** The
+[moving-plateau theorem](exact-collars.md#exact-moving-negative-plateau-and-arithmetic-closure)
+now proves the full-block zero-support law L_k=floor(2k/3)-3 for actual C.
+It is stronger than eventual flatness at each fixed negative gap.
+Every extension W_J with J>=26 violates that law already at
+
+$$
+N=F_{J+1}-v,\qquad v=L_{J+1}+1=\lfloor2(J+1)/3\rfloor-2.
+$$
+
+Indeed its two chosen child gaps r,q below the upper anchors F_J,F_(J-1)
+are nonnegative, sum to v, and satisfy max(r,q)<=(2/3)v+2 by the
+rounding estimate above. For J>=26,
+
+$$
+\max(r,q)\le\frac{4J+10}{9}
+\le\frac{6J-42}{9}\le L_{J-1}\le L_J.
+$$
+
+Both children belong to the unchanged actual prefix. Their actual plateau
+values are F_(J-1) and F_(J-2), so W_J(N)=F_J. But N lies one gap
+outside the actual top plateau, giving C(N)<F_J. Thus no member of this
+arbitrarily late-prefix family satisfies the new moving-profile constraint.
+The checker verifies the concrete J25/J26 violations and exact arithmetic
+child-gap bounds at J=26,...,90; the infinite exclusion is proved by the
+displayed estimates. A uniform dispersion inequality for profiles satisfying
+this constraint still requires a proof; excluding this counterfamily alone
+does not supply it.
 
 **Certified ratio envelopes are inherited.** Suppose actual C has
 ell<=C(N)/N<=beta for N>=M, and choose J with F_(J-2)>=M.

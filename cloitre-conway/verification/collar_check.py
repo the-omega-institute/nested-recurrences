@@ -520,6 +520,149 @@ def saturated_profile_audit(sequence, periods, splits, fibonacci):
                 scope='General two-scale saturation induction plus a minimum/maximum cycle argument. The36 extra seeds and earlier exact collar seeds are finite premises; all-start and selected-cycle checks are corroboration. The extended endpoint rule proves actual basin and phase on offsets1..32, with possible odd entry at the lower endpoint when t=32. Recursive nonautonomous windows in0..32 have arithmetic splits, but the spatial period bound applies only to autonomous constant-parameter cycles. No wider-arch phase classification or full minimum closure theorem is claimed.')
 
 
+def negative_plateau_width(order):
+    return 2 * order // 3 - 3
+
+
+def moving_negative_plateau_audit(sequence, splits, fibonacci):
+    base_order = 10
+    base_anchor = fibonacci[base_order]
+    base_cap = fibonacci[base_order - 1]
+    base_profile = [base_cap - sequence[base_anchor - gap]
+                    for gap in range(fibonacci[base_order - 2] + 1)]
+    expected_base = [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 4, 6, 5, 6, 8, 9, 9, 10, 11, 12, 13]
+    assert base_profile == expected_base
+    seed_order = 9
+    seed_values = [sequence[fibonacci[seed_order] - gap] for gap in range(4)]
+    assert seed_values == [fibonacci[seed_order - 1]] * 4
+    literal, updates = literal_generate(base_anchor)
+    assert literal == sequence[:base_anchor + 1] == brent_generate(base_anchor)
+    abstract_profiles = 0
+    periodic_readouts = 0
+    for collar_width in range(3, 13):
+        for extra in range(2, 9):
+            gap = collar_width + extra
+            ranges = [range(1, max(1, point - collar_width - 1) + 1)
+                      for point in range(collar_width + 1, gap + 1)]
+            for tail in product(*ranges):
+                profile = [0] * (collar_width + 1) + list(tail)
+                cycles = capped_profile_cycles(profile, gap)
+                for cycle in cycles:
+                    for selected in cycle:
+                        assert collar_width < selected < gap
+                        lower_gap = gap - selected
+                        lower_cap = 0 if lower_gap <= 3 else 2 * lower_gap // 3
+                        maximum_defect = profile[selected] + lower_cap
+                        assert maximum_defect > 0
+                        assert maximum_defect <= (1 if extra == 2 else extra - 2)
+                        periodic_readouts += 1
+                abstract_profiles += 1
+    block_vertices = 0
+    selected_rows = 0
+    recursive_rows = 0
+    five_window_rows = 0
+    five_window_witness = None
+    new_endpoint_rows = []
+    for order in range(6, 31):
+        anchor = fibonacci[order]
+        cap = fibonacci[order - 1]
+        collar_width = negative_plateau_width(order)
+        for gap in range(fibonacci[order - 2] + 1):
+            defect = cap - sequence[anchor - gap]
+            assert (defect == 0) == (gap <= collar_width)
+            if order >= 7 and gap > collar_width:
+                assert 1 <= defect <= max(1, gap - collar_width - 1)
+            block_vertices += 1
+        if order < 11:
+            continue
+        previous_width = negative_plateau_width(order - 1)
+        assert collar_width == previous_width + int(order % 3 != 1)
+        assert previous_width + 2 < fibonacci[order - 3]
+        for gap in range(previous_width + 2):
+            index = anchor - gap
+            boundary = gap == previous_width + 1
+            shift = int(boundary and order % 3 != 1)
+            expected_split = cap - gap + shift
+            trajectory, transient, period = full_orbit(sequence, index)
+            expected_cycle = {cap - gap, cap - gap + 1} if boundary else {cap - gap}
+            assert set(trajectory[transient:]) == expected_cycle
+            assert period == 1 + int(boundary)
+            assert splits[index] == expected_split
+            assert sequence[index] == cap - int(boundary and not shift)
+            if boundary:
+                capture = next(position for position, point in enumerate(trajectory)
+                               if cap - gap <= point <= cap)
+                assert capture % 2 == 0 and trajectory[capture] > cap - gap
+                assert sequence[index - 1] == cap - 1
+                assert fibonacci[order - 2] - sequence[cap - gap] == 1
+                assert fibonacci[order - 2] - sequence[cap - gap - 1] == 1
+            if gap <= collar_width:
+                first_gap = gap - shift
+                second_gap = shift
+                assert first_gap <= negative_plateau_width(order - 1)
+                assert second_gap <= negative_plateau_width(order - 2)
+                assert sequence[expected_split] == fibonacci[order - 2]
+                assert sequence[index - expected_split] == fibonacci[order - 3]
+                recursive_rows += 1
+                if boundary and order in (24, 26, 30):
+                    new_endpoint_rows.append(dict(order=order, gap=gap, index=index,
+                                                  selected_split=expected_split, period=period,
+                                                  first_child_gap=first_gap, second_child_gap=second_gap))
+            selected_rows += 1
+        gaps = [0, 1, collar_width // 2, collar_width - 1, collar_width]
+        shifts = [int(gap == previous_width + 1) for gap in gaps]
+        profile_order = order - 1
+        parent_offsets = [fibonacci[profile_order - 1] - gap for gap in gaps]
+        first_offsets = [fibonacci[profile_order - 2] - gap + shift
+                         for gap, shift in zip(gaps, shifts)]
+        second_offsets = [fibonacci[profile_order - 3] - shift for shift in shifts]
+        parent_parameters = []
+        first_parameters = []
+        second_parameters = []
+        for row, gap in enumerate(gaps):
+            following = (row + 1) % 5
+            index = anchor - gap
+            split = splits[index]
+            assert split - fibonacci[profile_order - 1] == first_offsets[row]
+            assert index - split - fibonacci[profile_order - 2] == second_offsets[row]
+            parent_parameter = parent_offsets[following] + sequence[index] - fibonacci[profile_order - 1]
+            first_parameter = first_offsets[following] + sequence[split] - fibonacci[profile_order - 2]
+            second_parameter = second_offsets[following] + sequence[index - split] - fibonacci[profile_order - 3]
+            assert parent_parameter == fibonacci[profile_order] - gaps[following]
+            assert first_parameter == fibonacci[profile_order - 1] - gaps[following] + shifts[following]
+            assert second_parameter == fibonacci[profile_order - 2] - shifts[following]
+            assert first_parameter + second_parameter == parent_parameter
+            parent_parameters.append(parent_parameter)
+            first_parameters.append(first_parameter)
+            second_parameters.append(second_parameter)
+            five_window_rows += 1
+        if order == 30:
+            defects = [fibonacci[profile_order - 3] - gap for gap in gaps]
+            five_window_witness = dict(anchor_order=order, gaps=gaps, shifts=shifts,
+                                       parent_parameters=parent_parameters, first_parameters=first_parameters,
+                                       second_parameters=second_parameters, total_natural_defect=sum(defects),
+                                       residual_selector_labels=0)
+    threshold_rows = []
+    for gap in (17, 18, 32, 100, 1000):
+        threshold = max(6, (3 * (gap + 3) + 1) // 2)
+        assert negative_plateau_width(threshold) >= gap
+        assert threshold == 6 or negative_plateau_width(threshold - 1) < gap
+        threshold_rows.append(dict(gap=gap, first_exact_order_at_least_six=threshold))
+    return dict(base_order=base_order, base_gaps_inclusive=[0, fibonacci[base_order - 2]],
+                base_defect_profile=base_profile, width_three_seed_order=seed_order,
+                width_three_seed_values=seed_values, unique_scalar_seed_indices_inclusive=[31, 55],
+                independently_literal_checked_through=base_anchor, base_literal_updates=updates,
+                abstract_widths_inclusive=[3, 12], abstract_extra_gaps_inclusive=[2, 8],
+                abstract_shelf_profiles=abstract_profiles, abstract_periodic_readouts=periodic_readouts,
+                actual_complete_block_orders_inclusive=[6, 30], actual_block_vertices=block_vertices,
+                actual_selected_fixed_or_boundary_rows=selected_rows,
+                actual_closed_arithmetic_rows=recursive_rows, new_two_cycle_endpoints=new_endpoint_rows,
+                actual_moving_five_window_rows=five_window_rows, arithmetic_five_window=five_window_witness,
+                width_formula='L_k=floor(2*k/3)-3, k>=6',
+                exact_tail_threshold_formula='max(6,ceil(3*(v+3)/2))', threshold_examples=threshold_rows,
+                scope='Simultaneous top-suffix/shelf-barrier induction and boundary depth parity prove the exact moving negative plateau for actual C. Small seeds are literal/full-orbit/Brent premises; larger blocks and abstract graphs corroborate the written proof. A freshly added zero endpoint has a proper two-cycle, so scalar exactness does not imply a fixed inner cycle. Arithmetic child gaps close the moving plateau with supplied order/gap, excluding finite base-table and scale/context costs. No complete actual-C interface, wide-arch dispersion, global limit or Lean claim.')
+
+
 def negative_adjacent_transitions(amplitude, adjacent):
     if amplitude == 1:
         return {1} if adjacent == 1 else {adjacent, 0, 1}
@@ -647,7 +790,7 @@ def negative_adjacent_gap_audit(sequence, fibonacci):
                 actual_adjacent_contexts=actual_rows,
                 complete_top_suffix_orders_inclusive=[5, 30], top_suffix_vertices=suffix_vertices,
                 top_suffix_rows=suffix_rows,
-                scope='Complete adjacent-gap cycle/readout envelope, exact parity-trace quotient and clock obstruction are general proofs with supplied flat lower profiles and amplitude. Three/two states count envelope parity continuations, not actual-C graph memory or numeric adjacent defects. Conditional widening requires the actual lower-endpoint entrance to be avoided; finite top suffixes and entrances do not prove this universal premise. Zero adjacent defects are allowed. A perpetual boundary copy would force recurring path-witnessed cap holes. No global limit/dispersion or Lean claim.')
+                scope='Complete adjacent-gap cycle/readout envelope, exact parity-trace quotient and clock obstruction are general proofs with supplied flat lower profiles and amplitude. Three/two states count envelope parity continuations, not actual-C graph memory or numeric adjacent defects. Zero adjacent defects are allowed in the envelope. The separate moving-plateau induction establishes actual top contiguity and resolves its entrance premise; the qualified actual first boundary has unit amplitude and adjacent defect one. No global limit/dispersion or Lean claim.')
 
 
 def negative_collar_boundary_audit(sequence, splits, fibonacci):
@@ -821,7 +964,8 @@ def negative_collar_boundary_audit(sequence, splits, fibonacci):
                 nonzero_actual_boundary_rows=positive_rows,
                 literal_witnesses=literal_witnesses, literal_endpoint_updates=literal_updates,
                 adjacent_gap_parity=negative_adjacent_gap_audit(sequence, fibonacci),
-                scope='Single-negative-seed propagation and first-boundary copy-or-contract/readout-phase proofs are general. Seeds reuse the independently agreeing F30+34 full-orbit/Brent prefix. Finite observations p=1,q=0,entrance flag1 and width growth are not uniform laws; arbitrary negative widths, full recursive minimum, dispersion and convergence remain open. Conditional phase-state minima exclude supplied context and its certification cost.')
+                moving_negative_plateau=moving_negative_plateau_audit(sequence, splits, fibonacci),
+                scope='Single-negative-seed propagation and first-boundary copy-or-contract/readout-phase proofs are general. Earlier scalar seeds reuse the independently agreeing F30+34 full-orbit/Brent prefix. The separate small-seed moving-plateau induction now proves all fixed negative widths, top contiguity and the unit-amplitude actual boundary rule. Full recursive minimum, dispersion and global convergence remain open. Conditional phase-state minima exclude supplied context and its certification cost.')
 
 
 def positive_collar_extinction_audit(sequence, fibonacci):
@@ -931,7 +1075,7 @@ def positive_collar_extinction_audit(sequence, fibonacci):
                 higher_threshold_cases=higher_cases, arithmetic_width_examples=width_rows,
                 growing_linear_width='L_j=32+2*floor((j-23)/6)+indicator((j-23 mod6)>=4)',
                 growing_saturated_width='W_j=max(32,G(L_j))',
-                scope='General offset induction from the already certified0..32 collar and a necessary defect-persistence/phase rule. Finite Boolean paths are exhaustive for the rule envelope, not reverse-complete actual C histories. Every fixed positive width eventually has a proved exact collar; arbitrary negative widths and global ratio convergence remain open. Additional independent numerical checks stay within the previously published2^20 range, while the infinite conclusion comes from the extinction proof.')
+                scope='General offset induction from the already certified0..32 collar and a necessary defect-persistence/phase rule. Finite Boolean paths are exhaustive for the rule envelope, not reverse-complete actual C histories. Every fixed positive width eventually has a proved exact collar; the separate moving-negative-plateau theorem supplies all fixed negative widths. Global ratio convergence remains open. Additional independent numerical checks stay within the previously published2^20 range, while the infinite conclusion comes from the extinction proof.')
     return positive_report, negative_collar_boundary_audit(higher_sequence, higher_splits, fibonacci)
 
 
@@ -1154,7 +1298,7 @@ def main():
             stable_graph_witnesses.append(dict(offset=offset, cycles=actual_cycles))
     positive_collars, negative_boundary = positive_collar_extinction_audit(sequence, fibonacci_values(10 ** 6))
     report = dict(
-        status='Exact two-collar and single-negative-seed premises, boundary readout and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states propagation and boundary proofs; no Lean formalization.',
+        status='Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.',
         source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         evaluator_source_sha256=hashlib.sha256(Path(__file__).with_name('conway_explore.py').read_bytes()).hexdigest(),
         limit=limit,
