@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "f04885d2605b41761490ff45226008bfb109da006cbcf09c996ea4e4bd738da7",
+  "source_sha256": "3c43fcefaf83798654381db1e290b57d0ac2d8792e4460f72094443e354b2b9b",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -6295,6 +6295,721 @@
       "descendant_interaction": 1,
       "cap_normalized_terminal_interaction": "1/2584",
       "scope": "Infinite canonical-index interaction follows from the unit-sublevel theorem and telescoping Zeckendorf identities. The explicit first family member and inherited-label first spines are independently checked. Root interaction does not imply a long orbit or a residual selector label; terminal signal persistence does not prove uniform dispersion because its size-biased first-spine probability tends to zero."
+    },
+    "canonical_additive_carry": {
+      "legal_unit_extended_words": [
+        "0000",
+        "1000",
+        "0100",
+        "0010",
+        "1010",
+        "0001",
+        "1001",
+        "0101"
+      ],
+      "exact_boolean_tables_reconstructed": 256,
+      "arithmetic_jump_orders_inclusive": [
+        20,
+        180
+      ],
+      "arithmetic_jump_cases": 2149099,
+      "arithmetic_context_orders_inclusive": [
+        8,
+        14
+      ],
+      "canonical_words_checked": 56,
+      "arithmetic_context_rows": [
+        {
+          "context_order": 8,
+          "anchor_order": 27,
+          "root_gap": 21,
+          "first_exit_depth": 2,
+          "joint_offsets": [
+            7,
+            7,
+            8
+          ],
+          "predicted_golden_defect": 12,
+          "scalar_valid_alternative_half_quadratic_bound": true
+        },
+        {
+          "context_order": 9,
+          "anchor_order": 47,
+          "root_gap": 34,
+          "first_exit_depth": 3,
+          "joint_offsets": [
+            7,
+            7,
+            7,
+            8
+          ],
+          "predicted_golden_defect": 20,
+          "scalar_valid_alternative_half_quadratic_bound": true
+        },
+        {
+          "context_order": 10,
+          "anchor_order": 78,
+          "root_gap": 55,
+          "first_exit_depth": 2,
+          "joint_offsets": [
+            7,
+            7,
+            8
+          ],
+          "predicted_golden_defect": 33,
+          "scalar_valid_alternative_half_quadratic_bound": true
+        },
+        {
+          "context_order": 11,
+          "anchor_order": 129,
+          "root_gap": 89,
+          "first_exit_depth": 2,
+          "joint_offsets": [
+            7,
+            7,
+            8
+          ],
+          "predicted_golden_defect": 54,
+          "scalar_valid_alternative_half_quadratic_bound": true
+        },
+        {
+          "context_order": 12,
+          "anchor_order": 212,
+          "root_gap": 144,
+          "first_exit_depth": 3,
+          "joint_offsets": [
+            7,
+            7,
+            7,
+            8
+          ],
+          "predicted_golden_defect": 88,
+          "scalar_valid_alternative_half_quadratic_bound": true
+        },
+        {
+          "context_order": 13,
+          "anchor_order": 345,
+          "root_gap": 233,
+          "first_exit_depth": 2,
+          "joint_offsets": [
+            7,
+            7,
+            8
+          ],
+          "predicted_golden_defect": 143,
+          "scalar_valid_alternative_half_quadratic_bound": true
+        },
+        {
+          "context_order": 14,
+          "anchor_order": 561,
+          "root_gap": 377,
+          "first_exit_depth": 2,
+          "joint_offsets": [
+            7,
+            7,
+            8
+          ],
+          "predicted_golden_defect": 232,
+          "scalar_valid_alternative_half_quadratic_bound": true
+        }
+      ],
+      "actual_prefix_limit": 317790,
+      "full_orbit_and_brent_agree": true,
+      "prefix_sha256": "99cabde133fbc0940bf4d58d53049612fb193043728c4a1db44d22b17a0582ed",
+      "parent": {
+        "index": 317790,
+        "value": 196417,
+        "selected": 196398,
+        "depth": 196417
+      },
+      "actual_additive_table": [
+        {
+          "offset": 0,
+          "digits": "0000",
+          "index": 196397,
+          "complement": 121393,
+          "readout": 196417,
+          "selected": 121373
+        },
+        {
+          "offset": 1,
+          "digits": "1000",
+          "index": 196398,
+          "complement": 121392,
+          "readout": 196417,
+          "selected": 121374
+        },
+        {
+          "offset": 2,
+          "digits": "0100",
+          "index": 196399,
+          "complement": 121391,
+          "readout": 196417,
+          "selected": 121375
+        },
+        {
+          "offset": 3,
+          "digits": "0010",
+          "index": 196400,
+          "complement": 121390,
+          "readout": 196417,
+          "selected": 121376
+        },
+        {
+          "offset": 4,
+          "digits": "1010",
+          "index": 196401,
+          "complement": 121389,
+          "readout": 196417,
+          "selected": 121377
+        },
+        {
+          "offset": 5,
+          "digits": "0001",
+          "index": 196402,
+          "complement": 121388,
+          "readout": 196417,
+          "selected": 121378
+        },
+        {
+          "offset": 6,
+          "digits": "1001",
+          "index": 196403,
+          "complement": 121387,
+          "readout": 196418,
+          "selected": 121379
+        },
+        {
+          "offset": 7,
+          "digits": "0101",
+          "index": 196404,
+          "complement": 121386,
+          "readout": 196418,
+          "selected": 121379
+        }
+      ],
+      "literal_selected_endpoint_updates": 1167554,
+      "actual_first_spine_rows": [
+        {
+          "root_offset": 0,
+          "anchor_order": 27,
+          "index": 196397,
+          "gap": 21,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 0,
+          "anchor_order": 26,
+          "index": 121373,
+          "gap": 20,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 0,
+          "anchor_order": 25,
+          "index": 75006,
+          "gap": 19,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 0,
+          "anchor_order": 24,
+          "index": 46350,
+          "gap": 18,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 0,
+          "anchor_order": 23,
+          "index": 28640,
+          "gap": 17,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 0,
+          "anchor_order": 22,
+          "index": 17695,
+          "gap": 16,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 0,
+          "anchor_order": 21,
+          "index": 10931,
+          "gap": 15,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 0,
+          "anchor_order": 20,
+          "index": 6751,
+          "gap": 14,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 0,
+          "anchor_order": 19,
+          "index": 4168,
+          "gap": 13,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 1,
+          "anchor_order": 27,
+          "index": 196398,
+          "gap": 20,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 1,
+          "anchor_order": 26,
+          "index": 121374,
+          "gap": 19,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 1,
+          "anchor_order": 25,
+          "index": 75007,
+          "gap": 18,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 1,
+          "anchor_order": 24,
+          "index": 46351,
+          "gap": 17,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 1,
+          "anchor_order": 23,
+          "index": 28641,
+          "gap": 16,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 1,
+          "anchor_order": 22,
+          "index": 17696,
+          "gap": 15,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 1,
+          "anchor_order": 21,
+          "index": 10932,
+          "gap": 14,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 1,
+          "anchor_order": 20,
+          "index": 6752,
+          "gap": 13,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 1,
+          "anchor_order": 19,
+          "index": 4169,
+          "gap": 12,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 2,
+          "anchor_order": 27,
+          "index": 196399,
+          "gap": 19,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 2,
+          "anchor_order": 26,
+          "index": 121375,
+          "gap": 18,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 2,
+          "anchor_order": 25,
+          "index": 75008,
+          "gap": 17,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 2,
+          "anchor_order": 24,
+          "index": 46352,
+          "gap": 16,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 2,
+          "anchor_order": 23,
+          "index": 28642,
+          "gap": 15,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 2,
+          "anchor_order": 22,
+          "index": 17697,
+          "gap": 14,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 2,
+          "anchor_order": 21,
+          "index": 10933,
+          "gap": 13,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 2,
+          "anchor_order": 20,
+          "index": 6753,
+          "gap": 12,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 2,
+          "anchor_order": 19,
+          "index": 4170,
+          "gap": 11,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 3,
+          "anchor_order": 27,
+          "index": 196400,
+          "gap": 18,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 3,
+          "anchor_order": 26,
+          "index": 121376,
+          "gap": 17,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 3,
+          "anchor_order": 25,
+          "index": 75009,
+          "gap": 16,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 3,
+          "anchor_order": 24,
+          "index": 46353,
+          "gap": 15,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 3,
+          "anchor_order": 23,
+          "index": 28643,
+          "gap": 14,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 3,
+          "anchor_order": 22,
+          "index": 17698,
+          "gap": 13,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 3,
+          "anchor_order": 21,
+          "index": 10934,
+          "gap": 12,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 3,
+          "anchor_order": 20,
+          "index": 6754,
+          "gap": 11,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 3,
+          "anchor_order": 19,
+          "index": 4171,
+          "gap": 10,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 4,
+          "anchor_order": 27,
+          "index": 196401,
+          "gap": 17,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 4,
+          "anchor_order": 26,
+          "index": 121377,
+          "gap": 16,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 4,
+          "anchor_order": 25,
+          "index": 75010,
+          "gap": 15,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 4,
+          "anchor_order": 24,
+          "index": 46354,
+          "gap": 14,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 4,
+          "anchor_order": 23,
+          "index": 28644,
+          "gap": 13,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 4,
+          "anchor_order": 22,
+          "index": 17699,
+          "gap": 12,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 4,
+          "anchor_order": 21,
+          "index": 10934,
+          "gap": 12,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 4,
+          "anchor_order": 20,
+          "index": 6754,
+          "gap": 11,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 4,
+          "anchor_order": 19,
+          "index": 4171,
+          "gap": 10,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 5,
+          "anchor_order": 27,
+          "index": 196402,
+          "gap": 16,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 5,
+          "anchor_order": 26,
+          "index": 121378,
+          "gap": 15,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 5,
+          "anchor_order": 25,
+          "index": 75011,
+          "gap": 14,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 5,
+          "anchor_order": 24,
+          "index": 46354,
+          "gap": 14,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 5,
+          "anchor_order": 23,
+          "index": 28644,
+          "gap": 13,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 5,
+          "anchor_order": 22,
+          "index": 17699,
+          "gap": 12,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 5,
+          "anchor_order": 21,
+          "index": 10934,
+          "gap": 12,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 5,
+          "anchor_order": 20,
+          "index": 6754,
+          "gap": 11,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 5,
+          "anchor_order": 19,
+          "index": 4171,
+          "gap": 10,
+          "cap_defect": 1
+        },
+        {
+          "root_offset": 6,
+          "anchor_order": 27,
+          "index": 196403,
+          "gap": 15,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 6,
+          "anchor_order": 26,
+          "index": 121379,
+          "gap": 14,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 6,
+          "anchor_order": 25,
+          "index": 75012,
+          "gap": 13,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 6,
+          "anchor_order": 24,
+          "index": 46355,
+          "gap": 13,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 6,
+          "anchor_order": 23,
+          "index": 28645,
+          "gap": 12,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 6,
+          "anchor_order": 22,
+          "index": 17700,
+          "gap": 11,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 6,
+          "anchor_order": 21,
+          "index": 10935,
+          "gap": 11,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 6,
+          "anchor_order": 20,
+          "index": 6755,
+          "gap": 10,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 6,
+          "anchor_order": 19,
+          "index": 4172,
+          "gap": 9,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 7,
+          "anchor_order": 27,
+          "index": 196404,
+          "gap": 14,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 7,
+          "anchor_order": 26,
+          "index": 121379,
+          "gap": 14,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 7,
+          "anchor_order": 25,
+          "index": 75012,
+          "gap": 13,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 7,
+          "anchor_order": 24,
+          "index": 46355,
+          "gap": 13,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 7,
+          "anchor_order": 23,
+          "index": 28645,
+          "gap": 12,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 7,
+          "anchor_order": 22,
+          "index": 17700,
+          "gap": 11,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 7,
+          "anchor_order": 21,
+          "index": 10935,
+          "gap": 11,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 7,
+          "anchor_order": 20,
+          "index": 6755,
+          "gap": 10,
+          "cap_defect": 0
+        },
+        {
+          "root_offset": 7,
+          "anchor_order": 19,
+          "index": 4172,
+          "gap": 9,
+          "cap_defect": 0
+        }
+      ],
+      "joint_seam_chain": [
+        196404,
+        121379,
+        75012
+      ],
+      "scalar_valid_dispersion": {
+        "inherited_order": 27,
+        "split": 196397,
+        "complement": 121393,
+        "golden_defect": 12,
+        "quadratic_ratio": "155142242161/214570989189",
+        "proved_uniform_constant": "1/2 on this canonical family"
+      },
+      "direct_decoder": "Q=0: min(v,L_s); Q=1: max(L_s+1,min(v-K+s,R_s)), 19<=s<=K",
+      "scope": "Infinite additive-window qualification, unit completion and direct actual first-spine formulas follow from the proved unit-sublevel theorem. Five labels plus one-edge images need exactly eight offset labels, not stationary recursive closure or an extra memory-bit lower bound. Higher contexts change by canonical carry. Supplied order/gap/depth derives all residual selector/carry labels; wide-block minimum and uniform dispersion remain open."
     },
     "scope": "Interpolation is elementary; infinite fixed-window vanishing follows from the proved positive collar. The digit alphabet is not an inner period-five orbit, and scalar additivity does not certify basin or selected phase."
   },

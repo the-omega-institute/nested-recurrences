@@ -71,6 +71,10 @@ digit patterns. This is a separate question from an orbit having five steps:
 the digit labels alone do not determine the recursive state. Read the
 [Cloitre construction](cloitre-conway/exact-collars.md#a-persistent-interaction-on-canonical-index-words)
 and [Campbell comparison](campbell/scale-memory.md#five-pattern-interaction-on-ternary-scale-interiors).
+For a qualified Cloitre family, the interaction also holds on complementary
+child sums. A [direct descendant decoder](cloitre-conway/exact-collars.md#additive-canonical-windows-and-a-direct-descendant-decoder)
+derives the changing context from order and gap; extending five labels to
+eight completes one edge but still does not give stationary recursive closure.
 
 Shifted Conway/Mallows variants remain finite observations under their
 stated initial conditions; see the [supporting audit](cloitre-conway/landing.md).

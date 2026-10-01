@@ -22,6 +22,7 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 - [Every fixed positive offset eventually becomes linear](#every-fixed-positive-offset-eventually-becomes-linear)
 - [Five legal bit patterns and eventual vanishing of a local interaction](#five-legal-bit-patterns-and-eventual-vanishing-of-a-local-interaction)
 - [A persistent interaction on canonical index words](#a-persistent-interaction-on-canonical-index-words)
+- [Additive canonical windows and a direct descendant decoder](#additive-canonical-windows-and-a-direct-descendant-decoder)
 
 ## 6. Exact collars propagate from two seeds
 
@@ -1684,3 +1685,148 @@ endpoint literally, verifies the shared canonical words and all fixed
 basins, and follows the five first spines to order19. Larger arithmetic
 contexts check the telescoping identity and theorem qualifications; their
 C values are consequences of the proof, not new evaluated prefixes.
+
+#### Additive canonical windows and a direct descendant decoder
+
+The preceding interaction can be qualified on actual complementary-child
+readouts, rather than on a single C table. Its descendants also admit a
+direct arithmetic formula, including the changes of canonical context.
+
+**Additive-window theorem.** Use m,t,k,h,A,B from the persistent-interaction
+theorem, and put S=F_k and N=F_(k+1)-t. For every w in{0,2,3,5,7}, the
+split a=h+w and its complement b=A-w lie in the captured child blocks.
+With w=2x_1+3x_2+5x_3 on the five legal patterns,
+
+$$
+C(N)=S-1,\qquad H_N(h+w):=C(h+w)+C(A-w)=S-1+x_1x_3. \tag{I.4}
+$$
+
+The prescribed root split is h+1, outside these five fixed-unit patterns.
+Allow the unit digit e at F_2, subject to the canonical nonadjacency rules
+e*x_1=x_1*x_2=x_2*x_3=0. The eight legal low words give each integer
+w=e+2x_1+3x_2+5x_3 in0..7 exactly once. On this expanded table,
+
+$$
+H_N(h+w)=S-1+e x_3+x_1x_3
+        =S-1+\mathbf1_{\{w\ge6\}}. \tag{I.5}
+$$
+
+Their actual first children have offsets min(w+1,7) relative to A-t.
+The original five offsets together with their first-child offsets therefore
+give exactly0..7. This is the least alphabet containing those particular
+one-edge offset images. It is not stationary closure under further descent.
+
+**Proof.** We have L_k=t-6, L_(k-1)=t-7>=14 and R_k>=2t-13>=t.
+Also L_(k+1) is t-6 or t-5, and R_(k+1)>=R_k+1. Thus t is in
+the unit region at order k+1 and its selected shift is1. The root value
+is S-1 and its selected split is S-t+1. Capture at N puts the first
+child in[S-t,S] and the complement in[A-t,A]; all eight tested splits
+are in these intervals. For0<=w<=7, the complements have gap w<=L_(k-1),
+so C(A-w)=B. The first-child gap t-w has cap defect1 for w<=5 and0
+for w=6,7. Since A+B=S, this proves both additive tables.
+
+The selected shift at order k is1 for w<=6 and0 for w=7, proving
+the child-offset formula. The unit-extension words remain canonical:
+the common higher digits start at F_7 or above and F_6 stays0 at this
+initial scale. Enumerating the nonadjacent four-bit words gives the
+eight distinct offsets, and identifies w=6 with e*x_3 and w=7 with
+x_1*x_3. Finally {0,2,3,5,7} union{1,3,4,6,7} is exactly0..7. QED.
+
+**Direct first-spine decoder.** More generally, let K>=19, 0<=v<=R_K,
+and n_K=F_K-v. Repeatedly take the actual first child, retaining the
+inherited anchor order. For every19<=s<=K, write n_s=F_s-v_s and
+let d=Q_K(v), which is0 or1. Then
+
+$$
+\boxed{v_s=
+\begin{cases}
+\min(v,L_s),&d=0,\\
+\max(L_s+1,\min(v-K+s,R_s)),&d=1.
+\end{cases}} \tag{I.6}
+$$
+
+In particular C(n_s)=F_(s-1)-d. For s>19 the complementary child
+has gap delta_s=v_s-v_(s-1) in{0,1,2}, index F_(s-2)-delta_s and
+value F_(s-3). The formula generates any requested descendant directly
+from K,v,s; intermediate selector, phase and canonical-carry labels are
+not supplied. It ends at the stated finite order19 boundary.
+
+**Proof.** The unit-sublevel theorem proves defect preservation and the
+actual shift rule. In the zero region that rule is
+v_(s-1)=min(v_s,L_(s-1)). Indeed L_s-L_(s-1) is1 at s=0,2 mod3
+and0 at s=1 mod3; the only nonzero zero-region shift removes a newly
+added frontier gap. Iterating these nested minima gives the first formula.
+
+In the unit region, the same exact rule can be written
+
+$$
+v_{s-1}=\max(L_{s-1}+1,\min(v_s-1,R_{s-1})). \tag{I.7}
+$$
+
+Its lower truncation is the shift0 frontier at s=1 mod3; its upper
+truncation is the shift2 frontier at that same residue. Every other unit
+gap shifts by1. Put z_s=v_s-s. Equation(I.7) projects z_s onto the
+integer interval J_(s-1)=[L_(s-1)+1-(s-1),R_(s-1)-(s-1)]. As s
+decreases, the lower endpoint of J_s increases by0 or1, and the upper
+endpoint decreases by0 or1, since the L increments are0/1 and the R
+increments are1/2. Thus J_(s-1) is contained in J_s. Projection onto
+nested intervals composes to projection onto the last one. Consequently
+z_s is the projection of v-K onto J_s, which is exactly(I.6).
+The second-child statements follow from the existing actual shift rule
+and its zero-plateau qualification. QED.
+
+**The precise changing-context obstruction.** In(I.4), follow the joint
+row w=7. Its defect is0 and initial gap t-7=L_k-1. Formula(I.6) gives
+
+$$
+v_s=\min(t-7,L_s),\qquad
+w_s:=t-v_s=\max(7,t-L_s). \tag{I.8}
+$$
+
+If t is odd, k=0 mod3, and w_(k-1)=7 but w_(k-2)=8. If t is
+even, k=2 mod3, and the first offset8 occurs at s=k-3. Thus the
+fixed eight-state window fails on the second or third edge for every
+member of this infinite family. Larger offsets continue to follow(I.8).
+They must be normalized into a new canonical word; inherited root labels
+are not literal low digits of every descendant.
+
+At m8 the chain is196404->121379->75012, with offsets7->7->8.
+At the last order25, F_25-F_8 has lowest canonical digit F_7, so
+adding F_6=8 carries F_6+F_7 to F_8. The higher context changes;
+the normalized F_6 digit is0, not1.
+
+**Representation and information costs.** An arbitrary scalar function on
+the eight legal words has the unique feature expansion
+
+$$
+b+a_e e+a_1x_1+a_2x_2+a_3x_3
+ +c_{e2}e x_2+c_{e3}e x_3+c_{13}x_1x_3. \tag{I.9}
+$$
+
+The empty and four singleton values fix the first five coefficients;
+the values at offsets4,6,7 fix the three pair coefficients independently.
+Restricting to e=0 gives the earlier five-pattern expansion. Thus extending
+an arbitrary five-pattern table requires three additional scalar degrees
+of freedom. In(I.5), the recurrence derives all three: a_e=c_(e2)=0
+and c_(e3)=1, while c_(13)=1. This is structural information, rather
+than information identifiable from the five original observations alone.
+
+Both five and eight labels fit in three bits. No extra memory-bit lower
+bound follows from adding the semantic unit coordinate. With K,v,s and
+the proved profile supplied, (I.6) needs zero residual selector/carry labels,
+the exact conditional minimum. It does not prove that those supplied
+context integers can be omitted, or solve the full wide-block interface.
+
+For any random weights on(I.5), the scalar moment margin relative to
+C(N) is exactly the total mass at offsets6,7. All such policies satisfy
+the lower-mean admissibility condition; exact mean preservation excludes
+those two offsets. This qualifies a real additive table for the
+[moment-policy dispersion contract](dispersion.md#two-split-moment-policies-and-cycle-average-dispersion),
+without claiming its variance gives a uniform global certificate.
+
+The checker independently regenerates through317790 for m8, verifies the
+root and all eight child endpoints by literal iteration, and follows every
+first spine to order19. It also compares the direct decoder against iterated
+shift arithmetic for all gaps and depths through order180, and checks larger
+canonical contexts algebraically. Those checks corroborate these deductions
+from the existing unit-profile theorem; they introduce no new finite premise.
