@@ -45,7 +45,8 @@ indices, and then establish a decay rate.
 3. **[Read the remaining convergence problem](dispersion.md).** Exact
    martingale identities give a conditional decay theorem; the required
    uniform dispersion inequality is still open.
-   A phase-free quadratic bound is proved within that Fibonacci family.
+   Phase-free bounds hold in the exact small-defect family and throughout
+   [cube-root Fibonacci neighborhoods](dispersion.md#diophantine-dispersion-in-cube-root-fibonacci-neighborhoods).
 
 All notes can be read in your browser, without installing software.
 The programs and JSON files are optional evidence, not part of this route.

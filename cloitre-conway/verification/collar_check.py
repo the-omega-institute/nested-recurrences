@@ -1116,6 +1116,9 @@ def cap_budget_interface_audit(sequence, splits, fibonacci):
         assert budget >= cap_gap_budget(order - 2) + negative_plateau_width(order - 1)
         assert budget >= 2 * negative_plateau_width(order - 1)
         assert 2 * cap_gap_budget(order + 1) <= 3 * budget
+        if order >= 30:
+            assert budget >= 10 * negative_plateau_width(order - 1)
+            assert 10 * cap_gap_budget(order + 1) <= 11 * budget
     thresholds = {}
     for level in range(1, 65):
         order = 11
@@ -1125,6 +1128,52 @@ def cap_budget_interface_audit(sequence, splits, fibonacci):
         assert all(level * cap_gap_budget(current) <= arithmetic_fibonacci[current - 4]
                    for current in range(order, 1001))
     assert thresholds['4'] == 17
+    dispersion_thresholds = {}
+    for level in range(1, 65):
+        order = 30
+        while True:
+            width = level * cap_gap_budget(order)
+            if (arithmetic_fibonacci[order - 3] >= 4 * width ** 2
+                    and arithmetic_fibonacci[order] - width >= width ** 3):
+                break
+            order += 1
+        dispersion_thresholds[str(level)] = order
+        for current in range(order, 1001):
+            width = level * cap_gap_budget(current)
+            assert arithmetic_fibonacci[current - 3] >= 4 * width ** 2
+            assert arithmetic_fibonacci[current] - width >= width ** 3
+    assert [dispersion_thresholds[str(level)] for level in range(1, 5)] == [39, 45, 49, 51]
+    geometric_variance_checks = 0
+    actual_cubic_phase_checks = 0
+    maximum_cubic_gap = 0
+    for order in range(21, 41):
+        anchor, cap = arithmetic_fibonacci[order], arithmetic_fibonacci[order - 1]
+        previous, lower = arithmetic_fibonacci[order - 2], arithmetic_fibonacci[order - 3]
+        gap = 1
+        while gap ** 3 <= anchor - gap:
+            index = anchor - gap
+            assert lower >= 4 * gap ** 2
+            for shift in range(gap + 1):
+                first, second = cap - gap + shift, previous - shift
+                assert previous <= first <= cap and lower <= second <= previous
+                norm = gap ** 2 - 3 * gap * shift + shift ** 2
+                assert norm != 0
+                numerator = (-1) ** (order - 1) + lower * gap - cap * shift
+                assert 4 * gap ** 2 * numerator ** 2 >= lower ** 2
+                assert 25 * gap ** 2 * numerator ** 2 >= first * second
+                assert 25 * numerator ** 2 * index ** 2 >= gap ** 4 * first * second
+                geometric_variance_checks += 1
+            if order <= 30:
+                trajectory, transient, period = full_orbit(sequence, index)
+                defect = sequence[index] - g_closed(index)
+                assert 0 <= defect <= gap
+                for point in trajectory[transient:]:
+                    complement = index - point
+                    numerator = previous * complement - lower * point
+                    assert 25 * numerator ** 2 * index ** 2 >= defect ** 4 * point * complement
+                    actual_cubic_phase_checks += 1
+            maximum_cubic_gap = max(maximum_cubic_gap, gap)
+            gap += 1
     block_positions = 0
     conservation_checks = 0
     branch_counts = dict(both_positive=0, first_only=0, second_only=0, both_zero=0)
@@ -1271,6 +1320,13 @@ def cap_budget_interface_audit(sequence, splits, fibonacci):
     return dict(budget_formula='P9=13; Pk=floor((k-2)^2/3)-3k+30 for k>=10',
                 no_new_sequence_premise=True, arithmetic_orders_inclusive=[11, 1000],
                 sufficient_local_thresholds=thresholds, full_block_orders_inclusive=[9, 30],
+                sufficient_quartic_dispersion_thresholds=dispersion_thresholds,
+                geometric_cubic_orders_inclusive=[21, 40],
+                geometric_cubic_variance_checks=geometric_variance_checks,
+                maximum_arithmetic_cubic_gap=maximum_cubic_gap,
+                actual_cubic_basin_phase_orders_inclusive=[21, 30],
+                actual_cubic_basin_phase_checks=actual_cubic_phase_checks,
+                cubic_quartic_constant='1/25',
                 block_positions=block_positions, actual_conservation_checks=conservation_checks,
                 child_budget_branch_counts=branch_counts,
                 actual_cap4_supports=support_rows, actual_local_selector_rows=local_rows,
@@ -1281,7 +1337,7 @@ def cap_budget_interface_audit(sequence, splits, fibonacci):
                                       first_cap_defects=first_defects, second_cap_defects=second_defects,
                                       parent_parameters=parent_parameters, first_parameters=first_parameters,
                                       second_parameters=second_parameters),
-                scope='General full-block cap-budget induction uses the proved zero plateau and actual two-child conservation, without a new finite sequence premise. Fixed-cap sublevels have polynomial gap enclosure and a conditional local-table/entrance decoder. The finite level4 holes, three-phase readouts and branching witness are actual C, not infinite support or dispersion laws. Tables, predecessor/exterior qualification, exact Fibonacci arithmetic and autonomous memory are separate costs; cap4 qualification already collapses the displayed scalar phase fiber.')
+                scope='General full-block cap-budget induction uses the proved zero plateau and actual two-child conservation, without a new finite sequence premise. Fixed-cap sublevels have polynomial gap enclosure and a conditional local-table/entrance decoder. The independent Diophantine proof gives phase-free quartic dispersion on cube-root collars, hence eventually on every fixed cap level; large arithmetic checks do not evaluate C. Finite level4 support holes are not an infinite support law. Tables, predecessor/exterior qualification, exact Fibonacci arithmetic and autonomous memory are separate costs; cap4 qualification already collapses the displayed scalar phase fiber. Global dispersion/convergence remain open.')
 
 
 def negative_adjacent_transitions(amplitude, adjacent):
