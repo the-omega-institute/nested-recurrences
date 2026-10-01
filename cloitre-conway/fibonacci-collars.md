@@ -1669,6 +1669,19 @@ root offsets and defects fixed, the geometric code count is the product of
 the p coefficients. This is the exact minimum for the stated geometric class,
 not a minimum for the narrower C family after its profile and phase constraints.
 
+This full arithmetic capacity has a sharp worst-case growth order. Put
+L=a+b=F_(j-3). Every leaf has at most four choices, so 2L bits always
+suffice for one geometric row. Even with E=0, choose only offsets zero and
+one and set u=floor(L/2). There are at least `binomial(L,floor(L/2))`
+codes. The largest binomial coefficient is at least `2^L/(L+1)`, so at
+least `L-log_2(L+1)` bits are needed in this context. Thus the worst-case
+geometric selector capacity is Theta(F_j), including contexts whose
+conditional residual seed budget is zero. Even a fixed histogram can retain
+this growth: choose half of each leaf type to have offset one; positional
+multiplicity is at least `2^L/((a+1)*(b+1))`. These are geometric-class
+lower bounds, not lower bounds for the actual selected C family. A short
+family certificate must restrict or describe positions arithmetically.
+
 The coefficient is positive exactly for the consecutive integer interval
 
 $$
