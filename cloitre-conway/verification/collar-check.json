@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "3c43fcefaf83798654381db1e290b57d0ac2d8792e4460f72094443e354b2b9b",
+  "source_sha256": "e72cad929cc5bcc69c9b2854bb13af86b972e47e9fdf9f3726eeafe967def4c3",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -4662,6 +4662,266 @@
           "selected_split": 4132
         }
       ],
+      "direct_projection_and_allocation": {
+        "arithmetic_projection_orders_inclusive": [
+          22,
+          100
+        ],
+        "arithmetic_projection_cases": 419016,
+        "actual_projection_states": 1956,
+        "boundary_order": 21,
+        "synthetic_profiles": 3412,
+        "synthetic_seed_cases": 16738,
+        "actual_cap4_complete_block_orders_inclusive": [
+          22,
+          30
+        ],
+        "cap4_block_rows": [
+          {
+            "order": 22,
+            "cap4_roots": 20,
+            "maximum_gap": 69,
+            "selected_shifts": [
+              4,
+              8
+            ],
+            "selected_periods": [
+              1,
+              2
+            ]
+          },
+          {
+            "order": 23,
+            "cap4_roots": 23,
+            "maximum_gap": 77,
+            "selected_shifts": [
+              3,
+              4,
+              8
+            ],
+            "selected_periods": [
+              1,
+              2
+            ]
+          },
+          {
+            "order": 24,
+            "cap4_roots": 25,
+            "maximum_gap": 83,
+            "selected_shifts": [
+              3,
+              4,
+              9
+            ],
+            "selected_periods": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "order": 25,
+            "cap4_roots": 29,
+            "maximum_gap": 89,
+            "selected_shifts": [
+              4,
+              8,
+              9
+            ],
+            "selected_periods": [
+              1,
+              2
+            ]
+          },
+          {
+            "order": 26,
+            "cap4_roots": 32,
+            "maximum_gap": 95,
+            "selected_shifts": [
+              3,
+              4,
+              8,
+              9
+            ],
+            "selected_periods": [
+              1,
+              2
+            ]
+          },
+          {
+            "order": 27,
+            "cap4_roots": 35,
+            "maximum_gap": 103,
+            "selected_shifts": [
+              3,
+              4,
+              8,
+              9
+            ],
+            "selected_periods": [
+              1,
+              2
+            ]
+          },
+          {
+            "order": 28,
+            "cap4_roots": 39,
+            "maximum_gap": 109,
+            "selected_shifts": [
+              4,
+              8,
+              9
+            ],
+            "selected_periods": [
+              1,
+              2
+            ]
+          },
+          {
+            "order": 29,
+            "cap4_roots": 41,
+            "maximum_gap": 116,
+            "selected_shifts": [
+              3,
+              4,
+              9
+            ],
+            "selected_periods": [
+              1,
+              2
+            ]
+          },
+          {
+            "order": 30,
+            "cap4_roots": 44,
+            "maximum_gap": 124,
+            "selected_shifts": [
+              3,
+              4,
+              8
+            ],
+            "selected_periods": [
+              1,
+              2
+            ]
+          }
+        ],
+        "actual_cap4_first_spine_edges": 1624,
+        "cap4_period_witnesses": [
+          {
+            "order": 22,
+            "gap": 50,
+            "index": 17661,
+            "value": 10942,
+            "selected": 10900,
+            "depth": 10942,
+            "shift": 4,
+            "period": 1
+          },
+          {
+            "order": 22,
+            "gap": 68,
+            "index": 17643,
+            "value": 10942,
+            "selected": 10886,
+            "depth": 10942,
+            "shift": 8,
+            "period": 2
+          },
+          {
+            "order": 24,
+            "gap": 83,
+            "index": 46285,
+            "value": 28653,
+            "selected": 28583,
+            "depth": 28648,
+            "shift": 9,
+            "period": 3
+          }
+        ],
+        "actual_allocation_root_caps_inclusive": [
+          4,
+          8
+        ],
+        "actual_allocation_roots": 514,
+        "allocation_option_counts": {
+          "1": 510,
+          "2": 4
+        },
+        "maximum_allocation_options": 2,
+        "cap4_one_step_quadratic_constant": "1/100",
+        "minimum_cap4_quadratic_ratio": "38706234121/106215877688",
+        "actual_allocation_witnesses": [
+          {
+            "order": 14,
+            "root": 310,
+            "gap": 67,
+            "value": 209,
+            "parent_cap_defect": 24,
+            "depth": 206,
+            "selected": 182,
+            "transient": 9,
+            "cycle": [
+              183,
+              190,
+              182,
+              187,
+              185
+            ],
+            "allocation_seed_candidates": [
+              {
+                "second_cap_defect": 3,
+                "first_cap_defect": 21,
+                "selected_gap": 51,
+                "selected_split": 182,
+                "period": 5
+              },
+              {
+                "second_cap_defect": 7,
+                "first_cap_defect": 17,
+                "selected_gap": 48,
+                "selected_split": 185,
+                "period": 5
+              }
+            ],
+            "supplied_cycle_phase_code_bits": 1
+          },
+          {
+            "order": 22,
+            "root": 17629,
+            "gap": 82,
+            "value": 10939,
+            "parent_cap_defect": 7,
+            "depth": 10939,
+            "selected": 10875,
+            "transient": 11,
+            "cycle": [
+              10870,
+              10871,
+              10875
+            ],
+            "allocation_seed_candidates": [
+              {
+                "second_cap_defect": 0,
+                "first_cap_defect": 7,
+                "selected_gap": 76,
+                "selected_split": 10870,
+                "period": 3
+              },
+              {
+                "second_cap_defect": 1,
+                "first_cap_defect": 6,
+                "selected_gap": 71,
+                "selected_split": 10875,
+                "period": 3
+              }
+            ],
+            "supplied_cycle_phase_code_bits": 1
+          }
+        ],
+        "literal_selected_endpoint_updates": 61677,
+        "scope": "Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open."
+      },
       "scope": "Independent full-block finite premises and abstract shelf graphs support the written phase-selected level2/3 induction. Arithmetic supplied-order/gap selectors close cap-defect0..3 along one first-child spine to base20/21; context/table costs separate. All basin phases satisfy the scoped quadratic bound. Actual level4 holes forbid arbitrary-level extrapolation; no global dispersion, convergence, full-interface minimum or Lean claim."
     },
     "bounded_cap_interface": {

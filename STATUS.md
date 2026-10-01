@@ -75,6 +75,10 @@ For a qualified Cloitre family, the interaction also holds on complementary
 child sums. A [direct descendant decoder](cloitre-conway/exact-collars.md#additive-canonical-windows-and-a-direct-descendant-decoder)
 derives the changing context from order and gap; extending five labels to
 eight completes one edge but still does not give stationary recursive closure.
+The [child-cap allocation interface](cloitre-conway/recursive-descent.md#actual-defect-allocation-and-phase-information)
+uses one allocation parameter in place of separate cycle/phase labels when
+lower profiles and the parent scalar are supplied. It is derived at cap4,
+even though that support has holes; the general allocation remains to be found.
 
 Shifted Conway/Mallows variants remain finite observations under their
 stated initial conditions; see the [supporting audit](cloitre-conway/landing.md).

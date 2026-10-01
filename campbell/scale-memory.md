@@ -295,6 +295,14 @@ For Cloitre, adding the unit digit completes the first edge, but a second or
 third edge already changes the higher canonical context. These semantic
 coordinates are not independent bit costs when their context derives them.
 
+The [child-cap allocation interface](../cloitre-conway/recursive-descent.md#actual-defect-allocation-and-phase-information)
+also distinguishes the two scalar contracts. In Campbell's recurrence,
+the parent value b(N) is itself the selected endpoint. Supplying that value
+therefore identifies the endpoint directly. Cloitre's parent value is a
+sum of two child values and can leave their allocation ambiguous, even on
+an actual five-cycle. With lower profiles supplied, a second-child cap
+determines a periodic seed and removes separate cycle/phase labels.
+
 The checker generates18 contexts at q3..8 from the recurrence, checks
 all90 canonical words, verifies every selected endpoint by literal
 iteration, and compares against the proved formula. A separate literal

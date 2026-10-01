@@ -898,6 +898,218 @@ def higher_cap_shift(order, gap):
     raise AssertionError('Gap lies outside the proved cap-defect0..3 domain')
 
 
+def higher_cap_first_spine_gap(initial_order, initial_gap, target_order, level):
+    assert 21 <= target_order <= initial_order
+    assert level in (2, 3)
+    assert higher_cap_width(initial_order, level - 1) < initial_gap <= higher_cap_width(initial_order, level)
+    return max(higher_cap_width(target_order, level - 1) + 1,
+               min(initial_gap - level * (initial_order - target_order),
+                   higher_cap_width(target_order, level)))
+
+
+def periodic_predecessor_gap(root_gap, seed_gap, profile, domain_upper=None):
+    if domain_upper is None:
+        domain_upper = root_gap
+    if not 0 <= seed_gap <= domain_upper:
+        return None
+    point = seed_gap
+    for period in range(1, domain_upper + 2):
+        following = root_gap - profile(point)
+        if following == seed_gap:
+            return point, period
+        if not 0 <= following <= domain_upper:
+            return None
+        point = following
+    return None
+
+
+def allocation_seed_candidates(order, gap, parent_cap, sequence, fibonacci):
+    first_anchor = fibonacci[order - 1]
+    first_cap = fibonacci[order - 2]
+    second_anchor = fibonacci[order - 2]
+    second_cap = fibonacci[order - 3]
+    domain_upper = min(gap, fibonacci[order - 3])
+    lower_profile = lambda point: first_cap - sequence[first_anchor - point]
+    candidates = []
+    first_minimum = 4 if order >= 22 else 0
+    for allocation in range(parent_cap - first_minimum + 1):
+        first_defect = parent_cap - allocation
+        decoded = periodic_predecessor_gap(gap, gap - first_defect, lower_profile, domain_upper)
+        if decoded is None:
+            continue
+        selected_gap, period = decoded
+        second_gap = gap - selected_gap
+        if not 0 <= second_gap <= fibonacci[order - 4]:
+            continue
+        if second_cap - sequence[second_anchor - second_gap] != allocation:
+            continue
+        assert lower_profile(selected_gap) == first_defect
+        candidates.append(dict(second_cap_defect=allocation, first_cap_defect=first_defect,
+                               selected_gap=selected_gap, selected_split=first_anchor - selected_gap,
+                               period=period))
+    return candidates
+
+
+def higher_projection_and_allocation_audit(sequence, splits, fibonacci):
+    jump_cases = 0
+    for initial_order in range(22, 101):
+        for level in (2, 3):
+            for initial_gap in range(higher_cap_width(initial_order, level - 1) + 1,
+                                     higher_cap_width(initial_order, level) + 1):
+                gap = initial_gap
+                for target_order in range(initial_order, 20, -1):
+                    assert gap == higher_cap_first_spine_gap(initial_order, initial_gap, target_order, level)
+                    if target_order > 21:
+                        gap -= higher_cap_shift(target_order, gap)
+                    jump_cases += 1
+    synthetic_profiles = 0
+    synthetic_seeds = 0
+    for gap in range(1, 5):
+        for profile in product(range(gap + 1), repeat=gap + 1):
+            cycles = capped_profile_cycles(profile, gap)
+            periodic = {point for cycle in cycles for point in cycle}
+            for seed in range(gap + 1):
+                decoded = periodic_predecessor_gap(gap, seed, profile.__getitem__)
+                if seed not in periodic:
+                    assert decoded is None
+                else:
+                    predecessors = [point for point in periodic if gap - profile[point] == seed]
+                    assert len(predecessors) == 1 and decoded[0] == predecessors[0]
+                    assert decoded[1] == next(len(cycle) for cycle in cycles if seed in cycle)
+                synthetic_seeds += 1
+            synthetic_profiles += 1
+    actual_projection_states = 0
+    cap4_rows = []
+    cap4_spine_edges = 0
+    minimum_variance_ratio = None
+    period_witnesses = {}
+    allocation_roots = 0
+    allocation_option_counts = {}
+    maximum_allocation_options = 0
+    for order in range(22, 31):
+        anchor = fibonacci[order]
+        first_anchor = fibonacci[order - 1]
+        first_cap = fibonacci[order - 2]
+        second_anchor = fibonacci[order - 2]
+        second_cap = fibonacci[order - 3]
+        for level in (2, 3):
+            for initial_gap in range(higher_cap_width(order, level - 1) + 1,
+                                     higher_cap_width(order, level) + 1):
+                current = anchor - initial_gap
+                for target_order in range(order, 20, -1):
+                    predicted = higher_cap_first_spine_gap(order, initial_gap, target_order, level)
+                    assert current == fibonacci[target_order] - predicted
+                    assert fibonacci[target_order - 1] - sequence[current] == level
+                    actual_projection_states += 1
+                    if target_order > 21:
+                        current = splits[current]
+        roots = 0
+        shifts = set()
+        periods = set()
+        maximum_gap = 0
+        for gap in range(fibonacci[order - 2] + 1):
+            root = anchor - gap
+            parent_cap = first_anchor - sequence[root]
+            if 4 <= parent_cap <= 8:
+                candidates = allocation_seed_candidates(order, gap, parent_cap, sequence, fibonacci)
+                assert 1 <= len(candidates) <= parent_cap - 3
+                selected_second_cap = second_cap - sequence[root - splits[root]]
+                selected = [row for row in candidates if row['second_cap_defect'] == selected_second_cap]
+                assert len(selected) == 1 and selected[0]['selected_split'] == splits[root]
+                assert len({row['selected_split'] for row in candidates}) == len(candidates)
+                allocation_roots += 1
+                allocation_option_counts[str(len(candidates))] = allocation_option_counts.get(str(len(candidates)), 0) + 1
+                maximum_allocation_options = max(maximum_allocation_options, len(candidates))
+            if parent_cap != 4:
+                continue
+            first = splits[root]
+            second = root - first
+            assert first_cap - sequence[first] == 4
+            assert second_cap - sequence[second] == 0
+            lower_profile = lambda point: first_cap - sequence[first_anchor - point]
+            selected_gap, period = periodic_predecessor_gap(gap, gap - 4, lower_profile)
+            assert first == first_anchor - selected_gap
+            profile = [lower_profile(point) for point in range(gap + 1)]
+            cycles = capped_profile_cycles(profile, gap)
+            scalar_valid = []
+            for cycle in cycles:
+                for point in cycle:
+                    first_point = first_anchor - point
+                    second_point = root - first_point
+                    if sequence[first_point] + sequence[second_point] == sequence[root]:
+                        scalar_valid.append(point)
+                    if gap >= higher_cap_width(order - 1, 3) + 5:
+                        assert sequence[first_point] + sequence[second_point] <= sequence[root]
+            assert scalar_valid == [selected_gap]
+            numerator = first_cap * second - second_cap * first
+            assert 100 * numerator * numerator >= gap * gap * first * second
+            golden_defect = sequence[root] - g_closed(root)
+            if golden_defect:
+                ratio = Fraction(numerator * numerator, first * second * golden_defect * golden_defect)
+                minimum_variance_ratio = ratio if minimum_variance_ratio is None else min(minimum_variance_ratio, ratio)
+            current = root
+            for target_order in range(order, 21, -1):
+                first = splits[current]
+                second = current - first
+                assert fibonacci[target_order - 2] - sequence[first] == 4
+                assert fibonacci[target_order - 3] - sequence[second] == 0
+                current = first
+                cap4_spine_edges += 1
+            if period not in period_witnesses:
+                period_witnesses[period] = dict(order=order, gap=gap, index=root,
+                                               value=sequence[root], selected=splits[root],
+                                               depth=sequence[root - 1], shift=gap - selected_gap,
+                                               period=period)
+            roots += 1
+            shifts.add(gap - selected_gap)
+            periods.add(period)
+            maximum_gap = max(maximum_gap, gap)
+        cap4_rows.append(dict(order=order, cap4_roots=roots, maximum_gap=maximum_gap,
+                              selected_shifts=sorted(shifts), selected_periods=sorted(periods)))
+    literal_updates = 0
+    witness_rows = []
+    for root in (310, 17629):
+        order = bisect.bisect_left(fibonacci, root)
+        gap = fibonacci[order] - root
+        parent_cap = fibonacci[order - 1] - sequence[root]
+        trajectory, transient, period = full_orbit(sequence, root)
+        cycle = trajectory[transient:]
+        candidates = allocation_seed_candidates(order, gap, parent_cap, sequence, fibonacci)
+        supplied_cycle_candidates = [row for row in candidates if row['selected_split'] in cycle]
+        assert len(supplied_cycle_candidates) == 2
+        expected = {(182, 3), (185, 7)} if root == 310 else {(10870, 0), (10875, 1)}
+        assert {(row['selected_split'], row['second_cap_defect']) for row in supplied_cycle_candidates} == expected
+        endpoint = root - 1
+        depth = sequence[root - 1]
+        for iteration in range(depth):
+            endpoint = root - sequence[endpoint]
+        assert endpoint == splits[root]
+        literal_updates += depth
+        witness_rows.append(dict(order=order, root=root, gap=gap, value=sequence[root],
+                                 parent_cap_defect=parent_cap, depth=depth, selected=endpoint,
+                                 transient=transient, cycle=cycle,
+                                 allocation_seed_candidates=candidates,
+                                 supplied_cycle_phase_code_bits=1))
+    for witness in period_witnesses.values():
+        root = witness['index']
+        endpoint = root - 1
+        for iteration in range(witness['depth']):
+            endpoint = root - sequence[endpoint]
+        assert endpoint == splits[root]
+        literal_updates += witness['depth']
+    return dict(arithmetic_projection_orders_inclusive=[22, 100], arithmetic_projection_cases=jump_cases,
+                actual_projection_states=actual_projection_states, boundary_order=21,
+                synthetic_profiles=synthetic_profiles, synthetic_seed_cases=synthetic_seeds,
+                actual_cap4_complete_block_orders_inclusive=[22, 30], cap4_block_rows=cap4_rows,
+                actual_cap4_first_spine_edges=cap4_spine_edges,
+                cap4_period_witnesses=list(period_witnesses.values()),
+                actual_allocation_root_caps_inclusive=[4, 8], actual_allocation_roots=allocation_roots,
+                allocation_option_counts=allocation_option_counts, maximum_allocation_options=maximum_allocation_options,
+                cap4_one_step_quadratic_constant='1/100', minimum_cap4_quadratic_ratio=str(minimum_variance_ratio),
+                actual_allocation_witnesses=witness_rows, literal_selected_endpoint_updates=literal_updates,
+                scope='Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open.')
+
+
 def higher_cap_closure_audit(sequence, splits, fibonacci):
     literal, literal_updates = literal_generate(fibonacci[21])
     assert literal == sequence[:fibonacci[21] + 1] == brent_generate(fibonacci[21])
@@ -1078,6 +1290,7 @@ def higher_cap_closure_audit(sequence, splits, fibonacci):
                                       first_parameters=first_parameters, second_parameters=second_parameters,
                                       residual_selector_labels=0),
                 actual_level4_noncontiguity=counterexample,
+                direct_projection_and_allocation=higher_projection_and_allocation_audit(sequence, splits, fibonacci),
                 scope='Independent full-block finite premises and abstract shelf graphs support the written phase-selected level2/3 induction. Arithmetic supplied-order/gap selectors close cap-defect0..3 along one first-child spine to base20/21; context/table costs separate. All basin phases satisfy the scoped quadratic bound. Actual level4 holes forbid arbitrary-level extrapolation; no global dispersion, convergence, full-interface minimum or Lean claim.')
 
 

@@ -42,6 +42,7 @@ Fibonacci neighborhood, even when its support has holes.
 - [A conserved budget for multiscale inverse labels](#a-conserved-budget-for-multiscale-inverse-labels)
 - [Seven terminal symbols and the full geometric selector code](#seven-terminal-symbols-and-the-full-geometric-selector-code)
 - [Growing actual defects and the remaining occupation problem](#growing-actual-defects-and-the-remaining-occupation-problem)
+- [Actual defect allocation and phase information](#actual-defect-allocation-and-phase-information)
 
 ### Recursive windows with a parameter at every row
 
@@ -1220,3 +1221,98 @@ count throughout the arch. A decay rate would require a quantitative bound
 on that occupation deficit. The positioned terminal code now identifies
 precisely where the missing selector and phase restrictions must act; seven
 symbols alone do not constitute a uniform finite-state classification.
+
+### Actual defect allocation and phase information
+
+Parent cap conservation does not by itself specify the two child caps.
+There is, however, a sharper supplied-profile interface: one child-cap
+allocation determines the selected periodic point, with no independent
+cycle, entrance, depth-phase or inverse label.
+
+**Allocation-seed theorem.** Let K>=22, N=F_K-v, 0<=v<=F_(K-2),
+and supply the actual parent cap e=Q_K(v)>=4 and lower profiles on
+the captured child blocks. Let b be the actual second-child cap. Then
+
+$$
+0\le b\le e-4,\qquad r_0=v-(e-b). \tag{D.1}
+$$
+
+The seed r_0 is on the actual selected gap cycle. Iterating
+r->v-Q_(K-1)(r) from this seed to its first return, the last gap r
+is the selected one. Its children and readouts are
+
+$$
+a=F_{K-1}-r,\quad N-a=F_{K-2}-(v-r),\quad
+C(a)=F_{K-2}-(e-b),\quad C(N-a)=F_{K-3}-b. \tag{D.2}
+$$
+
+With b supplied, the iteration needs at most v+1 profile queries and
+O(log(v+2)) working bits for the current gap and counter. Profile storage,
+context integers and certification of the supplied parent cap/allocation
+remain separate costs.
+
+**Proof.** The [cap4 tail argument](exact-collars.md#two-higher-cap-levels-and-their-phase-selected-closure)
+applies to every e>=4. Put W=Z_(K-1). The only case v=W+4 with
+e>=4 is the excluded cap3 frontier, where e=4 and the selected first
+cap is4. Otherwise v>=W+5 and every captured cycle has first-child
+cap at least4. Hence its selected first cap is e-b>=4, proving the
+range in(D.1). The selected gap r has successor v-Q_(K-1)(r)=r_0.
+Its prescribed depth is periodic by the foundations theorem, so r_0 is
+periodic too. A cycle has one periodic predecessor of a given point,
+which proves the decoder and(D.2). Only a gap and counter are needed
+to wait for the seed's return. QED.
+
+**Exact allocation alphabet in this contract.** Consider all captured
+periodic phases whose two scalar readouts sum to the supplied C(N).
+Their possible second caps form a set B(N,e). Each b in this set
+corresponds to exactly one periodic phase, even across different cycles:
+its first cap is e-b and its successor is the fixed seed in(D.1).
+Two cycles cannot share that seed, and one cycle cannot have two periodic
+predecessors of it. Conversely each such phase gives its second cap.
+Thus allocation labels are a bijective code for these scalar-valid phases.
+
+Consequently M=|B(N,e)|<=e-3. A fixed-length code distinguishing these
+M options has the exact minimum ceil(log2 M) bits. If a particular cycle
+of period p is supplied, restrict B to that cycle and M<=min(p,e-3).
+The latter bound applies to a five-window with p=5. This is a code for
+the declared periodic-phase options; it is not a lower bound on independent
+inputs needed to evaluate the actual recurrence. An arithmetic theorem or
+the prescribed depth can derive the selected allocation.
+
+Given the two lower profiles, B can be constructed: for each0<=b<=e-4,
+test whether its seed returns in the captured interval, take its periodic
+predecessor r, and check Q_(K-2)(v-r)=b. The first profile then already
+has Q_(K-1)(r)=e-b. This neither assumes a basin nor leaves an inverse
+branch label, but it still needs a rule to choose among multiple allocations.
+At e=4, b=0 is forced, recovering the cap4 zero-label decoder.
+
+**A genuine five-cycle ambiguity.** At N=310, K=14 and v=67, the
+actual cycle is(183,190,182,187,185). The parent value209 has cap24.
+Exactly two phases on this cycle preserve209:
+
+| First child | Second child | Scalar child values | Child caps |
+|---|---|---|---|
+|182|128|123,86|21,3|
+|185|125|127,82|17,7|
+
+Thus this supplied-cycle allocation alphabet has two symbols and its
+phase code needs one bit. The prescribed depth206 selects182.
+The K>=22 tail bound is not asserted at this small example; the periodic
+seed uniqueness argument itself holds whenever the cap labels and captured
+geometry are supplied. It gives the selected phase from second cap3,
+and the other scalar-valid phase from second cap7.
+
+At the high-order root N=17629=F_22-82, the prescribed depth10939
+selects10875, with complement6754 and child caps(6,1), totaling7.
+The same actual cycle(10870,10871,10875) also has scalar-valid phase10870,
+whose child caps are(7,0). This shows that a parent scalar and a qualified
+cycle can leave the allocation unresolved even at K>=22. Both witnesses
+are independently checked by full-orbit/Brent evaluation and literal depth.
+They do not prove that every allocation in(D.1) occurs, or that cap7 is
+the first branching level in the infinite sequence.
+
+The cap2/3 direct decoder and cap4 periodic seed give actual qualified
+five-row closure with derived labels. Above cap4, the new interface isolates
+one allocation parameter in place of separate cycle and phase data, conditional
+on supplied scalar/profile context. Deriving that parameter and the profiles
+in wide blocks remains part of the full minimum-interface problem.
