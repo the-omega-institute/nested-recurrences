@@ -35,6 +35,7 @@ Fibonacci neighborhood, even when its support has holes.
 
 - [Recursive windows with a parameter at every row](#recursive-windows-with-a-parameter-at-every-row)
 - [A quadratic enclosure for every bounded cap level](#a-quadratic-enclosure-for-every-bounded-cap-level)
+- [A modular symbolic selector with small working memory](#a-modular-symbolic-selector-with-small-working-memory)
 - [Sharing selectors at repeated physical indices](#sharing-selectors-at-repeated-physical-indices)
 - [A shared parameter network and its forest basis](#a-shared-parameter-network-and-its-forest-basis)
 - [Generating the layout from a sublinear shared descent code](#generating-the-layout-from-a-sublinear-shared-descent-code)
@@ -278,6 +279,10 @@ Computing the exact depth uses Theta(k)-bit Fibonacci integers; the
 selector-field bound does not assert that the whole decoder uses only
 O(log k) working memory.
 
+The [modular symbolic decoder](#a-modular-symbolic-selector-with-small-working-memory)
+below computes the phase and returns indexed gaps without materializing
+these large integers.
+
 **Why the entrance certificate remains explicit.** With A=F_(k-1),
 B=F_(k-2), J=F_(k-4), the first two prescribed points are
 
@@ -324,6 +329,149 @@ checks selected endpoints literally. It also records the full finite
 level4 supports with their holes; their exact infinite classification
 remains open. [Evidence](verification/collar-check.json) distinguishes
 the general proof from those finite support and phase witnesses.
+
+### A modular symbolic selector with small working memory
+
+The local selector can be evaluated without constructing the exact depth
+F_(k-1)-z or storing a trajectory. This is a uniform decoder relative
+to the supplied read-only profiles and certified entrance. It uses
+standard Floyd cycle detection and Fibonacci doubling identities.
+
+**Contract and theorem.** Let m>=1, k>=11, N=F_k-v, with
+Q_k(v)<=m and 2<=v<=min(mP_k,F_(k-4)). Supply the actual predecessor
+defect z=Q_k(v+1), the first-entry clock and gap (mu,r_0), and
+read-only random access to Q_(k-1)(0..v). For recovering scalar child
+values also supply Q_(k-2)(0..v). The entrance is into the same
+interval I=[F_(k-1)-v,F_(k-1)] as in (C.5).
+
+A decoder returns the actual selected gap r_d and symbolic child indices
+
+$$
+(k-1,r_d),\qquad(k-2,v-r_d), \tag{C.8}
+$$
+
+where (h,r) means F_h-r, using
+
+$$
+\boxed{O(\log m+\log k)\text{ working bits}} \tag{C.9}
+$$
+
+and O(v+log k) bounded-integer operations and profile queries, excluding
+the read-only tables and their construction. Two further table reads
+return the child cap defects. These symbolic indices retain inherited
+anchor orders, including gap0 aliases. Materializing their binary integer
+values would require Theta(k) output bits.
+
+**Find the local cycle.** Omega_v(r)=v-Q_(k-1)(r) maps0..v into itself.
+Starting at r_0, Floyd's tortoise-and-hare algorithm finds the cycle-entry
+gap c, local transient tau and period p using a constant number of gap
+registers and counters. The graph has v+1 vertices, so tau+p<=v+1;
+this takes O(v) profile reads. The decoder stores no cycle word or visited
+set. The global theorem guarantees that the prescribed depth reaches a
+cycle, so d=F_(k-1)-z>=mu+tau. Its selected phase is exactly
+
+$$
+\rho=\big(F_{k-1}\bmod p-z-\mu-\tau\big)\bmod p,
+\qquad r_d=\Omega_v^{\,\rho}(c). \tag{C.10}
+$$
+
+Walking rho<p steps gives the required gap. At p=1 the residue is0.
+This handles periods beyond two without replacing their phase by parity.
+
+**Compute only the Fibonacci residue.** Maintain
+(a,b)=(F_t,F_(t+1)) modulo p while reading the binary digits of k-1.
+The standard doubling identities are
+
+$$
+F_{2t}=F_t(2F_{t+1}-F_t),\qquad
+F_{2t+1}=F_t^2+F_{t+1}^2.
+$$
+
+For digit0 use (F_(2t),F_(2t+1)); for digit1 use
+(F_(2t+1),F_(2t)+F_(2t+1)), always modulo p. There are O(log k)
+updates. Residues are smaller than p and intermediate products have
+O(log p) bits. The exact Fibonacci number is never formed.
+
+The depth-in-cycle inequality also admits a small-register check. Set
+S=z+mu+tau and compute min(F_(k-1),S) by saturating both entries of
+the elementary Fibonacci recurrence at S, stopping once its first entry
+reaches S. It returns S exactly when d>=mu+tau. This takes
+O(log(S+1)+1) additions, or fewer if k-1 is reached first. It checks
+this numerical inequality; it does not certify the supplied entrance or
+predecessor value.
+
+**Space accounting.** The anchor-drop bound gives
+0<=z<=floor(2(v+1)/3), and first-entry contraction gives mu=O(k).
+The graph registers, tau and p have O(log(v+1)) bits; S has
+O(log(v+k+1)) bits; the order and binary control have O(log k) bits.
+Since v<=mP_k=O(mk^2), this constant-size collection gives (C.9).
+Lower profile values and addresses have the same bit order. Formula
+(C.6) then returns Q_(k-1)(r_d) and Q_(k-2)(v-r_d). QED.
+
+**Five-row reconstruction.** Apply this decoder to five supplied roots
+N_i=F_k-v_i at the same order, retaining row indices modulo5. Put
+r_i=r_d(N_i), q_i=v_i-r_i, e_(1,i)=Q_(k-1)(r_i) and
+e_(2,i)=Q_(k-2)(q_i). The parent and two child parameter words are
+
+$$
+\begin{aligned}
+\sigma_i&=F_{k-1}-v_{i+1}-e_{1,i}-e_{2,i},\\
+\alpha_i&=F_{k-2}-r_{i+1}-e_{1,i},\\
+\beta_i&=F_{k-3}-q_{i+1}-e_{2,i}.
+\end{aligned} \tag{C.11}
+$$
+
+Their small gap corrections use the same working-bit order. The identity
+r_(i+1)+q_(i+1)=v_(i+1) gives alpha_i+beta_i=sigma_i, so only one
+child parameter word need be retained once the parent word is supplied.
+A fixed five rows change the register count by a constant factor.
+This reconstructs row-aligned windows; the five physical roots need not
+form a single inner period-five orbit.
+
+For v=0 or1, established anchor/predecessor identities already give
+r_d=v and complementary gap0, without entrance or phase data. At fixed
+m, every higher-order bounded-cap root satisfies the local width condition
+once k>=K(m); the remaining orders form a finite base.
+
+**Clock compression.** After the cycle is known, z and mu affect decoding
+only through (z+mu) mod p. This correction can replace their exact fields
+for decoding if entrance validity and the depth-in-cycle inequality are
+certified separately. On a fixed supplied cycle, p residues give p
+distinct selected gaps. Thus ceil(log_2 p) fixed-width phase bits are
+necessary and sufficient for that variable-phase endpoint contract.
+Scalar-output qualification may collapse this quotient, as the cap4
+example above shows. The prescribed depth at one physical index is unique;
+this conditional phase minimum is not a full recursive minimum.
+
+For an actual period-five example, k16,v79,N908 has z19, mu4,
+tau5, p5 and cycle-entry gap67. Since F15 mod5=0, (C.10) gives
+rho=(-19-4-5) mod5=2 and selected gap66. The child indices are
+(15,66) and (14,13), representing544 and364. The checker verifies
+this endpoint by literal iteration. Its period-five orbit is distinct
+from the five legal digit-window letters.
+
+**Campbell comparison.** The same residue selection applies to Campbell's
+certified affine orbit templates. For n>=9, d=b(n-1)>=4 and
+d=n mod2 by the proved parity law. The points x_4,x_5 are already periodic,
+so a two-cycle selects x_4 for even n and x_5 for odd n; a fixed point
+has no phase distinction. Smaller cases are handled by the
+[complete proof](../campbell/note.pdf). Campbell supplies its entrance
+arithmetically; the Cloitre decoder uses certified profile/entrance data
+and a Fibonacci residue. This common operation transfers, while orbit
+qualification remains family-specific.
+
+The [checker](verification/collar_check.py) compares the Floyd/modular
+decoder with exact-depth trajectory evaluation on actual cap-defect<=16
+roots, and checks modular arithmetic independently by matrix powering.
+Huge-order arithmetic concerns only Fibonacci residues and saturation,
+not evaluated C values or verified entrances at those orders.
+
+Tables, predecessor and exterior-entrance provenance, and their verification
+are supplied resources. The decoder does not construct the tables or
+derive the actual entrance from local data. Its working-space bound uses
+a different contract from autonomous graph recognition. Full online
+evaluation, a complete minimum interface and wider-block dispersion remain
+open.
 
 ### Sharing selectors at repeated physical indices
 

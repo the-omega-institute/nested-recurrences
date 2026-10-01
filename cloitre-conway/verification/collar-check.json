@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "af14d4e8b6a368667c50303eb31c076bd78d57f2a71cd77d23a0613f4e679c23",
+  "source_sha256": "f7ebba5000e0a760ff9289ed7ce0c25dea7b9992860c181fd8f3dd1dc4ac57cd",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -5089,7 +5089,313 @@
           983,
           978,
           986
+        ],
+        "decoded_first_gaps": [
+          0,
+          10,
+          18,
+          36,
+          45
+        ],
+        "parent_symbolic_gaps": [
+          10,
+          21,
+          42,
+          58,
+          9
+        ],
+        "first_symbolic_gaps": [
+          10,
+          19,
+          38,
+          49,
+          8
+        ],
+        "second_symbolic_gaps": [
+          0,
+          2,
+          4,
+          9,
+          1
         ]
+      },
+      "modular_symbolic_selector": {
+        "modular_checks": 8032,
+        "capped_fibonacci_checks": 6006,
+        "independent_modular_method": "2x2 matrix binary exponentiation; exact Fibonacci values through order1000",
+        "huge_order_arithmetic_rows": [
+          {
+            "order_bit_length": 333,
+            "moduli": [
+              1,
+              2,
+              3,
+              5,
+              7,
+              16,
+              97,
+              1009
+            ],
+            "residues": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              11,
+              79,
+              515
+            ],
+            "capped_threshold_bit_length": 333
+          },
+          {
+            "order_bit_length": 3322,
+            "moduli": [
+              1,
+              2,
+              3,
+              5,
+              7,
+              16,
+              97,
+              1009
+            ],
+            "residues": [
+              0,
+              1,
+              2,
+              2,
+              5,
+              5,
+              7,
+              794
+            ],
+            "capped_threshold_bit_length": 333
+          },
+          {
+            "order_bit_length": 4097,
+            "moduli": [
+              1,
+              2,
+              3,
+              5,
+              7,
+              16,
+              97,
+              1009
+            ],
+            "residues": [
+              0,
+              0,
+              1,
+              3,
+              1,
+              2,
+              87,
+              141
+            ],
+            "capped_threshold_bit_length": 333
+          }
+        ],
+        "huge_order_scope": "Modular and capped Fibonacci arithmetic only; no C or actual entrance at these huge orders is evaluated.",
+        "actual_orders_inclusive": [
+          11,
+          30
+        ],
+        "actual_cap_bound": 16,
+        "actual_gap_domain": "2<=v<=min(16Pk,F_(k-4)); cap defect<=16",
+        "actual_symbolic_decodings": 2189,
+        "actual_period_counts": {
+          "1": 1694,
+          "2": 359,
+          "3": 106,
+          "4": 29,
+          "5": 1
+        },
+        "maximum_period": {
+          "order": 16,
+          "gap": 79,
+          "index": 908,
+          "cap_defect": 16,
+          "entrance_clock": 4,
+          "entrance_gap": 2,
+          "predecessor_defect": 19,
+          "exact_depth": 591,
+          "exact_depth_bits": 10,
+          "selected_gap": 66,
+          "local_transient": 5,
+          "period": 5,
+          "cycle_entry_gap": 67,
+          "selected_residue": 2
+        },
+        "maximum_local_transient": {
+          "order": 14,
+          "gap": 52,
+          "index": 325,
+          "cap_defect": 15,
+          "entrance_clock": 4,
+          "entrance_gap": 14,
+          "predecessor_defect": 18,
+          "exact_depth": 215,
+          "exact_depth_bits": 8,
+          "selected_gap": 38,
+          "local_transient": 10,
+          "period": 2,
+          "cycle_entry_gap": 39,
+          "selected_residue": 1
+        },
+        "actual_phase_witnesses": [
+          {
+            "order": 19,
+            "gap": 50,
+            "index": 4131,
+            "cap_defect": 4,
+            "entrance_clock": 8,
+            "entrance_gap": 40,
+            "predecessor_defect": 5,
+            "exact_depth": 2579,
+            "exact_depth_bits": 12,
+            "selected_gap": 42,
+            "local_transient": 1,
+            "period": 3,
+            "cycle_entry_gap": 46,
+            "selected_residue": 2
+          },
+          {
+            "order": 19,
+            "gap": 54,
+            "index": 4127,
+            "cap_defect": 9,
+            "entrance_clock": 6,
+            "entrance_gap": 2,
+            "predecessor_defect": 9,
+            "exact_depth": 2575,
+            "exact_depth_bits": 12,
+            "selected_gap": 45,
+            "local_transient": 3,
+            "period": 3,
+            "cycle_entry_gap": 49,
+            "selected_residue": 1
+          },
+          {
+            "order": 20,
+            "gap": 57,
+            "index": 6708,
+            "cap_defect": 4,
+            "entrance_clock": 8,
+            "entrance_gap": 42,
+            "predecessor_defect": 9,
+            "exact_depth": 4172,
+            "exact_depth_bits": 13,
+            "selected_gap": 49,
+            "local_transient": 1,
+            "period": 2,
+            "cycle_entry_gap": 53,
+            "selected_residue": 1
+          },
+          {
+            "order": 24,
+            "gap": 83,
+            "index": 46285,
+            "cap_defect": 4,
+            "entrance_clock": 10,
+            "entrance_gap": 67,
+            "predecessor_defect": 9,
+            "exact_depth": 28648,
+            "exact_depth_bits": 15,
+            "selected_gap": 74,
+            "local_transient": 1,
+            "period": 3,
+            "cycle_entry_gap": 79,
+            "selected_residue": 2
+          }
+        ],
+        "literal_period_witnesses": [
+          {
+            "order": 11,
+            "gap": 2,
+            "index": 87,
+            "cap_defect": 0,
+            "entrance_clock": 6,
+            "entrance_gap": 1,
+            "predecessor_defect": 0,
+            "exact_depth": 55,
+            "exact_depth_bits": 6,
+            "selected_gap": 2,
+            "local_transient": 1,
+            "period": 1,
+            "cycle_entry_gap": 2,
+            "selected_residue": 0
+          },
+          {
+            "order": 11,
+            "gap": 4,
+            "index": 85,
+            "cap_defect": 0,
+            "entrance_clock": 6,
+            "entrance_gap": 3,
+            "predecessor_defect": 1,
+            "exact_depth": 54,
+            "exact_depth_bits": 6,
+            "selected_gap": 3,
+            "local_transient": 0,
+            "period": 2,
+            "cycle_entry_gap": 3,
+            "selected_residue": 0
+          },
+          {
+            "order": 12,
+            "gap": 17,
+            "index": 127,
+            "cap_defect": 7,
+            "entrance_clock": 4,
+            "entrance_gap": 3,
+            "predecessor_defect": 4,
+            "exact_depth": 85,
+            "exact_depth_bits": 7,
+            "selected_gap": 13,
+            "local_transient": 4,
+            "period": 3,
+            "cycle_entry_gap": 11,
+            "selected_residue": 2
+          },
+          {
+            "order": 13,
+            "gap": 20,
+            "index": 213,
+            "cap_defect": 7,
+            "entrance_clock": 4,
+            "entrance_gap": 1,
+            "predecessor_defect": 7,
+            "exact_depth": 137,
+            "exact_depth_bits": 8,
+            "selected_gap": 17,
+            "local_transient": 2,
+            "period": 4,
+            "cycle_entry_gap": 13,
+            "selected_residue": 3
+          },
+          {
+            "order": 16,
+            "gap": 79,
+            "index": 908,
+            "cap_defect": 16,
+            "entrance_clock": 4,
+            "entrance_gap": 2,
+            "predecessor_defect": 19,
+            "exact_depth": 591,
+            "exact_depth_bits": 10,
+            "selected_gap": 66,
+            "local_transient": 5,
+            "period": 5,
+            "cycle_entry_gap": 67,
+            "selected_residue": 2
+          }
+        ],
+        "literal_selected_updates": 922,
+        "decoder_formula": "F_(k-1) mod p minus predecessor defect, entrance clock and local transient, all modulo p",
+        "workspace_bound": "O(log m+log k) bits with read-only random-access profiles and certified entrance; symbolic anchor/gap outputs",
+        "scope": "Standard Floyd cycle detection and modular Fibonacci doubling implement the proved conditional symbolic decoder. Exact-depth trajectory evaluation and actual literal witnesses cross-check the selected gaps. Profiles, actual predecessor/entrance provenance and their verification are supplied resources; physical integer output, table construction and full recursive minimum remain separate. No global dispersion or large-order C claim."
       },
       "scope": "General full-block cap-budget induction uses the proved zero plateau and actual two-child conservation, without a new finite sequence premise. Fixed-cap sublevels have polynomial gap enclosure and a conditional local-table/entrance decoder. The independent Diophantine proof gives phase-free quartic dispersion on cube-root collars, hence eventually on every fixed cap level; large arithmetic checks do not evaluate C. Finite level4 support holes are not an infinite support law. Tables, predecessor/exterior qualification, exact Fibonacci arithmetic and autonomous memory are separate costs; cap4 qualification already collapses the displayed scalar phase fiber. Global dispersion/convergence remain open."
     },

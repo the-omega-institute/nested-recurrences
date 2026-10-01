@@ -14,6 +14,10 @@ also matches the state-bit order for each fixed-cap Cloitre value and
 selected-split graph, with a deterministic sparse-trie upper bound.
 See the [Conway interface](../cloitre-conway/five-window-closure.md) for the
 cross-family closure question.
+The [modular symbolic selector](../cloitre-conway/recursive-descent.md#a-modular-symbolic-selector-with-small-working-memory)
+gives a concrete supplied-profile decoder for Cloitre. Its cycle residue
+reduces to parity on Campbell's certified period1/2 templates; this
+conditional decoding resource is distinct from autonomous FIB recognition.
 
 ## Contents
 
