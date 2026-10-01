@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "e72cad929cc5bcc69c9b2854bb13af86b972e47e9fdf9f3726eeafe967def4c3",
+  "source_sha256": "ec751fa6a58ae7d96c4f48948155bed6ff769495e64e5cd5c1214389f5fac570",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -4920,6 +4920,158 @@
           }
         ],
         "literal_selected_endpoint_updates": 61677,
+        "tail_query_interface": {
+          "actual_tail_roots": 282,
+          "actual_profile_queries": 302,
+          "maximum_observed_query_cap": 9,
+          "actual_period_counts": {
+            "1": 263,
+            "2": 18,
+            "3": 1
+          },
+          "profile_response_models": {
+            "model_orders_inclusive": [
+              24,
+              120
+            ],
+            "model_profile_ceilings": [
+              5,
+              9,
+              16,
+              31
+            ],
+            "model_contexts": 232,
+            "model_completions": 7554,
+            "checked_profile_positions": 5012970,
+            "checked_neighbor_start_maps": 2506485,
+            "model_collision": {
+              "order": 30,
+              "profile_ceiling": 9,
+              "frontier": 72,
+              "zero_width": 15,
+              "root_gap": 92,
+              "periodic_seed": 88,
+              "common_depth": 514225,
+              "common_period": 2,
+              "response_values": [
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              "selected_gaps": [
+                82,
+                81,
+                80,
+                79,
+                78,
+                77
+              ],
+              "exact_fixed_length_summary_bits": 3
+            },
+            "common_one_step_quadratic_constant": "1/100",
+            "scope": "Captured-map models, not alternative actual Cloitre sequences. Identical cap0..3 bands, shelves, local cap budgets, truncated first profile and complete cap4 membership support admit distinct selected children with the same odd local depth and period2. The omitted scalar response ranges from h+1 to L_(K-2), giving exactly ceil(log2(L_(K-2)-h)) summary bits in this family. Actual exterior qualification and globally nested profile construction are not asserted.",
+            "actual_zero_child_descendant_states": 60,
+            "actual_zero_child_descendant_rows": [
+              {
+                "order": 28,
+                "gaps": [
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15
+                ],
+                "distinct_child_indices": 6
+              },
+              {
+                "order": 27,
+                "gaps": [
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15
+                ],
+                "distinct_child_indices": 6
+              },
+              {
+                "order": 26,
+                "gaps": [
+                  10,
+                  11,
+                  12,
+                  13,
+                  14
+                ],
+                "distinct_child_indices": 5
+              },
+              {
+                "order": 25,
+                "gaps": [
+                  10,
+                  11,
+                  12,
+                  13
+                ],
+                "distinct_child_indices": 4
+              },
+              {
+                "order": 24,
+                "gaps": [
+                  10,
+                  11,
+                  12,
+                  13
+                ],
+                "distinct_child_indices": 4
+              },
+              {
+                "order": 23,
+                "gaps": [
+                  10,
+                  11,
+                  12
+                ],
+                "distinct_child_indices": 3
+              },
+              {
+                "order": 22,
+                "gaps": [
+                  10,
+                  11
+                ],
+                "distinct_child_indices": 2
+              },
+              {
+                "order": 21,
+                "gaps": [
+                  10,
+                  11
+                ],
+                "distinct_child_indices": 2
+              },
+              {
+                "order": 20,
+                "gaps": [
+                  10
+                ],
+                "distinct_child_indices": 1
+              },
+              {
+                "order": 19,
+                "gaps": [
+                  9
+                ],
+                "distinct_child_indices": 1
+              }
+            ]
+          }
+        },
         "scope": "Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open."
       },
       "scope": "Independent full-block finite premises and abstract shelf graphs support the written phase-selected level2/3 induction. Arithmetic supplied-order/gap selectors close cap-defect0..3 along one first-child spine to base20/21; context/table costs separate. All basin phases satisfy the scoped quadratic bound. Actual level4 holes forbid arbitrary-level extrapolation; no global dispersion, convergence, full-interface minimum or Lean claim."
