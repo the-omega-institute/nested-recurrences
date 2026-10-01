@@ -250,9 +250,10 @@ division. The run length is derived from those data, rather than an extra
 independent phase or branch coordinate.
 
 One can concatenate these blocks, and record the exact number of elapsed
-iterations. Revisiting the same block-boundary state certifies a cycle whose
-length is the difference of the two elapsed times; reduce the remaining
-depth modulo that length. At a zero-drift cell only parity remains. This
+iterations. Revisiting the same block-boundary state certifies a positive
+return time equal to the difference of the two elapsed times; reduce the
+remaining depth modulo that return time. The least period may divide it.
+At a zero-drift cell only parity remains. This
 computes the exact selected point at the prescribed depth, preserving entry
 alignment even when some literal path states were not individually stored.
 The profile intervals must themselves be verified; endpoint values alone do
