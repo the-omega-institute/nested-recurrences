@@ -825,6 +825,8 @@ recursive completion can be identified exactly.
 Let B={1,...,F_10}={1,...,55}, let A={F_j:j>=2}, and write
 S_m={n>=1:0<=E(n)<=m}, for a fixed integer m>=0. A set is recursively
 closed if every n>=3 in it has both actual children g(n),n-g(n) in it.
+This is closure under the selected two-child addition; obtaining g(n)
+from its defining inner orbit remains a separate evaluation task.
 
 **Least-completion theorem.** The smallest recursively closed set
 containing B and S_m is exactly
@@ -886,3 +888,15 @@ bounded-cap domain. The base B is a declared part of the closure contract,
 not a claim about the smallest possible finite base. Recognizing the
 completed graph does not supply a streaming output decoder or a compact
 procedure to build its transition table.
+
+**Full evaluation closure has a different answer.** If a domain must also
+contain n-1 whenever it contains n>=3, to obtain the defining depth C(n-1),
+then any such domain containing S_m and B is all positive integers.
+Indeed S_m contains the unbounded sequence F_k-1; repeated predecessor
+closure below these roots reaches every positive index. The polynomial
+count above shows that R_m is a proper sparse subset at every fixed m,
+so it cannot have this stronger closure. A sparse recursive interface
+must therefore supply or compile the selected endpoint, depth or equivalent
+orbit information instead of treating predecessor access as free. The
+least-completion and memory theorems use the stated selected-child and
+graph-recognition contracts throughout.
