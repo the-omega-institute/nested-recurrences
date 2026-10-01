@@ -629,6 +629,37 @@ def positive_collar_extinction_audit(sequence, fibonacci):
                 scope='General offset induction from the already certified0..32 collar and a necessary defect-persistence/phase rule. Finite Boolean paths are exhaustive for the rule envelope, not reverse-complete actual C histories. Every fixed positive width eventually has a proved exact collar; arbitrary negative widths and global ratio convergence remain open. Additional independent numerical checks stay within the previously published2^20 range, while the infinite conclusion comes from the extinction proof.')
 
 
+def five_pattern_interaction_audit(sequence, fibonacci):
+    patterns = ((0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1), (1, 0, 1))
+    function_count = 0
+    for values in product(range(-2, 3), repeat=5):
+        baseline, first, middle, last, joint = values
+        coefficients = (baseline, first - baseline, middle - baseline,
+                        last - baseline, joint - first - last + baseline)
+        for pattern, expected in zip(patterns, values):
+            features = (1, *pattern, pattern[0] * pattern[2])
+            assert sum(coefficient * feature for coefficient, feature
+                       in zip(coefficients, features)) == expected
+        function_count += 1
+    rows = []
+    for order in range(7, 27):
+        values = [sequence[fibonacci[order] + offset] for offset in (0, 2, 3, 5, 7)]
+        interaction = values[4] - values[1] - values[3] + values[0]
+        if order >= 23:
+            assert values == [fibonacci[order - 1] + offset for offset in (0, 2, 3, 5, 7)]
+            assert interaction == 0
+        rows.append(dict(order=order, anchor=fibonacci[order], values=values,
+                         interaction=interaction))
+    assert rows[2]['values'] == [21, 23, 24, 25, 28]
+    assert rows[2]['interaction'] == 1
+    assert rows[4]['interaction'] == 0 and rows[5]['interaction'] == 1
+    return dict(patterns=['000', '100', '010', '001', '101'],
+                exact_functions_reconstructed=function_count, responses=rows,
+                universal_lowest_window_zero_interaction_orders='all j>=23',
+                fixed_window_threshold='j>=max(3*i+7,K(F_(3*i+3)+F_(3*i+5)))',
+                scope='Interpolation is elementary; infinite fixed-window vanishing follows from the proved positive collar. The digit alphabet is not an inner period-five orbit, and scalar additivity does not certify basin or selected phase.')
+
+
 def main():
     if not __debug__:
         raise SystemExit('Run without -O; assertions perform the checks.')
@@ -848,6 +879,7 @@ def main():
         selected_positive_collar_phase=selected_collar_phase_audit(sequence, splits, fibonacci, zeros),
         saturated_fibonacci_profiles=saturated_profile_audit(sequence, periods, splits, fibonacci),
         growing_positive_collars=positive_collar_extinction_audit(sequence, fibonacci_values(10 ** 6)),
+        five_pattern_interaction=five_pattern_interaction_audit(sequence, fibonacci),
         quantitative_capture=dict(
             anchor_drop_formula='F_(j-1)-C(F_j-d) <= floor(2*d/3), j>=5, 1<=d<F_j',
             anchor_drop_base=anchor_drop_base,

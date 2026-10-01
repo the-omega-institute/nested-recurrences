@@ -915,6 +915,89 @@ the first new thresholds u=33 at orders 27..30 and u=34 at orders 29..30;
 their selected endpoints are rechecked by literal iteration. These are
 corroboration of the infinite argument, not its finite premises.
 
+### Five legal bit patterns and eventual vanishing of a local interaction
+
+The five legal patterns in a three-bit Zeckendorf window are
+`000,100,010,001,101`. They are a digit alphabet, distinct from the five
+points of a period-five inner orbit. The representation and its carry
+interface are developed in [FIB relational continuation geometry, Sections
+14-17](https://github.com/the-omega-institute/trureturing/blob/c71e2e9599ea407fae545287b024590c444b03ef/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md).
+The following elementary interpolation gives an explicit connection to the
+fixed-offset theorem above, without identifying these two uses of five.
+
+**Five-pattern interpolation.** Every real-valued function on this alphabet
+has the unique expansion
+
+$$
+f(x)=b+a_1x_1+a_2x_2+a_3x_3+\kappa x_1x_3,
+$$
+
+where b=f(000), a_i=f(e_i)-b and
+
+$$
+\kappa=f(101)-f(100)-f(001)+f(000).
+$$
+
+Indeed the empty pattern and the three singleton patterns determine the
+first four coefficients; the last pattern then determines kappa. Conversely,
+substitution recovers every value. Thus observing only the first four
+patterns leaves exactly one scalar degree of freedom for an unrestricted
+function. An additive model assumes kappa=0; that assumption does not follow
+from those four observations.
+
+**Actual C readout.** For j>=7 the five numbers
+
+$$
+F_j,\quad F_j+2,\quad F_j+3,\quad F_j+5,\quad F_j+7
+$$
+
+have the same higher Zeckendorf digits and unit bit zero; only their lowest
+window varies over these five patterns. Define f_j(x)=C(F_j+2x_1+3x_2+5x_3).
+The corresponding interaction is therefore the actual sequence difference
+
+$$
+\kappa_j=C(F_j+7)-C(F_j+2)-C(F_j+5)+C(F_j).
+$$
+
+The certified positive collar gives, for every j>=23,
+
+$$
+f_j(x)=F_{j-1}+2x_1+3x_2+5x_3,\qquad \boxed{\kappa_j=0}.
+$$
+
+This is an infinite consequence of the collar theorem. At lower orders the
+interaction need not vanish: at j=9 the five C values, in the order above,
+are (21,23,24,25,28), giving kappa_9=1. The zero observed at j=11 does
+not yet persist: kappa_12=1. These small values can be checked by literal
+iteration and do not supply the infinite premise.
+
+**Any fixed window.** Fix i>=0 and put
+w_1=F_(3i+3), w_2=F_(3i+4), w_3=F_(3i+5), R=w_1+w_3.
+For j>=max(3i+7,K(R)), the five canonical words with a fixed higher
+digit F_j and this window varying give
+
+$$
+C(F_j+w_1x_1+w_2x_2+w_3x_3)
+=F_{j-1}+w_1x_1+w_2x_2+w_3x_3.
+$$
+
+All five offsets lie in 0..R, where K is nondecreasing, so the fixed-offset
+theorem proves the formula and zero interaction. More generally, any fixed
+legal lower-digit context with numeric contribution h>=0 satisfies the
+same conclusion for j large enough to separate F_j from the context and
+j>=K(h+R), provided all five window choices are legal in that context.
+The fixed-context condition matters: it does not allow a window growing
+arbitrarily with j or erase cross-window seam restrictions.
+
+Vanishing of this scalar interaction is not a certificate of inner-orbit
+closure or selected phase. For example, order25 already has kappa_25=0,
+but at F_25+42=75067 the outer two phases give different root values
+46410 and46407, as checked above. The window response and the recurrence's
+basin/depth interface answer different questions. The checker records the
+twenty lowest-window responses at orders7..26, reconstructs3125 exact
+five-pattern functions, and verifies the four high-order linear responses
+inside its existing independently checked prefix.
+
 ## 7. Fibonacci profile renormalization and defect dynamics
 
 The collar formula has a useful two-scale form that also explains why the

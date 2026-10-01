@@ -1,6 +1,6 @@
 {
   "status": "Exact two-collar seeds and finite corroboration; fibonacci-collars.md Sections 1-4 use golden-proof.md, and Section 6 adds the recorded seed premises; no Lean formalization.",
-  "source_sha256": "5bb00e5e1bfc3500243729571de657eb2091883547e928e4eed6ac0c365023b0",
+  "source_sha256": "6932044a2aed32f537810b9312798ea04d20f8d7acc6719148b72f83031a0cef",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -2921,6 +2921,261 @@
     "growing_linear_width": "L_j=32+2*floor((j-23)/6)+indicator((j-23 mod6)>=4)",
     "growing_saturated_width": "W_j=max(32,G(L_j))",
     "scope": "General offset induction from the already certified0..32 collar and a necessary defect-persistence/phase rule. Finite Boolean paths are exhaustive for the rule envelope, not reverse-complete actual C histories. Every fixed positive width eventually has a proved exact collar; arbitrary negative widths and global ratio convergence remain open. Additional independent numerical checks stay within the previously published2^20 range, while the infinite conclusion comes from the extinction proof."
+  },
+  "five_pattern_interaction": {
+    "patterns": [
+      "000",
+      "100",
+      "010",
+      "001",
+      "101"
+    ],
+    "exact_functions_reconstructed": 3125,
+    "responses": [
+      {
+        "order": 7,
+        "anchor": 13,
+        "values": [
+          8,
+          10,
+          11,
+          12,
+          13
+        ],
+        "interaction": -1
+      },
+      {
+        "order": 8,
+        "anchor": 21,
+        "values": [
+          13,
+          15,
+          15,
+          18,
+          19
+        ],
+        "interaction": -1
+      },
+      {
+        "order": 9,
+        "anchor": 34,
+        "values": [
+          21,
+          23,
+          24,
+          25,
+          28
+        ],
+        "interaction": 1
+      },
+      {
+        "order": 10,
+        "anchor": 55,
+        "values": [
+          34,
+          36,
+          37,
+          38,
+          41
+        ],
+        "interaction": 1
+      },
+      {
+        "order": 11,
+        "anchor": 89,
+        "values": [
+          55,
+          57,
+          58,
+          60,
+          62
+        ],
+        "interaction": 0
+      },
+      {
+        "order": 12,
+        "anchor": 144,
+        "values": [
+          89,
+          91,
+          92,
+          93,
+          96
+        ],
+        "interaction": 1
+      },
+      {
+        "order": 13,
+        "anchor": 233,
+        "values": [
+          144,
+          146,
+          147,
+          149,
+          151
+        ],
+        "interaction": 0
+      },
+      {
+        "order": 14,
+        "anchor": 377,
+        "values": [
+          233,
+          235,
+          236,
+          237,
+          240
+        ],
+        "interaction": 1
+      },
+      {
+        "order": 15,
+        "anchor": 610,
+        "values": [
+          377,
+          379,
+          380,
+          382,
+          384
+        ],
+        "interaction": 0
+      },
+      {
+        "order": 16,
+        "anchor": 987,
+        "values": [
+          610,
+          612,
+          613,
+          615,
+          617
+        ],
+        "interaction": 0
+      },
+      {
+        "order": 17,
+        "anchor": 1597,
+        "values": [
+          987,
+          989,
+          990,
+          992,
+          994
+        ],
+        "interaction": 0
+      },
+      {
+        "order": 18,
+        "anchor": 2584,
+        "values": [
+          1597,
+          1599,
+          1600,
+          1602,
+          1604
+        ],
+        "interaction": 0
+      },
+      {
+        "order": 19,
+        "anchor": 4181,
+        "values": [
+          2584,
+          2586,
+          2587,
+          2589,
+          2591
+        ],
+        "interaction": 0
+      },
+      {
+        "order": 20,
+        "anchor": 6765,
+        "values": [
+          4181,
+          4183,
+          4184,
+          4186,
+          4188
+        ],
+        "interaction": 0
+      },
+      {
+        "order": 21,
+        "anchor": 10946,
+        "values": [
+          6765,
+          6767,
+          6768,
+          6770,
+          6772
+        ],
+        "interaction": 0
+      },
+      {
+        "order": 22,
+        "anchor": 17711,
+        "values": [
+          10946,
+          10948,
+          10949,
+          10951,
+          10953
+        ],
+        "interaction": 0
+      },
+      {
+        "order": 23,
+        "anchor": 28657,
+        "values": [
+          17711,
+          17713,
+          17714,
+          17716,
+          17718
+        ],
+        "interaction": 0
+      },
+      {
+        "order": 24,
+        "anchor": 46368,
+        "values": [
+          28657,
+          28659,
+          28660,
+          28662,
+          28664
+        ],
+        "interaction": 0
+      },
+      {
+        "order": 25,
+        "anchor": 75025,
+        "values": [
+          46368,
+          46370,
+          46371,
+          46373,
+          46375
+        ],
+        "interaction": 0
+      },
+      {
+        "order": 26,
+        "anchor": 121393,
+        "values": [
+          75025,
+          75027,
+          75028,
+          75030,
+          75032
+        ],
+        "interaction": 0
+      }
+    ],
+    "universal_lowest_window_zero_interaction_orders": "all j>=23",
+    "fixed_window_threshold": "j>=max(3*i+7,K(F_(3*i+3)+F_(3*i+5)))",
+    "scope": "Interpolation is elementary; infinite fixed-window vanishing follows from the proved positive collar. The digit alphabet is not an inner period-five orbit, and scalar additivity does not certify basin or selected phase."
   },
   "quantitative_capture": {
     "anchor_drop_formula": "F_(j-1)-C(F_j-d) <= floor(2*d/3), j>=5, 1<=d<F_j",

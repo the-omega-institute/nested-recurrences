@@ -25,6 +25,7 @@ or programming knowledge is needed.
 | Understand sharing between windows and a basis for their parameters | **[Shared network and forest basis](cloitre-conway/fibonacci-collars.md#a-shared-parameter-network-and-its-forest-basis)** |
 | See how child layouts and values can be recovered without a C table | **[Sublinear shared descent code](cloitre-conway/fibonacci-collars.md#generating-the-layout-from-a-sublinear-shared-descent-code)** |
 | Read growing exact collars, phase rules and nearby cycle exclusions | **[Growing positive collars](cloitre-conway/fibonacci-collars.md#every-fixed-positive-offset-eventually-becomes-linear)** · **[Saturated profiles](cloitre-conway/fibonacci-collars.md#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)** |
+| Connect the five legal Fibonacci digit patterns to a checked local interaction | **[Five-pattern readout and eventual additivity](cloitre-conway/fibonacci-collars.md#five-legal-bit-patterns-and-eventual-vanishing-of-a-local-interaction)** |
 | See a complete geometric selector code and the remaining real-orbit constraint | **[Seven terminal symbols](cloitre-conway/fibonacci-collars.md#seven-terminal-symbols-and-the-full-geometric-selector-code)** · **[Growing defects and occupation](cloitre-conway/fibonacci-collars.md#growing-actual-defects-and-the-remaining-occupation-problem)** |
 | See what is proved and what remains open | **[Current status](STATUS.md)** |
 
