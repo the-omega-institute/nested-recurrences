@@ -14,6 +14,8 @@ who want to change the repository or reproduce its evidence.
    Open a draft PR for ongoing work. Explain the problem, the resulting
    statement, and the validation performed; update that description to match
    the final scope before requesting review.
+   Readers should be able to tell from the PR description which question is
+   being investigated, what is established, and what still needs checking.
 3. Update the relevant proof, compact evidence, and status together. Separate
    proved statements, computer-assisted proofs, finite observations, and open
    conjectures. Preserve attribution and exact initial conditions.
@@ -24,6 +26,8 @@ who want to change the repository or reproduce its evidence.
 5. Review the complete diff and run checks appropriate to the change. Merge
    ready work to `main` only after the checks and review pass, then delete
    its completed branch. Do not push research changes directly to `main`.
+   Remove the completed local worktree and branch as well, after confirming
+   the merge and preserving any unrelated local work.
 
 There is currently no `dev` branch. Creating another integration branch is
 unnecessary for this workflow. A PR records developing work; `main` presents
@@ -41,6 +45,8 @@ Keep the root README an introduction and reading route. Summarize durable
 results and open questions in STATUS.md; put theorem thresholds, selector
 cases, and individual computational witnesses in the relevant proof note.
 Do not turn either entry page into a log of successive experiments.
+Keep theorem constants and computational counts in proof notes and evidence;
+the entry pages should explain what the result means and where to read it.
 
 Keep programs and compact, reproducible JSON evidence in the family's
 `verification/` directory. Scratch runs, alternate drafts, correspondence,

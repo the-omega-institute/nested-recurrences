@@ -25,11 +25,11 @@ and iteration depth in [the definition](cloitre-conway/README.md#definition).
 | Result | Proof |
 |---|---|
 | The sequence is well defined; its prescribed depth reaches an inner cycle. | [Foundations](cloitre-conway/proof.md) |
-| C(n)>=floor(alpha(n+1)), the equality set is classified, C(F_k)=F_(k-1), and liminf C(n)/n=alpha. A global upper cap and a certified eventual bound C(n)/n<=8900/13459 are also proved. | [Global golden structure](cloitre-conway/golden-proof.md) |
+| C(n)>=floor(alpha(n+1)), C(F_k)=F_(k-1), and liminf C(n)/n=alpha. The exact equality set and global upper bounds are proved. | [Global golden structure](cloitre-conway/golden-proof.md) |
 | The ratio converges to alpha in neighborhoods of Fibonacci indices whose width is sublinear in the index. Exact nearby values and selected phases are known, including a growing constant band below each Fibonacci index. | [Orbit bounds](cloitre-conway/fibonacci-collars.md) · [Exact neighborhoods](cloitre-conway/exact-collars.md) |
-| Five-window profile equations and qualified reconstruction results are proved. Cap defects0..3 have exact sublevels and arithmetic child gaps. Every bounded cap level, including noncontiguous supports, lies within O(mk^2) of F_k; a local-table interface with certified entrance handles its selected descent. | [Closure](cloitre-conway/five-window-closure.md) · [Exact sublevels](cloitre-conway/exact-collars.md#two-higher-cap-levels-and-their-phase-selected-closure) · [Reconstruction](cloitre-conway/inverse-reconstruction.md) · [Cap budget and descent](cloitre-conway/recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level) |
-| With read-only lower profiles and a certified entrance, a uniform symbolic selector computes actual child gaps in O(log m+log k) working bits, using the depth modulo the local period. Table construction and orbit certification remain separate. | [Modular decoder](cloitre-conway/recursive-descent.md#a-modular-symbolic-selector-with-small-working-memory) |
-| Martingale identities reduce decay to a uniform dispersion inequality. Integer cap flow and one-child variance transfer give a quadratic bound at a logarithmic cap-dependent horizon, with a cap-dependent constant; four generations suffice on cap-defect0..24. Its retained-spine envelope needs no high-cap entrance or phase data. A phase-free quartic bound also holds in cube-root Fibonacci neighborhoods. Uniform wider-block dispersion remains open. | [Retained-spine bound](cloitre-conway/dispersion.md#a-logarithmic-horizon-from-one-retained-child) · [Stronger small-cap constant](cloitre-conway/dispersion.md#cap-adaptive-quadratic-dispersion) · [Diophantine bound](cloitre-conway/dispersion.md#diophantine-dispersion-in-cube-root-fibonacci-neighborhoods) |
+| Local profile equations and qualified cycle reconstruction are proved. Exact small-defect neighborhoods close recursively; every bounded cap defect stays near a Fibonacci index. | [Closure](cloitre-conway/five-window-closure.md) · [Reconstruction](cloitre-conway/inverse-reconstruction.md) · [Exact neighborhoods](cloitre-conway/exact-collars.md) · [Cap budget](cloitre-conway/recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level) |
+| Given lower profiles and a certified entrance into the local orbit, an arithmetic decoder determines the actual child terms with small working memory. Those supplied inputs remain hypotheses of the theorem. | [Modular decoder](cloitre-conway/recursive-descent.md#a-modular-symbolic-selector-with-small-working-memory) |
+| Variance estimates are proved in specified Fibonacci neighborhoods, including a bound whose horizon grows logarithmically with the cap defect. They do not yet establish dispersion uniformly over wider blocks. | [Dispersion](cloitre-conway/dispersion.md) · [Logarithmic horizon](cloitre-conway/dispersion.md#a-logarithmic-horizon-from-one-retained-child) |
 
 The global induction and some exact-neighborhood results are
 **computer-assisted proofs**: an infinite argument uses explicit finite
@@ -39,10 +39,10 @@ conjectures remain finite observations. No Lean formalization is included.
 ## Questions that remain open
 
 1. **Convergence and decay over all integers.** Prove C(n)/n -> alpha,
-   including the interiors of the Fibonacci blocks. The dispersion note
-   proves that a stated uniform four-generation inequality would give
-   an upper error rate O(n/(log n)^(1/4)); that inequality is still open.
-   A matching lower bound for maxima is a separate question.
+   including the interiors of the Fibonacci blocks. The
+   [dispersion note](cloitre-conway/dispersion.md) gives a conditional decay
+   theorem; its required uniform inequality is still open. A matching
+   lower bound for maxima is a separate question.
 2. **The full recursive interface.** Determine what scale, position,
    profile, branch, and phase information suffices beyond the exact
    Fibonacci neighborhoods. Five digit labels or a candidate geometric
@@ -52,24 +52,19 @@ conjectures remain finite observations. No Lean formalization is included.
 
 ## Encoding comparison and related families
 
-Canonical Fibonacci digit encoding provides a comparison with Campbell's
-power-of-three solution. For the specified diagnostic in each family,
-the minimum autonomous state-bit order is Theta(log log N); short inner
-cycles do not imply constant encoding memory. The same order is now proved
-for every fixed-cap Cloitre value graph and actual selected-split graph,
-with both deterministic and nondeterministic recognition. Its least
-recursive completion adds exactly the Fibonacci anchors to the bounded-cap
-domain and the stated finite base, with the same state-bit order. The matching
+The encoding comparison asks how much memory is needed to recognize values
+and recursive choices from canonical Fibonacci digits. Short inner cycles
+do not imply constant memory. Exact memory orders are proved for the stated
+Campbell diagnostic and Cloitre's bounded-cap graphs; the corresponding
 upper bound for Cloitre's full sequence graph remains open. Read the
 [Campbell theorem](campbell/scale-memory.md) and
-[Cloitre bounded-cap theorem](cloitre-conway/five-window-closure.md#exact-state-bit-order-for-every-bounded-cap-graph)
-for the exact models and supplied-context distinctions.
+[Cloitre theorem](cloitre-conway/five-window-closure.md#exact-state-bit-order-for-every-bounded-cap-graph)
+for the recognition models and hypotheses.
 
-Both families also have proved context-dependent interactions on the five
-legal canonical digit patterns. Cloitre has an infinite interaction1
-family with fixed-point root basins and recursive signal persistence;
-Campbell's current coefficient has exactly three value classes.
-Read the [Cloitre construction](cloitre-conway/exact-collars.md#a-persistent-interaction-on-canonical-index-words)
+Both families have proved feature interactions on the five legal canonical
+digit patterns. This is a separate question from an orbit having five steps:
+the digit labels alone do not determine the recursive state. Read the
+[Cloitre construction](cloitre-conway/exact-collars.md#a-persistent-interaction-on-canonical-index-words)
 and [Campbell comparison](campbell/scale-memory.md#five-pattern-interaction-on-ternary-scale-interiors).
 
 Shifted Conway/Mallows variants remain finite observations under their
