@@ -41,15 +41,12 @@ indices, and then establish a decay rate.
 2. **[Read what happens near Fibonacci indices](fibonacci-collars.md).**
    The ratio converges in sublinear-width neighborhoods. The
    [exact-neighborhood note](exact-collars.md) gives exact values and phases.
-   Its cap-defect0..3 family closes recursively with arithmetic selectors.
 3. **[Read the remaining convergence problem](dispersion.md).** Exact
    martingale identities give a conditional decay theorem; the required
-   uniform dispersion inequality is still open.
-   Phase-free bounds hold in the exact small-defect family and throughout
-   [cube-root Fibonacci neighborhoods](dispersion.md#diophantine-dispersion-in-cube-root-fibonacci-neighborhoods).
-   [Integer cap flow](dispersion.md#a-logarithmic-horizon-from-one-retained-child)
-   also gives a quadratic bound at a logarithmic cap-dependent horizon;
-   four generations suffice for cap defects at most24.
+   uniform dispersion inequality is still open. Bounds in specific
+   neighborhoods, including a
+   [logarithmic cap-dependent horizon](dispersion.md#a-logarithmic-horizon-from-one-retained-child),
+   provide partial progress.
 
 All notes can be read in your browser, without installing software.
 The programs and JSON files are optional evidence, not part of this route.
@@ -57,6 +54,9 @@ The programs and JSON files are optional evidence, not part of this route.
 ## Technical research map
 
 Choose the topic you need; there is no need to read every note in order.
+A cap defect measures how far a value lies below the Fibonacci upper cap;
+a profile records the defects across a neighborhood. Exact definitions
+and theorem hypotheses are in the linked notes.
 
 | Question | Note | Starting point |
 |---|---|---|
@@ -66,12 +66,9 @@ Choose the topic you need; there is no need to read every note in order.
 | Which nearby values, cycles, and selected phases are exact? | [Exact collars](exact-collars.md) | Capture and stated finite seeds |
 | What closes a local reflection window, and what phase information does an output need? | [Profiles and five-window closure](five-window-closure.md) | Global structure and profile identities |
 | Can candidate cycles be reconstructed and qualified? | [Inverse reconstruction](inverse-reconstruction.md) | Reflection-window equations |
-| How much information is shared between recursive rows? | [Recursive descent](recursive-descent.md) | Inverse reconstruction |
-| Where can a bounded cap defect occur, and what selects its children? | [Cap budget and local interface](recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level) | Exact zero plateau; certified exterior entrance |
-| Can a certified local selector be decoded without large Fibonacci registers? | [Modular symbolic decoder](recursive-descent.md#a-modular-symbolic-selector-with-small-working-memory) | Read-only profiles; actual predecessor and certified entrance |
-| What would prove a global decay rate, and why are static collars insufficient? | [Martingales and dispersion](dispersion.md) | Profile identity and additive child blocks |
-| Can dispersion be certified without high-cap entrance or phase information? | [Retained-spine envelope](dispersion.md#a-logarithmic-horizon-from-one-retained-child) · [Full stopping envelope](dispersion.md#cap-adaptive-quadratic-dispersion) | Integer cap conservation; one-child variance transfer; arithmetic cap0..3 basins |
-| How much autonomous memory does canonical five-window recognition require? | [Cloitre bounded-cap graphs](five-window-closure.md#exact-state-bit-order-for-every-bounded-cap-graph) · [Cap diagnostic](five-window-closure.md#autonomous-memory-of-the-actual-top-plateau-diagnostic) · [Campbell scale memory](../campbell/scale-memory.md) | Quadratic cap budget; moving zero plateau; Campbell's explicit formula |
+| What information closes recursive descent and selects its children? | [Recursive descent](recursive-descent.md), including the [cap budget](recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level) and [modular decoder](recursive-descent.md#a-modular-symbolic-selector-with-small-working-memory) | Exact profiles; certified entrance for actual selection |
+| What would prove a global decay rate, and what dispersion is already proved? | [Martingales and dispersion](dispersion.md), including the [logarithmic horizon](dispersion.md#a-logarithmic-horizon-from-one-retained-child) | Profile identity and additive child blocks |
+| How much memory does canonical digit recognition require? | [Cloitre bounded-cap graphs](five-window-closure.md#exact-state-bit-order-for-every-bounded-cap-graph) · [Campbell comparison](../campbell/scale-memory.md) | Cap budget; exact plateau; Campbell's formula |
 | When does a canonical window have a persistent feature interaction? | [Cloitre family](exact-collars.md#a-persistent-interaction-on-canonical-index-words) · [Campbell comparison](../campbell/scale-memory.md#five-pattern-interaction-on-ternary-scale-interiors) | Unit-defect arithmetic descent; ternary formula |
 | What arithmetic supports the global induction and shifted-family tests? | [Supporting arithmetic and audit](landing.md) | Foundations |
 
