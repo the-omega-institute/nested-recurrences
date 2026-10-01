@@ -41,9 +41,11 @@ indices, and then establish a decay rate.
 2. **[Read what happens near Fibonacci indices](fibonacci-collars.md).**
    The ratio converges in sublinear-width neighborhoods. The
    [exact-neighborhood note](exact-collars.md) gives exact values and phases.
+   Its zero/unit-defect family closes recursively with arithmetic selectors.
 3. **[Read the remaining convergence problem](dispersion.md).** Exact
    martingale identities give a conditional decay theorem; the required
    uniform dispersion inequality is still open.
+   A phase-free quadratic bound is proved within that Fibonacci family.
 
 All notes can be read in your browser, without installing software.
 The programs and JSON files are optional evidence, not part of this route.

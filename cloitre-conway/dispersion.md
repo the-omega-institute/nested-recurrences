@@ -14,6 +14,7 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 
 - [Size-biased martingales and the four-generation dispersion criterion](#size-biased-martingales-and-the-four-generation-dispersion-criterion)
 - [A phase-free lower bound from the prescribed basin](#a-phase-free-lower-bound-from-the-prescribed-basin)
+- [Quadratic basin dispersion in the unit-defect family](#quadratic-basin-dispersion-in-the-unit-defect-family)
 - [Additive dispersion policies without orbit qualification](#additive-dispersion-policies-without-orbit-qualification)
 - [Finite prefixes and exact collars do not force convergence](#finite-prefixes-and-exact-collars-do-not-force-convergence)
 
@@ -301,6 +302,76 @@ all-periodic ratio is2179271359290201381/104713624505000000,
 approximately20.812, at2778. These are minima over the stated finite
 range, not estimates of a uniform constant. They show quantitatively
 why basin qualification strengthens the available lower envelope.
+
+### Quadratic basin dispersion in the unit-defect family
+
+The [exact unit-sublevel theorem](exact-collars.md#the-unit-defect-sublevel-set-and-its-arithmetic-spine)
+gives an infinite actual-C domain on which the required basin lower bound
+can be proved without choosing a cycle phase. Let k>=20,
+N=F_k-v, 0<=v<=R_k, and retain its natural-block label j=k-1.
+Write D=C(N)-G(N). Then
+
+$$
+\boxed{\mathcal B_1(j,N)\ge\frac{v^2}{25N^2}
+                    \ge\frac1{25}\left(\frac DN\right)^2.} \tag{U.4}
+$$
+
+In particular the four-generation quartic sufficient condition holds
+on this growing domain with kappa=1/25. This is a scoped theorem;
+the inequality for all sufficiently high natural-block contexts remains open.
+
+**Proof.** Put A=F_(k-1), B=F_(k-2), H=F_(k-3).
+For every phase in the unique prescribed basin, its two points have
+the form
+
+$$
+a=A-v+\delta,\qquad b=B-\delta.
+$$
+
+The unit-family classification gives delta in{0,1,2}. A phase with
+delta=1 requires v>=L_(k-1)+1>=10. A phase with delta=2 requires
+v=R_(k-1)+2>=21. This applies to both phases at both two-cycle
+frontiers, including a phase that does not preserve the actual parent
+scalar value. All these splits are in the captured child blocks.
+
+With inherited label j=k-1, the numerator of (9.22) is
+
+$$
+M=Bb-Ha=B^2-HA+Hv-A\delta
+       =(-1)^{k-1}+Hv-A\delta.
+$$
+
+We have A<=3H and H>=2. If v>=1 and delta=0, then
+M>=Hv-1>=Hv/2. For delta=1,
+M>=H(v-3)-1>=Hv/2 since v>=10; for delta=2,
+M>=H(v-6)-1>=Hv/2 since v>=21. Thus the bound holds for
+every basin phase, without any depth residue or entrance flag.
+Since N<=F_k=A+B<=5H and ab<=N^2/4,
+
+$$
+v(j,N;a)=\frac{M^2}{N^2ab}
+\ge\frac{H^2v^2}{N^4}
+\ge\frac{v^2}{25N^2}.
+$$
+
+Taking the minimum over phases proves the first inequality in (U.4).
+The global cap gives C(N)<=A=G(F_k), and G is1-Lipschitz, hence
+0<=D<=v. At v=0 this gives D=0 and the displayed lower bound is
+trivial. Nonnegative child variances imply B_4>=B_1; also D/N<=1,
+so (U.4) implies B_4>=(1/25)(D/N)^4 on the stated domain. QED.
+
+The [collar checker](verification/collar_check.py) verifies the exact
+Cassini numerator and both inequalities using integer cross-products
+for every phase of every qualified basin at orders20..30. Its finite
+minimum ratio to (D/N)^2 is recorded exactly as a rational number in
+[the evidence](verification/collar-check.json); it is corroboration,
+not an estimate of a global constant.
+
+This proof connects arithmetic recursive closure to Benoît Cloitre's
+dispersion route. Here every complementary gap is at most2, so the
+proportional-split cancellation of M cannot occur. In wider blocks,
+large complementary gaps can approach that cancellation ratio; controlling
+their accumulated variance still requires new actual-profile restrictions.
 
 ### Additive dispersion policies without orbit qualification
 

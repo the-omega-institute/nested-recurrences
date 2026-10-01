@@ -697,6 +697,15 @@ def unit_defect_closure_audit(sequence, splits, fibonacci):
             assert 2 <= defect <= max(2, gap - unit_defect_width(base_order) - 1)
     abstract_profiles = 0
     abstract_readouts = 0
+    lower_gap_bounds = 0
+    for lower_gap in range(2, 4097):
+        lower_cap = 0 if lower_gap <= 9 else 2 * lower_gap // 3
+        assert lower_cap <= lower_gap - 2
+        if lower_gap >= 3:
+            assert lower_cap <= lower_gap - 3
+        if lower_gap >= 4:
+            assert lower_cap <= lower_gap - 4
+        lower_gap_bounds += 1
     for zero_width in range(3, 9):
         for unit_width in range(zero_width + 2, zero_width + 7):
             for extra in range(1, 10):
@@ -856,6 +865,7 @@ def unit_defect_closure_audit(sequence, splits, fibonacci):
                 unit_width_formula='R_k=k+floor((k-1)/3)-6, k>=19',
                 shelf_formula='2<=Q_k(v)<=max(2,v-R_k-1) for v>R_k, k>=19',
                 abstract_profiles=abstract_profiles, abstract_periodic_upper_readouts=abstract_readouts,
+                lower_gap_arithmetic_bounds_checked=lower_gap_bounds,
                 actual_complete_block_orders_inclusive=[19, 30], actual_block_vertices=block_vertices,
                 actual_closed_selector_rows=selected_rows, actual_unit_defect_rows=unit_rows,
                 first_child_spine_steps=first_spine_steps, boundary_records=boundary_records,

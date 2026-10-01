@@ -14,6 +14,7 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 - [Large natural-block defects with no residual selector labels](#large-natural-block-defects-with-no-residual-selector-labels)
 - [The first negative boundary has an exact two-state interface](#the-first-negative-boundary-has-an-exact-two-state-interface)
 - [Exact moving negative plateau and arithmetic closure](#exact-moving-negative-plateau-and-arithmetic-closure)
+- [The unit-defect sublevel set and its arithmetic spine](#the-unit-defect-sublevel-set-and-its-arithmetic-spine)
 - [Adjacent-gap parity closure and the entrance condition](#adjacent-gap-parity-closure-and-the-entrance-condition)
 - [The prescribed basin and phase in a positive collar](#the-prescribed-basin-and-phase-in-a-positive-collar)
 - [A saturated lower barrier and the exclusion of nearby proper cycles](#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)
@@ -542,6 +543,194 @@ agreeing832074-term prefix. The infinite conclusion comes from the induction,
 not from extrapolating the observed widths. This establishes the actual
 entrance premise in the next section; its larger abstract parity envelope
 remains useful for separating conditional state counts from actual histories.
+
+### The unit-defect sublevel set and its arithmetic spine
+
+The zero plateau extends to an exactly classified, nonconstant family.
+Here Q is the upper-anchor cap defect, not the natural-block profile
+defect and not C-G. Put
+
+$$
+R_k=k+\lfloor(k-1)/3\rfloor-6.
+$$
+
+**Unit-sublevel theorem.** For every k>=19 and every gap in the full
+closed block, 0<=v<=F_(k-2),
+
+$$
+\boxed{Q_k(v)\le1\quad\Longleftrightarrow\quad v\le R_k.}
+$$
+
+On this set Q_k(v)=0 for v<=L_k and Q_k(v)=1 for L_k<v<=R_k.
+Outside it the simultaneous shelf bound is
+
+$$
+2\le Q_k(v)\le\max(2,v-R_k-1)\qquad(v>R_k). \tag{U.1}
+$$
+
+**Finite premise.** At order19, L_19=9 and R_19=19. The complete
+1598-position gap profile, corresponding to scalar indices2584..4181,
+has exactly these zero and unit regions and satisfies (U.1).
+The [checker](verification/collar_check.py) regenerates this entire premise
+from the recurrence; literal, full-orbit and Brent evaluations agree
+through4181. The [evidence](verification/collar-check.json) records the
+profile hash and literal update count. Flat lower-order gaps0..9 follow
+from the preceding moving-plateau theorem for every order at least18.
+
+**Simultaneous induction.** Take k>=20. Write A=F_(k-1), B=F_(k-2),
+L=L_(k-1), and R=R_(k-1). Assume the preceding unit sublevel is contiguous
+and satisfies (U.1). We have R>=L+2 and R+3<F_(k-3).
+The gap map and the readout at the actual selected periodic gap r are
+
+$$
+r\longmapsto v-Q_{k-1}(r),\qquad
+Q_k(v)=Q_{k-1}(r)+Q_{k-2}(v-r). \tag{U.2}
+$$
+
+For the tail estimates we bound this readout sum at every periodic gap;
+the scalar identity for the parent uses its prescribed selected phase.
+
+First take v>=R+3. Gaps r<=R map to v or v-1, both above R.
+For a captured gap r>R, (U.1) and r<=v imply
+
+$$
+v-Q_{k-1}(r)\ge v-\max(2,r-R-1)\ge R+1.
+$$
+
+Thus no cycle returns to r<=R; if one of the displayed images lies
+outside the captured child block, it cannot be periodic in the first
+place. Every periodic predecessor has defect at least2. Therefore
+r<=v-2 and the complementary gap q=v-r satisfies q>=2.
+The scalar defect in (U.2) is at least2. For its upper bound:
+
+- If r>=R+3, the first defect is at most r-R-1. Flat lower gaps0..3
+  and the anchor-drop bound give Q_(k-2)(q)<=q-2 for q>=2.
+  The sum is at most v-R-3.
+- If r=R+2, the first defect is2. At q=2 the sum is2;
+  for q>=3, flat gaps0..9 and the anchor-drop bound give
+  Q_(k-2)(q)<=q-3. The sum is at most q-1=v-R-3.
+- If r=R+1, the first defect is2. At q=2 or3 the sum is2;
+  for q>=4, flat gaps0..9 and floor(2q/3)<=q-4 for q>=10 give
+  Q_(k-2)(q)<=q-4. The sum is at most q-2=v-R-3.
+
+Consequently
+
+$$
+2\le Q_k(v)\le\max(2,v-R-3)\quad(v\ge R+3),
+\qquad Q_k(R+3)=2. \tag{U.3}
+$$
+
+Next take L+2<=v<=R+1. The captured graph has a unique fixed gap v-1.
+Unit gaps map to v-1. Zero gaps first map to v, then to v-1 if v<=R;
+at v=R+1 the defect at v is2, so they pass through R-1 before
+reaching R=v-1. The condition R>=L+2 places that intermediate gap
+in the unit region. The complementary gap is1, so Q_k(v)=1.
+Smaller gaps and their first boundary follow from the proved zero-plateau
+selector law.
+
+It remains to decide v=R+2. The unique captured cycle has gaps R,R+1,
+or physical points
+
+$$
+a_0=A-R-1,\qquad a_1=A-R,
+\qquad T_n(a_0)=a_1,\quad T_n(a_1)=a_0.
+$$
+
+Its two scalar outputs have cap defects2 and1, respectively.
+Contiguity of the preceding unit sublevel gives
+
+$$
+x>a_1\ \Longrightarrow\ C(x)\ge B-1\ \Longrightarrow\ T_n(x)\le a_0,
+$$
+
+$$
+x<a_0\ \Longrightarrow\ C(x)\le B-2\ \Longrightarrow\ T_n(x)\ge a_1.
+$$
+
+Within the preceding block these follow from the sublevel classification.
+Above A use G(A+1)=B+1; below B the global cap is at most F_(k-3)<=B-2.
+The prescribed start n-1 is above a_1. Exterior sides therefore alternate,
+and either first entrance puts a_1 at even clocks and a_0 at odd clocks.
+By (U.3) the exact depth is already known:
+
+$$
+d=C(F_k-v-1)=A-Q_k(R+3)=A-2.
+$$
+
+The depth reaches the cycle. It selects a_1, hence defect1, exactly when
+A is even, or k=1 mod3. Otherwise it selects a_0 and defect2. Thus
+
+$$
+R_k=R+1+\mathbf1_{\{k\equiv1\pmod3\}}.
+$$
+
+Starting at R_19=19 gives the stated formula. The stronger tail (U.3)
+implies (U.1) with this new width in either case. The size and separation
+conditions persist: R increases by at most2, L by at most1, while the
+Fibonacci child blocks grow by much more than2. This completes the
+simultaneous sublevel/barrier induction. QED.
+
+**Actual selectors and the conditional minimum.** For k>=20 and
+0<=v<=R_k define
+
+$$
+\delta_k(v)=
+\begin{cases}
+0,&v\le L_{k-1},\\
+\mathbf1_{\{k\not\equiv1\pmod3\}},&v=L_{k-1}+1,\\
+1,&L_{k-1}+2\le v\le R_{k-1}+1,\\
+2,&v=R_{k-1}+2\ \text{and}\ k\equiv1\pmod3.
+\end{cases}
+$$
+
+The exact selected split and child gaps are
+
+$$
+g=F_{k-1}-v+\delta_k(v),\qquad
+r=v-\delta_k(v),\qquad q=\delta_k(v).
+$$
+
+We have r<=R_(k-1), q<=L_(k-2), and, writing e=Q_k(v),
+
+$$
+Q_{k-1}(r)=e,\qquad Q_{k-2}(q)=0.
+$$
+
+Thus a unit cap defect has a single defective first-child spine; every
+second child lies in the zero plateau. The entire Q<=1 family closes
+under actual selected descent down to finite base orders18/19.
+With order and gaps supplied, the outputs, basins and selected phases
+are arithmetic: zero residual selector labels suffice and are minimal.
+The context and finite base-table costs are separate. These claims are
+about actual selected orbits, rather than arbitrary phases of a candidate
+geometric cycle.
+
+For a cyclic five-row word v_i in this family, put h=k-1,
+e_i=1 if v_i>L_k and0 otherwise, and d_i=delta_k(v_i). In the
+natural-block notation the exact parent and child data are
+
+$$
+\begin{aligned}
+u_i&=F_{h-1}-v_i,& A_i&=F_h-v_{i+1}-e_i,\\
+\rho_i&=F_{h-2}-v_i+d_i,&\sigma_i&=F_{h-3}-d_i,\\
+\alpha_i&=F_{h-1}-v_{i+1}+d_{i+1}-e_i,&
+\beta_i&=F_{h-2}-d_{i+1}.
+\end{aligned}
+$$
+
+Here alpha_i+beta_i=A_i. The first child profile is F_(h-3)-e_i
+and the second is F_(h-4). These certify row-indexed recursive closure;
+they do not assert a common autonomous parameter across all five rows.
+At k=28, gaps(0,16,17,30,31) give shifts(0,0,1,1,2) and cap
+defects(0,1,1,1,1), testing both two-cycle frontiers and all three shifts.
+
+The same family admits a proved
+[phase-free quadratic dispersion bound](dispersion.md#quadratic-basin-dispersion-in-the-unit-defect-family).
+The checker exhausts abstract shelf graphs, checks every complete block
+19..30 and all qualified actual selectors using the independently
+agreeing832074-term prefix. This supplies finite premises and corroboration;
+the infinite statements follow from the induction above. Wide-block
+interfaces and uniform global dispersion remain open.
 
 ### Adjacent-gap parity closure and the entrance condition
 
