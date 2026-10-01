@@ -781,8 +781,9 @@ filters enforcing canonical row seams, high padding, terminal units, and
 y=F_j. The last filter requires the output's single1 at the input's
 highest nonzero bit position and zeros everywhere else. It needs no
 unbounded order counter. Project away the y row and, for \(\mathcal H_m\),
-the g row. For every m>=0 the result accepts exactly the top-plateau
-diagnostic through the same horizon: y=F_j forces E=0, and those roots
+the g row. For every m>=0 the result accepts the top-plateau diagnostic
+through the same horizon, with inputs1,2 omitted for \(\mathcal H_m\):
+y=F_j forces E=0, and those roots
 are included in every cap sublevel. The projection gives an NFA whose
 state count grows by a constant factor, independent of m and L.
 
@@ -879,8 +880,9 @@ premise is needed beyond the existing theorems.
 3L+1 distinct anchors through L windows. Its input count is still
 O(mL^3) for m>=1 and O(L^2) for m=0. Storing actual value or selected-split
 words therefore gives the same O(mL^4), respectively O(L^3), state bounds.
-The constant-state zero-cap filter still projects either completed graph
-to the original diagnostic: added positive-defect base or anchor roots
+The constant-state zero-cap filter still projects the completed graphs
+to the original diagnostic, up to the omitted initial selected-split cases:
+added positive-defect base or anchor roots
 fail y=F_j. The same lower bound and minimum bit order follow.
 
 This theorem identifies the necessary endpoint category for this chosen
