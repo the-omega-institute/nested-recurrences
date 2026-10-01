@@ -27,6 +27,7 @@ beyond parity.
    neighborhoods of Fibonacci indices.
 3. **[Exact collars and phases](exact-collars.md).** Wider exact bands,
    single-seed negative propagation and its two-state boundary interface,
+   the adjacent-gap parity envelope and conditional widening criterion,
    saturation, the prescribed positive-collar phase, and eventual linearity
    at every fixed positive offset.
 

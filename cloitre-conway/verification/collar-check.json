@@ -1,6 +1,6 @@
 {
   "status": "Exact two-collar and single-negative-seed premises, boundary readout and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "b6b6fc4b3779ce789450f6135862c7e3d39d7403f35c922a1a0e9c57bc2002cf",
+  "source_sha256": "04b5d10924704727a8937d2da7b160b050f64fee6cce003799bf68b6f9eacc80",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -3508,6 +3508,427 @@
       }
     ],
     "literal_endpoint_updates": 150047,
+    "adjacent_gap_parity": {
+      "abstract_gaps_inclusive": [
+        3,
+        64
+      ],
+      "amplitude_contexts": 1364,
+      "capped_profile_contexts": 41094,
+      "parity_partition_types": [
+        [
+          false,
+          2
+        ],
+        [
+          true,
+          2
+        ],
+        [
+          true,
+          3
+        ]
+      ],
+      "unit_amplitude_maximum_clock_survival": 4,
+      "larger_amplitude_maximum_clock_survival": 3,
+      "positive_adjacent_only_maximum_clock_survival": 3,
+      "sharp_unit_amplitude_trace": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "sharp_larger_amplitude_trace": [
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "actual_adjacent_contexts": [
+        {
+          "order": 9,
+          "gap": 3,
+          "adjacent_index": 30,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 10,
+          "gap": 4,
+          "adjacent_index": 50,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 11,
+          "gap": 4,
+          "adjacent_index": 84,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 12,
+          "gap": 5,
+          "adjacent_index": 138,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 13,
+          "gap": 6,
+          "adjacent_index": 226,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 14,
+          "gap": 6,
+          "adjacent_index": 370,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 15,
+          "gap": 7,
+          "adjacent_index": 602,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 16,
+          "gap": 8,
+          "adjacent_index": 978,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 17,
+          "gap": 8,
+          "adjacent_index": 1588,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 18,
+          "gap": 9,
+          "adjacent_index": 2574,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 19,
+          "gap": 10,
+          "adjacent_index": 4170,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 20,
+          "gap": 10,
+          "adjacent_index": 6754,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 21,
+          "gap": 11,
+          "adjacent_index": 10934,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 22,
+          "gap": 12,
+          "adjacent_index": 17698,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 23,
+          "gap": 12,
+          "adjacent_index": 28644,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 24,
+          "gap": 13,
+          "adjacent_index": 46354,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 25,
+          "gap": 14,
+          "adjacent_index": 75010,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 26,
+          "gap": 14,
+          "adjacent_index": 121378,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 27,
+          "gap": 15,
+          "adjacent_index": 196402,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 28,
+          "gap": 16,
+          "adjacent_index": 317794,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 29,
+          "gap": 16,
+          "adjacent_index": 514212,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        },
+        {
+          "order": 30,
+          "gap": 17,
+          "adjacent_index": 832022,
+          "amplitude": 1,
+          "preceding_adjacent_defect": 1,
+          "next_adjacent_defect": 1,
+          "selected_adjacent_period": 1
+        }
+      ],
+      "complete_top_suffix_orders_inclusive": [
+        5,
+        30
+      ],
+      "top_suffix_vertices": 832063,
+      "top_suffix_rows": [
+        {
+          "order": 5,
+          "first_top_index": 4,
+          "top_value": 3,
+          "negative_width": 1
+        },
+        {
+          "order": 6,
+          "first_top_index": 7,
+          "top_value": 5,
+          "negative_width": 1
+        },
+        {
+          "order": 7,
+          "first_top_index": 12,
+          "top_value": 8,
+          "negative_width": 1
+        },
+        {
+          "order": 8,
+          "first_top_index": 19,
+          "top_value": 13,
+          "negative_width": 2
+        },
+        {
+          "order": 9,
+          "first_top_index": 31,
+          "top_value": 21,
+          "negative_width": 3
+        },
+        {
+          "order": 10,
+          "first_top_index": 52,
+          "top_value": 34,
+          "negative_width": 3
+        },
+        {
+          "order": 11,
+          "first_top_index": 85,
+          "top_value": 55,
+          "negative_width": 4
+        },
+        {
+          "order": 12,
+          "first_top_index": 139,
+          "top_value": 89,
+          "negative_width": 5
+        },
+        {
+          "order": 13,
+          "first_top_index": 228,
+          "top_value": 144,
+          "negative_width": 5
+        },
+        {
+          "order": 14,
+          "first_top_index": 371,
+          "top_value": 233,
+          "negative_width": 6
+        },
+        {
+          "order": 15,
+          "first_top_index": 603,
+          "top_value": 377,
+          "negative_width": 7
+        },
+        {
+          "order": 16,
+          "first_top_index": 980,
+          "top_value": 610,
+          "negative_width": 7
+        },
+        {
+          "order": 17,
+          "first_top_index": 1589,
+          "top_value": 987,
+          "negative_width": 8
+        },
+        {
+          "order": 18,
+          "first_top_index": 2575,
+          "top_value": 1597,
+          "negative_width": 9
+        },
+        {
+          "order": 19,
+          "first_top_index": 4172,
+          "top_value": 2584,
+          "negative_width": 9
+        },
+        {
+          "order": 20,
+          "first_top_index": 6755,
+          "top_value": 4181,
+          "negative_width": 10
+        },
+        {
+          "order": 21,
+          "first_top_index": 10935,
+          "top_value": 6765,
+          "negative_width": 11
+        },
+        {
+          "order": 22,
+          "first_top_index": 17700,
+          "top_value": 10946,
+          "negative_width": 11
+        },
+        {
+          "order": 23,
+          "first_top_index": 28645,
+          "top_value": 17711,
+          "negative_width": 12
+        },
+        {
+          "order": 24,
+          "first_top_index": 46355,
+          "top_value": 28657,
+          "negative_width": 13
+        },
+        {
+          "order": 25,
+          "first_top_index": 75012,
+          "top_value": 46368,
+          "negative_width": 13
+        },
+        {
+          "order": 26,
+          "first_top_index": 121379,
+          "top_value": 75025,
+          "negative_width": 14
+        },
+        {
+          "order": 27,
+          "first_top_index": 196403,
+          "top_value": 121393,
+          "negative_width": 15
+        },
+        {
+          "order": 28,
+          "first_top_index": 317796,
+          "top_value": 196418,
+          "negative_width": 15
+        },
+        {
+          "order": 29,
+          "first_top_index": 514213,
+          "top_value": 317811,
+          "negative_width": 16
+        },
+        {
+          "order": 30,
+          "first_top_index": 832023,
+          "top_value": 514229,
+          "negative_width": 17
+        }
+      ],
+      "scope": "Complete adjacent-gap cycle/readout envelope, exact parity-trace quotient and clock obstruction are general proofs with supplied flat lower profiles and amplitude. Three/two states count envelope parity continuations, not actual-C graph memory or numeric adjacent defects. Conditional widening requires the actual lower-endpoint entrance to be avoided; finite top suffixes and entrances do not prove this universal premise. Zero adjacent defects are allowed. A perpetual boundary copy would force recurring path-witnessed cap holes. No global limit/dispersion or Lean claim."
+    },
     "scope": "Single-negative-seed propagation and first-boundary copy-or-contract/readout-phase proofs are general. Seeds reuse the independently agreeing F30+34 full-orbit/Brent prefix. Finite observations p=1,q=0,entrance flag1 and width growth are not uniform laws; arbitrary negative widths, full recursive minimum, dispersion and convergence remain open. Conditional phase-state minima exclude supplied context and its certification cost."
   },
   "five_pattern_interaction": {
