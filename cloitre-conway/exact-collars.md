@@ -666,8 +666,9 @@ $$
 
 Starting at R_19=19 gives the stated formula. The stronger tail (U.3)
 implies (U.1) with this new width in either case. The size and separation
-conditions persist: R increases by at most2, L by at most1, while the
-Fibonacci child blocks grow by much more than2. This completes the
+conditions persist: R increases by at least1 and at most2, while L
+increases by at most1 and the Fibonacci child blocks grow by more than2.
+This completes the
 simultaneous sublevel/barrier induction. QED.
 
 **Actual selectors and the conditional minimum.** For k>=20 and

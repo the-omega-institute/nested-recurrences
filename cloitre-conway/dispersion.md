@@ -321,8 +321,8 @@ on this growing domain with kappa=1/25. This is a scoped theorem;
 the inequality for all sufficiently high natural-block contexts remains open.
 
 **Proof.** Put A=F_(k-1), B=F_(k-2), H=F_(k-3).
-For every phase in the unique prescribed basin, its two points have
-the form
+For every phase in the unique prescribed basin, the split and its
+complementary argument have the form
 
 $$
 a=A-v+\delta,\qquad b=B-\delta.
