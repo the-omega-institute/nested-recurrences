@@ -1,6 +1,6 @@
 {
-  "status": "Exact two-collar seeds and finite corroboration; fibonacci-collars.md Sections 1-4 use golden-proof.md, and Section 6 adds the recorded seed premises; no Lean formalization.",
-  "source_sha256": "6932044a2aed32f537810b9312798ea04d20f8d7acc6719148b72f83031a0cef",
+  "status": "Exact two-collar and single-negative-seed premises, boundary readout and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states propagation and boundary proofs; no Lean formalization.",
+  "source_sha256": "b6b6fc4b3779ce789450f6135862c7e3d39d7403f35c922a1a0e9c57bc2002cf",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -2921,6 +2921,594 @@
     "growing_linear_width": "L_j=32+2*floor((j-23)/6)+indicator((j-23 mod6)>=4)",
     "growing_saturated_width": "W_j=max(32,G(L_j))",
     "scope": "General offset induction from the already certified0..32 collar and a necessary defect-persistence/phase rule. Finite Boolean paths are exhaustive for the rule envelope, not reverse-complete actual C histories. Every fixed positive width eventually has a proved exact collar; arbitrary negative widths and global ratio convergence remain open. Additional independent numerical checks stay within the previously published2^20 range, while the infinite conclusion comes from the extinction proof."
+  },
+  "negative_fibonacci_boundary": {
+    "abstract_gaps_inclusive": [
+      2,
+      32
+    ],
+    "abstract_contexts": 1982,
+    "abstract_start_depth_readout_checks": 2741029,
+    "new_scalar_seed_premises": 5,
+    "whole_seed_values_corroborated": 80,
+    "seed_rows": [
+      {
+        "width": 13,
+        "order": 24,
+        "index": 46355,
+        "value": 28657,
+        "relative_seed_values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "corroborating_orders": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30
+        ],
+        "universal_value_orders": "all k >= 24, by single-seed propagation",
+        "universal_unique_fixed_cycle_orders": "all k >= 25"
+      },
+      {
+        "width": 14,
+        "order": 26,
+        "index": 121379,
+        "value": 75025,
+        "relative_seed_values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "corroborating_orders": [
+          26,
+          27,
+          28,
+          29,
+          30
+        ],
+        "universal_value_orders": "all k >= 26, by single-seed propagation",
+        "universal_unique_fixed_cycle_orders": "all k >= 27"
+      },
+      {
+        "width": 15,
+        "order": 27,
+        "index": 196403,
+        "value": 121393,
+        "relative_seed_values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "corroborating_orders": [
+          27,
+          28,
+          29,
+          30
+        ],
+        "universal_value_orders": "all k >= 27, by single-seed propagation",
+        "universal_unique_fixed_cycle_orders": "all k >= 28"
+      },
+      {
+        "width": 16,
+        "order": 29,
+        "index": 514213,
+        "value": 317811,
+        "relative_seed_values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "corroborating_orders": [
+          29,
+          30
+        ],
+        "universal_value_orders": "all k >= 29, by single-seed propagation",
+        "universal_unique_fixed_cycle_orders": "all k >= 30"
+      },
+      {
+        "width": 17,
+        "order": 30,
+        "index": 832023,
+        "value": 514229,
+        "relative_seed_values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "corroborating_orders": [
+          30
+        ],
+        "universal_value_orders": "all k >= 30, by single-seed propagation",
+        "universal_unique_fixed_cycle_orders": "all k >= 31"
+      }
+    ],
+    "conditional_actual_contexts": 200,
+    "absorbing_tail_contexts": 200,
+    "arithmetic_selected_window_rows": 154,
+    "arithmetic_selected_five_window": {
+      "anchor_order": 30,
+      "profile_order": 29,
+      "gaps": [
+        0,
+        1,
+        8,
+        15,
+        16
+      ],
+      "indices": [
+        832040,
+        832039,
+        832032,
+        832025,
+        832024
+      ],
+      "offsets": [
+        317811,
+        317810,
+        317803,
+        317796,
+        317795
+      ],
+      "defects": [
+        121393,
+        121392,
+        121385,
+        121378,
+        121377
+      ],
+      "total_defect": 606925,
+      "first_offsets": [
+        196418,
+        196417,
+        196410,
+        196403,
+        196402
+      ],
+      "second_offsets": [
+        121393,
+        121393,
+        121393,
+        121393,
+        121393
+      ],
+      "parent_parameters": [
+        514228,
+        514221,
+        514214,
+        514213,
+        514229
+      ],
+      "first_parameters": [
+        317810,
+        317803,
+        317796,
+        317795,
+        317811
+      ],
+      "second_parameters": [
+        196418,
+        196418,
+        196418,
+        196418,
+        196418
+      ],
+      "selected_splits": [
+        514229,
+        514228,
+        514221,
+        514214,
+        514213
+      ]
+    },
+    "nonzero_actual_boundary_rows": [
+      {
+        "order": 7,
+        "gap": 2,
+        "index": 11,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 2,
+        "entrance_flag": 1,
+        "depth": 7,
+        "selected_gap": 2,
+        "parent_defect": 1
+      },
+      {
+        "order": 8,
+        "gap": 2,
+        "index": 19,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 4,
+        "entrance_flag": 1,
+        "depth": 12,
+        "selected_gap": 1,
+        "parent_defect": 0
+      },
+      {
+        "order": 9,
+        "gap": 3,
+        "index": 31,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 4,
+        "entrance_flag": 1,
+        "depth": 20,
+        "selected_gap": 2,
+        "parent_defect": 0
+      },
+      {
+        "order": 10,
+        "gap": 4,
+        "index": 51,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 4,
+        "entrance_flag": 1,
+        "depth": 33,
+        "selected_gap": 4,
+        "parent_defect": 1
+      },
+      {
+        "order": 11,
+        "gap": 4,
+        "index": 85,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 6,
+        "entrance_flag": 1,
+        "depth": 54,
+        "selected_gap": 3,
+        "parent_defect": 0
+      },
+      {
+        "order": 12,
+        "gap": 5,
+        "index": 139,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 6,
+        "entrance_flag": 1,
+        "depth": 88,
+        "selected_gap": 4,
+        "parent_defect": 0
+      },
+      {
+        "order": 13,
+        "gap": 6,
+        "index": 227,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 6,
+        "entrance_flag": 1,
+        "depth": 143,
+        "selected_gap": 6,
+        "parent_defect": 1
+      },
+      {
+        "order": 14,
+        "gap": 6,
+        "index": 371,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 8,
+        "entrance_flag": 1,
+        "depth": 232,
+        "selected_gap": 5,
+        "parent_defect": 0
+      },
+      {
+        "order": 15,
+        "gap": 7,
+        "index": 603,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 6,
+        "entrance_flag": 1,
+        "depth": 376,
+        "selected_gap": 6,
+        "parent_defect": 0
+      },
+      {
+        "order": 16,
+        "gap": 8,
+        "index": 979,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 8,
+        "entrance_flag": 1,
+        "depth": 609,
+        "selected_gap": 8,
+        "parent_defect": 1
+      },
+      {
+        "order": 17,
+        "gap": 8,
+        "index": 1589,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 8,
+        "entrance_flag": 1,
+        "depth": 986,
+        "selected_gap": 7,
+        "parent_defect": 0
+      },
+      {
+        "order": 18,
+        "gap": 9,
+        "index": 2575,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 8,
+        "entrance_flag": 1,
+        "depth": 1596,
+        "selected_gap": 8,
+        "parent_defect": 0
+      },
+      {
+        "order": 19,
+        "gap": 10,
+        "index": 4171,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 8,
+        "entrance_flag": 1,
+        "depth": 2583,
+        "selected_gap": 10,
+        "parent_defect": 1
+      },
+      {
+        "order": 20,
+        "gap": 10,
+        "index": 6755,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 10,
+        "entrance_flag": 1,
+        "depth": 4180,
+        "selected_gap": 9,
+        "parent_defect": 0
+      },
+      {
+        "order": 21,
+        "gap": 11,
+        "index": 10935,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 10,
+        "entrance_flag": 1,
+        "depth": 6764,
+        "selected_gap": 10,
+        "parent_defect": 0
+      },
+      {
+        "order": 22,
+        "gap": 12,
+        "index": 17699,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 10,
+        "entrance_flag": 1,
+        "depth": 10945,
+        "selected_gap": 12,
+        "parent_defect": 1
+      },
+      {
+        "order": 23,
+        "gap": 12,
+        "index": 28645,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 10,
+        "entrance_flag": 1,
+        "depth": 17710,
+        "selected_gap": 11,
+        "parent_defect": 0
+      },
+      {
+        "order": 24,
+        "gap": 13,
+        "index": 46355,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 12,
+        "entrance_flag": 1,
+        "depth": 28656,
+        "selected_gap": 12,
+        "parent_defect": 0
+      },
+      {
+        "order": 25,
+        "gap": 14,
+        "index": 75011,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 12,
+        "entrance_flag": 1,
+        "depth": 46367,
+        "selected_gap": 14,
+        "parent_defect": 1
+      },
+      {
+        "order": 26,
+        "gap": 14,
+        "index": 121379,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 12,
+        "entrance_flag": 1,
+        "depth": 75024,
+        "selected_gap": 13,
+        "parent_defect": 0
+      },
+      {
+        "order": 27,
+        "gap": 15,
+        "index": 196403,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 12,
+        "entrance_flag": 1,
+        "depth": 121392,
+        "selected_gap": 14,
+        "parent_defect": 0
+      },
+      {
+        "order": 28,
+        "gap": 16,
+        "index": 317795,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 14,
+        "entrance_flag": 1,
+        "depth": 196417,
+        "selected_gap": 16,
+        "parent_defect": 1
+      },
+      {
+        "order": 29,
+        "gap": 16,
+        "index": 514213,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 14,
+        "entrance_flag": 1,
+        "depth": 317810,
+        "selected_gap": 15,
+        "parent_defect": 0
+      },
+      {
+        "order": 30,
+        "gap": 17,
+        "index": 832023,
+        "previous_defect": 1,
+        "transfer_defect": 0,
+        "capture_time": 14,
+        "entrance_flag": 1,
+        "depth": 514228,
+        "selected_gap": 16,
+        "parent_defect": 0
+      }
+    ],
+    "literal_witnesses": [
+      {
+        "order": 24,
+        "gap": 13,
+        "index": 46355,
+        "depth": 28656,
+        "transient": 12,
+        "cycle": [
+          28645,
+          28644
+        ],
+        "selected_split": 28645,
+        "value": 28657,
+        "other_split": 28644,
+        "other_value": 28656
+      },
+      {
+        "order": 25,
+        "gap": 14,
+        "index": 75011,
+        "depth": 46367,
+        "transient": 12,
+        "cycle": [
+          46355,
+          46354
+        ],
+        "selected_split": 46354,
+        "value": 46367,
+        "other_split": 46355,
+        "other_value": 46368
+      },
+      {
+        "order": 26,
+        "gap": 14,
+        "index": 121379,
+        "depth": 75024,
+        "transient": 13,
+        "cycle": [
+          75011,
+          75012
+        ],
+        "selected_split": 75012,
+        "value": 75025,
+        "other_split": 75011,
+        "other_value": 75024
+      }
+    ],
+    "literal_endpoint_updates": 150047,
+    "scope": "Single-negative-seed propagation and first-boundary copy-or-contract/readout-phase proofs are general. Seeds reuse the independently agreeing F30+34 full-orbit/Brent prefix. Finite observations p=1,q=0,entrance flag1 and width growth are not uniform laws; arbitrary negative widths, full recursive minimum, dispersion and convergence remain open. Conditional phase-state minima exclude supplied context and its certification cost."
   },
   "five_pattern_interaction": {
     "patterns": [
