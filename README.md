@@ -20,6 +20,7 @@ or programming knowledge is needed.
 | Understand the extra information needed to recover child branches | **[Seed reconstruction](cloitre-conway/fibonacci-collars.md#seed-reconstruction-and-the-remaining-branch-information)** · **[Minimum cycle checks](cloitre-conway/fibonacci-collars.md#minimal-periodicity-checks-for-inverse-reconstruction)** |
 | Check inverse uniqueness with a small graph and a hand-worked example | **[Gap graph and reverse completeness](cloitre-conway/fibonacci-collars.md#a-bounded-gap-automaton-with-reverse-completeness)** |
 | See the minimum total defect needed for a proper cycle | **[Cycle defect cost](cloitre-conway/fibonacci-collars.md#minimum-defect-cost-of-a-proper-cycle)** |
+| Understand recursive descent and its extra inverse-label budget | **[Recursive windows](cloitre-conway/fibonacci-collars.md#recursive-windows-with-a-parameter-at-every-row)** · **[Conserved branch budget](cloitre-conway/fibonacci-collars.md#a-conserved-budget-for-multiscale-inverse-labels)** |
 | See what is proved and what remains open | **[Current status](STATUS.md)** |
 
 Click a link to read its document, then use your browser's Back button to

@@ -750,9 +750,10 @@ ternary homogeneity, but the closure contract is the same:
 scale coordinates + branch label + affine transition + closure phase
 ```
 
-The next bounded C result should enumerate all period-five words in one arch
-window using this payload and prove a reverse completeness map. No global finite
-alphabet is claimed yet.
+The recursive extension below keeps a separate parameter at every row. It
+closes the representation under descent without claiming that a child word
+is an autonomous lower period-five orbit. A uniform small branch alphabet and
+short selected-value certificates remain open.
 
 ## 9. Common closure theorem and generic minimality
 
@@ -1449,3 +1450,165 @@ C itself attains E=p at n=68: t=13, cycle offsets `(9,6,8,5)` and defects
 `(2,1,0,1)`. The defect-cost theorem constrains primitive cycle types and their
 centroids; it does not bound E across Fibonacci orders or prove full ratio
 convergence.
+
+### Recursive windows with a parameter at every row
+
+A constant-parameter five-cycle does not generally descend to two
+constant-parameter cycles. The exact closed class is larger: a periodic
+row-indexed window with parameters `A_0,...,A_(p-1)`. Child offsets need not
+be distinct, and the row clock is inherited rather than independently
+rotated. This gives a structural recursive closure theorem, while the size
+and verification of the selector information remain separate questions.
+
+**Recursive window theorem.** Fix j>=6, p>=1 and a word of natural-block
+offsets `0<=u_i<=F_(j-1)`, satisfying
+
+$$
+u_{i+1}=A_i-P_j(u_i)\qquad(i\bmod p). \tag{9.4}
+$$
+
+For the actual selected split of `n_i=F_j+u_i`, write
+
+```text
+a(n_i)=F_(j-1)+r_i,       q_i=u_i-r_i.
+```
+
+Then the intersected capture bounds give
+
+$$
+\max(0,u_i-F_{j-3})\le r_i\le\min(u_i,F_{j-2}). \tag{9.5}
+$$
+
+In particular `0<=r_i<=F_(j-2)` and `0<=q_i<=F_(j-3)`. Define
+
+$$
+\alpha_i=r_{i+1}+P_{j-1}(r_i),\qquad
+\beta_i=q_{i+1}+P_{j-2}(q_i).
+$$
+
+The two children are natural-block windows of the same length p at orders
+j-1 and j-2, with
+
+$$
+r_{i+1}=\alpha_i-P_{j-1}(r_i),\qquad
+q_{i+1}=\beta_i-P_{j-2}(q_i),\qquad
+\alpha_i+\beta_i=A_i. \tag{9.6}
+$$
+
+The nonnegative profile defects split exactly, row by row and in total.
+No independent Fibonacci carry word or child rotation label is required.
+
+**Proof.** For `0<=u_i<F_(j-1)`, apply (1.4) to the selected point of
+`T_(F_j+u_i)`. Its lower and upper limits, relative to `F_(j-1)`, are
+exactly the two ends in (9.5). At the remaining endpoint
+`u_i=F_(j-1)`, the index is F_(j+1), whose selected split is F_j by
+Fibonacci landing. Thus `r_i=F_(j-2)` and `q_i=F_(j-3)`, and (9.5) still
+holds. The profile identity gives
+
+```text
+P_j(u_i)=P_(j-1)(r_i)+P_(j-2)(q_i).
+```
+
+Adding the two definitions in (9.6), and using `r_(i+1)+q_(i+1)=u_(i+1)`,
+gives `alpha_i+beta_i=u_(i+1)+P_j(u_i)=A_i`. The child transitions are
+their defining equations, including the last-to-first edge. Subtracting the
+profile identity from `u_i=r_i+q_i` proves defect additivity. The bounds
+place both children in their natural blocks; an upper endpoint is simply
+the next Fibonacci anchor, represented in the closed interval. QED.
+
+Repeat this theorem at every child of order at least six. The order drops
+by one or two at every edge, so a root of order j reaches leaf orders four
+or five after at most j-5 edges. At these leaves use the same defining
+formula `P_h(v)=C(F_h+v)-F_(h-1)`; their indices are at most F_6=8. This proves
+termination of the structural window descent, without assuming order-uniform
+defects or a finite alphabet. The two children retain the parent's row
+indexing throughout. If one chooses to canonicalize a child by rotation, its
+rotation must be restored before using the rowwise complement identity.
+
+For the first arch at n=196, the canonical parent offset word is
+`(26,31,27,28,29)` at profile order 11, with all A_i=52. Its children are
+
+```text
+r     = (10,20,16,12,18),       q    = (16,11,11,16,11),
+alpha = (29,31,26,29,26),       beta = (23,21,26,23,26).
+```
+
+Both parameter words vary, and each row sums to 52. They are exact closed
+nonautonomous windows; neither is thereby a constant-parameter lower C orbit.
+The verifier recursively replays all thirteen public five-window roots and
+additional boundary words of lengths 1,2,3,5,6 down to the small leaves,
+preserving row alignment, profile identities and defect sums. Selected splits
+used in the trees are independently checked by literal iteration at their
+physical indices, with no phase shortcut.
+
+For the minimum-information question, the consequence is specific. Store one
+child parameter word alpha; beta is derived from `A-alpha`. The seed/fiber
+theorems apply unchanged to the first child word. Block alignment and the
+row clock add no independent labels. What is still needed is a certificate
+that the recovered r_i are the actual selected splits of the physical n_i,
+including their prescribed basins and entry-aligned phases. The row clock
+of (9.4) is not the iteration phase in those separate physical orbits.
+
+An arbitrary raw decomposition may fail (9.5). The interval can therefore
+be added to each candidate domain at no extra coordinate cost; it preserves
+the actual word but does not prove inverse uniqueness or selected validity.
+The raw domains of the earlier collision examples remain exactly as stated.
+The binary descent tree may also have many nodes: termination is not a bound
+on a compact certificate's total size. Campbell's ternary endpoint templates
+already provide uniform branch and prescribed-phase information; the new
+C theorem establishes the recursive coordinate class, while that comparable
+compression remains open.
+
+### A conserved budget for multiscale inverse labels
+
+Defect conservation gives more than termination. Consider the selected
+recursive tree of an odd-length root window at profile order j, and let
+E be its total profile defect. At every node v, write E_v for that node's
+total defect. By (9.6), the two children have nonnegative costs with
+`E_left+E_right=E_v`. Hence any disjoint frontier has total cost at most E.
+
+At an internal node, the first-child defects lie in the parent row boxes:
+`0<=r_i-P_(h-1)(r_i)<=e_i`. Given its alpha word and candidate/profile
+context, the defect-seed theorem therefore needs at most
+
+```text
+b_v = ceil(log_2(floor(E_v/2)+1))
+```
+
+additional bits to recover the first child. The second child is then the
+coordinatewise difference from the known parent word, so it needs no second
+seed label. When E_v<=1, b_v=0 and every alpha fiber is already a singleton.
+
+Put D_v=floor(E_v/2). For D_v>=1, `D_v+1<=2^D_v`, so b_v<=D_v; this
+also holds at zero. On every frontier of internal nodes,
+
+$$
+\sum_v b_v\le\sum_v\lfloor E_v/2\rfloor\le\lfloor E/2\rfloor. \tag{9.7}
+$$
+
+The number of nodes that could require a nonzero inverse label is likewise
+at most floor(E/2) on any frontier. Since there are at most j-5 internal
+depth levels, the entire tree needs at most
+
+$$
+(j-5)\lfloor E/2\rfloor \tag{9.8}
+$$
+
+conditional seed-label bits. The same bound counts potentially ambiguous
+internal nodes. Its proof does not require enumerating their alpha fibers.
+The signed-gap capacity also satisfies
+`sum_v 2*floor(E_v/2)<=2*floor(E/2)` on each frontier, per row layer.
+Thus a per-root gap alphabet and inverse-label budget do not proliferate
+with the number of descendants, even though the raw tree can branch.
+
+These are bounds on **residual inverse labels after the local parameter words
+and contexts are supplied**. They exclude the cost of those parameter words,
+the profile/qualification certificates and the prescribed basin/phase proofs.
+They do not bound the whole certificate, and E need not be uniform across
+roots or Fibonacci orders. In particular, zero inverse-label cost does not
+make an unspecified child parameter word or its selected validity free.
+
+The recursive audit checks the bound at every depth and decodes each odd
+internal node with its adaptive residue, after the geometric candidate
+restriction (9.5). This makes the multiscale inverse budget independently
+testable alongside the row-aligned window representation.

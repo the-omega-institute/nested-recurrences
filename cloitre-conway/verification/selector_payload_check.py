@@ -710,11 +710,153 @@ def affine_rank(matrix):
     return pivot
 
 
+def recursive_window_audit(sequence, selected_splits, fibonacci, roots):
+    assert sequence == brent_generate(len(sequence) - 1)
+    boundary_rows = 0
+    for order in range(6, len(fibonacci) - 1):
+        for offset in range(fibonacci[order - 1] + 1):
+            index = fibonacci[order] + offset
+            if index >= len(sequence):
+                break
+            split = selected_splits[index] - fibonacci[order - 1]
+            assert max(0, offset - fibonacci[order - 3]) <= split
+            assert split <= min(offset, fibonacci[order - 2])
+            boundary_rows += 1
+    artificial_roots = []
+    for order in range(6, 14):
+        values = (0, 1, fibonacci[order - 3], fibonacci[order - 2],
+                  fibonacci[order - 1])
+        for length in (1, 2, 3, 5, 6):
+            offsets = tuple(values[phase % len(values)] for phase in range(length))
+            parameters = tuple(offsets[(phase + 1) % length]
+                               + sequence[fibonacci[order] + offset] - fibonacci[order - 1]
+                               for phase, offset in enumerate(offsets))
+            artificial_roots.append((order, offsets, parameters))
+    nodes_by_order = Counter()
+    leaf_orders = Counter()
+    literal_selected_indices = set()
+    child_parameter_words = 0
+    nonconstant_child_words = 0
+    maximum_depth = 0
+    first_example = None
+    inverse_decodings = 0
+    root_budgets = []
+    for root_number, root in enumerate([*roots, *artificial_roots]):
+        root_order, root_offsets, root_parameters = root
+        root_cost = sum(offset - sequence[fibonacci[root_order] + offset] + fibonacci[root_order - 1]
+                        for offset in root_offsets)
+        frontier_costs = Counter()
+        frontier_bits = Counter()
+        frontier_ambiguous = Counter()
+        stack = [(*root, 0)]
+        while stack:
+            order, offsets, parameters, depth = stack.pop()
+            maximum_depth = max(maximum_depth, depth)
+            nodes_by_order[order] += 1
+            assert all(0 <= offset <= fibonacci[order - 1] for offset in offsets)
+            profile = tuple(sequence[fibonacci[order] + offset] - fibonacci[order - 1]
+                            for offset in offsets)
+            assert all(0 <= value <= offset for offset, value in zip(offsets, profile))
+            node_cost = sum(offset - value for offset, value in zip(offsets, profile))
+            frontier_costs[depth] += node_cost
+            assert all(offsets[(phase + 1) % len(offsets)] == parameter - value
+                       for phase, (parameter, value) in enumerate(zip(parameters, profile)))
+            if order <= 5:
+                assert all(fibonacci[order] + offset <= 8 for offset in offsets)
+                leaf_orders[order] += 1
+                continue
+            splits = tuple(selected_splits[fibonacci[order] + offset] - fibonacci[order - 1]
+                           for offset in offsets)
+            complements = tuple(offset - split for offset, split in zip(offsets, splits))
+            assert all(0 <= split <= fibonacci[order - 2] for split in splits)
+            assert all(0 <= complement <= fibonacci[order - 3] for complement in complements)
+            first_values = tuple(sequence[fibonacci[order - 1] + split] - fibonacci[order - 2]
+                                 for split in splits)
+            second_values = tuple(sequence[fibonacci[order - 2] + complement] - fibonacci[order - 3]
+                                  for complement in complements)
+            assert all(value == first + second
+                       for value, first, second in zip(profile, first_values, second_values))
+            first_parameters = tuple(splits[(phase + 1) % len(splits)] + value
+                                     for phase, value in enumerate(first_values))
+            second_parameters = tuple(complements[(phase + 1) % len(complements)] + value
+                                      for phase, value in enumerate(second_values))
+            assert all(parameter == first + second for parameter, first, second
+                       in zip(parameters, first_parameters, second_parameters))
+            parent_cost = sum(offset - value for offset, value in zip(offsets, profile))
+            first_cost = sum(split - value for split, value in zip(splits, first_values))
+            second_cost = sum(complement - value
+                              for complement, value in zip(complements, second_values))
+            assert min(parent_cost, first_cost, second_cost) >= 0
+            assert parent_cost == first_cost + second_cost
+            assert all(0 <= value <= split for split, value in zip(splits, first_values))
+            assert all(0 <= value <= complement for complement, value
+                       in zip(complements, second_values))
+            if len(offsets) % 2:
+                defects = tuple(offset - value for offset, value in zip(offsets, profile))
+                sets = candidate_sets(sequence, fibonacci[order], fibonacci[order - 1],
+                                      fibonacci[order - 2], fibonacci[order - 3], offsets)
+                geometric_sets = [tuple(split for split in values
+                                        if max(0, offset - fibonacci[order - 3]) <= split
+                                        <= min(offset, fibonacci[order - 2]))
+                                  for offset, values in zip(offsets, sets)]
+                lower_profile = {split: sequence[fibonacci[order - 1] + split] - fibonacci[order - 2]
+                                 for values in geometric_sets for split in values}
+                modulus = parent_cost // 2 + 1
+                assert decode_defect_residue(geometric_sets, lower_profile, first_parameters,
+                                             defects, splits[0] % modulus) == splits
+                inverse_decodings += 1
+                frontier_bits[depth] += (parent_cost // 2).bit_length()
+                frontier_ambiguous[depth] += parent_cost >= 2
+            for offset in offsets:
+                index = fibonacci[order] + offset
+                if index in literal_selected_indices:
+                    continue
+                point = index - 1
+                for iteration in range(sequence[index - 1]):
+                    point = index - sequence[point]
+                assert point == selected_splits[index]
+                literal_selected_indices.add(index)
+            child_parameter_words += 2
+            nonconstant_child_words += sum(len(set(word)) > 1
+                                           for word in (first_parameters, second_parameters))
+            if root_number == 0 and depth == 0:
+                first_example = dict(profile_order=order, offsets=list(offsets),
+                                     parameters=list(parameters), first_offsets=list(splits),
+                                     second_offsets=list(complements),
+                                     first_parameters=list(first_parameters),
+                                     second_parameters=list(second_parameters))
+            stack.extend(((order - 1, splits, first_parameters, depth + 1),
+                          (order - 2, complements, second_parameters, depth + 1)))
+        assert all(cost <= root_cost for cost in frontier_costs.values())
+        if len(root_offsets) % 2:
+            assert all(bits <= root_cost // 2 for bits in frontier_bits.values())
+            assert all(count <= root_cost // 2 for count in frontier_ambiguous.values())
+            bit_bound = (root_order - 5) * (root_cost // 2)
+            assert sum(frontier_bits.values()) <= bit_bound
+            assert sum(frontier_ambiguous.values()) <= bit_bound
+            root_budgets.append(dict(root_kind='selected_five_window' if root_number < len(roots)
+                                    else 'boundary_word', profile_order=root_order,
+                                     window_length=len(root_offsets), root_defect_sum=root_cost,
+                                     total_adaptive_seed_bits=sum(frontier_bits.values()),
+                                     total_seed_bit_upper_bound=bit_bound,
+                                     potential_ambiguous_nodes=sum(frontier_ambiguous.values()),
+                                     maximum_frontier_seed_bits=max(frontier_bits.values(), default=0)))
+    return dict(selected_five_window_roots=len(roots), boundary_test_roots=len(artificial_roots),
+                geometric_selected_rows=boundary_rows, nodes_by_profile_order=dict(sorted(nodes_by_order.items())),
+                leaf_orders=dict(sorted(leaf_orders.items())), maximum_depth=maximum_depth,
+                literal_selected_points=len(literal_selected_indices), child_parameter_words=child_parameter_words,
+                nonconstant_child_parameter_words=nonconstant_child_words,
+                first_five_window_descent=first_example,
+                odd_node_inverse_decodings=inverse_decodings, odd_root_seed_budgets=root_budgets,
+                scope='Exact recursive nonautonomous windows with inherited row alignment. Child parameters add to the parent row parameter; all selected offsets stay in the two natural lower Fibonacci blocks, including endpoints. Leaf evaluations use indices at most eight. This certifies the recursive representation, not a uniform branch alphabet, minimal total certificate size, or an independent algorithm for choosing the splits.')
+
+
 def main():
     limit = 609
     fibonacci = fibonacci_values(limit + 1)
     sequence, _, _, selected_splits = generate(limit)
     payloads = []
+    recursive_roots = []
     candidate_lengths = Counter()
     ambiguous_rows = 0
     noncontiguous_sets = 0
@@ -853,6 +995,8 @@ def main():
                     "selected_ranks": ranks,
                     "cartesian_candidate_count": math.prod(lengths),
                 })
+                recursive_roots.append((order - 1, tuple(offsets),
+                                        (index - fibonacci[order],) * 5))
     largest = max(payloads, key=lambda row: row["cartesian_candidate_count"])
     assert len(payloads) == 13
     assert selected_seed_reconstructions == 13
@@ -878,7 +1022,7 @@ def main():
     print(json.dumps({
         "status": "passed",
         "source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-        "scope": "Exact public three-block selector audit; row-local Cartesian independence is checked, while lower-window closure constraints remain separate.",
+        "scope": "Exact public three-block selector audit, recursive nonautonomous window descent and conserved conditional seed-label budgets. Row-local Cartesian decompositions remain distinct from actual selected splits and their proof costs.",
         "period_five_payloads": len(payloads),
         "parent_rows": parent_rows,
         "ambiguous_parent_rows": ambiguous_rows,
@@ -889,8 +1033,8 @@ def main():
         "complementary_lower_map_rows": complementary_lower_map_rows,
         "complementary_lower_map_identity": {
             "formula": "(r_(i+1) + P_(k-2)(r_i)) + (q_(i+1) + P_(k-3)(q_i)) = t",
-            "scope": "all 65 public parent rows; q_i = u_i - r_i and t = n - F_(k-1)",
-            "interpretation": "The two lower-map parameters are exact complements at the parent scale; this is not a lower five-cycle closure theorem."
+            "scope": "all 65 public parent rows; q_i = u_i - r_i and t = n - F_k",
+            "interpretation": "The two lower-map parameters are exact complements at the parent scale. They close nonautonomous child windows, not necessarily autonomous lower C five-cycles."
         },
         "alpha_parameter_injectivity": {
             "payloads": len(alpha_image_counts),
@@ -927,6 +1071,8 @@ def main():
         "higher_order_profile_cover_witness": higher_order_cover_witness(),
         "collision_pair_completeness": collision_pair_completeness_examples(),
         "periodic_pivot_witnesses": periodic_pivot_witnesses(),
+        "recursive_parameter_windows": recursive_window_audit(sequence, selected_splits, fibonacci,
+                                                               recursive_roots),
         "affine_parameter_rank": {
             "payload_rows": len(payloads),
             "parent_features": "(t, five offsets, five nonnegative defects, 1)",

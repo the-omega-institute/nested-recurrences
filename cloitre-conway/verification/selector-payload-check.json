@@ -1,7 +1,7 @@
 {
   "status": "passed",
-  "source_sha256": "5667c258754f8364d1b3d73e0e6b4f094144b3a074bab61f609c3258ee01477a",
-  "scope": "Exact public three-block selector audit; row-local Cartesian independence is checked, while lower-window closure constraints remain separate.",
+  "source_sha256": "99a3df79af8731ecbe8639d960e86bb9ecbbfeac381c0ea5505e4f721d0325e7",
+  "scope": "Exact public three-block selector audit, recursive nonautonomous window descent and conserved conditional seed-label budgets. Row-local Cartesian decompositions remain distinct from actual selected splits and their proof costs.",
   "period_five_payloads": 13,
   "parent_rows": 65,
   "ambiguous_parent_rows": 57,
@@ -25,8 +25,8 @@
   "complementary_lower_map_rows": 65,
   "complementary_lower_map_identity": {
     "formula": "(r_(i+1) + P_(k-2)(r_i)) + (q_(i+1) + P_(k-3)(q_i)) = t",
-    "scope": "all 65 public parent rows; q_i = u_i - r_i and t = n - F_(k-1)",
-    "interpretation": "The two lower-map parameters are exact complements at the parent scale; this is not a lower five-cycle closure theorem."
+    "scope": "all 65 public parent rows; q_i = u_i - r_i and t = n - F_k",
+    "interpretation": "The two lower-map parameters are exact complements at the parent scale. They close nonautonomous child windows, not necessarily autonomous lower C five-cycles."
   },
   "alpha_parameter_injectivity": {
     "payloads": 13,
@@ -976,6 +976,450 @@
       "scope": "General sorted-vertex cut proof. Sharpness examples are capped abstract profiles, not C instances; selected C cycles are finite corroboration."
     },
     "qualification": "Minimum coordinate counts distinguish injectivity after the periodicity restrictions from the stronger raw-image uniqueness. The n=28996 context needs one check for the former and two for the latter; four other periodic coordinates still leave a collision. The two contexts together rule out any single fixed coordinate for restricted injectivity. Universal bounded adaptive-test existence for C remains open."
+  },
+  "recursive_parameter_windows": {
+    "selected_five_window_roots": 13,
+    "boundary_test_roots": 40,
+    "geometric_selected_rows": 610,
+    "nodes_by_profile_order": {
+      "4": 490,
+      "5": 791,
+      "6": 490,
+      "7": 301,
+      "8": 184,
+      "9": 112,
+      "10": 67,
+      "11": 40,
+      "12": 22,
+      "13": 12
+    },
+    "leaf_orders": {
+      "4": 490,
+      "5": 791
+    },
+    "maximum_depth": 8,
+    "literal_selected_points": 159,
+    "child_parameter_words": 2456,
+    "nonconstant_child_parameter_words": 1550,
+    "first_five_window_descent": {
+      "profile_order": 11,
+      "offsets": [
+        26,
+        31,
+        27,
+        28,
+        29
+      ],
+      "parameters": [
+        52,
+        52,
+        52,
+        52,
+        52
+      ],
+      "first_offsets": [
+        10,
+        20,
+        16,
+        12,
+        18
+      ],
+      "second_offsets": [
+        16,
+        11,
+        11,
+        16,
+        11
+      ],
+      "first_parameters": [
+        29,
+        31,
+        26,
+        29,
+        26
+      ],
+      "second_parameters": [
+        23,
+        21,
+        26,
+        23,
+        26
+      ]
+    },
+    "odd_node_inverse_decodings": 962,
+    "odd_root_seed_budgets": [
+      {
+        "root_kind": "selected_five_window",
+        "profile_order": 11,
+        "window_length": 5,
+        "root_defect_sum": 22,
+        "total_adaptive_seed_bits": 29,
+        "total_seed_bit_upper_bound": 66,
+        "potential_ambiguous_nodes": 16,
+        "maximum_frontier_seed_bits": 8
+      },
+      {
+        "root_kind": "selected_five_window",
+        "profile_order": 12,
+        "window_length": 5,
+        "root_defect_sum": 29,
+        "total_adaptive_seed_bits": 39,
+        "total_seed_bit_upper_bound": 98,
+        "potential_ambiguous_nodes": 18,
+        "maximum_frontier_seed_bits": 11
+      },
+      {
+        "root_kind": "selected_five_window",
+        "profile_order": 12,
+        "window_length": 5,
+        "root_defect_sum": 30,
+        "total_adaptive_seed_bits": 40,
+        "total_seed_bit_upper_bound": 105,
+        "potential_ambiguous_nodes": 18,
+        "maximum_frontier_seed_bits": 12
+      },
+      {
+        "root_kind": "selected_five_window",
+        "profile_order": 12,
+        "window_length": 5,
+        "root_defect_sum": 29,
+        "total_adaptive_seed_bits": 41,
+        "total_seed_bit_upper_bound": 98,
+        "potential_ambiguous_nodes": 18,
+        "maximum_frontier_seed_bits": 12
+      },
+      {
+        "root_kind": "selected_five_window",
+        "profile_order": 12,
+        "window_length": 5,
+        "root_defect_sum": 28,
+        "total_adaptive_seed_bits": 39,
+        "total_seed_bit_upper_bound": 98,
+        "potential_ambiguous_nodes": 19,
+        "maximum_frontier_seed_bits": 11
+      },
+      {
+        "root_kind": "selected_five_window",
+        "profile_order": 12,
+        "window_length": 5,
+        "root_defect_sum": 31,
+        "total_adaptive_seed_bits": 44,
+        "total_seed_bit_upper_bound": 105,
+        "potential_ambiguous_nodes": 19,
+        "maximum_frontier_seed_bits": 14
+      },
+      {
+        "root_kind": "selected_five_window",
+        "profile_order": 13,
+        "window_length": 5,
+        "root_defect_sum": 10,
+        "total_adaptive_seed_bits": 19,
+        "total_seed_bit_upper_bound": 40,
+        "potential_ambiguous_nodes": 12,
+        "maximum_frontier_seed_bits": 4
+      },
+      {
+        "root_kind": "selected_five_window",
+        "profile_order": 13,
+        "window_length": 5,
+        "root_defect_sum": 51,
+        "total_adaptive_seed_bits": 71,
+        "total_seed_bit_upper_bound": 200,
+        "potential_ambiguous_nodes": 32,
+        "maximum_frontier_seed_bits": 18
+      },
+      {
+        "root_kind": "selected_five_window",
+        "profile_order": 13,
+        "window_length": 5,
+        "root_defect_sum": 56,
+        "total_adaptive_seed_bits": 81,
+        "total_seed_bit_upper_bound": 224,
+        "potential_ambiguous_nodes": 37,
+        "maximum_frontier_seed_bits": 23
+      },
+      {
+        "root_kind": "selected_five_window",
+        "profile_order": 13,
+        "window_length": 5,
+        "root_defect_sum": 72,
+        "total_adaptive_seed_bits": 94,
+        "total_seed_bit_upper_bound": 288,
+        "potential_ambiguous_nodes": 37,
+        "maximum_frontier_seed_bits": 26
+      },
+      {
+        "root_kind": "selected_five_window",
+        "profile_order": 13,
+        "window_length": 5,
+        "root_defect_sum": 74,
+        "total_adaptive_seed_bits": 94,
+        "total_seed_bit_upper_bound": 296,
+        "potential_ambiguous_nodes": 37,
+        "maximum_frontier_seed_bits": 26
+      },
+      {
+        "root_kind": "selected_five_window",
+        "profile_order": 13,
+        "window_length": 5,
+        "root_defect_sum": 90,
+        "total_adaptive_seed_bits": 106,
+        "total_seed_bit_upper_bound": 360,
+        "potential_ambiguous_nodes": 42,
+        "maximum_frontier_seed_bits": 31
+      },
+      {
+        "root_kind": "selected_five_window",
+        "profile_order": 13,
+        "window_length": 5,
+        "root_defect_sum": 105,
+        "total_adaptive_seed_bits": 116,
+        "total_seed_bit_upper_bound": 416,
+        "potential_ambiguous_nodes": 44,
+        "maximum_frontier_seed_bits": 35
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 6,
+        "window_length": 1,
+        "root_defect_sum": 0,
+        "total_adaptive_seed_bits": 0,
+        "total_seed_bit_upper_bound": 0,
+        "potential_ambiguous_nodes": 0,
+        "maximum_frontier_seed_bits": 0
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 6,
+        "window_length": 3,
+        "root_defect_sum": 0,
+        "total_adaptive_seed_bits": 0,
+        "total_seed_bit_upper_bound": 0,
+        "potential_ambiguous_nodes": 0,
+        "maximum_frontier_seed_bits": 0
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 6,
+        "window_length": 5,
+        "root_defect_sum": 3,
+        "total_adaptive_seed_bits": 1,
+        "total_seed_bit_upper_bound": 1,
+        "potential_ambiguous_nodes": 1,
+        "maximum_frontier_seed_bits": 1
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 7,
+        "window_length": 1,
+        "root_defect_sum": 0,
+        "total_adaptive_seed_bits": 0,
+        "total_seed_bit_upper_bound": 0,
+        "potential_ambiguous_nodes": 0,
+        "maximum_frontier_seed_bits": 0
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 7,
+        "window_length": 3,
+        "root_defect_sum": 0,
+        "total_adaptive_seed_bits": 0,
+        "total_seed_bit_upper_bound": 0,
+        "potential_ambiguous_nodes": 0,
+        "maximum_frontier_seed_bits": 0
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 7,
+        "window_length": 5,
+        "root_defect_sum": 4,
+        "total_adaptive_seed_bits": 3,
+        "total_seed_bit_upper_bound": 4,
+        "potential_ambiguous_nodes": 2,
+        "maximum_frontier_seed_bits": 2
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 8,
+        "window_length": 1,
+        "root_defect_sum": 0,
+        "total_adaptive_seed_bits": 0,
+        "total_seed_bit_upper_bound": 0,
+        "potential_ambiguous_nodes": 0,
+        "maximum_frontier_seed_bits": 0
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 8,
+        "window_length": 3,
+        "root_defect_sum": 0,
+        "total_adaptive_seed_bits": 0,
+        "total_seed_bit_upper_bound": 0,
+        "potential_ambiguous_nodes": 0,
+        "maximum_frontier_seed_bits": 0
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 8,
+        "window_length": 5,
+        "root_defect_sum": 6,
+        "total_adaptive_seed_bits": 5,
+        "total_seed_bit_upper_bound": 9,
+        "potential_ambiguous_nodes": 4,
+        "maximum_frontier_seed_bits": 2
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 9,
+        "window_length": 1,
+        "root_defect_sum": 0,
+        "total_adaptive_seed_bits": 0,
+        "total_seed_bit_upper_bound": 0,
+        "potential_ambiguous_nodes": 0,
+        "maximum_frontier_seed_bits": 0
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 9,
+        "window_length": 3,
+        "root_defect_sum": 0,
+        "total_adaptive_seed_bits": 0,
+        "total_seed_bit_upper_bound": 0,
+        "potential_ambiguous_nodes": 0,
+        "maximum_frontier_seed_bits": 0
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 9,
+        "window_length": 5,
+        "root_defect_sum": 10,
+        "total_adaptive_seed_bits": 11,
+        "total_seed_bit_upper_bound": 20,
+        "potential_ambiguous_nodes": 7,
+        "maximum_frontier_seed_bits": 4
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 10,
+        "window_length": 1,
+        "root_defect_sum": 0,
+        "total_adaptive_seed_bits": 0,
+        "total_seed_bit_upper_bound": 0,
+        "potential_ambiguous_nodes": 0,
+        "maximum_frontier_seed_bits": 0
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 10,
+        "window_length": 3,
+        "root_defect_sum": 2,
+        "total_adaptive_seed_bits": 1,
+        "total_seed_bit_upper_bound": 5,
+        "potential_ambiguous_nodes": 1,
+        "maximum_frontier_seed_bits": 1
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 10,
+        "window_length": 5,
+        "root_defect_sum": 21,
+        "total_adaptive_seed_bits": 24,
+        "total_seed_bit_upper_bound": 50,
+        "potential_ambiguous_nodes": 12,
+        "maximum_frontier_seed_bits": 8
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 11,
+        "window_length": 1,
+        "root_defect_sum": 0,
+        "total_adaptive_seed_bits": 0,
+        "total_seed_bit_upper_bound": 0,
+        "potential_ambiguous_nodes": 0,
+        "maximum_frontier_seed_bits": 0
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 11,
+        "window_length": 3,
+        "root_defect_sum": 3,
+        "total_adaptive_seed_bits": 2,
+        "total_seed_bit_upper_bound": 6,
+        "potential_ambiguous_nodes": 2,
+        "maximum_frontier_seed_bits": 1
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 11,
+        "window_length": 5,
+        "root_defect_sum": 30,
+        "total_adaptive_seed_bits": 39,
+        "total_seed_bit_upper_bound": 90,
+        "potential_ambiguous_nodes": 20,
+        "maximum_frontier_seed_bits": 12
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 12,
+        "window_length": 1,
+        "root_defect_sum": 0,
+        "total_adaptive_seed_bits": 0,
+        "total_seed_bit_upper_bound": 0,
+        "potential_ambiguous_nodes": 0,
+        "maximum_frontier_seed_bits": 0
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 12,
+        "window_length": 3,
+        "root_defect_sum": 7,
+        "total_adaptive_seed_bits": 8,
+        "total_seed_bit_upper_bound": 21,
+        "potential_ambiguous_nodes": 6,
+        "maximum_frontier_seed_bits": 3
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 12,
+        "window_length": 5,
+        "root_defect_sum": 50,
+        "total_adaptive_seed_bits": 66,
+        "total_seed_bit_upper_bound": 175,
+        "potential_ambiguous_nodes": 33,
+        "maximum_frontier_seed_bits": 17
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 13,
+        "window_length": 1,
+        "root_defect_sum": 0,
+        "total_adaptive_seed_bits": 0,
+        "total_seed_bit_upper_bound": 0,
+        "potential_ambiguous_nodes": 0,
+        "maximum_frontier_seed_bits": 0
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 13,
+        "window_length": 3,
+        "root_defect_sum": 6,
+        "total_adaptive_seed_bits": 6,
+        "total_seed_bit_upper_bound": 24,
+        "potential_ambiguous_nodes": 5,
+        "maximum_frontier_seed_bits": 2
+      },
+      {
+        "root_kind": "boundary_word",
+        "profile_order": 13,
+        "window_length": 5,
+        "root_defect_sum": 76,
+        "total_adaptive_seed_bits": 110,
+        "total_seed_bit_upper_bound": 304,
+        "potential_ambiguous_nodes": 54,
+        "maximum_frontier_seed_bits": 28
+      }
+    ],
+    "scope": "Exact recursive nonautonomous windows with inherited row alignment. Child parameters add to the parent row parameter; all selected offsets stay in the two natural lower Fibonacci blocks, including endpoints. Leaf evaluations use indices at most eight. This certifies the recursive representation, not a uniform branch alphabet, minimal total certificate size, or an independent algorithm for choosing the splits."
   },
   "affine_parameter_rank": {
     "payload_rows": 13,
