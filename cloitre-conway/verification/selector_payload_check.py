@@ -2402,6 +2402,141 @@ def additive_policy_audit(sequence, selected_splits, fibonacci):
                 scope='Additive value-preserving policies need neither basin nor prescribed phase. Endpoint monotonicity certifies a greedy local maximum; full Bellman optimization is separate. Finite greedy quadratic support is not a global rate or an actual-selected dispersion theorem. Upper-cap knees refute automatic maximal dispersion from geometric and terminal premises alone.')
 
 
+def proportional_guard_split(index, fibonacci, golden=None):
+    order = bisect_right(fibonacci, index) - 1
+    anchor = fibonacci[order]
+    first_anchor = fibonacci[order - 1]
+    lower = max(first_anchor, index - first_anchor)
+    upper = min(anchor, index - fibonacci[order - 2])
+    center = first_anchor * index // anchor
+    candidates = {max(lower, min(upper, center)), max(lower, min(upper, center + 1))}
+    golden_value = g_closed if golden is None else golden.__getitem__
+    admitted = [point for point in candidates
+                if golden_value(point) + golden_value(index - point) >= golden_value(index)]
+    assert admitted
+    split = min(admitted, key=lambda point: (abs(first_anchor * index - anchor * point), -point))
+    assert abs(first_anchor * index - anchor * split) <= anchor
+    return split
+
+
+def collar_threshold(cutoff_order, offset, negative=False):
+    width = 6 if negative else 29
+    depth = 0
+    while 2 ** depth * offset > width * 3 ** depth:
+        depth += 1
+    return cutoff_order + int(negative) + 2 * depth
+
+
+def proportional_extension_audit(sequence):
+    limit = 1048576
+    fibonacci = fibonacci_values(limit + 1)
+    golden = [g_closed(index) for index in range(limit + 1)]
+    equality_set = {11, 24, 25, 59}
+    for order in range(2, len(fibonacci)):
+        equality_set.update((fibonacci[order], fibonacci[order] + 1))
+        if order % 2:
+            equality_set.add(fibonacci[order] - 1)
+    carry_contexts = 0
+    for index in range(3, 4097):
+        for point in range(1, index - 1):
+            first = golden[point] + golden[index - point] - golden[index]
+            second = golden[point + 1] + golden[index - point - 1] - golden[index]
+            assert first >= 0 or second >= 0
+            carry_contexts += 1
+    cases = []
+    for cutoff_order in (25, 26):
+        cutoff = fibonacci[cutoff_order]
+        values = sequence[:cutoff + 1]
+        first_difference = None
+        for index in range(cutoff + 1, limit + 1):
+            order = bisect_right(fibonacci, index) - 1
+            anchor, first_anchor, second_anchor = fibonacci[order], fibonacci[order - 1], fibonacci[order - 2]
+            split = proportional_guard_split(index, fibonacci, golden)
+            complement = index - split
+            assert first_anchor <= split <= anchor and second_anchor <= complement <= first_anchor
+            offset = index - anchor
+            first_offset, second_offset = split - first_anchor, complement - second_anchor
+            assert first_offset + second_offset == offset
+            assert 3 * first_offset <= 2 * offset + 3 and 3 * second_offset <= 2 * offset + 3
+            gap = fibonacci[order + 1] - index
+            first_gap, second_gap = anchor - split, first_anchor - complement
+            assert first_gap + second_gap == gap
+            assert 3 * first_gap <= 2 * gap + 6 and 3 * second_gap <= 2 * gap + 6
+            value = values[split] + values[complement]
+            values.append(value)
+            assert golden[index] <= value <= first_anchor + min(offset, second_anchor)
+            assert 22877 * value <= 15225 * index
+            assert value - first_anchor >= min(offset, 32)
+            assert (value == golden[index]) == (index in equality_set)
+            if index < len(sequence) and first_difference is None and value != sequence[index]:
+                first_difference = dict(index=index, extension_value=value, actual_value=sequence[index],
+                                        extension_split=split, child_values=[values[split], values[complement]])
+        positive_checks = 0
+        negative_checks = 0
+        for order in range(23, len(fibonacci)):
+            for offset in range(65):
+                index = fibonacci[order] + offset
+                if index <= limit and (offset <= 32 or order >= collar_threshold(cutoff_order, offset)):
+                    assert values[index] == fibonacci[order - 1] + offset
+                    positive_checks += 1
+            for gap in range(14):
+                index = fibonacci[order] - gap
+                if 1 <= index <= limit and (gap <= 12 or order >= collar_threshold(cutoff_order, gap, True)):
+                    assert values[index] == fibonacci[order - 1]
+                    negative_checks += 1
+        index = first_difference['index']
+        point = index - 1
+        for iteration in range(values[index - 1]):
+            point = index - values[point]
+        nested_value = values[point] + values[index - point]
+        assert nested_value == sequence[index] != values[index]
+        trajectory, transient, period = full_orbit(values, index)
+        alternative = first_difference['extension_split']
+        alternative_points = []
+        alternative_positions = {}
+        cursor = alternative
+        while cursor not in alternative_positions:
+            alternative_positions[cursor] = len(alternative_points)
+            alternative_points.append(cursor)
+            cursor = index - values[cursor]
+        first_difference.update(prescribed_depth=values[index - 1], prescribed_split=point,
+                                nested_value=nested_value, prescribed_cycle=list(trajectory[transient:]),
+                                transient=transient, period=period,
+                                alternative_transient=alternative_positions[cursor],
+                                alternative_cycle=alternative_points[alternative_positions[cursor]:],
+                                alternative_in_prescribed_cycle=alternative in trajectory[transient:])
+        large_fibonacci = fibonacci_values(10 ** 100)
+        previous_order = cutoff_order - 2
+        current_order = cutoff_order - 1
+        previous_index = large_fibonacci[previous_order] + large_fibonacci[previous_order - 2]
+        current_index = large_fibonacci[current_order] + large_fibonacci[current_order - 2]
+        previous_value, current_value = values[previous_index], values[current_index]
+        seed_values = [previous_value, current_value]
+        seed_defects = [previous_value - golden[previous_index], current_value - golden[current_index]]
+        assert min(seed_defects) > 0
+        knees = []
+        for order in range(cutoff_order, 91):
+            previous_value, current_value = current_value, previous_value + current_value
+            index = large_fibonacci[order] + large_fibonacci[order - 2]
+            split = proportional_guard_split(index, large_fibonacci)
+            assert split == large_fibonacci[order - 1] + large_fibonacci[order - 3]
+            assert g_closed(index) == split
+            if index <= limit:
+                assert values[index] == current_value
+            if order in (cutoff_order, cutoff_order + 1, 30, 40, 60, 90):
+                knees.append(dict(order=order, index=index, value=current_value,
+                                  defect=current_value - g_closed(index), ratio=str(Fraction(current_value, index))))
+        cases.append(dict(cutoff_order=cutoff_order, identical_actual_prefix_inclusive=[1, cutoff],
+                          extension_checked_inclusive=[cutoff + 1, limit], first_nested_failure=first_difference,
+                          exact_zero_set_verified=True, saturated_width=32,
+                          positive_collar_checks=positive_checks, negative_collar_checks=negative_checks,
+                          knee_seed_orders=[previous_order, current_order], knee_seed_indices=[previous_index, current_index],
+                          knee_seed_values=seed_values, knee_seed_defects=seed_defects, arithmetic_knees=knees))
+    return dict(consecutive_carry_contexts=carry_contexts, concrete_extensions=cases,
+                upper_envelope='15225/22877 for N>=16384; any certified actual C envelope is inherited when F_(J-2) is beyond its threshold',
+                scope='Written infinite extensions agree with arbitrarily late actual prefixes, have G/cap/zero-set/saturation/fixed-collar structure but positive knee defect density and nonconvergent ratios. Numeric cases J25/J26 corroborate through2^20; huge knee values follow exact arithmetic. These are not the actual nested C sequence.')
+
+
 def unbounded_defect_audit():
     sequence, _, _, selected_splits = generate(131071)
     assert sequence == brent_generate(131071)
@@ -2467,6 +2602,7 @@ def unbounded_defect_audit():
                 four_generation_dispersion=four_generation_dispersion_audit(sequence, selected_splits, fibonacci),
                 phase_free_dispersion=phase_free_dispersion_audit(sequence, selected_splits, fibonacci),
                 additive_dispersion_policies=additive_policy_audit(sequence, selected_splits, fibonacci),
+                proportional_extensions=proportional_extension_audit(sequence),
                 uniform_bounds=dict(knee='lambda_j(F_(j-2)) >= ceil(F_(j-3)/3) once F_j+F_(j-2)>=16384',
                                     centre='E/p >= 2*F_(k-1)/5-F_(k-3) at n=2*F_(k-1), F_(k-1)>=16384'),
                 upper_cap_geometric_family=dict(profile='Q_j(u)=min(u,F_(j-2))',

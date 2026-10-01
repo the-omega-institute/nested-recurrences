@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_sha256": "37ac0728f7b3cae67306395474edd10b00ead0af2154c83b958dbfe2644cb9dc",
+  "source_sha256": "6fd96c6e49eab9eddd61cba9c90e268903a76f287cd761819a77ddeb2590efc4",
   "scope": "Exact public three-block selector audit, recursive nonautonomous window descent and conserved conditional seed-label budgets. Row-local Cartesian decompositions remain distinct from actual selected splits and their proof costs.",
   "period_five_payloads": 13,
   "parent_rows": 65,
@@ -4879,6 +4879,213 @@
         }
       ],
       "scope": "Additive value-preserving policies need neither basin nor prescribed phase. Endpoint monotonicity certifies a greedy local maximum; full Bellman optimization is separate. Finite greedy quadratic support is not a global rate or an actual-selected dispersion theorem. Upper-cap knees refute automatic maximal dispersion from geometric and terminal premises alone."
+    },
+    "proportional_extensions": {
+      "consecutive_carry_contexts": 8382465,
+      "concrete_extensions": [
+        {
+          "cutoff_order": 25,
+          "identical_actual_prefix_inclusive": [
+            1,
+            75025
+          ],
+          "extension_checked_inclusive": [
+            75026,
+            1048576
+          ],
+          "first_nested_failure": {
+            "index": 75067,
+            "extension_value": 46410,
+            "actual_value": 46407,
+            "extension_split": 46394,
+            "child_values": [
+              28683,
+              17727
+            ],
+            "prescribed_depth": 46409,
+            "prescribed_split": 46368,
+            "nested_value": 46407,
+            "prescribed_cycle": [
+              46410,
+              46368
+            ],
+            "transient": 14,
+            "period": 2,
+            "alternative_transient": 0,
+            "alternative_cycle": [
+              46394,
+              46384
+            ],
+            "alternative_in_prescribed_cycle": false
+          },
+          "exact_zero_set_verified": true,
+          "saturated_width": 32,
+          "positive_collar_checks": 350,
+          "negative_collar_checks": 105,
+          "knee_seed_orders": [
+            23,
+            24
+          ],
+          "knee_seed_indices": [
+            39603,
+            64079
+          ],
+          "knee_seed_values": [
+            26111,
+            42202
+          ],
+          "knee_seed_defects": [
+            1635,
+            2599
+          ],
+          "arithmetic_knees": [
+            {
+              "order": 25,
+              "index": 103682,
+              "value": 68313,
+              "defect": 4234,
+              "ratio": "68313/103682"
+            },
+            {
+              "order": 26,
+              "index": 167761,
+              "value": 110515,
+              "defect": 6833,
+              "ratio": "110515/167761"
+            },
+            {
+              "order": 30,
+              "index": 1149851,
+              "value": 757514,
+              "defect": 46867,
+              "ratio": "757514/1149851"
+            },
+            {
+              "order": 40,
+              "index": 141422324,
+              "value": 93168151,
+              "defect": 5764348,
+              "ratio": "93168151/141422324"
+            },
+            {
+              "order": 60,
+              "index": 2139295485799,
+              "value": 1409354614106,
+              "defect": 87197291903,
+              "ratio": "1409354614106/2139295485799"
+            },
+            {
+              "order": 90,
+              "index": 3980154972736918051,
+              "value": 2622101440834227274,
+              "defect": 162230387190900827,
+              "ratio": "2622101440834227274/3980154972736918051"
+            }
+          ]
+        },
+        {
+          "cutoff_order": 26,
+          "identical_actual_prefix_inclusive": [
+            1,
+            121393
+          ],
+          "extension_checked_inclusive": [
+            121394,
+            1048576
+          ],
+          "first_nested_failure": {
+            "index": 121460,
+            "extension_value": 75089,
+            "actual_value": 75092,
+            "extension_split": 75067,
+            "child_values": [
+              46407,
+              28682
+            ],
+            "prescribed_depth": 75091,
+            "prescribed_split": 75025,
+            "nested_value": 75092,
+            "prescribed_cycle": [
+              75092,
+              75025
+            ],
+            "transient": 14,
+            "period": 2,
+            "alternative_transient": 1,
+            "alternative_cycle": [
+              75053,
+              75064
+            ],
+            "alternative_in_prescribed_cycle": false
+          },
+          "exact_zero_set_verified": true,
+          "saturated_width": 32,
+          "positive_collar_checks": 318,
+          "negative_collar_checks": 104,
+          "knee_seed_orders": [
+            24,
+            25
+          ],
+          "knee_seed_indices": [
+            64079,
+            103682
+          ],
+          "knee_seed_values": [
+            42202,
+            68155
+          ],
+          "knee_seed_defects": [
+            2599,
+            4076
+          ],
+          "arithmetic_knees": [
+            {
+              "order": 26,
+              "index": 167761,
+              "value": 110357,
+              "defect": 6675,
+              "ratio": "110357/167761"
+            },
+            {
+              "order": 27,
+              "index": 271443,
+              "value": 178512,
+              "defect": 10751,
+              "ratio": "59504/90481"
+            },
+            {
+              "order": 30,
+              "index": 1149851,
+              "value": 756250,
+              "defect": 45603,
+              "ratio": "756250/1149851"
+            },
+            {
+              "order": 40,
+              "index": 141422324,
+              "value": 93012205,
+              "defect": 5608402,
+              "ratio": "93012205/141422324"
+            },
+            {
+              "order": 60,
+              "index": 2139295485799,
+              "value": 1406995618490,
+              "defect": 84838296287,
+              "ratio": "1406995618490/2139295485799"
+            },
+            {
+              "order": 90,
+              "index": 3980154972736918051,
+              "value": 2617712534208651770,
+              "defect": 157841480565325323,
+              "ratio": "2617712534208651770/3980154972736918051"
+            }
+          ]
+        }
+      ],
+      "upper_envelope": "15225/22877 for N>=16384; any certified actual C envelope is inherited when F_(J-2) is beyond its threshold",
+      "scope": "Written infinite extensions agree with arbitrarily late actual prefixes, have G/cap/zero-set/saturation/fixed-collar structure but positive knee defect density and nonconvergent ratios. Numeric cases J25/J26 corroborate through2^20; huge knee values follow exact arithmetic. These are not the actual nested C sequence."
     },
     "uniform_bounds": {
       "knee": "lambda_j(F_(j-2)) >= ceil(F_(j-3)/3) once F_j+F_(j-2)>=16384",

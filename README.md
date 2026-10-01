@@ -16,6 +16,7 @@ or programming knowledge is needed.
 | Understand cycles and convergence near Fibonacci indices | **[Fibonacci collars](cloitre-conway/fibonacci-collars.md)** |
 | Follow the proposed decay proof and its remaining inequality | **[Martingales and dispersion](cloitre-conway/fibonacci-collars.md#size-biased-martingales-and-the-four-generation-dispersion-criterion)** · **[Basin lower bound without choosing a phase](cloitre-conway/fibonacci-collars.md#a-phase-free-lower-bound-from-the-prescribed-basin)** |
 | See how another value-preserving split can support a decay proof | **[Additive policies and their exact proof contract](cloitre-conway/fibonacci-collars.md#additive-dispersion-policies-without-orbit-qualification)** |
+| Understand why matching a long prefix and every fixed collar still does not prove convergence | **[Explicit nonconvergent extensions](cloitre-conway/fibonacci-collars.md#finite-prefixes-and-exact-collars-do-not-force-convergence)** |
 | Understand how quickly an orbit enters a Fibonacci neighborhood | **[Quantitative capture](cloitre-conway/fibonacci-collars.md#quantitative-capture-and-a-short-exterior-certificate)** |
 | See how long orbit runs can be checked by arithmetic blocks | **[Return certificates](cloitre-conway/fibonacci-collars.md#defect-plateau-return-certificates)** |
 | See the common five-window closure interface and the exact conditional phase minimum | **[Closure theorem](cloitre-conway/fibonacci-collars.md#9-common-closure-theorem-and-generic-minimality)** · **[Phase readout](cloitre-conway/fibonacci-collars.md#the-exact-minimum-phase-interface-depends-on-the-readout)** |
@@ -77,6 +78,17 @@ the actual scalar value and child blocks. The same two martingales hold,
 even when that split is transient under the original inner map. This
 removes orbit qualification from the sufficient policy criterion; its
 uniform dispersion premise is still open.
+
+The [nonconvergent-extension theorem](cloitre-conway/fibonacci-collars.md#finite-prefixes-and-exact-collars-do-not-force-convergence)
+now identifies a stronger obstruction. Explicit scalar extensions can agree
+with any prescribed finite actual prefix, retain the same golden lower bound,
+upper cap, exact equality set and proved fixed collars, and inherit any
+certified ratio envelope after a sufficiently late cutoff, yet have a
+nonconvergent ratio. Their fixed five-pattern interactions also vanish.
+For the cutoff F_25=75025, the first difference is 75067: the extension
+gives 46410, while the prescribed nested recurrence gives 46407.
+This isolates the missing global restriction on the actual profiles or
+their selected dynamics; it does not refute convergence for actual C.
 
 **Still open:** full convergence of C(n)/n, its decay rate, and the growth
 of periods and landing times away from Fibonacci neighborhoods.

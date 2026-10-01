@@ -42,6 +42,7 @@ Updated 2026-10-01. [Reading guide](README.md)
 | Basin-aware Bellman envelopes B_m<=Q_m<=actual V_m provide a sufficient dispersion criterion without choosing the precise depth phase. An exact upper-cap trace shows that scalar validity and periodicity do not certify the correct basin | General induction and occurrence-tree minimum; shared-selector and supplied-context costs remain separate. Exact four-generation checks for144..131071 support kappa1 even for B_4, with finite minimum ratio101.197 at4590. Uniform B/Q inequalities remain open. All-periodic comparison through4096 has a smaller minimum20.812 | [Phase-free lower envelope](cloitre-conway/fibonacci-collars.md#a-phase-free-lower-bound-from-the-prescribed-basin) · [Exact basin obstruction](cloitre-conway/fibonacci-collars.md#size-biased-martingales-and-the-four-generation-dispersion-criterion) |
 | Any scalar-valid geometric policy preserves both martingales; a uniform finite-horizon maximal dispersion inequality suffices for decay without basin or depth-phase certificates. Local variance maxima need only the two extreme admissible indices | General policy/Bellman/Jensen proof and extremal-variance derivative. Exact greedy four-generation check for all130891 positive-defect roots144..131071 supports the stronger quadratic kappa1 bound, minimum1.17910 at1384; this is finite only. Complete domain comparison through4096 and transient value-valid witnesses checked. Upper-cap knees have unique additive splits and vanishing maximal variance, disproving automatic dispersion from geometry/terminal data | [Adaptive additive policy criterion](cloitre-conway/fibonacci-collars.md#additive-dispersion-policies-without-orbit-qualification) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
 | First three Fibonacci-arch reverse-completeness audits: all starting states for 144<=n<=609 | 466 functional graphs, 174,983 vertices, exact per-block cycle histograms, and 13 period-five payloads; the first block has its unique period-five graph at n=196 | [Finite five-window certificate](cloitre-conway/verification/five-window-check.json) |
+| Arbitrarily late actual prefixes, the exact golden equality set, saturation, all proved fixed collars and inherited certified ratio envelopes do not force convergence or a uniform maximal-policy dispersion bound | General construction and proof of explicit guarded proportional extensions W_J, J>=25. Each has liminf ratio 1/phi and a knee subsequence with a strictly larger limit. J25/J26 checked through2^20, 8,382,465 consecutive-carry contexts exhausted, arithmetic knees checked through order90. First prescribed-nesting failures are75067/121460. These are scalar extensions, not actual C counterexamples; actual negative collars beyond12 and actual convergence remain open | [Nonconvergent extensions](cloitre-conway/fibonacci-collars.md#finite-prefixes-and-exact-collars-do-not-force-convergence) · [Exact check](cloitre-conway/verification/selector-payload-check.json) |
 
 Here G(n)=floor((n+1)/phi). The equality set is exactly
 
@@ -62,6 +63,12 @@ supplies an ingredient of the induction; it also documents numerical corrections
 1. **Full ratio convergence.** The liminf is 1/phi. To prove a full limit,
    control the limsup between Fibonacci anchors, especially the centers of
    the arches. The collar theorem covers offsets o(F_k), not offsets of order F_k.
+   Explicit nonconvergent extensions now show that arbitrarily long actual
+   prefixes, every proved fixed collar, the exact golden equality set and
+   all certified ratio envelopes cannot by themselves close this step.
+   Find a global actual-profile or selected-dynamics restriction that
+   excludes the guarded proportional family; its first J25 failure at75067
+   occurs in a different inner basin despite matching the scalar prefix.
    The new W(M)=max(C(m)/m: M<=m<3M) is exactly the tail supremum, and is
    nonincreasing for M>=21846. Its proved limit is the limsup; proving that
    limit equals 1/phi remains open. The certified upper bound is now

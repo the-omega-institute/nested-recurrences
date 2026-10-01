@@ -3450,3 +3450,229 @@ The checker also verifies the unique upper-cap knee split through
 order16 and its maximal-variance counterexamples at orders20,30,40,60,90.
 No prescribed-orbit or global-closure theorem is inferred from these
 policy experiments.
+
+### Finite prefixes and exact collars do not force convergence
+
+The missing global condition can be isolated more sharply than with U.
+There are explicit extensions of arbitrarily late actual C prefixes that
+retain G, the upper cap, the exact golden equality set, saturated profiles
+and all the proved fixed collars, but whose ratios do not converge.
+Thus even these stronger static premises do not supply a uniform actual
+or maximal-policy dispersion theorem. The construction is a counterfamily
+to those premises; it is not the prescribed nested C recurrence.
+
+**A nonnegative-carry split always exists nearby.** For every N and two
+consecutive admissible indices a,a+1, at least one satisfies
+
+$$
+G(a)+G(N-a)\ge G(N).
+$$
+
+Indeed put alpha=1/phi and theta={alpha(N+2)}. The sum of the two
+floors at a,N-a is G(N+1), or G(N+1)-1 when
+`{alpha(a+1)}>theta`. A negative G carry therefore requires
+G(N+1)=G(N), theta>=alpha, and {alpha(a+1)}>theta. At the next
+index the fractional part becomes `{alpha(a+2)}={alpha(a+1)}+alpha-1`
+and is less than alpha<=theta. Its carry is zero. QED.
+
+Fix J>=25 and let K=F_J. Define W_J(N)=C(N) for1<=N<=K.
+For N>K use its natural block S=F_j<=N<=F_(j+1), with
+A=F_(j-1),B=F_(j-2), and the geometric interval
+
+$$
+l=\max(A,N-A),\qquad h=\min(S,N-B).
+$$
+
+Take floor(AN/S) and ceil(AN/S), clipped to[l,h], discard candidates
+with negative G carry, and choose the remaining index closest to AN/S;
+break ties by the larger index. Denote it s_J(N), and put
+
+$$
+W_J(N)=W_J(s_J(N))+W_J(N-s_J(N)).
+$$
+
+The choice depends only on N, its order and the known G arithmetic.
+It is shared at every occurrence of the same physical N. At Fibonacci
+endpoint aliases the geometric domain is a singleton, so the definition
+is independent of that alias.
+
+For interior S<N<S+A both neighboring integers are in[l,h]. To see this,
+write N=S+u,1<=u<=A-1. The ideal split is A+A*u/S. Cassini gives
+`A^2-S*B=+/-1`, so A*(A-1)<=S*B and
+`(A-B)*S-B*(A-1)>=B-1`. Together with0<A/S<1, these establish all
+four geometric bounds. The carry lemma leaves a candidate. At either
+endpoint the unique Fibonacci split has zero carry. Thus W is total,
+and its chosen split satisfies
+
+$$
+|AN-Ss_J(N)|\le S. \tag{9.25}
+$$
+
+**Bounds, saturation and finite collars.** For every N,
+
+$$
+G(N)\le W_J(N)\le U(N).
+$$
+
+The lower bound propagates because the chosen carry is nonnegative.
+For the upper bound write N=S+u,s_J(N)=A+r,N-s_J(N)=B+q,
+so r,q>=0,r+q=u. The two child caps satisfy
+
+$$
+\min(r,F_{j-3})+\min(q,F_{j-4})\le\min(u,F_{j-2}),
+$$
+
+giving the parent cap by induction. Both statements hold in the actual
+prefix. The same profile sum propagates the actual saturated lower
+barrier: for all closed blocks of order j>=23,
+
+$$
+W_J(F_j+u)-F_{j-1}\ge\min(u,32).
+$$
+
+Consequently W_J(F_j+u)=F_(j-1)+u for0<=u<=32,j>=23.
+It also retains W_J(F_k-v)=F_(k-1) for0<=v<=12,k>=23.
+For the latter assertion, the two distances from the children's upper
+anchors are nonnegative and sum to v. Hence they are at most12,
+and the flat actual seed collars propagate. Orders at the cutoff are
+at least J-2, so all needed seed collars have order at least23.
+
+**The exact equality set is unchanged.** Let E_W=W_J-G. At a new node,
+
+$$
+E_W(N)=E_W(a)+E_W(N-a)+G(a)+G(N-a)-G(N),
+$$
+
+with all terms nonnegative. Equality thus requires two zero children
+and zero carry. By induction the possible first zero child in[A,S]
+is A,A+1,S, or S-1 when j is odd; the possible second in[B,A]
+is B,B+1,A, or A-1 when j-1 is odd. Exceptional seed zeros are below
+these high-order blocks.
+
+Mixed lower/upper pairs cannot obey (9.25). For pairs near A,A, their
+determinant has magnitude at least A*(A-B)-S>S; for pairs near S,B,
+it has magnitude at least B^2-S>S. These inequalities hold for j>=8.
+Two lower pairs give N=S,S+1,S+2; the last has carry one since
+G(S+2)=A+1 whereas the child sum is A+2. Two upper pairs give
+N=F_(j+1),F_(j+1)-1,F_(j+1)-2. The last would require j and j-1
+both odd for both children to be zero, which is impossible.
+The already proved collars determine the remaining minus-one case:
+W(F_k-1)=F_(k-1), equaling G exactly when k is odd. This proves
+
+$$
+\{N:W_J(N)=G(N)\}
+=\{F_k,F_k+1:k\ge2\}\cup\{F_k-1:k\ge3\text{ odd}\}
+ \cup\{11,24,25,59\}.
+$$
+
+**Every fixed width eventually becomes exact.** The property is stronger
+than retaining the finite band. For a positive offset u, (9.25) gives
+child offsets at most `(2/3)*u+1`. After d steps they are at most
+`(2/3)^d*u+3`. Put
+
+$$
+d_+(u)=\min\{d\ge0:(2/3)^d u\le29\}.
+$$
+
+If j>=J+2d_+(u), every path to the actual-prefix boundary has at least
+d_+(u) steps; its leaf offset is at most32, where the actual prefix
+is linear. Recombining the two Fibonacci baselines and offsets gives
+
+$$
+W_J(F_j+u)=F_{j-1}+u.
+$$
+
+The bound also ensures u<=F_(j-1), since
+`F_(J+2d-1)>=2^d F_(J-1)>=29*(3/2)^d`.
+For an upper-anchor gap v, the Cassini error at the proportional center
+and rounding give child gaps at most `(2/3)*v+2`. Define
+
+$$
+d_-(v)=\min\{d\ge0:(2/3)^d v\le6\}.
+$$
+
+At k>=J+1+2d_-(v), all boundary gaps are at most12, proving
+W_J(F_k-v)=F_(k-1). These infinite collar statements concern W;
+arbitrary negative widths for actual C remain open.
+In particular its lowest five legal digit-window responses are exactly
+the same as C at every anchor of order at least23: their interaction
+coefficient is zero. This static agreement does not identify the
+prescribed inner selection.
+
+**Certified ratio envelopes are inherited.** Suppose actual C has
+ell<=C(N)/N<=beta for N>=M, and choose J with F_(J-2)>=M.
+Every terminal index of a W descent from N>K lies in[F_(J-2),F_J].
+The parent ratio is a size-weighted average of those actual terminal
+ratios, so W has the same envelope for every N>=M. Thus J>=31
+preserves even the current upper bound8900/13459 for N>=349525.
+Increasing J also preserves any desired finite actual prefix. None of
+these choices prevents the obstruction below.
+
+**A persistent positive defect at Fibonacci knees.** Put
+N_j=F_j+F_(j-2). Its nearest proportional split is N_(j-1), since
+its determinant has absolute value one. Moreover
+
+$$
+G(N_j)=N_{j-1},\qquad G(N_{j-1})+G(N_{j-2})=G(N_j).
+$$
+
+The first identity follows by lowering the two nonadjacent Fibonacci
+weights, or directly by Binet's formula. Therefore the nearest candidate
+has zero G carry and is chosen. For j>=J,
+
+$$
+W_J(N_j)=W_J(N_{j-1})+W_J(N_{j-2}).
+$$
+
+The two actual seed defects at orders J-2,J-1 are strictly positive,
+by the exact equality set. Let D_h=C(N_h)-G(N_h) at those seeds.
+The continued defect has the Fibonacci recurrence, and hence
+
+$$
+\frac{W_J(N_j)}{N_j}\longrightarrow\alpha+\Delta_J,
+\qquad
+\Delta_J=\frac{D_{J-1}+\alpha D_{J-2}}
+                  {N_{J-1}+\alpha N_{J-2}}>0.
+$$
+
+On the other hand W_J(F_j)=F_(j-1) and W_J>=G, so its liminf
+ratio is alpha. Its ratio therefore does not converge.
+The fixed-horizon maximal-policy criterion applies to any scalar function
+with these bounds and nonempty geometric additive domains. If it held
+uniformly for W at any fixed m,q>=1,kappa>0, it would force convergence
+to alpha, a contradiction. Thus even the maximal dispersion inequality
+fails uniformly somewhere at arbitrarily high orders in this family.
+This last conclusion does not locate those optimizing states, and does
+not assert failure for actual C.
+
+**A concrete failure of prescribed selection.** For J=25, W agrees with
+actual C through75066. Its first difference is N=75067:
+
+```text
+chosen geometric split: 46394,
+W(46394)+W(28673)=28683+17727=46410,
+prescribed nested split: 46368,
+W(46368)+W(28699)=28657+17750=46407.
+```
+
+The alternative split lies in the inner two-cycle(46384,46394), while
+the prescribed start reaches a different cycle. Both child-value sums
+use the identical actual prefix. This is exactly where the geometric
+extension ceases to be the original recurrence, rather than an error
+in its scalar descent or its golden bounds.
+
+The knee seeds at orders23,24 are26111 and42202, with golden defects
+1635 and2599. Its knee ratio tends to
+
+$$
+\frac{42202+\alpha\,26111}{64079+\alpha\,39603}
+=0.658793805466\ldots>\alpha.
+$$
+
+The checker builds the J25 and J26 extensions through2^20, verifies
+their bounds, exact zero set, saturation and available collar thresholds,
+and replays each first prescribed failure literally. Consecutive-carry
+contexts through4096 are exhausted, and huge knee values and selected
+splits through order90 are checked by exact arithmetic. The nonconvergence
+and arbitrary-prefix conclusions have independent written proofs; they
+are not extrapolations from those finite tests.
