@@ -9,6 +9,9 @@ the size of horizon-specific transition tables. Supplied clocks are a
 separate resource. The
 [Cloitre counterpart](../cloitre-conway/five-window-closure.md#autonomous-memory-of-the-actual-top-plateau-diagnostic)
 now gives an actual-C cap diagnostic and a full-graph state lower bound.
+The [bounded-cap graph theorem](../cloitre-conway/five-window-closure.md#exact-state-bit-order-for-every-bounded-cap-graph)
+also matches the state-bit order for each fixed-cap Cloitre value and
+selected-split graph, with a deterministic sparse-trie upper bound.
 See the [Conway interface](../cloitre-conway/five-window-closure.md) for the
 cross-family closure question.
 

@@ -21,6 +21,8 @@ parameters; no residual selector label is needed in that qualified family.
 - [The exact minimum phase interface depends on the readout](#the-exact-minimum-phase-interface-depends-on-the-readout)
 - [9. Common closure theorem and generic minimality](#9-common-closure-theorem-and-generic-minimality)
 - [Autonomous memory of the actual top-plateau diagnostic](#autonomous-memory-of-the-actual-top-plateau-diagnostic)
+- [Exact state-bit order for every bounded-cap graph](#exact-state-bit-order-for-every-bounded-cap-graph)
+- [The least recursive completion adds Fibonacci anchors](#the-least-recursive-completion-adds-fibonacci-anchors)
 
 ## 7. Fibonacci profile renormalization and defect dynamics
 
@@ -701,3 +703,202 @@ at six finite horizons, and prefix-trie constructions. It checks the small
 diagnostic against independent actual evaluators. These computations
 corroborate the general fooling-set proof; supplied order/gap context and
 finite boundary tables remain separate from autonomous memory.
+
+### Exact state-bit order for every bounded-cap graph
+
+The [quadratic cap budget](recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level)
+also supplies an upper bound for actual graph recognition on every fixed
+cap sublevel, even when its support has holes. Together with the preceding
+diagnostic lower bound, it determines the state-bit order in this contract.
+
+**Contract.** For positive n, let j be its highest nonzero Fibonacci
+weight and put E(n)=F_j-C(n). Fix an integer m>=0. The bounded-cap graph is
+
+$$
+\mathcal G_m=\{(n,C(n)):n\ge1,\ 0\le E(n)\le m\}.
+$$
+
+Encode both rows in the canonical five-window alphabet and keep both unit
+digits in a distinct terminal symbol. Read synchronously from high to low.
+The n row's highest window is nonnull; pad only the output row with high
+null windows to the input's length. The positive number1 has no windows
+and a unit symbol. A horizon-L recognizer decides graph membership on every
+canonical paired word with at most L windows, including incorrect output
+rows; it need not decide longer words. Position counters count as states.
+Transition tables may depend on m and L and their storage is separate.
+
+**Theorem.** For every fixed m>=0, the minimum autonomous state-bit order
+for both DFA and NFA recognition of \(\mathcal G_m\) is
+
+$$
+\boxed{\Theta(\log L)=\Theta(\log\log N),\qquad N=F_{3L+3}-1.}
+$$
+
+Every such recognizer needs Omega(L) states. For m>=1, a deterministic
+prefix trie uses O(mL^4) states; for m=0, O(L^3) states suffice. The same
+orders hold for the actual selected-split graph
+
+$$
+\mathcal H_m=\{(n,C(n),g(n)):n\ge3,\ 0\le E(n)\le m\},
+$$
+
+with three synchronous rows, where g(n) is the endpoint after exactly
+C(n-1) inner iterations. This includes the actual branch choice, rather
+than accepting an arbitrary candidate split.
+
+**Upper bound.** Each input belongs to a unique natural block
+F_j<=n<F_(j+1). Write k=j+1 and v=F_k-n, so
+1<=v<=F_(k-2) and E(n)=Q_k(v). In particular v=0 belongs to the next
+natural block and must not be counted as a zero-defect endpoint alias.
+There are at most20 positive inputs with k<=8. At higher orders the cap
+budget confines every E<=m input to 1<=v<=mP_k when m>=1, including
+zero defects because L_k<=P_k. Hence the number A_m(L) of accepted inputs
+through L windows satisfies
+
+$$
+A_m(L)\le20+\sum_{k=9}^{3L+3}\min(F_{k-2},mP_k)
+\le20+m(3L+3)^3=O(mL^3). \tag{M.1}
+$$
+
+An empty sum is zero; the coarse last bound uses P_k<=k^2. Since
+1<=C(n)<=n and 1<=g(n)<n for n>=3, both graph words have at most
+L windows and one terminal symbol. Each accepted input has exactly one
+output word. The prefixes of these actual words, a root and a reject
+state give a DFA with at most
+
+$$
+2+(L+1)A_m(L)=O(mL^4) \tag{M.2}
+$$
+
+states. It accepts exactly the stored graph words; arbitrary incorrect
+outputs are rejected. For m=0, the exact zero plateau gives O(L^2)
+inputs and therefore O(L^3) states. Adding the actual g row changes the
+fixed alphabet, not the word count or length. The same argument applies
+to any fixed number of uniquely determined integer annotations in0..n.
+
+**Lower bound.** Intersect a graph recognizer with fixed finite-state
+filters enforcing canonical row seams, high padding, terminal units, and
+y=F_j. The last filter requires the output's single1 at the input's
+highest nonzero bit position and zeros everywhere else. It needs no
+unbounded order counter. Project away the y row and, for \(\mathcal H_m\),
+the g row. For every m>=0 the result accepts the top-plateau diagnostic
+through the same horizon, with inputs1,2 omitted for \(\mathcal H_m\):
+y=F_j forces E=0, and those roots
+are included in every cap sublevel. The projection gives an NFA whose
+state count grows by a constant factor, independent of m and L.
+
+The earlier triangular fooling set therefore gives Omega(L) graph
+states even for an NFA; it also applies to a DFA. For \(\mathcal H_m\)
+the omitted inputs1,2 do not occur in that fooling set, whose base order
+is at least18. Combining with (M.2) proves the stated bit order. QED.
+
+If m=m(L)>=1 grows at most polynomially in L, the same bit order follows
+from these bounds, with a constant depending on the polynomial degree.
+For unrestricted m the bounds only give Omega(log L) below and
+O(log m+log L) above; they do not determine an exact m dependence.
+
+**What this supplies to the recursive interface.** Every fixed-cap
+actual value graph and selected-split graph has the same state-bit order
+as Campbell's full graph NFA in this canonical encoding. The Cloitre
+upper bound is deterministic graph recognition, obtained from sparsity;
+Campbell's existing full-graph upper bound uses its explicit scale law.
+Neither comparison gives a matching deterministic streaming decoder.
+
+The stored trie may require knowledge of C and g at every accepted root;
+no fast or small-space procedure to construct it is asserted. Its transition
+table has O(mL^4 log(mL)) bits at fixed alphabet size for m>=1. This
+storage, the supplied-context local profile tables, and the cost of
+generating recursive descendants remain distinct. The full unbounded-cap
+C graph and the complete minimum recursive interface are still open.
+
+The [closure checker](verification/closure_interface.py) builds actual
+paired and selected-split tries at finite horizons, rejects incorrect
+outputs, projects the zero-cap filter, checks endpoint aliases, and
+compares independent sequence evaluators. Those finite checks corroborate
+the proof; they do not replace the cap budget or fooling-set argument.
+
+### The least recursive completion adds Fibonacci anchors
+
+A bounded natural-cap domain is not itself closed under the actual
+two-child recurrence. This is an endpoint-alias issue, and its least
+recursive completion can be identified exactly.
+
+Let B={1,...,F_10}={1,...,55}, let A={F_j:j>=2}, and write
+S_m={n>=1:0<=E(n)<=m}, for a fixed integer m>=0. A set is recursively
+closed if every n>=3 in it has both actual children g(n),n-g(n) in it.
+This is closure under the selected two-child addition; obtaining g(n)
+from its defining inner orbit remains a separate evaluation task.
+
+**Least-completion theorem.** The smallest recursively closed set
+containing B and S_m is exactly
+
+$$
+\boxed{R_m=B\cup S_m\cup A.} \tag{M.3}
+$$
+
+Its value and actual selected-split graphs have the same minimum
+autonomous DFA/NFA state-bit order Theta(log L). Thus the sparse graph
+upper bound extends to a genuinely recursively closed actual family.
+
+**Why the anchors are forced.** For every k>=6, n=F_k-1 has E(n)=0.
+The capture interval is [F_(k-1)-1,F_(k-1)]. Put A_k=F_(k-1) and
+B_k=F_(k-2). The proved Fibonacci and predecessor identities give
+C(A_k)=C(A_k-1)=B_k. Hence
+
+$$
+T_n(A_k)=A_k-1,\qquad T_n(A_k-1)=A_k-1.
+$$
+
+The prescribed depth reaches a cycle, so its actual split is
+g(n)=A_k-1 and its complementary child is B_k. That child's natural
+cap defect is F_(k-4), which exceeds any fixed m eventually. This proves
+S_m alone is not recursively closed. Moreover, every Fibonacci anchor
+above55 occurs as B_k for one such zero-cap root. Any recursively closed
+superset of B and S_m must therefore contain every element of A.
+
+**Sufficiency.** Roots in B have smaller children, also in B. At an
+anchor n=F_k>55, the capture interval at t=0 is the singleton
+{F_(k-1)}, so the actual children are F_(k-1),F_(k-2), both in A.
+
+It remains to check a nonanchor n>55 in S_m. Its upper-anchor order
+k>=11. The proved child conservation gives
+
+$$
+g(n)=F_{k-1}-r,\quad n-g(n)=F_{k-2}-q,\quad
+v=r+q,\quad E(n)=e_1+e_2,\quad e_1,e_2\ge0,
+$$
+
+where e_1=Q_(k-1)(r) and e_2=Q_(k-2)(q). Thus each inherited defect
+is at most m. A child with gap0 is an anchor and lies in A. For a
+positive gap the inherited upper anchor is its natural upper anchor,
+including the lower block boundary; its natural cap defect is e_i and
+the child lies in S_m. All cases are covered, so R_m is closed. Together
+with the forced-anchor argument this proves (M.3). No new finite sequence
+premise is needed beyond the existing theorems.
+
+**Graph resources.** The completion adds at most55 base inputs and
+3L+1 distinct anchors through L windows. Its input count is still
+O(mL^3) for m>=1 and O(L^2) for m=0. Storing actual value or selected-split
+words therefore gives the same O(mL^4), respectively O(L^3), state bounds.
+The constant-state zero-cap filter still projects the completed graphs
+to the original diagnostic, up to the omitted initial selected-split cases:
+added positive-defect base or anchor roots
+fail y=F_j. The same lower bound and minimum bit order follow.
+
+This theorem identifies the necessary endpoint category for this chosen
+bounded-cap domain. The base B is a declared part of the closure contract,
+not a claim about the smallest possible finite base. Recognizing the
+completed graph does not supply a streaming output decoder or a compact
+procedure to build its transition table.
+
+**Full evaluation closure has a different answer.** If a domain must also
+contain n-1 whenever it contains n>=3, to obtain the defining depth C(n-1),
+then any such domain containing S_m and B is all positive integers.
+Indeed S_m contains the unbounded sequence F_k-1; repeated predecessor
+closure below these roots reaches every positive index. The polynomial
+count above shows that R_m is a proper sparse subset at every fixed m,
+so it cannot have this stronger closure. A sparse recursive interface
+must therefore supply or compile the selected endpoint, depth or equivalent
+orbit information instead of treating predecessor access as free. The
+least-completion and memory theorems use the stated selected-child and
+graph-recognition contracts throughout.

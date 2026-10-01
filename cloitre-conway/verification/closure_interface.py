@@ -1,5 +1,6 @@
 """Exact checks for the generic reflection-window closure interface."""
 
+from bisect import bisect_right
 from fractions import Fraction
 import hashlib
 import json
@@ -355,6 +356,200 @@ def cloitre_top_plateau_memory_audit():
                 scope='Written moving-plateau theorem identifies the actual C cap language. Prefix (25,3) raises the anchor order by6 at a fixed gap; its triangular fooling set gives the general NFA/DFA lower bound. A polynomial-size finite-horizon trie matches the state-bit order, excluding table size and supplied clocks. The actual C full graph inherits a lower bound by a constant-state cap filter/projection; its matching upper bound and the complete recursive minimum remain open.')
 
 
+def synchronous_fib_word(numbers):
+    rows = [canonical_fib_word(number) for number in numbers]
+    width = len(rows[0][1])
+    assert all(len(windows) <= width for unit, windows in rows)
+    padded = [(0,) * (width - len(windows)) + windows for unit, windows in rows]
+    return tuple(zip(*padded)) + (('unit', *(unit for unit, windows in rows)),)
+
+
+def graph_trie(words):
+    transitions = [{}]
+    accepting = set()
+    for word in sorted(words, key=repr):
+        state = 0
+        for symbol in word:
+            if symbol not in transitions[state]:
+                transitions[state][symbol] = len(transitions)
+                transitions.append({})
+            state = transitions[state][symbol]
+        accepting.add(state)
+    return transitions, accepting
+
+
+def trie_accepts(trie, word):
+    transitions, accepting = trie
+    state = 0
+    for symbol in word:
+        if symbol not in transitions[state]:
+            return False
+        state = transitions[state][symbol]
+    return state in accepting
+
+
+def highest_input_cap_filter(word):
+    patterns = ((0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1), (1, 0, 1))
+    found_highest = False
+    for symbol in word:
+        if symbol[0] == 'unit':
+            bit_pairs = ((symbol[1], symbol[2]),)
+        else:
+            bit_pairs = zip(reversed(patterns[symbol[0]]), reversed(patterns[symbol[1]]))
+        for input_bit, output_bit in bit_pairs:
+            expected = int(not found_highest and input_bit == 1)
+            if output_bit != expected:
+                return False
+            found_highest = found_highest or input_bit == 1
+    return found_highest
+
+
+def cloitre_bounded_cap_graph_audit():
+    fibonacci = [0, 1]
+    while len(fibonacci) <= 150:
+        fibonacci.append(sum(fibonacci[-2:]))
+    limit = fibonacci[21] - 1
+    actual, _, _, splits = generate(limit)
+    assert actual == brent_generate(limit)
+    caps = (0, 1, 2, 3, 4, 8)
+    rows = []
+    pair_checks = split_checks = projection_checks = 0
+    closure_checks = completed_projection_checks = incorrect_completed_outputs = 0
+    qualified_roots = set()
+    for horizon in range(1, 7):
+        maximum = fibonacci[3 * horizon + 3] - 1
+        for cap in caps:
+            numbers = [number for number in range(1, maximum + 1)
+                       if 0 <= fibonacci[bisect_right(fibonacci, number) - 1] - actual[number] <= cap]
+            pair_words = {synchronous_fib_word((number, actual[number])) for number in numbers}
+            split_words = {synchronous_fib_word((number, actual[number], splits[number]))
+                           for number in numbers if number >= 3}
+            pair_trie = graph_trie(pair_words)
+            split_trie = graph_trie(split_words)
+            assert len(pair_words) == len(numbers)
+            assert len(split_words) == len([number for number in numbers if number >= 3])
+            for trie, words in ((pair_trie, pair_words), (split_trie, split_words)):
+                assert all(trie_accepts(trie, word) for word in words)
+                assert len(trie[0]) + 1 <= 2 + (horizon + 1) * len(words)
+            if cap:
+                bound = 20 + sum(min(fibonacci[order - 2], cap *
+                                     (13 if order == 9 else (order - 2) ** 2 // 3 - 3 * order + 30))
+                                 for order in range(9, 3 * horizon + 4))
+                assert len(numbers) <= bound <= 20 + cap * (3 * horizon + 3) ** 3
+            projected = {word for word in pair_words if highest_input_cap_filter(word)}
+            for number in range(1, maximum + 1):
+                highest = bisect_right(fibonacci, number) - 1
+                expected = actual[number] == fibonacci[highest]
+                word = synchronous_fib_word((number, fibonacci[highest]))
+                assert (word in projected) == expected
+                projection_checks += 1
+            if horizon <= 3:
+                for number in range(1, maximum + 1):
+                    for output in range(maximum + 1):
+                        if len(canonical_fib_word(output)[1]) > len(canonical_fib_word(number)[1]):
+                            continue
+                        word = synchronous_fib_word((number, output))
+                        expected = number in numbers and output == actual[number]
+                        assert trie_accepts(pair_trie, word) == expected
+                        assert highest_input_cap_filter(word) == (output == fibonacci[bisect_right(fibonacci, number) - 1])
+                        pair_checks += 1
+            if horizon <= 2:
+                for number in range(3, maximum + 1):
+                    for output in range(number + 1):
+                        for endpoint in range(number + 1):
+                            word = synchronous_fib_word((number, output, endpoint))
+                            expected = number in numbers and output == actual[number] and endpoint == splits[number]
+                            assert trie_accepts(split_trie, word) == expected
+                            split_checks += 1
+            qualified_roots.update(number for number in numbers if number >= 3)
+            completed_numbers = set(numbers) | set(range(1, min(55, maximum) + 1))
+            completed_numbers.update(anchor for anchor in fibonacci[2:] if anchor <= maximum)
+            completed_pair_words = {synchronous_fib_word((number, actual[number])) for number in completed_numbers}
+            completed_split_words = {synchronous_fib_word((number, actual[number], splits[number]))
+                                     for number in completed_numbers if number >= 3}
+            completed_pair_trie = graph_trie(completed_pair_words)
+            completed_split_trie = graph_trie(completed_split_words)
+            assert len(completed_numbers) <= len(numbers) + 55 + 3 * horizon + 1
+            for trie, words in ((completed_pair_trie, completed_pair_words),
+                                (completed_split_trie, completed_split_words)):
+                assert all(trie_accepts(trie, word) for word in words)
+                assert len(trie[0]) + 1 <= 2 + (horizon + 1) * len(words)
+            completed_projected = {word for word in completed_pair_words if highest_input_cap_filter(word)}
+            for number in range(1, maximum + 1):
+                highest = bisect_right(fibonacci, number) - 1
+                word = synchronous_fib_word((number, fibonacci[highest]))
+                assert (word in completed_projected) == (actual[number] == fibonacci[highest])
+                completed_projection_checks += 1
+            for number in sorted(completed_numbers):
+                for output in (actual[number] - 1, actual[number] + 1):
+                    if output <= number:
+                        assert not trie_accepts(completed_pair_trie, synchronous_fib_word((number, output)))
+                        incorrect_completed_outputs += 1
+                if number >= 3:
+                    assert splits[number] in completed_numbers
+                    assert number - splits[number] in completed_numbers
+                    closure_checks += 1
+                    for endpoint in (splits[number] - 1, splits[number] + 1):
+                        assert not trie_accepts(completed_split_trie,
+                                                synchronous_fib_word((number, actual[number], endpoint)))
+                        incorrect_completed_outputs += 1
+            qualified_roots.update(number for number in completed_numbers if number >= 3)
+            rows.append(dict(horizon_windows=horizon, cap=cap, accepted_inputs=len(numbers),
+                             value_graph_states_including_reject=len(pair_trie[0]) + 1,
+                             selected_split_graph_states_including_reject=len(split_trie[0]) + 1,
+                             recursively_completed_inputs=len(completed_numbers),
+                             completed_value_graph_states_including_reject=len(completed_pair_trie[0]) + 1,
+                             completed_selected_split_graph_states_including_reject=len(completed_split_trie[0]) + 1))
+    literal_updates = 0
+    for number in sorted(qualified_roots):
+        endpoint = number - 1
+        for step in range(actual[number - 1]):
+            endpoint = number - actual[endpoint]
+            literal_updates += 1
+        assert endpoint == splits[number]
+        assert actual[number] == actual[endpoint] + actual[number - endpoint]
+    aliases = []
+    for order in range(3, 21):
+        number = fibonacci[order]
+        natural_defect = fibonacci[order] - actual[number]
+        assert natural_defect == fibonacci[order - 2] > 0
+        aliases.append(dict(order=order, index=number, natural_cap_defect=natural_defect))
+    forced_anchors = []
+    for order in range(6, 22):
+        number = fibonacci[order] - 1
+        endpoint = fibonacci[order - 1] - 1
+        assert actual[number] == fibonacci[order - 1]
+        assert splits[number] == endpoint
+        assert number - endpoint == fibonacci[order - 2]
+        natural_child_defect = fibonacci[order - 2] - actual[number - endpoint]
+        assert natural_child_defect == fibonacci[order - 4]
+        forced_anchors.append(dict(root_order=order, zero_cap_root=number,
+                                   selected_split=endpoint, forced_anchor=number - endpoint,
+                                   forced_anchor_natural_cap_defect=natural_child_defect))
+    high_filter_checks = 0
+    for order in range(3, 151):
+        for number in (fibonacci[order] - 1, fibonacci[order], fibonacci[order] + 1):
+            highest = bisect_right(fibonacci, number) - 1
+            for output in (0, fibonacci[highest] - 1, fibonacci[highest], fibonacci[highest] + 1):
+                if len(canonical_fib_word(output)[1]) > len(canonical_fib_word(number)[1]):
+                    continue
+                assert highest_input_cap_filter(synchronous_fib_word((number, output))) == (output == fibonacci[highest])
+                high_filter_checks += 1
+    return dict(cap_levels=list(caps), horizon_windows_inclusive=[1, 6],
+                independent_evaluators_agree_through=limit, trie_examples=rows,
+                exhaustive_value_output_checks=pair_checks, exhaustive_selected_split_checks=split_checks,
+                zero_cap_projection_checks=projection_checks, endpoint_aliases=aliases,
+                recursively_completed_child_checks=closure_checks,
+                completed_zero_cap_projection_checks=completed_projection_checks,
+                incorrect_completed_output_checks=incorrect_completed_outputs,
+                zero_cap_roots_forcing_anchor_completion=forced_anchors,
+                literal_selected_roots=len(qualified_roots), literal_endpoint_updates=literal_updates,
+                high_order_filter_checks=high_filter_checks, highest_filter_order=150,
+                minimum_nonuniform_DFA_NFA_state_bit_order='Theta(log L) for every fixed cap, both value and actual selected-split graphs, including the least recursive completion by Fibonacci anchors and the declared base1..55',
+                general_state_bounds='Omega(L) below; O(m L^4) above for m>=1; O(L^3) above for m=0',
+                scope='The infinite theorem uses the proved quadratic cap enclosure and zero-plateau fooling set; additive child cap conservation and forced anchor children identify the least recursive completion. Finite tries test actual graphs, incorrect outputs, literal selected endpoints, recursive child closure and constant-state cap filtering. Table storage and construction, streaming decoding, full unbounded-cap graph and full recursive minimum remain separate.')
+
+
 def main():
     rows = [check_period(period) for period in range(1, 9)]
     five = rows[4]
@@ -381,6 +576,7 @@ def main():
         },
         "Campbell_FIB_scale_memory": scale_memory_audit(),
         "Cloitre_top_plateau_FIB_memory": cloitre_top_plateau_memory_audit(),
+        "Cloitre_bounded_cap_graph_FIB_memory": cloitre_bounded_cap_graph_audit(),
         "scope": "Exact symbolic affine closure; branch inequalities and family-specific selectors remain separate.",
     }, indent=2))
 

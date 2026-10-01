@@ -66,11 +66,15 @@ Choose the topic you need; there is no need to read every note in order.
 | How much information is shared between recursive rows? | [Recursive descent](recursive-descent.md) | Inverse reconstruction |
 | Where can a bounded cap defect occur, and what selects its children? | [Cap budget and local interface](recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level) | Exact zero plateau; certified exterior entrance |
 | What would prove a global decay rate, and why are static collars insufficient? | [Martingales and dispersion](dispersion.md) | Profile identity and additive child blocks |
-| How much autonomous memory does canonical five-window recognition require? | [Cloitre cap diagnostic](five-window-closure.md#autonomous-memory-of-the-actual-top-plateau-diagnostic) · [Campbell scale memory](../campbell/scale-memory.md) | Moving negative plateau; Campbell's explicit formula |
+| How much autonomous memory does canonical five-window recognition require? | [Cloitre bounded-cap graphs](five-window-closure.md#exact-state-bit-order-for-every-bounded-cap-graph) · [Cap diagnostic](five-window-closure.md#autonomous-memory-of-the-actual-top-plateau-diagnostic) · [Campbell scale memory](../campbell/scale-memory.md) | Quadratic cap budget; moving zero plateau; Campbell's explicit formula |
 | When does a canonical window have a persistent feature interaction? | [Cloitre family](exact-collars.md#a-persistent-interaction-on-canonical-index-words) · [Campbell comparison](../campbell/scale-memory.md#five-pattern-interaction-on-ternary-scale-interiors) | Unit-defect arithmetic descent; ternary formula |
 | What arithmetic supports the global induction and shifted-family tests? | [Supporting arithmetic and audit](landing.md) | Foundations |
 
 The local interface theorems state exactly which context is supplied.
+For a bounded natural-cap domain, the
+[least recursive completion](five-window-closure.md#the-least-recursive-completion-adds-fibonacci-anchors)
+adds Fibonacci anchors to the declared finite base; its actual value and
+selected-split graphs have the proved state-bit order.
 A candidate geometric cycle, a finite numerical test, and an actual selected
 recursive orbit are distinct objects. The [status page](../STATUS.md) tracks
 the unresolved full-interface and asymptotic questions.
