@@ -274,6 +274,9 @@ For five roots the order is unchanged. The two profile tables cost
 O(mk^2 log(mk)) bits; Fibonacci arithmetic, root indices, and verification
 of the exterior trace are separate resources. This is a conditional
 selector interface, not an autonomous recognizer or a global minimum.
+Computing the exact depth uses Theta(k)-bit Fibonacci integers; the
+selector-field bound does not assert that the whole decoder uses only
+O(log k) working memory.
 
 **Why the entrance certificate remains explicit.** With A=F_(k-1),
 B=F_(k-2), J=F_(k-4), the first two prescribed points are
@@ -305,6 +308,15 @@ alternative prescribed depths at this physical index. If the cap4
 qualification itself is supplied, only the readout4 is compatible;
 it would be incorrect to count2 additional phase bits again in that
 smaller qualified contract.
+
+**Cross-family scope.** Campbell's recurrence has no corresponding
+additive two-child identity, so this cap-budget proof does not transfer
+from the common reflection map alone. Its
+[ternary formula](../campbell/README.md) determines the basin and phase
+arithmetically, with at most four transient steps and periods1/2.
+What transfers is the distinction between supplied arithmetic context,
+cycle readout classes, and an independently certified entrance. The
+autonomous FIB scale-memory counts remain a separate contract.
 
 The checker verifies (C.1)/(C.2) on all complete blocks9..30,
 reconstructs actual small-cap roots through this local interface, and
