@@ -392,6 +392,16 @@ excluded boundary phases with a different parent scalar readout.
 This gives a larger infinite domain, still of width O(k) at F_k;
 it is not a uniform inequality over the interiors of whole blocks.
 
+**A generated cap4 band.** The
+[propagated profile theorem](exact-collars.md#a-propagated-cap4-band-generates-its-own-profiles)
+extends the same all-basin constant1/25 to0<=v<=4k-19 at k>=23.
+The newly included cap4 roots have fixed cycles or the known frontier
+two-cycle, with every phase shift in{3,4}. Their gaps exceed Z_k and are
+at least53, so v>=6delta+2. The same Cassini estimate therefore applies
+to every phase. The finite order22 seed is a terminal profile table; its
+own shifts are not assumed to be3 or4. This remains a linear-width domain
+and does not establish dispersion over the wider block interiors.
+
 This proof connects arithmetic recursive closure to Benoît Cloitre's
 dispersion route. In the extended family every complementary gap is at most4,
 so the

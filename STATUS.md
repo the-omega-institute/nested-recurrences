@@ -44,8 +44,9 @@ conjectures remain finite observations. No Lean formalization is included.
    profile, branch, and phase information suffices beyond the exact
    Fibonacci neighborhoods. Five digit labels or a candidate geometric
    cycle alone do not determine the actual selected recursive orbit.
-   Actual nesting must also generate the profiles used by the
-   [local decoders](cloitre-conway/recursive-descent.md#cap4-query-profiles-and-the-information-they-carry).
+   Actual profiles and descendants are now generated arithmetically in a
+   [growing initial band](cloitre-conway/exact-collars.md#a-propagated-cap4-band-generates-its-own-profiles).
+   Constructing them in the wider domains remains open.
 3. **Inner dynamics between Fibonacci indices.** Control periods,
    landing times, and selected phases in the wider block interiors.
 

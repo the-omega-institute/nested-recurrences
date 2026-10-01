@@ -950,6 +950,246 @@ def allocation_seed_candidates(order, gap, parent_cap, sequence, fibonacci):
     return candidates
 
 
+def cap4_generated_width(order):
+    assert order >= 22
+    return 4 * order - 19
+
+
+def generated_cap4_profile(order, gap):
+    assert 0 <= gap <= cap4_generated_width(order)
+    return next((level for level in range(4) if gap <= higher_cap_width(order, level)), 4)
+
+
+def cap4_band_first_spine_gap(initial_order, initial_gap, target_order):
+    assert 22 <= target_order <= initial_order
+    assert higher_cap_width(initial_order, 3) < initial_gap <= cap4_generated_width(initial_order)
+    return max(higher_cap_width(target_order, 3) + 1,
+               initial_gap - 4 * (initial_order - target_order))
+
+
+def cap4_generated_band_audit(sequence, splits, fibonacci):
+    base_order = 22
+    base_lower = higher_cap_width(base_order, 3) + 1
+    base_upper = cap4_generated_width(base_order)
+    base_shifts = []
+    literal_updates = 0
+    for gap in range(base_lower, base_upper + 1):
+        root = fibonacci[base_order] - gap
+        assert fibonacci[base_order - 1] - sequence[root] == 4
+        endpoint = root - 1
+        for iteration in range(sequence[root - 1]):
+            endpoint = root - sequence[endpoint]
+        assert endpoint == splits[root]
+        assert sequence[endpoint] + sequence[root - endpoint] == fibonacci[base_order - 1] - 4
+        base_shifts.append(endpoint - (fibonacci[base_order - 1] - gap))
+        literal_updates += sequence[root - 1]
+    projection_cases = 0
+    completion_graphs = 0
+    for initial_order in range(23, 121):
+        for initial_gap in range(higher_cap_width(initial_order, 3) + 1,
+                                 cap4_generated_width(initial_order) + 1):
+            gap = initial_gap
+            for target_order in range(initial_order, 21, -1):
+                assert gap == cap4_band_first_spine_gap(initial_order, initial_gap, target_order)
+                assert generated_cap4_profile(target_order, gap) == 4
+                projection_cases += 1
+                if target_order > 22:
+                    frontier = higher_cap_width(target_order - 1, 3)
+                    shift = 3 if gap == frontier + 4 else 4
+                    assert shift == 4 or target_order % 3 != 1
+                    gap -= shift
+            if initial_order > 60:
+                continue
+            frontier = higher_cap_width(initial_order - 1, 3)
+            known_width = cap4_generated_width(initial_order - 1)
+            expected_cycle = ({frontier, frontier + 1} if initial_gap == frontier + 4
+                              else {initial_gap - 4})
+            for completion_kind in range(3):
+                profile = []
+                for point in range(initial_gap + 1):
+                    if point <= known_width:
+                        defect = generated_cap4_profile(initial_order - 1, point)
+                    else:
+                        maximum = max(4, point - frontier - 1)
+                        defect = (4 if completion_kind == 0 else maximum if completion_kind == 1
+                                  else 4 + (point - known_width) % (maximum - 3))
+                    assert 0 <= defect <= 2 * point // 3
+                    profile.append(defect)
+                cycles = capped_profile_cycles(profile, initial_gap)
+                assert len(cycles) == 1 and set(cycles[0]) == expected_cycle
+                completion_graphs += 1
+    actual_roots = 0
+    actual_spine_states = 0
+    basin_phases = 0
+    minimum_ratio = None
+    for order in range(23, 31):
+        first_cap = fibonacci[order - 2]
+        second_cap = fibonacci[order - 3]
+        for gap in range(higher_cap_width(order, 3) + 1, cap4_generated_width(order) + 1):
+            root = fibonacci[order] - gap
+            assert sequence[root] == fibonacci[order - 1] - 4
+            selected_gap = cap4_band_first_spine_gap(order, gap, order - 1)
+            assert splits[root] == fibonacci[order - 1] - selected_gap
+            assert gap - selected_gap in (3, 4)
+            assert first_cap - sequence[splits[root]] == 4
+            assert second_cap - sequence[root - splits[root]] == 0
+            current = root
+            for target_order in range(order, 21, -1):
+                predicted_gap = cap4_band_first_spine_gap(order, gap, target_order)
+                assert current == fibonacci[target_order] - predicted_gap
+                assert sequence[current] == fibonacci[target_order - 1] - 4
+                actual_spine_states += 1
+                if target_order > 22:
+                    current = splits[current]
+            trajectory, transient, period = full_orbit(sequence, root)
+            cycle = trajectory[transient:]
+            assert period == (2 if gap == higher_cap_width(order - 1, 3) + 4 else 1)
+            for first in cycle:
+                second = root - first
+                numerator = first_cap * second - second_cap * first
+                assert 25 * numerator * numerator >= gap * gap * first * second
+                ratio = Fraction(numerator * numerator, gap * gap * first * second)
+                minimum_ratio = ratio if minimum_ratio is None else min(minimum_ratio, ratio)
+                basin_phases += 1
+            actual_roots += 1
+    witness_order = 30
+    witness_gap = 92
+    witness_root = fibonacci[witness_order] - witness_gap
+    trajectory, transient, period = full_orbit(sequence, witness_root)
+    assert period == 1 and splits[witness_root] == fibonacci[29] - 88
+    endpoint = witness_root - 1
+    for iteration in range(sequence[witness_root - 1]):
+        endpoint = witness_root - sequence[endpoint]
+    assert endpoint == splits[witness_root]
+    literal_updates += sequence[witness_root - 1]
+    actual_excluded_model = dict(order=witness_order, root=witness_root, gap=witness_gap,
+                                value=sequence[witness_root], depth=sequence[witness_root - 1],
+                                selected=endpoint, selected_gap=88, period=period,
+                                transient=transient, seed_query_cap=4,
+                                scope='Actual nesting fixes the PR22 model seed response at4; its hypothetical responses10..15 are excluded at this actual index.')
+    offsets = [0, 2, 3, 5, 7]
+    finite_order = 26
+    finite_gap = higher_cap_width(finite_order, 3) + 6
+    finite_base = fibonacci[finite_order] - finite_gap
+    finite_values = [sequence[finite_base + offset] for offset in offsets]
+    assert [fibonacci[finite_order - 1] - value for value in finite_values] == [4, 4, 4, 4, 3]
+    assert finite_values[4] - finite_values[1] - finite_values[3] + finite_values[0] == 1
+    finite_children = [splits[finite_base + offset] - (fibonacci[finite_order - 1] - finite_gap)
+                       for offset in offsets]
+    assert finite_children == [4, 6, 7, 8, 10]
+    finite_alphabet = sorted(set(offsets + finite_children))
+    assert len(finite_alphabet) == 9
+    for offset in offsets:
+        root = finite_base + offset
+        digits = set(canonical_fibonacci_indices(root, fibonacci))
+        expected_digits = set(canonical_fibonacci_indices(finite_base, fibonacci))
+        expected_digits.update(canonical_fibonacci_indices(offset, fibonacci))
+        assert digits == expected_digits
+        endpoint = root - 1
+        for iteration in range(sequence[root - 1]):
+            endpoint = root - sequence[endpoint]
+        assert endpoint == splits[root]
+        literal_updates += sequence[root - 1]
+    finite_child_digits = []
+    finite_child_base = fibonacci[finite_order - 1] - finite_gap
+    for offset, child_offset in zip(offsets, finite_children):
+        physical = splits[finite_base + offset]
+        digits = set(canonical_fibonacci_indices(physical, fibonacci))
+        expected_digits = set(canonical_fibonacci_indices(finite_child_base, fibonacci))
+        expected_digits.update(canonical_fibonacci_indices(child_offset, fibonacci))
+        assert digits == expected_digits
+        finite_child_digits.append([int(position in digits) for position in range(2, 7)])
+    digit_interactions = [finite_child_digits[4][position] - finite_child_digits[1][position]
+                          - finite_child_digits[3][position] + finite_child_digits[0][position]
+                          for position in range(5)]
+    assert digit_interactions == [0, 1, 1, -1, 0]
+    assert sum(fibonacci[position + 2] * coefficient
+               for position, coefficient in enumerate(digit_interactions)) == 0
+    assert finite_children[4] - finite_children[1] - finite_children[3] + finite_children[0] == 0
+    finite_descendants = [finite_base + offset for offset in offsets]
+    finite_spine_rows = []
+    for target_order in range(finite_order, 21, -1):
+        values = [sequence[physical] for physical in finite_descendants]
+        assert [fibonacci[target_order - 1] - value for value in values] == [4, 4, 4, 4, 3]
+        assert values[4] - values[1] - values[3] + values[0] == 1
+        finite_spine_rows.append(dict(order=target_order,
+                                      gaps=[fibonacci[target_order] - physical for physical in finite_descendants],
+                                      inherited_scalar_interaction=1,
+                                      distinct_physical_indices=len(set(finite_descendants))))
+        if target_order > 22:
+            finite_descendants = [splits[physical] for physical in finite_descendants]
+    family_fibonacci = [0, 1]
+    while len(family_fibonacci) <= 199:
+        family_fibonacci.append(sum(family_fibonacci[-2:]))
+    assert family_fibonacci[60] % 10 == 0 and family_fibonacci[61] % 10 == 1
+    family_rows = []
+    inherited_pattern_states = 0
+    for fibonacci_order in range(19, 200, 60):
+        gap = family_fibonacci[fibonacci_order]
+        assert gap % 10 == 1
+        order = 3 * ((gap + 19) // 10)
+        assert order >= 23 and order >= fibonacci_order + 2 and order % 3 == 0
+        assert higher_cap_width(order, 3) == gap - 6
+        defects = [generated_cap4_profile(order, gap - offset) for offset in offsets]
+        assert defects == [4, 4, 4, 4, 3]
+        child_offsets = []
+        for offset, defect in zip(offsets, defects):
+            root_gap = gap - offset
+            child_gap = (cap4_band_first_spine_gap(order, root_gap, order - 1) if defect == 4
+                         else root_gap - higher_cap_shift(order, root_gap))
+            child_offsets.append(gap - child_gap)
+        assert child_offsets == [4, 6, 7, 8, 10]
+        for pattern, child_offset in zip(((0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1), (1, 0, 1)),
+                                         child_offsets):
+            first_bit, middle_bit, last_bit = pattern
+            digits = set(canonical_fibonacci_indices(child_offset, family_fibonacci))
+            expected = [1 - middle_bit - last_bit, middle_bit + first_bit * last_bit,
+                        1 - first_bit - middle_bit - last_bit + first_bit * last_bit,
+                        first_bit + middle_bit - first_bit * last_bit, last_bit]
+            assert [int(position in digits) for position in range(2, 7)] == expected
+        alphabet = sorted(set(offsets + child_offsets))
+        assert alphabet == [0, 2, 3, 4, 5, 6, 7, 8, 10]
+        for target_order in (order, order - 1, order - 2, order - 9, order - 20, 22):
+            descendant_defects = []
+            descendant_gaps = []
+            for offset, defect in zip(offsets, defects):
+                descendant_gap = (cap4_band_first_spine_gap(order, gap - offset, target_order)
+                                  if defect == 4 else higher_cap_first_spine_gap(
+                                      order, gap - offset, target_order, 3))
+                descendant_defects.append(generated_cap4_profile(target_order, descendant_gap))
+                descendant_gaps.append(descendant_gap)
+                inherited_pattern_states += 1
+            assert descendant_defects == defects
+            if target_order == 22:
+                assert descendant_gaps == [50, 50, 50, 50, 49]
+        family_rows.append(dict(fibonacci_order=fibonacci_order, gap=gap, anchor_order=order,
+                                root_cap_defects=defects, selected_child_offsets=child_offsets,
+                                one_edge_alphabet=alphabet, one_edge_label_bits=4,
+                                persistent_inherited_interaction=1))
+    return dict(base_order=base_order, base_gap_interval_inclusive=[base_lower, base_upper],
+                base_cap4_value=fibonacci[21] - 4, base_selected_shifts=base_shifts,
+                propagated_width='4K-19, K>=22; a certified initial band, not the full cap4 support',
+                arithmetic_projection_orders_inclusive=[23, 120], arithmetic_projection_cases=projection_cases,
+                synthetic_completion_graph_orders_inclusive=[23, 60], synthetic_completion_graphs=completion_graphs,
+                actual_band_orders_inclusive=[23, 30], actual_cap4_roots=actual_roots,
+                actual_first_spine_states=actual_spine_states, actual_basin_phases=basin_phases,
+                basin_quadratic_constant='1/25', minimum_basin_quadratic_ratio=str(minimum_ratio),
+                actual_model_seed_exclusion=actual_excluded_model,
+                finite_canonical_window=dict(order=finite_order, gap=finite_gap, base=finite_base,
+                                             values=finite_values, selected_child_offsets=finite_children,
+                                             one_edge_alphabet=finite_alphabet, one_edge_label_bits=4,
+                                             selected_child_digits_F2_through_F6=finite_child_digits,
+                                             selected_child_digit_interactions=digit_interactions,
+                                             selected_child_offset_interaction=0,
+                                             inherited_pattern_spine_rows=finite_spine_rows),
+                symbolic_canonical_family_rows=family_rows, symbolic_inherited_pattern_states=inherited_pattern_states,
+                canonical_child_numeric_map='4+2*x1+3*x2+4*x3; interaction0',
+                canonical_child_digit_interactions_F2_through_F6=[0, 1, 1, -1, 0],
+                canonical_family_terminal_gaps_at_order22=[50, 50, 50, 50, 49],
+                literal_endpoint_updates=literal_updates,
+                scope='The certified20-value base band propagates by the cap3 shelf; profile values, selected shifts and descendants are arithmetic to order22. The canonical family m=19 mod60 has a persistent interaction and a nine-symbol one-edge alphabet including F6. Symbolic rows do not directly evaluate C at huge Fibonacci orders; four-bit label packing is not an independent selector-input lower bound. Full cap4 support, wide-block profiles, high-cap allocations and uniform dispersion remain open.')
+
+
 def cap4_tail_query_domain(order, gap):
     frontier = higher_cap_width(order - 1, 3)
     excess = gap - frontier
@@ -1260,6 +1500,7 @@ def higher_projection_and_allocation_audit(sequence, splits, fibonacci):
                                           maximum_observed_query_cap=maximum_tail_query_cap,
                                           actual_period_counts=tail_period_counts,
                                           profile_response_models=response_models),
+                cap4_generated_band=cap4_generated_band_audit(sequence, splits, fibonacci),
                 scope='Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open.')
 
 

@@ -79,6 +79,10 @@ handles a particular canonical family; it does not close the full recursion.
 The [profile query theorem](recursive-descent.md#cap4-query-profiles-and-the-information-they-carry)
 shrinks the required lower-profile interval and distinguishes its arithmetic
 information from cycle-phase information.
+The [propagated cap4 band](exact-collars.md#a-propagated-cap4-band-generates-its-own-profiles)
+generates that profile and its selected descendants in a growing initial
+region. A [canonical family](exact-collars.md#a-canonical-cap4-window-reaches-the-next-fibonacci-digit)
+shows why even its first edge can need a higher Fibonacci digit in the output.
 
 The local interface theorems state exactly which context is supplied.
 For a bounded natural-cap domain, the
