@@ -41,7 +41,7 @@ indices, and then establish a decay rate.
 2. **[Read what happens near Fibonacci indices](fibonacci-collars.md).**
    The ratio converges in sublinear-width neighborhoods. The
    [exact-neighborhood note](exact-collars.md) gives exact values and phases.
-   Its zero/unit-defect family closes recursively with arithmetic selectors.
+   Its cap-defect0..3 family closes recursively with arithmetic selectors.
 3. **[Read the remaining convergence problem](dispersion.md).** Exact
    martingale identities give a conditional decay theorem; the required
    uniform dispersion inequality is still open.

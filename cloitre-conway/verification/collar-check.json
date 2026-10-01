@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "8bc015afcaf808ee0f5eae9bbddb7d4ab04df12f15b4202581ec793148d6c057",
+  "source_sha256": "372f2253e79c92ed390fcc38cd6389864953e39af80ece136119b08602c8c65e",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -4312,6 +4312,357 @@
         "golden_defect": 1
       },
       "scope": "Finite base and abstract graph checks for the unit-sublevel/shelf induction; actual selector and single-defective-spine checks through order30. All basin phases satisfy the scoped one-step quadratic dispersion inequality in the proved Q<=1 family. No wide-block or global dispersion bound, full minimum interface or Lean claim."
+    },
+    "higher_cap_closure": {
+      "base_rows": [
+        {
+          "level": 2,
+          "order": 20,
+          "width": 35,
+          "full_gap_positions": 2585,
+          "profile_sha256": "5cb9d21a1d4a8f7a73068bed49669a2bde2f91164159152f7052f064b9bdae31"
+        },
+        {
+          "level": 3,
+          "order": 21,
+          "width": 45,
+          "full_gap_positions": 4182,
+          "profile_sha256": "8c43d99933815e4cf9bfb15dcb0a976235e60f00b49fe666b983d437004f74f4"
+        }
+      ],
+      "literal_and_brent_checked_through": 10946,
+      "base_literal_updates": 38923521,
+      "lower_gap_bound_checks": 4183,
+      "abstract_profiles": 5868,
+      "abstract_periodic_upper_readouts": 3564,
+      "level2_width": "floor(8k/3)-18, k>=20",
+      "level3_width": "3k+floor((k-1)/3)-24, k>=21",
+      "actual_complete_block_orders_inclusive": [
+        20,
+        30
+      ],
+      "actual_block_positions": 827870,
+      "actual_selector_rows": 567,
+      "first_spine_steps": 3033,
+      "boundary_phase_rows": [
+        {
+          "order": 21,
+          "level": 2,
+          "gap": 38,
+          "depth": 6762,
+          "cycle": [
+            6729,
+            6730
+          ],
+          "transient": 10,
+          "selected_shift": 3,
+          "cap_defect": 2
+        },
+        {
+          "order": 22,
+          "level": 2,
+          "gap": 41,
+          "depth": 10943,
+          "cycle": [
+            10907,
+            10908
+          ],
+          "transient": 10,
+          "selected_shift": 2,
+          "cap_defect": 3
+        },
+        {
+          "order": 22,
+          "level": 3,
+          "gap": 49,
+          "depth": 10942,
+          "cycle": [
+            10900,
+            10901
+          ],
+          "transient": 10,
+          "selected_shift": 4,
+          "cap_defect": 3
+        },
+        {
+          "order": 23,
+          "level": 2,
+          "gap": 43,
+          "depth": 17708,
+          "cycle": [
+            17670,
+            17671
+          ],
+          "transient": 11,
+          "selected_shift": 3,
+          "cap_defect": 2
+        },
+        {
+          "order": 23,
+          "level": 3,
+          "gap": 53,
+          "depth": 17707,
+          "cycle": [
+            17661,
+            17662
+          ],
+          "transient": 11,
+          "selected_shift": 3,
+          "cap_defect": 4
+        },
+        {
+          "order": 24,
+          "level": 2,
+          "gap": 46,
+          "depth": 28654,
+          "cycle": [
+            28613,
+            28614
+          ],
+          "transient": 11,
+          "selected_shift": 3,
+          "cap_defect": 2
+        },
+        {
+          "order": 24,
+          "level": 3,
+          "gap": 56,
+          "depth": 28653,
+          "cycle": [
+            28604,
+            28605
+          ],
+          "transient": 12,
+          "selected_shift": 3,
+          "cap_defect": 4
+        },
+        {
+          "order": 25,
+          "level": 2,
+          "gap": 49,
+          "depth": 46365,
+          "cycle": [
+            46321,
+            46322
+          ],
+          "transient": 11,
+          "selected_shift": 2,
+          "cap_defect": 3
+        },
+        {
+          "order": 25,
+          "level": 3,
+          "gap": 59,
+          "depth": 46364,
+          "cycle": [
+            46312,
+            46313
+          ],
+          "transient": 12,
+          "selected_shift": 4,
+          "cap_defect": 3
+        },
+        {
+          "order": 26,
+          "level": 2,
+          "gap": 51,
+          "depth": 75022,
+          "cycle": [
+            74976,
+            74977
+          ],
+          "transient": 12,
+          "selected_shift": 3,
+          "cap_defect": 2
+        },
+        {
+          "order": 26,
+          "level": 3,
+          "gap": 63,
+          "depth": 75021,
+          "cycle": [
+            74965,
+            74966
+          ],
+          "transient": 12,
+          "selected_shift": 3,
+          "cap_defect": 4
+        },
+        {
+          "order": 27,
+          "level": 2,
+          "gap": 54,
+          "depth": 121390,
+          "cycle": [
+            121341,
+            121342
+          ],
+          "transient": 13,
+          "selected_shift": 3,
+          "cap_defect": 2
+        },
+        {
+          "order": 27,
+          "level": 3,
+          "gap": 66,
+          "depth": 121389,
+          "cycle": [
+            121330,
+            121331
+          ],
+          "transient": 13,
+          "selected_shift": 3,
+          "cap_defect": 4
+        },
+        {
+          "order": 28,
+          "level": 2,
+          "gap": 57,
+          "depth": 196415,
+          "cycle": [
+            196363,
+            196364
+          ],
+          "transient": 13,
+          "selected_shift": 2,
+          "cap_defect": 3
+        },
+        {
+          "order": 28,
+          "level": 3,
+          "gap": 69,
+          "depth": 196414,
+          "cycle": [
+            196352,
+            196353
+          ],
+          "transient": 14,
+          "selected_shift": 4,
+          "cap_defect": 3
+        },
+        {
+          "order": 29,
+          "level": 2,
+          "gap": 59,
+          "depth": 317808,
+          "cycle": [
+            317754,
+            317755
+          ],
+          "transient": 13,
+          "selected_shift": 3,
+          "cap_defect": 2
+        },
+        {
+          "order": 29,
+          "level": 3,
+          "gap": 73,
+          "depth": 317807,
+          "cycle": [
+            317741,
+            317742
+          ],
+          "transient": 14,
+          "selected_shift": 3,
+          "cap_defect": 4
+        },
+        {
+          "order": 30,
+          "level": 2,
+          "gap": 62,
+          "depth": 514226,
+          "cycle": [
+            514169,
+            514170
+          ],
+          "transient": 14,
+          "selected_shift": 3,
+          "cap_defect": 2
+        },
+        {
+          "order": 30,
+          "level": 3,
+          "gap": 76,
+          "depth": 514225,
+          "cycle": [
+            514156,
+            514157
+          ],
+          "transient": 14,
+          "selected_shift": 3,
+          "cap_defect": 4
+        }
+      ],
+      "all_basin_phase_variance_checks": 597,
+      "quadratic_constant": "1/25",
+      "basin_ratio_minimum": "5776/24477",
+      "basin_ratio_witness": {
+        "order": 22,
+        "gap": 1,
+        "phase_shift": 0,
+        "golden_defect": 1
+      },
+      "five_row_witness": {
+        "order": 28,
+        "gaps": [
+          0,
+          16,
+          31,
+          56,
+          69
+        ],
+        "shifts": [
+          0,
+          0,
+          2,
+          2,
+          4
+        ],
+        "cap_defects": [
+          0,
+          1,
+          1,
+          2,
+          3
+        ],
+        "parent_parameters": [
+          196402,
+          196386,
+          196361,
+          196347,
+          196415
+        ],
+        "first_parameters": [
+          121377,
+          121363,
+          121338,
+          121326,
+          121390
+        ],
+        "second_parameters": [
+          75025,
+          75023,
+          75023,
+          75021,
+          75025
+        ],
+        "residual_selector_labels": 0
+      },
+      "actual_level4_noncontiguity": [
+        {
+          "gap": 55,
+          "index": 6710,
+          "cap_defect": 5,
+          "selected_split": 4130
+        },
+        {
+          "gap": 57,
+          "index": 6708,
+          "cap_defect": 4,
+          "selected_split": 4132
+        }
+      ],
+      "scope": "Independent full-block finite premises and abstract shelf graphs support the written phase-selected level2/3 induction. Arithmetic supplied-order/gap selectors close cap-defect0..3 along one first-child spine to base20/21; context/table costs separate. All basin phases satisfy the scoped quadratic bound. Actual level4 holes forbid arbitrary-level extrapolation; no global dispersion, convergence, full-interface minimum or Lean claim."
     },
     "scope": "Single-negative-seed propagation and first-boundary copy-or-contract/readout-phase proofs are general. Earlier scalar seeds reuse the independently agreeing F30+34 full-orbit/Brent prefix. The separate small-seed moving-plateau induction now proves all fixed negative widths, top contiguity and the unit-amplitude actual boundary rule. Full recursive minimum, dispersion and global convergence remain open. Conditional phase-state minima exclude supplied context and its certification cost."
   },
