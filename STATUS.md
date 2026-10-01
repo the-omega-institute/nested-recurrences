@@ -54,37 +54,15 @@ actual nesting outside those neighborhoods must also be used.
 
 ## Encoding comparison and related families
 
-<details>
-<summary>Show the encoding results and related recurrence families</summary>
-
-The encoding comparison asks how much memory is needed to recognize values
-and recursive choices from canonical Fibonacci digits. Short inner cycles
-do not imply constant memory. Exact memory orders are proved for the stated
-Campbell diagnostic and Cloitre's bounded-cap graphs; the corresponding
-upper bound for Cloitre's full sequence graph remains open. Read the
-[Campbell theorem](campbell/scale-memory.md) and
-[Cloitre theorem](cloitre-conway/five-window-closure.md#exact-state-bit-order-for-every-bounded-cap-graph)
-for the recognition models and hypotheses.
-
-Both families have proved feature interactions on the five legal canonical
-digit patterns. This is a separate question from an orbit having five steps:
-the digit labels alone do not determine the recursive state. Read the
-[Cloitre construction](cloitre-conway/exact-collars.md#a-persistent-interaction-on-canonical-index-words)
-and [Campbell comparison](campbell/scale-memory.md#five-pattern-interaction-on-ternary-scale-interiors).
-For a qualified Cloitre family, the interaction also holds on complementary
-child sums. A [direct descendant decoder](cloitre-conway/exact-collars.md#additive-canonical-windows-and-a-direct-descendant-decoder)
-derives the changing context from order and gap; extending five labels to
-eight completes one edge but still does not give stationary recursive closure.
-The [child-cap allocation interface](cloitre-conway/recursive-descent.md#actual-defect-allocation-and-phase-information)
-uses one allocation parameter in place of separate cycle/phase labels when
-lower profiles and the parent scalar are supplied. It is derived at cap4,
-even though that support has holes; the general allocation remains to be found.
+The [technical research map](cloitre-conway/README.md#technical-research-map)
+collects the local-cycle, recursive-interface, and digit-encoding results.
+The [Campbell comparison](campbell/scale-memory.md) explains why short inner
+cycles need not give a recognizer with constant memory. The corresponding
+upper bound for Cloitre's full sequence graph remains open.
 
 Shifted Conway/Mallows variants remain finite observations under their
 stated initial conditions; see the [supporting audit](cloitre-conway/landing.md).
 Literature review, a manuscript, and formalization are separate milestones.
-
-</details>
 
 [CONTRIBUTING.md](CONTRIBUTING.md) explains verification and the PR workflow.
 Current proofs are maintained by topic; superseded versions live in Git

@@ -55,6 +55,20 @@ the centers of the intervening blocks require further control.
 
 Read the [Conway guide](cloitre-conway/README.md) for the proof route.
 
+## A small example
+
+At n=5, both sequences have previous value 3. Starting at 4, repeat the
+lookup x -> 5-a(x) exactly three times:
+
+$$
+4\ \longrightarrow\ 2\ \longrightarrow\ 4\ \longrightarrow\ 2.
+$$
+
+Campbell's rule keeps the endpoint: b(5)=2. Cloitre's rule uses that endpoint
+as a split: C(5)=C(2)+C(3)=1+2=3. The same short inner orbit can therefore
+produce different outer sequences. In each rule, the previous value sets the
+number of steps; stopping as soon as a cycle appears would change the definition.
+
 ## Where the five-window question enters
 
 Near a Fibonacci index, the inner map can be written as a reflection plus
