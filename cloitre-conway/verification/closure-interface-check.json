@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_sha256": "1292c71b3dcc920bb4040d0cd08bb3f552c0e96b0f52fcd8e84cae32c10e294a",
+  "source_sha256": "7fe2bcdfdf78ef9a951694b0bf3371a2af9ed71af85e52d67b5161f5b87c8a63",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "periods_checked": [
     1,
@@ -251,6 +251,602 @@
     "small_actual_contract_checks": 792,
     "small_actual_evaluators_agree_through": 609,
     "scope": "Written moving-plateau theorem identifies the actual C cap language. Prefix (25,3) raises the anchor order by6 at a fixed gap; its triangular fooling set gives the general NFA/DFA lower bound. A polynomial-size finite-horizon trie matches the state-bit order, excluding table size and supplied clocks. The actual C full graph inherits a lower bound by a constant-state cap filter/projection; its matching upper bound and the complete recursive minimum remain open."
+  },
+  "Cloitre_bounded_cap_graph_FIB_memory": {
+    "cap_levels": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      8
+    ],
+    "horizon_windows_inclusive": [
+      1,
+      6
+    ],
+    "independent_evaluators_agree_through": 10945,
+    "trie_examples": [
+      {
+        "horizon_windows": 1,
+        "cap": 0,
+        "accepted_inputs": 3,
+        "value_graph_states_including_reject": 7,
+        "selected_split_graph_states_including_reject": 6,
+        "recursively_completed_inputs": 7,
+        "completed_value_graph_states_including_reject": 14,
+        "completed_selected_split_graph_states_including_reject": 12
+      },
+      {
+        "horizon_windows": 1,
+        "cap": 1,
+        "accepted_inputs": 6,
+        "value_graph_states_including_reject": 13,
+        "selected_split_graph_states_including_reject": 10,
+        "recursively_completed_inputs": 7,
+        "completed_value_graph_states_including_reject": 14,
+        "completed_selected_split_graph_states_including_reject": 12
+      },
+      {
+        "horizon_windows": 1,
+        "cap": 2,
+        "accepted_inputs": 7,
+        "value_graph_states_including_reject": 14,
+        "selected_split_graph_states_including_reject": 12,
+        "recursively_completed_inputs": 7,
+        "completed_value_graph_states_including_reject": 14,
+        "completed_selected_split_graph_states_including_reject": 12
+      },
+      {
+        "horizon_windows": 1,
+        "cap": 3,
+        "accepted_inputs": 7,
+        "value_graph_states_including_reject": 14,
+        "selected_split_graph_states_including_reject": 12,
+        "recursively_completed_inputs": 7,
+        "completed_value_graph_states_including_reject": 14,
+        "completed_selected_split_graph_states_including_reject": 12
+      },
+      {
+        "horizon_windows": 1,
+        "cap": 4,
+        "accepted_inputs": 7,
+        "value_graph_states_including_reject": 14,
+        "selected_split_graph_states_including_reject": 12,
+        "recursively_completed_inputs": 7,
+        "completed_value_graph_states_including_reject": 14,
+        "completed_selected_split_graph_states_including_reject": 12
+      },
+      {
+        "horizon_windows": 1,
+        "cap": 8,
+        "accepted_inputs": 7,
+        "value_graph_states_including_reject": 14,
+        "selected_split_graph_states_including_reject": 12,
+        "recursively_completed_inputs": 7,
+        "completed_value_graph_states_including_reject": 14,
+        "completed_selected_split_graph_states_including_reject": 12
+      },
+      {
+        "horizon_windows": 2,
+        "cap": 0,
+        "accepted_inputs": 9,
+        "value_graph_states_including_reject": 19,
+        "selected_split_graph_states_including_reject": 20,
+        "recursively_completed_inputs": 33,
+        "completed_value_graph_states_including_reject": 61,
+        "completed_selected_split_graph_states_including_reject": 63
+      },
+      {
+        "horizon_windows": 2,
+        "cap": 1,
+        "accepted_inputs": 18,
+        "value_graph_states_including_reject": 37,
+        "selected_split_graph_states_including_reject": 38,
+        "recursively_completed_inputs": 33,
+        "completed_value_graph_states_including_reject": 61,
+        "completed_selected_split_graph_states_including_reject": 63
+      },
+      {
+        "horizon_windows": 2,
+        "cap": 2,
+        "accepted_inputs": 23,
+        "value_graph_states_including_reject": 45,
+        "selected_split_graph_states_including_reject": 47,
+        "recursively_completed_inputs": 33,
+        "completed_value_graph_states_including_reject": 61,
+        "completed_selected_split_graph_states_including_reject": 63
+      },
+      {
+        "horizon_windows": 2,
+        "cap": 3,
+        "accepted_inputs": 26,
+        "value_graph_states_including_reject": 49,
+        "selected_split_graph_states_including_reject": 51,
+        "recursively_completed_inputs": 33,
+        "completed_value_graph_states_including_reject": 61,
+        "completed_selected_split_graph_states_including_reject": 63
+      },
+      {
+        "horizon_windows": 2,
+        "cap": 4,
+        "accepted_inputs": 27,
+        "value_graph_states_including_reject": 51,
+        "selected_split_graph_states_including_reject": 53,
+        "recursively_completed_inputs": 33,
+        "completed_value_graph_states_including_reject": 61,
+        "completed_selected_split_graph_states_including_reject": 63
+      },
+      {
+        "horizon_windows": 2,
+        "cap": 8,
+        "accepted_inputs": 33,
+        "value_graph_states_including_reject": 61,
+        "selected_split_graph_states_including_reject": 63,
+        "recursively_completed_inputs": 33,
+        "completed_value_graph_states_including_reject": 61,
+        "completed_selected_split_graph_states_including_reject": 63
+      },
+      {
+        "horizon_windows": 3,
+        "cap": 0,
+        "accepted_inputs": 21,
+        "value_graph_states_including_reject": 39,
+        "selected_split_graph_states_including_reject": 43,
+        "recursively_completed_inputs": 65,
+        "completed_value_graph_states_including_reject": 118,
+        "completed_selected_split_graph_states_including_reject": 127
+      },
+      {
+        "horizon_windows": 3,
+        "cap": 1,
+        "accepted_inputs": 42,
+        "value_graph_states_including_reject": 81,
+        "selected_split_graph_states_including_reject": 89,
+        "recursively_completed_inputs": 73,
+        "completed_value_graph_states_including_reject": 135,
+        "completed_selected_split_graph_states_including_reject": 147
+      },
+      {
+        "horizon_windows": 3,
+        "cap": 2,
+        "accepted_inputs": 57,
+        "value_graph_states_including_reject": 105,
+        "selected_split_graph_states_including_reject": 119,
+        "recursively_completed_inputs": 81,
+        "completed_value_graph_states_including_reject": 148,
+        "completed_selected_split_graph_states_including_reject": 163
+      },
+      {
+        "horizon_windows": 3,
+        "cap": 3,
+        "accepted_inputs": 64,
+        "value_graph_states_including_reject": 116,
+        "selected_split_graph_states_including_reject": 130,
+        "recursively_completed_inputs": 84,
+        "completed_value_graph_states_including_reject": 153,
+        "completed_selected_split_graph_states_including_reject": 168
+      },
+      {
+        "horizon_windows": 3,
+        "cap": 4,
+        "accepted_inputs": 68,
+        "value_graph_states_including_reject": 124,
+        "selected_split_graph_states_including_reject": 138,
+        "recursively_completed_inputs": 86,
+        "completed_value_graph_states_including_reject": 157,
+        "completed_selected_split_graph_states_including_reject": 172
+      },
+      {
+        "horizon_windows": 3,
+        "cap": 8,
+        "accepted_inputs": 90,
+        "value_graph_states_including_reject": 167,
+        "selected_split_graph_states_including_reject": 183,
+        "recursively_completed_inputs": 98,
+        "completed_value_graph_states_including_reject": 181,
+        "completed_selected_split_graph_states_including_reject": 198
+      },
+      {
+        "horizon_windows": 4,
+        "cap": 0,
+        "accepted_inputs": 39,
+        "value_graph_states_including_reject": 69,
+        "selected_split_graph_states_including_reject": 76,
+        "recursively_completed_inputs": 86,
+        "completed_value_graph_states_including_reject": 154,
+        "completed_selected_split_graph_states_including_reject": 166
+      },
+      {
+        "horizon_windows": 4,
+        "cap": 1,
+        "accepted_inputs": 78,
+        "value_graph_states_including_reject": 145,
+        "selected_split_graph_states_including_reject": 164,
+        "recursively_completed_inputs": 112,
+        "completed_value_graph_states_including_reject": 205,
+        "completed_selected_split_graph_states_including_reject": 228
+      },
+      {
+        "horizon_windows": 4,
+        "cap": 2,
+        "accepted_inputs": 114,
+        "value_graph_states_including_reject": 204,
+        "selected_split_graph_states_including_reject": 238,
+        "recursively_completed_inputs": 141,
+        "completed_value_graph_states_including_reject": 253,
+        "completed_selected_split_graph_states_including_reject": 288
+      },
+      {
+        "horizon_windows": 4,
+        "cap": 3,
+        "accepted_inputs": 131,
+        "value_graph_states_including_reject": 230,
+        "selected_split_graph_states_including_reject": 268,
+        "recursively_completed_inputs": 154,
+        "completed_value_graph_states_including_reject": 273,
+        "completed_selected_split_graph_states_including_reject": 312
+      },
+      {
+        "horizon_windows": 4,
+        "cap": 4,
+        "accepted_inputs": 141,
+        "value_graph_states_including_reject": 247,
+        "selected_split_graph_states_including_reject": 286,
+        "recursively_completed_inputs": 162,
+        "completed_value_graph_states_including_reject": 286,
+        "completed_selected_split_graph_states_including_reject": 326
+      },
+      {
+        "horizon_windows": 4,
+        "cap": 8,
+        "accepted_inputs": 191,
+        "value_graph_states_including_reject": 345,
+        "selected_split_graph_states_including_reject": 390,
+        "recursively_completed_inputs": 202,
+        "completed_value_graph_states_including_reject": 365,
+        "completed_selected_split_graph_states_including_reject": 411
+      },
+      {
+        "horizon_windows": 5,
+        "cap": 0,
+        "accepted_inputs": 63,
+        "value_graph_states_including_reject": 109,
+        "selected_split_graph_states_including_reject": 119,
+        "recursively_completed_inputs": 113,
+        "completed_value_graph_states_including_reject": 200,
+        "completed_selected_split_graph_states_including_reject": 215
+      },
+      {
+        "horizon_windows": 5,
+        "cap": 1,
+        "accepted_inputs": 126,
+        "value_graph_states_including_reject": 235,
+        "selected_split_graph_states_including_reject": 268,
+        "recursively_completed_inputs": 163,
+        "completed_value_graph_states_including_reject": 301,
+        "completed_selected_split_graph_states_including_reject": 338
+      },
+      {
+        "horizon_windows": 5,
+        "cap": 2,
+        "accepted_inputs": 195,
+        "value_graph_states_including_reject": 349,
+        "selected_split_graph_states_including_reject": 410,
+        "recursively_completed_inputs": 225,
+        "completed_value_graph_states_including_reject": 404,
+        "completed_selected_split_graph_states_including_reject": 466
+      },
+      {
+        "horizon_windows": 5,
+        "cap": 3,
+        "accepted_inputs": 227,
+        "value_graph_states_including_reject": 400,
+        "selected_split_graph_states_including_reject": 466,
+        "recursively_completed_inputs": 253,
+        "completed_value_graph_states_including_reject": 449,
+        "completed_selected_split_graph_states_including_reject": 516
+      },
+      {
+        "horizon_windows": 5,
+        "cap": 4,
+        "accepted_inputs": 255,
+        "value_graph_states_including_reject": 446,
+        "selected_split_graph_states_including_reject": 517,
+        "recursively_completed_inputs": 279,
+        "completed_value_graph_states_including_reject": 491,
+        "completed_selected_split_graph_states_including_reject": 563
+      },
+      {
+        "horizon_windows": 5,
+        "cap": 8,
+        "accepted_inputs": 341,
+        "value_graph_states_including_reject": 613,
+        "selected_split_graph_states_including_reject": 700,
+        "recursively_completed_inputs": 355,
+        "completed_value_graph_states_including_reject": 639,
+        "completed_selected_split_graph_states_including_reject": 727
+      },
+      {
+        "horizon_windows": 6,
+        "cap": 0,
+        "accepted_inputs": 93,
+        "value_graph_states_including_reject": 158,
+        "selected_split_graph_states_including_reject": 171,
+        "recursively_completed_inputs": 146,
+        "completed_value_graph_states_including_reject": 255,
+        "completed_selected_split_graph_states_including_reject": 273
+      },
+      {
+        "horizon_windows": 6,
+        "cap": 1,
+        "accepted_inputs": 186,
+        "value_graph_states_including_reject": 342,
+        "selected_split_graph_states_including_reject": 392,
+        "recursively_completed_inputs": 226,
+        "completed_value_graph_states_including_reject": 414,
+        "completed_selected_split_graph_states_including_reject": 468
+      },
+      {
+        "horizon_windows": 6,
+        "cap": 2,
+        "accepted_inputs": 300,
+        "value_graph_states_including_reject": 534,
+        "selected_split_graph_states_including_reject": 631,
+        "recursively_completed_inputs": 333,
+        "completed_value_graph_states_including_reject": 595,
+        "completed_selected_split_graph_states_including_reject": 693
+      },
+      {
+        "horizon_windows": 6,
+        "cap": 3,
+        "accepted_inputs": 353,
+        "value_graph_states_including_reject": 618,
+        "selected_split_graph_states_including_reject": 723,
+        "recursively_completed_inputs": 382,
+        "completed_value_graph_states_including_reject": 673,
+        "completed_selected_split_graph_states_including_reject": 779
+      },
+      {
+        "horizon_windows": 6,
+        "cap": 4,
+        "accepted_inputs": 425,
+        "value_graph_states_including_reject": 737,
+        "selected_split_graph_states_including_reject": 863,
+        "recursively_completed_inputs": 452,
+        "completed_value_graph_states_including_reject": 788,
+        "completed_selected_split_graph_states_including_reject": 915
+      },
+      {
+        "horizon_windows": 6,
+        "cap": 8,
+        "accepted_inputs": 553,
+        "value_graph_states_including_reject": 982,
+        "selected_split_graph_states_including_reject": 1134,
+        "recursively_completed_inputs": 570,
+        "completed_value_graph_states_including_reject": 1014,
+        "completed_selected_split_graph_states_including_reject": 1167
+      }
+    ],
+    "exhaustive_value_output_checks": 106548,
+    "exhaustive_selected_split_checks": 83166,
+    "zero_cap_projection_checks": 85920,
+    "endpoint_aliases": [
+      {
+        "order": 3,
+        "index": 2,
+        "natural_cap_defect": 1
+      },
+      {
+        "order": 4,
+        "index": 3,
+        "natural_cap_defect": 1
+      },
+      {
+        "order": 5,
+        "index": 5,
+        "natural_cap_defect": 2
+      },
+      {
+        "order": 6,
+        "index": 8,
+        "natural_cap_defect": 3
+      },
+      {
+        "order": 7,
+        "index": 13,
+        "natural_cap_defect": 5
+      },
+      {
+        "order": 8,
+        "index": 21,
+        "natural_cap_defect": 8
+      },
+      {
+        "order": 9,
+        "index": 34,
+        "natural_cap_defect": 13
+      },
+      {
+        "order": 10,
+        "index": 55,
+        "natural_cap_defect": 21
+      },
+      {
+        "order": 11,
+        "index": 89,
+        "natural_cap_defect": 34
+      },
+      {
+        "order": 12,
+        "index": 144,
+        "natural_cap_defect": 55
+      },
+      {
+        "order": 13,
+        "index": 233,
+        "natural_cap_defect": 89
+      },
+      {
+        "order": 14,
+        "index": 377,
+        "natural_cap_defect": 144
+      },
+      {
+        "order": 15,
+        "index": 610,
+        "natural_cap_defect": 233
+      },
+      {
+        "order": 16,
+        "index": 987,
+        "natural_cap_defect": 377
+      },
+      {
+        "order": 17,
+        "index": 1597,
+        "natural_cap_defect": 610
+      },
+      {
+        "order": 18,
+        "index": 2584,
+        "natural_cap_defect": 987
+      },
+      {
+        "order": 19,
+        "index": 4181,
+        "natural_cap_defect": 1597
+      },
+      {
+        "order": 20,
+        "index": 6765,
+        "natural_cap_defect": 2584
+      }
+    ],
+    "recursively_completed_child_checks": 5009,
+    "completed_zero_cap_projection_checks": 85920,
+    "incorrect_completed_output_checks": 20144,
+    "zero_cap_roots_forcing_anchor_completion": [
+      {
+        "root_order": 6,
+        "zero_cap_root": 7,
+        "selected_split": 4,
+        "forced_anchor": 3,
+        "forced_anchor_natural_cap_defect": 1
+      },
+      {
+        "root_order": 7,
+        "zero_cap_root": 12,
+        "selected_split": 7,
+        "forced_anchor": 5,
+        "forced_anchor_natural_cap_defect": 2
+      },
+      {
+        "root_order": 8,
+        "zero_cap_root": 20,
+        "selected_split": 12,
+        "forced_anchor": 8,
+        "forced_anchor_natural_cap_defect": 3
+      },
+      {
+        "root_order": 9,
+        "zero_cap_root": 33,
+        "selected_split": 20,
+        "forced_anchor": 13,
+        "forced_anchor_natural_cap_defect": 5
+      },
+      {
+        "root_order": 10,
+        "zero_cap_root": 54,
+        "selected_split": 33,
+        "forced_anchor": 21,
+        "forced_anchor_natural_cap_defect": 8
+      },
+      {
+        "root_order": 11,
+        "zero_cap_root": 88,
+        "selected_split": 54,
+        "forced_anchor": 34,
+        "forced_anchor_natural_cap_defect": 13
+      },
+      {
+        "root_order": 12,
+        "zero_cap_root": 143,
+        "selected_split": 88,
+        "forced_anchor": 55,
+        "forced_anchor_natural_cap_defect": 21
+      },
+      {
+        "root_order": 13,
+        "zero_cap_root": 232,
+        "selected_split": 143,
+        "forced_anchor": 89,
+        "forced_anchor_natural_cap_defect": 34
+      },
+      {
+        "root_order": 14,
+        "zero_cap_root": 376,
+        "selected_split": 232,
+        "forced_anchor": 144,
+        "forced_anchor_natural_cap_defect": 55
+      },
+      {
+        "root_order": 15,
+        "zero_cap_root": 609,
+        "selected_split": 376,
+        "forced_anchor": 233,
+        "forced_anchor_natural_cap_defect": 89
+      },
+      {
+        "root_order": 16,
+        "zero_cap_root": 986,
+        "selected_split": 609,
+        "forced_anchor": 377,
+        "forced_anchor_natural_cap_defect": 144
+      },
+      {
+        "root_order": 17,
+        "zero_cap_root": 1596,
+        "selected_split": 986,
+        "forced_anchor": 610,
+        "forced_anchor_natural_cap_defect": 233
+      },
+      {
+        "root_order": 18,
+        "zero_cap_root": 2583,
+        "selected_split": 1596,
+        "forced_anchor": 987,
+        "forced_anchor_natural_cap_defect": 377
+      },
+      {
+        "root_order": 19,
+        "zero_cap_root": 4180,
+        "selected_split": 2583,
+        "forced_anchor": 1597,
+        "forced_anchor_natural_cap_defect": 610
+      },
+      {
+        "root_order": 20,
+        "zero_cap_root": 6764,
+        "selected_split": 4180,
+        "forced_anchor": 2584,
+        "forced_anchor_natural_cap_defect": 987
+      },
+      {
+        "root_order": 21,
+        "zero_cap_root": 10945,
+        "selected_split": 6764,
+        "forced_anchor": 4181,
+        "forced_anchor_natural_cap_defect": 1597
+      }
+    ],
+    "literal_selected_roots": 568,
+    "literal_endpoint_updates": 1193623,
+    "high_order_filter_checks": 1775,
+    "highest_filter_order": 150,
+    "minimum_nonuniform_DFA_NFA_state_bit_order": "Theta(log L) for every fixed cap, both value and actual selected-split graphs, including the least recursive completion by Fibonacci anchors and the declared base1..55",
+    "general_state_bounds": "Omega(L) below; O(m L^4) above for m>=1; O(L^3) above for m=0",
+    "scope": "The infinite theorem uses the proved quadratic cap enclosure and zero-plateau fooling set; additive child cap conservation and forced anchor children identify the least recursive completion. Finite tries test actual graphs, incorrect outputs, literal selected endpoints, recursive child closure and constant-state cap filtering. Table storage and construction, streaming decoding, full unbounded-cap graph and full recursive minimum remain separate."
   },
   "scope": "Exact symbolic affine closure; branch inequalities and family-specific selectors remain separate."
 }

@@ -54,10 +54,14 @@ conjectures remain finite observations. No Lean formalization is included.
 Canonical Fibonacci digit encoding provides a comparison with Campbell's
 power-of-three solution. For the specified diagnostic in each family,
 the minimum autonomous state-bit order is Theta(log log N); short inner
-cycles do not imply constant encoding memory. The matching upper bound
-for Cloitre's full sequence graph remains open. Read the
+cycles do not imply constant encoding memory. The same order is now proved
+for every fixed-cap Cloitre value graph and actual selected-split graph,
+with both deterministic and nondeterministic recognition. Its least
+recursive completion adds exactly the Fibonacci anchors to the bounded-cap
+domain and the stated finite base, with the same state-bit order. The matching
+upper bound for Cloitre's full sequence graph remains open. Read the
 [Campbell theorem](campbell/scale-memory.md) and
-[Cloitre diagnostic](cloitre-conway/five-window-closure.md#autonomous-memory-of-the-actual-top-plateau-diagnostic)
+[Cloitre bounded-cap theorem](cloitre-conway/five-window-closure.md#exact-state-bit-order-for-every-bounded-cap-graph)
 for the exact models and supplied-context distinctions.
 
 Both families also have proved context-dependent interactions on the five
