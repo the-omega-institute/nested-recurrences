@@ -11,13 +11,19 @@ who want to change the repository or reproduce its evidence.
 1. Fetch the latest default branch and develop each coherent change on its
    own branch, using an isolated worktree when other work is in progress.
 2. Keep a pull request focused on one result or one documentation change.
-   Explain the problem, the resulting statement, and the validation performed.
+   Open a draft PR for ongoing work. Explain the problem, the resulting
+   statement, and the validation performed; update that description to match
+   the final scope before requesting review.
 3. Update the relevant proof, compact evidence, and status together. Separate
    proved statements, computer-assisted proofs, finite observations, and open
    conjectures. Preserve attribution and exact initial conditions.
-4. Review the complete diff and run checks appropriate to the change. Merge
-   work to the existing default branch `main` only when the result and its
-   evidence are ready. Do not push research changes directly to `main`.
+4. Before marking a research PR ready, give the complete argument, exact
+   domains, attribution, and any finite premises together with their
+   independent verification. A promising computation alone does not qualify
+   as a proved infinite result.
+5. Review the complete diff and run checks appropriate to the change. Merge
+   ready work to `main` only after the checks and review pass, then delete
+   its completed branch. Do not push research changes directly to `main`.
 
 There is currently no `dev` branch. Creating another integration branch is
 unnecessary for this workflow. A PR records developing work; `main` presents
@@ -30,6 +36,11 @@ Use [the research map](cloitre-conway/README.md#technical-research-map) to find
 the note corresponding to a topic. Maintain that note rather than appending
 unrelated results to a single file. Add a separate topic only when it helps
 a reader follow the mathematical dependency.
+
+Keep the root README an introduction and reading route. Summarize durable
+results and open questions in STATUS.md; put theorem thresholds, selector
+cases, and individual computational witnesses in the relevant proof note.
+Do not turn either entry page into a log of successive experiments.
 
 Keep programs and compact, reproducible JSON evidence in the family's
 `verification/` directory. Scratch runs, alternate drafts, correspondence,
@@ -66,7 +77,15 @@ Narrower programs are suitable while developing; run the affected checks before
 merging. A prose-only reorganization requires link and content checks, rather
 than new sequence calculations when programs and evidence are unchanged.
 
-The [Campbell guide](campbell/README.md#optional-computational-checks) also
-explains optional PDF rebuilding. The
-[Conway guide](cloitre-conway/README.md#optional-computational-checks) explains
-the independent evaluators and the larger audit.
+The Conway checks use independent full-orbit and Brent evaluators, with
+a separate literal calculation over a smaller prefix. The original
+[evaluator](cloitre-conway/verification/conway_explore.py) defaults to
+1,048,576 terms and a literal check through 4096; its
+[recorded output](cloitre-conway/verification/conway-results.json) contains
+the finite certificates and orbit witnesses. The extended
+[audit](cloitre-conway/verification/landing_audit.py) reaches
+F_36=14,930,352 and checks three shifted variants. That larger finite audit
+does not prove a limit or universal shifted-family law.
+
+The [Campbell guide](campbell/README.md#optional-computational-checks) explains
+optional PDF rebuilding.

@@ -1,55 +1,69 @@
-# Research status
+# Results and open questions
 
-Updated 2026-10-01. [Project home](README.md) · [Definitions and context](GENERAL.md)
+[Project home](README.md) · [Definitions and context](GENERAL.md)
 
-## Established results
+Campbell's recurrence has a complete solution. Cloitre's recurrence has
+proved global bounds and exact Fibonacci structure, but its full ratio
+limit and decay rate remain open. This page summarizes the current results;
+the linked notes give exact hypotheses, thresholds, and finite premises.
 
-| Subject | Result and proof scope | Read |
-|---|---|---|
-| Campbell's recurrence | Complete power-of-three formula; sharp four-step transient; periods 1 or 2; dilation identity; ratio extrema 2/5 and 3/4. Written proof with exact symbolic and independent sequence checks. | [Proof PDF](campbell/note.pdf) |
-| Conway foundations | Totality, elementary 3/5 and 3/4 bounds, prescribed-depth cycle entry, and propagation of finite-window ratio bounds. | [Foundations](cloitre-conway/proof.md) |
-| Global golden structure | C>=G, exact equality set, Fibonacci identities and landing, block upper cap, and liminf C(n)/n=1/phi. Computer-assisted induction with explicit finite premises. The shorter-window certificate gives C(n)/n<=8900/13459 for n>=349525. | [Global proof](cloitre-conway/golden-proof.md) |
-| Fibonacci neighborhoods | Capture and period bounds; convergence in sublinear-width neighborhoods. The full-block top plateau has exact width L_k=floor(2k/3)-3 for k>=6, proved by simultaneous contiguity/barrier induction with small finite seeds. Every fixed negative gap is exact from max(6,ceil(3(v+3)/2)); every fixed positive offset eventually becomes linear. The newly added negative endpoint has a selected proper two-cycle. | [Orbit bounds](cloitre-conway/fibonacci-collars.md) · [Exact collars](cloitre-conway/exact-collars.md) |
-| Five-window interfaces | Exact profile identities, closure equations, and conditional minimum phase states for a specified output. Qualified negative-collar windows have an arithmetic descent with zero residual selector labels despite unbounded natural-block defects. Inverse reconstruction and shared recursive codes have stated geometric and profile qualification requirements. These are not a complete minimum interface for actual C. | [Closure](cloitre-conway/five-window-closure.md) · [Inverse reconstruction](cloitre-conway/inverse-reconstruction.md) · [Recursive descent](cloitre-conway/recursive-descent.md) |
-| Asymptotic reduction | Two exact size-biased martingales and a proved conditional decay implication. Basin lower envelopes and scalar-valid split policies give sufficient routes to the missing dispersion inequality. Finite tests support these routes; the uniform inequality remains open. | [Martingales and dispersion](cloitre-conway/dispersion.md) |
-| Limits of static information | Explicit alternative scalar extensions can preserve any actual finite prefix, the golden bounds, equality set and eventual fixed collars, yet fail to converge. The new exact moving top-plateau law excludes this whole family for cutoff orders J>=26. Uniform dispersion under that stronger actual constraint is still open. | [Nonconvergent extensions](cloitre-conway/dispersion.md#finite-prefixes-and-exact-collars-do-not-force-convergence) |
-| Autonomous Fibonacci encoding | Campbell's 5b(n)=2n diagnostic has L<=4K+4. Cloitre's actual block-cap diagnostic has K>=floor(L/4)+1 for L>=12, by a canonical-prefix fooling set. Both have minimum state-bit order Theta(log L)=Theta(log log N), excluding nonuniform table size and supplied clocks. Actual-C full-graph recognition inherits the lower bound; its matching upper bound and deterministic decoder remain open. | [Campbell](campbell/scale-memory.md) · [Cloitre](cloitre-conway/five-window-closure.md#autonomous-memory-of-the-actual-top-plateau-diagnostic) |
+## Campbell: complete solution
 
-Proof notes state the precise domains, thresholds, finite premises, and
-verification scope. No Lean validation is claimed. Historical conjecture
-labels in saved experiment reports describe their original scope; the notes
-give current theorem status.
+The [three-page proof](campbell/note.pdf) gives an explicit formula on
+power-of-three intervals. Every inner orbit reaches a fixed point or a
+two-cycle after at most four transient steps. The lower and upper limiting
+ratios are respectively 2/5 and 3/4, so the ratio does not converge.
+The written proof is supported by exact symbolic and independent sequence
+checks. The [Campbell guide](campbell/README.md) explains the formula.
 
-## Open questions and next steps
+## Cloitre: established results
 
-1. **Global convergence and decay for actual C.** Prove a uniform dispersion
-   inequality using restrictions on actual profiles or their selected dynamics.
-   The conditional quartic criterion yields an upper error rate
-   O(n/(log n)^(1/4)); proving that criterion and a matching lower bound for
-   maxima are separate open tasks. Long finite prefixes and exact collars
-   alone do not force convergence.
-2. **The full minimum recursive interface.** Count scale, position, profile,
-   branch qualification, and phase resources together. Local output-state
-   minima assume the surrounding context is supplied. Prove an actual-C
-   interface beyond the exact Fibonacci collars rather than treating the
-   five digit labels or a geometric cycle certificate as sufficient.
-   The moving negative plateau now has exact arithmetic child gaps and is
-   recursively closed, with zero residual selector labels when order and gaps
-   are supplied. Count that context and finite boundary data, then extend the
-   interface beyond this growing collar into actual wide arches. The abstract
-   adjacent-gap parity minimum is separate from the resolved actual boundary.
-3. **Dynamics in wide arches.** Control periods, landing times, and actual
-   selectors in Fibonacci-block centers. The orbit bounds and saturated
-   barriers restrict this domain but do not settle it.
-4. **Related families and consolidation.** Shifted Conway/Mallows laws remain
-   finite observations under their stated initial conditions. Review the
-   literature before preparing a manuscript. Formalization is a separate
-   possible milestone.
+Write C for Cloitre's sequence, F_k for the Fibonacci numbers, and
+alpha=1/phi=(sqrt(5)-1)/2. These results concern the precise starting point
+and iteration depth in [the definition](cloitre-conway/README.md#definition).
 
-## Reproducibility and maintenance
+| Result | Proof |
+|---|---|
+| The sequence is well defined; its prescribed depth reaches an inner cycle. | [Foundations](cloitre-conway/proof.md) |
+| C(n)>=floor(alpha(n+1)), the equality set is classified, C(F_k)=F_(k-1), and liminf C(n)/n=alpha. A global upper cap and a certified eventual bound C(n)/n<=8900/13459 are also proved. | [Global golden structure](cloitre-conway/golden-proof.md) |
+| The ratio converges to alpha in neighborhoods of Fibonacci indices whose width is sublinear in the index. Exact nearby values and selected phases are known, including a growing constant band below each Fibonacci index. | [Orbit bounds](cloitre-conway/fibonacci-collars.md) · [Exact neighborhoods](cloitre-conway/exact-collars.md) |
+| Five-window profile equations and qualified reconstruction results are proved. The growing constant band has exact recursive child gaps; supplying order and gaps removes residual selector labels there. | [Closure](cloitre-conway/five-window-closure.md) · [Reconstruction](cloitre-conway/inverse-reconstruction.md) · [Descent](cloitre-conway/recursive-descent.md) |
+| Exact martingale identities reduce a possible decay proof to a uniform dispersion inequality. Explicit alternative sequences show why finite prefixes, golden bounds, and eventual fixed neighborhoods alone cannot prove convergence. | [Dispersion and limitations](cloitre-conway/dispersion.md) |
 
-[CONTRIBUTING.md](CONTRIBUTING.md) explains the eight reproduction checks and
-the branch → pull request → review → merge workflow. Current proofs are
-maintained by subject. Code and compact evidence live in verification
-directories; intermediate experiments and correspondence stay outside the
-public tree. Superseded stages are retained in Git history.
+The global induction and some exact-neighborhood results are
+**computer-assisted proofs**: an infinite argument uses explicit finite
+premises checked by independent programs. Finite tests of additional
+conjectures remain finite observations. No Lean formalization is included.
+
+## Questions that remain open
+
+1. **Convergence and decay over all integers.** Prove C(n)/n -> alpha,
+   including the interiors of the Fibonacci blocks. The dispersion note
+   proves that a stated uniform four-generation inequality would give
+   an upper error rate O(n/(log n)^(1/4)); that inequality is still open.
+   A matching lower bound for maxima is a separate question.
+2. **The full recursive interface.** Determine what scale, position,
+   profile, branch, and phase information suffices beyond the exact
+   Fibonacci neighborhoods. Five digit labels or a candidate geometric
+   cycle alone do not determine the actual selected recursive orbit.
+3. **Inner dynamics between Fibonacci indices.** Control periods,
+   landing times, and selected phases in the wider block interiors.
+
+## Encoding comparison and related families
+
+Canonical Fibonacci digit encoding provides a comparison with Campbell's
+power-of-three solution. For the specified diagnostic in each family,
+the minimum autonomous state-bit order is Theta(log log N); short inner
+cycles do not imply constant encoding memory. The matching upper bound
+for Cloitre's full sequence graph remains open. Read the
+[Campbell theorem](campbell/scale-memory.md) and
+[Cloitre diagnostic](cloitre-conway/five-window-closure.md#autonomous-memory-of-the-actual-top-plateau-diagnostic)
+for the exact models and supplied-context distinctions.
+
+Shifted Conway/Mallows variants remain finite observations under their
+stated initial conditions; see the [supporting audit](cloitre-conway/landing.md).
+Literature review, a manuscript, and formalization are separate milestones.
+
+[CONTRIBUTING.md](CONTRIBUTING.md) explains verification and the PR workflow.
+Current proofs are maintained by topic; superseded versions live in Git
+history. Historical labels in saved computations retain their original scope.

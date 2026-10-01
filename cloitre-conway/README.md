@@ -1,6 +1,10 @@
 # Cloitre's variable-depth Conway recurrence
 
-[Project home](../README.md) · [Current status](../STATUS.md)
+[Project home](../README.md) · [Results and open questions](../STATUS.md)
+
+**The golden-ratio lower structure is proved. The full ratio limit remains
+open.** Start with the definition and main result below; the technical map
+is for readers who want to follow a particular research question.
 
 ## Definition
 
@@ -12,38 +16,43 @@ g=T_n^{\,C(n-1)}(n-1),\qquad C(n)=C(g)+C(n-g).
 $$
 
 The first terms are 1, 1, 2, 3, 3, 4, 5, 5, 6, 7. Benoît Cloitre
-proposed this candidate. Its inner orbit can have longer cycles than
-Campbell's recurrence, so the selected phase can retain information
-beyond parity.
+proposed this candidate. The starting point and exact iteration count
+are part of the definition.
 
-## Start with these proofs
+## What is proved, and what is missing?
 
-1. **[Global golden structure](golden-proof.md).** The main theorem:
-   C(n)>=floor((n+1)/phi), the exact equality set, Fibonacci values and
-   orbit landing, an upper cap, and liminf C(n)/n=1/phi.
-   Its induction uses explicitly verified finite premises.
-2. **[Fibonacci orbit bounds](fibonacci-collars.md).** All-cycle capture,
-   nearby cycle classification, and ratio convergence within sublinear-width
-   neighborhoods of Fibonacci indices.
-3. **[Exact collars and phases](exact-collars.md).** Wider exact bands,
-   the exact moving negative plateau and its arithmetic recursive closure,
-   the boundary phase and adjacent-gap parity envelope,
-   saturation, the prescribed positive-collar phase, and eventual linearity
-   at every fixed positive offset.
+Let phi=(1+sqrt(5))/2 and F_k be the Fibonacci numbers. We have proved
 
-The full limit C(n)/n -> 1/phi and its decay rate remain open. The
-[dispersion note](dispersion.md) gives a precise conditional route to an
-upper rate and explains the remaining uniform inequality.
+$$
+C(n)\ge\lfloor(n+1)/\phi\rfloor,\qquad
+C(F_k)=F_{k-1}\ (k\ge2),\qquad
+\liminf_{n\to\infty} C(n)/n=1/\phi.
+$$
 
-Everything can be read in your browser. No programming knowledge or GitHub
-account is needed. The proof notes contain the full arguments; the programs
-and JSON files are optional supporting evidence.
+The equality set and a global upper cap are also proved. These conclusions
+use an induction with explicitly checked finite premises. They do not yet
+show that C(n)/n converges: we must control the values between Fibonacci
+indices, and then establish a decay rate.
+
+## A reading route
+
+1. **[Read the main proof](golden-proof.md).** Its opening theorem states
+   the global results and identifies the finite premises.
+2. **[Read what happens near Fibonacci indices](fibonacci-collars.md).**
+   The ratio converges in sublinear-width neighborhoods. The
+   [exact-neighborhood note](exact-collars.md) gives exact values and phases.
+3. **[Read the remaining convergence problem](dispersion.md).** Exact
+   martingale identities give a conditional decay theorem; the required
+   uniform dispersion inequality is still open.
+
+All notes can be read in your browser, without installing software.
+The programs and JSON files are optional evidence, not part of this route.
 
 ## Technical research map
 
 Choose the topic you need; there is no need to read every note in order.
 
-| Question | Note | Depends on |
+| Question | Note | Starting point |
 |---|---|---|
 | Is the sequence well defined, and does its depth reach a cycle? | [Foundations](proof.md) | The definition |
 | What global golden bounds and Fibonacci identities are proved? | [Global golden structure](golden-proof.md) | Foundations and explicit finite certificates |
@@ -61,36 +70,16 @@ A candidate geometric cycle, a finite numerical test, and an actual selected
 recursive orbit are distinct objects. The [status page](../STATUS.md) tracks
 the unresolved full-interface and asymptotic questions.
 
-Previously shared anchors in the original collar note still point to their
-new topic sections. Exact revision links continue to show the cited version.
-
 ## Optional computational checks
 
-Programs and compact evidence are in [verification/](verification/).
-From the repository root, with Python 3.10 or newer:
+Programs and compact evidence live in [verification/](verification/).
+With Python 3.10 or newer, run this from the repository root:
 
 ```sh
 python3 scripts/verify.py
 ```
 
 This reruns eight checks and compares exact JSON output and source hashes.
-Only the standard library is needed. Run without `-O` or
-`PYTHONOPTIMIZE`; assertions perform mathematical checks.
-See the [verification guide](../CONTRIBUTING.md#reproduce-the-evidence).
-
-For the original independent Conway calculation alone, from this directory:
-
-```sh
-python3 verification/conway_explore.py
-```
-
-The default limit is 1,048,576, with full-orbit and Brent evaluators and a
-separate literal check through 4096. [Recorded output](verification/conway-results.json)
-contains certificates, equality corrections, and orbit witnesses. Historical
-conjecture labels describe the original experiment; current theorem status
-is given in the proof notes.
-
-The optional larger [audit](verification/landing_audit.py) reaches
-F_36=14,930,352 and checks three shifted variants using compact storage.
-Use `python3 scripts/verify.py --extended` from the root to replay it.
-Its finite data supplies no proof of a limit or a universal shifted-family law.
+Only the standard library is needed. Run without `-O` or `PYTHONOPTIMIZE`.
+The [verification guide](../CONTRIBUTING.md#reproduce-the-evidence) explains
+the independent evaluators, finite certificates, and optional larger audit.
