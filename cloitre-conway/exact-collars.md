@@ -969,6 +969,10 @@ an inner phase has cap9. These follow from the selected shifts8,9:
 each shift is the first cap at the preceding cycle point. Thus closure
 of the selected children does not restrict every inner lookup to cap4.
 The supplied lower profile must cover those additional queries as well.
+The [query-domain theorem](recursive-descent.md#cap4-query-profiles-and-the-information-they-carry)
+restricts the decoder to a tail interval above the preceding cap3 boundary;
+its captured-map models show why the omitted profile responses cannot be
+recovered from low-cap membership and a known two-cycle phase alone.
 For the genuinely branched obstruction and its five-cycle counterpart,
 see [defect allocation and phase information](recursive-descent.md#actual-defect-allocation-and-phase-information).
 The checker compares(H.7) with iterated shifts and actual descendants,

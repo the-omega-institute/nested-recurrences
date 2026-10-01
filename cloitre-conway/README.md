@@ -76,6 +76,9 @@ the lower profiles and parent value are supplied. That parameter is derived
 at cap4; its general selection and construction of the required profiles
 remain open. The [direct descendant decoder](exact-collars.md#additive-canonical-windows-and-a-direct-descendant-decoder)
 handles a particular canonical family; it does not close the full recursion.
+The [profile query theorem](recursive-descent.md#cap4-query-profiles-and-the-information-they-carry)
+shrinks the required lower-profile interval and distinguishes its arithmetic
+information from cycle-phase information.
 
 The local interface theorems state exactly which context is supplied.
 For a bounded natural-cap domain, the

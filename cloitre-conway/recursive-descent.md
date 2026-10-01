@@ -43,6 +43,7 @@ Fibonacci neighborhood, even when its support has holes.
 - [Seven terminal symbols and the full geometric selector code](#seven-terminal-symbols-and-the-full-geometric-selector-code)
 - [Growing actual defects and the remaining occupation problem](#growing-actual-defects-and-the-remaining-occupation-problem)
 - [Actual defect allocation and phase information](#actual-defect-allocation-and-phase-information)
+- [Cap4 query profiles and the information they carry](#cap4-query-profiles-and-the-information-they-carry)
 
 ### Recursive windows with a parameter at every row
 
@@ -1316,3 +1317,158 @@ five-row closure with derived labels. Above cap4, the new interface isolates
 one allocation parameter in place of separate cycle and phase data, conditional
 on supplied scalar/profile context. Deriving that parameter and the profiles
 in wide blocks remains part of the full minimum-interface problem.
+
+### Cap4 query profiles and the information they carry
+
+The cap4 periodic seed removes independent phase data **after the lower
+profile is supplied**. Its profile queries can be confined more sharply,
+but the profile values still carry arithmetic information. A captured-map
+construction below separates that information from knowing a cycle's phase.
+
+**Actual query domain.** Let K>=22, Q_K(v)=4, and put
+W=Z_(K-1), t=v-W. At t=4 the earlier exceptional frontier has the known
+two-cycle with gaps W,W+1 and selected shift3. Otherwise t>=5. Every
+captured cycle lies in
+
+$$
+J_{K,v}=[W+\min(5,t-4),\ v-4],\qquad
+4\le Q_{K-1}(r)\le B=\max(4,t-5)\quad(r\text{ on a cycle}). \tag{Q.1}
+$$
+
+The actual seed v-4 and its whole return trajectory therefore need only
+Q_(K-1) restricted to J_(K,v). There are at most
+
+$$
+\boxed{\max(1,t-8)\text{ profile queries},\qquad
+       4\le\delta=v-r_{\rm selected}\le L_{K-2}.} \tag{Q.2}
+$$
+
+For 5<=t<=9 the cycle is fixed and delta=4. At larger t, the bound B
+depends on the root's gap; this does not prove a constant bound9. A full
+lower-profile table on gaps0..v is unnecessary for this qualified decoder.
+The retained profile still has to be constructed and the root cap certified.
+
+**Proof.** The cap-budget theorem gives v<=4P_K<=F_(K-4), so the declared
+gap windows lie in the inherited child blocks. The cap3 shelf excludes
+every cycle from r<=W and forces its first caps to be at least4.
+Consequently every periodic r is at most v-4. The same shelf gives
+
+$$
+v-Q_{K-1}(r)\ge\min(v-4,\ v-r+W+1)
+                 \ge\min(v-4,W+5).
+$$
+
+This proves the lower endpoint of J. Applying the shelf once more at
+r<=v-4 gives B. Two cycle points with the same first cap have the same
+successor, so their first caps are distinct. There are B-3 available
+integers, equal to max(1,t-8); the cycle has at most that many points.
+The periodic-seed theorem makes the first return's predecessor the selected
+gap. Its complementary child has cap0, hence its gap delta lies in the
+proved zero plateau0..L_(K-2). The cycle bound r<=v-4 gives delta>=4.
+If B=4 there is just one phase. This proves (Q.1)-(Q.2). QED.
+
+The query bound applies separately to every cap4 row of a qualified five-row
+window. Repeated physical queries refer to the same profile value; rowwise
+bounds do not supply independent copies of that value or construct it.
+
+**What the low-cap laws cannot determine.** Fix any integer h>=5. There
+are arbitrarily large K>=24 with K!=1 mod3 and L=L_(K-2)>=h+2.
+The following family of **captured-map models** has L-h members. It retains
+the exact cap0..3 bands and shelves, anchor-drop inequalities and cap
+budgets on its declared windows. All members have the same cap4 support,
+the same first profile truncated at h, the same second profile, parent
+readout4, periodic start and odd iteration count. Their selected children
+are different. These are local profile completions, not alternative
+globally nested Cloitre sequences or actual exterior-entrance certificates.
+
+Set
+
+$$
+v=W+L+5,\qquad s=v-4=W+L+1,\qquad D=F_{K-1}-4.
+$$
+
+On0..v+1, let H_m be the exact cap0..3 band function through W,
+equal4 at every r>W except
+
+$$
+H_m(s)=m,\qquad h+1\le m\le L. \tag{Q.3}
+$$
+
+Let the common second profile be its order K-2 cap0..3 band function,
+equal4 above Z_(K-2) on the same declared window. In particular it is
+zero at every gap0..L. The first profiles min(H_m,h) are identical,
+and their cap4 support is the common set (W,v+1] minus {s}.
+
+Every H_m satisfies the cap3 shelf: at s its upper allowance is exactly
+s-W-1=L, and every other tail value is4. The low bands have their known
+anchor-drop bounds; the spike obeys m<=L<=floor(2s/3).
+All window positions are at most v+1<=4K-26<=P_(K-2), so positive
+values satisfy both lower-order cap budgets. The last inequality starts
+at K24 and its difference increases thereafter.
+
+For Omega_m(r)=v-H_m(r), the unique cycle is
+
+$$
+s\ \longmapsto\ v-m\ \longmapsto\ s. \tag{Q.4}
+$$
+
+Indeed v-m>=W+5 and v-m<s, so H_m(v-m)=4. Other tail points map
+to s, while low-band points first map strictly above s and then to s.
+At gap v+1 the corresponding map has the unique fixed point s+1:
+the exceptional point s maps to v+1-m<s, a tail point of value4,
+and all other starts also reach s+1 within two steps. Its paired scalar
+readout is4. Thus the modeled predecessor cap is4 as well.
+
+Since K!=1 mod3, D is odd. Starting on the common periodic gap s,
+exactly D captured iterations select v-m in every member. At that phase
+the child caps are(4,0), because the complementary gap m is in0..L.
+At the other phase they are(m,0). Phase, period and the scalar-qualified
+parent readout are therefore resolved; the omitted profile response m
+still changes the numerical split.
+
+All parent and child scalar values agree across this family: they are
+F_(K-1)-4, F_(K-2)-4 and F_(K-3). The response m is invisible to these
+scalar readouts but is needed to identify the physical recursive calls.
+The second-child indices F_(K-2)-m themselves lie in the **actual** zero
+plateau. Their actual first-spine descendants have gaps
+min(m,L_s), for19<=s<=K-2, by the
+[direct cap0 decoder](exact-collars.md#additive-canonical-windows-and-a-direct-descendant-decoder).
+Thus m remains visible in descendant indices until the narrowing plateau
+clips it; the descendant scalar values still agree at each inherited order.
+This uses actual lower-child arithmetic and does not qualify the modeled
+parent as an actual C root. Each model also satisfies the
+[zero-child one-step quadratic certificate](dispersion.md#cap-adaptive-quadratic-dispersion)
+with constant1/100: that certificate estimates dispersion without selecting
+one of these numerical splits.
+
+**Exact response-summary cost.** Within this family, any fixed-length
+summary of the omitted profile information that lets a decoder return the
+selected children must distinguish L-h outputs. Its minimum length is
+
+$$
+\boxed{\lceil\log_2(L-h)\rceil\text{ bits}.} \tag{Q.5}
+$$
+
+Supplying m attains it. More generally, (Q.2) lets a qualified cap4
+tail decoder return both symbolic children from a shift in4..L, with at
+most ceil(log_2(L-3)) summary bits. At fixed h these lower and upper
+orders are Theta(log K) in the captured-map relaxation. Reading the
+profile can derive the summary instead of accepting it as an input.
+This counts information retained about an omitted profile, not extra phase
+labels with that profile supplied, total profile-storage cost, autonomous
+recognizer memory, or an independent-input lower bound for the actual C.
+
+For example, K30,h9 gives W72,L15,v92,s88 and D514225. The six
+responses m=10..15 select gaps82..77. All six have period2, the same
+odd phase and the same truncated profile and cap4 support; exactly3
+summary bits distinguish their child outputs. This is a model witness.
+The independently evaluated actual cap4 roots in complete blocks22..30
+still have queried caps at most9; no infinite actual cap9 bound follows.
+
+The [checker](verification/collar_check.py) verifies (Q.1)-(Q.2) on every
+qualified cap4 tail root in those blocks, with a profile adapter that rejects
+queries outside J. It also checks the model profiles, collisions and
+neighbor maps at orders24..120. The infinite arguments above use the
+existing shelf and zero-plateau theorems and add no finite induction premise.
+For actual recursive closure, the next step is to derive these profile
+responses from the nesting, not from phase or low-cap membership alone.

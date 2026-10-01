@@ -351,6 +351,15 @@ actual nesting. The scale-memory obstruction above therefore remains a
 separate result: a small residual phase label with clocks and defects
 supplied does not imply bounded autonomous memory in Fibonacci encoding.
 
+The [cap4 profile-response construction](../cloitre-conway/recursive-descent.md#cap4-query-profiles-and-the-information-they-carry)
+isolates another distinction. Its captured-map models all have period2
+and the same selected odd phase, but an omitted profile amplitude changes
+the numerical children. For actual Campbell, the proved formula obtains
+both amplitude and phase from n and its power-of-three scale. Transferring
+that interface to Cloitre requires deriving its profile values as well;
+matching short periods alone does not supply them. The construction is a
+local-profile obstruction, not an asserted alternative actual C sequence.
+
 The shared [selector checker](../cloitre-conway/verification/selector_payload_check.py)
 independently evaluates Campbell's first32 terms by literal iteration and
 checks the displayed three-solution inverse. The sharpness statement

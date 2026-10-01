@@ -950,6 +950,114 @@ def allocation_seed_candidates(order, gap, parent_cap, sequence, fibonacci):
     return candidates
 
 
+def cap4_tail_query_domain(order, gap):
+    frontier = higher_cap_width(order - 1, 3)
+    excess = gap - frontier
+    assert order >= 22 and excess >= 5
+    return dict(minimum_gap=frontier + min(5, excess - 4), maximum_gap=gap - 4,
+                maximum_first_cap=max(4, excess - 5), maximum_queries=max(1, excess - 8))
+
+
+def cap4_tail_predecessor(order, gap, profile):
+    domain = cap4_tail_query_domain(order, gap)
+    seed = gap - 4
+    point = seed
+    for period in range(1, domain['maximum_queries'] + 1):
+        assert domain['minimum_gap'] <= point <= domain['maximum_gap']
+        defect = profile(point)
+        assert 4 <= defect <= domain['maximum_first_cap']
+        following = gap - defect
+        if following == seed:
+            assert defect == 4
+            return point, period
+        point = following
+    raise AssertionError('The supplied cap4 seed did not return inside its shelf domain.')
+
+
+def cap4_profile_response_audit():
+    contexts = 0
+    completions = 0
+    checked_profile_positions = 0
+    checked_start_maps = 0
+    witness = None
+    fibonacci = [0, 1]
+    while len(fibonacci) <= 120:
+        fibonacci.append(sum(fibonacci[-2:]))
+    for order in range(24, 121):
+        if order % 3 == 1:
+            continue
+        frontier = higher_cap_width(order - 1, 3)
+        lower_zero_width = negative_plateau_width(order - 2)
+        gap = frontier + lower_zero_width + 5
+        seed = gap - 4
+        depth = fibonacci[order - 1] - 4
+        assert depth % 2 == 1 and gap + 1 <= fibonacci[order - 4]
+        first_widths = [higher_cap_width(order - 1, level) for level in range(4)]
+        second_widths = [higher_cap_width(order - 2, level) for level in range(4)]
+        first_base = [next((level for level in range(4) if point <= first_widths[level]), 4)
+                      for point in range(gap + 2)]
+        second = [next((level for level in range(4) if point <= second_widths[level]), 4)
+                  for point in range(gap + 2)]
+        for ceiling in (5, 9, 16, 31):
+            if lower_zero_width < ceiling + 2:
+                continue
+            common_truncation = first_base[:]
+            common_truncation[seed] = ceiling
+            common_support = [point for point, defect in enumerate(first_base)
+                              if defect == 4 and point != seed]
+            selected_gaps = []
+            for response in range(ceiling + 1, lower_zero_width + 1):
+                first = first_base[:]
+                first[seed] = response
+                assert [min(defect, ceiling) for defect in first] == common_truncation
+                assert [point for point, defect in enumerate(first) if defect == 4] == common_support
+                for child_order, profile in ((order - 1, first), (order - 2, second)):
+                    child_widths = [higher_cap_width(child_order, level) for level in range(4)]
+                    budget = (child_order - 2) ** 2 // 3 - 3 * child_order + 30
+                    for point, defect in enumerate(profile):
+                        assert 0 <= defect <= 2 * point // 3
+                        assert not defect or point <= defect * budget
+                        for level, child_frontier in enumerate(child_widths):
+                            if point > child_frontier:
+                                assert level + 1 <= defect <= max(level + 1, point - child_frontier - 1)
+                        checked_profile_positions += 1
+                selected, period = cap4_tail_predecessor(order, gap, first.__getitem__)
+                assert period == 2 and selected == gap - response
+                assert first[selected] == 4 and second[response] == 0
+                assert first[seed] == response and second[4] == 0
+                first_index = fibonacci[order - 1] - selected
+                second_index = fibonacci[order - 2] - response
+                numerator = (fibonacci[order - 2] * second_index
+                             - fibonacci[order - 3] * first_index)
+                assert 100 * numerator * numerator >= gap * gap * first_index * second_index
+                neighbor_fixed = gap + 1 - 4
+                for start in range(gap + 2):
+                    point = start
+                    for iteration in range(2):
+                        point = gap + 1 - first[point]
+                    assert point == neighbor_fixed
+                    checked_start_maps += 1
+                assert first[neighbor_fixed] == 4 and second[4] == 0
+                selected_gaps.append(selected)
+                completions += 1
+            assert len(set(selected_gaps)) == lower_zero_width - ceiling
+            contexts += 1
+            if order == 30 and ceiling == 9:
+                witness = dict(order=order, profile_ceiling=ceiling, frontier=frontier,
+                               zero_width=lower_zero_width, root_gap=gap, periodic_seed=seed,
+                               common_depth=depth, common_period=2,
+                               response_values=list(range(ceiling + 1, lower_zero_width + 1)),
+                               selected_gaps=selected_gaps,
+                               exact_fixed_length_summary_bits=(len(selected_gaps) - 1).bit_length())
+    assert witness is not None
+    return dict(model_orders_inclusive=[24, 120], model_profile_ceilings=[5, 9, 16, 31],
+                model_contexts=contexts, model_completions=completions,
+                checked_profile_positions=checked_profile_positions,
+                checked_neighbor_start_maps=checked_start_maps, model_collision=witness,
+                common_one_step_quadratic_constant='1/100',
+                scope='Captured-map models, not alternative actual Cloitre sequences. Identical cap0..3 bands, shelves, local cap budgets, truncated first profile and complete cap4 membership support admit distinct selected children with the same odd local depth and period2. The omitted scalar response ranges from h+1 to L_(K-2), giving exactly ceil(log2(L_(K-2)-h)) summary bits in this family. Actual exterior qualification and globally nested profile construction are not asserted.')
+
+
 def higher_projection_and_allocation_audit(sequence, splits, fibonacci):
     jump_cases = 0
     for initial_order in range(22, 101):
@@ -981,6 +1089,10 @@ def higher_projection_and_allocation_audit(sequence, splits, fibonacci):
     actual_projection_states = 0
     cap4_rows = []
     cap4_spine_edges = 0
+    tail_roots = 0
+    tail_profile_queries = 0
+    maximum_tail_query_cap = 0
+    tail_period_counts = {}
     minimum_variance_ratio = None
     period_witnesses = {}
     allocation_roots = 0
@@ -1029,6 +1141,22 @@ def higher_projection_and_allocation_audit(sequence, splits, fibonacci):
             lower_profile = lambda point: first_cap - sequence[first_anchor - point]
             selected_gap, period = periodic_predecessor_gap(gap, gap - 4, lower_profile)
             assert first == first_anchor - selected_gap
+            if gap >= higher_cap_width(order - 1, 3) + 5:
+                query_domain = cap4_tail_query_domain(order, gap)
+                queried_caps = []
+                def restricted_profile(point):
+                    assert query_domain['minimum_gap'] <= point <= query_domain['maximum_gap']
+                    defect = lower_profile(point)
+                    queried_caps.append(defect)
+                    return defect
+                restricted_gap, restricted_period = cap4_tail_predecessor(order, gap, restricted_profile)
+                assert (restricted_gap, restricted_period) == (selected_gap, period)
+                assert len(set(queried_caps)) == period and queried_caps[-1] == 4
+                assert 4 <= gap - selected_gap <= negative_plateau_width(order - 2)
+                tail_roots += 1
+                tail_profile_queries += len(queried_caps)
+                maximum_tail_query_cap = max(maximum_tail_query_cap, max(queried_caps))
+                tail_period_counts[str(period)] = tail_period_counts.get(str(period), 0) + 1
             profile = [lower_profile(point) for point in range(gap + 1)]
             cycles = capped_profile_cycles(profile, gap)
             scalar_valid = []
@@ -1097,6 +1225,26 @@ def higher_projection_and_allocation_audit(sequence, splits, fibonacci):
             endpoint = root - sequence[endpoint]
         assert endpoint == splits[root]
         literal_updates += witness['depth']
+    response_models = cap4_profile_response_audit()
+    response_witness = response_models['model_collision']
+    response_order = response_witness['order'] - 2
+    descendant_gaps = {target_order: set() for target_order in range(19, response_order + 1)}
+    actual_response_states = 0
+    for response in response_witness['response_values']:
+        current = fibonacci[response_order] - response
+        for target_order in range(response_order, 18, -1):
+            target_gap = min(response, negative_plateau_width(target_order))
+            assert current == fibonacci[target_order] - target_gap
+            assert sequence[current] == fibonacci[target_order - 1]
+            descendant_gaps[target_order].add(target_gap)
+            actual_response_states += 1
+            if target_order > 19:
+                current = splits[current]
+    response_models['actual_zero_child_descendant_states'] = actual_response_states
+    response_models['actual_zero_child_descendant_rows'] = [
+        dict(order=target_order, gaps=sorted(descendant_gaps[target_order]),
+             distinct_child_indices=len(descendant_gaps[target_order]))
+        for target_order in range(response_order, 18, -1)]
     return dict(arithmetic_projection_orders_inclusive=[22, 100], arithmetic_projection_cases=jump_cases,
                 actual_projection_states=actual_projection_states, boundary_order=21,
                 synthetic_profiles=synthetic_profiles, synthetic_seed_cases=synthetic_seeds,
@@ -1107,6 +1255,11 @@ def higher_projection_and_allocation_audit(sequence, splits, fibonacci):
                 allocation_option_counts=allocation_option_counts, maximum_allocation_options=maximum_allocation_options,
                 cap4_one_step_quadratic_constant='1/100', minimum_cap4_quadratic_ratio=str(minimum_variance_ratio),
                 actual_allocation_witnesses=witness_rows, literal_selected_endpoint_updates=literal_updates,
+                tail_query_interface=dict(actual_tail_roots=tail_roots,
+                                          actual_profile_queries=tail_profile_queries,
+                                          maximum_observed_query_cap=maximum_tail_query_cap,
+                                          actual_period_counts=tail_period_counts,
+                                          profile_response_models=response_models),
                 scope='Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open.')
 
 
