@@ -122,5 +122,435 @@
     "phase": "parity of n; no independent five-phase selector",
     "qualification": "The six labels are distinct parity/domain templates; five affine endpoint maps occur because the even- and odd-low plateau labels share the same map on different domains. The explicit formula derives the applicable label from n and its power-of-three scale."
   },
+  "five_pattern_interaction": {
+    "maximum_removed_low_value": 12,
+    "independently_literal_prefix": 439,
+    "literal_prefix_updates": 55464,
+    "orbit_prefix_limit": 104983,
+    "prefix_sha256": "c2dd60daa394f066cc232ccd80f61ded6c59cda0638806f60e2157e36f36f2f8",
+    "actual_contexts": 18,
+    "canonical_words_checked": 90,
+    "same_parity_increment_pairs_checked": 104980,
+    "coefficient_readout_class_count": 3,
+    "literal_selected_endpoint_updates": 1087214,
+    "contexts": [
+      {
+        "exponent": 3,
+        "multiplier": 10,
+        "scale": 81,
+        "context": 267,
+        "removed_low_value": 3,
+        "parity": 1,
+        "values": [
+          162,
+          162,
+          189,
+          191,
+          193
+        ],
+        "interaction": 2,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 3,
+        "multiplier": 14,
+        "scale": 81,
+        "context": 377,
+        "removed_low_value": 1,
+        "parity": 1,
+        "values": [
+          162,
+          162,
+          243,
+          243,
+          243
+        ],
+        "interaction": 0,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 3,
+        "multiplier": 16,
+        "scale": 81,
+        "context": 432,
+        "removed_low_value": 0,
+        "parity": 0,
+        "values": [
+          243,
+          243,
+          192,
+          194,
+          196
+        ],
+        "interaction": 2,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 4,
+        "multiplier": 10,
+        "scale": 243,
+        "context": 809,
+        "removed_low_value": 1,
+        "parity": 1,
+        "values": [
+          486,
+          486,
+          569,
+          571,
+          573
+        ],
+        "interaction": 2,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 4,
+        "multiplier": 14,
+        "scale": 243,
+        "context": 1131,
+        "removed_low_value": 3,
+        "parity": 1,
+        "values": [
+          486,
+          486,
+          729,
+          729,
+          729
+        ],
+        "interaction": 0,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 4,
+        "multiplier": 16,
+        "scale": 243,
+        "context": 1296,
+        "removed_low_value": 0,
+        "parity": 0,
+        "values": [
+          729,
+          729,
+          570,
+          572,
+          574
+        ],
+        "interaction": 2,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 5,
+        "multiplier": 10,
+        "scale": 729,
+        "context": 2427,
+        "removed_low_value": 3,
+        "parity": 1,
+        "values": [
+          1458,
+          1458,
+          1701,
+          1703,
+          1705
+        ],
+        "interaction": 2,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 5,
+        "multiplier": 14,
+        "scale": 729,
+        "context": 3393,
+        "removed_low_value": 9,
+        "parity": 1,
+        "values": [
+          1458,
+          1458,
+          2187,
+          2187,
+          2187
+        ],
+        "interaction": 0,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 5,
+        "multiplier": 16,
+        "scale": 729,
+        "context": 3880,
+        "removed_low_value": 8,
+        "parity": 0,
+        "values": [
+          2187,
+          2187,
+          1696,
+          1698,
+          1700
+        ],
+        "interaction": 2,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 6,
+        "multiplier": 10,
+        "scale": 2187,
+        "context": 7286,
+        "removed_low_value": 4,
+        "parity": 0,
+        "values": [
+          5099,
+          5101,
+          4374,
+          4374,
+          4374
+        ],
+        "interaction": -2,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 6,
+        "multiplier": 14,
+        "scale": 2187,
+        "context": 10205,
+        "removed_low_value": 1,
+        "parity": 1,
+        "values": [
+          4374,
+          4374,
+          6561,
+          6561,
+          6561
+        ],
+        "interaction": 0,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 6,
+        "multiplier": 16,
+        "scale": 2187,
+        "context": 11658,
+        "removed_low_value": 6,
+        "parity": 0,
+        "values": [
+          6561,
+          6561,
+          5100,
+          5102,
+          5104
+        ],
+        "interaction": 2,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 7,
+        "multiplier": 10,
+        "scale": 6561,
+        "context": 21858,
+        "removed_low_value": 12,
+        "parity": 0,
+        "values": [
+          15297,
+          15299,
+          13122,
+          13122,
+          13122
+        ],
+        "interaction": -2,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 7,
+        "multiplier": 14,
+        "scale": 6561,
+        "context": 30610,
+        "removed_low_value": 8,
+        "parity": 0,
+        "values": [
+          19683,
+          19683,
+          13122,
+          13122,
+          13122
+        ],
+        "interaction": 0,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 7,
+        "multiplier": 16,
+        "scale": 6561,
+        "context": 34990,
+        "removed_low_value": 2,
+        "parity": 0,
+        "values": [
+          19683,
+          19683,
+          15310,
+          15312,
+          15314
+        ],
+        "interaction": 2,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 8,
+        "multiplier": 10,
+        "scale": 19683,
+        "context": 65608,
+        "removed_low_value": 2,
+        "parity": 0,
+        "values": [
+          45925,
+          45927,
+          39366,
+          39366,
+          39366
+        ],
+        "interaction": -2,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 8,
+        "multiplier": 14,
+        "scale": 19683,
+        "context": 91851,
+        "removed_low_value": 3,
+        "parity": 1,
+        "values": [
+          39366,
+          39366,
+          59049,
+          59049,
+          59049
+        ],
+        "interaction": 0,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exponent": 8,
+        "multiplier": 16,
+        "scale": 19683,
+        "context": 104970,
+        "removed_low_value": 6,
+        "parity": 0,
+        "values": [
+          59049,
+          59049,
+          45924,
+          45926,
+          45928
+        ],
+        "interaction": 2,
+        "root_periods": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      }
+    ],
+    "scope": "Universal strip/parity interaction laws follow from the proved ternary formula and bounded canonical truncation. The18 contexts are independently generated from the recurrence, with literal endpoints and a literal prefix; they do not supply an infinite premise or claim constant autonomous scale memory."
+  },
+  "source_sha256": "0ef77a1920e2ab83c59bb048d88330bb3f88b15ce445aecc060e14fc06f1832d",
   "scope": "arithmetic certificate for the written induction, not Lean verification"
 }

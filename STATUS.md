@@ -60,6 +60,13 @@ for Cloitre's full sequence graph remains open. Read the
 [Cloitre diagnostic](cloitre-conway/five-window-closure.md#autonomous-memory-of-the-actual-top-plateau-diagnostic)
 for the exact models and supplied-context distinctions.
 
+Both families also have proved context-dependent interactions on the five
+legal canonical digit patterns. Cloitre has an infinite interaction1
+family with fixed-point root basins and recursive signal persistence;
+Campbell's current coefficient has exactly three value classes.
+Read the [Cloitre construction](cloitre-conway/exact-collars.md#a-persistent-interaction-on-canonical-index-words)
+and [Campbell comparison](campbell/scale-memory.md#five-pattern-interaction-on-ternary-scale-interiors).
+
 Shifted Conway/Mallows variants remain finite observations under their
 stated initial conditions; see the [supporting audit](cloitre-conway/landing.md).
 Literature review, a manuscript, and formalization are separate milestones.

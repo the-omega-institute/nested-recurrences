@@ -1292,6 +1292,124 @@ def positive_collar_extinction_audit(sequence, fibonacci):
     return positive_report, negative_collar_boundary_audit(higher_sequence, higher_splits, fibonacci)
 
 
+def canonical_fibonacci_indices(value, fibonacci):
+    remainder = value
+    indices = []
+    for order in range(len(fibonacci) - 1, 1, -1):
+        if fibonacci[order] <= remainder:
+            indices.append(order)
+            remainder -= fibonacci[order]
+    assert remainder == 0
+    assert all(first - second >= 2 for first, second in zip(indices, indices[1:]))
+    return tuple(indices)
+
+
+def persistent_canonical_interaction_audit():
+    patterns = ((0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1), (1, 0, 1))
+    offsets = (0, 2, 3, 5, 7)
+    fibonacci = fibonacci_values(1000)
+    context_orders = range(8, 15)
+    anchor_orders = [(3 * (fibonacci[order] - 3) + 1) // 2 for order in context_orders]
+    while len(fibonacci) <= max(anchor_orders):
+        fibonacci.append(fibonacci[-1] + fibonacci[-2])
+    arithmetic_rows = []
+    canonical_words = 0
+    for context_order, anchor_order in zip(context_orders, anchor_orders):
+        gap = fibonacci[context_order]
+        anchor = fibonacci[anchor_order]
+        context = anchor - gap
+        zero_width = negative_plateau_width(anchor_order)
+        unit_width = unit_defect_width(anchor_order)
+        assert anchor_order >= context_order + 2 and anchor_order >= 27
+        assert anchor_order % 3 != 1
+        assert zero_width == gap - 6 and unit_width >= gap
+        assert negative_plateau_width(anchor_order - 1) == gap - 7
+        expected_high = (tuple(range(anchor_order - 1, context_order, -2))
+                         if (anchor_order - context_order) % 2 == 0
+                         else tuple(range(anchor_order - 1, context_order + 1, -2)) + (context_order - 1,))
+        assert sum(fibonacci[order] for order in expected_high) == context
+        assert min(expected_high) >= 7
+        for pattern, offset in zip(patterns, offsets):
+            indices = canonical_fibonacci_indices(context + offset, fibonacci)
+            low = tuple(order for order in (5, 4, 3) if pattern[order - 3])
+            assert indices == expected_high + low
+            defect = int(gap - offset > zero_width)
+            assert defect == 1 - pattern[0] * pattern[2]
+            assert unit_defect_shift(anchor_order, gap - offset) == defect
+            canonical_words += 1
+        arithmetic_rows.append(dict(context_order=context_order, anchor_order=anchor_order,
+                                    anchor_gap=gap, zero_width=zero_width, unit_width=unit_width,
+                                    high_digit_count=len(expected_high), lowest_high_digit=min(expected_high),
+                                    context_bit_length=context.bit_length(),
+                                    predicted_interaction=1))
+    witness_order = anchor_orders[0]
+    witness_context_order = 8
+    prefix_limit = fibonacci[witness_order]
+    sequence, _, _, splits = generate(prefix_limit)
+    assert sequence == brent_generate(prefix_limit)
+    context = prefix_limit - fibonacci[witness_context_order]
+    root_indices = [context + offset for offset in offsets]
+    values = [sequence[index] for index in root_indices]
+    cap = fibonacci[witness_order - 1]
+    assert values == [cap - 1] * 4 + [cap]
+    assert values[4] - values[1] - values[3] + values[0] == 1
+    root_rows = []
+    literal_updates = 0
+    for pattern, index in zip(patterns, root_indices):
+        trajectory, transient, period = full_orbit(sequence, index)
+        point = index - 1
+        depth = sequence[index - 1]
+        for iteration in range(depth):
+            point = index - sequence[point]
+        literal_updates += depth
+        assert point == splits[index] and period == 1
+        root_rows.append(dict(pattern=''.join(map(str, pattern)), index=index, value=sequence[index],
+                              canonical_indices=list(canonical_fibonacci_indices(index, fibonacci)),
+                              depth=depth, transient=transient, period=period, selected_split=point))
+    current_indices = root_indices[:]
+    first_spine_steps = 0
+    spine_rows = []
+    spine_weights = [Fraction(1)] * 5
+    for order in range(witness_order, 18, -1):
+        cap = fibonacci[order - 1]
+        values = [sequence[index] for index in current_indices]
+        defects = [cap - value for value in values]
+        assert defects == [1, 1, 1, 1, 0]
+        assert values[4] - values[1] - values[3] + values[0] == 1
+        gaps = [fibonacci[order] - index for index in current_indices]
+        assert all(gap <= unit_defect_width(order) for gap in gaps)
+        spine_rows.append(dict(anchor_order=order, gaps=gaps, cap=cap, values=values,
+                               interaction=1, cap_normalized_interaction=str(Fraction(1, cap))))
+        if order == 19:
+            break
+        following_indices = []
+        for row, (index, gap) in enumerate(zip(current_indices, gaps)):
+            shift = unit_defect_shift(order, gap)
+            split = cap - gap + shift
+            assert split == splits[index]
+            assert sequence[index - split] == fibonacci[order - 3]
+            following_indices.append(split)
+            spine_weights[row] *= Fraction(split, index)
+            first_spine_steps += 1
+        current_indices = following_indices
+    spine_probabilities = [str(Fraction(terminal, root))
+                           for terminal, root in zip(current_indices, root_indices)]
+    assert spine_probabilities == [str(weight) for weight in spine_weights]
+    assert all(terminal <= fibonacci[19] for terminal in current_indices)
+    return dict(arithmetic_context_orders_inclusive=[8, 14], canonical_words_checked=canonical_words,
+                arithmetic_context_rows=arithmetic_rows,
+                arithmetic_scope='Canonical Zeckendorf identities, legal seams and proved unit-family qualifications; no direct C evaluation at the large arithmetic contexts.',
+                actual_prefix_limit=prefix_limit, full_orbit_and_brent_agree=True,
+                prefix_sha256=hashlib.sha256(','.join(map(str, sequence[1:])).encode('ascii')).hexdigest(),
+                actual_root_rows=root_rows, literal_selected_endpoint_updates=literal_updates,
+                actual_first_spine_steps=first_spine_steps, inherited_pattern_spine_rows=spine_rows,
+                terminal_first_spine_probabilities=spine_probabilities,
+                persistent_interaction_formula='k_m=ceil(3*(F_m-3)/2), h_m=F_(k_m)-F_m; C(h_m+w(x))=F_(k_m-1)-1+x1*x3, m>=8',
+                all_root_basins_fixed=True, descendant_interaction=1,
+                cap_normalized_terminal_interaction=str(Fraction(1, fibonacci[18])),
+                scope='Infinite canonical-index interaction follows from the unit-sublevel theorem and telescoping Zeckendorf identities. The explicit first family member and inherited-label first spines are independently checked. Root interaction does not imply a long orbit or a residual selector label; terminal signal persistence does not prove uniform dispersion because its size-biased first-spine probability tends to zero.')
+
+
 def five_pattern_interaction_audit(sequence, fibonacci):
     patterns = ((0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1), (1, 0, 1))
     function_count = 0
@@ -1320,6 +1438,7 @@ def five_pattern_interaction_audit(sequence, fibonacci):
                 exact_functions_reconstructed=function_count, responses=rows,
                 universal_lowest_window_zero_interaction_orders='all j>=23',
                 fixed_window_threshold='j>=max(3*i+7,K(F_(3*i+3)+F_(3*i+5)))',
+                persistent_canonical_context=persistent_canonical_interaction_audit(),
                 scope='Interpolation is elementary; infinite fixed-window vanishing follows from the proved positive collar. The digit alphabet is not an inner period-five orbit, and scalar additivity does not certify basin or selected phase.')
 
 
