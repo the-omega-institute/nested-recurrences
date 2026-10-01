@@ -47,6 +47,9 @@ conjectures remain finite observations. No Lean formalization is included.
    Actual profiles and descendants are now generated arithmetically in a
    [growing initial band](cloitre-conway/exact-collars.md#a-propagated-cap4-band-generates-its-own-profiles).
    Constructing them in the wider domains remains open.
+   A [new upper shelf](cloitre-conway/exact-collars.md#a-bounded-upper-shelf-and-a-wider-zero-allocation-corridor)
+   bounds the missing responses and derives zero child allocation in a
+   wider neighborhood; it does not construct the exact profiles there.
 3. **Inner dynamics between Fibonacci indices.** Control periods,
    landing times, and selected phases in the wider block interiors.
 

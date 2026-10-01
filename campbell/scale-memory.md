@@ -369,6 +369,13 @@ or affine numerical interface can therefore retain nonlinear digit
 readouts. Both the new Cloitre interface and Campbell's formula derive
 their scoped arithmetic data; the wider Cloitre profile problem stays open.
 
+The [actual upper shelf](../cloitre-conway/exact-collars.md#a-bounded-upper-shelf-and-a-wider-zero-allocation-corridor)
+also bounds a fixed D-position Cloitre tail by height max(9,D), leaving
+only O(D log(D+1)) response-packing bits independently of the order.
+It derives zero allocation in a wider corridor, but still requires the
+tail responses and parent value. Campbell's formula supplies its arithmetic
+data directly; this bounded response envelope does not yet do so for C.
+
 The shared [selector checker](../cloitre-conway/verification/selector_payload_check.py)
 independently evaluates Campbell's first32 terms by literal iteration and
 checks the displayed three-solution inverse. The sharpness statement

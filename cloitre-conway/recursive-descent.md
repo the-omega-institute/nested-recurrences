@@ -1318,6 +1318,14 @@ one allocation parameter in place of separate cycle and phase data, conditional
 on supplied scalar/profile context. Deriving that parameter and the profiles
 in wide blocks remains part of the full minimum-interface problem.
 
+The [bounded-tail theorem](exact-collars.md#a-bounded-upper-shelf-and-a-wider-zero-allocation-corridor)
+derives b=0 on gaps up to4K-19+L_(K-2), K>=25, including roots above
+cap4. In that region the supplied parent cap and lower profiles determine
+the actual periodic predecessor without an allocation or entrance label.
+At fixed excess D beyond the generated band, at most D profile responses
+remain unknown, with height max(9,D). Their sufficient packing bound is
+independent of K; exact response construction and wider allocations remain open.
+
 ### Cap4 query profiles and the information they carry
 
 The cap4 periodic seed removes independent phase data **after the lower
