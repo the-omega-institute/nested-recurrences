@@ -1106,6 +1106,173 @@ def local_cap_endpoint(gap, start_gap, remaining, profile):
     return selected, transient, period
 
 
+def fibonacci_mod(order, modulus):
+    assert order >= 0 and modulus >= 1
+    first, second = 0, 1 % modulus
+    for digit in bin(order)[2:]:
+        doubled = first * (2 * second - first) % modulus
+        following = (first * first + second * second) % modulus
+        if digit == '0':
+            first, second = doubled, following
+        else:
+            first, second = following, (doubled + following) % modulus
+    return first
+
+
+def fibonacci_capped(order, threshold):
+    assert order >= 0 and threshold >= 0
+    first, second = 0, min(1, threshold)
+    position = 0
+    while position < order and first < threshold:
+        first, second = second, min(threshold, first + second)
+        position += 1
+    return first
+
+
+def symbolic_cap_selector(order, gap, start_gap, entrance, predecessor_defect, profile):
+    assert order >= 1 and 0 <= start_gap <= gap
+    assert entrance >= 0 and predecessor_defect >= 0 and len(profile) >= gap + 1
+
+    def following(point):
+        result = gap - profile[point]
+        assert 0 <= result <= gap
+        return result
+
+    slow = following(start_gap)
+    fast = following(following(start_gap))
+    while slow != fast:
+        slow = following(slow)
+        fast = following(following(fast))
+    cycle_entry = start_gap
+    transient = 0
+    while cycle_entry != slow:
+        cycle_entry = following(cycle_entry)
+        slow = following(slow)
+        transient += 1
+    period = 1
+    point = following(cycle_entry)
+    while point != cycle_entry:
+        point = following(point)
+        period += 1
+    assert transient + period <= gap + 1
+    threshold = predecessor_defect + entrance + transient
+    assert fibonacci_capped(order - 1, threshold) == threshold
+    residue = (fibonacci_mod(order - 1, period) - predecessor_defect - entrance - transient) % period
+    selected = cycle_entry
+    for step in range(residue):
+        selected = following(selected)
+    return dict(selected_gap=selected, local_transient=transient,
+                period=period, cycle_entry_gap=cycle_entry, selected_residue=residue)
+
+
+def modular_selector_audit(sequence, splits, fibonacci):
+    def matrix_product(left, right, modulus):
+        return tuple(tuple(sum(left[row][middle] * right[middle][column] for middle in range(2)) % modulus
+                           for column in range(2)) for row in range(2))
+
+    def matrix_fibonacci_mod(order, modulus):
+        result = ((1, 0), (0, 1))
+        power = ((1, 1), (1, 0))
+        remaining = order
+        while remaining:
+            if remaining % 2:
+                result = matrix_product(result, power, modulus)
+            power = matrix_product(power, power, modulus)
+            remaining //= 2
+        return result[0][1] % modulus
+
+    modular_checks = capped_checks = 0
+    first, second = 0, 1
+    moduli = (1, 2, 3, 5, 7, 16, 97, 1009)
+    for order in range(1001):
+        for modulus in moduli:
+            expected = first % modulus
+            assert fibonacci_mod(order, modulus) == matrix_fibonacci_mod(order, modulus) == expected
+            modular_checks += 1
+        for threshold in (0, 1, 2, 13, 100, 10000):
+            assert fibonacci_capped(order, threshold) == min(first, threshold)
+            capped_checks += 1
+        first, second = second, first + second
+    huge_orders = (10 ** 100, 10 ** 1000 + 123, 2 ** 4096 + 17)
+    huge_rows = []
+    for order in huge_orders:
+        residues = []
+        for modulus in moduli:
+            residue = fibonacci_mod(order, modulus)
+            assert residue == matrix_fibonacci_mod(order, modulus)
+            residues.append(residue)
+            modular_checks += 1
+        for modulus, pisano in ((2, 3), (3, 8), (5, 20)):
+            assert fibonacci_mod(order, modulus) == fibonacci_mod(order % pisano, modulus)
+        assert fibonacci_capped(order, 10 ** 100) == 10 ** 100
+        huge_rows.append(dict(order_bit_length=order.bit_length(), moduli=list(moduli), residues=residues,
+                              capped_threshold_bit_length=(10 ** 100).bit_length()))
+    decoded = 0
+    phase_period_counts = {}
+    maximum_period = None
+    maximum_local_transient = None
+    witnesses = {}
+    actual_modular_rows = []
+    for order in range(11, 31):
+        anchor, cap = fibonacci[order], fibonacci[order - 1]
+        width = min(16 * cap_gap_budget(order), fibonacci[order - 4])
+        previous = [fibonacci[order - 2] - sequence[cap - gap] for gap in range(width + 1)]
+        lower = [fibonacci[order - 3] - sequence[fibonacci[order - 2] - gap] for gap in range(width + 1)]
+        for gap in range(2, width + 1):
+            index = anchor - gap
+            defect = cap - sequence[index]
+            if defect > 16:
+                continue
+            assert 0 <= defect and gap <= 16 * cap_gap_budget(order)
+            trajectory, transient, period = full_orbit(sequence, index)
+            entrance = next(position for position, point in enumerate(trajectory)
+                            if cap - gap <= point <= cap)
+            start_gap = cap - trajectory[entrance]
+            predecessor = cap - sequence[index - 1]
+            decoded_row = symbolic_cap_selector(order, gap, start_gap, entrance, predecessor, previous)
+            selected_gap = decoded_row['selected_gap']
+            exact_depth = sequence[index - 1]
+            reference_gap, reference_transient, reference_period = local_cap_endpoint(
+                gap, start_gap, exact_depth - entrance, previous)
+            assert selected_gap == reference_gap == cap - splits[index]
+            assert decoded_row['local_transient'] == reference_transient == transient - entrance
+            assert decoded_row['period'] == reference_period == period
+            assert previous[selected_gap] + lower[gap - selected_gap] == defect
+            assert decoded_row['selected_residue'] == (exact_depth - entrance - reference_transient) % period
+            decoded += 1
+            phase_period_counts[str(period)] = phase_period_counts.get(str(period), 0) + 1
+            row = dict(order=order, gap=gap, index=index, cap_defect=defect,
+                       entrance_clock=entrance, entrance_gap=start_gap, predecessor_defect=predecessor,
+                       exact_depth=exact_depth, exact_depth_bits=exact_depth.bit_length(), **decoded_row)
+            if maximum_period is None or period > maximum_period['period']:
+                maximum_period = row
+            if maximum_local_transient is None or reference_transient > maximum_local_transient['local_transient']:
+                maximum_local_transient = row
+            if str(period) not in witnesses:
+                witnesses[str(period)] = row
+            if (order, gap) in ((19, 50), (19, 54), (20, 57), (24, 83)):
+                actual_modular_rows.append(row)
+    literal_updates = 0
+    for row in witnesses.values():
+        point = row['index'] - 1
+        for step in range(sequence[row['index'] - 1]):
+            point = row['index'] - sequence[point]
+            literal_updates += 1
+        assert point == splits[row['index']] == fibonacci[row['order'] - 1] - row['selected_gap']
+    return dict(modular_checks=modular_checks, capped_fibonacci_checks=capped_checks,
+                independent_modular_method='2x2 matrix binary exponentiation; exact Fibonacci values through order1000',
+                huge_order_arithmetic_rows=huge_rows, huge_order_scope='Modular and capped Fibonacci arithmetic only; no C or actual entrance at these huge orders is evaluated.',
+                actual_orders_inclusive=[11, 30], actual_cap_bound=16,
+                actual_gap_domain='2<=v<=min(16Pk,F_(k-4)); cap defect<=16',
+                actual_symbolic_decodings=decoded, actual_period_counts=phase_period_counts,
+                maximum_period=maximum_period, maximum_local_transient=maximum_local_transient,
+                actual_phase_witnesses=actual_modular_rows, literal_period_witnesses=list(witnesses.values()),
+                literal_selected_updates=literal_updates,
+                decoder_formula='F_(k-1) mod p minus predecessor defect, entrance clock and local transient, all modulo p',
+                workspace_bound='O(log m+log k) bits with read-only random-access profiles and certified entrance; symbolic anchor/gap outputs',
+                scope='Standard Floyd cycle detection and modular Fibonacci doubling implement the proved conditional symbolic decoder. Exact-depth trajectory evaluation and actual literal witnesses cross-check the selected gaps. Profiles, actual predecessor/entrance provenance and their verification are supplied resources; physical integer output, table construction and full recursive minimum remain separate. No global dispersion or large-order C claim.')
+
+
 def cap_budget_interface_audit(sequence, splits, fibonacci):
     arithmetic_fibonacci = fibonacci[:]
     while len(arithmetic_fibonacci) <= 1000:
@@ -1288,13 +1455,27 @@ def cap_budget_interface_audit(sequence, splits, fibonacci):
                                  selected_split=point, value=sequence[index]))
     five_gaps = [0, 10, 20, 40, 54]
     first_defects, second_defects, shifts = [], [], []
+    decoded_first_gaps = []
     parent_parameters, first_parameters, second_parameters = [], [], []
+    symbolic_profile = [fibonacci[17] - sequence[fibonacci[18] - gap]
+                        for gap in range(max(five_gaps) + 1)]
     for row, gap in enumerate(five_gaps):
         index = fibonacci[19] - gap
         split = splits[index]
         shifts.append(split - (fibonacci[18] - gap))
         first_defects.append(fibonacci[17] - sequence[split])
         second_defects.append(fibonacci[16] - sequence[index - split])
+        if gap <= 1:
+            selected_gap = gap
+        else:
+            trajectory, transient, period = full_orbit(sequence, index)
+            entrance = next(position for position, point in enumerate(trajectory)
+                            if fibonacci[18] - gap <= point <= fibonacci[18])
+            decoded = symbolic_cap_selector(19, gap, fibonacci[18] - trajectory[entrance], entrance,
+                                           fibonacci[18] - sequence[index - 1], symbolic_profile)
+            selected_gap = decoded['selected_gap']
+        assert selected_gap == fibonacci[18] - split
+        decoded_first_gaps.append(selected_gap)
     for row, gap in enumerate(five_gaps):
         following = (row + 1) % 5
         defect = first_defects[row] + second_defects[row]
@@ -1310,6 +1491,9 @@ def cap_budget_interface_audit(sequence, splits, fibonacci):
         first_parameter = (fibonacci[17] - five_gaps[following] + shifts[following]
                            - first_defects[row])
         second_parameter = fibonacci[16] - shifts[following] - second_defects[row]
+        assert first_parameter == fibonacci[17] - decoded_first_gaps[following] - first_defects[row]
+        assert second_parameter == (fibonacci[16] - five_gaps[following]
+                                    + decoded_first_gaps[following] - second_defects[row])
         assert first_parameter + second_parameter == parent_parameter
         assert fibonacci[16] - five_gaps[following] + shifts[following] + first_profile == first_parameter
         assert fibonacci[15] - shifts[following] + second_profile == second_parameter
@@ -1336,7 +1520,15 @@ def cap_budget_interface_audit(sequence, splits, fibonacci):
                 five_row_witness=dict(order=19, gaps=five_gaps, shifts=shifts,
                                       first_cap_defects=first_defects, second_cap_defects=second_defects,
                                       parent_parameters=parent_parameters, first_parameters=first_parameters,
-                                      second_parameters=second_parameters),
+                                      second_parameters=second_parameters,
+                                      decoded_first_gaps=decoded_first_gaps,
+                                      parent_symbolic_gaps=[five_gaps[(row + 1) % 5] + first_defects[row] + second_defects[row]
+                                                            for row in range(5)],
+                                      first_symbolic_gaps=[decoded_first_gaps[(row + 1) % 5] + first_defects[row]
+                                                           for row in range(5)],
+                                      second_symbolic_gaps=[five_gaps[(row + 1) % 5] - decoded_first_gaps[(row + 1) % 5]
+                                                            + second_defects[row] for row in range(5)]),
+                modular_symbolic_selector=modular_selector_audit(sequence, splits, fibonacci),
                 scope='General full-block cap-budget induction uses the proved zero plateau and actual two-child conservation, without a new finite sequence premise. Fixed-cap sublevels have polynomial gap enclosure and a conditional local-table/entrance decoder. The independent Diophantine proof gives phase-free quartic dispersion on cube-root collars, hence eventually on every fixed cap level; large arithmetic checks do not evaluate C. Finite level4 support holes are not an infinite support law. Tables, predecessor/exterior qualification, exact Fibonacci arithmetic and autonomous memory are separate costs; cap4 qualification already collapses the displayed scalar phase fiber. Global dispersion/convergence remain open.')
 
 
