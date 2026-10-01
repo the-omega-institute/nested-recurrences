@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_sha256": "7fc3a08f3528d122218cfb966c10ce2432b1fc65c0b4a48c01c18005c11c4b0e",
+  "source_sha256": "ea7726e35349c83665bcba102e9f76f2a96d33a1f68fe036c311c3cf205c91c2",
   "scope": "Exact public three-block selector audit, recursive nonautonomous window descent and conserved conditional seed-label budgets. Row-local Cartesian decompositions remain distinct from actual selected splits and their proof costs.",
   "period_five_payloads": 13,
   "parent_rows": 65,
@@ -1040,6 +1040,141 @@
         "scope": "Every subgraph of a 3-by-3 bipartite parameter graph has forest size equal to independently computed rational rank; every strongly connected directed graph on up to three named vertices with small shared capped profiles has exact gap reconstruction and seed decoding checked against complete Cartesian fibers."
       },
       "scope": "A fixed physical-label layout of the 147 selected five-cycle roots through 4096 and their internal descendants. All 37 joint selector components are injective on the supplied independent canonical geometric/value domains: singleton, sign or complete finite gap certificates cover every parameter image. Forest size is the universal linear parameter rank, not C-specific minimum code size. Layout, profile/domain, basin/phase and validity proof costs remain excluded."
+    },
+    "generated_shared_descent": {
+      "small_class_completeness": {
+        "root_sets": 25,
+        "exhaustive_shared_layouts": 55408,
+        "profile_cache_nodes_checked": 905301,
+        "scope": "Independent iterative enumeration of every reachable shared geometric selector dictionary for roots9..30 and three repeated five-row root sets. Key-free bitstreams biject with dictionaries, agree with literal expanded value trees, reconstruct boundary-alias histograms, are prefix-free and reject truncation/trailing bits."
+      },
+      "five_window_at_196": {
+        "root_indices": [
+          115,
+          120,
+          116,
+          117,
+          118
+        ],
+        "root_values": [
+          76,
+          80,
+          79,
+          78,
+          81
+        ],
+        "distinct_internal_indices": 35,
+        "stream_bits": 105,
+        "stream_hex": "005214734e54b121254822c30a56",
+        "stream_sha256": "af656b872913b2c35eec2872bc46d81a3c0cc49b94559203ae08322c373fe475",
+        "maximum_encoding_stack_depth": 5,
+        "bound": {
+          "total_distinct_root_mass": 586,
+          "cutoff": 47,
+          "distinct_internal_bound": 84,
+          "sufficient_bit_bound": 588
+        },
+        "profile_histogram_nodes": 44,
+        "marked_counts": [
+          5,
+          6,
+          3,
+          5,
+          3
+        ],
+        "root_cycle_qualifications": 0,
+        "qualified_root_cycles": []
+      },
+      "selected_root_and_cycle_at_196": {
+        "root_indices": [
+          115,
+          120,
+          116,
+          117,
+          118,
+          196
+        ],
+        "root_values": [
+          76,
+          80,
+          79,
+          78,
+          81,
+          134
+        ],
+        "distinct_internal_indices": 37,
+        "stream_bits": 112,
+        "stream_hex": "290a39a72a589092a41161852b42",
+        "stream_sha256": "41cad32866332dcbe1b9e1e22d4e4f6ed5f552af09bc38a86dd82f26c6d171f6",
+        "maximum_encoding_stack_depth": 5,
+        "bound": {
+          "total_distinct_root_mass": 782,
+          "cutoff": 54,
+          "distinct_internal_bound": 99,
+          "sufficient_bit_bound": 792
+        },
+        "profile_histogram_nodes": 46,
+        "marked_counts": [
+          5,
+          6,
+          3,
+          5,
+          3,
+          7
+        ],
+        "root_cycle_qualifications": 1,
+        "qualified_root_cycles": [
+          [
+            196,
+            115,
+            120,
+            116,
+            117,
+            118
+          ]
+        ]
+      },
+      "combined_root_forest": {
+        "distinct_internal_indices": 1471,
+        "stream_bits": 9427,
+        "stream_hex": "014851cd3952c48495208b0c2959252151ca49b10d12045111ac40a364fd4e9480a292054902462526d12035a9869161331cc28a064d24a1421356290690474452611640944fa942c98b456868e9cd4851839a68b204e243058610f2381311050650a2c79a4501869d7ee4ea3872034c708cb63063ac8a921c4aa24b14f72684e47a22035145b54aacf5b39105213d0542a90931444568eaa32468ea0a95988ac1d4d45508ac9d4b4856827281e22ac43413b4589b212e342e2d2e4c4e4120a89344a4989a212e272424e627384a8070e44848c83e4e688482129110464e58e88d214284f101a34b9c458d1079639a305cb972e589083673450d12a72222283042c6885521aa4796b4a4f5cca2160fcd926cb52509a2ab306569eaaa955a4aab491e3013d6b4aad08d0368e5795a17582e5c52a50246a6f1b639694ec5a75ad4bef1f69717d3362b7052f5c9fbbc746e0e699bdaae505b9fb827767752f0d5e5ac0223dcc8052845de05f94136bb36adb439a25b82d090a185b1319c0ee82ecc885758d0592eb19d3ba01443d59351113d3d153079e2f27ada9143964394d4f6439474f4f404f603f4888b458e54aca47698ba689ca67298a480989672a544cd453150e1111120915219ca41b27710d110d1cb93a3a0a3a013344e8e8f4b343728504e09138ac820d8c2c30e0b4e094e0b549b171c1c926c526849592685a49b1b92d34363228a4969598124a409893901033a34723423e30951618d1b19919e1943831a20208b8ca17203c8d131131c21624c7102c5091a224c60d202313a68c29364983f4a187e90d05595a725c6aeb90532eaf6db900a179f18ecd5902705f3362b893a6140d6a856a54e6c500e3d523a1738c525dcdb9d601b4044a0c01f44232865aa4db22641b23be3c99f619e5da453e51490c8a9d8a22d213203e2924e32748a7145824524a09c3d47262d4da4a4d6ed89e4c2428d55309b4f2853c9a54b55262c2814ec2aa552c565628b66778ae5e572e191a40b3685a32b22b4603631da970c46a663531186cec56c72c462b6b75d1bb0316334b1ce59d8aba6bc5eac95ed686abf5b9a2e16ea15a342bdb570542a559274d0e2c9e15ca17f573a9fae1b538ac844f3ba5d46e0a74e3f27932fca750bdab14308b34e3f28d461468d6d4812a265588c4924e279d93ce113cc296a368462453a9e6b28c463b2209522904ca419d189145121d31512c28b255b403b21a2d14c67f633e2255d23520887c3e1d0f1640919fd74fe6d663a1c0d1fcfeba726e387f361b42347142a6168a833189998c40b88b45a473102d160bc64b45d2da2158a968a85f482d950b05a2ba202b2394d04a6562a158a60a250392b144a451050934a1f1a930964a1a70482b10c59105920944722108599159045910823e38eca28ccf8d0e0912483728c8a1412e24e1b91905a4904a6840925449d2c684a563145a4e41196908a4e5040f1392a12b242c187411104241f1c1874807463436318c082c2110304445880c8c901a010020022a20051b0c9a85624616041082442244510f94cccde8c91c937f4f529304e0a08cb186788a6488c4c9f1686196c14cb982a25809c58874e40a0c93aceb290ca49188cc1006818250b16509305944a289200c10082",
+        "stream_sha256": "9cf16b2da558fb7dff8312f29692f8436da9d796ce77cff3e815b6eb3dc20b27",
+        "maximum_encoding_stack_depth": 6,
+        "bound": {
+          "total_distinct_root_mass": 1193252,
+          "cutoff": 2092,
+          "distinct_internal_bound": 4175,
+          "sufficient_bit_bound": 50100
+        },
+        "profile_histogram_nodes": 1486,
+        "root_cycle_qualifications": 147,
+        "root_count": 882,
+        "distinct_root_count": 689,
+        "root_indices_sha256": "d285b42ba588e82e03590a85596f5c8cb7357f8b46e5eec04ac9d3006e0dade8",
+        "root_values_sha256": "9091a37ecd5b132dc84ae937304ca90fbee199cee2b64f9a1af957611ece0d93",
+        "marked_total": 77350,
+        "root_cycle_header": "196:115,120,116,117,118\n310:182,187,185,183,190\n313:182,190,185,186,191\n316:185,189,190,188,191\n431:259,262,261,260,263\n507:300,306,303,307,302\n513:306,309,307,308,311\n523:310,314,315,312,316\n535:314,327,321,317,326\n550:326,329,332,327,336\n825:491,493,499,492,500\n892:532,541,536,533,543\n895:535,545,539,537,543\n908:543,548,544,545,552\n1218:725,737,728,734,736\n1246:739,751,747,748,756\n1248:747,750,757,751,749\n1266:752,765,762,753,774\n1273:760,767,765,769,766\n1279:760,773,769,772,768\n1293:768,774,779,769,786\n1296:772,785,774,782,779\n1297:774,783,777,776,781\n1367:813,821,817,824,822\n1399:832,845,837,839,841\n1400:833,845,838,842,841\n1412:845,850,846,847,856\n1421:853,859,857,854,855\n1430:855,862,863,861,860\n1459:876,880,878,882,881\n1465:881,882,887,886,884\n1474:885,890,889,891,894\n1481:892,896,900,899,894\n1494:899,907,903,900,912\n1892:1134,1144,1141,1139,1146\n1893:1134,1145,1141,1140,1147\n1907:1144,1156,1147,1148,1152\n1955:1172,1178,1173,1174,1180\n1991:1193,1196,1197,1195,1198\n1995:1194,1198,1197,1199,1201\n2004:1199,1210,1201,1203,1208\n2011:1202,1213,1208,1206,1212\n2012:1207,1211,1209,1214,1208\n2015:1206,1216,1208,1210,1212\n2033:1216,1226,1218,1221,1220\n2079:1238,1248,1250,1243,1255\n2095:1249,1271,1251,1254,1265\n2096:1252,1262,1263,1254,1266\n2107:1261,1264,1271,1263,1265\n2146:1284,1287,1291,1286,1295\n2150:1281,1287,1295,1288,1307\n2162:1287,1307,1293,1299,1308\n2169:1294,1312,1300,1299,1315\n2186:1301,1326,1304,1309,1321\n2191:1306,1312,1322,1313,1320\n2195:1310,1317,1313,1324,1321\n2197:1311,1324,1323,1316,1325\n2210:1317,1328,1325,1324,1336\n2211:1321,1326,1329,1323,1330\n2214:1325,1328,1329,1326,1332\n2219:1320,1334,1335,1323,1338\n2228:1329,1340,1331,1334,1344\n2244:1341,1353,1343,1349,1348\n2255:1351,1353,1354,1355,1352\n2266:1354,1366,1360,1358,1364\n2284:1364,1372,1378,1369,1383\n2296:1372,1390,1374,1382,1380\n2307:1383,1387,1388,1385,1392\n2319:1386,1406,1394,1398,1397\n2322:1389,1400,1394,1401,1397\n2330:1396,1409,1402,1405,1403\n2410:1455,1461,1463,1460,1458\n2428:1465,1480,1468,1470,1479\n2453:1485,1490,1486,1493,1492\n2461:1492,1493,1500,1499,1496\n2469:1497,1507,1506,1498,1504\n2478:1505,1508,1506,1507,1515\n2862:1732,1743,1741,1735,1748\n2963:1788,1799,1796,1793,1797\n3001:1811,1815,1825,1814,1818\n3026:1820,1831,1829,1825,1839\n3048:1834,1852,1840,1836,1843\n3049:1830,1852,1841,1834,1853\n3054:1835,1846,1841,1839,1848\n3065:1840,1853,1846,1852,1857\n3082:1851,1859,1863,1854,1861\n3115:1869,1881,1876,1879,1883\n3118:1864,1888,1883,1872,1886\n3156:1894,1903,1899,1898,1904\n3171:1904,1909,1908,1910,1915\n3173:1903,1916,1907,1912,1911\n3189:1911,1919,1921,1914,1928\n3196:1911,1926,1925,1914,1935\n3238:1935,1953,1947,1939,1955\n3248:1941,1962,1946,1949,1960\n3274:1957,1969,1963,1961,1972\n3301:1975,1982,1981,1978,1983\n3342:1996,2011,2000,2007,2010\n3358:2007,2026,2012,2020,2016\n3373:2016,2022,2023,2017,2032\n3392:2022,2042,2032,2035,2041\n3396:2033,2042,2036,2035,2045\n3398:2021,2044,2038,2027,2048\n3404:2032,2047,2043,2035,2053\n3436:2057,2060,2059,2069,2062\n3444:2056,2077,2061,2068,2067\n3446:2058,2077,2063,2062,2067\n3448:2050,2075,2064,2073,2079\n3466:2068,2089,2075,2082,2079\n3474:2077,2091,2080,2083,2096\n3479:2081,2082,2092,2083,2101\n3481:2076,2095,2079,2083,2103\n3485:2084,2094,2097,2085,2088\n3507:2097,2107,2106,2104,2122\n3511:2096,2114,2108,2100,2111\n3537:2121,2130,2135,2122,2127\n3542:2123,2127,2126,2136,2134\n3551:2123,2136,2143,2124,2139\n3564:2132,2148,2139,2136,2156\n3580:2144,2148,2155,2145,2152\n3608:2154,2176,2160,2170,2166\n3609:2155,2174,2156,2177,2166\n3641:2182,2188,2200,2186,2197\n3643:2184,2187,2188,2202,2197\n3675:2195,2213,2206,2210,2220\n3686:2206,2221,2214,2217,2220\n3710:2225,2239,2227,2228,2235\n3711:2225,2240,2233,2229,2236\n3726:2235,2241,2249,2237,2243\n3728:2231,2249,2239,2245,2251\n3732:2235,2247,2242,2250,2251\n3733:2236,2247,2243,2242,2251\n3734:2244,2249,2245,2257,2247\n3738:2241,2261,2250,2257,2251\n3743:2247,2253,2257,2256,2254\n3745:2253,2259,2257,2258,2255\n3764:2264,2275,2267,2272,2271\n3789:2274,2296,2285,2279,2295\n3804:2292,2296,2300,2293,2294\n3814:2295,2299,2297,2302,2304\n3831:2309,2316,2312,2311,2314\n3859:2326,2336,2329,2333,2335\n3911:2366,2369,2377,2373,2368\n3917:2374,2377,2379,2382,2384\n3937:2385,2401,2389,2388,2390\n3995:2426,2435,2427,2430,2439\n4047:2467,2470,2476,2468,2469"
+      },
+      "reconstructed_internal_windows": 12208,
+      "reconstructed_absolute_edges": 6514,
+      "derived_parameter_forest_entries": 2308,
+      "geometry_only_counterexample": {
+        "index": 11,
+        "stream": "01",
+        "split": 7,
+        "qualified_cycle_stream": "1",
+        "decoded_value": 8,
+        "actual_value": 7,
+        "actual_prescribed_split": 6,
+        "actual_cycle": [
+          6,
+          7
+        ],
+        "transient": 3,
+        "depth": 7,
+        "same_prescribed_basin": true
+      },
+      "scope": "Root indices/cycles and first-visit choice bits alone generate the shared descent layout, all encountered values and the earlier parameter network. Decoder uses only Fibonacci arithmetic and the fixed values through8, not a supplied C table or child labels. The structural code includes numeric chosen endpoints; it does not certify their prescribed iteration, basin or phase. General O(sqrt(R)*log(N)) bound includes the generated layout but excludes selected-validity proof costs."
     },
     "scope": "Actual recursive descendants of every prescribed period-five orbit through 4096, deduplicated by profile order and aligned offsets. Sharing removes 434 of 437 collision pairs, but three survive in two contexts; none of these counts is an order-uniform theorem or a basin/phase certificate."
   },
@@ -3352,6 +3487,108 @@
         "index": 103682,
         "defect": 6870,
         "lower_bound": 5904
+      }
+    ],
+    "generated_knee_codes": [
+      {
+        "root_indices": [
+          24476
+        ],
+        "root_values": [
+          16114
+        ],
+        "distinct_internal_indices": 233,
+        "stream_bits": 1228,
+        "stream_hex": "0258135228b1002224962892122498a4a44133728924451cc4105649073093a0214ad960305131011f1c401099142524aac4898b22c4b09208ce18b0729124ec27133502a424625969549f348831470e799d94516929274c596481424d2e522ec9cd52245a04340c929141aa5569fcbf2b2534fa916882c903d6ce44814ec268b8834e2d9a48d54664d1d8a94a599da2831758d0c5caeb954fd4",
+        "stream_sha256": "49728360fc971575b21f53de503847be2eec20cf500a1db6d0367f10bf2e2566",
+        "maximum_encoding_stack_depth": 13,
+        "bound": {
+          "total_distinct_root_mass": 24476,
+          "cutoff": 300,
+          "distinct_internal_bound": 591,
+          "sufficient_bit_bound": 8865
+        },
+        "profile_histogram_nodes": 246,
+        "marked_counts": [
+          1597
+        ],
+        "root_cycle_qualifications": 0,
+        "qualified_root_cycles": []
+      },
+      {
+        "root_indices": [
+          39603
+        ],
+        "root_values": [
+          26111
+        ],
+        "distinct_internal_indices": 287,
+        "stream_bits": 1558,
+        "stream_hex": "0f3a7ccde60400086008c4c458487080908918a0c4c61024b226525220ae4316222489c824c4402410596030544a67d4aa26814c495ca0347911c7851469721715324323c503728c2229485295135a93e3e50ce162139aa72d4ee1c4821149aec54909189652d29a831458830e561c388d22260b392514952948cac54e491b186e9f1647164a4993a687127b4ec9141c62eb10751f241c1baac78708c0d434c5f076a3941a64b0c21499b298fca4c40288c224285568a76f1a9fa06d1853a8d9553947",
+        "stream_sha256": "0261214b7c286e86e4768facbc0e866d34448fe35bd665bb43e7babcf9b98bfa",
+        "maximum_encoding_stack_depth": 14,
+        "bound": {
+          "total_distinct_root_mass": 39603,
+          "cutoff": 382,
+          "distinct_internal_bound": 754,
+          "sufficient_bit_bound": 12064
+        },
+        "profile_histogram_nodes": 299,
+        "marked_counts": [
+          2546
+        ],
+        "root_cycle_qualifications": 0,
+        "qualified_root_cycles": []
+      },
+      {
+        "root_indices": [
+          64079
+        ],
+        "root_values": [
+          42202
+        ],
+        "distinct_internal_indices": 311,
+        "stream_bits": 1765,
+        "stream_hex": "062599796e3e300048c672092840111391c324c62624518392012162c410a595825870c921058ec2450311aa907c2c14188590a89a398d40e54baa5118656b93892e385441739c0f0ce32859c5988d944c1e99ca97a4811e83a9619a2022ce298664e3069cab2948a5a9144f4054aa5d52e0fd34853eb393f61b4a7510a7e90a2713c87c2c2e966ca6871699f9aca625139425317ee49cd34d1dd3e9f19c46465a2a722513352b2a0cbd6962d2d03aa049d574b484adcd1b9322fd75b4143d48a24625eb6399546a570ded5c5ca0b55c1eb6712240a6780c551e6d0a07",
+        "stream_sha256": "04fb7f4dace58c93aad774e3e520d48eca9a579ccc3f00dabb009e3f7ddbbb47",
+        "maximum_encoding_stack_depth": 14,
+        "bound": {
+          "total_distinct_root_mass": 64079,
+          "cutoff": 485,
+          "distinct_internal_bound": 961,
+          "sufficient_bit_bound": 15376
+        },
+        "profile_histogram_nodes": 325,
+        "marked_counts": [
+          4166
+        ],
+        "root_cycle_qualifications": 0,
+        "qualified_root_cycles": []
+      },
+      {
+        "root_indices": [
+          103682
+        ],
+        "root_values": [
+          68155
+        ],
+        "distinct_internal_indices": 424,
+        "stream_bits": 2577,
+        "stream_hex": "004feca8c5047c5880088924a14409240a0914e200c4b0903728920ac62418e4c44627148139c4259132c42682b0a51ea6c50c3a0ac888203b09e21648c453203184584478b2a52948a2b09488e1992284a5a7f42411910a091ca06a95baa8ab5d0b4860e0a24cca11248390d42a4a893d220b21148291a80d406a04623104624d10a2326e385062f1d1cca155a3727f6338d95153350c8aa75204d184282c04558d8c1d72c36553f50ed742d30c354b4b892497213468e3ea234930a942139092c9e59212594ad98369a1e44c28998e98a80a5d4c98d0592b10da2ba75121808ab9314358b4a13e214f4b052909d199051a06d1a44c970786b23480f1890ca83ead163952b31b24812a22164d268298aea1b05a9bc6a82d224eba72af3952bad4d8a2916da70c68ad18ad0c1cae0c46a5facac6a0c5066babdb4815052a843a64e30a",
+        "stream_sha256": "8032e8eee27d29ec7e23322d9e7500d2ea5d668142a60e1490a6d7635e4c7269",
+        "maximum_encoding_stack_depth": 15,
+        "bound": {
+          "total_distinct_root_mass": 103682,
+          "cutoff": 617,
+          "distinct_internal_bound": 1225,
+          "sufficient_bit_bound": 20825
+        },
+        "profile_histogram_nodes": 438,
+        "marked_counts": [
+          6870
+        ],
+        "root_cycle_qualifications": 0,
+        "qualified_root_cycles": []
       }
     ],
     "all_cycle_centre_examples": [

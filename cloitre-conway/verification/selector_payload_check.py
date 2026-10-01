@@ -1,6 +1,7 @@
 """Audit ordinal encodings of the five Fibonacci child-split selectors."""
 
 from collections import Counter, defaultdict
+from bisect import bisect_right
 from fractions import Fraction
 import hashlib
 import json
@@ -342,6 +343,7 @@ def shared_selector_audit():
     counts = Counter()
     examples = {}
     network_parameters = {}
+    root_windows = []
     for index in range(3, limit + 1):
         if periods[index] != 5:
             continue
@@ -349,6 +351,7 @@ def shared_selector_audit():
         order = max(height for height, anchor in enumerate(fibonacci) if anchor <= index) - 1
         trajectory, transient, _ = full_orbit(sequence, index)
         root = canonical_cycle(tuple(point - fibonacci[order] for point in trajectory[transient:]))
+        root_windows.append((index, order, root))
         stack = [(order, root)]
         while stack:
             order, offsets = stack.pop()
@@ -454,6 +457,8 @@ def shared_selector_audit():
                                          defect_residue_sufficient_bits=3, consistent_inverse_seed_bits=0),
                 cross_window_network=cross_window_network_audit(sequence, selected_splits, fibonacci,
                                                                 network_parameters, len(seen)),
+                generated_shared_descent=generative_descent_audit(sequence, selected_splits, fibonacci,
+                                                                  root_windows),
                 scope='Actual recursive descendants of every prescribed period-five orbit through 4096, deduplicated by profile order and aligned offsets. Sharing removes 434 of 437 collision pairs, but three survive in two contexts; none of these counts is an order-uniform theorem or a basin/phase certificate.')
 
 
@@ -472,6 +477,304 @@ def connected_components(neighbours):
         unseen -= reached
         result.append(tuple(sorted(reached)))
     return result
+
+
+def geometric_split_choices(index, fibonacci, root_cycles):
+    order = bisect_right(fibonacci, index) - 1
+    offset = index - fibonacci[order]
+    lower = fibonacci[order - 1] + max(0, offset - fibonacci[order - 3])
+    upper = fibonacci[order - 1] + min(offset, fibonacci[order - 2])
+    assert 2 * lower >= index and 11 * (index - upper) >= 3 * index
+    choices = range(lower, upper + 1)
+    if index in root_cycles:
+        choices = tuple(root_cycles[index])
+        assert choices and len(set(choices)) == len(choices)
+        assert all(lower <= point <= upper for point in choices)
+    return choices
+
+
+def check_generated_cycles(roots, root_cycles, values, splits):
+    assert set(root_cycles) <= set(roots)
+    for index, cycle in root_cycles.items():
+        assert index >= 9 and set(cycle) <= set(roots)
+        assert splits[index] in cycle
+        assert all(index - values[point] == cycle[(phase + 1) % len(cycle)]
+                   for phase, point in enumerate(cycle))
+
+
+def encode_shared_descent(roots, selectors, fibonacci, root_cycles=None):
+    root_cycles = root_cycles or {}
+    values = dict(enumerate((0, 1, 1, 2, 3, 3, 4, 5, 5)))
+    splits = {}
+    chunks = []
+    maximum_depth = 0
+
+    def visit(index, depth):
+        nonlocal maximum_depth
+        maximum_depth = max(maximum_depth, depth)
+        assert index >= 1
+        if index in values:
+            return values[index]
+        choices = geometric_split_choices(index, fibonacci, root_cycles)
+        split = selectors[index]
+        ordinal = choices.index(split)
+        width = (len(choices) - 1).bit_length()
+        if width:
+            chunks.append(format(ordinal, f'0{width}b'))
+        splits[index] = split
+        values[index] = visit(index - split, depth + 1) + visit(split, depth + 1)
+        return values[index]
+
+    for root in roots:
+        visit(root, 0)
+    check_generated_cycles(roots, root_cycles, values, splits)
+    return dict(bits=''.join(chunks), splits=splits, values=values, maximum_depth=maximum_depth)
+
+
+def decode_shared_descent(roots, bits, fibonacci, root_cycles=None):
+    assert set(bits) <= {'0', '1'}
+    root_cycles = root_cycles or {}
+    values = dict(enumerate((0, 1, 1, 2, 3, 3, 4, 5, 5)))
+    splits = {}
+    position = 0
+
+    def visit(index):
+        nonlocal position
+        assert index >= 1
+        if index in values:
+            return values[index]
+        choices = geometric_split_choices(index, fibonacci, root_cycles)
+        width = (len(choices) - 1).bit_length()
+        assert position + width <= len(bits)
+        ordinal = int(bits[position:position + width], 2) if width else 0
+        position += width
+        assert ordinal < len(choices)
+        split = choices[ordinal]
+        splits[index] = split
+        values[index] = visit(index - split) + visit(split)
+        return values[index]
+
+    for root in roots:
+        visit(root)
+    assert position == len(bits)
+    check_generated_cycles(roots, root_cycles, values, splits)
+    return dict(splits=splits, values=values)
+
+
+def unpack_descent_stream(packet):
+    width = packet['stream_bits']
+    encoded = packet['stream_hex']
+    assert len(encoded) == 2 * ((width + 7) // 8)
+    value = int(encoded or '0', 16)
+    assert value.bit_length() <= width
+    return format(value, f'0{width}b') if width else ''
+
+
+def replay_descent_packet(packet):
+    if 'root_cycle_header' in packet:
+        root_cycles = {}
+        for line in packet['root_cycle_header'].splitlines():
+            index, points = line.split(':')
+            assert int(index) not in root_cycles
+            root_cycles[int(index)] = tuple(map(int, points.split(',')))
+        roots = tuple(point for cycle in root_cycles.values() for point in cycle) + tuple(root_cycles)
+    else:
+        roots = tuple(packet['root_indices'])
+        root_cycles = {record[0]: tuple(record[1:]) for record in packet['qualified_root_cycles']}
+    fibonacci = fibonacci_values(max(roots) + 1)
+    bits = unpack_descent_stream(packet)
+    assert hashlib.sha256(bits.encode('ascii')).hexdigest() == packet['stream_sha256']
+    return decode_shared_descent(roots, bits, fibonacci, root_cycles)
+
+
+def shared_descent_bound(roots):
+    mass = sum(set(roots))
+    threshold = max(8, math.isqrt(11 * mass // 3))
+    if 3 * threshold * threshold < 11 * mass:
+        threshold += 1
+    node_bound = threshold - 8 + 11 * mass // (3 * threshold)
+    return dict(total_distinct_root_mass=mass, cutoff=threshold, distinct_internal_bound=node_bound,
+                sufficient_bit_bound=node_bound * (max(roots) - 1).bit_length())
+
+
+def generated_profile_histograms(profile_roots, decoded, fibonacci):
+    cache = {}
+
+    def histogram(order, index):
+        key = (order, index)
+        if key in cache:
+            return cache[key]
+        offset = index - fibonacci[order]
+        assert 0 <= offset <= fibonacci[order - 1]
+        if order <= 5:
+            counts = [0] * 7
+            counts[offset if order == 4 else offset + 3] = 1
+        else:
+            split = decoded['splits'][index] if index >= 9 else 5
+            first = histogram(order - 1, split)
+            second = histogram(order - 2, index - split)
+            counts = [left + right for left, right in zip(first, second)]
+        marked = counts[2] + counts[6]
+        assert decoded['values'][index] == fibonacci[order - 1] + offset - marked
+        assert sum(counts[:3]) == (1 if order == 4 else fibonacci[order - 5])
+        assert sum(counts[3:]) == (0 if order == 4 else fibonacci[order - 4])
+        cache[key] = tuple(counts)
+        return cache[key]
+
+    roots = [histogram(order, index) for order, index in profile_roots]
+    assert len(cache) <= 2 * (len(decoded['splits']) + 6)
+    return roots, len(cache)
+
+
+def complete_shared_layouts(roots, fibonacci):
+    def extend(pending, selectors):
+        if not pending:
+            yield selectors
+            return
+        index, remainder = pending[-1], pending[:-1]
+        if index <= 8 or index in selectors:
+            yield from extend(remainder, selectors)
+            return
+        for split in geometric_split_choices(index, fibonacci, {}):
+            yield from extend((*remainder, split, index - split), {**selectors, index: split})
+
+    yield from extend(tuple(reversed(roots)), {})
+
+
+def generative_descent_completeness(fibonacci):
+    root_sets = [(index,) for index in range(9, 31)]
+    root_sets.extend(((14, 17, 19, 17, 14), (21, 22, 24, 22, 21), (28, 25, 29, 25, 28)))
+    layouts = 0
+    profile_cache_nodes = 0
+    for roots in root_sets:
+        codes = set()
+        for selectors in complete_shared_layouts(roots, fibonacci):
+            encoded = encode_shared_descent(roots, selectors, fibonacci)
+            decoded = decode_shared_descent(roots, encoded['bits'], fibonacci)
+            assert decoded['splits'] == selectors == encoded['splits']
+            assert decoded['values'] == encoded['values']
+            assert encoded['bits'] not in codes
+            codes.add(encoded['bits'])
+            assert len(selectors) <= shared_descent_bound(roots)['distinct_internal_bound']
+
+            def literal_value(index):
+                if index <= 8:
+                    return (0, 1, 1, 2, 3, 3, 4, 5, 5)[index]
+                split = selectors[index]
+                return literal_value(split) + literal_value(index - split)
+
+            assert all(decoded['values'][index] == literal_value(index) for index in roots)
+            profile_roots = [(bisect_right(fibonacci, index) - 1, index) for index in roots]
+            for order, index in tuple(profile_roots):
+                if index == fibonacci[order] and order >= 5:
+                    profile_roots.append((order - 1, index))
+            _, cache_nodes = generated_profile_histograms(profile_roots, decoded, fibonacci)
+            profile_cache_nodes += cache_nodes
+            if encoded['bits']:
+                try:
+                    decode_shared_descent(roots, encoded['bits'][:-1], fibonacci)
+                except AssertionError:
+                    pass
+                else:
+                    raise AssertionError('A proper code prefix decoded as a complete layout.')
+            try:
+                decode_shared_descent(roots, encoded['bits'] + '0', fibonacci)
+            except AssertionError:
+                pass
+            else:
+                raise AssertionError('Trailing layout bits were accepted.')
+            layouts += 1
+        ordered = sorted(codes)
+        assert all(not following.startswith(previous) for previous, following in zip(ordered, ordered[1:]))
+    return dict(root_sets=len(root_sets), exhaustive_shared_layouts=layouts,
+                profile_cache_nodes_checked=profile_cache_nodes,
+                scope='Independent iterative enumeration of every reachable shared geometric selector dictionary for roots9..30 and three repeated five-row root sets. Key-free bitstreams biject with dictionaries, agree with literal expanded value trees, reconstruct boundary-alias histograms, are prefix-free and reject truncation/trailing bits.')
+
+
+def shared_descent_case(roots, selectors, sequence, fibonacci, root_cycles=None):
+    encoded = encode_shared_descent(roots, selectors, fibonacci, root_cycles)
+    decoded = decode_shared_descent(roots, encoded['bits'], fibonacci, root_cycles)
+    assert decoded['values'] == encoded['values'] and decoded['splits'] == encoded['splits']
+    assert all(value == sequence[index] for index, value in decoded['values'].items())
+    assert all(split == selectors[index] for index, split in decoded['splits'].items())
+    bound = shared_descent_bound(roots)
+    assert len(decoded['splits']) <= bound['distinct_internal_bound']
+    assert len(encoded['bits']) <= bound['sufficient_bit_bound']
+    profile_roots = [(bisect_right(fibonacci, index) - 1, index) for index in roots]
+    histograms, histogram_nodes = generated_profile_histograms(profile_roots, decoded, fibonacci)
+    packet = dict(root_indices=list(roots), root_values=[decoded['values'][index] for index in roots],
+                  distinct_internal_indices=len(decoded['splits']), stream_bits=len(encoded['bits']),
+                  stream_hex=int(encoded['bits'] or '0', 2).to_bytes((len(encoded['bits']) + 7) // 8, 'big').hex(),
+                  stream_sha256=hashlib.sha256(encoded['bits'].encode('ascii')).hexdigest(),
+                  maximum_encoding_stack_depth=encoded['maximum_depth'], bound=bound,
+                  profile_histogram_nodes=histogram_nodes,
+                  marked_counts=[counts[2] + counts[6] for counts in histograms],
+                  root_cycle_qualifications=len(root_cycles or {}),
+                  qualified_root_cycles=[[index, *cycle] for index, cycle in (root_cycles or {}).items()])
+    assert replay_descent_packet(packet) == decoded
+    return decoded, packet
+
+
+def generative_descent_audit(sequence, selectors, fibonacci, root_windows):
+    first_index, first_order, first_offsets = root_windows[0]
+    first_cycle = tuple(fibonacci[first_order] + offset for offset in first_offsets)
+    assert first_index == 196
+    _, window_code = shared_descent_case(first_cycle, selectors, sequence, fibonacci)
+    _, outer_code = shared_descent_case((*first_cycle, first_index), selectors, sequence, fibonacci,
+                                        {first_index: first_cycle})
+    root_cycles = {index: tuple(fibonacci[order] + offset for offset in offsets)
+                   for index, order, offsets in root_windows}
+    roots = tuple(point for cycle in root_cycles.values() for point in cycle) + tuple(root_cycles)
+    decoded, combined = shared_descent_case(roots, selectors, sequence, fibonacci, root_cycles)
+    combined['root_count'] = len(roots)
+    combined['distinct_root_count'] = len(set(roots))
+    combined['root_indices_sha256'] = hashlib.sha256(json.dumps(combined.pop('root_indices')).encode()).hexdigest()
+    combined['root_values_sha256'] = hashlib.sha256(json.dumps(combined.pop('root_values')).encode()).hexdigest()
+    combined['marked_total'] = sum(combined.pop('marked_counts'))
+    combined['root_cycle_header'] = '\n'.join(f'{index}:' + ','.join(map(str, cycle))
+                                               for index, cycle in root_cycles.items())
+    combined.pop('qualified_root_cycles')
+    assert replay_descent_packet(combined) == decoded
+    contexts = set()
+    parameters = {}
+    stack = [(order, offsets) for index, order, offsets in root_windows]
+    while stack:
+        order, offsets = stack.pop()
+        if order <= 5 or (order, offsets) in contexts:
+            continue
+        contexts.add((order, offsets))
+        physical = tuple(fibonacci[order] + offset for offset in offsets)
+        selected = tuple(decoded['splits'][index] if index >= 9 else 5 for index in physical)
+        first = tuple(split - fibonacci[order - 1] for split in selected)
+        second = tuple(offset - split for offset, split in zip(offsets, first))
+        for phase, index in enumerate(physical):
+            target = physical[(phase + 1) % 5]
+            value = selected[(phase + 1) % 5] + decoded['values'][selected[phase]]
+            assert parameters.setdefault((index, target), value) == value
+            assert decoded['values'][index] == (decoded['values'][selected[phase]]
+                                                + decoded['values'][index - selected[phase]])
+        stack.extend(((order - 1, first), (order - 2, second)))
+    forest, _, _ = parameter_forest(parameters)
+    assert len(contexts) == 12208 and len(parameters) == 6514 and len(forest) == 2308
+    upper_selector = {11: 7}
+    upper_payload = encode_shared_descent((11,), upper_selector, fibonacci)
+    upper_decoded = decode_shared_descent((11,), upper_payload['bits'], fibonacci)
+    assert upper_decoded['values'][11] == 8 != sequence[11]
+    qualified_wrong = encode_shared_descent((6, 7, 11), upper_selector, fibonacci, {11: (6, 7)})
+    assert qualified_wrong['bits'] == '1' and qualified_wrong['values'][11] == 8
+    trajectory, transient, period = full_orbit(sequence, 11)
+    assert trajectory[transient:] == [6, 7] and transient == 3 and period == 2
+    assert selectors[11] == 6 and sequence[10] == 7
+    return dict(small_class_completeness=generative_descent_completeness(fibonacci),
+                five_window_at_196=window_code, selected_root_and_cycle_at_196=outer_code,
+                combined_root_forest=combined, reconstructed_internal_windows=len(contexts),
+                reconstructed_absolute_edges=len(parameters), derived_parameter_forest_entries=len(forest),
+                geometry_only_counterexample=dict(index=11, stream=upper_payload['bits'], split=7,
+                                                   qualified_cycle_stream=qualified_wrong['bits'],
+                                                   decoded_value=8, actual_value=sequence[11],
+                                                   actual_prescribed_split=6, actual_cycle=[6, 7],
+                                                   transient=3, depth=7, same_prescribed_basin=True),
+                scope='Root indices/cycles and first-visit choice bits alone generate the shared descent layout, all encountered values and the earlier parameter network. Decoder uses only Fibonacci arithmetic and the fixed values through8, not a supplied C table or child labels. The structural code includes numeric chosen endpoints; it does not certify their prescribed iteration, basin or phase. General O(sqrt(R)*log(N)) bound includes the generated layout but excludes selected-validity proof costs.')
 
 
 def parameter_forest(parameters):
@@ -1629,10 +1932,11 @@ def terminal_code_audit(sequence, selected_splits, fibonacci, roots):
 
 
 def unbounded_defect_audit():
-    sequence, _, _, _ = generate(131071)
+    sequence, _, _, selected_splits = generate(131071)
     assert sequence == brent_generate(131071)
     fibonacci = fibonacci_values(131072)
     knees = []
+    knee_codes = []
     for order in range(22, 26):
         index = fibonacci[order] + fibonacci[order - 2]
         cost = fibonacci[order] - sequence[index]
@@ -1640,6 +1944,9 @@ def unbounded_defect_audit():
         assert sequence[index] * 3 <= 2 * index
         assert cost >= lower
         knees.append(dict(profile_order=order, index=index, defect=cost, lower_bound=lower))
+        _, code = shared_descent_case((index,), selected_splits, sequence, fibonacci)
+        assert code['marked_counts'] == [cost]
+        knee_codes.append(code)
     centres = []
     for order in range(23, 26):
         anchor, width = fibonacci[order - 1], fibonacci[order - 3]
@@ -1684,7 +1991,7 @@ def unbounded_defect_audit():
         else:
             upper_selected, upper_nested_value = point, value
     assert (upper_selected, upper_nested_value) == (6, 7)
-    return dict(knee_examples=knees, all_cycle_centre_examples=centres,
+    return dict(knee_examples=knees, generated_knee_codes=knee_codes, all_cycle_centre_examples=centres,
                 uniform_bounds=dict(knee='lambda_j(F_(j-2)) >= ceil(F_(j-3)/3) once F_j+F_(j-2)>=16384',
                                     centre='E/p >= 2*F_(k-1)/5-F_(k-3) at n=2*F_(k-1), F_(k-1)>=16384'),
                 upper_cap_geometric_family=dict(profile='Q_j(u)=min(u,F_(j-2))',

@@ -1864,6 +1864,181 @@ remain open. The next target is to recover the layout arithmetically while
 retaining this shared interface, rather than treating supplied labels as
 free total certificate data.
 
+### Generating the layout from a sublinear shared descent code
+
+The fixed-layout qualification can be removed from the structural payload.
+Instead of supplying the child labels, record a geometric split only at the
+first visit to each physical integer. Subsequent occurrences reuse it.
+This generates the layout and its values, rather than assuming them as
+free inverse context. It still requires a separate proof that the recorded
+endpoints obey the prescribed inner iteration.
+
+Use the canonical block `F_j<=N<F_(j+1)`, j>=6, and put u=N-F_j. The
+geometric interval for the larger child a is
+
+$$
+L_N=F_{j-1}+\max(0,u-F_{j-3}),\qquad
+U_N=F_{j-1}+\min(u,F_{j-2}). \tag{9.18}
+$$
+
+For actual C, its selected endpoint belongs to this interval by the proved
+intersected capture theorem. A canonical anchor has u=0 and a forced split.
+Alternative closed-block representations use that same physical endpoint.
+
+**Balanced-split lemma.** Every a in (9.18), with b=N-a, satisfies
+
+$$
+\frac N2\le a\le\frac{8N}{11},\qquad
+\frac{3N}{11}\le b\le\frac N2. \tag{9.19}
+$$
+
+**Proof.** The identity `F_j+F_(j-3)=2F_(j-1)` shows L_N>=N/2, by
+splitting into u<=F_(j-3) and u>=F_(j-3). Also
+`F_(j-3)<=2F_(j-2)/3` for j>=6: equivalently
+`F_(j-3)<=2F_(j-4)`, which follows from the Fibonacci recursion.
+Thus `F_j<=8F_(j-2)/3`. If u<=F_(j-2), then b>=F_(j-2) and
+`N<=11F_(j-2)/3`. If u>=F_(j-2), then b>=u and `N<=11u/3`.
+These give b>=3N/11 and a<=8N/11. QED.
+
+Stop value descent at N<=8, using the fixed table
+`C(1),...,C(8)=(1,1,2,3,3,4,5,5)`. Consider any finite rooted forest
+obeying (9.18), with a single split shared at every repeated physical N.
+Let R be the sum of its **distinct supplied root indices**, and let D be
+the number of distinct reached internal indices N>=9.
+
+**Shared-descent size theorem.** For every integer B>=8,
+
+$$
+D\le B-8+\left\lfloor\frac{11R}{3B}\right\rfloor. \tag{9.20}
+$$
+
+In particular `B=max(8,ceil(sqrt(11R/3)))` gives D=O(sqrt(R)).
+
+**Proof.** Unfold the shared forest, keeping only one copy of each supplied
+root, and cut it whenever a node first becomes at most B. Every cut leaf
+under a larger root is greater than 3B/11 by (9.19). Child sizes sum to
+their parent, so the number of these cut leaves is less than 11R/(3B).
+The number of occurrence nodes greater than B is at most the number of
+cut leaves, since each cut tree is a full binary tree. This bounds the
+number of distinct large indices by floor(11R/(3B)). Small internal
+indices lie in the integer set {9,...,B}, of size B-8. Add the bounds.
+QED.
+
+This argument uses global sharing of physical integers, not a uniform
+defect bound. All branches also have logarithmic depth because their sizes
+contract by at most 8/11 at each step.
+
+**Generative code theorem.** Supply the root indices and their row order.
+Visit roots in that order, descending the smaller child first. At the
+first encounter with N>=9, write the ordinal of its split in (9.18),
+using `ceil(log_2(U_N-L_N+1))` bits; a forced split writes none. Reuse
+the cached split at subsequent encounters. The decoder performs exactly
+this traversal, discovering the child indices from each new ordinal.
+It computes values bottom-up by `V(N)=V(a)+V(N-a)`, using only the table
+through eight. No child addresses, lower profile table, alpha words or
+parameter graph are additional input.
+
+For fixed roots, the unqualified code is a bijection with the reachable
+shared geometric split dictionaries. It is prefix-free: once a bit prefix
+determines all traversals and reaches their end, no additional choice is
+left to read. Out-of-range ordinals, premature ends and extra bits are
+rejected. The code body has at most
+
+$$
+D\lceil\log_2 N_{\max}\rceil
+=O(\sqrt R\log N_{\max}) \tag{9.21}
+$$
+
+bits, including the generated layout and its numeric chosen endpoints.
+For a five-window plus its outer index n, R<=6n. Its root metadata have
+O(log n) size under the existing one-scale payload, so the total structural
+representation has an O(sqrt(n) log n) upper bound. This is a sufficient
+representation bound, not a minimum bit count or a bound on the complete
+selected-validity proof.
+
+If the input already specifies an outer cycle, the outer endpoint can
+instead be recorded as an ordinal in that cycle. After decoding, check
+the cycle transitions using the generated values and check that the outer
+endpoint belongs to it. This qualification narrows the structural class
+and does not certify the cycle's prescribed basin or the exact selected
+phase. The body-length metadata used by the byte-packed evidence adds
+only O(log n) bits; the reported body lengths exclude root headers and
+optional evidence hashes.
+
+The seven terminal histograms are also computable on the shared structure.
+Cache them by `(profile order, physical index)`, adding the two child
+histograms at each internal node. A physical index has at most two
+representations in the closed natural blocks, so there are at most
+`2(D+6)` such cache nodes. Their marked counts give the exact profile
+defects as before. Large occupation counts need not require enumerating
+all their repeated terminal occurrences.
+
+The earlier Theta(F_j) lower capacity bound concerned arbitrary geometric
+trees with independently positioned leaves. The present upper bound is
+for the smaller globally shared class containing actual C descents. Many
+arbitrary leaf layouts do not give the same split and value at repeated
+physical indices. Thus the two bounds have different domains; the earlier
+geometric lower bound does not apply to this generative code.
+
+**Checked examples.** At n=196, the five cycle points
+`(115,120,116,117,118)` have a 105-bit body and 35 distinct internal indices.
+Add the outer root 196 and record its endpoint in the supplied five-cycle:
+the body has **112 bits**, with 37 internal indices. The decoder recovers
+the cycle-point values `(76,80,79,78,81)`, selected outer split 118 and
+C(196)=134. The root cycle is checked from these generated values. No
+C table beyond the first eight terms is supplied to the decoder.
+
+The same 147-root family through 4096 has 882 supplied row/outer root
+occurrences, representing 689 distinct roots. Its **9,427-bit body** visits
+1,471 distinct internal indices and generates the earlier 12,208 internal
+windows, 6,514 absolute edges and 2,308-entry parameter forest. Those
+parameters are derived outputs here. The compact evidence contains the
+one-scale root-cycle header and the actual packed body; `replay_descent_packet`
+decodes that saved packet without generating a C prefix.
+
+At the already checked Fibonacci knees:
+
+| Root N | Distinct internal indices | Body bits | Marked-leaf count |
+|---:|---:|---:|---:|
+| 24,476 | 233 | 1,228 | 1,597 |
+| 39,603 | 287 | 1,558 | 2,546 |
+| 64,079 | 311 | 1,765 | 4,166 |
+| 103,682 | 424 | 2,577 | 6,870 |
+
+The linearly growing defects proved above are compatible with this
+sublinear structural replay: repeated subtrees carry occupation multiplicity.
+These numerical code sizes are examples, not optimality claims or an
+empirical replacement for the general bound.
+
+The checker independently enumerates 55,408 complete shared layouts over
+25 small root sets, including repeated five-row roots. Every bitstream
+recovers its dictionary, agrees with literal expanded value descent and
+reconstructs the boundary-alias histograms. The streams are prefix-free
+and reject truncated or appended data; 905,301 histogram cache nodes are
+checked. Actual saved packets independently recover the values and splits
+used to produce them, including all four knees in the existing prefix.
+
+**Selected-validity boundary.** Even a perfectly shared code with an actual
+cycle and basin can select the wrong phase. At N=11 the valid geometric
+body `01` records split 7 and computes V(11)=C(7)+C(4)=8. But the actual
+orbit from 10 reaches cycle `(6,7)` after three steps, and depth C(10)=7
+selects 6, giving C(11)=C(6)+C(5)=7. Split 7 is periodic and lies in that
+same prescribed basin. With the cycle supplied as root data, its qualified
+one-bit body `1` also passes the cycle checks and gives eight. The remaining
+distinction is the phase.
+
+A verifier that insists on proving the exact depth at every point from
+another pointwise predecessor recurrence, using only the base table through
+eight, must certify every index 9,...,N: depth at N requires C(N-1), and
+that dependency repeats. This observation concerns that verification
+contract, not all possible proofs. The exact collar theorem already avoids
+depth values when the output is phase independent. Short complete
+certificates therefore need arithmetic phase rules, value-equivalence
+arguments or proved profile ranges, as Campbell's ternary templates supply.
+The generative code removes free child-layout and value-table inputs from
+the structural representation; the full minimum proof interface and the
+occupation estimate for convergence remain open.
+
 ### A conserved budget for multiscale inverse labels
 
 Defect conservation gives more than termination. Consider the selected
