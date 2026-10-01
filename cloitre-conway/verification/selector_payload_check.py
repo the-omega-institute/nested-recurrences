@@ -2150,6 +2150,242 @@ def split_variance(order, index, split, fibonacci):
     return Fraction(mismatch * mismatch, index * index * split * complement)
 
 
+def optimal_moment_policy(rows, target):
+    best = None
+    for point, readout, reward in rows:
+        if readout >= target and (best is None or reward > best[0]):
+            best = reward, ((point, Fraction(1)),)
+    for first, second in combinations(rows, 2):
+        lower, upper = sorted((first, second), key=lambda row: row[1])
+        if lower[1] < target < upper[1]:
+            weight = Fraction(upper[1] - target, upper[1] - lower[1])
+            reward = weight * lower[2] + (1 - weight) * upper[2]
+            if best is None or reward > best[0]:
+                best = reward, ((lower[0], weight), (upper[0], 1 - weight))
+    return best
+
+
+def moment_simplex_audit():
+    contexts = infeasible = two_support = grid_points = 0
+    table_entries = tuple(product((0, 2, 4), (0, 1, 3)))
+    for length in range(1, 5):
+        simplex = []
+        for separators in combinations(range(12 + length - 1), length - 1):
+            bounds = (-1, *separators, 12 + length - 1)
+            simplex.append(tuple(bounds[position + 1] - bounds[position] - 1
+                                 for position in range(length)))
+        entries = table_entries if length < 4 else ((0, 0), (0, 3), (4, 0), (4, 3))
+        for table in product(entries, repeat=length):
+            rows = tuple((position + 1, *entry) for position, entry in enumerate(table))
+            grid = [(sum(units * row[1] for units, row in zip(weights, rows)),
+                     sum(units * row[2] for units, row in zip(weights, rows)))
+                    for weights in simplex]
+            grid_points += len(grid)
+            for target in range(-1, 6):
+                expected = max((reward for readout, reward in grid if readout >= 12 * target),
+                               default=None)
+                actual = optimal_moment_policy(rows, target)
+                assert (actual is None) == (expected is None)
+                if actual is not None:
+                    reward, support = actual
+                    assert reward * 12 == expected
+                    assert 1 <= len(support) <= 2
+                    assert sum(weight for point, weight in support) == 1
+                    assert all(weight > 0 for point, weight in support)
+                    by_point = {point: (readout, value) for point, readout, value in rows}
+                    assert sum(weight * by_point[point][0] for point, weight in support) >= target
+                    assert sum(weight * by_point[point][1] for point, weight in support) == reward
+                    two_support += len(support) == 2
+                else:
+                    infeasible += 1
+                contexts += 1
+    assert contexts == 7525 and two_support and infeasible
+    return dict(contexts=contexts, grid_denominator=12, full_simplex_grid_points=grid_points,
+                lengths=[1, 2, 3, 4], infeasible_contexts=infeasible,
+                attaining_two_support_contexts=two_support,
+                scope='Independent full-simplex grid includes supports of size3/4. Integer readout differences divide12, so every two-support extreme optimum is present; exact rational objective and feasibility match.')
+
+
+def moment_dispersion_audit(sequence, selected_splits, fibonacci):
+    counts = Counter()
+    qualified_periods = Counter()
+    paired_checks = 0
+    maximum_interior_defect = None
+    cycles = {}
+    for index in range(8, len(sequence)):
+        order = bisect_right(fibonacci, index) - 1
+        anchor, first_anchor, second_anchor = (fibonacci[order], fibonacci[order - 1],
+                                              fibonacci[order - 2])
+        trajectory, transient, period = full_orbit(sequence, index)
+        cycle = canonical_cycle(tuple(trajectory[transient:]))
+        if index <= 4096:
+            cycles[index] = cycle
+        readouts = [sequence[point] + sequence[index - point] for point in cycle]
+        defects = [sequence[point] - g_closed(point) for point in cycle]
+        variances = [split_variance(order, index, point, fibonacci) for point in cycle]
+        for position, point in enumerate(cycle):
+            following = cycle[(position + 1) % period]
+            assert following == index - sequence[point]
+            assert first_anchor <= point <= anchor and second_anchor <= index - point <= first_anchor
+            mismatch = first_anchor * index - anchor * point
+            next_mismatch = first_anchor * index - anchor * following
+            cassini = first_anchor ** 2 - anchor * second_anchor
+            assert abs(cassini) == 1
+            numerator = first_anchor * mismatch + anchor * next_mismatch
+            assert numerator == anchor ** 2 * sequence[point] - anchor * first_anchor * point + cassini * index
+            assert 320 * numerator > anchor ** 2 * (320 * defects[position] - 213)
+            product_value = point * (index - point)
+            next_product = following * (index - following)
+            assert 10 * (mismatch ** 2 * next_product + next_mismatch ** 2 * product_value) >= (
+                defects[position] ** 2 * product_value * next_product)
+            paired_checks += 1
+        variance_sum = sum(variances, Fraction())
+        assert 20 * variance_sum >= Fraction(sum(defect ** 2 for defect in defects), index ** 2)
+        parent_defect = sequence[index] - g_closed(index)
+        scalar_condition = sum(readouts) >= period * sequence[index]
+        retention_condition = 2 * sum(defects) >= period * parent_defect
+        counts['roots'] += 1
+        counts['mean_scalar_submartingale'] += scalar_condition
+        counts['mean_retains_half'] += retention_condition
+        if parent_defect and scalar_condition and retention_condition:
+            assert 80 * variance_sum >= Fraction(period * parent_defect ** 2, index ** 2)
+            counts['positive_quadratic_certificates'] += 1
+            qualified_periods[period] += 1
+            interior = min(index - anchor, fibonacci[order + 1] - index)
+            if 10 * interior >= anchor and (maximum_interior_defect is None or
+                                            parent_defect > maximum_interior_defect['golden_defect']):
+                maximum_interior_defect = dict(index=index, order=order, golden_defect=parent_defect,
+                                              period=period, mean_readout=str(Fraction(sum(readouts), period)),
+                                              target=sequence[index], mean_first_defect=str(Fraction(sum(defects), period)),
+                                              mean_variance=str(variance_sum / period),
+                                              distance_to_nearest_anchor=interior)
+    witnesses = []
+    for index in (313, 11213):
+        order = bisect_right(fibonacci, index) - 1
+        trajectory, transient, _ = full_orbit(sequence, index)
+        cycle = canonical_cycle(tuple(trajectory[transient:]))
+        rows = tuple((point, sequence[point] + sequence[index - point],
+                      split_variance(order, index, point, fibonacci)) for point in cycle)
+        reward, support = optimal_moment_policy(rows, sequence[index])
+        point = index - 1
+        for iteration in range(sequence[index - 1]):
+            point = index - sequence[point]
+        assert point == selected_splits[index]
+        witness = dict(index=index, target=sequence[index], selected_split=point,
+                       golden_defect=sequence[index] - g_closed(index), cycle=list(cycle),
+                       readouts=[row[1] for row in rows], variances=[str(row[2]) for row in rows],
+                       optimal_variance=str(reward), support=[dict(split=split, weight=str(weight))
+                                                             for split, weight in support],
+                       individually_scalar_valid_maximum=str(max(row[2] for row in rows if row[1] == sequence[index])),
+                       nonnegative_drift_singleton_maximum=str(max(row[2] for row in rows if row[1] >= sequence[index])))
+        if index == 313:
+            assert cycle == (182, 190, 185, 186, 191)
+            assert witness['readouts'] == [210, 211, 213, 204, 214]
+            assert support == ((182, Fraction(2, 3)), (185, Fraction(1, 3)))
+            assert reward == Fraction(71476778683, 27655598472320)
+            assert reward > Fraction(witness['nonnegative_drift_singleton_maximum'])
+            by_point = {point: (readout, value) for point, readout, value in rows}
+            slope = (by_point[185][1] - by_point[182][1]) / 3
+            intercept = by_point[182][1] - 210 * slope
+            assert slope < 0
+            assert all(value <= intercept + slope * readout for point, readout, value in rows)
+            assert intercept + slope * sequence[index] == reward
+            witness['affine_optimality_certificate'] = dict(slope=str(slope), intercept=str(intercept))
+        else:
+            assert witness['readouts'] == [7024, 7030]
+            assert support == ((6930, Fraction(1)),)
+            assert reward / Fraction(100, index) ** 2 == Fraction(11, 119924000)
+        witnesses.append(witness)
+    optimal_support_counts = Counter()
+
+    @lru_cache(None)
+    def policy_variance(order, index, steps, policy):
+        if not steps or order <= 5:
+            return Fraction()
+        if policy == 'actual':
+            points = (selected_splits[index],)
+        else:
+            points = cycles[index]
+        rows = tuple((point, sequence[point] + sequence[index - point],
+                      split_variance(order, index, point, fibonacci)
+                      + Fraction(point, index) * policy_variance(order - 1, point, steps - 1, policy)
+                      + Fraction(index - point, index) * policy_variance(order - 2, index - point, steps - 1, policy))
+                     for point in points)
+        assert all(fibonacci[order - 1] <= point <= fibonacci[order]
+                   and fibonacci[order - 2] <= index - point <= fibonacci[order - 1] for point in points)
+        if policy == 'moment':
+            result = optimal_moment_policy(rows, sequence[index])
+            assert result is not None
+            optimal_support_counts[len(result[1])] += 1
+            return result[0]
+        return max(row[2] for row in rows if row[1] == sequence[index])
+
+    improvements = checked = 0
+    minimum = None
+    for index in range(144, 4097):
+        defect = sequence[index] - g_closed(index)
+        if not defect:
+            continue
+        order = bisect_right(fibonacci, index) - 1
+        moment = policy_variance(order, index, 4, 'moment')
+        scalar = policy_variance(order, index, 4, 'scalar')
+        actual = policy_variance(order, index, 4, 'actual')
+        assert moment >= scalar >= actual
+        improvements += moment > scalar
+        ratio = moment / Fraction(defect, index) ** 2
+        if minimum is None or ratio < Fraction(minimum['ratio']):
+            minimum = dict(index=index, variance=str(moment), ratio=str(ratio),
+                           scalar_variance=str(scalar), actual_variance=str(actual))
+        checked += 1
+    assert checked == 3936
+    policy_variance.cache_clear()
+    bottleneck_index = 125952
+    bottleneck_order = bisect_right(fibonacci, bottleneck_index) - 1
+    lower = max(fibonacci[bottleneck_order - 1], bottleneck_index - fibonacci[bottleneck_order - 1])
+    upper = min(fibonacci[bottleneck_order], bottleneck_index - fibonacci[bottleneck_order - 2])
+    readouts = {point: sequence[point] + sequence[bottleneck_index - point]
+                for point in range(lower, upper + 1)}
+    target = sequence[bottleneck_index]
+    maximizing = [point for point, value in readouts.items() if value == target]
+    assert max(readouts.values()) == target == 79505 and maximizing == [77846]
+    point = bottleneck_index - 1
+    for iteration in range(sequence[bottleneck_index - 1]):
+        point = bottleneck_index - sequence[point]
+    assert point == selected_splits[bottleneck_index] == maximizing[0]
+    defect = sequence[bottleneck_index] - g_closed(bottleneck_index)
+    quartic_ratio = split_variance(bottleneck_order, bottleneck_index, point, fibonacci) / Fraction(defect, bottleneck_index) ** 4
+    assert defect == 1662 and quartic_ratio == Fraction(4645051457352564736, 49606335160931882511) < 1
+    bottleneck = dict(index=bottleneck_index, target=target, geometric_splits=len(readouts),
+                      readout_range=[min(readouts.values()), max(readouts.values())],
+                      only_moment_admissible_split=point, golden_defect=defect, quartic_ratio=str(quartic_ratio))
+    upper_cap_contexts = 0
+    for order in range(6, 17):
+        anchor, first_anchor, second_anchor = fibonacci[order], fibonacci[order - 1], fibonacci[order - 2]
+        first_width, second_width = fibonacci[order - 3], fibonacci[order - 4]
+        index = anchor + second_anchor
+        permitted = []
+        for offset in range(second_anchor + 1):
+            split = first_anchor + offset
+            if first_anchor <= split <= anchor and second_anchor <= index - split <= first_anchor:
+                readout = first_anchor + min(offset, first_width) + min(second_anchor - offset, second_width)
+                assert readout <= anchor
+                if readout == anchor:
+                    permitted.append(offset)
+                upper_cap_contexts += 1
+        assert permitted == [first_width]
+    return dict(synthetic_simplex=moment_simplex_audit(), selected_limit=len(sequence) - 1,
+                selected_root_counts=dict(sorted(counts.items())), adjacent_phase_checks=paired_checks,
+                qualified_period_histogram=dict(sorted(qualified_periods.items())),
+                maximum_certified_interior_golden_defect=maximum_interior_defect, witnesses=witnesses,
+                four_generation_cycle_policy=dict(limit=4096, positive_roots=checked,
+                                                  strict_improvements_over_scalar_valid=improvements,
+                                                  optimal_support_histogram=dict(sorted(optimal_support_counts.items())),
+                                                  minimum_quadratic_ratio=minimum),
+                upper_cap_knee_contexts=upper_cap_contexts,
+                actual_geometric_moment_bottleneck=bottleneck,
+                scope='Written paired and cycle-average quadratic bounds plus moment-submartingale decay criterion and sharp two-support conditional optimizer. Finite audits verify supplied mean conditions, not a uniform global inequality; original selector is unchanged.')
+
+
 def variance_fiber_audit():
     contexts = 0
     paired_indices = 0
@@ -3037,6 +3273,7 @@ def unbounded_defect_audit():
     assert (upper_selected, upper_nested_value) == (6, 7)
     return dict(knee_examples=knees, generated_knee_codes=knee_codes, all_cycle_centre_examples=centres,
                 golden_defect_decoder=golden_decoder_orbit_audit(sequence, selected_splits, fibonacci),
+                moment_dispersion=moment_dispersion_audit(sequence, selected_splits, fibonacci),
                 selected_phase_readouts=phase_readout_audit(sequence, selected_splits, fibonacci),
                 four_generation_dispersion=four_generation_dispersion_audit(sequence, selected_splits, fibonacci),
                 phase_free_dispersion=phase_free_dispersion_audit(sequence, selected_splits, fibonacci),
