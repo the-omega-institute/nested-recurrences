@@ -1081,6 +1081,265 @@ def higher_cap_closure_audit(sequence, splits, fibonacci):
                 scope='Independent full-block finite premises and abstract shelf graphs support the written phase-selected level2/3 induction. Arithmetic supplied-order/gap selectors close cap-defect0..3 along one first-child spine to base20/21; context/table costs separate. All basin phases satisfy the scoped quadratic bound. Actual level4 holes forbid arbitrary-level extrapolation; no global dispersion, convergence, full-interface minimum or Lean claim.')
 
 
+def cap_gap_budget(order):
+    assert order >= 9
+    if order == 9:
+        return 13
+    return (order - 2) ** 2 // 3 - 3 * order + 30
+
+
+def local_cap_endpoint(gap, start_gap, remaining, profile):
+    assert 0 <= start_gap <= gap and remaining >= 0
+    point = start_gap
+    positions = {}
+    trajectory = []
+    while point not in positions:
+        positions[point] = len(trajectory)
+        trajectory.append(point)
+        point = gap - profile[point]
+        assert 0 <= point <= gap
+    transient = positions[point]
+    period = len(trajectory) - transient
+    assert len(trajectory) <= gap + 1
+    selected = (trajectory[remaining] if remaining < len(trajectory)
+                else trajectory[transient + (remaining - transient) % period])
+    return selected, transient, period
+
+
+def cap_budget_interface_audit(sequence, splits, fibonacci):
+    arithmetic_fibonacci = fibonacci[:]
+    while len(arithmetic_fibonacci) <= 1000:
+        arithmetic_fibonacci.append(arithmetic_fibonacci[-1] + arithmetic_fibonacci[-2])
+    for order in range(11, 1001):
+        budget = cap_gap_budget(order)
+        assert budget == cap_gap_budget(order - 1) + negative_plateau_width(order - 2)
+        assert budget >= cap_gap_budget(order - 2) + negative_plateau_width(order - 1)
+        assert budget >= 2 * negative_plateau_width(order - 1)
+        assert 2 * cap_gap_budget(order + 1) <= 3 * budget
+        if order >= 30:
+            assert budget >= 10 * negative_plateau_width(order - 1)
+            assert 10 * cap_gap_budget(order + 1) <= 11 * budget
+    thresholds = {}
+    for level in range(1, 65):
+        order = 11
+        while level * cap_gap_budget(order) > arithmetic_fibonacci[order - 4]:
+            order += 1
+        thresholds[str(level)] = order
+        assert all(level * cap_gap_budget(current) <= arithmetic_fibonacci[current - 4]
+                   for current in range(order, 1001))
+    assert thresholds['4'] == 17
+    dispersion_thresholds = {}
+    for level in range(1, 65):
+        order = 30
+        while True:
+            width = level * cap_gap_budget(order)
+            if (arithmetic_fibonacci[order - 3] >= 4 * width ** 2
+                    and arithmetic_fibonacci[order] - width >= width ** 3):
+                break
+            order += 1
+        dispersion_thresholds[str(level)] = order
+        for current in range(order, 1001):
+            width = level * cap_gap_budget(current)
+            assert arithmetic_fibonacci[current - 3] >= 4 * width ** 2
+            assert arithmetic_fibonacci[current] - width >= width ** 3
+    assert [dispersion_thresholds[str(level)] for level in range(1, 5)] == [39, 45, 49, 51]
+    geometric_variance_checks = 0
+    actual_cubic_phase_checks = 0
+    maximum_cubic_gap = 0
+    for order in range(21, 41):
+        anchor, cap = arithmetic_fibonacci[order], arithmetic_fibonacci[order - 1]
+        previous, lower = arithmetic_fibonacci[order - 2], arithmetic_fibonacci[order - 3]
+        gap = 1
+        while gap ** 3 <= anchor - gap:
+            index = anchor - gap
+            assert lower >= 4 * gap ** 2
+            for shift in range(gap + 1):
+                first, second = cap - gap + shift, previous - shift
+                assert previous <= first <= cap and lower <= second <= previous
+                norm = gap ** 2 - 3 * gap * shift + shift ** 2
+                assert norm != 0
+                numerator = (-1) ** (order - 1) + lower * gap - cap * shift
+                assert 4 * gap ** 2 * numerator ** 2 >= lower ** 2
+                assert 25 * gap ** 2 * numerator ** 2 >= first * second
+                assert 25 * numerator ** 2 * index ** 2 >= gap ** 4 * first * second
+                geometric_variance_checks += 1
+            if order <= 30:
+                trajectory, transient, period = full_orbit(sequence, index)
+                defect = sequence[index] - g_closed(index)
+                assert 0 <= defect <= gap
+                for point in trajectory[transient:]:
+                    complement = index - point
+                    numerator = previous * complement - lower * point
+                    assert 25 * numerator ** 2 * index ** 2 >= defect ** 4 * point * complement
+                    actual_cubic_phase_checks += 1
+            maximum_cubic_gap = max(maximum_cubic_gap, gap)
+            gap += 1
+    block_positions = 0
+    conservation_checks = 0
+    branch_counts = dict(both_positive=0, first_only=0, second_only=0, both_zero=0)
+    local_rows = 0
+    exterior_trace_points = 0
+    maximum_entrance = None
+    support_rows = []
+    cycle_witness = None
+    for order in range(9, 31):
+        anchor, cap = fibonacci[order], fibonacci[order - 1]
+        profile = [cap - sequence[anchor - gap] for gap in range(fibonacci[order - 2] + 1)]
+        allowed = []
+        for gap, defect in enumerate(profile):
+            if defect:
+                assert gap <= defect * cap_gap_budget(order)
+            else:
+                assert gap <= negative_plateau_width(order)
+            block_positions += 1
+            if order >= 11:
+                index = anchor - gap
+                split = splits[index]
+                first_gap = cap - split
+                second_gap = fibonacci[order - 2] - (index - split)
+                first_defect = fibonacci[order - 2] - sequence[split]
+                second_defect = fibonacci[order - 3] - sequence[index - split]
+                assert first_gap + second_gap == gap
+                assert first_defect + second_defect == defect
+                assert 0 <= first_gap <= fibonacci[order - 3]
+                assert 0 <= second_gap <= fibonacci[order - 4]
+                assert first_defect >= 0 and second_defect >= 0
+                branch = ('both_positive' if first_defect and second_defect
+                          else 'first_only' if first_defect
+                          else 'second_only' if second_defect else 'both_zero')
+                branch_counts[branch] += 1
+                conservation_checks += 1
+            if defect <= 4:
+                allowed.append(gap)
+        if order >= 19:
+            support_rows.append(dict(order=order, full_block_checked=True,
+                                     first_width=next(gap - 1 for gap, defect in enumerate(profile) if defect > 4),
+                                     maximum_gap=max(allowed),
+                                     holes=[gap for gap in range(max(allowed) + 1) if profile[gap] > 4],
+                                     bound=4 * cap_gap_budget(order)))
+        if order < thresholds['4']:
+            continue
+        width = 4 * cap_gap_budget(order)
+        previous = [fibonacci[order - 2] - sequence[cap - gap] for gap in range(width + 1)]
+        lower = [fibonacci[order - 3] - sequence[fibonacci[order - 2] - gap]
+                 for gap in range(width + 1)]
+        for gap in allowed:
+            if gap < 2:
+                continue
+            index = anchor - gap
+            trajectory, transient, period = full_orbit(sequence, index)
+            entrance = next(position for position, point in enumerate(trajectory)
+                            if cap - gap <= point <= cap)
+            start_gap = cap - trajectory[entrance]
+            distance = interval_distance(index - 1, cap - gap, cap)
+            pairs = capture_pair_budget(distance)
+            assert entrance <= 2 * pairs
+            next_defect = cap - sequence[index - 1]
+            assert 0 <= next_defect <= 2 * (gap + 1) // 3 <= gap
+            depth = cap - next_defect
+            assert depth >= entrance
+            selected_gap, local_transient, local_period = local_cap_endpoint(
+                gap, start_gap, depth - entrance, previous)
+            split = cap - selected_gap
+            assert split == splits[index] and local_period == period
+            assert previous[selected_gap] + lower[gap - selected_gap] == profile[gap]
+            assert period <= gap + 1 <= width + 1
+            first_point = fibonacci[order - 2] - gap + next_defect
+            second_point = cap + fibonacci[order - 4] - gap + lower[gap - next_defect]
+            assert trajectory[1] == first_point and trajectory[2] == second_point
+            assert second_point >= cap
+            local_rows += 1
+            exterior_trace_points += entrance
+            if maximum_entrance is None or entrance > maximum_entrance['clock']:
+                maximum_entrance = dict(order=order, gap=gap, clock=entrance,
+                                       pair_bound=2 * pairs, start_gap=start_gap)
+            if order == 24 and gap == 83:
+                cycle = sorted(trajectory[transient:])
+                assert cycle == [28578, 28582, 28583] and period == 3
+                values = [cap - sequence[point] - sequence[index - point] for point in cycle]
+                assert values == [8, 9, 4]
+                assert [index - sequence[point] for point in cycle] == [28582, 28583, 28578]
+                assert depth == 28648 and split == 28583 and sequence[index] == 28653
+                same_parity = []
+                for clock in (0, 2, 4):
+                    point = cycle[0]
+                    for iteration in range(clock):
+                        point = index - sequence[point]
+                    same_parity.append(cap - sequence[point] - sequence[index - point])
+                assert same_parity == [8, 4, 9]
+                cycle_witness = dict(order=order, gap=gap, index=index, cycle=cycle,
+                                     cap_readouts=values, actual_depth=depth, actual_split=split,
+                                     actual_value=sequence[index], entrance_clock=entrance,
+                                     entrance_gap=start_gap, local_transient=local_transient,
+                                     unrestricted_readout_classes=3, unrestricted_fixed_width_bits=2,
+                                     even_clock_readouts=same_parity,
+                                     qualified_cap4_readout_classes=1)
+    literal_rows = []
+    literal_updates = 0
+    for order, gap in ((19, 50), (19, 54), (20, 55), (20, 57), (24, 83)):
+        index = fibonacci[order] - gap
+        point = index - 1
+        depth = sequence[index - 1]
+        for iteration in range(depth):
+            point = index - sequence[point]
+        assert point == splits[index]
+        literal_updates += depth
+        literal_rows.append(dict(order=order, gap=gap, index=index, depth=depth,
+                                 selected_split=point, value=sequence[index]))
+    five_gaps = [0, 10, 20, 40, 54]
+    first_defects, second_defects, shifts = [], [], []
+    parent_parameters, first_parameters, second_parameters = [], [], []
+    for row, gap in enumerate(five_gaps):
+        index = fibonacci[19] - gap
+        split = splits[index]
+        shifts.append(split - (fibonacci[18] - gap))
+        first_defects.append(fibonacci[17] - sequence[split])
+        second_defects.append(fibonacci[16] - sequence[index - split])
+    for row, gap in enumerate(five_gaps):
+        following = (row + 1) % 5
+        defect = first_defects[row] + second_defects[row]
+        index = fibonacci[19] - gap
+        split = splits[index]
+        assert split - fibonacci[17] == fibonacci[16] - gap + shifts[row]
+        assert index - split - fibonacci[16] == fibonacci[15] - shifts[row]
+        first_profile = sequence[split] - fibonacci[16]
+        second_profile = sequence[index - split] - fibonacci[15]
+        assert first_profile == fibonacci[15] - first_defects[row]
+        assert second_profile == fibonacci[14] - second_defects[row]
+        parent_parameter = fibonacci[18] - five_gaps[following] - defect
+        first_parameter = (fibonacci[17] - five_gaps[following] + shifts[following]
+                           - first_defects[row])
+        second_parameter = fibonacci[16] - shifts[following] - second_defects[row]
+        assert first_parameter + second_parameter == parent_parameter
+        assert fibonacci[16] - five_gaps[following] + shifts[following] + first_profile == first_parameter
+        assert fibonacci[15] - shifts[following] + second_profile == second_parameter
+        parent_parameters.append(parent_parameter)
+        first_parameters.append(first_parameter)
+        second_parameters.append(second_parameter)
+    assert first_defects[-1] == 8 and second_defects[-1] == 1
+    return dict(budget_formula='P9=13; Pk=floor((k-2)^2/3)-3k+30 for k>=10',
+                no_new_sequence_premise=True, arithmetic_orders_inclusive=[11, 1000],
+                sufficient_local_thresholds=thresholds, full_block_orders_inclusive=[9, 30],
+                sufficient_quartic_dispersion_thresholds=dispersion_thresholds,
+                geometric_cubic_orders_inclusive=[21, 40],
+                geometric_cubic_variance_checks=geometric_variance_checks,
+                maximum_arithmetic_cubic_gap=maximum_cubic_gap,
+                actual_cubic_basin_phase_orders_inclusive=[21, 30],
+                actual_cubic_basin_phase_checks=actual_cubic_phase_checks,
+                cubic_quartic_constant='1/25',
+                block_positions=block_positions, actual_conservation_checks=conservation_checks,
+                child_budget_branch_counts=branch_counts,
+                actual_cap4_supports=support_rows, actual_local_selector_rows=local_rows,
+                exterior_trace_points=exterior_trace_points, maximum_entrance=maximum_entrance,
+                three_phase_witness=cycle_witness, literal_endpoint_rows=literal_rows,
+                literal_selected_updates=literal_updates,
+                five_row_witness=dict(order=19, gaps=five_gaps, shifts=shifts,
+                                      first_cap_defects=first_defects, second_cap_defects=second_defects,
+                                      parent_parameters=parent_parameters, first_parameters=first_parameters,
+                                      second_parameters=second_parameters),
+                scope='General full-block cap-budget induction uses the proved zero plateau and actual two-child conservation, without a new finite sequence premise. Fixed-cap sublevels have polynomial gap enclosure and a conditional local-table/entrance decoder. The independent Diophantine proof gives phase-free quartic dispersion on cube-root collars, hence eventually on every fixed cap level; large arithmetic checks do not evaluate C. Finite level4 support holes are not an infinite support law. Tables, predecessor/exterior qualification, exact Fibonacci arithmetic and autonomous memory are separate costs; cap4 qualification already collapses the displayed scalar phase fiber. Global dispersion/convergence remain open.')
+
+
 def negative_adjacent_transitions(amplitude, adjacent):
     if amplitude == 1:
         return {1} if adjacent == 1 else {adjacent, 0, 1}
@@ -1385,6 +1644,7 @@ def negative_collar_boundary_audit(sequence, splits, fibonacci):
                 moving_negative_plateau=moving_negative_plateau_audit(sequence, splits, fibonacci),
                 unit_defect_closure=unit_defect_closure_audit(sequence, splits, fibonacci),
                 higher_cap_closure=higher_cap_closure_audit(sequence, splits, fibonacci),
+                bounded_cap_interface=cap_budget_interface_audit(sequence, splits, fibonacci),
                 scope='Single-negative-seed propagation and first-boundary copy-or-contract/readout-phase proofs are general. Earlier scalar seeds reuse the independently agreeing F30+34 full-orbit/Brent prefix. The separate small-seed moving-plateau induction now proves all fixed negative widths, top contiguity and the unit-amplitude actual boundary rule. Full recursive minimum, dispersion and global convergence remain open. Conditional phase-state minima exclude supplied context and its certification cost.')
 
 

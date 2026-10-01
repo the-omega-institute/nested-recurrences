@@ -15,6 +15,7 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 - [Size-biased martingales and the four-generation dispersion criterion](#size-biased-martingales-and-the-four-generation-dispersion-criterion)
 - [A phase-free lower bound from the prescribed basin](#a-phase-free-lower-bound-from-the-prescribed-basin)
 - [Quadratic basin dispersion in the unit-defect family](#quadratic-basin-dispersion-in-the-unit-defect-family)
+- [Diophantine dispersion in cube-root Fibonacci neighborhoods](#diophantine-dispersion-in-cube-root-fibonacci-neighborhoods)
 - [Additive dispersion policies without orbit qualification](#additive-dispersion-policies-without-orbit-qualification)
 - [Finite prefixes and exact collars do not force convergence](#finite-prefixes-and-exact-collars-do-not-force-convergence)
 
@@ -393,6 +394,78 @@ so the
 proportional-split cancellation of M cannot occur. In wider blocks,
 large complementary gaps can approach that cancellation ratio; controlling
 their accumulated variance still requires new actual-profile restrictions.
+
+### Diophantine dispersion in cube-root Fibonacci neighborhoods
+
+Small complementary gaps are not necessary for a uniform quartic bound.
+Integer separation from the golden ratio controls every captured phase
+through a much wider sublinear neighborhood.
+
+**Cube-root dispersion theorem.** Let k>=21, N=F_k-v with
+0<=v<=F_(k-2), and suppose v^3<=N. With D=C(N)-G(N),
+
+$$
+\boxed{\mathcal B_1(k-1,N)\ge\frac1{25}\left(\frac DN\right)^4.} \tag{D.1}
+$$
+
+For v>=1 we also have B_1>=1/(25v^2N^2). Consequently B_4
+satisfies the same quartic criterion on this entire cube-root collar.
+The theorem requires no exact profile, predecessor residue or phase choice.
+
+**Proof.** Put A=F_(k-1), B=F_(k-2), H=F_(k-3) and
+lambda=phi^2=(3+sqrt(5))/2. Every captured phase has
+a=A-v+delta, b=B-delta with integral0<=delta<=v. Its variance
+numerator is M=(-1)^(k-1)+Hv-A*delta.
+
+For v>0, the nonzero integer norm
+
+$$
+(v-\lambda\delta)(v-\lambda^{-1}\delta)
+ =v^2-3v\delta+\delta^2
+$$
+
+has absolute value at least1. Its conjugate factor is positive and
+at mostv, since0<=delta<=v. Hence |v-lambda*delta|>=1/v.
+Also |A-lambda H|=alpha^(k-3)<1. If H>=4v^2, then
+
+$$
+|M|\ge H/v-v-1\ge H/(2v).
+$$
+
+Since N<=A+B<=5H and ab<=N^2/4,
+
+$$
+\frac{M^2}{N^2ab}\ge\frac1{25v^2N^2}
+\ge\frac1{25}\left(\frac vN\right)^4
+\ge\frac1{25}\left(\frac DN\right)^4. \tag{D.2}
+$$
+
+The middle inequality uses v^3<=N; the last uses0<=D<=v from
+the global cap and the1-Lipschitz G function. The auxiliary condition
+H>=4v^2 is automatic: for v>=20 use H>=N/5>=v^3/5>=4v^2;
+for1<=v<=19 use H>=F_18=2584>4*19^2. At v0, D=0.
+Taking the minimum over all basin phases proves (D.1). QED.
+
+**Every fixed cap level eventually qualifies.** The
+[cap-budget theorem](recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level)
+gives v<=mP_k throughout Q_k<=m, for m>=1. Define T(m) as the
+first k>=30 with F_(k-3)>=4(mP_k)^2 and
+F_k-mP_k>=(mP_k)^3. Both inequalities persist: P_(k+1)<=11P_k/10
+for k>=30, while Fibonacci numbers grow by at least3/2 and
+F_(k+1)-mP_(k+1)>=3(F_k-mP_k)/2. The budget ratio follows from
+P_k>=10L_(k-1), starting at k30 and propagating because L>=10.
+Exponential growth ensures T(m) exists. Thus the whole cap sublevel,
+including its holes, satisfies (D.1) for every k>=T(m).
+For m1,2,3,4 these sufficient thresholds are39,45,49,51.
+
+The checker exhausts geometric integer shifts in the cube-root collars
+at orders21..40, verifies actual basin phases at orders21..30, and
+checks the explicit bounded-cap thresholds arithmetically. Large-order
+arithmetic checks do not evaluate new C prefixes. This is an infinite
+Diophantine proof with finite corroboration, not extrapolated dispersion.
+The interiors outside these sublinear collars, where v is proportional
+to F_k, still require a uniform multi-generation argument; the global
+convergence and decay theorem remains open.
 
 ### Additive dispersion policies without orbit qualification
 
