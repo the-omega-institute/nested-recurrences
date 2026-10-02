@@ -398,6 +398,15 @@ alphabet or parity shortcut alone has not provided the corresponding
 Cloitre word evolution. This isolates a temporal selection question beyond
 the shared finite-cycle decoder and autonomous scale-memory comparison.
 
+The [Cloitre frontier reset rule](../cloitre-conway/recursive-descent.md#an-even-landing-determines-a-frontier-phase)
+now derives its phase bit from the first even landing below a Fibonacci
+anchor and at most one tail query, without a supplied current parent cap.
+The exterior landing still needs actual-C queries or a qualified certificate;
+Campbell's formula derives its entry data arithmetically. On the five additive
+patterns, the Cloitre phase transfers joint interaction between scalar values
+and selected child indices while their difference remains e-4. Canonical
+higher-word qualification and recursive evolution remain separate.
+
 The shared [selector checker](../cloitre-conway/verification/selector_payload_check.py)
 independently evaluates Campbell's first32 terms by literal iteration and
 checks the displayed three-solution inverse. The sharpness statement

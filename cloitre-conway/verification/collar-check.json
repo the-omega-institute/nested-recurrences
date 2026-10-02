@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "c59237ff2750e0b9be5fed74f82780e9365e695984c4c7ab1313ac00c1852d3e",
+  "source_sha256": "9ab89fa88bf92758ddd02eee8ccaccf5fc77e3da33d4acea68085ebfed6738d3",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -6061,6 +6061,135 @@
           ],
           "quadratic_dispersion": "constant1/25 for gaps0..V_K+max(47,floor((V_K-2)/5)), K>=27",
           "scope": "The47-value actual order26 seed propagates its alphabet at all orders>=26; every higher-order periodic phase has zero second cap and at most six periodic vertices. Wider words and parent caps remain supplied outside generated regions. High-cap spines have at most15 strict translated-excess drops, so arbitrarily long high spines require long high-member two-cycle copy runs. Actual local-word/depth-parity collisions need entry clocks; these different-order examples are not independent-input lower bounds with full order supplied. Alphabet packing bounds are not exact actual costs. Seed26 internal allocation, copy-run control, wider profile construction and global dispersion/convergence remain outside this theorem."
+        },
+        "frontier_reset": {
+          "symbolic_orders_inclusive": [
+            27,
+            60
+          ],
+          "frontier_positions_inclusive": [
+            9,
+            43
+          ],
+          "symbolic_landing_phase_cases": 380052,
+          "symbolic_map_updates": 3230442,
+          "symbolic_branch_counts": {
+            "high_member_landing": 11560,
+            "cap4_band_landing": 23120,
+            "one_tail_query": 345372
+          },
+          "actual_orders_inclusive": [
+            27,
+            30
+          ],
+          "actual_frontiers": 4,
+          "actual_five_pattern_rows": 20,
+          "literal_endpoint_updates": 5749175,
+          "global_threshold_wall_positions": 1860070,
+          "actual_rows": [
+            {
+              "order": 27,
+              "root": 196320,
+              "frontier_excess": 9,
+              "first_high_cap": 8,
+              "even_landing_clock": 12,
+              "landing_offset_from_anchor": -89,
+              "reset_bit": 0,
+              "query_excess": null,
+              "queried_cap": null,
+              "depth_parity": 1,
+              "selected_cap": 8,
+              "child_offsets": [
+                4,
+                6,
+                7,
+                9,
+                11
+              ],
+              "scalar_joint": -4,
+              "index_joint": 0,
+              "joint_difference": 4,
+              "common_canonical_higher_word": false
+            },
+            {
+              "order": 28,
+              "root": 317709,
+              "frontier_excess": 9,
+              "first_high_cap": 8,
+              "even_landing_clock": 12,
+              "landing_offset_from_anchor": -83,
+              "reset_bit": 0,
+              "query_excess": null,
+              "queried_cap": null,
+              "depth_parity": 0,
+              "selected_cap": 4,
+              "child_offsets": [
+                8,
+                6,
+                7,
+                9,
+                11
+              ],
+              "scalar_joint": 0,
+              "index_joint": 4,
+              "joint_difference": 4,
+              "common_canonical_higher_word": false
+            },
+            {
+              "order": 29,
+              "root": 514119,
+              "frontier_excess": 13,
+              "first_high_cap": 8,
+              "even_landing_clock": 12,
+              "landing_offset_from_anchor": -87,
+              "reset_bit": 0,
+              "query_excess": null,
+              "queried_cap": null,
+              "depth_parity": 1,
+              "selected_cap": 8,
+              "child_offsets": [
+                4,
+                6,
+                7,
+                9,
+                11
+              ],
+              "scalar_joint": -4,
+              "index_joint": 0,
+              "joint_difference": 4,
+              "common_canonical_higher_word": true
+            },
+            {
+              "order": 30,
+              "root": 831926,
+              "frontier_excess": 13,
+              "first_high_cap": 8,
+              "even_landing_clock": 12,
+              "landing_offset_from_anchor": -65,
+              "reset_bit": 1,
+              "query_excess": 14,
+              "queried_cap": 4,
+              "depth_parity": 1,
+              "selected_cap": 4,
+              "child_offsets": [
+                8,
+                6,
+                7,
+                9,
+                11
+              ],
+              "scalar_joint": 0,
+              "index_joint": 4,
+              "joint_difference": 4,
+              "common_canonical_higher_word": false
+            }
+          ],
+          "entry_rule": "First even point at or below F_(K-1); no supplied entry clock/current parent cap. One arithmetic low-cap read and at most one tail query derive a reset bit.",
+          "maximum_tail_lookahead": 4,
+          "joint_identity": "I_selected_child_index-I_parent_scalar=e-4; the entire g-C five-pattern response is phase independent.",
+          "conditional_periodic_option_count": 2,
+          "conditional_fixed_width_phase_bits": 1,
+          "scope": "A written frontier theorem follows from the existing alphabet, shelves, capture and depth-in-cycle results; no new infinite finite-base premise. Symbolic landing cases corroborate local phase and feature formulas, not exterior stopping qualification. Actual first-even landings and literal endpoints verify orders27..30. Only the order29 root is a certified canonical FIB window. The one-bit phase cost counts the declared two-periodic-option table; a qualified landing derives it and it is not an independent-input lower bound with full order supplied. Exterior landing construction uses actual global sequence queries; general nonfrontier copy runs, wider word evolution and global dispersion/convergence remain open."
         },
         "scope": "Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open."
       },
