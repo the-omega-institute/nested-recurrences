@@ -1418,8 +1418,8 @@ assumed to obey the higher-order zero-cap rule.
 
 At K>=27 the generated first thirteen preceding responses leave positions
 14..47 to supply; their sufficient rectangular packing uses at most
-ceil(34 log_2 6)=88 bits. At K>=31 the generated first sixteen leave
-positions20..47 after the first19 construction below, using at most
+ceil(34 log_2 6)=88 bits. At K>=31 the generated first nineteen leave
+positions20..47 after the binary-prefix construction, using at most
 ceil(28 log_2 6)=73 bits. Each word is
 shared by the five rows; actual parent caps outside generated regions are
 also supplied. These are upper bounds for an alphabet envelope, not exact

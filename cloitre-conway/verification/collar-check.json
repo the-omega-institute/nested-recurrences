@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "63a0b292848be823afb596a9e0b72596298acf8c998a8fbc7fbe6d4bf770d5fb",
+  "source_sha256": "53794c27be6983b20ab7dc44eb4e9aa3118c9e0409a09f8421ace3253bbdf795",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -6000,9 +6000,9 @@
           "strict_excess_drop_edges": 276,
           "translated_excess_copy_edges": 33,
           "maximum_strict_drops_any_depth": 15,
-          "copy_rule": "Every nondecreasing high-cap edge copies the translated excess by selecting the high member of a two-cycle with readouts{4,e}; all strict drops are at least3.",
+          "copy_rule": "Every zero-drop high-cap edge selects response state4 with readout e>4. It is a two-cycle exactly when H_d(e)=4; zero drop alone does not prove that extra response. The checked finite actual copies are two-cycles. All strict drops are at least3.",
           "preceding_word_response_bits_Kge27": 88,
-          "preceding_word_response_bits_Kge31": 81,
+          "preceding_word_response_bits_Kge31": 73,
           "actual_parity_shortcut_counterexamples": [
             {
               "order": 29,
@@ -6060,7 +6060,7 @@
             }
           ],
           "quadratic_dispersion": "constant1/25 for gaps0..V_K+max(47,floor((V_K-2)/5)), K>=27",
-          "scope": "The47-value actual order26 seed propagates its alphabet at all orders>=26; every higher-order periodic phase has zero second cap and at most six periodic vertices. Wider words and parent caps remain supplied outside generated regions. High-cap spines have at most15 strict translated-excess drops, so arbitrarily long high spines require long high-member two-cycle copy runs. Actual local-word/depth-parity collisions need entry clocks; these different-order examples are not independent-input lower bounds with full order supplied. Alphabet packing bounds are not exact actual costs. Seed26 internal allocation, copy-run control, wider profile construction and global dispersion/convergence remain outside this theorem."
+          "scope": "The47-value actual order26 seed propagates its alphabet at all orders>=26; every higher-order periodic phase has zero second cap and at most six periodic vertices. Wider words and parent caps remain supplied outside generated regions. High-cap spines have at most15 strict translated-excess drops, so arbitrarily long high spines require long zero-drop copy runs; two-cycle qualification is additional. Actual local-word/depth-parity collisions need entry clocks; these different-order examples are not independent-input lower bounds with full order supplied. Alphabet packing bounds are not exact actual costs. Seed26 internal allocation, copy-run control, wider profile construction and global dispersion/convergence remain outside this theorem."
         },
         "frontier_reset": {
           "symbolic_orders_inclusive": [
@@ -6625,6 +6625,260 @@
             "conditional_option_bits": 3,
             "literal_endpoint_updates": 6731311,
             "scope": "One finite actual canonical FIB window, including a three-cycle row. Zero current scalar interaction coexists with index interaction-5. The option count allows periodic rows independently and is not actual input cost or an infinite family."
+          },
+          "binary_prefix": {
+            "adjacent_even_prefix_maps": 1458,
+            "adjacent_even_prefix_periods": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "binary_maps": 4,
+            "binary_direct_updates": 160,
+            "even_three_cycle_profile": {
+              "order": 32,
+              "excess": 33,
+              "tail_overrides": {
+                "33": 8,
+                "29": 10
+              },
+              "cycle_states": [
+                4,
+                8,
+                10
+              ],
+              "period": 3,
+              "selected_state": 4,
+              "parent_cap": 8,
+              "excess_drop": 0,
+              "scope": "Relaxed even captured profile, not an actual C copy or alternative sequence."
+            },
+            "shared_five_row_positions": [
+              0,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              9,
+              11
+            ],
+            "relaxed_shared_words": 512,
+            "distinct_complete_map_collections": 512,
+            "relaxed_word_bits": 9,
+            "maximum_periodic_output_options": 32,
+            "sharp_periodic_output_bits": 5,
+            "sharp_shared_words": 16,
+            "sharp_shared_word": [
+              4,
+              4,
+              4,
+              8,
+              4,
+              8,
+              8,
+              8,
+              4
+            ],
+            "sharp_maps": [
+              [
+                4,
+                8
+              ],
+              [
+                4,
+                8
+              ],
+              [
+                4,
+                8
+              ],
+              [
+                4,
+                8
+              ],
+              [
+                8,
+                4
+              ]
+            ],
+            "sharpness_order": 32,
+            "sharpness_excess": 31,
+            "shared_profile_graphs": 2560,
+            "new_scalar_premises": [
+              {
+                "order": 30,
+                "position": 17,
+                "index": 831922,
+                "response": 8,
+                "value": 514221,
+                "split": 514119
+              },
+              {
+                "order": 30,
+                "position": 18,
+                "index": 831921,
+                "response": 8,
+                "value": 514221,
+                "split": 514114
+              },
+              {
+                "order": 30,
+                "position": 19,
+                "index": 831920,
+                "response": 4,
+                "value": 514225,
+                "split": 514113
+              },
+              {
+                "order": 31,
+                "position": 17,
+                "index": 1346147,
+                "response": 4,
+                "value": 832036,
+                "split": 831926
+              },
+              {
+                "order": 31,
+                "position": 18,
+                "index": 1346146,
+                "response": 4,
+                "value": 832036,
+                "split": 831925
+              }
+            ],
+            "binary_seed_order": 30,
+            "binary_seed_positions_inclusive": [
+              1,
+              19
+            ],
+            "binary_seed_word": [
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              8,
+              8,
+              4
+            ],
+            "flat_positions_inclusive": [
+              1,
+              19
+            ],
+            "flat_from_order": 31,
+            "actual_order31_shifts": [
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              8,
+              8,
+              4
+            ],
+            "actual_order31_periods": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              2,
+              2,
+              1
+            ],
+            "literal_checked_roots": 22,
+            "literal_endpoint_updates": 17351350,
+            "qualified_landing_response_reads": 33,
+            "symbolic_flat_orders_inclusive": [
+              32,
+              120
+            ],
+            "symbolic_orders": 89,
+            "symbolic_fixed_graphs": 1691,
+            "canonical_boundary_window": {
+              "order": 31,
+              "root": 1346146,
+              "higher_fibonacci_indices": [
+                8,
+                11,
+                14,
+                16,
+                18,
+                20,
+                22,
+                24,
+                26,
+                28,
+                30
+              ],
+              "offsets": [
+                0,
+                2,
+                3,
+                5,
+                7
+              ],
+              "values": [
+                832036,
+                832036,
+                832036,
+                832036,
+                832036
+              ],
+              "splits": [
+                831925,
+                831923,
+                831924,
+                831926,
+                831928
+              ],
+              "periods": [
+                2,
+                1,
+                1,
+                1,
+                1
+              ],
+              "scalar_joint": 0,
+              "index_joint": 4
+            },
+            "scope": "Infinite causal subset propagation, one-way adjacent parity and binary periodic/three-step landing decoder. Five new independently regenerated/literal scalar premises give the explicit actual first19 word, zero residual selected descent to order30, and a finite canonical index interaction4 after scalar flattening. Nine/five-bit sharpness is a relaxed wide binary-prefix contract, not actual input minima or a proved actual wide binary seed. Even prefix alone allows period3 and zero drop alone does not certify period2. Qualified two-cycle reset density does not supply lower-hole equivalence, exterior word/entry construction or additive martingale occupation; global dispersion/convergence remain open."
           },
           "scope": "Written conjugacy and two-step landing decoder hold at K>=27, d9..43 without frontier flatness, using existing finite-alphabet premises. Six shared stencil answers give every periodic option and no parent cap is supplied. Five additive rows share15 answers for d16..43. Exact39bit word and13bit phase costs concern relaxed independent response/periodic-output contracts, not actual-C input minima. Landings, clock residues, actual response words and wider recursive evolution remain supplied or open; global dispersion is unchanged."
         },
