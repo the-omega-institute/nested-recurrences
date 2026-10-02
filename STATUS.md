@@ -53,6 +53,9 @@ conjectures remain finite observations. No Lean formalization is included.
    A [finite-alphabet extension](cloitre-conway/exact-collars.md#a-finite-alphabet-propagates-beyond-the-zero-allocation-corridor)
    propagates wider bounded responses and zero allocation. Persistent
    high-member choices on two-cycles remain a profile-evolution obstacle.
+   At a [first nonflat frontier](cloitre-conway/exact-collars.md#a-moving-frontier-needs-recurring-cap4-holes),
+   persistence requires recurring holes on the actual inner path. Controlling
+   those events, rather than only the periodic alphabet, remains necessary.
    At the first nonflat position, an
    [even landing and one response](cloitre-conway/recursive-descent.md#an-even-landing-determines-a-frontier-phase)
    determine the phase; generating that exterior landing locally remains open.

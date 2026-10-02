@@ -94,6 +94,10 @@ propagates a wider bounded response alphabet and zero allocation from one
 seed. A high-cap spine has only finitely many strict position drops;
 eventual flattening would require control of persistent high-member choices
 on two-cycles. A local depth-parity shortcut fails in actual examples.
+At a [first nonflat frontier](exact-collars.md#a-moving-frontier-needs-recurring-cap4-holes),
+the Fibonacci clock forces a positive frequency of actual path holes during
+persistence. Excluding them gives conditional tail widening; their actual
+frequency remains open.
 The [frontier reset rule](recursive-descent.md#an-even-landing-determines-a-frontier-phase)
 replaces the full entry clock by a bit derived from a qualified even landing
 and one tail response. The same phase bit transfers a five-pattern joint

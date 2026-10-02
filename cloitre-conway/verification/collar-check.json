@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "a6f44ca6eda7c49ef3e43861005b40707cf21c27c94792b45e8953d3550164c4",
+  "source_sha256": "068400767b8f63d8434d507f36de44fd5eaa28c9d261214e8b88bab9d415f596",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -6190,6 +6190,204 @@
           "conditional_periodic_option_count": 2,
           "conditional_fixed_width_phase_bits": 1,
           "scope": "A written frontier theorem follows from the existing alphabet, shelves, capture and depth-in-cycle results; no new infinite finite-base premise. Symbolic landing cases corroborate local phase and feature formulas, not exterior stopping qualification. Actual first-even landings and literal endpoints verify orders27..30. Only the order29 root is a certified canonical FIB window. The one-bit phase cost counts the declared two-periodic-option table; a qualified landing derives it and it is not an independent-input lower bound with full order supplied. Exterior landing construction uses actual global sequence queries; general nonfrontier copy runs, wider word evolution and global dispersion/convergence remain open."
+        },
+        "frontier_copy_holes": {
+          "shifted_alphabet": [
+            0,
+            3,
+            4,
+            5,
+            6,
+            9
+          ],
+          "frontier_positions_inclusive": [
+            9,
+            46
+          ],
+          "adjacent_profile_graphs": 1324,
+          "clock_horizons_inclusive": [
+            1,
+            150
+          ],
+          "clock_histories": 34425,
+          "clock_minima": [
+            {
+              "updates": 1,
+              "general_minimum": 0,
+              "even_adjacent_minimum": 0,
+              "never_erased_odd_minimum": 0
+            },
+            {
+              "updates": 2,
+              "general_minimum": 0,
+              "even_adjacent_minimum": 0,
+              "never_erased_odd_minimum": 1
+            },
+            {
+              "updates": 3,
+              "general_minimum": 0,
+              "even_adjacent_minimum": 1,
+              "never_erased_odd_minimum": 2
+            },
+            {
+              "updates": 4,
+              "general_minimum": 1,
+              "even_adjacent_minimum": 1,
+              "never_erased_odd_minimum": 2
+            },
+            {
+              "updates": 6,
+              "general_minimum": 1,
+              "even_adjacent_minimum": 2,
+              "never_erased_odd_minimum": 4
+            },
+            {
+              "updates": 7,
+              "general_minimum": 2,
+              "even_adjacent_minimum": 2,
+              "never_erased_odd_minimum": 4
+            },
+            {
+              "updates": 30,
+              "general_minimum": 9,
+              "even_adjacent_minimum": 10,
+              "never_erased_odd_minimum": 20
+            },
+            {
+              "updates": 150,
+              "general_minimum": 49,
+              "even_adjacent_minimum": 50,
+              "never_erased_odd_minimum": 100
+            }
+          ],
+          "symbolic_orders_inclusive": [
+            27,
+            60
+          ],
+          "symbolic_landing_cases": 535432,
+          "symbolic_map_updates": 4551172,
+          "out_of_alphabet_lookahead_cases": 60860,
+          "maximum_tail_lookahead_position": 50,
+          "actual_orders_inclusive": [
+            27,
+            30
+          ],
+          "actual_qualified_roots": 12,
+          "actual_flat_roots": 8,
+          "actual_high_frontiers": [
+            {
+              "order": 27,
+              "excess": 9,
+              "root": 196320,
+              "preceding_cap": 8,
+              "parent_cap": 8,
+              "adjacent_before": 0,
+              "adjacent_after": 0,
+              "reset": 0,
+              "depth_parity": 1,
+              "even_landing_clock": 12,
+              "hole": null,
+              "hole_clock": null,
+              "hole_value": null,
+              "frontier_index": 121299,
+              "frontier_value": 75017,
+              "tail_query": null,
+              "queried_cap": null
+            },
+            {
+              "order": 28,
+              "excess": 9,
+              "root": 317709,
+              "preceding_cap": 8,
+              "parent_cap": 4,
+              "adjacent_before": 0,
+              "adjacent_after": 0,
+              "reset": 0,
+              "depth_parity": 0,
+              "even_landing_clock": 12,
+              "hole": null,
+              "hole_clock": null,
+              "hole_value": null,
+              "frontier_index": 196320,
+              "frontier_value": 121385,
+              "tail_query": null,
+              "queried_cap": null
+            },
+            {
+              "order": 29,
+              "excess": 13,
+              "root": 514119,
+              "preceding_cap": 8,
+              "parent_cap": 8,
+              "adjacent_before": 0,
+              "adjacent_after": 0,
+              "reset": 0,
+              "depth_parity": 1,
+              "even_landing_clock": 12,
+              "hole": null,
+              "hole_clock": null,
+              "hole_value": null,
+              "frontier_index": 317705,
+              "frontier_value": 196410,
+              "tail_query": null,
+              "queried_cap": null
+            },
+            {
+              "order": 30,
+              "excess": 13,
+              "root": 831926,
+              "preceding_cap": 8,
+              "parent_cap": 4,
+              "adjacent_before": 0,
+              "adjacent_after": 0,
+              "reset": 1,
+              "depth_parity": 1,
+              "even_landing_clock": 12,
+              "hole": 514118,
+              "hole_clock": 13,
+              "hole_value": 317807,
+              "frontier_index": 514119,
+              "frontier_value": 317803,
+              "tail_query": 14,
+              "queried_cap": 4
+            }
+          ],
+          "actual_literal_endpoint_updates": 1149835,
+          "actual_copy_histories": [
+            {
+              "seed_order": 26,
+              "excess": 9,
+              "seed_cap": 8,
+              "seed_adjacent": 0,
+              "observed_copies": 1,
+              "observed_copy_resets": 0,
+              "erased_order": 28,
+              "scope": "Finite observed prefix of the conditional copy history; no lifetime extrapolation."
+            },
+            {
+              "seed_order": 28,
+              "excess": 13,
+              "seed_cap": 8,
+              "seed_adjacent": 0,
+              "observed_copies": 1,
+              "observed_copy_resets": 0,
+              "erased_order": 30,
+              "scope": "Finite observed prefix of the conditional copy history; no lifetime extrapolation."
+            },
+            {
+              "seed_order": 30,
+              "excess": 17,
+              "seed_cap": 8,
+              "seed_adjacent": 4,
+              "observed_copies": 0,
+              "observed_copy_resets": 0,
+              "erased_order": null,
+              "scope": "Finite observed prefix of the conditional copy history; no lifetime extrapolation."
+            }
+          ],
+          "reset_lower_bound": "floor((t-1)/3); floor(t/3) with initially even adjacent cap; floor(2t/3) while adjacent cap remains odd.",
+          "hole_rule": "Reset1 iff an odd-clock actual path point y lies below the high frontier and has C(y)=F_(K-2)-4. Witnesses at different orders are distinct.",
+          "scope": "Infinite copy/erase, clock-density and hole-witness deductions use existing alphabet/shelf/zero-allocation premises. Envelope sharpness is not actual history sharpness. Hole-free frontier paths give conditional widening only. Nonfrontier runs, actual hole-frequency control, additive martingale occupation, global dispersion/convergence and position47 remain outside this result."
         },
         "six_response_map": {
           "alphabet": [

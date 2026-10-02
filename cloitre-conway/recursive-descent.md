@@ -1485,6 +1485,9 @@ The [checker](verification/collar_check.py) records symbolic landing cases,
 actual first-even landings, literal five-row endpoints and interaction
 identities under `frontier_reset`. General nonfrontier copy runs, deriving
 the landing from local arithmetic and global dispersion remain open.
+The [moving-frontier clock theorem](exact-collars.md#a-moving-frontier-needs-recurring-cap4-holes)
+identifies reset bits with actual path holes and bounds their required
+frequency during persistent frontier copies; excluding them remains open.
 
 ### Six response states close a wider selected-orbit interface
 

@@ -2018,6 +2018,224 @@ def frontier_reset_audit(sequence, splits, fibonacci):
                 scope='A written frontier theorem follows from the existing alphabet, shelves, capture and depth-in-cycle results; no new infinite finite-base premise. Symbolic landing cases corroborate local phase and feature formulas, not exterior stopping qualification. Actual first-even landings and literal endpoints verify orders27..30. Only the order29 root is a certified canonical FIB window. The one-bit phase cost counts the declared two-periodic-option table; a qualified landing derives it and it is not an independent-input lower bound with full order supplied. Exterior landing construction uses actual global sequence queries; general nonfrontier copy runs, wider word evolution and global dispersion/convergence remain open.')
 
 
+def frontier_hole_reset(order, excess, landing_gap, response):
+    assert order >= 27 and 9 <= excess <= 46
+    previous_width = cap4_generated_width(order - 1)
+    frontier = higher_cap_width(order - 1, 3)
+    high_gap = previous_width + excess
+    assert 0 <= landing_gap <= high_gap
+    if landing_gap == high_gap:
+        return 1, None, None
+    if landing_gap > frontier:
+        return 0, None, None
+    landing_cap = generated_cap4_profile(order - 1, landing_gap)
+    query_excess = excess + 4 - landing_cap
+    queried_cap = response(query_excess)
+    assert 4 <= queried_cap <= query_excess <= 50
+    if queried_cap > 4:
+        following_gap = previous_width + excess + 4 - queried_cap
+        assert frontier < following_gap < high_gap
+    return int(queried_cap == 4), query_excess, queried_cap
+
+
+def frontier_copy_hole_audit(sequence, splits, fibonacci):
+    alphabet = (4, 7, 8, 9, 10, 13)
+    shifted_alphabet = tuple(letter - 4 for letter in alphabet)
+    adjacent_graphs = 0
+    for excess in range(9, 47):
+        for current, adjacent in product(shifted_alphabet, repeat=2):
+            if current > excess - 4 or adjacent > excess - 3:
+                continue
+            profile = [0] * (excess + 2)
+            profile[excess] = current
+            profile[excess + 1] = adjacent
+            first_cycles = capped_profile_cycles(profile[:excess + 1], excess)
+            first_points = {point for cycle in first_cycles for point in cycle}
+            assert first_points == ({excess} if current == 0 else {excess, excess - current})
+            assert {profile[point] for point in first_points} == {0, current}
+            following_cycles = capped_profile_cycles(profile, excess + 1)
+            following_points = {point for cycle in following_cycles for point in cycle}
+            assert following_points == ({excess + 1} if adjacent == 0
+                                        else {excess + 1, excess + 1 - adjacent})
+            assert {profile[point] for point in following_points} == {0, adjacent}
+            adjacent_graphs += 1
+    clock_cases = 0
+    minima = []
+    for horizon in range(1, 151):
+        minimum = horizon
+        even_minimum = horizon
+        odd_minimum = horizon
+        for first_residue in range(3):
+            even_resets = sum((first_residue + step) % 3 == 1 for step in range(horizon))
+            odd_resets = horizon - even_resets
+            even_minimum = min(even_minimum, even_resets)
+            odd_minimum = min(odd_minimum, odd_resets)
+            for odd_prefix in range(horizon + 1):
+                resets = sum(int((first_residue + step) % 3 != 1) == int(step < odd_prefix)
+                             for step in range(horizon))
+                minimum = min(minimum, resets)
+                assert resets >= (horizon - 1) // 3
+                clock_cases += 1
+        assert minimum == (horizon - 1) // 3
+        assert even_minimum == horizon // 3 and odd_minimum == 2 * horizon // 3
+        if horizon in (1, 2, 3, 4, 6, 7, 30, 150):
+            minima.append(dict(updates=horizon, general_minimum=minimum,
+                               even_adjacent_minimum=even_minimum,
+                               never_erased_odd_minimum=odd_minimum))
+    symbolic_cases = 0
+    symbolic_updates = 0
+    out_of_alphabet_queries = 0
+    arithmetic_fibonacci = [0, 1]
+    while len(arithmetic_fibonacci) <= 60:
+        arithmetic_fibonacci.append(sum(arithmetic_fibonacci[-2:]))
+    for order in range(27, 61):
+        width = cap4_generated_width(order - 1)
+        frontier = higher_cap_width(order - 1, 3)
+        assert width > frontier and width + 50 < arithmetic_fibonacci[order - 3]
+        landing_gaps = sorted({0, negative_plateau_width(order - 1),
+                               unit_defect_width(order - 1), higher_cap_width(order - 1, 2),
+                               frontier, frontier + 1})
+        for excess in range(9, 47):
+            high_gap = width + excess
+            for high_cap in alphabet[1:]:
+                if high_cap > excess:
+                    continue
+                for landing_gap in landing_gaps + [high_gap - 1, high_gap]:
+                    if landing_gap <= frontier:
+                        landing_cap = generated_cap4_profile(order - 1, landing_gap)
+                        query = excess + 4 - landing_cap
+                        choices = alphabet if query <= 47 else range(4, query + 1)
+                    else:
+                        query = None
+                        choices = (4,)
+                    for queried_cap in choices:
+                        if query is not None and queried_cap > query:
+                            continue
+                        reset, query_excess, response_cap = frontier_hole_reset(
+                            order, excess, landing_gap, lambda position: queried_cap)
+                        def profile(point):
+                            if point <= width:
+                                return generated_cap4_profile(order - 1, point)
+                            if point < high_gap:
+                                return 4
+                            if point == high_gap:
+                                return high_cap
+                            assert query_excess is not None and point == width + query_excess
+                            return response_cap
+                        for parity in (0, 1):
+                            point = landing_gap
+                            for iteration in range(8 + parity):
+                                point = width + excess + 4 - profile(point)
+                                symbolic_updates += 1
+                            selected_high = parity != reset
+                            assert point == (high_gap if selected_high else high_gap + 4 - high_cap)
+                            assert profile(point) == (high_cap if selected_high else 4)
+                            symbolic_cases += 1
+                        out_of_alphabet_queries += queried_cap not in alphabet
+    assert out_of_alphabet_queries > 0
+    actual_roots = 0
+    actual_high = []
+    actual_flat = 0
+    literal_updates = 0
+    actual_by_key = {}
+    for order in range(27, 31):
+        anchor, first_cap = fibonacci[order - 1], fibonacci[order - 2]
+        width = cap4_generated_width(order - 1)
+        response = lambda position: first_cap - sequence[anchor - width - position]
+        for excess in range(9, 47):
+            if not all(response(position) == 4 for position in range(1, excess)):
+                continue
+            high_cap = response(excess)
+            adjacent_before = response(excess + 1) - 4
+            root = fibonacci[order] - cap4_generated_width(order) - excess
+            current = anchor - sequence[root] - 4
+            adjacent_after = anchor - sequence[root - 1] - 4
+            assert current in (0, high_cap - 4)
+            assert adjacent_after in (0, adjacent_before)
+            if high_cap == 4:
+                assert current == 0 and splits[root] == anchor - width - excess
+                actual_flat += 1
+            else:
+                high_member = anchor - width - excess
+                landing, pairs = even_anchor_landing(sequence, root, anchor)
+                reset, query, queried_cap = frontier_hole_reset(order, excess, anchor - landing, response)
+                trajectory, transient, period = full_orbit(sequence, root)
+                assert period == 2
+                path_holes = [(clock, point) for clock, point in enumerate(trajectory)
+                              if clock % 2 and point < high_member and sequence[point] == first_cap - 4]
+                assert bool(path_holes) == bool(reset)
+                witness, witness_clock = None, None
+                if reset:
+                    witness = trajectory[2 * pairs - 1] if landing == high_member else root - sequence[landing]
+                    witness_clock = 2 * pairs - 1 if landing == high_member else 2 * pairs + 1
+                    assert (witness_clock, witness) in path_holes
+                    assert witness < high_member and sequence[witness] == first_cap - 4
+                depth = sequence[root - 1]
+                assert bool(current) == bool((depth - reset) % 2)
+                endpoint = root - 1
+                for iteration in range(depth):
+                    endpoint = root - sequence[endpoint]
+                assert endpoint == splits[root]
+                literal_updates += depth
+                row = dict(order=order, excess=excess, root=root, preceding_cap=high_cap,
+                           parent_cap=current + 4, adjacent_before=adjacent_before,
+                           adjacent_after=adjacent_after, reset=reset, depth_parity=depth % 2,
+                           even_landing_clock=2 * pairs, hole=witness, hole_clock=witness_clock,
+                           hole_value=sequence[witness] if witness is not None else None,
+                           frontier_index=high_member, frontier_value=sequence[high_member],
+                           tail_query=query, queried_cap=queried_cap)
+                actual_high.append(row)
+                actual_by_key[(order, excess)] = row
+            actual_roots += 1
+    histories = []
+    for excess in range(9, 47):
+        seed_order = next((order for order in range(26, 31)
+                           if all(fibonacci[order - 1] - sequence[fibonacci[order] - cap4_generated_width(order) - position] == 4
+                                  for position in range(1, excess))), None)
+        if seed_order is None:
+            continue
+        seed_root = fibonacci[seed_order] - cap4_generated_width(seed_order) - excess
+        seed_cap = fibonacci[seed_order - 1] - sequence[seed_root]
+        if seed_cap == 4:
+            continue
+        seed_adjacent = fibonacci[seed_order - 1] - sequence[seed_root - 1] - 4
+        updates = []
+        erased_order = None
+        for order in range(seed_order + 1, 31):
+            root = fibonacci[order] - cap4_generated_width(order) - excess
+            cap = fibonacci[order - 1] - sequence[root]
+            if cap == 4:
+                erased_order = order
+                assert all(fibonacci[following - 1] - sequence[fibonacci[following] - cap4_generated_width(following) - position] == 4
+                           for following in range(order, 31) for position in range(1, excess + 1))
+                break
+            assert cap == seed_cap
+            updates.append(actual_by_key[(order, excess)])
+        resets = sum(row['reset'] for row in updates)
+        count = len(updates)
+        assert resets >= max(0, (count - 1) // 3)
+        if seed_adjacent % 2 == 0:
+            assert resets >= count // 3
+        histories.append(dict(seed_order=seed_order, excess=excess, seed_cap=seed_cap,
+                               seed_adjacent=seed_adjacent, observed_copies=count,
+                               observed_copy_resets=resets, erased_order=erased_order,
+                               scope='Finite observed prefix of the conditional copy history; no lifetime extrapolation.'))
+    assert any(row['hole'] == 514118 and row['frontier_index'] == 514119
+               and row['parent_cap'] == 4 for row in actual_high)
+    return dict(shifted_alphabet=list(shifted_alphabet), frontier_positions_inclusive=[9, 46],
+                adjacent_profile_graphs=adjacent_graphs, clock_horizons_inclusive=[1, 150],
+                clock_histories=clock_cases, clock_minima=minima,
+                symbolic_orders_inclusive=[27, 60], symbolic_landing_cases=symbolic_cases,
+                symbolic_map_updates=symbolic_updates, out_of_alphabet_lookahead_cases=out_of_alphabet_queries,
+                maximum_tail_lookahead_position=50, actual_orders_inclusive=[27, 30],
+                actual_qualified_roots=actual_roots, actual_flat_roots=actual_flat,
+                actual_high_frontiers=actual_high, actual_literal_endpoint_updates=literal_updates,
+                actual_copy_histories=histories,
+                reset_lower_bound='floor((t-1)/3); floor(t/3) with initially even adjacent cap; floor(2t/3) while adjacent cap remains odd.',
+                hole_rule='Reset1 iff an odd-clock actual path point y lies below the high frontier and has C(y)=F_(K-2)-4. Witnesses at different orders are distinct.',
+                scope='Infinite copy/erase, clock-density and hole-witness deductions use existing alphabet/shelf/zero-allocation premises. Envelope sharpness is not actual history sharpness. Hole-free frontier paths give conditional widening only. Nonfrontier runs, actual hole-frequency control, additive martingale occupation, global dispersion/convergence and position47 remain outside this result.')
+
+
 def response_state_orbit(mapping, start):
     states = []
     point = start
@@ -2558,6 +2776,7 @@ def higher_projection_and_allocation_audit(sequence, splits, fibonacci):
                 bounded_tail_shelf=bounded_tail_shelf_audit(sequence, splits, fibonacci),
                 finite_tail_alphabet=finite_tail_alphabet_audit(sequence, splits, fibonacci),
                 frontier_reset=frontier_reset_audit(sequence, splits, fibonacci),
+                frontier_copy_holes=frontier_copy_hole_audit(sequence, splits, fibonacci),
                 six_response_map=six_response_map_audit(sequence, splits, fibonacci),
                 scope='Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open.')
 

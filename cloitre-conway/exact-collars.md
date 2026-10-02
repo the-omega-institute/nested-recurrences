@@ -19,6 +19,7 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 - [A propagated cap4 band generates its own profiles](#a-propagated-cap4-band-generates-its-own-profiles)
 - [A bounded upper shelf and a wider zero-allocation corridor](#a-bounded-upper-shelf-and-a-wider-zero-allocation-corridor)
 - [A finite alphabet propagates beyond the zero-allocation corridor](#a-finite-alphabet-propagates-beyond-the-zero-allocation-corridor)
+- [A moving frontier needs recurring cap4 holes](#a-moving-frontier-needs-recurring-cap4-holes)
 - [Adjacent-gap parity closure and the entrance condition](#adjacent-gap-parity-closure-and-the-entrance-condition)
 - [The prescribed basin and phase in a positive collar](#the-prescribed-basin-and-phase-in-a-positive-collar)
 - [A saturated lower barrier and the exclusion of nearby proper cycles](#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)
@@ -1485,6 +1486,162 @@ responses determine every periodic option, and five additive rows share
 fifteen responses. A qualified two-step landing seed and cycle-clock
 residue determine selection without a supplied parent cap. Constructing
 those inputs locally and controlling long nonfrontier copy runs remain open.
+
+### A moving frontier needs recurring cap4 holes
+
+The finite tail alphabet bounds strict position drops but does not exclude
+long high-member copies. At a first nonflat translated-tail position,
+persistence now forces repeated, identifiable holes on the actual inner
+orbit. Their order frequency is bounded below by the Fibonacci clock.
+This is an actual necessary condition; excluding the holes remains open.
+
+**Moving-frontier hypotheses.** Let H>=26, 9<=d<=46, and
+V_h=4h-19. Suppose
+
+$$
+Q_H(V_H+j)=4\quad(1\le j<d).
+$$
+
+Write
+
+$$
+p_h=Q_h(V_h+d)-4,\qquad R_h=Q_h(V_h+d+1)-4. \tag{C.1}
+$$
+
+The existing 47-position alphabet gives both quantities in
+{0,3,4,5,6,9}. The sharper shelf bounds p_h<=d-4 and R_h<=d-3.
+The zero second-cap rule holds at every update h>H.
+
+**Two entries can only copy or erase.** The preceding flat prefix
+propagates, and for every h>H,
+
+$$
+p_h\in\{0,p_{h-1}\},\qquad R_h\in\{0,R_{h-1}\}. \tag{C.2}
+$$
+
+In particular, after p reaches zero the whole translated prefix through d
+is permanently4. Before erasure p is one constant positive amplitude.
+The adjacent R is also constant until it erases, so its parity can change
+only once, from odd to even.
+
+**Proof.** Put U=V_(h-1). In translated gap coordinates j=r-U the
+periodic map for the gap V_h+d is j -> d-(Q_(h-1)(U+j)-4).
+Every periodic point has j in0..d by the alphabet and cap3 shelf.
+If the preceding p is positive, its only cycle is {d,d-p}, with
+shifted readouts {p,0}. If p is zero, d is the only fixed point.
+The complementary child has cap zero, so the next shifted parent value
+is0 or p. The same constant-band argument applies at each smaller j,
+proving prefix propagation.
+
+For the adjacent root replace d by w=d+1. Its profile is zero below d,
+p at d and R at w. If R=0 its only cycle is the fixed point w.
+If R>0 then R>=3; w-R and w-p, when p>0, are strictly below d.
+No point maps to d, and the unique cycle is {w,w-R}, with readouts
+{R,0}. When p=0 this cycle classification is unchanged. Zero second
+cap again preserves the selected readout. This proves(C.2). QED.
+
+**The phase bit has a path-hole witness.** At a live frontier update
+h>H, put A=F_(h-1), B=F_(h-2), U=V_(h-1), W=Z_(h-1),
+N=F_h-(V_h+d), e=4+p_(h-1), and ell=A-U-d. Its two-cycle
+is {ell,ell+e-4}, with readouts B-e and B-4. Define sigma from
+the first even landing X<=A, as in the
+[frontier reset rule](recursive-descent.md#an-even-landing-determines-a-frontier-phase).
+Then
+
+$$
+\sigma_h=1\quad\Longleftrightarrow\quad
+\text{the prescribed orbit visits a }y<\ell\text{ at an odd clock,
+with }C(y)=B-4. \tag{C.3}
+$$
+
+This y is a cap4 hole below the first high-cap point: C(ell)=B-e<B-4.
+No clock is guessed; the witness is an actual orbit point.
+
+To prove(C.3), if X=ell then its preceding odd point y is below ell
+and has C(y)=B-4. Otherwise sigma=1 precisely in the low-cap landing
+case c=Q_(h-1)(A-X)<=3 with Q_(h-1)(U+d+4-c)=4.
+The next odd point y=ell-4+c is the required witness, one to four
+positions below ell. Conversely any such odd-clock y maps to ell
+at an even clock, fixing the reset parity on the two-cycle.
+
+For d<=43 this is the existing reset theorem. The same proof extends
+the rule to d<=46 without an additional alphabet premise. The queried
+position j=d+4-c can now reach50. The queries fit in the preceding
+natural block since U+50<F_(h-3) for h>=27. The sharper shelf gives
+4<=q=Q_(h-1)(U+j)<=j. If q>4, the next even gap U+d+4-q
+lies between U+c and U+d-1, inside the preceding flat cap4 band.
+It therefore maps to ell at an odd clock, giving sigma=0. If q=4,
+it maps to ell at an even clock, giving sigma=1. The extra response
+is bounded by the shelf, not asserted to belong to the47-letter word.
+The first landing is still constructed with O(h) actual-C queries.
+
+**A persistent frontier needs reset density at least one third.** Suppose
+p stays positive through t successive updates H+1,...,H+t. Let M_t
+count the updates with sigma=1. Then
+
+$$
+\boxed{M_t\ge\left\lfloor\frac{t-1}{3}\right\rfloor.} \tag{C.4}
+$$
+
+If R_H is even, the stronger bound floor(t/3) holds. If R stays odd
+throughout these updates, floor(2t/3) holds. Each counted reset gives
+a distinct physical hole witness: its C-value F_(h-2)-4 strictly
+increases with h, so the same integer cannot witness two orders.
+
+**Proof.** A copied high cap is selected exactly when
+D_h-sigma_h is odd, with
+
+$$
+D_h=C(N-1)=F_{h-1}-4-R_h.
+$$
+
+Thus on a persistent copy sigma=1 exactly when D_h is even.
+F_(h-1) is even exactly at h=1 mod3. By(C.2), the R parities are
+an odd prefix followed by an even suffix, or are even throughout.
+If all R are even, reset counts are the number of h=1 mod3, at
+least floor(t/3). If all remain odd, count the complementary two
+order classes, at least floor(2t/3).
+
+For the mixed case compare with the all-even count. An odd prefix of
+length L changes that count by L-2a, where a is its number of orders
+h=1 mod3. If the first update is not1 mod3, this difference is
+nonnegative. If it is1 mod3, write L=3q+r; the difference is q
+when r=0, q-1 when r=1, and q when r=2. It is therefore at
+least-1, while the all-even count is ceil(t/3) for that starting
+class. The minimum is at least ceil(t/3)-1=floor((t-1)/3).
+Taking that starting class and an odd prefix of length one attains the
+bound in the clock envelope. This is envelope sharpness, not an actual-C
+history or an infinite family. QED.
+
+**Conditional erasure and widening.** If at most m witnessed reset events
+occur before erasure, a high frontier must erase by update3m+4.
+For even R_H, update3m+3 suffices. Otherwise survival to that update
+would contradict(C.4). In particular, hole-free frontier paths force
+erasure within four updates, followed by permanent flat-prefix propagation.
+An upper asymptotic reset density below1/3 also rules out perpetual
+persistence, without requiring complete cap4 contiguity.
+
+The generated first16 tail responses are flat from order30. If the
+hole-free premise holds whenever each successive frontier17..D is live,
+with D<=46, induction gives a flat first-D tail from order
+30+4(D-16). This is conditional; the hole-free premise is not proved.
+The bound does not include position47, whose adjacent response lies
+outside the propagated47-position alphabet.
+
+The actual order30, excess13 orbit has a local hole y=514118, below
+ell=514119, with C(y)=317807 and C(ell)=317803. Its reset is1,
+but its depth is odd, so the high cap erases. A hole can therefore
+cause erasure as well as sustain a copy, depending on the clock.
+The [checker](verification/collar_check.py) records the adjacent-map
+classification, exact clock-envelope minima, shelf-based lookahead and
+actual hole witnesses under `frontier_copy_holes`.
+
+This theorem concerns a first nonflat moving frontier. It does not bound
+all nonfrontier copy runs or produce the actual exterior paths. Its hole
+counts concern inner-orbit events across orders, not occupation along the
+additive-child martingale. A uniform dispersion inequality still needs
+its own occupation argument. The full recursive minimum, word construction
+and global convergence remain open.
 
 ### Adjacent-gap parity closure and the entrance condition
 
