@@ -1642,6 +1642,10 @@ counts concern inner-orbit events across orders, not occupation along the
 additive-child martingale. A uniform dispersion inequality still needs
 its own occupation argument. The full recursive minimum, word construction
 and global convergence remain open.
+The [general copy-run clock](recursive-descent.md#copy-runs-trade-reset-events-against-adjacent-migrations)
+also counts adjacent-row migrations. Its reset can enter through another
+high-cap point; an actual nonfrontier copy has no lower hole. The flat-prefix
+hypothesis is essential to the hole equivalence above.
 
 ### Adjacent-gap parity closure and the entrance condition
 

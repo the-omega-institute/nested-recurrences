@@ -62,6 +62,9 @@ conjectures remain finite observations. No Lean formalization is included.
    A [six-response map](cloitre-conway/recursive-descent.md#six-response-states-close-a-wider-selected-orbit-interface)
    extends the decoder beyond that frontier and shares responses across five
    rows; qualified landing and clock data still remain inputs.
+   For [general two-cycle copy runs](cloitre-conway/recursive-descent.md#copy-runs-trade-reset-events-against-adjacent-migrations),
+   the clock forces phase resets or migrations of the adjacent row.
+   A reset outside the frontier need not have a hole below its high member.
 3. **Inner dynamics between Fibonacci indices.** Control periods,
    landing times, and selected phases in the wider block interiors.
 

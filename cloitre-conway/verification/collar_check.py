@@ -2253,6 +2253,173 @@ def response_state_endpoint(mapping, start, steps):
     return states[position]
 
 
+def copy_clock_variation_audit(sequence, splits, fibonacci):
+    alphabet = (4, 7, 8, 9, 10, 13)
+    maps = 0
+    seeds = 0
+    direct_updates = 0
+    maximum_transient = 0
+    for high_cap in alphabet[1:]:
+        free = [letter for letter in alphabet if letter not in (4, high_cap)]
+        for responses in product(alphabet, repeat=4):
+            mapping = dict(zip(free, responses))
+            mapping.update({4: high_cap, high_cap: 4})
+            maps += 1
+            for start in alphabet:
+                states, transient, period = response_state_orbit(mapping, start)
+                if set(states[transient:]) != {4, high_cap}:
+                    continue
+                assert period == 2 and transient <= 4
+                maximum_transient = max(maximum_transient, transient)
+                reset = int((transient + int(states[transient] == high_cap)) % 2 == 0)
+                point = start
+                for step in range(16):
+                    if step >= transient:
+                        assert (point == 4) == bool((step - reset) % 2)
+                    point = mapping[point]
+                    direct_updates += 1
+                seeds += 1
+    assert maps == 5 * 6 ** 4 and maximum_transient == 4
+    clock_cases = 0
+    sharp_cases = 0
+    for horizon in range(1, 15):
+        for first_residue in range(3):
+            clock = [int((first_residue + step) % 3 == 1) for step in range(horizon)]
+            clock_variation = sum(before != after for before, after in zip(clock, clock[1:]))
+            assert clock_variation >= 2 * (horizon - 1) // 3
+            for parities in product((0, 1), repeat=horizon):
+                resets = [phase ^ parity for phase, parity in zip(clock, parities)]
+                switches = sum(before != after for before, after in zip(parities, parities[1:]))
+                reset_variation = sum(before != after for before, after in zip(resets, resets[1:]))
+                cost = 2 * sum(resets) - resets[0] - resets[-1] + switches
+                assert clock_variation <= switches + reset_variation <= cost
+                assert sum(resets) >= max(0, (clock_variation - switches + 1) // 2)
+                sharp_cases += cost == clock_variation
+                clock_cases += 1
+            assert 2 * sum(clock) - clock[0] - clock[-1] == clock_variation
+    actual_rows = []
+    categories = {}
+    literal_updates = 0
+    copied = {}
+    maximum_actual_transient = 0
+    for order in range(27, 31):
+        anchor, lower = fibonacci[order - 1], fibonacci[order - 2]
+        width = cap4_generated_width(order)
+        previous_width = cap4_generated_width(order - 1)
+        response = lambda position: lower - sequence[anchor - previous_width - position]
+        for excess in range(9, 44):
+            root = fibonacci[order] - width - excess
+            high_member = anchor - previous_width - excess
+            high_cap = response(excess)
+            if high_cap == 4:
+                continue
+            partner = high_member + high_cap - 4
+            if sequence[partner] != lower - 4:
+                continue
+            trajectory, transient, period = full_orbit(sequence, root)
+            if set(trajectory[transient:]) != {high_member, partner}:
+                continue
+            assert period == 2
+            reset = int(trajectory.index(high_member) % 2 == 0)
+            landing, pairs = even_anchor_landing(sequence, root, anchor)
+            landing_cap = lower - sequence[landing]
+            seed = response(excess + 4 - landing_cap)
+            mapping = {letter: response(excess + 4 - letter) for letter in alphabet}
+            states, delay, mapped_period = response_state_orbit(mapping, seed)
+            assert mapped_period == 2 and set(states[delay:]) == {4, high_cap}
+            assert delay <= 4
+            maximum_actual_transient = max(maximum_actual_transient, delay)
+            assert reset == int((delay + int(states[delay] == high_cap)) % 2 == 0)
+            holes = [(clock, point) for clock, point in enumerate(trajectory)
+                     if clock % 2 and point < high_member and sequence[point] == lower - 4]
+            if reset:
+                precursor = trajectory[transient - 1]
+                precursor_clock = transient - 1
+                assert precursor not in (high_member, partner)
+                if trajectory[transient] == high_member:
+                    assert precursor_clock % 2 == 1 and sequence[precursor] == lower - 4
+                    category = 'lower_cap4_hole' if precursor < high_member else 'upper_cap4_precursor'
+                else:
+                    assert precursor_clock % 2 == 0 and precursor > high_member
+                    assert sequence[precursor] == lower - high_cap
+                    category = 'upper_high_cap_precursor'
+            else:
+                category, precursor, precursor_clock = 'no_reset', None, None
+                assert not holes
+            depth = sequence[root - 1]
+            copying = bool((depth - reset) % 2)
+            endpoint = root - 1
+            for iteration in range(depth):
+                endpoint = root - sequence[endpoint]
+            literal_updates += depth
+            assert endpoint == splits[root] == (high_member if copying else partner)
+            parent_cap = anchor - sequence[root]
+            assert parent_cap == (high_cap if copying else 4)
+            key = category + ('_copy' if copying else '_erase')
+            categories[key] = categories.get(key, 0) + 1
+            row = dict(order=order, excess=excess, root=root, high_cap=high_cap,
+                       parent_cap=parent_cap, adjacent_cap=anchor - sequence[root - 1],
+                       high_member=high_member, partner=partner, reset=reset,
+                       category=category, precursor=precursor, precursor_clock=precursor_clock,
+                       first_cycle_clock=transient, even_landing_clock=2 * pairs,
+                       response_seed=seed, response_transient=delay,
+                       odd_lower_cap4_holes=[dict(clock=clock, index=point) for clock, point in holes])
+            actual_rows.append(row)
+            if copying:
+                copied[(order, excess)] = row
+    runs = []
+    migrations = []
+    for excess in range(9, 44):
+        orders = [order for order in range(27, 31) if (order, excess) in copied]
+        while orders:
+            start = orders.pop(0)
+            consecutive = [start]
+            while orders and orders[0] == consecutive[-1] + 1:
+                consecutive.append(orders.pop(0))
+            rows = [copied[(order, excess)] for order in consecutive]
+            assert len({row['high_cap'] for row in rows}) == 1
+            parities = [row['adjacent_cap'] % 2 for row in rows]
+            resets = [row['reset'] for row in rows]
+            switches = sum(before != after for before, after in zip(parities, parities[1:]))
+            clock = [int(order % 3 == 1) for order in consecutive]
+            clock_variation = sum(before != after for before, after in zip(clock, clock[1:]))
+            assert resets == [phase ^ parity for phase, parity in zip(clock, parities)]
+            assert 2 * sum(resets) - resets[0] - resets[-1] + switches >= clock_variation
+            for position in range(1, len(rows)):
+                if parities[position] == parities[position - 1]:
+                    continue
+                row = rows[position]
+                order = row['order']
+                adjacent = row['root'] - 1
+                child = splits[adjacent]
+                child_excess = fibonacci[order - 1] - child - cap4_generated_width(order - 1)
+                shift = fibonacci[order - 2] - (adjacent - child)
+                assert child_excess == excess + 5 - shift <= excess - 2
+                assert shift in alphabet and shift >= 7
+                assert fibonacci[order - 2] - sequence[child] == row['adjacent_cap']
+                assert fibonacci[order - 3] - sequence[adjacent - child] == 0
+                migrations.append(dict(order=order, excess=excess, adjacent_root=adjacent,
+                                       child=child, child_excess=child_excess, shift=shift))
+            runs.append(dict(excess=excess, orders=consecutive, resets=resets,
+                             adjacent_parities=parities, switches=switches,
+                             clock_variation=clock_variation))
+    witness = next(row for row in actual_rows if row['root'] == 196314)
+    assert witness['reset'] == 1 and witness['parent_cap'] == witness['high_cap'] == 9
+    assert witness['precursor'] == 121297 and witness['precursor_clock'] == 12
+    assert witness['category'] == 'upper_high_cap_precursor' and not witness['odd_lower_cap4_holes']
+    assert migrations
+    return dict(two_cycle_maps=maps, qualified_response_seeds=seeds,
+                direct_map_updates=direct_updates, maximum_response_transient=maximum_transient,
+                binary_clock_horizons_inclusive=[1, 14], binary_clock_cases=clock_cases,
+                sharp_binary_clock_cases=sharp_cases,
+                clock_inequality='2M-reset_first-reset_last+S >= B_t >= floor(2(t-1)/3).',
+                actual_orders_inclusive=[27, 30], actual_two_cycle_rows=len(actual_rows),
+                actual_categories=categories, actual_literal_endpoint_updates=literal_updates,
+                maximum_actual_response_transient=maximum_actual_transient,
+                actual_rows=actual_rows, actual_copy_runs=runs, actual_adjacent_migrations=migrations,
+                scope='General selected {4,e} two-cycle phase decoder and reset/adjacent-variation tradeoff are infinite written deductions from existing premises. Reset precursors can be lower holes, upper cap4 points or upper same-high-cap points. Actual196314 resets and copies with no odd lower cap4 hole. Binary sharpness is a relaxed clock envelope, not actual history sharpness. Adjacent migration counts cross orders and are not bounded by the single-spine15-drop budget or additive martingale occupation. Actual entry/word generation and global dispersion remain open.')
+
+
 def six_response_map_audit(sequence, splits, fibonacci):
     alphabet = (4, 7, 8, 9, 10, 13)
     offsets = (0, 2, 3, 5, 7)
@@ -2778,6 +2945,7 @@ def higher_projection_and_allocation_audit(sequence, splits, fibonacci):
                 frontier_reset=frontier_reset_audit(sequence, splits, fibonacci),
                 frontier_copy_holes=frontier_copy_hole_audit(sequence, splits, fibonacci),
                 six_response_map=six_response_map_audit(sequence, splits, fibonacci),
+                copy_clock_variation=copy_clock_variation_audit(sequence, splits, fibonacci),
                 scope='Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open.')
 
 
