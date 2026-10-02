@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_sha256": "49c35462de2313bf2ff018c16a82cee1131a125aa211e25a90dbbe62b1095674",
+  "source_sha256": "09dd1a679da019bfcc8956109215b5449b4f856eb1c5a954d832eeed5c3cb0cb",
   "scope": "Exact public three-block selector audit, recursive nonautonomous window descent and conserved conditional seed-label budgets. Row-local Cartesian decompositions remain distinct from actual selected splits and their proof costs.",
   "period_five_payloads": 13,
   "parent_rows": 65,
@@ -4010,6 +4010,243 @@
         "only_moment_admissible_split": 77846,
         "golden_defect": 1662,
         "quartic_ratio": "4645051457352564736/49606335160931882511"
+      },
+      "two_generation_bottleneck": {
+        "index": 125952,
+        "order": 26,
+        "target": 79505,
+        "golden_defect": 1662,
+        "root_geometric_splits": 4560,
+        "only_root_split": 77846,
+        "root_variance": "42164104921/14852025755422949376",
+        "children": [
+          {
+            "order": 25,
+            "index": 77846,
+            "target": 49136,
+            "geometric_splits": 2822,
+            "distinct_readouts": 162,
+            "scalar_maximum": {
+              "split": 47729,
+              "variance": "823408936180609/8710972607342980788"
+            },
+            "moment_singleton_maximum": {
+              "split": 47671,
+              "readout": 49138,
+              "variance": "1092074665181809/8717142486973831300"
+            },
+            "optimal_variance": "4960146254986283878721557/12307866734920245597359626144",
+            "affine_majorant": {
+              "slope": "-6878522502504563817/316210639850994157628128",
+              "intercept": "13160275634604895997577256933/12307866734920245597359626144"
+            },
+            "support": [
+              {
+                "split": 48994,
+                "complement": 28852,
+                "values": [
+                  31226,
+                  17905
+                ],
+                "readout": 49131,
+                "weight": "3/4",
+                "variance": "1095991411389121/2141565854956182952"
+              },
+              {
+                "split": 47767,
+                "complement": 30079,
+                "values": [
+                  30040,
+                  19111
+                ],
+                "readout": 49151,
+                "weight": "1/4",
+                "variance": "667920244287409/8706908165533459588"
+              }
+            ]
+          },
+          {
+            "order": 24,
+            "index": 48106,
+            "target": 30369,
+            "geometric_splits": 1739,
+            "distinct_readouts": 107,
+            "scalar_maximum": {
+              "split": 30007,
+              "variance": "40901998148089/314206858713602637"
+            },
+            "moment_singleton_maximum": {
+              "split": 29321,
+              "readout": 30370,
+              "variance": "90416459685049/318660680984952865"
+            },
+            "optimal_variance": "254240890949692080774859/815565841278936905192031555",
+            "affine_majorant": {
+              "slope": "-949281299542772672/33907032024235517614935",
+              "intercept": "693671534111144977257633163/815565841278936905192031555"
+            },
+            "support": [
+              {
+                "split": 28761,
+                "complement": 19345,
+                "values": [
+                  17815,
+                  12509
+                ],
+                "readout": 30324,
+                "weight": "1/46",
+                "variance": "505880932289209/321892767446239905"
+              },
+              {
+                "split": 29321,
+                "complement": 18785,
+                "values": [
+                  18369,
+                  12001
+                ],
+                "readout": 30370,
+                "weight": "45/46",
+                "variance": "90416459685049/318660680984952865"
+              }
+            ]
+          }
+        ],
+        "dual_inequalities_checked": 4561,
+        "literal_endpoint_updates": 158858,
+        "scalar_two_generation_maximum": "148813706951672661383119/1376064621342200247478124544",
+        "scalar_two_generation_quadratic_ratio": "148813706951672661383119/239602161729633761986884",
+        "moment_policy_variants": [
+          {
+            "randomized_children": [],
+            "variance": "2113460787496130864351/11374684946841045329510400",
+            "quadratic_ratio": "2113460787496130864351/1980574938114687216900"
+          },
+          {
+            "randomized_children": [
+              48106
+            ],
+            "variance": "635598842932423388898731606293/3234650889912628097922326672179200",
+            "quadratic_ratio": "635598842932423388898731606293/563221620295559297808959078700"
+          },
+          {
+            "randomized_children": [
+              77846
+            ],
+            "variance": "46643832388612193132685772719683/130488243920392888000942875067023360",
+            "quadratic_ratio": "46643832388612193132685772719683/22720782758831511850769718905460"
+          },
+          {
+            "randomized_children": [
+              77846,
+              48106
+            ],
+            "variance": "13661024941286689532863351608692510814817/37107305942346582150188018679783244856033280",
+            "quadratic_ratio": "13661024941286689532863351608692510814817/6461172376539219911977611329071500131580"
+          }
+        ],
+        "terminal_certificates": [
+          {
+            "policy": "one_randomized_child",
+            "expected_scalar_numerator": 79506,
+            "variance": "46643832388612193132685772719683/130488243920392888000942875067023360",
+            "leaves": [
+              {
+                "order": 24,
+                "index": 48994,
+                "value": 31226,
+                "probability": "24497/83968"
+              },
+              {
+                "order": 23,
+                "index": 28852,
+                "value": 17905,
+                "probability": "7213/41984"
+              },
+              {
+                "order": 24,
+                "index": 47767,
+                "value": 30040,
+                "probability": "47767/503808"
+              },
+              {
+                "order": 23,
+                "index": 30079,
+                "value": 19111,
+                "probability": "30079/503808"
+              },
+              {
+                "order": 23,
+                "index": 29321,
+                "value": 18369,
+                "probability": "29321/125952"
+              },
+              {
+                "order": 22,
+                "index": 18785,
+                "value": 12001,
+                "probability": "18785/125952"
+              }
+            ]
+          },
+          {
+            "policy": "optimal_two_generation",
+            "expected_scalar_numerator": 79505,
+            "variance": "13661024941286689532863351608692510814817/37107305942346582150188018679783244856033280",
+            "leaves": [
+              {
+                "order": 24,
+                "index": 48994,
+                "value": 31226,
+                "probability": "24497/83968"
+              },
+              {
+                "order": 23,
+                "index": 28852,
+                "value": 17905,
+                "probability": "7213/41984"
+              },
+              {
+                "order": 24,
+                "index": 47767,
+                "value": 30040,
+                "probability": "47767/503808"
+              },
+              {
+                "order": 23,
+                "index": 30079,
+                "value": 19111,
+                "probability": "30079/503808"
+              },
+              {
+                "order": 23,
+                "index": 28761,
+                "value": 17815,
+                "probability": "9587/1931264"
+              },
+              {
+                "order": 22,
+                "index": 19345,
+                "value": 12509,
+                "probability": "19345/5793792"
+              },
+              {
+                "order": 23,
+                "index": 29321,
+                "value": 18369,
+                "probability": "439815/1931264"
+              },
+              {
+                "order": 22,
+                "index": 18785,
+                "value": 12001,
+                "probability": "281775/1931264"
+              }
+            ]
+          }
+        ],
+        "minimum_randomized_internal_nodes_for_quadratic_constant_two": 1,
+        "required_randomized_child": 77846,
+        "scope": "Exact finite two-generation optimization at actual125952 with supplied actual child profiles and nodewise moment constraints. Root moment admissibility forces77846. Independent affine dual certificates verify full child optima over4561 geometric splits; terminal laws independently reproduce variance and scalar means. Scalar-valid maximum is below the quadratic constant1; every nodewise deterministic moment policy is below constant2. Randomizing only child77846 reaches constant2, while two mixed children attain the full maximum. This is a proof decomposition for existing C values, not the prescribed selected tree, an actual input minimum, a uniform dispersion theorem or a global rate."
       },
       "scope": "Written paired and cycle-average quadratic bounds plus moment-submartingale decay criterion and sharp two-support conditional optimizer. Finite audits verify supplied mean conditions, not a uniform global inequality; original selector is unchanged."
     },
