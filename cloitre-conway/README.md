@@ -130,7 +130,11 @@ For the separate asymptotic route, an
 [exact two-generation certificate](dispersion.md#a-two-generation-certificate-at-the-forced-geometric-bottleneck)
 repairs a full-geometric one-step bottleneck using a moment policy.
 One randomized child split is necessary and sufficient in that finite
-contract; the uniform inequality and actual occupation law remain open.
+nodewise contract. A [block-terminal mean certificate](dispersion.md#block-terminal-means-remove-intermediate-scalar-constraints)
+allows intermediate scalar deficits: a deterministic two-generation
+tree already repairs the same variance threshold, and two complete trees
+attain its larger finite optimum. Both contracts give conditional decay
+routes; the uniform inequality and actual occupation law remain open.
 
 The local interface theorems state exactly which context is supplied.
 For a bounded natural-cap domain, the

@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_sha256": "09dd1a679da019bfcc8956109215b5449b4f856eb1c5a954d832eeed5c3cb0cb",
+  "source_sha256": "6bc0df5dc07c2981d630560311186dc952345787038441aff6f4efa1c8f2dd1a",
   "scope": "Exact public three-block selector audit, recursive nonautonomous window descent and conserved conditional seed-label budgets. Row-local Cartesian decompositions remain distinct from actual selected splits and their proof costs.",
   "period_five_payloads": 13,
   "parent_rows": 65,
@@ -4247,6 +4247,196 @@
         "minimum_randomized_internal_nodes_for_quadratic_constant_two": 1,
         "required_randomized_child": 77846,
         "scope": "Exact finite two-generation optimization at actual125952 with supplied actual child profiles and nodewise moment constraints. Root moment admissibility forces77846. Independent affine dual certificates verify full child optima over4561 geometric splits; terminal laws independently reproduce variance and scalar means. Scalar-valid maximum is below the quadratic constant1; every nodewise deterministic moment policy is below constant2. Randomizing only child77846 reaches constant2, while two mixed children attain the full maximum. This is a proof decomposition for existing C values, not the prescribed selected tree, an actual input minimum, a uniform dispersion theorem or a global rate."
+      },
+      "two_generation_horizon": {
+        "index": 125952,
+        "order": 26,
+        "target": 79505,
+        "deterministic_trees": [
+          {
+            "root_split": 76851,
+            "child_splits": [
+              46389,
+              30462
+            ],
+            "root_readout": 79450,
+            "child_targets": [
+              48153,
+              31297
+            ],
+            "child_readouts": [
+              48153,
+              31335
+            ],
+            "terminal_scalar": 79488,
+            "terminal_reward": "24477134593683418/209038118427",
+            "variance": "834633144811890071/1105387041563461287936",
+            "quadratic_ratio": "834633144811890071/192471429465423396",
+            "leaves": [
+              {
+                "order": 24,
+                "index": 46389,
+                "value": 28678,
+                "probability": "15463/41984"
+              },
+              {
+                "order": 23,
+                "index": 30462,
+                "value": 19475,
+                "probability": "5077/20992"
+              },
+              {
+                "order": 23,
+                "index": 30462,
+                "value": 19475,
+                "probability": "5077/20992"
+              },
+              {
+                "order": 22,
+                "index": 18639,
+                "value": 11860,
+                "probability": "6213/41984"
+              }
+            ]
+          },
+          {
+            "root_split": 77160,
+            "child_splits": [
+              48499,
+              30102
+            ],
+            "root_readout": 79434,
+            "child_targets": [
+              48454,
+              30980
+            ],
+            "child_readouts": [
+              48473,
+              31044
+            ],
+            "terminal_scalar": 79517,
+            "terminal_reward": "85708236974499743521/732246868737615",
+            "variance": "1514430909993737622619/3872098572350303706808320",
+            "quadratic_ratio": "1514430909993737622619/674214839896421536020",
+            "leaves": [
+              {
+                "order": 24,
+                "index": 48499,
+                "value": 30758,
+                "probability": "48499/125952"
+              },
+              {
+                "order": 23,
+                "index": 28661,
+                "value": 17715,
+                "probability": "28661/125952"
+              },
+              {
+                "order": 23,
+                "index": 30102,
+                "value": 19135,
+                "probability": "5017/20992"
+              },
+              {
+                "order": 22,
+                "index": 18690,
+                "value": 11909,
+                "probability": "3115/20992"
+              }
+            ]
+          }
+        ],
+        "small_complete_terminal_audit": {
+          "roots_inclusive": [
+            8,
+            89
+          ],
+          "deterministic_trees_checked": 8444,
+          "strict_horizon_improvements_over_nodewise": 23,
+          "upper_cap_terminal_equal_trees": 2067,
+          "scope": "Complete small two-generation geometric tree enumeration independently equates leaf variance and recursive variance, compares horizon/nodewise optimizers and checks telescoping nonnegative upper-cap deficits. Infinite support and collapse claims use the written arguments."
+        },
+        "low_scalar_tree_weight": "12/29",
+        "dual_multiplier": "2338857016326494043564802201/1479652574094743720808805515",
+        "child_states": 9120,
+        "child_candidate_comparisons": 20798160,
+        "child_dual_scores_sha256": "2c6162aa4d2f3ddc523f9ce57140b908476f3053930e07855a28b566efa874ee",
+        "supporting_child_duals": [
+          {
+            "order": 25,
+            "index": 76851,
+            "maximizing_splits": [
+              46389
+            ],
+            "score": "21056222774266986468425799418651/140919292770927973410362430",
+            "candidate_splits": 1827
+          },
+          {
+            "order": 25,
+            "index": 77160,
+            "maximizing_splits": [
+              48499
+            ],
+            "score": "20123803551380544871648387789168/134513870372249429164436865",
+            "candidate_splits": 2136
+          },
+          {
+            "order": 24,
+            "index": 48792,
+            "maximizing_splits": [
+              30102
+            ],
+            "score": "3062396533634402734914993538450/32881168313216527129084567",
+            "candidate_splits": 2425
+          },
+          {
+            "order": 24,
+            "index": 49101,
+            "maximizing_splits": [
+              30462
+            ],
+            "score": "55231737579572303496334432406105/591861029637897488323522206",
+            "candidate_splits": 2734
+          }
+        ],
+        "root_candidate_comparisons": 4560,
+        "maximizing_root_splits": [
+          76851,
+          77160,
+          78601
+        ],
+        "maximizing_trees": [
+          {
+            "root_split": 76851,
+            "child_splits": [
+              46389,
+              30462
+            ],
+            "terminal_scalar": 79488
+          },
+          {
+            "root_split": 77160,
+            "child_splits": [
+              48499,
+              30102
+            ],
+            "terminal_scalar": 79517
+          },
+          {
+            "root_split": 78601,
+            "child_splits": [
+              48499,
+              28661
+            ],
+            "terminal_scalar": 79517
+          }
+        ],
+        "dual_tree_score": "359169683078734116659306974911098/1479652574094743720808805515",
+        "optimal_variance": "1412849386279431524430818924772589/2608118866434603556200358420902051840",
+        "optimal_quadratic_ratio": "1412849386279431524430818924772589/454129049430862363815755353441740",
+        "minimum_split_randomization_for_quadratic_constant_two": 0,
+        "minimum_deterministic_tree_support_for_optimum": 2,
+        "scope": "Exact two-generation horizon-mean proof-policy optimum for supplied actual C values. One deterministic tree reaches constant2 despite a root scalar deficit71; its child gains19/64 give terminal surplus12. The full optimum mixes two complete deterministic trees with weight12/29 and preserves only the block-terminal mean. Exact integer comparisons cover20798160 child choices and4560 roots. Three dual-maximizing trees have unique child optima and only two distinct terminal laws, with scalar means79488/79517; attaining the full optimum therefore requires two trees. This broader contract does not correct or contradict the nodewise PR32 minimum, change the recurrence, reconstruct actual selected five-windows or prove uniform dispersion/convergence."
       },
       "scope": "Written paired and cycle-average quadratic bounds plus moment-submartingale decay criterion and sharp two-support conditional optimizer. Finite audits verify supplied mean conditions, not a uniform global inequality; original selector is unchanged."
     },
