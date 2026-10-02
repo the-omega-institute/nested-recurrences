@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "2f4fb053c3ebc3d15ac2e5342fe192cba9286f852b3b8778436165388dfe7b6b",
+  "source_sha256": "3e7d23d6a5bdac4210ca3b0e0c16b5434be45b5c513906c9f4b8e0e0775c6d2c",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -5420,6 +5420,498 @@
           ],
           "literal_endpoint_updates": 1108167,
           "scope": "The certified20-value base band propagates by the cap3 shelf; profile values, selected shifts and descendants are arithmetic to order22. The canonical family m=19 mod60 has a persistent interaction and a nine-symbol one-edge alphabet including F6. Symbolic rows do not directly evaluate C at huge Fibonacci orders; four-bit label packing is not an independent selector-input lower bound. Full cap4 support, wide-block profiles, high-cap allocations and uniform dispersion remain open."
+        },
+        "bounded_tail_shelf": {
+          "base_order": 24,
+          "base_tail_gap_interval_inclusive": [
+            78,
+            230
+          ],
+          "base_tail_values": 153,
+          "base_tail_sha256": "b31eda0623a04cf285ba6a230b5056e18bfab7aeb59cb5d0f111bae672b7e0fa",
+          "literal_endpoint_updates": 14613200,
+          "shelf_formula": "4<=Q_K(v)<=max(9,v-(4K-19)) for K>=24; sharper max(4,v-(4K-19)) for K>=26",
+          "strengthened_base_order": 26,
+          "strengthened_base_gap_interval_inclusive": [
+            86,
+            93
+          ],
+          "strengthened_base_values": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "extended_generated_band": "Q_K(V_K+j)=4 for1<=j<=8, K>=26; first spine keeps j to order26",
+          "ternary_base_gap_interval_inclusive": [
+            94,
+            98
+          ],
+          "ternary_base_values": [
+            8,
+            4,
+            9,
+            9,
+            8
+          ],
+          "ternary_tail": {
+            "base_order": 26,
+            "response_positions_inclusive": [
+              9,
+              13
+            ],
+            "response_alphabet": [
+              4,
+              8,
+              9
+            ],
+            "response_word_bits": 8,
+            "complete_response_words": 243,
+            "complete_word_graphs": 1215,
+            "complete_word_decodings": 3645,
+            "distinct_complete_option_descriptors": 243,
+            "actual_words": [
+              {
+                "order": 26,
+                "response_word": [
+                  8,
+                  4,
+                  9,
+                  9,
+                  8
+                ]
+              },
+              {
+                "order": 27,
+                "response_word": [
+                  8,
+                  4,
+                  4,
+                  9,
+                  8
+                ]
+              },
+              {
+                "order": 28,
+                "response_word": [
+                  4,
+                  4,
+                  4,
+                  4,
+                  8
+                ]
+              },
+              {
+                "order": 29,
+                "response_word": [
+                  4,
+                  4,
+                  4,
+                  4,
+                  8
+                ]
+              },
+              {
+                "order": 30,
+                "response_word": [
+                  4,
+                  4,
+                  4,
+                  4,
+                  4
+                ]
+              }
+            ],
+            "actual_selected_roots": 52,
+            "actual_periodic_phases": 59,
+            "actual_first_spine_states": 182,
+            "inherited_five_pattern_states": 350,
+            "scalar_interaction_alphabet": [
+              -5,
+              -4,
+              -1,
+              0,
+              1,
+              4,
+              5
+            ],
+            "terminal_flat_seed_order": 30,
+            "terminal_flat_seed_gap_interval_inclusive": [
+              110,
+              117
+            ],
+            "terminal_flat_seed_values": [
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4
+            ],
+            "eventual_generated_band": "Q_K(V_K+j)=4 for1<=j<=16, K>=30; first spine keeps j above finite order30",
+            "explicit_word_boundary_orders_inclusive": [
+              26,
+              29
+            ],
+            "explicit_word_late_orders_inclusive": [
+              31,
+              120
+            ],
+            "explicit_word_late_symbolic_states": 1170,
+            "actual_residual_word_or_parent_cap_inputs": 0,
+            "scope": "Five order26 values start the actual ternary-alphabet induction; fifteen order27..29 entries give its boundary words. An eight-value order30 flat seed propagates the first16 tail entries. The actual thirteen-position word and selector are therefore arithmetic in the order and excess, with zero residual word/cap/phase inputs above finite order26. Eight bits is exact only for the larger complete relaxed option-table contract. The general wider tail response construction, full minimum and global closure remain open."
+          },
+          "lower_child_bound": "Q_l(q)<=max(0,q-12), l>=23",
+          "lower_bound_positions": 300106,
+          "symbolic_inequality_orders_inclusive": [
+            25,
+            100
+          ],
+          "symbolic_inequalities": 551790,
+          "synthetic_graph_orders_inclusive": [
+            25,
+            55
+          ],
+          "synthetic_graphs": 5580,
+          "synthetic_periodic_phases": 42137,
+          "actual_full_block_orders_inclusive": [
+            24,
+            30
+          ],
+          "full_block_positions": 803390,
+          "zero_allocation_width": "4K-19+L_(K-2), K>=25",
+          "zero_allocation_roots": 82,
+          "zero_allocation_phases": 102,
+          "first_spine_states": 276,
+          "actual_tail_rows": [
+            {
+              "order": 25,
+              "maximum_gap": 93,
+              "cap_counts": {
+                "4": 7,
+                "9": 3,
+                "8": 2
+              },
+              "period_counts": {
+                "1": 6,
+                "2": 5,
+                "3": 1
+              }
+            },
+            {
+              "order": 26,
+              "maximum_gap": 98,
+              "cap_counts": {
+                "4": 9,
+                "8": 2,
+                "9": 2
+              },
+              "period_counts": {
+                "1": 9,
+                "2": 4
+              }
+            },
+            {
+              "order": 27,
+              "maximum_gap": 102,
+              "cap_counts": {
+                "4": 10,
+                "8": 2,
+                "9": 1
+              },
+              "period_counts": {
+                "1": 10,
+                "2": 3
+              }
+            },
+            {
+              "order": 28,
+              "maximum_gap": 107,
+              "cap_counts": {
+                "4": 13,
+                "8": 1
+              },
+              "period_counts": {
+                "1": 12,
+                "2": 2
+              }
+            },
+            {
+              "order": 29,
+              "maximum_gap": 112,
+              "cap_counts": {
+                "4": 14,
+                "8": 1
+              },
+              "period_counts": {
+                "1": 14,
+                "2": 1
+              }
+            },
+            {
+              "order": 30,
+              "maximum_gap": 116,
+              "cap_counts": {
+                "4": 15
+              },
+              "period_counts": {
+                "1": 14,
+                "2": 1
+              }
+            }
+          ],
+          "actual_tail_cap_witnesses": {
+            "4": {
+              "order": 25,
+              "gap": 82,
+              "root": 74943,
+              "parent_cap": 4,
+              "shift": 4,
+              "period": 1,
+              "selected": 46290
+            },
+            "9": {
+              "order": 25,
+              "gap": 88,
+              "root": 74937,
+              "parent_cap": 9,
+              "shift": 9,
+              "period": 1,
+              "selected": 46289
+            },
+            "8": {
+              "order": 25,
+              "gap": 90,
+              "root": 74935,
+              "parent_cap": 8,
+              "shift": 8,
+              "period": 1,
+              "selected": 46286
+            }
+          },
+          "dispersion_width": "4K-19+floor((4K-21)/5), K>=25",
+          "all_periodic_dispersion_phases": 135,
+          "quadratic_constant": "1/25",
+          "minimum_quadratic_ratio": "277045375201/2284100499292",
+          "canonical_five_row_word": {
+            "order": 26,
+            "gap": 97,
+            "base": 121296,
+            "cap_vector": [
+              9,
+              4,
+              8,
+              4,
+              4
+            ],
+            "root_offsets": [
+              0,
+              2,
+              3,
+              5,
+              7
+            ],
+            "shared_lower_tail_responses": [
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              9,
+              4,
+              8,
+              8,
+              9,
+              9
+            ],
+            "selected_child_offsets": [
+              9,
+              10,
+              7,
+              14,
+              11
+            ],
+            "inherited_first_spine": [
+              {
+                "order": 26,
+                "gaps": [
+                  97,
+                  95,
+                  94,
+                  92,
+                  90
+                ],
+                "inherited_scalar_interaction": -5
+              },
+              {
+                "order": 25,
+                "gaps": [
+                  88,
+                  87,
+                  90,
+                  83,
+                  86
+                ],
+                "inherited_scalar_interaction": -5
+              },
+              {
+                "order": 24,
+                "gaps": [
+                  79,
+                  83,
+                  82,
+                  74,
+                  78
+                ],
+                "inherited_scalar_interaction": -5
+              }
+            ]
+          },
+          "late_canonical_five_row_word": {
+            "order": 29,
+            "gap": 110,
+            "base": 514119,
+            "cap_vector": [
+              8,
+              4,
+              4,
+              4,
+              4
+            ],
+            "root_offsets": [
+              0,
+              2,
+              3,
+              5,
+              7
+            ],
+            "residual_positions_inclusive": [
+              9,
+              13
+            ],
+            "shared_lower_tail_responses": [
+              4,
+              4,
+              4,
+              4,
+              8
+            ],
+            "selected_child_offsets": [
+              4,
+              6,
+              7,
+              9,
+              11
+            ],
+            "inherited_first_spine": [
+              {
+                "order": 29,
+                "gaps": [
+                  110,
+                  108,
+                  107,
+                  105,
+                  103
+                ],
+                "inherited_scalar_interaction": -4
+              },
+              {
+                "order": 28,
+                "gaps": [
+                  106,
+                  104,
+                  103,
+                  101,
+                  99
+                ],
+                "inherited_scalar_interaction": -4
+              },
+              {
+                "order": 27,
+                "gaps": [
+                  98,
+                  100,
+                  99,
+                  97,
+                  95
+                ],
+                "inherited_scalar_interaction": -4
+              },
+              {
+                "order": 26,
+                "gaps": [
+                  94,
+                  91,
+                  95,
+                  93,
+                  91
+                ],
+                "inherited_scalar_interaction": -4
+              }
+            ]
+          },
+          "relaxed_tail_profile_capacities": [
+            {
+              "tail_positions": 1,
+              "relaxed_profile_words": 1,
+              "packed_bits": 0
+            },
+            {
+              "tail_positions": 5,
+              "relaxed_profile_words": 1,
+              "packed_bits": 0
+            },
+            {
+              "tail_positions": 9,
+              "relaxed_profile_words": 1,
+              "packed_bits": 0
+            },
+            {
+              "tail_positions": 12,
+              "relaxed_profile_words": 1,
+              "packed_bits": 0
+            },
+            {
+              "tail_positions": 24,
+              "relaxed_profile_words": 14079294028800,
+              "packed_bits": 44
+            }
+          ],
+          "late_relaxed_tail_profile_capacities": [
+            {
+              "tail_positions": 1,
+              "relaxed_profile_words": 1,
+              "packed_bits": 0
+            },
+            {
+              "tail_positions": 5,
+              "relaxed_profile_words": 1,
+              "packed_bits": 0
+            },
+            {
+              "tail_positions": 9,
+              "relaxed_profile_words": 1,
+              "packed_bits": 0
+            },
+            {
+              "tail_positions": 12,
+              "relaxed_profile_words": 1,
+              "packed_bits": 0
+            },
+            {
+              "tail_positions": 24,
+              "relaxed_profile_words": 8204716800,
+              "packed_bits": 33
+            }
+          ],
+          "scope": "A153-value order24 shelf premise propagates height9; thirteen order26 values give height4, eight generated positions and a ternary tail. Fifteen order27..29 entries and an eight-value order30 flat seed supply the actual thirteen-position word explicitly and extend the generated band to16. At K>=27 only positions above13 remain unknown; at K>=31 only positions above16 remain unknown. Their height is max(4,D), with parent cap still supplied outside the generated profiles. Packing counts relaxed response words, not actual independent inputs or an optimal whole-recursion code. High-cap allocations and global dispersion/convergence remain open."
         },
         "scope": "Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open."
       },

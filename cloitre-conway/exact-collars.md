@@ -17,6 +17,7 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 - [The unit-defect sublevel set and its arithmetic spine](#the-unit-defect-sublevel-set-and-its-arithmetic-spine)
 - [Two higher cap levels and their phase-selected closure](#two-higher-cap-levels-and-their-phase-selected-closure)
 - [A propagated cap4 band generates its own profiles](#a-propagated-cap4-band-generates-its-own-profiles)
+- [A bounded upper shelf and a wider zero-allocation corridor](#a-bounded-upper-shelf-and-a-wider-zero-allocation-corridor)
 - [Adjacent-gap parity closure and the entrance condition](#adjacent-gap-parity-closure-and-the-entrance-condition)
 - [The prescribed basin and phase in a positive collar](#the-prescribed-basin-and-phase-in-a-positive-collar)
 - [A saturated lower barrier and the exclusion of nearby proper cycles](#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)
@@ -1067,6 +1068,292 @@ formula, adversarial completions outside the preceding certified band,
 actual first-spine states and all basin phases in complete blocks23..30.
 Its JSON records this under `cap4_generated_band`; the larger symbolic
 projection checks corroborate the written induction rather than replace it.
+
+#### A bounded upper shelf and a wider zero-allocation corridor
+
+The actual tail just beyond V_K=4K-19 admits a sharper bound than the
+cap3 shelf. This bounds the missing profile responses and removes the
+allocation input on a wider moving neighborhood, including higher caps.
+It does not construct the exact tail profile.
+
+**Upper-shelf theorem.** Throughout the full closed gap block,
+
+$$
+\boxed{4\le Q_K(v)\le\max(9,v-V_K)
+\quad(V_K<v\le F_{K-2},\ K\ge24).} \tag{E.1}
+$$
+
+The constant9 is necessary for this stated domain: at K24,gap79 the
+actual cap is9. Below V_K the preceding generated-band theorem still
+gives the exact profile. The finite premise for (E.1) is the153 values
+Q_24(v), 78<=v<=230, satisfying its upper bound. Independent full-orbit
+and Brent evaluation agree on this prefix, and all153 prescribed endpoints
+and scalar outputs are checked by literal iteration. For v>=231=3V_24,
+the anchor-drop bound floor(2v/3)<=v-V_24 completes the finite base block.
+
+**A lower-child estimate.** At every ell>=23,
+
+$$
+Q_\ell(q)\le\max(0,q-12). \tag{E.2}
+$$
+
+Indeed gaps0..12 are in the zero plateau; gaps13..24 have cap at most1;
+gaps25..35 have cap at most2. For q>=36 use floor(2q/3)<=q-12.
+These statements use the existing zero/unit/cap2 sublevels, whose widths
+increase with ell. The estimate applies on the inherited natural block.
+
+**Proof of (E.1).** The lower bound follows from the exact cap3 sublevel.
+For the induction step K>=25, write V=V_K, U=V_(K-1)=V-4,
+W=Z_(K-1), d=v-V and M=max(9,d). The cap3 shelf forces every periodic
+gap r above W and at most v-4. Its complementary gap q=v-r is at least4.
+The selected parent cap is the sum of its two child caps.
+
+If r>U, the induction hypothesis and (E.2) bound that sum by
+max(9,r-U)+max(0,q-12). For4<=q<12 this is at most M because
+r-U=d+4-q<=d. For q>=12 it is at most max(q-3,d-8);
+r>=U+1 gives q-3<=d. Thus the sum is at most M.
+
+If r<=U, its first cap is4. Let t be its periodic predecessor. It cannot
+lie at or below U: such a periodic point would have cap4 and map to
+v-4=U+d>U. Hence t>U and t<=v-4=U+d. The induction hypothesis gives
+q=Q_(K-1)(t)<=M. Consequently the scalar sum is at most
+4+max(0,M-12)<=M. This proves the upper bound for the actual selected
+phase and completes the full-block induction. QED.
+
+**A sharper shelf after a second finite seed.** The eight values
+Q_26(V_26+j), 1<=j<=8, are all4; their prescribed endpoints and scalar
+outputs are independently checked literally. The already proved height9
+bound supplies Q_26(v)<=v-V_26 for v-V_26>=9. These eight additional
+values therefore start the stronger full-block theorem
+
+$$
+\boxed{4\le Q_K(v)\le\max(4,v-V_K)
+\quad(V_K<v\le F_{K-2},\ K\ge26).} \tag{E.5}
+$$
+
+The same induction applies with9 replaced by4. In the r>U case,
+q>=12 gives the stronger upper bound max(q-8,d-8)<=d; the other
+case gives4+max(0,M-12)<=M for M=max(4,d)>=4. Thus (E.5) does
+not need a new full-block computation as a premise.
+
+Those eight values also generate an exact larger band:
+Q_K(V_K+j)=4 for1<=j<=8 at every K>=26. Indeed at K>=27 every
+cycle point lies above the cap3 frontier and at gap at most
+v-4=V_(K-1)+j. The preceding extended band makes every cycle readout4,
+so the only cycle is fixed at v-4 and the complementary gap4 is flat.
+The selected first spine keeps j unchanged down to the finite order26
+boundary. No profile or phase input is needed in these eight positions.
+
+**Periodic height and profile size.** For K>=25, v=V_K+d with d>=1,
+every periodic point and its predecessor have first cap and complementary
+gap in4..M. Here M=max(9,d) at K25/26 and M=max(4,d) at K>=27,
+by the preceding-order shelf. The first-cap readout is injective on the
+entire periodic set: equal readouts give the same successor; two cycles
+cannot share a point, and a cycle has a unique predecessor. Thus the
+total number of periodic vertices, not just one period, is at most M-3.
+
+All their queried gaps are at most v-4=V_(K-1)+d. At K>=27 the
+preceding profile through V_(K-1)+8 is arithmetic, so at most
+max(0,d-8) further entries remain unknown. For a supplied tail width
+D>=d with V_(K-1)+D<=F_(K-3), response j has the alphabet4..j,
+9<=j<=D. A sufficient mixed-radix packing has capacity
+
+$$
+\prod_{j=9}^{D}(j-3),
+$$
+
+with the empty product equal to1, and uses the ceiling of its base-two
+logarithm. This is O(max(0,D-8) log(D+1)) bits, independent of K at
+fixed D. The K25/26 boundary layers use at most D entries of height
+max(9,D) instead. This counts a rectangular response
+envelope; it does not assert that every word occurs in actual C or prove
+a minimum for actual independent inputs. The supplied scale, parent cap,
+finite base and materialized indices remain separate. The exact tail
+responses still need to be constructed from nesting.
+
+**Zero-allocation corridor.** For K>=25 and
+
+$$
+V_K<v\le V_K+L_{K-2}, \tag{E.3}
+$$
+
+we have M<=L_(K-2), since L_23=12>=9 and later height bounds are
+no larger. Every periodic phase has its
+second child in the actual zero plateau. Therefore the actual children
+have caps(e,0), where e=Q_K(v). Supply e and the lower profiles; the
+periodic seed v-e has a unique periodic predecessor, which is the actual
+selected gap. The scalar value and profiles now determine selection
+without an allocation, entrance or phase label even when e>4. This
+extends the cap4 decoder to a wider actual-C region. It does not make
+the supplied scalar value or missing profile entries free.
+
+The first-child gap r has excess r-V_(K-1)=d+4-q<=d. The parent cap
+is preserved, and complementary children are arithmetic zero-cap calls.
+For a fixed D, repeat while K>=25 and L_(K-2)>=max(9,D), stopping
+at its finite boundary order or switching to the generated band if the
+gap enters it. This derives the allocation at every eligible edge; the
+tail profiles at the successive orders are still required.
+
+**Sharing one response word across five rows.** Let five supplied gaps lie
+in0..V_K+D, with K>=25 and D<=L_(K-2). The same D responses of Q_(K-1)
+serve every row above the generated band; the earlier arithmetic decoder
+handles rows inside it. At K>=27 the first eight responses are generated,
+leaving only max(0,D-8) unknown entries. Supply actual caps only for rows
+outside the generated region.
+All selected second
+caps are0, so no second-profile word, allocation or phase labels are needed.
+The first-child gaps remain in0..V_(K-1)+D, and their caps are preserved.
+Thus one bounded tail word per eligible order supports the five-row descent;
+the response-packing cost is not multiplied by five. Constructing the words
+and initial tail caps is still outside this interface.
+For D<=8 at K>=27, the profile and selected splits are entirely arithmetic;
+no residual tail responses or caps are supplied.
+
+**An actual three-symbol tail through position13.** Five further finite
+values at order26 are
+
+$$
+(Q_{26}(V_{26}+j))_{j=9}^{13}=(8,4,9,9,8).
+$$
+
+Their prescribed endpoints and scalar outputs are checked literally.
+Together with the preceding eight values they start the infinite theorem
+
+$$
+\boxed{Q_K(V_K+d)\in\{4,8,9\}
+\quad(1\le d\le13,\ K\ge26).} \tag{E.6}
+$$
+
+For the induction step K>=27, L_(K-2)>=L_25=13, so the zero-allocation
+theorem preserves the cap in the first child, whose excess is no larger
+than d. If that child enters the earlier generated band its cap is4;
+otherwise the induction hypothesis applies. This proves (E.6), rather
+than extrapolating the earlier finite maximum9 observation. The theorem
+has a fixed translated-tail domain; it is not a constant9 bound over
+all actual cap4 supports or whole blocks.
+
+At every K>=27, the entire periodic set for v=V_K+d, 9<=d<=13,
+lies at child excesses
+
+$$
+\{d,d-4,d-5\},\qquad
+j\longmapsto d+4-q(j),
+$$
+
+where q(j)=4 for j<=8 and q(j) is one of the five preceding-order
+responses at9..13 otherwise. The periodic set has at most three points,
+since its first-cap readout is injective and lies in{4,8,9}. Supply the
+actual parent cap e; starting at j_0=d+4-e and taking its periodic
+predecessor gives the actual selected excess in at most three reads.
+Its inherited cap is e, so this same five-response interface supports
+first-spine descent down to26. The five rows share one response word;
+additional allocation, entrance and phase labels are absent.
+In particular a proper inner five-cycle cannot occur in this translated
+tail; five-row response windows retain their inherited row clock.
+
+There are243 words in the full rectangular five-trit envelope. Eight
+bits suffice to pack one, and are the exact fixed-width minimum if the
+contract asks for the complete table of scalar-valid periodic options
+at all d9..13. To see injectivity, for d9..12 the option table identifies
+q(d): cap4 at selected excess d means q(d)=4; otherwise the higher cap
+at d is8 or9. For d13, cap4 selected at13 means q(13)=4; cap9 selected
+at13 means q(13)=9; the remaining case is q(13)=8. Thus the table
+recovers every letter. This proves243 distinct tables, requiring
+ceil(log_2 243)=8 bits. It does not prove that all words occur in actual C,
+that one selected five-row output needs eight independent bits, or that
+word qualification and evolution are free.
+
+For additive offsets0,2,3,5,7 and parent excess d9..13, the last two
+caps are4. Hence the scalar joint coefficient is exactly
+Q_K(V_K+d-2)-Q_K(V_K+d), lying in{-5,-4,-1,0,1,4,5}.
+At each eligible first-child edge every row loses the same complementary
+scalar F_(K-3), so all nonconstant response coefficients are preserved
+under inherited row labels down to26. A common canonical higher word
+must still be checked before interpreting an additive window as the
+original canonical digit window; descendant canonical contexts need
+not remain fixed.
+
+**The actual tail word is explicit.** The independently checked words are
+
+| Order K | Q_K(V_K+9),...,Q_K(V_K+13) |
+|---|---|
+|26|(8,4,9,9,8)|
+|27|(8,4,4,9,8)|
+|28|(4,4,4,4,8)|
+|29|(4,4,4,4,8)|
+|K>=30|(4,4,4,4,4)|
+
+The fifteen order27..29 entries are checked by literal prescribed iteration.
+At order30, eight further literal checks give Q_30(V_30+j)=4 for9<=j<=16.
+Together with the already generated positions1..8, this is a constant band
+through V_30+16=117. The same constant-band propagation proves
+
+$$
+\boxed{Q_K(V_K+j)=4\quad(1\le j\le16,\ K\ge30).} \tag{E.7}
+$$
+
+For K>=31, every periodic gap is at most v-4<=V_(K-1)+16 and
+above the cap3 frontier, so it has readout4. The unique cycle is fixed
+at v-4, and the complementary gap4 is flat. Thus the first spine keeps
+j unchanged down to30. The finite order30 boundary itself can have
+nonfixed cycles and shifts8/9; those are not assumed to follow this
+higher-order fixed rule.
+
+Consequently the displayed word is known for every K>=26. For K>=27,
+derive the parent cap from the current word (or cap4 for d<=8), use
+the preceding word in the three-point decoder, and recover the actual
+selected split. No residual profile word, parent cap, allocation, entrance
+or phase input is supplied: order and gap suffice above the finite order26
+base. Zero residual labels is the conditional minimum; the indexing
+context, finite certificates and materialized values are separate costs.
+The eight-bit count above describes the larger rectangular option-table
+contract, while the actual word is now generated by this formula.
+
+This gives arithmetic five-row closure on0..V_K+13, K>=27, down to26,
+and extends the fully generated band to0..V_K+16 for K>=30, down to30.
+All first-child caps are preserved and all complementary children are
+zero-cap calls. In the additive thirteen-position windows, the interaction
+therefore vanishes from order30 onward. The earlier nonzero boundary
+examples remain finite interactions, not persistent canonical families.
+The [five-row parameter formulas](recursive-descent.md#a-modular-symbolic-selector-with-small-working-memory)
+also become derived data: their gaps and caps are now supplied by this
+arithmetic decoder.
+
+For a wider supplied tail width D, the remaining responses at K>=27
+are only those at positions14..D, with alphabets4..j. Their rectangular
+packing capacity is the empty product1 or product_(j=14)^D(j-3), giving
+O(max(0,D-13) log(D+1)) bits. At K>=31, start the product at17 instead,
+giving O(max(0,D-16) log(D+1)). These are shared response-packing upper
+bounds; constructing the wider actual profiles and their initial parent
+caps still remains part of the full recursive-interface problem.
+
+For a hand-checkable finite example, take K26,gap97,h=121296.
+The actual integers h+w on offsets0,2,3,5,7 share a canonical higher word.
+Their caps are(9,4,8,4,4). One twelve-entry lower tail word,
+(4,4,4,4,4,4,9,4,8,8,9,9), yields selected child offsets
+(9,10,7,14,11) relative to F_25-97, with every second cap0.
+The inherited scalar interaction is-5 at orders26,25,24. This is a finite
+canonical example of the proved interface; it does not assert an infinite
+family with this same cap vector or fixed descendant canonical context.
+
+The sharper interface has another actual canonical example at K29,gap110,
+h=514119. Its caps are(8,4,4,4,4), and its only residual responses are
+(4,4,4,4,8) at positions9..13; the first eight are generated. This one
+word yields child offsets(4,6,7,9,11) and zero second caps for all rows.
+The numerical child map is affine, but the scalar interaction is-4 and
+persists at inherited orders29..26. The five-position rectangular profile
+envelope from the upper shelf alone has30240 words and a15-bit packing.
+The three-symbol theorem reduces the larger response-envelope contract
+to243 words and8 bits; the actual word is already generated by the table
+above. Neither envelope count is an independent-input minimum or a fixed
+descendant canonical alphabet.
+
+The [checker](verification/collar_check.py) records the explicit seed,
+full-block shelf checks, adversarial profile graphs, actual zero-allocation
+decoding and first-spine states under `bounded_tail_shelf`. A separate
+[dispersion consequence](dispersion.md#quadratic-basin-dispersion-in-the-unit-defect-family)
+extends the all-periodic quadratic domain further. Neither result gives
+the missing wide-block profile construction or global convergence.
 
 ### Adjacent-gap parity closure and the entrance condition
 

@@ -402,10 +402,29 @@ to every phase. The finite order22 seed is a terminal profile table; its
 own shifts are not assumed to be3 or4. This remains a linear-width domain
 and does not establish dispersion over the wider block interiors.
 
+**A wider upper-shelf domain.** The
+[bounded-tail theorem](exact-collars.md#a-bounded-upper-shelf-and-a-wider-zero-allocation-corridor)
+extends the same constant1/25 to every K>=25 and
+
+$$
+0\le v\le V_K+\left\lfloor\frac{V_K-2}{5}\right\rfloor,
+\qquad V_K=4K-19. \tag{E.4}
+$$
+
+For v<=V_K use the earlier generated-band result. Otherwise write
+d=v-V_K. Every periodic phase, even outside the prescribed basin, has
+shift delta<=max(9,d). If d<=9, v>=V_25+1=82>=6delta+2.
+If d>=10, 5d<=V_K-2 gives v>=6d+2>=6delta+2.
+Thus the same Cassini numerator is at least Hv/2 for every periodic
+phase, giving B_1>=v^2/(25N^2)>=(1/25)(D/N)^2 and the
+four-generation quartic consequence. This domain is wider than the
+zero-allocation corridor; its proof does not require zero child caps
+or a selected allocation. Its width is still O(K), and a uniform
+inequality over whole Fibonacci blocks remains open.
+
 This proof connects arithmetic recursive closure to Benoît Cloitre's
-dispersion route. In the extended family every complementary gap is at most4,
-so the
-proportional-split cancellation of M cannot occur. In wider blocks,
+dispersion route. In these domains the complementary-gap bounds keep
+the Cassini numerator away from zero. In wider blocks,
 large complementary gaps can approach that cancellation ratio; controlling
 their accumulated variance still requires new actual-profile restrictions.
 
