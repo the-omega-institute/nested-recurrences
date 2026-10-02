@@ -45,6 +45,7 @@ Fibonacci neighborhood, even when its support has holes.
 - [Actual defect allocation and phase information](#actual-defect-allocation-and-phase-information)
 - [An even landing determines a frontier phase](#an-even-landing-determines-a-frontier-phase)
 - [Six response states close a wider selected-orbit interface](#six-response-states-close-a-wider-selected-orbit-interface)
+- [Copy runs trade reset events against adjacent migrations](#copy-runs-trade-reset-events-against-adjacent-migrations)
 - [Cap4 query profiles and the information they carry](#cap4-query-profiles-and-the-information-they-carry)
 
 ### Recursive windows with a parameter at every row
@@ -1703,6 +1704,141 @@ requirements. The [checker](verification/collar_check.py) records all
 and the independently reproduced three-cycle under `six_response_map`.
 The finite map does not extend the existing O(K)-width dispersion
 domain to the full Fibonacci block.
+
+### Copy runs trade reset events against adjacent migrations
+
+The moving-frontier hole theorem needs its flat-prefix hypothesis. A
+nonfrontier high-member copy can reset its phase without visiting any
+cap4 hole below the high member. The six-response decoder identifies
+the additional entry channels, and the Fibonacci clock bounds resets
+and adjacent-row migrations together.
+
+**General two-cycle decoder.** Let K>=27,9<=d<=43, with
+A=F_(K-1), B=F_(K-2), U=V_(K-1), v=V_K+d and N=F_K-v.
+Suppose the prescribed basin is the two-cycle
+
+$$
+\ell=A-v+4=A-U-d,\qquad u=A-v+e,\qquad e>4,
+\qquad C(\ell)=B-e,\quad C(u)=B-4.
+$$
+
+In the six-response map this means H_d(4)=e and H_d(e)=4.
+Let sigma=1 when ell occurs at even orbit clocks, and sigma=0
+when it occurs at odd clocks. Then
+
+$$
+g=\ell,\quad Q_K(v)=e
+\quad\Longleftrightarrow\quad C(N-1)-\sigma\text{ is odd}. \tag{T.1}
+$$
+
+A qualified even landing gives the response seed s after two further
+steps. If its map orbit first enters {4,e} after b steps, at state a,
+then b<=4 and
+
+$$
+\sigma=1\quad\Longleftrightarrow\quad
+b+\mathbf1_{\{a=e\}}\text{ is even}. \tag{T.2}
+$$
+
+Indeed state4 is ell and statee is u. The seed is at an even clock,
+so the first ell clock has this parity. There are only four other
+alphabet states, proving b<=4. The depth reaches the cycle; its two
+scalar outputs are e and4 because complementary caps are zero.
+No landing-clock residue remains for this two-cycle. The actual lower
+word and qualified seed still have to be constructed. The one-bit
+two-option phase contract is not an actual independent-input minimum.
+
+**Three possible reset precursors.** Let tau be the first entry into
+{ell,u}. Since N-1>A, tau>0. If sigma=1, precisely one of the
+following describes the immediate predecessor of that first entry:
+
+| First entry | Predecessor and clock | Reset witness |
+|---|---|---|
+| ell at even tau | Odd y<ell, C(y)=B-4 | A cap4 hole below the high member. |
+| ell at even tau | Odd y>ell, y!=u, C(y)=B-4 | A different cap4 point above the high member. |
+| u at odd tau | Even z>ell, z!=u, C(z)=B-e | A different point with the same high cap. |
+
+The predecessor is outside the cycle by minimality of tau. The readouts
+follow by solving T_N(y)=ell or T_N(z)=u. In the last row z cannot
+be above A, where the golden bound gives C(z)>=B+1. After the first
+even landing, all even points are at least ell: a cap0..3 landing
+maps through a point below ell whose cap is at least4; a cap4 landing
+maps directly to ell; a tail-alphabet landing maps into the six-state
+domain after two steps. Hence z>ell. It lies at an earlier translated
+position1..d-1, since its high cap excludes the generated band.
+
+Conversely each displayed precursor enters the cycle with ell at an
+even clock, so is sufficient for sigma=1. Thus a reset is equivalent
+to an odd noncycle cap4 precursor or an even noncycle high-cap
+precursor, with the first type split by its position relative to ell.
+At a first nonflat frontier the two upper channels are excluded, giving
+the earlier path-hole equivalence. That exclusion fails in wider words.
+
+**Actual hole-free reset and copy.** At K27,d15,N=196314, e=9,
+ell=121293 and u=121298. The orbit has the final segment
+
+$$
+x_{12}=121297\ \longrightarrow\ x_{13}=121298
+\ \longrightarrow\ x_{14}=121293.
+$$
+
+Here C(121297)=75016=B-9, and121297>ell is outside the cycle.
+The first cycle entry is u at odd clock13, so sigma=1.
+Its depth121384 is even and selects ell, giving parent cap9:
+the high cap copies. There is no odd-clock cap4 hole below ell
+anywhere on its orbit. This is a finite actual counterexample to
+extending the frontier hole necessity to all copy edges; it is not
+an infinite persistent-copy family.
+
+**Clock/variation inequality for any persistent copy run.** Consider
+t successive updates at the same excess d with the same positive
+high amplitude, each selecting ell. Put
+
+$$
+z_h=Q_h(V_h+d+1),\qquad s_h=z_h\bmod2,\qquad
+\beta_h=\mathbf1_{\{h\equiv1\pmod3\}}.
+$$
+
+Let M count resets sigma_h=1, S count switches s_h!=s_(h-1)
+between successive updates in the run, and B_t count switches of beta
+over those same t-1 edges. Then
+
+$$
+\boxed{2M-\sigma_{\rm first}-\sigma_{\rm last}+S\ \ge B_t
+\ \ge\left\lfloor\frac{2(t-1)}3\right\rfloor.} \tag{T.3}
+$$
+
+**Proof.** Since C(N_h-1)=F_(h-1)-z_h, (T.1) on a copy gives
+sigma_h=beta_h XOR s_h. At any switch of beta, either s or sigma
+must switch. Consequently B_t<=S+TV(sigma). A binary word with
+M ones has TV(sigma)<=2M-sigma_first-sigma_last. Every three
+successive Fibonacci-clock edges have two beta switches, proving
+the floor bound. QED. For t=1 the two endpoint terms refer to
+the same bit and both count, as required.
+
+Every counted adjacent parity switch has an actual selected child with
+translated excess strictly below d+1. Alphabet propagation gives zero
+second cap and a predecessor shift q>=4, so the child excess is
+d+5-q. If q=4 the adjacent cap would copy its previous value,
+contradicting the parity switch. Thus q>=7 and the excess drops by
+at least3. These are migrations of the adjacent row at different
+orders, not a single spine; the fifteen-drop bound for one spine
+does not bound S.
+
+In particular, sublinear adjacent variation forces reset density at
+least1/3. With at most s switches, M>=max(0,ceil((B_t-s)/2)).
+At a first frontier the adjacent shifted response only copies or erases,
+so S<=1; this recovers floor((t-1)/3). In a wider word, suppressing
+resets forces approximately two adjacent migrations per three orders.
+There is no unconditional bound on either channel here. The tradeoff
+is sharp as a binary-clock envelope, not as an actual-C history claim.
+
+The [checker](verification/collar_check.py) verifies the finite map decoder,
+binary-clock inequality, actual reset precursors, literal endpoints and
+adjacent migrations under `copy_clock_variation`. The infinite argument
+uses the existing alphabet and capture premises, with no new finite
+sequence premise. Actual word/entry construction, control of these two
+channels and additive martingale occupation for global dispersion remain open.
 
 ### Cap4 query profiles and the information they carry
 

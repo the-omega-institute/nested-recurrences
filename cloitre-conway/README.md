@@ -109,6 +109,10 @@ landing and clock data. Five rows share fifteen responses. A checked actual
 three-cycle explains why the general clock cannot be reduced to parity.
 A verified canonical window has zero scalar interaction but nonzero
 child-index interaction, so a scalar interaction alone does not close descent.
+For [two-cycle copy runs](recursive-descent.md#copy-runs-trade-reset-events-against-adjacent-migrations),
+resets trade against changes in adjacent-row parity, each such change
+requiring a strict child migration. Outside a first frontier, a reset can
+come from another high-cap point rather than a lower cap4 hole.
 
 The local interface theorems state exactly which context is supplied.
 For a bounded natural-cap domain, the

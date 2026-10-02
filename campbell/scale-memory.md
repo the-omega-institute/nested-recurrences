@@ -426,6 +426,11 @@ ternary formulas derive its entry data; a finite cycle alphabet alone
 does not give the corresponding hole-frequency control for Cloitre.
 These inner-orbit counts do not supply the additive martingale occupation
 needed for global dispersion.
+Beyond that frontier, the [two-cycle clock tradeoff](../cloitre-conway/recursive-descent.md#copy-runs-trade-reset-events-against-adjacent-migrations)
+forces resets or adjacent-row migrations, with additional reset entry
+channels. An actual high-cap duplicate sustains a hole-free copy.
+Campbell's derived entry templates avoid supplying these events as inputs;
+controlling their recurrence in Cloitre's wider words remains open.
 
 The shared [selector checker](../cloitre-conway/verification/selector_payload_check.py)
 independently evaluates Campbell's first32 terms by literal iteration and
