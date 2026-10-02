@@ -2839,6 +2839,13 @@ def exterior_gateway_audit(sequence, splits, fibonacci):
             assert 1327 * lower >= 182360 * (4 * order + 20)
         for excess in range(9, 44):
             gap = cap4_generated_width(order) + excess
+            cutoff = next(height for height in range(4 + order % 2, order - 1, 2)
+                          if symbolic_fibonacci[height] >= gap)
+            prefix_digits = list(range(order - 1, cutoff, -2))
+            prefix = symbolic_fibonacci[order] - symbolic_fibonacci[cutoff]
+            assert cutoff <= order - 4 and order - 3 in prefix_digits
+            assert symbolic_fibonacci[cutoff - 2] < gap <= symbolic_fibonacci[cutoff] < 3 * gap
+            assert prefix == sum(symbolic_fibonacci[height] for height in prefix_digits)
             for adjacent_cap, first_cap in product(alphabet, repeat=2):
                 lower_excess = excess + 8 - adjacent_cap
                 first = lower - gap + adjacent_cap
@@ -2849,6 +2856,11 @@ def exterior_gateway_audit(sequence, splits, fibonacci):
                                   - (symbolic_fibonacci[order - 3] - first_cap))
                 assert 3 * (second - anchor) >= lower
                 assert second - anchor < symbolic_fibonacci[order] - second
+                residual = symbolic_fibonacci[cutoff] - gap
+                assert 0 <= residual + adjacent_cap < symbolic_fibonacci[cutoff]
+                assert 0 <= residual + first_cap < symbolic_fibonacci[cutoff]
+                assert first == prefix - anchor + residual + adjacent_cap
+                assert second == prefix - symbolic_fibonacci[order - 3] + residual + first_cap
                 if order >= 29:
                     assert 20 * (4559 * second - 13459 * symbolic_fibonacci[order - 3]) >= 13459 * lower
                 symbolic_cases += 1
@@ -2863,6 +2875,9 @@ def exterior_gateway_audit(sequence, splits, fibonacci):
             gap = cap4_generated_width(order) + excess
             root = fibonacci[order] - gap
             base = 2 * lower - gap
+            cutoff = next(height for height in range(4 + order % 2, order - 1, 2)
+                          if fibonacci[height] >= gap)
+            prefix_digits = tuple(range(order - 1, cutoff, -2))
             rows = []
             for offset in offsets:
                 index = root + offset
@@ -2880,6 +2895,17 @@ def exterior_gateway_audit(sequence, splits, fibonacci):
                 assert second == base + offset + first_cap
                 assert second in {base + 4 + position for position in stencil}
                 assert 3 * (second - anchor) >= lower
+                residual = fibonacci[cutoff] - gap + offset
+                assert 0 <= residual + adjacent_cap < fibonacci[cutoff]
+                assert 0 <= residual + first_cap < fibonacci[cutoff]
+                assert canonical_fibonacci_indices(index, fibonacci) == (
+                    prefix_digits + canonical_fibonacci_indices(residual, fibonacci))
+                assert canonical_fibonacci_indices(first, fibonacci) == (
+                    tuple(height for height in prefix_digits if height != order - 1)
+                    + canonical_fibonacci_indices(residual + adjacent_cap, fibonacci))
+                assert canonical_fibonacci_indices(second, fibonacci) == (
+                    tuple(height for height in prefix_digits if height != order - 3)
+                    + canonical_fibonacci_indices(residual + first_cap, fibonacci))
                 natural_cap = second - fibonacci[order - 3] - sequence[second]
                 if order >= 29:
                     assert 13459 * sequence[second] <= 8900 * second
@@ -2890,7 +2916,10 @@ def exterior_gateway_audit(sequence, splits, fibonacci):
                                  first_iterate=first, lower_excess=lower_excess, first_cap=first_cap,
                                  second_iterate=second, gateway_value=sequence[second],
                                  gateway_natural_cap=natural_cap,
-                                 third_iterate=index - sequence[second]))
+                                 third_iterate=index - sequence[second],
+                                 context_cutoff=cutoff, input_residual=residual,
+                                 first_residual=residual + adjacent_cap,
+                                 second_residual=residual + first_cap))
                 actual_rows += 1
             distinct_query_counts.add(len({row['second_iterate'] for row in rows}))
             actual_windows += 1
@@ -2934,6 +2963,13 @@ def exterior_gateway_audit(sequence, splits, fibonacci):
                 actual_first_pair_rows=actual_rows, distinct_gateway_queries_per_window=sorted(distinct_query_counts),
                 minimum_actual_natural_cap_over_F_order_minus_two=str(minimum_cap_ratio),
                 full_stencil=stencil, ternary_stencil=ternary_stencil,
+                context_code=dict(common_prefix_step=2, first_removed_high_digit='K-1',
+                                  second_removed_high_digit='K-3',
+                                  deletion_reference='Each deletion is relative to the root prefix; the second iterate restores K-1.',
+                                  cutoff_rule='smallest J>=4 with J=K mod2 and F_J>=V_K+d',
+                                  residual_bound='F_J<3*(V_K+d)=O(K)',
+                                  residual_high_context_labels=0,
+                                  symbolic_stream_working_bits='O(log K), excluding read-only responses and materialized numeric outputs'),
                 canonical_root=root, canonical_higher_indices=sorted(higher), canonical_rows=canonical_rows,
                 gateway_digits=gateway_digits, gateway_common_higher_indices=sorted(gateway_higher),
                 gateway_low_digit_sets=[sorted(low) for low in low_digits],
@@ -2943,7 +2979,7 @@ def exterior_gateway_audit(sequence, splits, fibonacci):
                 protected_tail_perturbation=dict(index=perturbed, increment=1,
                                                  changed_third_iterate=-1,
                                                  scope='One-step shared profile envelope only: G/cap/ratio bounds, root depth and protected local tails stay fixed; the perturbed prefix is not generated by the original recurrence.'),
-                scope='Infinite first-pair arithmetic and shared stencil theorem from existing actual alphabet premises. Every row enters a macroscopic interior query after two steps, at distance>=F_(K-2)/3 from its nearest Fibonacci anchor; at K>=29 its actual natural-cap defect is>=F_(K-2)/20, using the proved global8900/13459 upper ratio. Ternary stencil reduction applies at K>=36. Finite canonical example has affine gateway addresses but inherited readout interaction-166 and a derived Fibonacci carry at001/101. These are exterior replay dependencies, not lower bounds on actual evaluation inputs: already arithmetic fixed-cycle outputs can skip replay. Full exterior clock/word construction and uniform dispersion remain open.')
+                scope='Infinite first-pair arithmetic, generated canonical high contexts and shared stencil theorem from existing actual alphabet premises. The two steps remove high digits K-1/K-3; all carry is confined to an O(K) residual, so no extra high-context labels are supplied and a symbolic stream uses O(log K) working bits. Every row then enters a macroscopic interior query, at distance>=F_(K-2)/3 from its nearest Fibonacci anchor; at K>=29 its actual natural-cap defect is>=F_(K-2)/20, using the proved global8900/13459 upper ratio. Ternary stencil reduction applies at K>=36. Finite canonical example has affine gateway addresses but inherited readout interaction-166 and a derived Fibonacci carry at001/101. These are exterior replay dependencies, not lower bounds on actual evaluation inputs: already arithmetic fixed-cycle outputs can skip replay. Full exterior clock/word construction and uniform dispersion remain open.')
 
 
 def six_response_map_audit(sequence, splits, fibonacci):

@@ -2163,6 +2163,9 @@ responses at two orders. The next query lies in a macroscopic block
 interior, with an unbounded natural-cap defect. Thus replaying that
 exterior path does not remain inside the bounded-tail interface.
 Five rows nevertheless share the same stencil shape at this transition.
+Their high Fibonacci context is generated too: only a small residual
+needs normalization. The missing data are the interior values and clock,
+rather than an additional high-context label for these first two steps.
 
 **First-pair theorem.** Let K>=28,9<=d<=43, A=F_(K-1), B=F_(K-2),
 V_h=4h-19, v=V_K+d and N=F_K-v. Set
@@ -2262,6 +2265,49 @@ The interior readouts do not inherit the three-letter alphabet; (G.4)
 puts them in an unbounded-cap region. Constructing their actual values
 and the rest of the exterior clock is the remaining task.
 
+**Generating the canonical high context.** Choose the smallest J>=4
+with J=K modulo2 and F_J>=v. Then
+
+$$
+J\le K-4,\qquad F_{J-2}<v\le F_J<3v=O(K). \tag{G.6}
+$$
+
+Indeed F_(K-4)>=4K+24>=v at K28 and thereafter by the same
+linear-versus-Fibonacci growth argument. Minimality gives F_(J-2)<v;
+F_J=2F_(J-2)+F_(J-3)<3F_(J-2) gives the upper bound. In this
+domain J>4, so the lower comparison is within the allowed parity class.
+Put P=F_K-F_J and r_i=F_J-v+w_i. Telescoping
+F_h-F_(h-2)=F_(h-1) gives the canonical high digits of P as
+J+1,J+3,...,K-1. The three indices have exact representations
+
+$$
+\begin{aligned}
+N+w_i&=P+r_i,\\
+x_{1,i}&=(P-F_{K-1})+(r_i+z_i),\\
+x_{2,i}&=(P-F_{K-3})+(r_i+q_i).
+\end{aligned} \tag{G.7}
+$$
+
+All three residuals lie in[0,F_J-1]: they are nonnegative, while
+w_i+z_i,w_i+q_i<=20<v. Their canonical digits have maximum index
+J-1, leaving a legal seam below the smallest prefix digit J+1.
+Removing a present high digit preserves nonadjacency. Relative to the
+root's high word, the first iterate deletes K-1 and the second deletes
+K-3; the second restores K-1, so these are not cumulative deletions.
+All normalization and carries are confined to the O(K) residual.
+No extra high-context labels need be supplied.
+
+A symbolic digit stream for each of these indices uses O(log K)
+working bits. Compute F_J with an adjacent Fibonacci pair, emit the
+alternating high prefix with an index counter and the indicated deletion,
+then greedily decode the residual using descending adjacent pairs.
+The pairs stay O(K), and the counter stays at most K. This bound excludes
+read-only responses and materialized numeric outputs: those indices
+themselves need Theta(K) bits. It describes the generated first-pair
+context, not an autonomous recognizer for the full C graph. The orbit's
+initial point remains x_0=N-1 as in(G.2); (G.7) encodes the root and
+its first two iterates, rather than assuming x_0 has the root's digits.
+
 **An interaction reappears at the interior lookup.** The already verified
 canonical root h=2178165 at K32,d35 has common higher Fibonacci indices
 {13,15,17,19,21,23,25,27,29,31} on the five legal low patterns.
@@ -2287,7 +2333,7 @@ Both the parent scalar joint coefficient and the gateway-index joint
 coefficient are zero. The gateway readout instead has
 
 $$
-C(Y(x))=1095358-64x_1-x_2+194x_3-166x_1x_3. \tag{G.6}
+C(Y(x))=1095358-64x_1-x_2+194x_3-166x_1x_3. \tag{G.8}
 $$
 
 An additive fit to000 and the three single features predicts1095488
@@ -2301,7 +2347,7 @@ and keep their original labels. If I denotes the joint coefficient,
 their update always gives
 
 $$
-I_{x_{t+1}}=-I_{C(x_t)}, \tag{G.7}
+I_{x_{t+1}}=-I_{C(x_t)}, \tag{G.9}
 $$
 
 because I_(N+w)=0. In this example the index coefficients at clocks
@@ -2317,6 +2363,10 @@ next window. The carry flag is the already supplied feature x_3, so
 adds no independent bit in this example. The five gateway rows do not
 share one unchanged canonical higher word. Their response interaction
 is asserted under the original inherited labels, with this carry recorded.
+Here v144=F_12, so(G.7) generates J12 and residuals w_i. Deleting
+K-3=29 gives exactly the displayed common gateway part; normalizing
+w_i+8 gives the five displayed low digit sets. The original triple
+boundary changes, while the generated high prefix above J remains common.
 
 **Scope of the dependency.** Changing C(1663944) by1 preserves the
 G/upper-cap/ratio bounds, the actual root depths and every tail through
@@ -2340,7 +2390,9 @@ The [collar checker](verification/collar_check.py) records the arithmetic
 inequalities,196 five-row windows at orders28..34 and this canonical
 example under **ternary_support.exterior_gateway**. Its C inputs use the
 independently agreeing full-orbit/Brent prefix; five interior readouts
-also pass literal prescribed iteration. No new finite premise is added
+also pass literal prescribed iteration. All980 rows compare the generated
+canonical context with an independent greedy decomposition;117180
+arithmetic cases cover orders28..120. No new finite premise is added
 to the infinite theorem. Full word/landing construction, the actual
 five-window minimum and uniform dispersion remain open.
 
