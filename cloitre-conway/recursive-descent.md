@@ -1335,6 +1335,18 @@ the actual thirteen-position interface supplies no residual word or cap
 inputs and closes down to26. The generated band reaches16 positions at
 order30 and later. Wider word evolution and the full interface remain open.
 
+The [finite-alphabet theorem](exact-collars.md#a-finite-alphabet-propagates-beyond-the-zero-allocation-corridor)
+extends zero allocation through forty-seven translated-tail positions from
+one order26 seed, even when their width exceeds the earlier corridor.
+The actual alphabet{4,7,8,9,10,13} gives at most six periodic vertices;
+the lower word and parent cap suffice for selected decoding. These data
+are still supplied outside the generated first thirteen/sixteen positions.
+A high-cap spine can strictly decrease its translated excess at most
+fifteen times; every other edge is a selected high member of a two-cycle
+with readouts{4,e}. Two actual contexts show that the local response word,
+cycle and depth parity alone do not determine that high-member choice.
+Long copy-run control and wider word construction remain open.
+
 ### Cap4 query profiles and the information they carry
 
 The cap4 periodic seed removes independent phase data **after the lower

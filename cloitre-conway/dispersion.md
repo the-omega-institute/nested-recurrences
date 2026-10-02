@@ -422,6 +422,23 @@ zero-allocation corridor; its proof does not require zero child caps
 or a selected allocation. Its width is still O(K), and a uniform
 inequality over whole Fibonacci blocks remains open.
 
+**A finite-alphabet tail.** The
+[alphabet propagation theorem](exact-collars.md#a-finite-alphabet-propagates-beyond-the-zero-allocation-corridor)
+gives every periodic shift delta<=13 on V_K<v<=V_K+47, K>=27.
+Since v>=V_27+1=90>=6*13+2, the same Cassini proof applies throughout
+this band, with no selected-phase or entry-clock qualification. Combined
+with(E.4), the quadratic1/25 domain therefore extends to
+
+$$
+0\le v\le V_K+\max\left(47,\left\lfloor\frac{V_K-2}{5}\right\rfloor\right),
+\qquad K\ge27. \tag{A.3}
+$$
+
+The forty-seven-position result uses a literal order26 seed and an infinite
+alphabet induction. The seed order26 itself is excluded from the new
+all-periodic conclusion. The width is still O(K); it does not establish
+uniform dispersion or decay over whole blocks.
+
 This proof connects arithmetic recursive closure to Benoît Cloitre's
 dispersion route. In these domains the complementary-gap bounds keep
 the Cassini numerator away from zero. In wider blocks,

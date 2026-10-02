@@ -1683,6 +1683,162 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
                 scope='A153-value order24 shelf premise propagates height9; thirteen order26 values give height4, eight generated positions and a ternary tail. Fifteen order27..29 entries and an eight-value order30 flat seed supply the actual thirteen-position word explicitly and extend the generated band to16. At K>=27 only positions above13 remain unknown; at K>=31 only positions above16 remain unknown. Their height is max(4,D), with parent cap still supplied outside the generated profiles. Packing counts relaxed response words, not actual independent inputs or an optimal whole-recursion code. High-cap allocations and global dispersion/convergence remain open.')
 
 
+def finite_tail_alphabet_audit(sequence, splits, fibonacci):
+    base_order = 26
+    tail_width = 47
+    alphabet = {4, 7, 8, 9, 10, 13}
+    seed_word = [4, 4, 4, 4, 4, 4, 4, 4, 8, 4, 9, 9, 8, 8, 9, 9,
+                 8, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 7, 7, 7, 7, 7,
+                 8, 8, 8, 8, 8, 8, 9, 9, 8, 9, 9, 10, 10, 13, 9]
+    assert len(seed_word) == tail_width and set(seed_word) == alphabet
+    assert max(alphabet) == negative_plateau_width(base_order - 1)
+    literal_updates = 0
+    for excess, defect in enumerate(seed_word, 1):
+        root = fibonacci[base_order] - cap4_generated_width(base_order) - excess
+        assert fibonacci[base_order - 1] - sequence[root] == defect
+        endpoint = root - 1
+        for iteration in range(sequence[root - 1]):
+            endpoint = root - sequence[endpoint]
+        assert endpoint == splits[root]
+        assert sequence[endpoint] + sequence[root - endpoint] == sequence[root]
+        literal_updates += sequence[root - 1]
+    synthetic_graphs = 0
+    synthetic_phases = 0
+    ordered_alphabet = sorted(alphabet)
+    for order in range(27, 61):
+        previous_width = cap4_generated_width(order - 1)
+        for excess in range(1, tail_width + 1):
+            gap = cap4_generated_width(order) + excess
+            for completion_kind in range(len(alphabet) + 2):
+                profile = [generated_cap4_profile(order - 1, point) if point <= previous_width
+                           else ordered_alphabet[completion_kind] if completion_kind < len(alphabet)
+                           else ordered_alphabet[((point - previous_width) *
+                                                  (completion_kind - len(alphabet) + 1)) % len(alphabet)]
+                           for point in range(gap + 1)]
+                cycles = capped_profile_cycles(profile, gap)
+                readouts = []
+                for cycle in cycles:
+                    for point in cycle:
+                        shift = gap - point
+                        assert point <= previous_width + excess
+                        assert profile[point] in alphabet and shift in alphabet
+                        assert shift <= negative_plateau_width(order - 2)
+                        readouts.append(profile[point])
+                        synthetic_phases += 1
+                assert len(readouts) == len(set(readouts)) <= len(alphabet)
+                synthetic_graphs += 1
+    actual_roots = 0
+    periodic_phases = 0
+    high_cap_spine_states = 0
+    strict_edges = 0
+    copy_edges = 0
+    observed_periods = {}
+    for order in range(27, 31):
+        width = cap4_generated_width(order)
+        previous_width = cap4_generated_width(order - 1)
+        profile = [fibonacci[order - 2] - sequence[fibonacci[order - 1] - point]
+                   for point in range(width + tail_width + 1)]
+        for excess in range(1, tail_width + 1):
+            gap = width + excess
+            root = fibonacci[order] - gap
+            parent_cap = fibonacci[order - 1] - sequence[root]
+            assert parent_cap in alphabet
+            cycles = capped_profile_cycles(profile[:gap + 1], gap)
+            readouts = []
+            for cycle in cycles:
+                for point in cycle:
+                    shift = gap - point
+                    first = fibonacci[order - 1] - point
+                    second = fibonacci[order - 2] - shift
+                    assert profile[point] in alphabet and shift in alphabet
+                    assert fibonacci[order - 3] - sequence[second] == 0
+                    assert gap >= 6 * shift + 2
+                    numerator = fibonacci[order - 2] * second - fibonacci[order - 3] * first
+                    assert 25 * numerator * numerator >= gap * gap * first * second
+                    readouts.append(profile[point])
+                    periodic_phases += 1
+            assert len(readouts) == len(set(readouts)) <= len(alphabet)
+            decoded = periodic_predecessor_gap(gap, gap - parent_cap, profile.__getitem__)
+            assert decoded is not None and decoded[1] <= len(alphabet)
+            selected_gap, period = decoded
+            assert splits[root] == fibonacci[order - 1] - selected_gap
+            observed_periods[str(period)] = observed_periods.get(str(period), 0) + 1
+            if parent_cap > 4:
+                current = root
+                current_excess = excess
+                current_strict = 0
+                current_copies = 0
+                for current_order in range(order, base_order, -1):
+                    first = splits[current]
+                    second = current - first
+                    child_excess = fibonacci[current_order - 1] - first - cap4_generated_width(current_order - 1)
+                    shift = current_excess + 4 - child_excess
+                    assert fibonacci[current_order - 2] - sequence[first] == parent_cap
+                    assert fibonacci[current_order - 3] - sequence[second] == 0
+                    assert 1 <= child_excess <= current_excess and shift in alphabet
+                    if child_excess == current_excess:
+                        successor = current - sequence[first]
+                        assert successor != first and current - sequence[successor] == first
+                        assert fibonacci[current_order - 2] - sequence[successor] == 4
+                        current_copies += 1
+                        copy_edges += 1
+                    else:
+                        assert current_excess - child_excess >= 3
+                        current_strict += 1
+                        strict_edges += 1
+                    high_cap_spine_states += 1
+                    current = first
+                    current_excess = child_excess
+                assert current_strict <= 15
+                assert current_copies >= max(0, order - base_order - 15)
+            actual_roots += 1
+    parity_witnesses = []
+    for order, expected_cap, expected_clock, expected_depth in (
+            (29, 8, 13, 317807), (30, 4, 14, 514225)):
+        width = cap4_generated_width(order)
+        root = fibonacci[order] - width - 13
+        word = [fibonacci[order - 2] - sequence[
+            fibonacci[order - 1] - cap4_generated_width(order - 1) - excess]
+                for excess in range(1, 15)]
+        assert word == [4] * 12 + [8, 4]
+        trajectory, transient, period = full_orbit(sequence, root)
+        assert transient == expected_clock and period == 2
+        assert sequence[root - 1] == expected_depth and expected_depth % 2 == 1
+        assert fibonacci[order - 1] % 2 == 1
+        entry_excess = fibonacci[order - 1] - trajectory[transient] - cap4_generated_width(order - 1)
+        selected_excess = fibonacci[order - 1] - splits[root] - cap4_generated_width(order - 1)
+        assert entry_excess == 13 and selected_excess == (13 if expected_cap == 8 else 9)
+        assert fibonacci[order - 1] - sequence[root] == expected_cap
+        endpoint = root - 1
+        for iteration in range(expected_depth):
+            endpoint = root - sequence[endpoint]
+        assert endpoint == splits[root]
+        literal_updates += expected_depth
+        parity_witnesses.append(dict(order=order, root=root, lower_word=word,
+                                     first_anchor_parity=1, prescribed_depth=expected_depth,
+                                     entry_clock=transient, entry_excess=entry_excess,
+                                     selected_excess=selected_excess, parent_cap=expected_cap,
+                                     phase_residue=(expected_depth - transient) % period))
+    return dict(base_order=base_order, tail_positions=tail_width,
+                base_gap_interval_inclusive=[86, 132], base_word=seed_word,
+                base_word_sha256=hashlib.sha256(','.join(map(str, seed_word)).encode('ascii')).hexdigest(),
+                response_alphabet=ordered_alphabet, maximum_response=13,
+                literal_endpoint_updates=literal_updates,
+                synthetic_orders_inclusive=[27, 60], synthetic_graphs=synthetic_graphs,
+                synthetic_periodic_phases=synthetic_phases,
+                actual_orders_inclusive=[27, 30], actual_roots=actual_roots,
+                actual_periodic_phases=periodic_phases, actual_selected_period_counts=observed_periods,
+                high_cap_first_spine_states=high_cap_spine_states,
+                strict_excess_drop_edges=strict_edges, translated_excess_copy_edges=copy_edges,
+                maximum_strict_drops_any_depth=15,
+                copy_rule='Every nondecreasing high-cap edge copies the translated excess by selecting the high member of a two-cycle with readouts{4,e}; all strict drops are at least3.',
+                preceding_word_response_bits_Kge27=(6 ** 34 - 1).bit_length(),
+                preceding_word_response_bits_Kge31=(6 ** 31 - 1).bit_length(),
+                actual_parity_shortcut_counterexamples=parity_witnesses,
+                quadratic_dispersion='constant1/25 for gaps0..V_K+max(47,floor((V_K-2)/5)), K>=27',
+                scope='The47-value actual order26 seed propagates its alphabet at all orders>=26; every higher-order periodic phase has zero second cap and at most six periodic vertices. Wider words and parent caps remain supplied outside generated regions. High-cap spines have at most15 strict translated-excess drops, so arbitrarily long high spines require long high-member two-cycle copy runs. Actual local-word/depth-parity collisions need entry clocks; these different-order examples are not independent-input lower bounds with full order supplied. Alphabet packing bounds are not exact actual costs. Seed26 internal allocation, copy-run control, wider profile construction and global dispersion/convergence remain outside this theorem.')
+
+
 def cap4_tail_query_domain(order, gap):
     frontier = higher_cap_width(order - 1, 3)
     excess = gap - frontier
@@ -1995,6 +2151,7 @@ def higher_projection_and_allocation_audit(sequence, splits, fibonacci):
                                           profile_response_models=response_models),
                 cap4_generated_band=cap4_generated_band_audit(sequence, splits, fibonacci),
                 bounded_tail_shelf=bounded_tail_shelf_audit(sequence, splits, fibonacci),
+                finite_tail_alphabet=finite_tail_alphabet_audit(sequence, splits, fibonacci),
                 scope='Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open.')
 
 

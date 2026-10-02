@@ -18,6 +18,7 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 - [Two higher cap levels and their phase-selected closure](#two-higher-cap-levels-and-their-phase-selected-closure)
 - [A propagated cap4 band generates its own profiles](#a-propagated-cap4-band-generates-its-own-profiles)
 - [A bounded upper shelf and a wider zero-allocation corridor](#a-bounded-upper-shelf-and-a-wider-zero-allocation-corridor)
+- [A finite alphabet propagates beyond the zero-allocation corridor](#a-finite-alphabet-propagates-beyond-the-zero-allocation-corridor)
 - [Adjacent-gap parity closure and the entrance condition](#adjacent-gap-parity-closure-and-the-entrance-condition)
 - [The prescribed basin and phase in a positive collar](#the-prescribed-basin-and-phase-in-a-positive-collar)
 - [A saturated lower barrier and the exclusion of nearby proper cycles](#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)
@@ -1354,6 +1355,123 @@ decoding and first-spine states under `bounded_tail_shelf`. A separate
 [dispersion consequence](dispersion.md#quadratic-basin-dispersion-in-the-unit-defect-family)
 extends the all-periodic quadratic domain further. Neither result gives
 the missing wide-block profile construction or global convergence.
+
+#### A finite alphabet propagates beyond the zero-allocation corridor
+
+A bounded actual seed word gives more than a bound on missing responses.
+Its alphabet propagates even when its width exceeds the earlier
+zero-allocation corridor. The word itself need not be determined by this
+alphabet. This separates the remaining profile-evolution question from
+child allocation and from the number of inner periodic options.
+
+**Alphabet propagation theorem.** Let K_0>=22, D>=1, and let A be a
+finite set of integers at least4, containing4. Put M=max A and assume
+
+$$
+V_{K_0}+D\le F_{K_0-2},\qquad M\le L_{K_0-1},\qquad
+Q_{K_0}(V_{K_0}+d)\in A\quad(1\le d\le D). \tag{A.1}
+$$
+
+Then the same alphabet membership holds at every K>=K_0. At every
+K>K_0 and1<=d<=D, all periodic phases have both their first-cap readout
+and complementary gap in A. Their second-child cap is0. The entire
+periodic set has at most |A| vertices, so a supplied actual parent cap
+and lower word determine the selected predecessor in at most |A| reads.
+The width condition persists as K increases, since the Fibonacci block
+grows faster than the four-position translation.
+
+**Proof.** Suppose the alphabet statement holds at K-1. Write v=V_K+d.
+The cap3 shelf puts every periodic gap r above Z_(K-1) and at most
+v-4=V_(K-1)+d. Its first readout is therefore4 in the earlier generated
+band, or a letter of the preceding seed-derived alphabet. Its periodic
+predecessor also has a readout in A, and that readout is its complementary
+gap q=v-r. Thus q<=M<=L_(K_0-1)<=L_(K-2), and the second-child cap is0.
+The actual selected scalar sum preserves its first cap, proving membership
+at K. Equal first readouts give the same successor; periodic predecessors
+are unique, so the readout is injective across the entire periodic set.
+This proves its size bound and the predecessor decoder. QED.
+
+**An actual forty-seven-position seed.** At K_0=26, V_26=85, the
+independently checked word Q_26(86..132) is
+
+```text
+4,4,4,4,4,4,4,4,8,4,9,9,8,8,9,9,8,8,8,8,8,8,8,
+7,7,7,7,7,7,7,7,7,8,8,8,8,8,8,9,9,8,9,9,10,10,13,9.
+```
+
+This is47 finite scalar premises; the first13 are already certified above.
+Full-orbit and Brent evaluations agree, and literal prescribed iteration
+checks all endpoints and additive outputs. Its alphabet is
+
+$$
+A=\{4,7,8,9,10,13\},\qquad M=13=L_{25}.
+$$
+
+Consequently every K>=26 has this same alphabet bound through translated
+position47. At K>=27 all periodic complementary gaps are at most13,
+all second caps are0, and the entire periodic set has at most six points.
+This holds beyond the previously proved width L_(K-2) corridor.
+The actual selected first spine preserves its cap down to finite order26.
+The terminal26 is a scalar/profile seed; its own child allocation is not
+assumed to obey the higher-order zero-cap rule.
+
+At K>=27 the generated first thirteen preceding responses leave positions
+14..47 to supply; their sufficient rectangular packing uses at most
+ceil(34 log_2 6)=88 bits. At K>=31 the generated first sixteen leave
+positions17..47, using at most ceil(31 log_2 6)=81 bits. Each word is
+shared by the five rows; actual parent caps outside generated regions are
+also supplied. These are upper bounds for an alphabet envelope, not exact
+costs or independent-input minima for actual C.
+
+**What can persist on a high-cap spine?** For an initial cap e>4, write
+d_s for its translated excess at inherited order s. At each edge above26,
+
+$$
+d_{s-1}=d_s+4-q_s,\qquad q_s\in A. \tag{A.2}
+$$
+
+The child cap is e, so d_(s-1)>0; entering the earlier generated band
+would instead give cap4. Every strict decrease is at least3. A spine
+starting in positions1..47 therefore has at most floor((47-1)/3)=15
+strict decreases, at any depth. Every other edge has q_s=4 and keeps d
+unchanged. Such an edge is exactly a selected high member of a two-cycle:
+its gap r has readout e, its successor is v-e, and that point has readout4
+and maps back to r=v-4. The two readouts are{e,4}. Conversely this
+high-member selection gives a copy edge. Hence a t-edge high-cap spine
+above26 has at least max(0,t-15) copy edges, in at most sixteen runs.
+To prove that all these actual tail values eventually become4, it would
+suffice to rule out arbitrarily long high-member copy runs. Alphabet
+propagation alone does not rule them out.
+
+**A local parity shortcut fails in actual C.** At excess13, the roots
+
+$$
+N_{29}=514119,\qquad N_{30}=831926
+$$
+
+have the same preceding translated tail through position14:
+twelve4s followed by8,4. Their periodic excess cycle is(13,9), with
+readouts(8,4). Both first Fibonacci anchors and both prescribed depths
+are odd. Nevertheless their selected caps are respectively8 and4:
+
+| Order | Depth | First cycle-entry clock | Entry excess | Selected excess | Parent cap |
+|---|---|---|---|---|---|
+|29|317807|13|13|13|8|
+|30|514225|14|13|9|4|
+
+The selected phase is obtained from depth minus entry clock modulo2.
+Thus the same local tail word, cycle and depth parity do not determine
+selection. In this two-option certificate, an entry-clock parity bit
+distinguishes the phases. These different-order examples do not prove an
+independent-input lower bound when the full order is supplied; the earlier
+explicit thirteen-position theorem already derives both answers. They
+show why a wider word-evolution rule cannot simply discard entry clocks.
+
+The [dispersion consequence](dispersion.md#quadratic-basin-dispersion-in-the-unit-defect-family)
+uses the bounded complementary gaps and applies to every periodic phase.
+The [checker](verification/collar_check.py) records the literal seed,
+actual copy edges and parity witnesses under `finite_tail_alphabet`.
+Wider word construction, copy-run control and global convergence remain open.
 
 ### Adjacent-gap parity closure and the entrance condition
 

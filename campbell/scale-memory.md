@@ -386,6 +386,18 @@ The wider response problem remains open. This scoped arithmetic evolution
 is now derived for both families, with their different scale rules and
 the autonomous FIB memory requirements kept separate.
 
+The [finite-alphabet Cloitre tail](../cloitre-conway/exact-collars.md#a-finite-alphabet-propagates-beyond-the-zero-allocation-corridor)
+has at most six periodic vertices and zero second-cap allocation through
+forty-seven translated positions, but its wider response word remains an
+input. High-cap spines have at most fifteen strict excess drops; all other
+edges copy that excess by selecting the high member of a{4,e} two-cycle.
+Actual orders29/30 have the same local tail word, cycle and depth parity,
+yet select different members because their entry clocks differ. Campbell's
+complete ternary templates determine its entry and parity data; a cycle
+alphabet or parity shortcut alone has not provided the corresponding
+Cloitre word evolution. This isolates a temporal selection question beyond
+the shared finite-cycle decoder and autonomous scale-memory comparison.
+
 The shared [selector checker](../cloitre-conway/verification/selector_payload_check.py)
 independently evaluates Campbell's first32 terms by literal iteration and
 checks the displayed three-solution inverse. The sharpness statement
