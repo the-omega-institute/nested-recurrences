@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "068400767b8f63d8434d507f36de44fd5eaa28c9d261214e8b88bab9d415f596",
+  "source_sha256": "63a0b292848be823afb596a9e0b72596298acf8c998a8fbc7fbe6d4bf770d5fb",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -6627,6 +6627,553 @@
             "scope": "One finite actual canonical FIB window, including a three-cycle row. Zero current scalar interaction coexists with index interaction-5. The option count allows periodic rows independently and is not actual input cost or an infinite family."
           },
           "scope": "Written conjugacy and two-step landing decoder hold at K>=27, d9..43 without frontier flatness, using existing finite-alphabet premises. Six shared stencil answers give every periodic option and no parent cap is supplied. Five additive rows share15 answers for d16..43. Exact39bit word and13bit phase costs concern relaxed independent response/periodic-output contracts, not actual-C input minima. Landings, clock residues, actual response words and wider recursive evolution remain supplied or open; global dispersion is unchanged."
+        },
+        "copy_clock_variation": {
+          "two_cycle_maps": 6480,
+          "qualified_response_seeds": 27600,
+          "direct_map_updates": 441600,
+          "maximum_response_transient": 4,
+          "binary_clock_horizons_inclusive": [
+            1,
+            14
+          ],
+          "binary_clock_cases": 98298,
+          "sharp_binary_clock_cases": 501,
+          "clock_inequality": "2M-reset_first-reset_last+S >= B_t >= floor(2(t-1)/3).",
+          "actual_orders_inclusive": [
+            27,
+            30
+          ],
+          "actual_two_cycle_rows": 20,
+          "actual_categories": {
+            "no_reset_copy": 10,
+            "no_reset_erase": 8,
+            "upper_high_cap_precursor_copy": 1,
+            "lower_cap4_hole_erase": 1
+          },
+          "actual_literal_endpoint_updates": 5627723,
+          "maximum_actual_response_transient": 1,
+          "actual_rows": [
+            {
+              "order": 27,
+              "excess": 9,
+              "root": 196320,
+              "high_cap": 8,
+              "parent_cap": 8,
+              "adjacent_cap": 4,
+              "high_member": 121299,
+              "partner": 121303,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 12,
+              "response_seed": 8,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 27,
+              "excess": 11,
+              "root": 196318,
+              "high_cap": 9,
+              "parent_cap": 4,
+              "adjacent_cap": 9,
+              "high_member": 121297,
+              "partner": 121302,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 12,
+              "response_seed": 9,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 27,
+              "excess": 12,
+              "root": 196317,
+              "high_cap": 9,
+              "parent_cap": 9,
+              "adjacent_cap": 8,
+              "high_member": 121296,
+              "partner": 121301,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 12,
+              "even_landing_clock": 10,
+              "response_seed": 9,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 27,
+              "excess": 14,
+              "root": 196315,
+              "high_cap": 8,
+              "parent_cap": 4,
+              "adjacent_cap": 9,
+              "high_member": 121294,
+              "partner": 121298,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 12,
+              "even_landing_clock": 10,
+              "response_seed": 8,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 27,
+              "excess": 15,
+              "root": 196314,
+              "high_cap": 9,
+              "parent_cap": 9,
+              "adjacent_cap": 9,
+              "high_member": 121293,
+              "partner": 121298,
+              "reset": 1,
+              "category": "upper_high_cap_precursor",
+              "precursor": 121297,
+              "precursor_clock": 12,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 10,
+              "response_seed": 8,
+              "response_transient": 1,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 28,
+              "excess": 9,
+              "root": 317709,
+              "high_cap": 8,
+              "parent_cap": 4,
+              "adjacent_cap": 4,
+              "high_member": 196320,
+              "partner": 196324,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 12,
+              "response_seed": 8,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 28,
+              "excess": 12,
+              "root": 317706,
+              "high_cap": 9,
+              "parent_cap": 4,
+              "adjacent_cap": 8,
+              "high_member": 196317,
+              "partner": 196322,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 12,
+              "response_seed": 9,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 28,
+              "excess": 15,
+              "root": 317703,
+              "high_cap": 9,
+              "parent_cap": 4,
+              "adjacent_cap": 4,
+              "high_member": 196314,
+              "partner": 196319,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 12,
+              "response_seed": 9,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 28,
+              "excess": 16,
+              "root": 317702,
+              "high_cap": 9,
+              "parent_cap": 4,
+              "adjacent_cap": 8,
+              "high_member": 196313,
+              "partner": 196318,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 12,
+              "response_seed": 9,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 28,
+              "excess": 18,
+              "root": 317700,
+              "high_cap": 8,
+              "parent_cap": 8,
+              "adjacent_cap": 9,
+              "high_member": 196311,
+              "partner": 196315,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 12,
+              "response_seed": 8,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 28,
+              "excess": 19,
+              "root": 317699,
+              "high_cap": 9,
+              "parent_cap": 9,
+              "adjacent_cap": 9,
+              "high_member": 196310,
+              "partner": 196315,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 12,
+              "response_seed": 9,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 29,
+              "excess": 13,
+              "root": 514119,
+              "high_cap": 8,
+              "parent_cap": 8,
+              "adjacent_cap": 4,
+              "high_member": 317705,
+              "partner": 317709,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 12,
+              "response_seed": 8,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 29,
+              "excess": 18,
+              "root": 514114,
+              "high_cap": 8,
+              "parent_cap": 8,
+              "adjacent_cap": 4,
+              "high_member": 317700,
+              "partner": 317704,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 12,
+              "response_seed": 8,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 29,
+              "excess": 19,
+              "root": 514113,
+              "high_cap": 9,
+              "parent_cap": 4,
+              "adjacent_cap": 9,
+              "high_member": 317699,
+              "partner": 317704,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 12,
+              "response_seed": 9,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 29,
+              "excess": 20,
+              "root": 514112,
+              "high_cap": 9,
+              "parent_cap": 9,
+              "adjacent_cap": 8,
+              "high_member": 317698,
+              "partner": 317703,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 12,
+              "response_seed": 9,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 30,
+              "excess": 13,
+              "root": 831926,
+              "high_cap": 8,
+              "parent_cap": 4,
+              "adjacent_cap": 4,
+              "high_member": 514119,
+              "partner": 514123,
+              "reset": 1,
+              "category": "lower_cap4_hole",
+              "precursor": 514118,
+              "precursor_clock": 13,
+              "first_cycle_clock": 14,
+              "even_landing_clock": 12,
+              "response_seed": 4,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": [
+                {
+                  "clock": 13,
+                  "index": 514118
+                }
+              ]
+            },
+            {
+              "order": 30,
+              "excess": 18,
+              "root": 831921,
+              "high_cap": 8,
+              "parent_cap": 8,
+              "adjacent_cap": 4,
+              "high_member": 514114,
+              "partner": 514118,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 12,
+              "response_seed": 8,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 30,
+              "excess": 20,
+              "root": 831919,
+              "high_cap": 9,
+              "parent_cap": 9,
+              "adjacent_cap": 8,
+              "high_member": 514112,
+              "partner": 514117,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 12,
+              "response_seed": 9,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 30,
+              "excess": 23,
+              "root": 831916,
+              "high_cap": 8,
+              "parent_cap": 4,
+              "adjacent_cap": 9,
+              "high_member": 514109,
+              "partner": 514113,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 12,
+              "response_seed": 8,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            },
+            {
+              "order": 30,
+              "excess": 24,
+              "root": 831915,
+              "high_cap": 9,
+              "parent_cap": 9,
+              "adjacent_cap": 8,
+              "high_member": 514108,
+              "partner": 514113,
+              "reset": 0,
+              "category": "no_reset",
+              "precursor": null,
+              "precursor_clock": null,
+              "first_cycle_clock": 13,
+              "even_landing_clock": 12,
+              "response_seed": 9,
+              "response_transient": 0,
+              "odd_lower_cap4_holes": []
+            }
+          ],
+          "actual_copy_runs": [
+            {
+              "excess": 9,
+              "orders": [
+                27
+              ],
+              "resets": [
+                0
+              ],
+              "adjacent_parities": [
+                0
+              ],
+              "switches": 0,
+              "clock_variation": 0
+            },
+            {
+              "excess": 12,
+              "orders": [
+                27
+              ],
+              "resets": [
+                0
+              ],
+              "adjacent_parities": [
+                0
+              ],
+              "switches": 0,
+              "clock_variation": 0
+            },
+            {
+              "excess": 13,
+              "orders": [
+                29
+              ],
+              "resets": [
+                0
+              ],
+              "adjacent_parities": [
+                0
+              ],
+              "switches": 0,
+              "clock_variation": 0
+            },
+            {
+              "excess": 15,
+              "orders": [
+                27
+              ],
+              "resets": [
+                1
+              ],
+              "adjacent_parities": [
+                1
+              ],
+              "switches": 0,
+              "clock_variation": 0
+            },
+            {
+              "excess": 18,
+              "orders": [
+                28,
+                29,
+                30
+              ],
+              "resets": [
+                0,
+                0,
+                0
+              ],
+              "adjacent_parities": [
+                1,
+                0,
+                0
+              ],
+              "switches": 1,
+              "clock_variation": 1
+            },
+            {
+              "excess": 19,
+              "orders": [
+                28
+              ],
+              "resets": [
+                0
+              ],
+              "adjacent_parities": [
+                1
+              ],
+              "switches": 0,
+              "clock_variation": 0
+            },
+            {
+              "excess": 20,
+              "orders": [
+                29,
+                30
+              ],
+              "resets": [
+                0,
+                0
+              ],
+              "adjacent_parities": [
+                0,
+                0
+              ],
+              "switches": 0,
+              "clock_variation": 0
+            },
+            {
+              "excess": 24,
+              "orders": [
+                30
+              ],
+              "resets": [
+                0
+              ],
+              "adjacent_parities": [
+                0
+              ],
+              "switches": 0,
+              "clock_variation": 0
+            }
+          ],
+          "actual_adjacent_migrations": [
+            {
+              "order": 29,
+              "excess": 18,
+              "adjacent_root": 514113,
+              "child": 317704,
+              "child_excess": 14,
+              "shift": 9
+            }
+          ],
+          "scope": "General selected {4,e} two-cycle phase decoder and reset/adjacent-variation tradeoff are infinite written deductions from existing premises. Reset precursors can be lower holes, upper cap4 points or upper same-high-cap points. Actual196314 resets and copies with no odd lower cap4 hole. Binary sharpness is a relaxed clock envelope, not actual history sharpness. Adjacent migration counts cross orders and are not bounded by the single-spine15-drop budget or additive martingale occupation. Actual entry/word generation and global dispersion remain open."
         },
         "scope": "Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open."
       },
