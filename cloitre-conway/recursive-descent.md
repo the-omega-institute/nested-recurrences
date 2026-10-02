@@ -47,6 +47,7 @@ Fibonacci neighborhood, even when its support has holes.
 - [Six response states close a wider selected-orbit interface](#six-response-states-close-a-wider-selected-orbit-interface)
 - [Copy runs trade reset events against adjacent migrations](#copy-runs-trade-reset-events-against-adjacent-migrations)
 - [Binary prefixes close with two response states](#binary-prefixes-close-with-two-response-states)
+- [Arithmetic support cones shrink the shared response word](#arithmetic-support-cones-shrink-the-shared-response-word)
 - [Cap4 query profiles and the information they carry](#cap4-query-profiles-and-the-information-they-carry)
 
 ### Recursive windows with a parameter at every row
@@ -1979,6 +1980,179 @@ independently regenerated order32 prefix with no larger computation.
 The binary seed and erasures are new finite premises; subset/parity and
 map arguments are infinite deductions. Wider word/entry construction,
 generic copy periods and global dispersion/convergence remain open.
+
+### Arithmetic support cones shrink the shared response word
+
+The actual alphabet can be reduced further without assuming an even
+prefix throughout the wider tail. A new order34 seed gives three responses;
+their spatial propagation leaves permanent holes and a smaller five-row
+map-word contract. It also explains why a third clock class remains a
+separate issue after that reduction.
+
+**Finite premise and alphabet propagation.** The already proved first19
+responses are4. Twenty-eight additional scalar premises, positions20..47
+at order34, give the following full word, grouped only for readability:
+
+    positions 1..24: 4 repeated24 times
+    positions25..40: (8,8,4,4,9,8,4,4,4,8,4,4,4,8,4,4)
+    positions41..47: 8 repeated7 times.
+
+These are values of R_34(j)=Q_34(V_34+j), V_h=4h-19. Independent
+full-orbit and Brent evaluation, followed by literal exact-depth checks
+at the28 new roots, verify the premises. The first19 use the earlier
+theorem, not a new assumption. Causal subset propagation consequently gives
+
+$$
+R_h(j)\in\{4,8,9\}\quad(h\ge34,\ 1\le j\le47). \tag{T.1}
+$$
+
+At each update h>34 the second cap is zero and the selected first-child
+excess is j'=j+4-q, with q in{4,8,9}. Thus a nonflat response is
+inherited at the same position or from four or five positions earlier.
+
+**Spatial support theorem.** Put S={4a+5b:a,b>=0 integers}, and
+
+$$
+E_8=(\{25,26\}+S)\cap[1,47],\qquad
+E_9=(29+S)\cap[1,47]. \tag{T.2}
+$$
+
+For every h>=34, R_h(j)=8 implies j in E_8, and R_h(j)=9 implies
+j in E_9. All order34 occurrences satisfy these conditions; each set
+is closed under adding0,4,5 before leaving the domain. Inheriting the
+response at j' proves the induction. This is a spatial invariant, not
+a claim that every8 was actually generated from positions25/26.
+For9 there is one actual seed position29: at h=34+t its support even
+lies in{29+4a+5b:a+b<=t}. That extra time constraint is not imposed
+in the uniform contracts below.
+
+Explicitly E_9={29,33,34,37,38,39,41,42,43,44,45,46,47}, and E_8
+contains every position25..47 except27,28,32. Since E_9 is a subset
+of E_8, we obtain
+
+$$
+R_h(j)=4\quad(j\le24\text{ or }j\in\{27,28,32\}),\qquad
+R_h(j)\in\{4,8\}\quad(j\le28). \tag{T.3}
+$$
+
+For h>=35 the27 explicit flat positions also have selected shift4:
+their own and four/five-earlier responses are all4, so the periodic map
+is constant4. Their value and split are arithmetic down to order34,
+without residual word/cap/basin/phase labels. The holes outside the
+initial band are genuine additional generated positions. Deeper order34
+selectors remain finite boundary data.
+
+**Shorter high-cap spines and even neighbors.** Above order34 a high-cap
+first spine preserves its cap e in{8,9}. Each strict excess drop is4
+or5; excess remains at least25 for e8 and29 for e9. Starting at most47,
+there are at most5 strict drops for cap8 or4 for cap9, at any depth
+above this base. All other edges are zero-drop copies. This does not
+automatically qualify them as two-cycles.
+When d+1 is outside E_9, the adjacent response is permanently even.
+On a qualified two-cycle copy run at9<=d<=43, the earlier clock theorem
+then forces at least floor(t/3) resets over t updates: adjacent parity
+never switches, and copied high selection requires sigma=1 exactly when
+h=1 mod3. Neither this frequency bound nor the finite drop bound
+controls actual reset frequency or additive-child occupation.
+
+**Three response states and qualified clocks.** For h>=35,9<=d<=43,
+the complete periodic map is
+
+$$
+H_d(4)=R_{h-1}(d),\quad H_d(8)=R_{h-1}(d-4),\quad
+H_d(9)=R_{h-1}(d-5). \tag{T.4}
+$$
+
+Every periodic vertex is represented, has zero second cap, and gives
+g=A-v+a, parent cap H_d(a). The27 possible maps have transient<=2
+and period<=3. The earlier two-read even landing decoder applies with
+this reduced alphabet, including its four-position lookahead. After
+landing at clock eta+2 with seed s, the selected state is
+H_d^(D-eta-2)(s), D=C(N-1). A supplied D mod6 and eta mod3 suffice
+for all three periods; even eta mod3 uniquely determines eta mod6.
+For period1/2 no landing residue is needed; period3 retains three
+landing-clock classes. Deriving those exterior data remains separate.
+The exact depth is D=F_(h-1)-R_h(d+1). Since(F_24,F_25) is(0,1)
+modulo6, Fibonacci residues modulo6 repeat after24 orders. Thus the
+supplied order and one current adjacent response derive D mod6;
+the exact large depth need not be stored. Generating that adjacent
+response and the qualified landing is still part of the interface.
+
+There is a stronger obstruction than an arbitrary three-state coloring.
+Start with the actual order34 word, allow each row to choose any of its
+periodic outputs, and choose at position34 the fixed response state9.
+Its map is(8,8,9); at position38 the response8 is forced, and at33
+response4 is forced. This valid periodic-only update gives
+R_35(38)=8,R_35(34)=9,R_35(33)=4. The order36 map at d38 is then
+4 -> 8 -> 9 -> 4. It respects the actual seed, subset propagation
+and support cones. The update has not been qualified by the prescribed
+exterior starts/depths, so it is not an actual-C three-cycle claim.
+It proves that those seed/support/periodic-selection premises alone
+cannot remove the modulo-three clock problem.
+
+**Exact relaxed shared-word costs.** For five offsets(0,2,3,5,7) and
+16<=d<=43 the union of three-entry stencils is
+
+$$
+\{d-j:j\in P\},\qquad P=\{0,2,3,4,5,6,7,8,9,10,11,12\}. \tag{T.5}
+$$
+
+At position k use the independent envelope
+A(k)={4}, adding8 if k in E_8 and9 if k in E_9. These support
+constraints hold for actual responses; independent choices are a
+relaxation of actual word evolution. The complete map collection
+recovers each entry, so it has exactly N_d=product_(j in P)|A(d-j)|
+possibilities. For a fixed word the independent-row output contract
+has M=product_i|Per(H_(d-w_i))| possibilities. Its upper bound is
+the product of the five allowable image-alphabet sizes. Directly
+counting these small sets gives the following bounds:
+
+| d | N_d | Maximum M |
+|---|---:|---:|
+|16..24|1|1|
+|25,26|2|2|
+|27|2|2|
+|28|4|4|
+|29|12|6|
+|30|8|4|
+|31,32|24|12|
+|33|144|24|
+|34|144|18|
+|35|288|12|
+|36|864|108|
+|37|2592|36|
+|38|2592|72|
+|39|3888|54|
+|40|7776|108|
+|41|34992|162|
+|42|23328|108|
+|43|34992|108|
+
+Both uniform maxima are attained at d41. Since2^15<34992<=2^16,
+the complete relaxed map word needs exactly16 fixed-length bits.
+The coloring
+
+    j       = (0,2,3,4,5,6,7,8,9,10,11,12)
+    R(41-j) = (4,4,4,9,8,8,9,8,4,4,4,8)
+
+gives four three-state permutations and one two-state periodic map,
+so M=3^4*2=162. Since2^7<162<=2^8, the independent-row output
+contract needs exactly8 bits in the worst case. Captured profiles at
+h35 obeying(T.1)--(T.3) realize the displayed sharpness and the shelf.
+Qualified landing data derive the actual choices instead of supplying
+them independently. Canonical higher-word and recursive context remain
+separate qualifications. These are exact relaxed costs, not input
+minima for actual C or complete selected-validity certificates.
+For the whole47-position word the same support envelope gives the
+sufficient packing ceil(log_2(2^7*3^13))=28 bits.
+
+The [checker](verification/collar_check.py) records the28 finite premises,
+support closure,27 maps,111687 shared words, sharp captured graphs and
+the seed-compatible periodic-only obstruction under **ternary_support**.
+The actual seed verification uses an independently regenerated prefix;
+the support and decoder theorems are infinite deductions from that seed.
+Wider profile/entry construction, generic copy frequency and Benoît's
+additive occupation/global dispersion problem remain open.
 
 ### Cap4 query profiles and the information they carry
 

@@ -1,6 +1,7 @@
 """Corroborate the proved Fibonacci collar consequences by exact computation."""
 
 import bisect
+from array import array
 from fractions import Fraction
 from functools import lru_cache
 import hashlib
@@ -2643,6 +2644,181 @@ def binary_prefix_audit(sequence, splits, fibonacci):
 
 
 
+def ternary_support_audit(sequence=None, splits=None):
+    fibonacci = [0, 1]
+    while len(fibonacci) <= 34:
+        fibonacci.append(sum(fibonacci[-2:]))
+    order = 34
+    width = cap4_generated_width(order)
+    limit = fibonacci[order] - width - 1
+    if sequence is None:
+        sequence = array('I', [0, 1, 1])
+        splits = array('I', [0, 0, 0])
+        for index in range(3, limit + 1):
+            trajectory, transient, period = full_orbit(sequence, index)
+            depth = sequence[index - 1]
+            position = depth if depth < len(trajectory) else transient + (depth - transient) % period
+            endpoint = trajectory[position]
+            value = sequence[endpoint] + sequence[index - endpoint]
+            assert 2 <= value < index
+            sequence.append(value)
+            splits.append(endpoint)
+        independent = brent_generate(limit)
+        assert len(sequence) == len(independent)
+        assert all(value == independent[index] for index, value in enumerate(sequence))
+        del independent
+    assert splits is not None and len(sequence) > limit
+    digest = hashlib.sha256()
+    for start in range(1, limit + 1, 65536):
+        if start > 1:
+            digest.update(b',')
+        digest.update(','.join(map(str, sequence[start:min(start + 65536, limit + 1)])).encode('ascii'))
+    word = [fibonacci[order - 1] - sequence[fibonacci[order] - width - position]
+            for position in range(1, 48)]
+    expected_word = [4] * 24 + [8, 8, 4, 4, 9, 8, 4, 4, 4, 8, 4, 4, 4, 8, 4, 4] + [8] * 7
+    assert word == expected_word
+    semigroup = {4 * first + 5 * second for first in range(12) for second in range(10)}
+    support8 = {position for position in range(1, 48)
+                if position - 25 in semigroup or position - 26 in semigroup}
+    support9 = {position for position in range(1, 48) if position - 29 in semigroup}
+    assert support9 <= support8
+    assert [position for position in range(25, 48) if position not in support8] == [27, 28, 32]
+    assert [position for position, value in enumerate(word, 1) if value == 9] == [29]
+    for position, value in enumerate(word, 1):
+        assert value == 4 or position in (support8 if value == 8 else support9)
+    for support in (support8, support9):
+        for position in support:
+            for shift in (0, 4, 5):
+                assert position + shift > 47 or position + shift in support
+    literal_updates = 0
+    premises = []
+    for position in range(20, 48):
+        root = fibonacci[order] - width - position
+        endpoint = root - 1
+        for iteration in range(sequence[root - 1]):
+            endpoint = root - sequence[endpoint]
+        assert endpoint == splits[root]
+        assert sequence[endpoint] + sequence[root - endpoint] == sequence[root]
+        literal_updates += sequence[root - 1]
+        premises.append(dict(position=position, index=root, response=word[position - 1],
+                              value=sequence[root], split=endpoint))
+    alphabet = (4, 8, 9)
+    periodic_sizes = {}
+    map_updates = 0
+    observed_periods = set()
+    map_graphs = 0
+    previous_width = cap4_generated_width(34)
+    full_gap = cap4_generated_width(35) + 43
+    for outputs in product(alphabet, repeat=3):
+        mapping = dict(zip(alphabet, outputs))
+        periodic = set()
+        for start in alphabet:
+            states, transient, period = response_state_orbit(mapping, start)
+            assert transient <= 2 and period <= 3
+            observed_periods.add(period)
+            periodic.update(states[transient:])
+            point = start
+            for steps in range(24):
+                assert response_state_endpoint(mapping, start, steps) == point
+                point = mapping[point]
+                map_updates += 1
+        periodic_sizes[outputs] = len(periodic)
+        profile = [generated_cap4_profile(34, point) if point <= previous_width else 4
+                   for point in range(full_gap + 1)]
+        for letter, output in zip(alphabet, outputs):
+            position = 43 + 4 - letter
+            assert position in support9
+            profile[previous_width + position] = output
+        cycles = capped_profile_cycles(profile, full_gap)
+        assert {point for cycle in cycles for point in cycle} == {
+            full_gap - letter for letter in periodic}
+        map_graphs += 1
+    assert observed_periods == {1, 2, 3}
+    offsets = (0, 2, 3, 5, 7)
+    shared_positions = sorted({offset + shift for offset in offsets for shift in (0, 4, 5)})
+    assert shared_positions == [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    stencils = [tuple(shared_positions.index(offset + shift) for shift in (0, 4, 5))
+                for offset in offsets]
+    contracts = []
+    graph_checks = 0
+    for excess in range(16, 44):
+        domains = [tuple([4] + ([8] if excess - position in support8 else [])
+                        + ([9] if excess - position in support9 else []))
+                   for position in shared_positions]
+        words = 0
+        maximum_options = 0
+        sharp_word = None
+        for shared_word in product(*domains):
+            descriptors = [tuple(shared_word[index] for index in stencil) for stencil in stencils]
+            recovered = {}
+            options = 1
+            for offset, outputs in zip(offsets, descriptors):
+                options *= periodic_sizes[outputs]
+                for letter, output in zip(alphabet, outputs):
+                    position = offset + letter - 4
+                    assert recovered.get(position, output) == output
+                    recovered[position] = output
+            assert tuple(recovered[position] for position in shared_positions) == shared_word
+            if options > maximum_options:
+                maximum_options = options
+                sharp_word = shared_word
+            words += 1
+        full_gap = cap4_generated_width(35) + excess
+        profile = [generated_cap4_profile(34, point) if point <= previous_width else 4
+                   for point in range(full_gap + 1)]
+        for position, value in zip(shared_positions, sharp_word):
+            profile[previous_width + excess - position] = value
+        for offset in offsets:
+            row_gap = full_gap - offset
+            mapping = {letter: profile[row_gap - letter] for letter in alphabet}
+            periodic = set()
+            for start in alphabet:
+                states, transient, period = response_state_orbit(mapping, start)
+                periodic.update(states[transient:])
+            cycles = capped_profile_cycles(profile[:row_gap + 1], row_gap)
+            assert {point for cycle in cycles for point in cycle} == {
+                row_gap - letter for letter in periodic}
+            graph_checks += 1
+        contracts.append(dict(excess=excess, words=words, word_bits=(words - 1).bit_length(),
+                              maximum_options=maximum_options,
+                              output_bits=(maximum_options - 1).bit_length(),
+                              sharp_word=list(sharp_word)))
+    assert max(row['words'] for row in contracts) == 34992
+    assert max(row['maximum_options'] for row in contracts) == 162
+    assert next(row for row in contracts if row['excess'] == 41)['sharp_word'] == [
+        4, 4, 4, 9, 8, 8, 9, 8, 4, 4, 4, 8]
+    relaxed_next_word = [4] * 24
+    for excess in range(25, 48):
+        mapping = {letter: word[excess + 3 - letter] for letter in alphabet}
+        selected = 9 if excess == 34 else response_state_endpoint(mapping, 4, 6)
+        states, transient, period = response_state_orbit(mapping, selected)
+        assert transient == 0
+        relaxed_next_word.append(mapping[selected])
+    assert [relaxed_next_word[position - 1] for position in (38, 34, 33)] == [8, 9, 4]
+    for position, value in enumerate(relaxed_next_word, 1):
+        assert value == 4 or position in (support8 if value == 8 else support9)
+    mapping = {letter: relaxed_next_word[38 + 3 - letter] for letter in alphabet}
+    assert [mapping[letter] for letter in alphabet] == [8, 9, 4]
+    return dict(seed_order=34, new_scalar_premises=premises, seed_word=word,
+                prefix_limit=limit, independent_brent_agrees_through=limit,
+                prefix_sha256=digest.hexdigest(), literal_endpoint_updates=literal_updates,
+                response_alphabet=list(alphabet), response_support8=sorted(support8),
+                response_support9=sorted(support9), flat_positions_inclusive=[1, 24],
+                additional_permanent_flat_positions=[27, 28, 32],
+                binary_prefix_positions_inclusive=[1, 28],
+                sufficient_full_word_bits=(2 ** 7 * 3 ** 13 - 1).bit_length(),
+                maximum_strict_drops_above_seed_by_cap={'8': 5, '9': 4},
+                ternary_maps=len(periodic_sizes), map_direct_updates=map_updates,
+                map_profile_graphs=map_graphs, possible_periods=sorted(observed_periods),
+                shared_positions=shared_positions, shared_contracts=contracts,
+                shared_word_graphs=graph_checks, shared_words_checked=sum(row['words'] for row in contracts),
+                exact_relaxed_max_word_bits=16, exact_relaxed_max_output_bits=8,
+                relaxed_next_word=relaxed_next_word,
+                reachable_relaxed_three_cycle=dict(order=36, excess=38, map_values=[8, 9, 4],
+                                                   cycle=[4, 8, 9], period=3),
+                scope='Twenty-eight independently regenerated/literal scalar premises extend actual alphabet closure to{4,8,9}, first24 flat responses, permanent holes27/28/32 and binary prefix28 for every order>=34. Spatial4/5 support cones and cap-specific strict-drop bounds are infinite deductions. Full-word28-bit packing and exact five-row16/8-bit contracts describe relaxed support-compatible words, not actual input minima. A periodic-only update of the actual order34 seed permits a three-cycle at order36, but is not claimed to be the actual selected recurrence. Exterior landing and modulo3 clock construction, generic copy frequency and additive occupation/global dispersion remain open.')
+
+
 def six_response_map_audit(sequence, splits, fibonacci):
     alphabet = (4, 7, 8, 9, 10, 13)
     offsets = (0, 2, 3, 5, 7)
@@ -3170,6 +3346,7 @@ def higher_projection_and_allocation_audit(sequence, splits, fibonacci):
                 frontier_copy_holes=frontier_copy_hole_audit(sequence, splits, fibonacci),
                 six_response_map=six_response_map_audit(sequence, splits, fibonacci),
                 copy_clock_variation=copy_clock_variation_audit(sequence, splits, fibonacci),
+                ternary_support=ternary_support_audit(),
                 scope='Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open.')
 
 

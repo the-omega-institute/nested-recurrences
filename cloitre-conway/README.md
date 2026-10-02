@@ -120,6 +120,12 @@ and extends the explicit actual tail to its first nineteen positions.
 There, order and position determine the value and selected split down to
 the stated finite base. An even prefix alone does not force a two-cycle;
 wider word and exterior-entry construction remain open.
+The [support-cone theorem](recursive-descent.md#arithmetic-support-cones-shrink-the-shared-response-word)
+propagates a later actual three-response seed. High responses can move
+only by four or five positions; this generates permanent holes beyond
+the initial flat band and reduces the shared five-row response word.
+A periodic-only update of the actual seed still permits a three-cycle,
+so constructing its exterior clock remains a distinct task.
 
 The local interface theorems state exactly which context is supplied.
 For a bounded natural-cap domain, the
