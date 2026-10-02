@@ -417,6 +417,16 @@ caps, but the response word and exterior data remain inputs. Campbell's
 ternary templates derive those family data; the remaining cross-family
 question is their construction, not the finite option-table decoding.
 
+The [moving-frontier Cloitre clock](../cloitre-conway/exact-collars.md#a-moving-frontier-needs-recurring-cap4-holes)
+adds a cross-order restriction: a surviving first nonflat tail position
+must encounter cap4 holes on the actual inner path at order density at
+least one third. The phase bit therefore has an explicit path witness,
+and its possible recurrence is a word-evolution obstacle. Campbell's
+ternary formulas derive its entry data; a finite cycle alphabet alone
+does not give the corresponding hole-frequency control for Cloitre.
+These inner-orbit counts do not supply the additive martingale occupation
+needed for global dispersion.
+
 The shared [selector checker](../cloitre-conway/verification/selector_payload_check.py)
 independently evaluates Campbell's first32 terms by literal iteration and
 checks the displayed three-solution inverse. The sharpness statement
