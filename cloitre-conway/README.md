@@ -78,6 +78,8 @@ reduces the local data, and the
 generates two orbit steps and their high digit context. The next lookup
 enters a macroscopic block interior: constructing its values and the
 remaining clock is the current obstruction.
+Its [first two child generations and a complete phase fibre](recursive-descent.md#interior-descent-preserves-a-scalar-valid-phase-ambiguity)
+show why small-cap closure and parent readouts alone do not finish descent.
 
 For convergence, the
 [block-terminal criterion](dispersion.md#block-terminal-means-remove-intermediate-scalar-constraints)
