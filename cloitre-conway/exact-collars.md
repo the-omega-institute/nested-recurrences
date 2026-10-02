@@ -1479,6 +1479,12 @@ clock. It uses a qualified exterior landing and at most one tail response.
 The phase changes whether a five-pattern joint interaction appears in
 the scalar values or the selected indices; their difference is invariant.
 The exterior landing and general nonfrontier copy runs remain unresolved.
+The [six-response interface](recursive-descent.md#six-response-states-close-a-wider-selected-orbit-interface)
+now removes frontier flatness from the periodic-map decoder: six tail
+responses determine every periodic option, and five additive rows share
+fifteen responses. A qualified two-step landing seed and cycle-clock
+residue determine selection without a supplied parent cap. Constructing
+those inputs locally and controlling long nonfrontier copy runs remain open.
 
 ### Adjacent-gap parity closure and the entrance condition
 

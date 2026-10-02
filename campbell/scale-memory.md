@@ -407,6 +407,16 @@ patterns, the Cloitre phase transfers joint interaction between scalar values
 and selected child indices while their difference remains e-4. Canonical
 higher-word qualification and recursive evolution remain separate.
 
+The [six-response Cloitre map](../cloitre-conway/recursive-descent.md#six-response-states-close-a-wider-selected-orbit-interface)
+extends beyond that frontier: its alphabet map gives every periodic option
+from six tail answers, with fifteen shared answers for five additive rows.
+An actual three-cycle requires a modulo-three phase calculation, so the
+general landing clock is not exhausted by parity. Qualified landing and
+clock residues now give a fixed finite decoder without supplied parent
+caps, but the response word and exterior data remain inputs. Campbell's
+ternary templates derive those family data; the remaining cross-family
+question is their construction, not the finite option-table decoding.
+
 The shared [selector checker](../cloitre-conway/verification/selector_payload_check.py)
 independently evaluates Campbell's first32 terms by literal iteration and
 checks the displayed three-solution inverse. The sharpness statement

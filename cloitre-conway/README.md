@@ -99,6 +99,10 @@ replaces the full entry clock by a bit derived from a qualified even landing
 and one tail response. The same phase bit transfers a five-pattern joint
 interaction between scalar values and child indices. Generating the exterior
 landing locally remains open.
+Beyond the frontier, a [six-response map](recursive-descent.md#six-response-states-close-a-wider-selected-orbit-interface)
+determines every periodic option and decodes the selected split with qualified
+landing and clock data. Five rows share fifteen responses. A checked actual
+three-cycle explains why the general clock cannot be reduced to parity.
 
 The local interface theorems state exactly which context is supplied.
 For a bounded natural-cap domain, the

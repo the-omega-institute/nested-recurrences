@@ -44,6 +44,7 @@ Fibonacci neighborhood, even when its support has holes.
 - [Growing actual defects and the remaining occupation problem](#growing-actual-defects-and-the-remaining-occupation-problem)
 - [Actual defect allocation and phase information](#actual-defect-allocation-and-phase-information)
 - [An even landing determines a frontier phase](#an-even-landing-determines-a-frontier-phase)
+- [Six response states close a wider selected-orbit interface](#six-response-states-close-a-wider-selected-orbit-interface)
 - [Cap4 query profiles and the information they carry](#cap4-query-profiles-and-the-information-they-carry)
 
 ### Recursive windows with a parameter at every row
@@ -1484,6 +1485,181 @@ The [checker](verification/collar_check.py) records symbolic landing cases,
 actual first-even landings, literal five-row endpoints and interaction
 identities under `frontier_reset`. General nonfrontier copy runs, deriving
 the landing from local arithmetic and global dispersion remain open.
+
+### Six response states close a wider selected-orbit interface
+
+The frontier reset rule uses the first nonflat position. A six-state
+response map removes that flatness hypothesis, controls every periodic
+option in a wider band, and gives a finite decoder for the selected split.
+Its input still includes a qualified exterior landing and clock residue;
+the wider actual response word is not yet generated from the order.
+
+**Response-map theorem.** Let K>=27, 9<=d<=43,
+A=F_(K-1), B=F_(K-2), U=V_(K-1), v=V_K+d=U+d+4,
+and N=F_K-v. Put
+
+$$
+\mathcal A=\{4,7,8,9,10,13\},\qquad
+R(j)=Q_{K-1}(U+j),\qquad R(0)=4.
+$$
+
+Only the following six responses define the map H_d on A:
+
+$$
+H_d(a)=R(d+4-a),\qquad
+d+4-a\in\{d,d-3,d-4,d-5,d-6,d-9\}. \tag{S.1}
+$$
+
+Every query position lies in 0..43, so the existing
+[forty-seven-position alphabet theorem](exact-collars.md#a-finite-alphabet-propagates-beyond-the-zero-allocation-corridor)
+makes H_d a map A -> A. In gap coordinates r=A-x, the inner map
+is r -> v-Q_(K-1)(r). The injection
+
+$$
+a\longmapsto r=v-a \tag{S.2}
+$$
+
+conjugates H_d to that map on these six points. The cap3 shelf confines
+every periodic gap to the generated cap4 band or certified translated
+tail, and both its readout and its predecessor's readout belong to A.
+The latter equals v-r. Thus (S.2) gives **all** periodic vertices and
+cycles, including their order, not merely a bound on their number.
+The complementary cap is zero at every such vertex. A periodic response
+state a gives the complete parent output
+
+$$
+g=A-v+a,\qquad Q_K(v)=H_d(a). \tag{S.3}
+$$
+
+The parent cap is not supplied. Distinct periodic states give distinct
+splits, and distinct readouts, by injectivity of readouts on the entire
+periodic set. A high-cap copy edge is precisely a selected state a=4
+with H_d(4)=e>4 and H_d(e)=4. The stencil therefore also identifies
+nonfrontier two-cycle copy options. It does not determine which one is
+selected without the remaining basin/clock data.
+
+**A two-step landing decoder.** Define eta and X as in (R.2), without
+the preceding-flatness condition. The same argument gives
+
+$$
+\eta\text{ even},\qquad \eta\le2Q(F_{K-2})<4K,\qquad
+A-U-d\le X\le A, \tag{S.4}
+$$
+
+where Q is the integer capture-pair budget. Indeed earlier even points
+above A have odd successors below A-U-d; below that wall the cap3 shelf
+and global cap give C(y)<=B-4. The following even point is at least
+A-U-d. Capture proves existence. Since F_(K-2)<=2^(K-3) and
+log_(3/2)2<2, the capture budget is less than 2K.
+
+At X read
+
+$$
+c=Q_{K-1}(A-X),\qquad s=Q_{K-1}(v-c). \tag{S.5}
+$$
+
+The first read is arithmetic if A-X<=U; otherwise it is one tail read
+at position at most d. Here c lies in {0,1,2,3} union A. The second
+query has translated position d+4-c in 0..47 and therefore s belongs
+to A. Two inner steps from X reach A-v+s at the even clock eta+2.
+This proves the decoder with at most two landing-response queries.
+For c in A the second response is already an edge of the six-read stencil.
+For c<=3 it needs at most four-position lookahead.
+
+Let D=C(N-1). Its exact value is unnecessary after the response orbit
+has reached a cycle. If that orbit, starting at s, has transient length
+b and period p, then b<=5 and 1<=p<=6. The selected state is
+
+$$
+a_D=H_d^{\,D-\eta-2}(s). \tag{S.6}
+$$
+
+There are enough iterations to pass its transient: N-1>A and the
+golden lower bound give D>=B+1; for K>=27, B+1>=4K+7, first at
+K=27 and then by Fibonacci growth. Combining (S.4) gives
+D-eta-2>=5. Consequently only (D-eta-2-b) mod p is needed for
+the final cycle lookup. A supplied depth residue D mod p and landing
+residue eta mod p suffice, with s and H_d. Since eta is even, its
+residue has only p/gcd(p,2) possible classes. For p=1 or 2 the
+landing clock can be omitted; for p=3 it has three possible classes.
+The bound is a fixed six-state orbit decoder, not a constant-memory
+recognizer for the full Fibonacci-encoded sequence graph.
+
+The existing exact depth and exterior path may supply these residues;
+the cost of constructing them is separate. In particular, an even
+landing does not make parity a sufficient clock for every wider orbit.
+Local arithmetic generation of the landing, responses and depth residues
+remains open.
+
+**An actual three-cycle.** For K=32, d=33, N=2178167, the six-edge
+map, in increasing source order (4,7,8,9,10,13), is
+
+```text
+H = (8,8,9,4,4,9).
+```
+
+It has the cycle 8 -> 9 -> 4 -> 8. The first even landing is A-123
+at clock14, and (S.5) gives s=8. The qualified clock in (S.6)
+selects a_D=9, with parent cap4. Omitting eta from this calculation
+changes the selected output. This is a finite actual witness, checked
+by independently agreeing full-orbit and Brent prefixes and literal
+prescribed iteration. It is not an infinite three-cycle family or an
+independent-input lower bound for actual C.
+
+**Five rows share fifteen responses.** For offsets w=(0,2,3,5,7),
+assume 16<=d<=43. At N+w_i the translated excess is d-w_i in 9..43.
+The union of their six-response stencils is
+
+$$
+\{d-j:j\in S\},\qquad
+S=\{0,2,3,4,5,6,7,8,9,10,11,12,13,14,16\}. \tag{S.7}
+$$
+
+Thus fifteen shared responses determine all five periodic maps,
+instead of thirty separate answers or the whole 47-position word.
+Generated prefix responses need not be supplied. Landing queries and
+clock residues remain separate from these maps. Additive pattern labels
+do not assert a common canonical FIB higher word or unchanged descendant
+context; those qualifications must be checked separately.
+
+There are two exact **relaxed certificate costs**, with the order/gaps
+and stated profile constraints supplied. Neither is an actual-C input
+lower bound:
+
+1. For the complete map collection, fifteen independent alphabet entries
+   have 6^15 possibilities and an exact fixed-length code of39 bits.
+   All fifteen positions occur on an edge, so the map collection determines
+   them uniquely. This bound is sharp in the relaxed response-word class:
+   take K>=31, d=33, keep the generated first16 tail positions at4,
+   and choose every response at positions17..33 appearing in(S.7) freely
+   in A. These choices obey the sharper shelf since each position is>=17.
+2. Given the shared word, let P_i be the periodic vertices of H_(d-w_i).
+   The complete independent-row periodic-output contract has exactly
+   M=product_i |P_i| options and needs ceil(log_2 M) bits. Always
+   M<=6^5, giving a13-bit upper bound. It is sharp even with the shared
+   word: the following one coloring of S supplies all five maps as
+   permutations, so every row has six periodic vertices.
+
+| j in increasing order |0|2|3|4|5|6|7|8|9|10|11|12|13|14|16|
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| R(33-j) |7|8|9|13|4|10|7|13|8|10|9|4|8|7|13|
+
+Each row's positions w_i+{0,3,4,5,6,9} have all six different colors.
+Its map is therefore a permutation on A. With all distinct physical
+rows allowed independently, all6^5 output choices exist in this contract,
+and log_2(6^5) lies strictly between12 and13. Supplying a qualified
+landing and the needed clock residue derives the actual choice instead;
+supplying actual parent caps also distinguishes the periodic vertices.
+
+These costs concern a full option table. They do not say that39+13 bits
+are needed to evaluate actual C, or that the actual 47-position words
+can be freely chosen. Family word evolution, exterior qualification,
+inter-row actual selection and recursive allocation remain additional
+requirements. The [checker](verification/collar_check.py) records all
+46,656 six-state maps, the shared sharpness witness, actual decoding
+and the independently reproduced three-cycle under `six_response_map`.
+The finite map does not extend the existing O(K)-width dispersion
+domain to the full Fibonacci block.
 
 ### Cap4 query profiles and the information they carry
 
