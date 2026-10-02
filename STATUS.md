@@ -40,6 +40,10 @@ conjectures remain finite observations. No Lean formalization is included.
    [dispersion note](cloitre-conway/dispersion.md) gives a conditional decay
    theorem; its required uniform inequality is still open. A matching
    lower bound for maxima is a separate question.
+   An [exact two-generation policy certificate](cloitre-conway/dispersion.md#a-two-generation-certificate-at-the-forced-geometric-bottleneck)
+   repairs a checked one-step bottleneck and separates scalar-preserving
+   from moment-preserving proof policies. Its finite minimum uses one
+   randomized split state; a uniform dispersion bound remains open.
 2. **The full recursive interface.** Determine what scale, position,
    profile, branch, and phase information suffices beyond the exact
    Fibonacci neighborhoods. Five digit labels or a candidate geometric

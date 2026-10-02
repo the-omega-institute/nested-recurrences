@@ -1404,6 +1404,115 @@ of3936 positive-defect roots. Their minimum quadratic ratio is
 The broader geometric policy domain is separate and contains the
 previous scalar-valid policies; neither finite comparison proves (M.4).
 
+#### A two-generation certificate at the forced geometric bottleneck
+
+The one-step obstruction at125952 can be repaired in two generations
+by a small moment policy. Its optimality and the required split
+randomization can be certified exactly in this finite actual context.
+This advances the policy interface; it does not establish a uniform
+dispersion inequality or choose the prescribed recurrence's endpoints.
+
+Put N=125952, j=26, C(N)=79505, D=C(N)-G(N)=1662 and
+delta=D/N. The4560 geometric root splits have H<=79505, with equality
+only at a=77846. Every nodewise moment-admissible policy must therefore
+use this split. Its children are a=77846, b=48106, with inherited
+orders25 and24 and actual values49136,30369. Their full geometric
+domains have2822 and1739 candidates, respectively.
+
+**A certificate with only one randomized split state.** Use this policy:
+
+| Parent | Split | Complement | Child values | H | Split probability |
+|---:|---:|---:|---|---:|---:|
+|125952|77846|48106|49136,30369|79505|1|
+|77846|48994|28852|31226,17905|49131|3/4|
+|77846|47767|30079|30040,19111|49151|1/4|
+|48106|29321|18785|18369,12001|30370|1|
+
+The left mean is(3*49131+49151)/4=49136, exactly its target.
+The right readout30370 exceeds its target30369 by one. Each state
+thus satisfies(M.1). The lower-readout left choice fails that inequality
+on its own; their mixture meets it exactly. Let v(j,n;x) be(9.22).
+The accumulated variance is exactly
+
+$$
+W=v(26,N;77846)+\frac{77846}{N}
+ \left[\frac34v(25,77846;48994)+\frac14v(25,77846;47767)\right]
+ +\frac{48106}{N}v(24,48106;29321). \tag{M.12}
+$$
+
+Exact rational comparison gives W/delta^2=2.05291485...>2.
+Only the split at77846 is randomized; the usual size-biased choice
+between children is still made at every state. The expected normalized
+scalar after two generations is79506/N, so Z gains exactly1/N.
+
+**Full finite optimum and its dual certificate.** At48106 the optimal
+one-step moment policy mixes split28761 with weight1/46 and29321
+with weight45/46. Their respective child values are(17815,12509) and
+(18369,12001), giving readouts30324 and30370. The mean is30369.
+Together with the left mixture above, this gives the full E_2 value
+at the forced root, with E_2/delta^2=2.11432603... . Both child
+means now equal their targets, so the resulting Z policy is a martingale.
+
+To certify these child optima, for each child n take its two displayed
+supporting points x_-,x_+, and write H_-=H(x_-), H_+=H(x_+).
+Define
+
+$$
+L_n(H)=v(j_n,n;x_-)
+ +\frac{H-H_-}{H_+-H_-}
+       [v(j_n,n;x_+)-v(j_n,n;x_-)]. \tag{M.13}
+$$
+
+Both slopes are negative. The independently evaluated C table verifies
+v(j_n,n;x)<=L_n(H(x)) at every geometric candidate:4561 exact
+rational inequalities. Hence any admissible child mixture has variance
+at most L_n(mean H)<=L_n(C(n)). Each displayed mixture attains that
+bound. The root split is forced, so these two child dual bounds prove
+the full two-generation optimum without relying on the optimizer's
+choice of supports.
+
+**One randomized split state is necessary, sharply.** Exhausting the
+same child domains gives the following two-generation maxima, normalized
+by delta^2:
+
+| Nodewise policy restriction | Maximum ratio |
+|---|---:|
+| Each split individually preserves its parent's C value |0.62108666...<1|
+| One moment-admissible split per state |1.06709458...<2|
+| Left child deterministic; right child may mix |1.12850576...<2|
+| Left child may mix; right child deterministic |2.05291485...>2|
+| Both children may mix |2.11432603...>2|
+
+The scalar-valid maxima at the two children are attained at47729 and
+30007. Their moment-admissible singleton maxima are at47671 and29321,
+with readouts49138 and30370. Thus no nodewise deterministic moment
+policy reaches2*delta^2, even though it may increase scalar values.
+Allowing arbitrary mixtures only at the right child is also insufficient.
+The displayed left mixture with a deterministic right child succeeds.
+Exactly one internal split state needs randomization, and it must be
+the left child77846, in this declared two-generation proof-policy contract.
+This minimum does not count random bits, actual evaluation inputs, or
+selected-validity certificates.
+
+**Independent terminal check.** The simple policy has six terminal
+occurrences, the full optimum eight. A support split x of a root child
+n, with mixture weight w, contributes terminal probabilities wx/N and
+w(n-x)/N. With inherited terminal states(h,t), direct summation gives
+sum p=1, sum p*F_h/t=F_26/N, and
+sum p*(F_h/t-F_26/N)^2 equal to(M.12) or the full optimum.
+The scalar terminal mean is79506/N or79505/N, respectively.
+These calculations independently recover the Bellman variance and the
+submartingale/martingale claims.
+
+The [selector checker](verification/selector_payload_check.py) records
+the finite domains, all support values, affine majorants, exact maxima
+and terminal laws under **two_generation_bottleneck**. Its full-orbit
+and Brent prefixes agree through131071; literal prescribed iteration
+checks the root and its two actual children. The complete finite
+certificate does not imply a uniform E_2 bound, a decay exponent, or
+control of the actual selected tree's marked-leaf occupation. Campbell's
+endpoint recurrence lacks the additive moment identity used here.
+
 ### Finite prefixes and exact collars do not force convergence
 
 The missing global condition can be isolated more sharply than with U.

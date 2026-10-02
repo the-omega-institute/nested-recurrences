@@ -2165,6 +2165,127 @@ def optimal_moment_policy(rows, target):
     return best
 
 
+def two_generation_bottleneck_audit(sequence, selected_splits, fibonacci):
+    root, root_order, root_split = 125952, 26, 77846
+    target = sequence[root]
+    defect = target - g_closed(root)
+    assert target == 79505 and defect == 1662
+    lower = max(fibonacci[root_order - 1], root - fibonacci[root_order - 1])
+    upper = min(fibonacci[root_order], root - fibonacci[root_order - 2])
+    root_readouts = [sequence[point] + sequence[root - point] for point in range(lower, upper + 1)]
+    assert max(root_readouts) == target
+    assert [point for point in range(lower, upper + 1)
+            if sequence[point] + sequence[root - point] == target] == [root_split]
+    root_variance = split_variance(root_order, root, root_split, fibonacci)
+    expected_supports = (((48994, Fraction(3, 4)), (47767, Fraction(1, 4))),
+                         ((28761, Fraction(1, 46)), (29321, Fraction(45, 46))))
+    children = []
+    mixed_choices = {}
+    singleton_choices = {}
+    child_values = []
+    dual_checks = 0
+    literal_updates = 0
+    for index in (root, root_split, root - root_split):
+        endpoint = index - 1
+        for iteration in range(sequence[index - 1]):
+            endpoint = index - sequence[endpoint]
+        assert endpoint == selected_splits[index]
+        assert sequence[endpoint] + sequence[index - endpoint] == sequence[index]
+        literal_updates += sequence[index - 1]
+    for (order, index), expected in zip(((25, root_split), (24, root - root_split)), expected_supports):
+        lower = max(fibonacci[order - 1], index - fibonacci[order - 1])
+        upper = min(fibonacci[order], index - fibonacci[order - 2])
+        rows = tuple((point, sequence[point] + sequence[index - point],
+                      split_variance(order, index, point, fibonacci))
+                     for point in range(lower, upper + 1))
+        scalar = max((row for row in rows if row[1] == sequence[index]),
+                     key=lambda row: (row[2], row[0]))
+        singleton = max((row for row in rows if row[1] >= sequence[index]),
+                        key=lambda row: (row[2], row[0]))
+        by_readout = {}
+        for row in rows:
+            if row[1] not in by_readout or row[2] > by_readout[row[1]][2]:
+                by_readout[row[1]] = row
+        variance, support = optimal_moment_policy(tuple(by_readout.values()), sequence[index])
+        assert support == expected
+        by_point = {point: (readout, value) for point, readout, value in rows}
+        first, second = [by_point[point] for point, weight in support]
+        slope = (second[1] - first[1]) / (second[0] - first[0])
+        intercept = first[1] - slope * first[0]
+        assert slope < 0
+        assert all(value <= intercept + slope * readout for point, readout, value in rows)
+        assert variance == intercept + slope * sequence[index]
+        assert sum(weight * by_point[point][0] for point, weight in support) == sequence[index]
+        dual_checks += len(rows)
+        mixed_choices[index] = support
+        singleton_choices[index] = ((singleton[0], Fraction(1)),)
+        child_values.append((index, scalar[2], singleton[2], variance))
+        children.append(dict(order=order, index=index, target=sequence[index],
+                              geometric_splits=len(rows), distinct_readouts=len(by_readout),
+                              scalar_maximum=dict(split=scalar[0], variance=str(scalar[2])),
+                              moment_singleton_maximum=dict(split=singleton[0], readout=singleton[1],
+                                                            variance=str(singleton[2])),
+                              optimal_variance=str(variance),
+                              affine_majorant=dict(slope=str(slope), intercept=str(intercept)),
+                              support=[dict(split=point, complement=index - point,
+                                            values=[sequence[point], sequence[index - point]],
+                                            readout=by_point[point][0], weight=str(weight),
+                                            variance=str(by_point[point][1])) for point, weight in support]))
+    scalar_total = root_variance + sum(Fraction(index, root) * value
+                                       for index, value, singleton, mixed in child_values)
+    normalized_defect = Fraction(defect, root) ** 2
+    variants = []
+    for flags in product((0, 1), repeat=2):
+        total = root_variance + sum(Fraction(index, root) * (mixed if flag else singleton)
+                                   for flag, (index, value, singleton, mixed) in zip(flags, child_values))
+        variants.append(dict(randomized_children=[index for flag, (index, *rest)
+                                                   in zip(flags, child_values) if flag],
+                              variance=str(total), quadratic_ratio=str(total / normalized_defect)))
+    assert scalar_total < normalized_defect
+    assert Fraction(variants[0]['variance']) < 2 * normalized_defect
+    assert Fraction(variants[1]['variance']) < 2 * normalized_defect
+    assert Fraction(variants[2]['variance']) > 2 * normalized_defect
+    assert Fraction(variants[3]['variance']) > Fraction(variants[2]['variance'])
+    assert singleton_choices[root - root_split] == ((29321, Fraction(1)),)
+    terminal_certificates = []
+    for name, choices, expected_value, expected_mean in (
+            ('one_randomized_child', {root_split: mixed_choices[root_split],
+                                      root - root_split: singleton_choices[root - root_split]},
+             Fraction(variants[2]['variance']), target + 1),
+            ('optimal_two_generation', mixed_choices, Fraction(variants[3]['variance']), target)):
+        leaves = []
+        for order, index in ((25, root_split), (24, root - root_split)):
+            for point, weight in choices[index]:
+                for leaf_order, leaf in ((order - 1, point), (order - 2, index - point)):
+                    probability = weight * Fraction(leaf, root)
+                    leaves.append((leaf_order, leaf, probability))
+        assert sum(probability for order, leaf, probability in leaves) == 1
+        root_x = Fraction(fibonacci[root_order], root)
+        assert sum(probability * Fraction(fibonacci[order], leaf)
+                   for order, leaf, probability in leaves) == root_x
+        assert sum(probability * Fraction(sequence[leaf], leaf)
+                   for order, leaf, probability in leaves) == Fraction(expected_mean, root)
+        direct_variance = sum(probability * (Fraction(fibonacci[order], leaf) - root_x) ** 2
+                              for order, leaf, probability in leaves)
+        assert direct_variance == expected_value
+        terminal_certificates.append(dict(policy=name, expected_scalar_numerator=expected_mean,
+                                           variance=str(direct_variance),
+                                           leaves=[dict(order=order, index=leaf, value=sequence[leaf],
+                                                        probability=str(probability))
+                                                   for order, leaf, probability in leaves]))
+    assert dual_checks == 4561
+    return dict(index=root, order=root_order, target=target, golden_defect=defect,
+                root_geometric_splits=len(root_readouts), only_root_split=root_split,
+                root_variance=str(root_variance), children=children,
+                dual_inequalities_checked=dual_checks, literal_endpoint_updates=literal_updates,
+                scalar_two_generation_maximum=str(scalar_total),
+                scalar_two_generation_quadratic_ratio=str(scalar_total / normalized_defect),
+                moment_policy_variants=variants, terminal_certificates=terminal_certificates,
+                minimum_randomized_internal_nodes_for_quadratic_constant_two=1,
+                required_randomized_child=root_split,
+                scope='Exact finite two-generation optimization at actual125952 with supplied actual child profiles and nodewise moment constraints. Root moment admissibility forces77846. Independent affine dual certificates verify full child optima over4561 geometric splits; terminal laws independently reproduce variance and scalar means. Scalar-valid maximum is below the quadratic constant1; every nodewise deterministic moment policy is below constant2. Randomizing only child77846 reaches constant2, while two mixed children attain the full maximum. This is a proof decomposition for existing C values, not the prescribed selected tree, an actual input minimum, a uniform dispersion theorem or a global rate.')
+
+
 def moment_simplex_audit():
     contexts = infeasible = two_support = grid_points = 0
     table_entries = tuple(product((0, 2, 4), (0, 1, 3)))
@@ -2383,6 +2504,7 @@ def moment_dispersion_audit(sequence, selected_splits, fibonacci):
                                                   minimum_quadratic_ratio=minimum),
                 upper_cap_knee_contexts=upper_cap_contexts,
                 actual_geometric_moment_bottleneck=bottleneck,
+                two_generation_bottleneck=two_generation_bottleneck_audit(sequence, selected_splits, fibonacci),
                 scope='Written paired and cycle-average quadratic bounds plus moment-submartingale decay criterion and sharp two-support conditional optimizer. Finite audits verify supplied mean conditions, not a uniform global inequality; original selector is unchanged.')
 
 
