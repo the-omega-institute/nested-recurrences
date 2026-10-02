@@ -92,8 +92,9 @@ Profiles beyond this arithmetic region remain open.
 The [finite-alphabet extension](exact-collars.md#a-finite-alphabet-propagates-beyond-the-zero-allocation-corridor)
 propagates a wider bounded response alphabet and zero allocation from one
 seed. A high-cap spine has only finitely many strict position drops;
-eventual flattening would require control of persistent high-member choices
-on two-cycles. A local depth-parity shortcut fails in actual examples.
+eventual flattening would require control of persistent zero-drop copies.
+Two-cycle qualification requires an additional response, and a local
+depth-parity shortcut fails in actual examples.
 At a [first nonflat frontier](exact-collars.md#a-moving-frontier-needs-recurring-cap4-holes),
 the Fibonacci clock forces a positive frequency of actual path holes during
 persistence. Excluding them gives conditional tail widening; their actual
@@ -113,6 +114,12 @@ For [two-cycle copy runs](recursive-descent.md#copy-runs-trade-reset-events-agai
 resets trade against changes in adjacent-row parity, each such change
 requiring a strict child migration. Outside a first frontier, a reset can
 come from another high-cap point rather than a lower cap4 hole.
+The [binary-prefix theorem](recursive-descent.md#binary-prefixes-close-with-two-response-states)
+derives a two-state periodic map, shares nine responses across five rows,
+and extends the explicit actual tail to its first nineteen positions.
+There, order and position determine the value and selected split down to
+the stated finite base. An even prefix alone does not force a two-cycle;
+wider word and exterior-entry construction remain open.
 
 The local interface theorems state exactly which context is supplied.
 For a bounded natural-cap domain, the

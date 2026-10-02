@@ -46,6 +46,7 @@ Fibonacci neighborhood, even when its support has holes.
 - [An even landing determines a frontier phase](#an-even-landing-determines-a-frontier-phase)
 - [Six response states close a wider selected-orbit interface](#six-response-states-close-a-wider-selected-orbit-interface)
 - [Copy runs trade reset events against adjacent migrations](#copy-runs-trade-reset-events-against-adjacent-migrations)
+- [Binary prefixes close with two response states](#binary-prefixes-close-with-two-response-states)
 - [Cap4 query profiles and the information they carry](#cap4-query-profiles-and-the-information-they-carry)
 
 ### Recursive windows with a parameter at every row
@@ -1345,8 +1346,8 @@ The actual alphabet{4,7,8,9,10,13} gives at most six periodic vertices;
 the lower word and parent cap suffice for selected decoding. These data
 are still supplied outside the generated first thirteen/sixteen positions.
 A high-cap spine can strictly decrease its translated excess at most
-fifteen times; every other edge is a selected high member of a two-cycle
-with readouts{4,e}. Two actual contexts show that the local response word,
+fifteen times; every other edge copies that excess. A two-cycle copy
+additionally requires the successor's readout to be4. Two actual contexts show that the local response word,
 cycle and depth parity alone do not determine that high-member choice.
 Long copy-run control and wider word construction remain open.
 
@@ -1540,8 +1541,9 @@ $$
 The parent cap is not supplied. Distinct periodic states give distinct
 splits, and distinct readouts, by injectivity of readouts on the entire
 periodic set. A high-cap copy edge is precisely a selected state a=4
-with H_d(4)=e>4 and H_d(e)=4. The stencil therefore also identifies
-nonfrontier two-cycle copy options. It does not determine which one is
+with H_d(4)=e>4. It is a two-cycle copy exactly when H_d(e)=4.
+The stencil therefore also identifies nonfrontier two-cycle copy options.
+It does not determine which one is
 selected without the remaining basin/clock data.
 
 **A two-step landing decoder.** Define eta and X as in (R.2), without
@@ -1641,8 +1643,10 @@ lower bound:
    them uniquely. This bound is sharp in the relaxed response-word class:
    take K>=31, d=33, keep the generated first16 tail positions at4,
    and choose every response at positions17..33 appearing in(S.7) freely
-   in the response alphabet. These choices obey the sharper shelf since
-   each position is>=17.
+  in the response alphabet. These choices obey the sharper shelf since
+  each position is>=17.
+   This relaxed contract imposes the first16 constraints; the later
+   first19 construction below further restricts actual response words.
 2. Given the shared word, let P_i be the periodic vertices of H_(d-w_i).
    The complete independent-row periodic-output contract has exactly
    M=product_i |P_i| options and needs ceil(log_2 M) bits. Always
@@ -1839,6 +1843,142 @@ adjacent migrations under `copy_clock_variation`. The infinite argument
 uses the existing alphabet and capture premises, with no new finite
 sequence premise. Actual word/entry construction, control of these two
 channels and additive martingale occupation for global dispersion remain open.
+
+### Binary prefixes close with two response states
+
+Parity information propagates, but it does not reduce every cycle clock
+to parity. A binary response alphabet does give that reduction, a smaller
+shared five-row map and an explicit extension of the actual generated tail.
+
+**Causal prefix and one-way adjacent parity.** At K>=27,1<=j<=47,
+alphabet propagation gives zero second cap and first-child excess
+
+$$
+j'=j+4-q\le j,\qquad q\in\{4,7,8,9,10,13\}. \tag{B.1}
+$$
+
+The parent response equals the preceding response at j', or4 when j'<=0.
+Any subset containing4 therefore propagates on a prefix from one seed.
+In particular an even prefix stays even without being flat.
+
+Suppose the prefix1..d-2 is even from a seed H>=26. At position d+1,
+a noncopy edge has j'<=d-2 and hence an even response; a copy preserves
+its own preceding response. The adjacent parity can only change from odd
+to even, at most once. On a qualified{4,e} two-cycle copy run at d9..43,
+the clock theorem gives M>=floor((t-1)/3), or floor(t/3) if the adjacent
+seed response is even. This weakens the flat-prefix hypothesis for the
+frequency bound, retaining two-cycle qualification. It does not imply
+the frontier's lower-hole equivalence.
+
+**Even responses can support a three-cycle.** At d33 set R(33)=8,
+R(29)=10 and all other tail responses to4. They obey the generated-prefix
+and sharper-shelf constraints and are all even, but H_d has
+4 -> 8 -> 10 -> 4. Selecting state4 copies the position with parent
+readout8 and zero complementary cap. Thus the structural premises do
+not imply that every zero-drop copy is a two-cycle, or that an even
+prefix only needs a parity clock. This is a relaxed captured profile,
+not an alternative actual C sequence or an actual three-cycle copy.
+A two-cycle needs the additional response H_d(e)=4; the wider decoder
+retains its full cycle-clock residue.
+
+**Binary-prefix theorem.** Suppose H>=26,1<=D<=47 and
+Q_H(V_H+j) in{4,8} for1<=j<=D. This membership propagates to every
+higher order. For K>H,9<=d<=min(D,43), the full periodic map is
+
+$$
+H_d(4)=R(d),\qquad H_d(8)=R(d-4),\qquad
+R(j)=Q_{K-1}(V_{K-1}+j). \tag{B.2}
+$$
+
+All periodic vertices are represented and have zero second cap. State a
+gives g=A-v+a and parent cap H_d(a). The four maps are constant4,
+identity, interchange and constant8, so period at most two is derived.
+Every high-cap zero-drop copy here is consequently a{4,8} two-cycle.
+
+**Three-step qualified landing.** At the first even landing X<=A read
+c=Q_(K-1)(A-X), s=R(d+4-c), then z=R(d+4-s). The first read is arithmetic
+or binary. The second may leave the binary prefix but stays within47,
+since d<=43, and lies in the full alphabet. The third is at a position
+in0..d and is binary. Three steps from X reach A-v+z at an odd clock.
+Its binary-map transient b<=1 and period p<=2 leave enough depth;
+for p2 only (C(N-1)-3-b) mod2 is needed. The even landing clock
+contributes no residue. If d+1<=D, the adjacent response is even and
+the depth parity is F_(K-1) mod2, known from K mod3. At d=D an
+adjacent parity input can remain. Exterior landing construction still
+uses actual-C queries; seed/lookahead reads are separate from the map.
+
+**Five rows share nine binary responses.** For offsets(0,2,3,5,7) and
+16<=d<=min(D,43), the union of two-entry stencils is
+
+$$
+\{d-j:j\in\{0,2,3,4,5,6,7,9,11\}\}. \tag{B.3}
+$$
+
+Every entry is recoverable from an edge, so the complete relaxed map-word
+contract has2^9 possibilities and an exact nine-bit fixed-length code.
+Sharpness allows D>=32,d31,K>=32, keeps the generated first19 at4 and
+chooses those nine positions20..31 freely, obeying the shelf. Given the
+word, the independent-row periodic-output contract has at most2^5 choices,
+requiring at most five bits. The shared coloring below makes all five
+maps permutations and attains all32 options:
+
+    j       = (0,2,3,4,5,6,7,9,11)
+    R(31-j) = (4,4,4,8,4,8,8,8,4).
+
+These are relaxed contracts, not actual input minima or a claim that C
+has such a wide binary prefix. Qualified seeds derive the choices;
+canonical higher-word and recursive-context qualification stay separate.
+
+**The actual first nineteen positions are explicit.** The first16 are
+already4 for K>=30. Five additional scalar premises are
+
+| Order | Position j | Index F_K-V_K-j | Response |
+|---|---|---|---|
+|30|17|831922|8|
+|30|18|831921|8|
+|30|19|831920|4|
+|31|17|1346147|4|
+|31|18|1346146|4|
+
+The binary theorem propagates the order30 first19. Positions17/18 have
+earlier responses at13/14 permanently4, so each can only copy8 or erase
+to4. Position19 has a constant4 map since its earlier responses at19/15
+are4. The two order31 erasures therefore give
+
+$$
+Q_K(V_K+j)=4\qquad(K\ge31,\ 1\le j\le19). \tag{B.4}
+$$
+
+At K31, positions17/18 have selected shift8 and all other positions
+shift4. At K>=32 each has a fixed cycle and shift4. Order and position
+alone now give both value and split. The first-child excess stays j above31,
+then becomes j-4 at31 only for j17/18; complementary children are zero-cap
+calls. This closes selected descent down to the finite order30 base with
+zero residual word, parent-cap, basin or phase labels. Deeper order30
+selectors are boundary data; positions beyond19 are not constructed here.
+
+**A final canonical index interaction after scalar flattening.** At K31,
+root1346146 has common higher Fibonacci indices
+{8,11,14,16,18,20,22,24,26,28,30} on the five legal low patterns.
+All five caps are4 and their splits are
+(831925,831923,831924,831926,831928). The scalar joint coefficient is0
+and the child-index coefficient is4:
+
+    C(1346146+2x1+3x2+5x3)=832036,
+    g(x)=831925-2x1-x2+x3+4x1*x3.
+
+For the additive same-excess family at all K>=32 the split is affine
+and the index interaction also vanishes. Canonical qualification is only
+asserted for the checked order31 root; later digit contexts require their
+own check. This is a transient boundary effect, not infinite interaction.
+
+The [checker](verification/collar_check.py) records prefix/adjacent parity,
+the relaxed three-cycle, binary maps and sharpness, five literal premises
+and canonical endpoints under **binary_prefix**. It reuses the existing
+independently regenerated order32 prefix with no larger computation.
+The binary seed and erasures are new finite premises; subset/parity and
+map arguments are infinite deductions. Wider word/entry construction,
+generic copy periods and global dispersion/convergence remain open.
 
 ### Cap4 query profiles and the information they carry
 

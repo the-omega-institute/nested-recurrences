@@ -1419,7 +1419,8 @@ assumed to obey the higher-order zero-cap rule.
 At K>=27 the generated first thirteen preceding responses leave positions
 14..47 to supply; their sufficient rectangular packing uses at most
 ceil(34 log_2 6)=88 bits. At K>=31 the generated first sixteen leave
-positions17..47, using at most ceil(31 log_2 6)=81 bits. Each word is
+positions20..47 after the first19 construction below, using at most
+ceil(28 log_2 6)=73 bits. Each word is
 shared by the five rows; actual parent caps outside generated regions are
 also supplied. These are upper bounds for an alphabet envelope, not exact
 costs or independent-input minima for actual C.
@@ -1435,13 +1436,15 @@ The child cap is e, so d_(s-1)>0; entering the earlier generated band
 would instead give cap4. Every strict decrease is at least3. A spine
 starting in positions1..47 therefore has at most floor((47-1)/3)=15
 strict decreases, at any depth. Every other edge has q_s=4 and keeps d
-unchanged. Such an edge is exactly a selected high member of a two-cycle:
-its gap r has readout e, its successor is v-e, and that point has readout4
-and maps back to r=v-4. The two readouts are{e,4}. Conversely this
-high-member selection gives a copy edge. Hence a t-edge high-cap spine
+unchanged. Its selected gap is r=v-4, with readout e and successor
+v-e. It belongs to a{4,e} two-cycle exactly when the response at v-e
+is4. Zero position drop alone does not give that additional response;
+a captured profile can instead put r on a longer cycle. The finite
+actual copies below are two-cycles, without a universal claim for all
+actual copies. Hence a t-edge high-cap spine
 above26 has at least max(0,t-15) copy edges, in at most sixteen runs.
 To prove that all these actual tail values eventually become4, it would
-suffice to rule out arbitrarily long high-member copy runs. Alphabet
+suffice to rule out arbitrarily long zero-drop copy runs. Alphabet
 propagation alone does not rule them out.
 
 **A local parity shortcut fails in actual C.** At excess13, the roots
@@ -1486,6 +1489,10 @@ responses determine every periodic option, and five additive rows share
 fifteen responses. A qualified two-step landing seed and cycle-clock
 residue determine selection without a supplied parent cap. Constructing
 those inputs locally and controlling long nonfrontier copy runs remain open.
+The [binary-prefix theorem](recursive-descent.md#binary-prefixes-close-with-two-response-states)
+does certify period at most two under a two-letter response condition.
+Five new scalar premises give an explicit first-nineteen-position word
+and its selected descent; the wider six-letter problem remains open.
 
 ### A moving frontier needs recurring cap4 holes
 

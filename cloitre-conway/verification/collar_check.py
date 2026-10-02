@@ -1831,12 +1831,12 @@ def finite_tail_alphabet_audit(sequence, splits, fibonacci):
                 high_cap_first_spine_states=high_cap_spine_states,
                 strict_excess_drop_edges=strict_edges, translated_excess_copy_edges=copy_edges,
                 maximum_strict_drops_any_depth=15,
-                copy_rule='Every nondecreasing high-cap edge copies the translated excess by selecting the high member of a two-cycle with readouts{4,e}; all strict drops are at least3.',
+                copy_rule='Every zero-drop high-cap edge selects response state4 with readout e>4. It is a two-cycle exactly when H_d(e)=4; zero drop alone does not prove that extra response. The checked finite actual copies are two-cycles. All strict drops are at least3.',
                 preceding_word_response_bits_Kge27=(6 ** 34 - 1).bit_length(),
-                preceding_word_response_bits_Kge31=(6 ** 31 - 1).bit_length(),
+                preceding_word_response_bits_Kge31=(6 ** 28 - 1).bit_length(),
                 actual_parity_shortcut_counterexamples=parity_witnesses,
                 quadratic_dispersion='constant1/25 for gaps0..V_K+max(47,floor((V_K-2)/5)), K>=27',
-                scope='The47-value actual order26 seed propagates its alphabet at all orders>=26; every higher-order periodic phase has zero second cap and at most six periodic vertices. Wider words and parent caps remain supplied outside generated regions. High-cap spines have at most15 strict translated-excess drops, so arbitrarily long high spines require long high-member two-cycle copy runs. Actual local-word/depth-parity collisions need entry clocks; these different-order examples are not independent-input lower bounds with full order supplied. Alphabet packing bounds are not exact actual costs. Seed26 internal allocation, copy-run control, wider profile construction and global dispersion/convergence remain outside this theorem.')
+                scope='The47-value actual order26 seed propagates its alphabet at all orders>=26; every higher-order periodic phase has zero second cap and at most six periodic vertices. Wider words and parent caps remain supplied outside generated regions. High-cap spines have at most15 strict translated-excess drops, so arbitrarily long high spines require long zero-drop copy runs; two-cycle qualification is additional. Actual local-word/depth-parity collisions need entry clocks; these different-order examples are not independent-input lower bounds with full order supplied. Alphabet packing bounds are not exact actual costs. Seed26 internal allocation, copy-run control, wider profile construction and global dispersion/convergence remain outside this theorem.')
 
 
 def even_anchor_landing(sequence, root, anchor):
@@ -2420,6 +2420,229 @@ def copy_clock_variation_audit(sequence, splits, fibonacci):
                 scope='General selected {4,e} two-cycle phase decoder and reset/adjacent-variation tradeoff are infinite written deductions from existing premises. Reset precursors can be lower holes, upper cap4 points or upper same-high-cap points. Actual196314 resets and copies with no odd lower cap4 hole. Binary sharpness is a relaxed clock envelope, not actual history sharpness. Adjacent migration counts cross orders and are not bounded by the single-spine15-drop budget or additive martingale occupation. Actual entry/word generation and global dispersion remain open.')
 
 
+def binary_prefix_audit(sequence, splits, fibonacci):
+    alphabet = (4, 7, 8, 9, 10, 13)
+    even_alphabet = (4, 8, 10)
+    binary_alphabet = (4, 8)
+    adjacent_maps = 0
+    adjacent_periods = set()
+    for own in alphabet:
+        for earlier in product(even_alphabet, repeat=5):
+            mapping = dict(zip(alphabet, (own,) + earlier))
+            for start in alphabet:
+                states, transient, period = response_state_orbit(mapping, start)
+                adjacent_periods.add(period)
+                for state in states[transient:]:
+                    output = mapping[state]
+                    assert output % 2 == 0 or output == own
+                    if own % 2 == 0:
+                        assert output % 2 == 0
+            adjacent_maps += 1
+    binary_maps = 0
+    binary_updates = 0
+    for outputs in product(binary_alphabet, repeat=2):
+        mapping = dict(zip(binary_alphabet, outputs))
+        for start in binary_alphabet:
+            states, transient, period = response_state_orbit(mapping, start)
+            assert transient <= 1 and period <= 2
+            if 4 in states[transient:] and mapping[4] == 8:
+                assert period == 2 and mapping[8] == 4
+            point = start
+            for step in range(20):
+                assert response_state_endpoint(mapping, start, step) == point
+                point = mapping[point]
+                binary_updates += 1
+        binary_maps += 1
+    relaxed_order, relaxed_excess = 32, 33
+    previous_width = cap4_generated_width(relaxed_order - 1)
+    relaxed_gap = cap4_generated_width(relaxed_order) + relaxed_excess
+    profile = [generated_cap4_profile(relaxed_order - 1, point)
+               if point <= previous_width else 4
+               for point in range(relaxed_gap + 1)]
+    profile[previous_width + 33] = 8
+    profile[previous_width + 29] = 10
+    mapping = {letter: profile[relaxed_gap - letter] for letter in even_alphabet}
+    assert [mapping[letter] for letter in even_alphabet] == [8, 10, 4]
+    states, transient, period = response_state_orbit(mapping, 4)
+    assert states == [4, 8, 10] and transient == 0 and period == 3
+    cycles = capped_profile_cycles(profile, relaxed_gap)
+    selected_gap = relaxed_gap - 4
+    cycle = next(cycle for cycle in cycles if selected_gap in cycle)
+    assert len(cycle) == 3 and profile[selected_gap] == 8
+    assert profile[relaxed_gap - 8] == 10
+    for position in range(1, 48):
+        if previous_width + position < len(profile):
+            assert 4 <= profile[previous_width + position] <= max(4, position)
+    assert all(letter <= negative_plateau_width(relaxed_order - 2) for letter in even_alphabet)
+    offsets = (0, 2, 3, 5, 7)
+    shared_positions = sorted({offset + shift for offset in offsets for shift in (0, 4)})
+    assert shared_positions == [0, 2, 3, 4, 5, 6, 7, 9, 11]
+    shared_words = 0
+    complete_map_descriptors = set()
+    maximum_options = 0
+    sharp_words = 0
+    sharp_word = [4, 4, 4, 8, 4, 8, 8, 8, 4]
+    sharp_maps = None
+    shared_profile_graphs = 0
+    for word in product(binary_alphabet, repeat=len(shared_positions)):
+        response = dict(zip(shared_positions, word))
+        row_maps = []
+        options = 1
+        for offset in offsets:
+            mapping = {letter: response[offset + letter - 4] for letter in binary_alphabet}
+            periodic = set()
+            for start in binary_alphabet:
+                states, transient, period = response_state_orbit(mapping, start)
+                assert transient <= 1 and period <= 2
+                periodic.update(states[transient:])
+            options *= len(periodic)
+            row_maps.append(tuple(mapping[letter] for letter in binary_alphabet))
+        descriptor = tuple(row_maps)
+        assert descriptor not in complete_map_descriptors
+        complete_map_descriptors.add(descriptor)
+        maximum_options = max(maximum_options, options)
+        sharp_words += options == 32
+        if list(word) == sharp_word:
+            assert options == 32
+            sharp_maps = row_maps
+        previous_width = cap4_generated_width(31)
+        full_gap = cap4_generated_width(32) + 31
+        profile = [generated_cap4_profile(31, point) if point <= previous_width else 4
+                   for point in range(full_gap + 1)]
+        for position, letter in response.items():
+            profile[previous_width + 31 - position] = letter
+            assert 20 <= 31 - position <= 31 and letter <= 31 - position
+        assert profile[previous_width + 1:previous_width + 20] == [4] * 19
+        for offset, outputs in zip(offsets, row_maps):
+            row_gap = full_gap - offset
+            mapping = dict(zip(binary_alphabet, outputs))
+            periodic = set()
+            for start in binary_alphabet:
+                states, transient, period = response_state_orbit(mapping, start)
+                periodic.update(states[transient:])
+            cycles = capped_profile_cycles(profile[:row_gap + 1], row_gap)
+            assert {point for cycle in cycles for point in cycle} == {
+                row_gap - letter for letter in periodic}
+            shared_profile_graphs += 1
+        shared_words += 1
+    assert shared_words == 512 and maximum_options == 32 and sharp_maps is not None
+    literal_updates = 0
+    checked_endpoints = {}
+    def verify_root(root):
+        nonlocal literal_updates
+        if root in checked_endpoints:
+            return checked_endpoints[root]
+        endpoint = root - 1
+        for iteration in range(sequence[root - 1]):
+            endpoint = root - sequence[endpoint]
+        assert endpoint == splits[root]
+        assert sequence[endpoint] + sequence[root - endpoint] == sequence[root]
+        literal_updates += sequence[root - 1]
+        checked_endpoints[root] = endpoint
+        return endpoint
+    premises = []
+    for order, excess, cap in ((30, 17, 8), (30, 18, 8), (30, 19, 4),
+                              (31, 17, 4), (31, 18, 4)):
+        root = fibonacci[order] - cap4_generated_width(order) - excess
+        assert fibonacci[order - 1] - sequence[root] == cap
+        endpoint = verify_root(root)
+        premises.append(dict(order=order, position=excess, index=root, response=cap,
+                              value=sequence[root], split=endpoint))
+    seed_word = [fibonacci[29] - sequence[fibonacci[30] - cap4_generated_width(30) - position]
+                 for position in range(1, 20)]
+    assert seed_word == [4] * 16 + [8, 8, 4]
+    shifts = []
+    periods = []
+    landing_reads = 0
+    for excess in range(1, 20):
+        order = 31
+        anchor, lower = fibonacci[30], fibonacci[29]
+        gap = cap4_generated_width(order) + excess
+        root = fibonacci[order] - gap
+        endpoint = verify_root(root)
+        shift = gap - (anchor - endpoint)
+        assert shift == (8 if excess in (17, 18) else 4)
+        assert anchor - sequence[root] == 4
+        assert lower - sequence[endpoint] == 4
+        assert fibonacci[28] - sequence[root - endpoint] == 0
+        trajectory, transient, period = full_orbit(sequence, root)
+        assert period == (2 if excess in (17, 18) else 1)
+        shifts.append(shift)
+        periods.append(period)
+        if excess >= 9:
+            response = lambda position: lower - sequence[anchor - cap4_generated_width(30) - position]
+            mapping = {letter: response(excess + 4 - letter) for letter in binary_alphabet}
+            landing, pairs = even_anchor_landing(sequence, root, anchor)
+            landing_cap = lower - sequence[landing]
+            initial_seed = response(excess + 4 - landing_cap)
+            binary_seed = response(excess + 4 - initial_seed)
+            assert binary_seed in binary_alphabet
+            assert response_state_endpoint(mapping, binary_seed,
+                                           sequence[root - 1] - 2 * pairs - 3) == shift
+            assert sequence[root - 1] % 2 == anchor % 2
+            landing_reads += 3
+    symbolic_orders = 0
+    symbolic_rows = 0
+    for order in range(32, 121):
+        previous_width = cap4_generated_width(order - 1)
+        for excess in range(1, 20):
+            gap = cap4_generated_width(order) + excess
+            profile = [generated_cap4_profile(order - 1, point)
+                       if point <= previous_width else 4 for point in range(gap + 1)]
+            cycles = capped_profile_cycles(profile, gap)
+            assert cycles == [(gap - 4,)]
+            symbolic_rows += 1
+        symbolic_orders += 1
+    canonical_root = fibonacci[31] - cap4_generated_width(31) - 18
+    higher_word = set(canonical_fibonacci_indices(canonical_root, fibonacci))
+    assert sorted(higher_word) == [8, 11] + list(range(14, 31, 2))
+    canonical_values = []
+    canonical_splits = []
+    canonical_periods = []
+    for offset in offsets:
+        root = canonical_root + offset
+        assert set(canonical_fibonacci_indices(root, fibonacci)) == (
+            higher_word | set(canonical_fibonacci_indices(offset, fibonacci)))
+        canonical_values.append(sequence[root])
+        canonical_splits.append(verify_root(root))
+        trajectory, transient, period = full_orbit(sequence, root)
+        canonical_periods.append(period)
+    assert canonical_values == [832036] * 5
+    assert canonical_splits == [831925, 831923, 831924, 831926, 831928]
+    scalar_joint = canonical_values[4] - canonical_values[1] - canonical_values[3] + canonical_values[0]
+    index_joint = canonical_splits[4] - canonical_splits[1] - canonical_splits[3] + canonical_splits[0]
+    assert scalar_joint == 0 and index_joint == 4
+    return dict(adjacent_even_prefix_maps=adjacent_maps,
+                adjacent_even_prefix_periods=sorted(adjacent_periods),
+                binary_maps=binary_maps, binary_direct_updates=binary_updates,
+                even_three_cycle_profile=dict(order=relaxed_order, excess=relaxed_excess,
+                                               tail_overrides={'33': 8, '29': 10},
+                                               cycle_states=[4, 8, 10], period=3,
+                                               selected_state=4, parent_cap=8, excess_drop=0,
+                                               scope='Relaxed even captured profile, not an actual C copy or alternative sequence.'),
+                shared_five_row_positions=shared_positions, relaxed_shared_words=shared_words,
+                distinct_complete_map_collections=len(complete_map_descriptors),
+                relaxed_word_bits=9, maximum_periodic_output_options=maximum_options,
+                sharp_periodic_output_bits=5, sharp_shared_words=sharp_words,
+                sharp_shared_word=sharp_word, sharp_maps=sharp_maps,
+                sharpness_order=32, sharpness_excess=31, shared_profile_graphs=shared_profile_graphs,
+                new_scalar_premises=premises, binary_seed_order=30,
+                binary_seed_positions_inclusive=[1, 19], binary_seed_word=seed_word,
+                flat_positions_inclusive=[1, 19], flat_from_order=31,
+                actual_order31_shifts=shifts, actual_order31_periods=periods,
+                literal_checked_roots=len(checked_endpoints), literal_endpoint_updates=literal_updates,
+                qualified_landing_response_reads=landing_reads,
+                symbolic_flat_orders_inclusive=[32, 120], symbolic_orders=symbolic_orders,
+                symbolic_fixed_graphs=symbolic_rows,
+                canonical_boundary_window=dict(order=31, root=canonical_root,
+                                               higher_fibonacci_indices=sorted(higher_word),
+                                               offsets=list(offsets), values=canonical_values,
+                                               splits=canonical_splits, periods=canonical_periods,
+                                               scalar_joint=scalar_joint, index_joint=index_joint),
+                scope='Infinite causal subset propagation, one-way adjacent parity and binary periodic/three-step landing decoder. Five new independently regenerated/literal scalar premises give the explicit actual first19 word, zero residual selected descent to order30, and a finite canonical index interaction4 after scalar flattening. Nine/five-bit sharpness is a relaxed wide binary-prefix contract, not actual input minima or a proved actual wide binary seed. Even prefix alone allows period3 and zero drop alone does not certify period2. Qualified two-cycle reset density does not supply lower-hole equivalence, exterior word/entry construction or additive martingale occupation; global dispersion/convergence remain open.')
+
+
+
 def six_response_map_audit(sequence, splits, fibonacci):
     alphabet = (4, 7, 8, 9, 10, 13)
     offsets = (0, 2, 3, 5, 7)
@@ -2626,6 +2849,7 @@ def six_response_map_audit(sequence, splits, fibonacci):
                 landing_tail_reads=landing_tail_reads, low_cap_extra_lookahead_reads=extra_lookahead_reads,
                 actual_literal_endpoint_updates=literal_updates, three_cycle_witness=witness,
                 canonical_three_cycle_window=canonical,
+                binary_prefix=binary_prefix_audit(witness_sequence, witness_splits, witness_fibonacci),
                 scope='Written conjugacy and two-step landing decoder hold at K>=27, d9..43 without frontier flatness, using existing finite-alphabet premises. Six shared stencil answers give every periodic option and no parent cap is supplied. Five additive rows share15 answers for d16..43. Exact39bit word and13bit phase costs concern relaxed independent response/periodic-output contracts, not actual-C input minima. Landings, clock residues, actual response words and wider recursive evolution remain supplied or open; global dispersion is unchanged.')
 
 

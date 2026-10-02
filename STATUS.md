@@ -52,7 +52,8 @@ conjectures remain finite observations. No Lean formalization is included.
    wider neighborhood; it does not construct the exact profiles there.
    A [finite-alphabet extension](cloitre-conway/exact-collars.md#a-finite-alphabet-propagates-beyond-the-zero-allocation-corridor)
    propagates wider bounded responses and zero allocation. Persistent
-   high-member choices on two-cycles remain a profile-evolution obstacle.
+   zero-drop copies remain a profile-evolution obstacle; they are not
+   automatically certified two-cycles.
    At a [first nonflat frontier](cloitre-conway/exact-collars.md#a-moving-frontier-needs-recurring-cap4-holes),
    persistence requires recurring holes on the actual inner path. Controlling
    those events, rather than only the periodic alphabet, remains necessary.
@@ -65,6 +66,10 @@ conjectures remain finite observations. No Lean formalization is included.
    For [general two-cycle copy runs](cloitre-conway/recursive-descent.md#copy-runs-trade-reset-events-against-adjacent-migrations),
    the clock forces phase resets or migrations of the adjacent row.
    A reset outside the frontier need not have a hole below its high member.
+   A [binary-prefix theorem](cloitre-conway/recursive-descent.md#binary-prefixes-close-with-two-response-states)
+   derives periods of at most two from two response values. Five checked
+   premises extend the explicit actual tail and its selected descendants;
+   wider response words and exterior entrances still need construction.
 3. **Inner dynamics between Fibonacci indices.** Control periods,
    landing times, and selected phases in the wider block interiors.
 
