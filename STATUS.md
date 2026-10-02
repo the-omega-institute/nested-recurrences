@@ -62,6 +62,11 @@ conjectures remain finite observations. No Lean formalization is included.
    remaining clock is necessary for this replay route. Arithmetic outputs
    can sometimes skip replay; these dependencies are not a general
    lower bound on evaluation inputs.
+   [Interior descent](cloitre-conway/recursive-descent.md#interior-descent-preserves-a-scalar-valid-phase-ambiguity)
+   avoids every fixed-cap neighborhood for its first two generations at
+   large order. A checked five-row fibre retains a cross-cycle phase choice
+   even with parent values supplied; its stated certificate minimum is
+   distinct from the actual evaluation-input problem.
 3. **Inner dynamics between Fibonacci indices.** Control periods,
    landing times, and selected phases in the wider block interiors.
 
