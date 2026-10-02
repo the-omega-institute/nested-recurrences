@@ -1658,6 +1658,39 @@ and log_2(6^5) lies strictly between12 and13. Supplying a qualified
 landing and the needed clock residue derives the actual choice instead;
 supplying actual parent caps also distinguishes the periodic vertices.
 
+**A canonical window has zero scalar interaction but a nonzero index
+interaction.** The root h=2178165=F_32-(V_32+35) has higher
+Fibonacci indices {13,15,17,19,21,23,25,27,29,31}. Every h+w_i
+has precisely this common higher word and the indicated legal low pattern.
+The same independently generated prefix and literal iteration give:
+
+| Low pattern | Index | Parent cap | Selected split | Selected period |
+|---|---:|---:|---:|---:|
+|000|2178165|8|1346133|1|
+|100|2178167|4|1346136|3|
+|010|2178168|9|1346132|2|
+|001|2178170|8|1346138|1|
+|101|2178172|4|1346136|1|
+
+Its parent scalar joint coefficient is0, while the child-index joint
+coefficient is-5. On the five legal patterns, with A=F_31,
+
+```text
+C(h+2x1+3x2+5x3) = A-8+4x1-x2,
+g(x) = 1346133+3x1-x2+5x3-5x1*x3.
+```
+
+Thus vanishing scalar interaction does not eliminate the interaction in
+the recursive child indices, even for a verified canonical FIB window.
+The100 row is the three-cycle example above. This is one finite actual
+window, not an infinite family or preservation of the same canonical
+context at later generations. The frontier identity(R.4) has its stated
+first-nonflat hypotheses and is not asserted for this wider window.
+For this fixed lower word the five periodic-option counts are(1,3,2,1,1).
+The independent-row option contract therefore has exactly six outputs
+and a three-bit minimum; the actual selected row vector is already fixed
+once its landing and clock data are derived.
+
 These costs concern a full option table. They do not say that39+13 bits
 are needed to evaluate actual C, or that the actual 47-position words
 can be freely chosen. Family word evolution, exterior qualification,

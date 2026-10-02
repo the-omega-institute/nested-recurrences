@@ -103,6 +103,8 @@ Beyond the frontier, a [six-response map](recursive-descent.md#six-response-stat
 determines every periodic option and decodes the selected split with qualified
 landing and clock data. Five rows share fifteen responses. A checked actual
 three-cycle explains why the general clock cannot be reduced to parity.
+A verified canonical window has zero scalar interaction but nonzero
+child-index interaction, so a scalar interaction alone does not close descent.
 
 The local interface theorems state exactly which context is supplied.
 For a bounded natural-cap domain, the

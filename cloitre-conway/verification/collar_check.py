@@ -2157,8 +2157,9 @@ def six_response_map_audit(sequence, splits, fibonacci):
     witness_order, witness_excess = 32, 33
     witness_gap = cap4_generated_width(witness_order) + witness_excess
     witness_root = witness_fibonacci[witness_order] - witness_gap
-    witness_sequence, _, _, witness_splits = generate(witness_root)
-    assert witness_sequence == brent_generate(witness_root)
+    witness_limit = witness_root + 5
+    witness_sequence, _, _, witness_splits = generate(witness_limit)
+    assert witness_sequence == brent_generate(witness_limit)
     assert witness_sequence[:len(sequence)] == sequence
     anchor, first_cap = witness_fibonacci[31], witness_fibonacci[30]
     mapping = {letter: first_cap - witness_sequence[anchor - witness_gap + letter]
@@ -2185,10 +2186,49 @@ def six_response_map_audit(sequence, splits, fibonacci):
                    even_landing_clock=2 * pairs, landing_offset=landing - anchor,
                    landing_cap=landing_cap, response_seed=seed, depth=depth,
                    selected_state=selected, parent_cap=mapping[selected], selected_split=endpoint,
-                   clock_omitted_state=clock_omitted, prefix_limit=witness_root,
-                   independent_brent_agrees_through=witness_root,
+                   clock_omitted_state=clock_omitted, prefix_limit=witness_limit,
+                   independent_brent_agrees_through=witness_limit,
                    prefix_sha256=hashlib.sha256(','.join(map(str, witness_sequence[1:])).encode('ascii')).hexdigest(),
                    literal_endpoint_updates=depth)
+    canonical_root = witness_root - 2
+    higher_word = set(canonical_fibonacci_indices(canonical_root, witness_fibonacci))
+    assert sorted(higher_word) == list(range(13, 32, 2))
+    canonical_rows = []
+    canonical_literal_updates = 0
+    option_count = 1
+    for offset in offsets:
+        current = canonical_root + offset
+        assert set(canonical_fibonacci_indices(current, witness_fibonacci)) == (
+            higher_word | set(canonical_fibonacci_indices(offset, witness_fibonacci)))
+        current_gap = witness_fibonacci[witness_order] - current
+        current_map = {letter: first_cap - witness_sequence[anchor - current_gap + letter]
+                       for letter in alphabet}
+        periodic = set()
+        for letter in alphabet:
+            states, transient, period = response_state_orbit(current_map, letter)
+            periodic.update(states[transient:])
+        option_count *= len(periodic)
+        trajectory, transient, period = full_orbit(witness_sequence, current)
+        endpoint = current - 1
+        for iteration in range(witness_sequence[current - 1]):
+            endpoint = current - witness_sequence[endpoint]
+        assert endpoint == witness_splits[current]
+        assert witness_sequence[endpoint] + witness_sequence[current - endpoint] == witness_sequence[current]
+        canonical_literal_updates += witness_sequence[current - 1]
+        canonical_rows.append(dict(offset=offset, index=current, value=witness_sequence[current],
+                                   cap=anchor - witness_sequence[current], split=endpoint,
+                                   period=period, periodic_states=sorted(periodic)))
+    scalar_joint = canonical_rows[4]['value'] - canonical_rows[1]['value'] - canonical_rows[3]['value'] + canonical_rows[0]['value']
+    index_joint = canonical_rows[4]['split'] - canonical_rows[1]['split'] - canonical_rows[3]['split'] + canonical_rows[0]['split']
+    assert scalar_joint == 0 and index_joint == -5 and option_count == 6
+    assert [row['period'] for row in canonical_rows] == [1, 3, 2, 1, 1]
+    canonical = dict(root=canonical_root, order=witness_order, excess=35,
+                     common_higher_fibonacci_indices=sorted(higher_word), rows=canonical_rows,
+                     scalar_joint=scalar_joint, index_joint=index_joint,
+                     full_periodic_option_count=option_count,
+                     conditional_option_bits=(option_count - 1).bit_length(),
+                     literal_endpoint_updates=canonical_literal_updates,
+                     scope='One finite actual canonical FIB window, including a three-cycle row. Zero current scalar interaction coexists with index interaction-5. The option count allows periodic rows independently and is not actual input cost or an infinite family.')
     return dict(alphabet=list(alphabet), stencil_subtractions=list(stencil),
                 synthetic_maps=synthetic_maps, synthetic_starts=synthetic_starts,
                 synthetic_direct_updates=direct_updates, maximum_response_transient=maximum_transient,
@@ -2200,6 +2240,7 @@ def six_response_map_audit(sequence, splits, fibonacci):
                 actual_period_counts=actual_periods, actual_five_windows=five_windows,
                 landing_tail_reads=landing_tail_reads, low_cap_extra_lookahead_reads=extra_lookahead_reads,
                 actual_literal_endpoint_updates=literal_updates, three_cycle_witness=witness,
+                canonical_three_cycle_window=canonical,
                 scope='Written conjugacy and two-step landing decoder hold at K>=27, d9..43 without frontier flatness, using existing finite-alphabet premises. Six shared stencil answers give every periodic option and no parent cap is supplied. Five additive rows share15 answers for d16..43. Exact39bit word and13bit phase costs concern relaxed independent response/periodic-output contracts, not actual-C input minima. Landings, clock residues, actual response words and wider recursive evolution remain supplied or open; global dispersion is unchanged.')
 
 
