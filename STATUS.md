@@ -56,6 +56,9 @@ conjectures remain finite observations. No Lean formalization is included.
    At the first nonflat position, an
    [even landing and one response](cloitre-conway/recursive-descent.md#an-even-landing-determines-a-frontier-phase)
    determine the phase; generating that exterior landing locally remains open.
+   A [six-response map](cloitre-conway/recursive-descent.md#six-response-states-close-a-wider-selected-orbit-interface)
+   extends the decoder beyond that frontier and shares responses across five
+   rows; qualified landing and clock data still remain inputs.
 3. **Inner dynamics between Fibonacci indices.** Control periods,
    landing times, and selected phases in the wider block interiors.
 

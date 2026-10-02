@@ -2018,6 +2018,232 @@ def frontier_reset_audit(sequence, splits, fibonacci):
                 scope='A written frontier theorem follows from the existing alphabet, shelves, capture and depth-in-cycle results; no new infinite finite-base premise. Symbolic landing cases corroborate local phase and feature formulas, not exterior stopping qualification. Actual first-even landings and literal endpoints verify orders27..30. Only the order29 root is a certified canonical FIB window. The one-bit phase cost counts the declared two-periodic-option table; a qualified landing derives it and it is not an independent-input lower bound with full order supplied. Exterior landing construction uses actual global sequence queries; general nonfrontier copy runs, wider word evolution and global dispersion/convergence remain open.')
 
 
+def response_state_orbit(mapping, start):
+    states = []
+    point = start
+    while point not in states:
+        states.append(point)
+        point = mapping[point]
+    transient = states.index(point)
+    return states, transient, len(states) - transient
+
+
+def response_state_endpoint(mapping, start, steps):
+    assert steps >= 0
+    states, transient, period = response_state_orbit(mapping, start)
+    position = steps if steps < len(states) else transient + (steps - transient) % period
+    return states[position]
+
+
+def six_response_map_audit(sequence, splits, fibonacci):
+    alphabet = (4, 7, 8, 9, 10, 13)
+    offsets = (0, 2, 3, 5, 7)
+    stencil = tuple(letter - 4 for letter in alphabet)
+    shared_positions = sorted({offset + shift for offset in offsets for shift in stencil})
+    assert shared_positions == [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16]
+    synthetic_maps = 0
+    synthetic_starts = 0
+    direct_updates = 0
+    maximum_transient = 0
+    observed_periods = set()
+    for word in product(alphabet, repeat=6):
+        mapping = dict(zip(alphabet, word))
+        periodic = set()
+        for start in alphabet:
+            states, transient, period = response_state_orbit(mapping, start)
+            assert transient <= 5 and 1 <= period <= 6
+            maximum_transient = max(maximum_transient, transient)
+            observed_periods.add(period)
+            periodic.update(states[transient:])
+            point = start
+            for steps in range(18):
+                assert response_state_endpoint(mapping, start, steps) == point
+                if steps >= 5:
+                    assert point == states[transient + (steps - transient) % period]
+                point = mapping[point]
+                direct_updates += 1
+            synthetic_starts += 1
+        assert 1 <= len(periodic) <= 6
+        synthetic_maps += 1
+    assert synthetic_maps == 6 ** 6 and maximum_transient == 5
+    assert observed_periods == set(range(1, 7))
+    sharp_word = [7, 8, 9, 13, 4, 10, 7, 13, 8, 10, 9, 4, 8, 7, 13]
+    sharp_responses = dict(zip(shared_positions, sharp_word))
+    sharp_maps = []
+    for offset in offsets:
+        mapping = {letter: sharp_responses[offset + letter - 4] for letter in alphabet}
+        assert set(mapping.values()) == set(alphabet)
+        assert all(response_state_orbit(mapping, letter)[1] == 0 for letter in alphabet)
+        sharp_maps.append([mapping[letter] for letter in alphabet])
+    assert 2 ** 38 < 6 ** 15 <= 2 ** 39
+    assert 2 ** 12 < 6 ** 5 <= 2 ** 13
+    for order in range(31, 61):
+        width = cap4_generated_width(order - 1)
+        profile = [generated_cap4_profile(order - 1, point) for point in range(width + 1)]
+        profile.extend([4] * 47)
+        for position, letter in sharp_responses.items():
+            profile[width + 33 - position] = letter
+        assert profile[width + 1:width + 17] == [4] * 16
+        assert all(4 <= profile[width + position] <= max(4, position) for position in range(1, 48))
+        for offset, sharp_map in zip(offsets, sharp_maps):
+            gap = cap4_generated_width(order) + 33 - offset
+            cycles = capped_profile_cycles(profile[:gap + 1], gap)
+            periodic = {point for cycle in cycles for point in cycle}
+            assert periodic == {gap - letter for letter in alphabet}
+            mapping = dict(zip(alphabet, sharp_map))
+            assert all(gap - profile[gap - letter] == gap - mapping[letter] for letter in alphabet)
+    actual_roots = 0
+    actual_periods = {}
+    landing_tail_reads = 0
+    extra_lookahead_reads = 0
+    five_windows = 0
+    literal_updates = 0
+    for order in range(27, 31):
+        anchor, first_cap = fibonacci[order - 1], fibonacci[order - 2]
+        width = cap4_generated_width(order)
+        previous_width = cap4_generated_width(order - 1)
+        for excess in range(9, 44):
+            gap = width + excess
+            root = fibonacci[order] - gap
+            response = lambda position: first_cap - sequence[anchor - previous_width - position]
+            mapping = {letter: response(excess + 4 - letter) for letter in alphabet}
+            assert all(letter in alphabet for letter in mapping.values())
+            cycles = capped_profile_cycles([first_cap - sequence[anchor - point]
+                                           for point in range(gap + 1)], gap)
+            actual_periodic = {point for cycle in cycles for point in cycle}
+            map_periodic = set()
+            for letter in alphabet:
+                states, transient, period = response_state_orbit(mapping, letter)
+                map_periodic.update(states[transient:])
+            assert actual_periodic == {gap - letter for letter in map_periodic}
+            landing, pairs = even_anchor_landing(sequence, root, anchor)
+            landing_gap = anchor - landing
+            assert 0 <= landing_gap <= previous_width + excess
+            assert pairs <= capture_pair_budget(first_cap) < 2 * order
+            landing_cap = first_cap - sequence[landing]
+            assert landing_cap in (0, 1, 2, 3) + alphabet
+            seed = response(excess + 4 - landing_cap)
+            assert seed in alphabet
+            following = root - sequence[landing]
+            assert root - sequence[following] == anchor - gap + seed
+            remaining = sequence[root - 1] - 2 * pairs - 2
+            assert remaining >= 5
+            selected = response_state_endpoint(mapping, seed, remaining)
+            states, transient, period = response_state_orbit(mapping, seed)
+            assert splits[root] == anchor - gap + selected
+            assert anchor - sequence[root] == mapping[selected]
+            assert fibonacci[order - 3] - sequence[first_cap - selected] == 0
+            trajectory, actual_transient, actual_period = full_orbit(sequence, root)
+            assert actual_period == period
+            actual_periods[str(period)] = actual_periods.get(str(period), 0) + 1
+            landing_tail_reads += landing_gap > previous_width
+            extra_lookahead_reads += landing_cap <= 3
+            if excess in (9, 33, 43):
+                endpoint = root - 1
+                for iteration in range(sequence[root - 1]):
+                    endpoint = root - sequence[endpoint]
+                assert endpoint == splits[root]
+                literal_updates += sequence[root - 1]
+            if excess >= 16:
+                shared = {position: response(excess - position) for position in shared_positions}
+                for offset in offsets:
+                    assert {letter: shared[offset + letter - 4] for letter in alphabet} == {
+                        letter: response(excess - offset + 4 - letter) for letter in alphabet}
+                five_windows += 1
+            actual_roots += 1
+    witness_fibonacci = list(fibonacci)
+    while len(witness_fibonacci) <= 32:
+        witness_fibonacci.append(sum(witness_fibonacci[-2:]))
+    witness_order, witness_excess = 32, 33
+    witness_gap = cap4_generated_width(witness_order) + witness_excess
+    witness_root = witness_fibonacci[witness_order] - witness_gap
+    witness_limit = witness_root + 5
+    witness_sequence, _, _, witness_splits = generate(witness_limit)
+    assert witness_sequence == brent_generate(witness_limit)
+    assert witness_sequence[:len(sequence)] == sequence
+    anchor, first_cap = witness_fibonacci[31], witness_fibonacci[30]
+    mapping = {letter: first_cap - witness_sequence[anchor - witness_gap + letter]
+               for letter in alphabet}
+    assert [mapping[letter] for letter in alphabet] == [8, 8, 9, 4, 4, 9]
+    landing, pairs = even_anchor_landing(witness_sequence, witness_root, anchor)
+    landing_cap = first_cap - witness_sequence[landing]
+    seed = first_cap - witness_sequence[anchor - witness_gap + landing_cap]
+    depth = witness_sequence[witness_root - 1]
+    remaining = depth - 2 * pairs - 2
+    selected = response_state_endpoint(mapping, seed, remaining)
+    clock_omitted = response_state_endpoint(mapping, seed, depth - 2)
+    trajectory, transient, period = full_orbit(witness_sequence, witness_root)
+    assert period == 3 and seed == 8 and pairs == 7 and landing == anchor - 123
+    assert selected == 9 and mapping[selected] == 4 and selected != clock_omitted
+    assert witness_splits[witness_root] == anchor - witness_gap + selected
+    endpoint = witness_root - 1
+    for iteration in range(depth):
+        endpoint = witness_root - witness_sequence[endpoint]
+    assert endpoint == witness_splits[witness_root]
+    assert witness_sequence[endpoint] + witness_sequence[witness_root - endpoint] == witness_sequence[witness_root]
+    witness = dict(order=witness_order, excess=witness_excess, root=witness_root,
+                   map_values=[mapping[letter] for letter in alphabet], cycle=[8, 9, 4],
+                   even_landing_clock=2 * pairs, landing_offset=landing - anchor,
+                   landing_cap=landing_cap, response_seed=seed, depth=depth,
+                   selected_state=selected, parent_cap=mapping[selected], selected_split=endpoint,
+                   clock_omitted_state=clock_omitted, prefix_limit=witness_limit,
+                   independent_brent_agrees_through=witness_limit,
+                   prefix_sha256=hashlib.sha256(','.join(map(str, witness_sequence[1:])).encode('ascii')).hexdigest(),
+                   literal_endpoint_updates=depth)
+    canonical_root = witness_root - 2
+    higher_word = set(canonical_fibonacci_indices(canonical_root, witness_fibonacci))
+    assert sorted(higher_word) == list(range(13, 32, 2))
+    canonical_rows = []
+    canonical_literal_updates = 0
+    option_count = 1
+    for offset in offsets:
+        current = canonical_root + offset
+        assert set(canonical_fibonacci_indices(current, witness_fibonacci)) == (
+            higher_word | set(canonical_fibonacci_indices(offset, witness_fibonacci)))
+        current_gap = witness_fibonacci[witness_order] - current
+        current_map = {letter: first_cap - witness_sequence[anchor - current_gap + letter]
+                       for letter in alphabet}
+        periodic = set()
+        for letter in alphabet:
+            states, transient, period = response_state_orbit(current_map, letter)
+            periodic.update(states[transient:])
+        option_count *= len(periodic)
+        trajectory, transient, period = full_orbit(witness_sequence, current)
+        endpoint = current - 1
+        for iteration in range(witness_sequence[current - 1]):
+            endpoint = current - witness_sequence[endpoint]
+        assert endpoint == witness_splits[current]
+        assert witness_sequence[endpoint] + witness_sequence[current - endpoint] == witness_sequence[current]
+        canonical_literal_updates += witness_sequence[current - 1]
+        canonical_rows.append(dict(offset=offset, index=current, value=witness_sequence[current],
+                                   cap=anchor - witness_sequence[current], split=endpoint,
+                                   period=period, periodic_states=sorted(periodic)))
+    scalar_joint = canonical_rows[4]['value'] - canonical_rows[1]['value'] - canonical_rows[3]['value'] + canonical_rows[0]['value']
+    index_joint = canonical_rows[4]['split'] - canonical_rows[1]['split'] - canonical_rows[3]['split'] + canonical_rows[0]['split']
+    assert scalar_joint == 0 and index_joint == -5 and option_count == 6
+    assert [row['period'] for row in canonical_rows] == [1, 3, 2, 1, 1]
+    canonical = dict(root=canonical_root, order=witness_order, excess=35,
+                     common_higher_fibonacci_indices=sorted(higher_word), rows=canonical_rows,
+                     scalar_joint=scalar_joint, index_joint=index_joint,
+                     full_periodic_option_count=option_count,
+                     conditional_option_bits=(option_count - 1).bit_length(),
+                     literal_endpoint_updates=canonical_literal_updates,
+                     scope='One finite actual canonical FIB window, including a three-cycle row. Zero current scalar interaction coexists with index interaction-5. The option count allows periodic rows independently and is not actual input cost or an infinite family.')
+    return dict(alphabet=list(alphabet), stencil_subtractions=list(stencil),
+                synthetic_maps=synthetic_maps, synthetic_starts=synthetic_starts,
+                synthetic_direct_updates=direct_updates, maximum_response_transient=maximum_transient,
+                synthetic_periods=sorted(observed_periods), shared_five_row_positions=shared_positions,
+                shared_response_count=len(shared_positions), full_response_word_options=6 ** 15,
+                relaxed_response_word_bits=39, sharp_shared_word=sharp_word, sharp_five_maps=sharp_maps,
+                relaxed_periodic_output_options=6 ** 5, sharp_periodic_output_bits=13,
+                actual_orders_inclusive=[27, 30], actual_roots=actual_roots,
+                actual_period_counts=actual_periods, actual_five_windows=five_windows,
+                landing_tail_reads=landing_tail_reads, low_cap_extra_lookahead_reads=extra_lookahead_reads,
+                actual_literal_endpoint_updates=literal_updates, three_cycle_witness=witness,
+                canonical_three_cycle_window=canonical,
+                scope='Written conjugacy and two-step landing decoder hold at K>=27, d9..43 without frontier flatness, using existing finite-alphabet premises. Six shared stencil answers give every periodic option and no parent cap is supplied. Five additive rows share15 answers for d16..43. Exact39bit word and13bit phase costs concern relaxed independent response/periodic-output contracts, not actual-C input minima. Landings, clock residues, actual response words and wider recursive evolution remain supplied or open; global dispersion is unchanged.')
+
+
 def cap4_tail_query_domain(order, gap):
     frontier = higher_cap_width(order - 1, 3)
     excess = gap - frontier
@@ -2332,6 +2558,7 @@ def higher_projection_and_allocation_audit(sequence, splits, fibonacci):
                 bounded_tail_shelf=bounded_tail_shelf_audit(sequence, splits, fibonacci),
                 finite_tail_alphabet=finite_tail_alphabet_audit(sequence, splits, fibonacci),
                 frontier_reset=frontier_reset_audit(sequence, splits, fibonacci),
+                six_response_map=six_response_map_audit(sequence, splits, fibonacci),
                 scope='Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open.')
 
 

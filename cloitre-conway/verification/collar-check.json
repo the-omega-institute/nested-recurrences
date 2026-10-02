@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "9ab89fa88bf92758ddd02eee8ccaccf5fc77e3da33d4acea68085ebfed6738d3",
+  "source_sha256": "a6f44ca6eda7c49ef3e43861005b40707cf21c27c94792b45e8953d3550164c4",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -6190,6 +6190,245 @@
           "conditional_periodic_option_count": 2,
           "conditional_fixed_width_phase_bits": 1,
           "scope": "A written frontier theorem follows from the existing alphabet, shelves, capture and depth-in-cycle results; no new infinite finite-base premise. Symbolic landing cases corroborate local phase and feature formulas, not exterior stopping qualification. Actual first-even landings and literal endpoints verify orders27..30. Only the order29 root is a certified canonical FIB window. The one-bit phase cost counts the declared two-periodic-option table; a qualified landing derives it and it is not an independent-input lower bound with full order supplied. Exterior landing construction uses actual global sequence queries; general nonfrontier copy runs, wider word evolution and global dispersion/convergence remain open."
+        },
+        "six_response_map": {
+          "alphabet": [
+            4,
+            7,
+            8,
+            9,
+            10,
+            13
+          ],
+          "stencil_subtractions": [
+            0,
+            3,
+            4,
+            5,
+            6,
+            9
+          ],
+          "synthetic_maps": 46656,
+          "synthetic_starts": 279936,
+          "synthetic_direct_updates": 5038848,
+          "maximum_response_transient": 5,
+          "synthetic_periods": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "shared_five_row_positions": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            16
+          ],
+          "shared_response_count": 15,
+          "full_response_word_options": 470184984576,
+          "relaxed_response_word_bits": 39,
+          "sharp_shared_word": [
+            7,
+            8,
+            9,
+            13,
+            4,
+            10,
+            7,
+            13,
+            8,
+            10,
+            9,
+            4,
+            8,
+            7,
+            13
+          ],
+          "sharp_five_maps": [
+            [
+              7,
+              9,
+              13,
+              4,
+              10,
+              8
+            ],
+            [
+              8,
+              4,
+              10,
+              7,
+              13,
+              9
+            ],
+            [
+              9,
+              10,
+              7,
+              13,
+              8,
+              4
+            ],
+            [
+              4,
+              13,
+              8,
+              10,
+              9,
+              7
+            ],
+            [
+              7,
+              10,
+              9,
+              4,
+              8,
+              13
+            ]
+          ],
+          "relaxed_periodic_output_options": 7776,
+          "sharp_periodic_output_bits": 13,
+          "actual_orders_inclusive": [
+            27,
+            30
+          ],
+          "actual_roots": 140,
+          "actual_period_counts": {
+            "2": 30,
+            "1": 110
+          },
+          "actual_five_windows": 112,
+          "landing_tail_reads": 58,
+          "low_cap_extra_lookahead_reads": 38,
+          "actual_literal_endpoint_updates": 3449476,
+          "three_cycle_witness": {
+            "order": 32,
+            "excess": 33,
+            "root": 2178167,
+            "map_values": [
+              8,
+              8,
+              9,
+              4,
+              4,
+              9
+            ],
+            "cycle": [
+              8,
+              9,
+              4
+            ],
+            "even_landing_clock": 14,
+            "landing_offset": -123,
+            "landing_cap": 4,
+            "response_seed": 8,
+            "depth": 1346261,
+            "selected_state": 9,
+            "parent_cap": 4,
+            "selected_split": 1346136,
+            "clock_omitted_state": 8,
+            "prefix_limit": 2178172,
+            "independent_brent_agrees_through": 2178172,
+            "prefix_sha256": "3ef32021cfa4a0a8e8e5d60f4c8708adb9c516e307cf56190051fa60ee7a1cee",
+            "literal_endpoint_updates": 1346261
+          },
+          "canonical_three_cycle_window": {
+            "root": 2178165,
+            "order": 32,
+            "excess": 35,
+            "common_higher_fibonacci_indices": [
+              13,
+              15,
+              17,
+              19,
+              21,
+              23,
+              25,
+              27,
+              29,
+              31
+            ],
+            "rows": [
+              {
+                "offset": 0,
+                "index": 2178165,
+                "value": 1346261,
+                "cap": 8,
+                "split": 1346133,
+                "period": 1,
+                "periodic_states": [
+                  8
+                ]
+              },
+              {
+                "offset": 2,
+                "index": 2178167,
+                "value": 1346265,
+                "cap": 4,
+                "split": 1346136,
+                "period": 3,
+                "periodic_states": [
+                  4,
+                  8,
+                  9
+                ]
+              },
+              {
+                "offset": 3,
+                "index": 2178168,
+                "value": 1346260,
+                "cap": 9,
+                "split": 1346132,
+                "period": 2,
+                "periodic_states": [
+                  4,
+                  9
+                ]
+              },
+              {
+                "offset": 5,
+                "index": 2178170,
+                "value": 1346261,
+                "cap": 8,
+                "split": 1346138,
+                "period": 1,
+                "periodic_states": [
+                  8
+                ]
+              },
+              {
+                "offset": 7,
+                "index": 2178172,
+                "value": 1346265,
+                "cap": 4,
+                "split": 1346136,
+                "period": 1,
+                "periodic_states": [
+                  4
+                ]
+              }
+            ],
+            "scalar_joint": 0,
+            "index_joint": -5,
+            "full_periodic_option_count": 6,
+            "conditional_option_bits": 3,
+            "literal_endpoint_updates": 6731311,
+            "scope": "One finite actual canonical FIB window, including a three-cycle row. Zero current scalar interaction coexists with index interaction-5. The option count allows periodic rows independently and is not actual input cost or an infinite family."
+          },
+          "scope": "Written conjugacy and two-step landing decoder hold at K>=27, d9..43 without frontier flatness, using existing finite-alphabet premises. Six shared stencil answers give every periodic option and no parent cap is supplied. Five additive rows share15 answers for d16..43. Exact39bit word and13bit phase costs concern relaxed independent response/periodic-output contracts, not actual-C input minima. Landings, clock residues, actual response words and wider recursive evolution remain supplied or open; global dispersion is unchanged."
         },
         "scope": "Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open."
       },
