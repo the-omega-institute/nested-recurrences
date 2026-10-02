@@ -51,37 +51,17 @@ conjectures remain finite observations. No Lean formalization is included.
    profile, branch, and phase information suffices beyond the exact
    Fibonacci neighborhoods. Five digit labels or a candidate geometric
    cycle alone do not determine the actual selected recursive orbit.
-   Actual profiles and descendants are now generated arithmetically in a
-   [growing initial band](cloitre-conway/exact-collars.md#a-propagated-cap4-band-generates-its-own-profiles).
-   Constructing them in the wider domains remains open.
-   A [new upper shelf](cloitre-conway/exact-collars.md#a-bounded-upper-shelf-and-a-wider-zero-allocation-corridor)
-   bounds the missing responses and derives zero child allocation in a
-   wider neighborhood; it does not construct the exact profiles there.
-   A [finite-alphabet extension](cloitre-conway/exact-collars.md#a-finite-alphabet-propagates-beyond-the-zero-allocation-corridor)
-   propagates wider bounded responses and zero allocation. Persistent
-   zero-drop copies remain a profile-evolution obstacle; they are not
-   automatically certified two-cycles.
-   At a [first nonflat frontier](cloitre-conway/exact-collars.md#a-moving-frontier-needs-recurring-cap4-holes),
-   persistence requires recurring holes on the actual inner path. Controlling
-   those events, rather than only the periodic alphabet, remains necessary.
-   At the first nonflat position, an
-   [even landing and one response](cloitre-conway/recursive-descent.md#an-even-landing-determines-a-frontier-phase)
-   determine the phase; generating that exterior landing locally remains open.
-   A [six-response map](cloitre-conway/recursive-descent.md#six-response-states-close-a-wider-selected-orbit-interface)
-   extends the decoder beyond that frontier and shares responses across five
-   rows; qualified landing and clock data still remain inputs.
-   For [general two-cycle copy runs](cloitre-conway/recursive-descent.md#copy-runs-trade-reset-events-against-adjacent-migrations),
-   the clock forces phase resets or migrations of the adjacent row.
-   A reset outside the frontier need not have a hole below its high member.
-   A [binary-prefix theorem](cloitre-conway/recursive-descent.md#binary-prefixes-close-with-two-response-states)
-   derives periods of at most two from two response values. Five checked
-   premises extend the explicit actual tail and its selected descendants;
-   wider response words and exterior entrances still need construction.
-   [Arithmetic support cones](cloitre-conway/recursive-descent.md#arithmetic-support-cones-shrink-the-shared-response-word)
-   further restrict the actual tail to three responses and generate
-   additional noncontinuous flat positions. Their shared-word bounds
-   sharpen the local interface; periodic qualification alone still
-   permits a three-cycle and leaves the exterior clock problem open.
+   The [generated Fibonacci band](cloitre-conway/exact-collars.md#a-propagated-cap4-band-generates-its-own-profiles)
+   gives actual profiles and descendants in a growing neighborhood.
+   [Shared response words](cloitre-conway/recursive-descent.md#arithmetic-support-cones-shrink-the-shared-response-word)
+   reduce the data outside it. The
+   [first exterior pair](cloitre-conway/recursive-descent.md#the-exterior-replay-reaches-an-unbounded-profile-after-two-steps)
+   and its high digit context are generated without extra context labels,
+   but the next lookup enters a macroscopic interior with unbounded
+   natural-cap defect. Constructing those interior values and the
+   remaining clock is necessary for this replay route. Arithmetic outputs
+   can sometimes skip replay; these dependencies are not a general
+   lower bound on evaluation inputs.
 3. **Inner dynamics between Fibonacci indices.** Control periods,
    landing times, and selected phases in the wider block interiors.
 

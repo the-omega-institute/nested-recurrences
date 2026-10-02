@@ -69,81 +69,28 @@ exact definitions, domains and supplied inputs.
 | Digit encoding and feature interactions | [Cloitre memory theorem](five-window-closure.md#exact-state-bit-order-for-every-bounded-cap-graph) · [Cloitre interactions](exact-collars.md#a-persistent-interaction-on-canonical-index-words) · [Campbell comparison](../campbell/scale-memory.md) | Fibonacci digits; exact neighborhood and ternary formulas |
 | Supporting arithmetic and related variants | [Landing and shifted-family audit](landing.md) | Foundations |
 
-For the current recursive-interface question, the
-[child-cap allocation theorem](recursive-descent.md#actual-defect-allocation-and-phase-information)
-replaces separate cycle and phase labels with one allocation parameter when
-the lower profiles and parent value are supplied. That parameter is derived
-at cap4; its general selection and construction of the required profiles
-remain open. The [direct descendant decoder](exact-collars.md#additive-canonical-windows-and-a-direct-descendant-decoder)
-handles a particular canonical family; it does not close the full recursion.
-The [profile query theorem](recursive-descent.md#cap4-query-profiles-and-the-information-they-carry)
-shrinks the required lower-profile interval and distinguishes its arithmetic
-information from cycle-phase information.
-The [propagated cap4 band](exact-collars.md#a-propagated-cap4-band-generates-its-own-profiles)
-generates that profile and its selected descendants in a growing initial
-region. A [canonical family](exact-collars.md#a-canonical-cap4-window-reaches-the-next-fibonacci-digit)
-shows why even its first edge can need a higher Fibonacci digit in the output.
-The [bounded-tail theorem](exact-collars.md#a-bounded-upper-shelf-and-a-wider-zero-allocation-corridor)
-bounds the remaining responses near that band and derives zero allocation
-in a wider region, including higher caps.
-Its first thirteen translated-tail positions have the proved alphabet
-{4,8,9}; the word is explicit, so order and gaps suffice for their descent.
-Profiles beyond this arithmetic region remain open.
-The [finite-alphabet extension](exact-collars.md#a-finite-alphabet-propagates-beyond-the-zero-allocation-corridor)
-propagates a wider bounded response alphabet and zero allocation from one
-seed. A high-cap spine has only finitely many strict position drops;
-eventual flattening would require control of persistent zero-drop copies.
-Two-cycle qualification requires an additional response, and a local
-depth-parity shortcut fails in actual examples.
-At a [first nonflat frontier](exact-collars.md#a-moving-frontier-needs-recurring-cap4-holes),
-the Fibonacci clock forces a positive frequency of actual path holes during
-persistence. Excluding them gives conditional tail widening; their actual
-frequency remains open.
-The [frontier reset rule](recursive-descent.md#an-even-landing-determines-a-frontier-phase)
-replaces the full entry clock by a bit derived from a qualified even landing
-and one tail response. The same phase bit transfers a five-pattern joint
-interaction between scalar values and child indices. Generating the exterior
-landing locally remains open.
-Beyond the frontier, a [six-response map](recursive-descent.md#six-response-states-close-a-wider-selected-orbit-interface)
-determines every periodic option and decodes the selected split with qualified
-landing and clock data. Five rows share fifteen responses. A checked actual
-three-cycle explains why the general clock cannot be reduced to parity.
-A verified canonical window has zero scalar interaction but nonzero
-child-index interaction, so a scalar interaction alone does not close descent.
-For [two-cycle copy runs](recursive-descent.md#copy-runs-trade-reset-events-against-adjacent-migrations),
-resets trade against changes in adjacent-row parity, each such change
-requiring a strict child migration. Outside a first frontier, a reset can
-come from another high-cap point rather than a lower cap4 hole.
-The [binary-prefix theorem](recursive-descent.md#binary-prefixes-close-with-two-response-states)
-derives a two-state periodic map, shares nine responses across five rows,
-and extends the explicit actual tail to its first nineteen positions.
-There, order and position determine the value and selected split down to
-the stated finite base. An even prefix alone does not force a two-cycle;
-wider word and exterior-entry construction remain open.
-The [support-cone theorem](recursive-descent.md#arithmetic-support-cones-shrink-the-shared-response-word)
-propagates a later actual three-response seed. High responses can move
-only by four or five positions; this generates permanent holes beyond
-the initial flat band and reduces the shared five-row response word.
-A periodic-only update of the actual seed still permits a three-cycle,
-so constructing its exterior clock remains a distinct task.
-For the separate asymptotic route, an
-[exact two-generation certificate](dispersion.md#a-two-generation-certificate-at-the-forced-geometric-bottleneck)
-repairs a full-geometric one-step bottleneck using a moment policy.
-One randomized child split is necessary and sufficient in that finite
-nodewise contract. A [block-terminal mean certificate](dispersion.md#block-terminal-means-remove-intermediate-scalar-constraints)
-allows intermediate scalar deficits: a deterministic two-generation
-tree already repairs the same variance threshold, and two complete trees
-attain its larger finite optimum. Both contracts give conditional decay
-routes; the uniform inequality and actual occupation law remain open.
+For the recursive-interface question, the
+[generated Fibonacci band](exact-collars.md#a-propagated-cap4-band-generates-its-own-profiles)
+provides actual values and selected descendants. Outside it, the
+[shared response-word theorem](recursive-descent.md#arithmetic-support-cones-shrink-the-shared-response-word)
+reduces the local data, and the
+[first exterior pair](recursive-descent.md#the-exterior-replay-reaches-an-unbounded-profile-after-two-steps)
+generates two orbit steps and their high digit context. The next lookup
+enters a macroscopic block interior: constructing its values and the
+remaining clock is the current obstruction.
 
-The local interface theorems state exactly which context is supplied.
-For a bounded natural-cap domain, the
-[least recursive completion](five-window-closure.md#the-least-recursive-completion-adds-fibonacci-anchors)
-adds Fibonacci anchors to the declared finite base; its actual value and
-selected-split graphs have the proved state-bit order.
-A candidate geometric cycle, a finite numerical test, and an actual selected
-recursive orbit are distinct objects. The [status page](../STATUS.md) tracks
-the unresolved full-interface and asymptotic questions.
+For convergence, the
+[block-terminal criterion](dispersion.md#block-terminal-means-remove-intermediate-scalar-constraints)
+explains what a uniform dispersion proof would require. Its checked
+finite optimum gives a proof-policy example; uniform compensation and
+the actual selected occupation law remain open.
+
+Each interface theorem states which profiles, values and context are
+supplied. A candidate cycle and an actual selected recursive orbit are
+distinct objects. For bounded natural-cap domains, the
+[recursive completion and memory theorem](five-window-closure.md#the-least-recursive-completion-adds-fibonacci-anchors)
+give a precise encoding result. The
+[status page](../STATUS.md) records the remaining full-interface questions.
 
 </details>
 

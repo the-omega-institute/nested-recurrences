@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "8baf632b61225aa1bfa8a0f31e4136e1a2526ad20808185ee9d762caab55b609",
+  "source_sha256": "a616de6325a609c1260f7a33aa849849f65f76bd1d66d4461f55b89367d4a951",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -8421,6 +8421,270 @@
               9
             ],
             "period": 3
+          },
+          "exterior_gateway": {
+            "symbolic_orders_inclusive": [
+              28,
+              120
+            ],
+            "symbolic_first_pair_cases": 117180,
+            "actual_orders_inclusive": [
+              28,
+              34
+            ],
+            "actual_five_windows": 196,
+            "actual_first_pair_rows": 980,
+            "distinct_gateway_queries_per_window": [
+              3,
+              4,
+              5
+            ],
+            "minimum_actual_natural_cap_over_F_order_minus_two": "6078/98209",
+            "full_stencil": [
+              0,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              16
+            ],
+            "ternary_stencil": [
+              0,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "context_code": {
+              "common_prefix_step": 2,
+              "first_removed_high_digit": "K-1",
+              "second_removed_high_digit": "K-3",
+              "deletion_reference": "Each deletion is relative to the root prefix; the second iterate restores K-1.",
+              "cutoff_rule": "smallest J>=4 with J=K mod2 and F_J>=V_K+d",
+              "residual_bound": "F_J<3*(V_K+d)=O(K)",
+              "residual_high_context_labels": 0,
+              "symbolic_stream_working_bits": "O(log K), excluding read-only responses and materialized numeric outputs"
+            },
+            "canonical_root": 2178165,
+            "canonical_higher_indices": [
+              13,
+              15,
+              17,
+              19,
+              21,
+              23,
+              25,
+              27,
+              29,
+              31
+            ],
+            "canonical_rows": [
+              {
+                "offset": 0,
+                "index": 2178165,
+                "adjacent_cap": 9,
+                "first_iterate": 831905,
+                "lower_excess": 34,
+                "first_cap": 8,
+                "second_iterate": 1663944,
+                "gateway_value": 1095358,
+                "gateway_natural_cap": 54357,
+                "third_iterate": 1082807,
+                "context_cutoff": 12,
+                "input_residual": 0,
+                "first_residual": 9,
+                "second_residual": 8
+              },
+              {
+                "offset": 2,
+                "index": 2178167,
+                "adjacent_cap": 8,
+                "first_iterate": 831906,
+                "lower_excess": 33,
+                "first_cap": 8,
+                "second_iterate": 1663946,
+                "gateway_value": 1095294,
+                "gateway_natural_cap": 54423,
+                "third_iterate": 1082873,
+                "context_cutoff": 12,
+                "input_residual": 2,
+                "first_residual": 10,
+                "second_residual": 10
+              },
+              {
+                "offset": 3,
+                "index": 2178168,
+                "adjacent_cap": 4,
+                "first_iterate": 831903,
+                "lower_excess": 36,
+                "first_cap": 8,
+                "second_iterate": 1663947,
+                "gateway_value": 1095357,
+                "gateway_natural_cap": 54361,
+                "third_iterate": 1082811,
+                "context_cutoff": 12,
+                "input_residual": 3,
+                "first_residual": 7,
+                "second_residual": 11
+              },
+              {
+                "offset": 5,
+                "index": 2178170,
+                "adjacent_cap": 4,
+                "first_iterate": 831905,
+                "lower_excess": 34,
+                "first_cap": 8,
+                "second_iterate": 1663949,
+                "gateway_value": 1095552,
+                "gateway_natural_cap": 54168,
+                "third_iterate": 1082618,
+                "context_cutoff": 12,
+                "input_residual": 5,
+                "first_residual": 9,
+                "second_residual": 13
+              },
+              {
+                "offset": 7,
+                "index": 2178172,
+                "adjacent_cap": 9,
+                "first_iterate": 831912,
+                "lower_excess": 27,
+                "first_cap": 8,
+                "second_iterate": 1663951,
+                "gateway_value": 1095322,
+                "gateway_natural_cap": 54400,
+                "third_iterate": 1082850,
+                "context_cutoff": 12,
+                "input_residual": 7,
+                "first_residual": 16,
+                "second_residual": 15
+              }
+            ],
+            "gateway_digits": [
+              [
+                31,
+                27,
+                25,
+                23,
+                21,
+                19,
+                17,
+                15,
+                13,
+                6
+              ],
+              [
+                31,
+                27,
+                25,
+                23,
+                21,
+                19,
+                17,
+                15,
+                13,
+                6,
+                3
+              ],
+              [
+                31,
+                27,
+                25,
+                23,
+                21,
+                19,
+                17,
+                15,
+                13,
+                6,
+                4
+              ],
+              [
+                31,
+                27,
+                25,
+                23,
+                21,
+                19,
+                17,
+                15,
+                13,
+                7
+              ],
+              [
+                31,
+                27,
+                25,
+                23,
+                21,
+                19,
+                17,
+                15,
+                13,
+                7,
+                3
+              ]
+            ],
+            "gateway_common_higher_indices": [
+              13,
+              15,
+              17,
+              19,
+              21,
+              23,
+              25,
+              27,
+              31
+            ],
+            "gateway_low_digit_sets": [
+              [
+                6
+              ],
+              [
+                3,
+                6
+              ],
+              [
+                4,
+                6
+              ],
+              [
+                7
+              ],
+              [
+                3,
+                7
+              ]
+            ],
+            "root_scalar_joint": 0,
+            "gateway_index_joint": 0,
+            "gateway_readout_joint": -166,
+            "additive_prediction_at_101": 1095488,
+            "actual_readout_at_101": 1095322,
+            "literal_gateway_updates": 5476347,
+            "protected_tail_perturbation": {
+              "index": 1663944,
+              "increment": 1,
+              "changed_third_iterate": -1,
+              "scope": "One-step shared profile envelope only: G/cap/ratio bounds, root depth and protected local tails stay fixed; the perturbed prefix is not generated by the original recurrence."
+            },
+            "scope": "Infinite first-pair arithmetic, generated canonical high contexts and shared stencil theorem from existing actual alphabet premises. The two steps remove high digits K-1/K-3; all carry is confined to an O(K) residual, so no extra high-context labels are supplied and a symbolic stream uses O(log K) working bits. Every row then enters a macroscopic interior query, at distance>=F_(K-2)/3 from its nearest Fibonacci anchor; at K>=29 its actual natural-cap defect is>=F_(K-2)/20, using the proved global8900/13459 upper ratio. Ternary stencil reduction applies at K>=36. Finite canonical example has affine gateway addresses but inherited readout interaction-166 and a derived Fibonacci carry at001/101. These are exterior replay dependencies, not lower bounds on actual evaluation inputs: already arithmetic fixed-cycle outputs can skip replay. Full exterior clock/word construction and uniform dispersion remain open."
           },
           "scope": "Twenty-eight independently regenerated/literal scalar premises extend actual alphabet closure to{4,8,9}, first24 flat responses, permanent holes27/28/32 and binary prefix28 for every order>=34. Spatial4/5 support cones and cap-specific strict-drop bounds are infinite deductions. Full-word28-bit packing and exact five-row16/8-bit contracts describe relaxed support-compatible words, not actual input minima. A periodic-only update of the actual order34 seed permits a three-cycle at order36, but is not claimed to be the actual selected recurrence. Exterior landing and modulo3 clock construction, generic copy frequency and additive occupation/global dispersion remain open."
         },
