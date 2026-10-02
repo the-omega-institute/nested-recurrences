@@ -86,6 +86,8 @@ shows why even its first edge can need a higher Fibonacci digit in the output.
 The [bounded-tail theorem](exact-collars.md#a-bounded-upper-shelf-and-a-wider-zero-allocation-corridor)
 bounds the remaining responses near that band and derives zero allocation
 in a wider region, including higher caps. Exact tail profiles remain open.
+Its first thirteen translated-tail positions have the proved alphabet
+{4,8,9}; one five-response word serves all rows above the generated part.
 
 The local interface theorems state exactly which context is supplied.
 For a bounded natural-cap domain, the

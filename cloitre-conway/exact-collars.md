@@ -1209,6 +1209,70 @@ and initial tail caps is still outside this interface.
 For D<=8 at K>=27, the profile and selected splits are entirely arithmetic;
 no residual tail responses or caps are supplied.
 
+**An actual three-symbol tail through position13.** Five further finite
+values at order26 are
+
+$$
+(Q_{26}(V_{26}+j))_{j=9}^{13}=(8,4,9,9,8).
+$$
+
+Their prescribed endpoints and scalar outputs are checked literally.
+Together with the preceding eight values they start the infinite theorem
+
+$$
+\boxed{Q_K(V_K+d)\in\{4,8,9\}
+\quad(1\le d\le13,\ K\ge26).} \tag{E.6}
+$$
+
+For the induction step K>=27, L_(K-2)>=L_25=13, so the zero-allocation
+theorem preserves the cap in the first child, whose excess is no larger
+than d. If that child enters the earlier generated band its cap is4;
+otherwise the induction hypothesis applies. This proves (E.6), rather
+than extrapolating the earlier finite maximum9 observation. The theorem
+has a fixed translated-tail domain; it is not a constant9 bound over
+all actual cap4 supports or whole blocks.
+
+At every K>=27, the entire periodic set for v=V_K+d, 9<=d<=13,
+lies at child excesses
+
+$$
+\{d,d-4,d-5\},\qquad
+j\longmapsto d+4-q(j),
+$$
+
+where q(j)=4 for j<=8 and q(j) is one of the five preceding-order
+responses at9..13 otherwise. The periodic set has at most three points,
+since its first-cap readout is injective and lies in{4,8,9}. Supply the
+actual parent cap e; starting at j_0=d+4-e and taking its periodic
+predecessor gives the actual selected excess in at most three reads.
+Its inherited cap is e, so this same five-response interface supports
+first-spine descent down to26. The five rows share one response word;
+additional allocation, entrance and phase labels are absent.
+In particular a proper inner five-cycle cannot occur in this translated
+tail; five-row response windows retain their inherited row clock.
+
+There are243 words in the full rectangular five-trit envelope. Eight
+bits suffice to pack one, and are the exact fixed-width minimum if the
+contract asks for the complete table of scalar-valid periodic options
+at all d9..13. To see injectivity, for d9..12 the option table identifies
+q(d): cap4 at selected excess d means q(d)=4; otherwise the higher cap
+at d is8 or9. For d13, cap4 selected at13 means q(13)=4; cap9 selected
+at13 means q(13)=9; the remaining case is q(13)=8. Thus the table
+recovers every letter. This proves243 distinct tables, requiring
+ceil(log_2 243)=8 bits. It does not prove that all words occur in actual C,
+that one selected five-row output needs eight independent bits, or that
+word qualification and evolution are free.
+
+For additive offsets0,2,3,5,7 and parent excess d9..13, the last two
+caps are4. Hence the scalar joint coefficient is exactly
+Q_K(V_K+d-2)-Q_K(V_K+d), lying in{-5,-4,-1,0,1,4,5}.
+At each eligible first-child edge every row loses the same complementary
+scalar F_(K-3), so all nonconstant response coefficients are preserved
+under inherited row labels down to26. A common canonical higher word
+must still be checked before interpreting an additive window as the
+original canonical digit window; descendant canonical contexts need
+not remain fixed.
+
 For a hand-checkable finite example, take K26,gap97,h=121296.
 The actual integers h+w on offsets0,2,3,5,7 share a canonical higher word.
 Their caps are(9,4,8,4,4). One twelve-entry lower tail word,
@@ -1224,8 +1288,10 @@ h=514119. Its caps are(8,4,4,4,4), and its only residual responses are
 word yields child offsets(4,6,7,9,11) and zero second caps for all rows.
 The numerical child map is affine, but the scalar interaction is-4 and
 persists at inherited orders29..26. The five-position rectangular profile
-envelope has30240 words, so15 bits suffice to pack it; this is not an
-independent-input minimum or a fixed descendant canonical alphabet.
+envelope from the upper shelf alone has30240 words and a15-bit packing.
+The actual three-symbol theorem reduces its common word envelope to243
+words and8 bits. Neither is an independent-input minimum or a fixed
+descendant canonical alphabet.
 
 The [checker](verification/collar_check.py) records the explicit seed,
 full-block shelf checks, adversarial profile graphs, actual zero-allocation

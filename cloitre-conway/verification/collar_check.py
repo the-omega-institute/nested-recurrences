@@ -1211,6 +1211,25 @@ def bounded_tail_dispersion_width(order):
     return width + (width - 2) // 5
 
 
+def three_symbol_tail_predecessor(excess, parent_cap, word):
+    assert 1 <= excess <= 13 and parent_cap in (4, 8, 9)
+    assert len(word) == 5 and set(word) <= {4, 8, 9}
+    seed = excess + 4 - parent_cap
+    if not 0 <= seed <= excess:
+        return None
+    point = seed
+    for period in range(1, 4):
+        assert 0 <= point <= excess
+        defect = 4 if point <= 8 else word[point - 9]
+        following = excess + 4 - defect
+        if following == seed:
+            return point, period
+        point = following
+        if not 0 <= point <= excess:
+            return None
+    return None
+
+
 def bounded_tail_shelf_audit(sequence, splits, fibonacci):
     base_order = 24
     base_width = cap4_generated_width(base_order)
@@ -1228,15 +1247,20 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
         base_values.append(defect)
         literal_updates += sequence[root - 1]
     strengthened_base_values = []
-    for excess in range(1, 9):
+    ternary_base_values = []
+    for excess in range(1, 14):
         root = fibonacci[26] - cap4_generated_width(26) - excess
-        assert fibonacci[25] - sequence[root] == 4
+        defect = fibonacci[25] - sequence[root]
+        assert defect == (4 if excess <= 8 else [8, 4, 9, 9, 8][excess - 9])
         endpoint = root - 1
         for iteration in range(sequence[root - 1]):
             endpoint = root - sequence[endpoint]
         assert endpoint == splits[root]
         assert sequence[endpoint] + sequence[root - endpoint] == sequence[root]
-        strengthened_base_values.append(4)
+        if excess <= 8:
+            strengthened_base_values.append(defect)
+        else:
+            ternary_base_values.append(defect)
         literal_updates += sequence[root - 1]
     lower_bound_positions = 0
     for order in range(23, 29):
@@ -1371,6 +1395,88 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
             zero_allocation_roots += 1
         actual_rows.append(dict(order=order, maximum_gap=zero_allocation_collar_width(order),
                                 cap_counts=cap_counts, period_counts=period_counts))
+    complete_word_graphs = 0
+    complete_word_decodings = 0
+    word_descriptors = set()
+    for word in product((4, 8, 9), repeat=5):
+        descriptor = []
+        for excess in range(9, 14):
+            profile = [word[point - 9] if 9 <= point <= 13 else 4
+                       for point in range(excess + 5)]
+            cycles = capped_profile_cycles(profile, excess + 4)
+            vertices = [point for cycle in cycles for point in cycle]
+            assert len(vertices) <= 3 and set(vertices) <= {excess, excess - 4, excess - 5}
+            options = {profile[point]: point for point in vertices}
+            assert len(options) == len(vertices)
+            for parent_cap in (4, 8, 9):
+                decoded = three_symbol_tail_predecessor(excess, parent_cap, word)
+                if parent_cap in options:
+                    assert decoded is not None and decoded[0] == options[parent_cap]
+                else:
+                    assert decoded is None
+                descriptor.append(None if decoded is None else decoded[0])
+                complete_word_decodings += 1
+            complete_word_graphs += 1
+        word_descriptors.add(tuple(descriptor))
+    assert len(word_descriptors) == 243
+    ternary_rows = []
+    ternary_selected_roots = 0
+    ternary_periodic_phases = 0
+    ternary_spine_states = 0
+    inherited_window_states = 0
+    for order in range(26, 31):
+        width = cap4_generated_width(order)
+        word = [fibonacci[order - 1] - sequence[fibonacci[order] - width - excess]
+                for excess in range(9, 14)]
+        assert set(word) <= {4, 8, 9}
+        ternary_rows.append(dict(order=order, response_word=word))
+        if order == 26:
+            continue
+        previous_word = [fibonacci[order - 2] - sequence[
+            fibonacci[order - 1] - cap4_generated_width(order - 1) - excess]
+                         for excess in range(9, 14)]
+        for excess in range(1, 14):
+            gap = width + excess
+            root = fibonacci[order] - gap
+            parent_cap = fibonacci[order - 1] - sequence[root]
+            assert parent_cap == (4 if excess <= 8 else word[excess - 9])
+            decoded = three_symbol_tail_predecessor(excess, parent_cap, previous_word)
+            assert decoded is not None
+            selected_excess, period = decoded
+            assert splits[root] == fibonacci[order - 1] - cap4_generated_width(order - 1) - selected_excess
+            profile = [fibonacci[order - 2] - sequence[fibonacci[order - 1] - point]
+                       for point in range(gap + 1)]
+            cycles = capped_profile_cycles(profile, gap)
+            vertices = [point for cycle in cycles for point in cycle]
+            allowed = {excess} if excess <= 8 else {excess, excess - 4, excess - 5}
+            assert len(vertices) <= 3
+            for point in vertices:
+                assert point - cap4_generated_width(order - 1) in allowed
+                assert profile[point] in (4, 8, 9)
+                ternary_periodic_phases += 1
+            current = root
+            for target_order in range(order, 25, -1):
+                current_excess = fibonacci[target_order] - current - cap4_generated_width(target_order)
+                assert 1 <= current_excess <= excess
+                assert fibonacci[target_order - 1] - sequence[current] == parent_cap
+                ternary_spine_states += 1
+                if target_order > 26:
+                    second = current - splits[current]
+                    assert sequence[second] == fibonacci[target_order - 3]
+                    current = splits[current]
+            ternary_selected_roots += 1
+        for excess in range(9, 14):
+            roots = [fibonacci[order] - width - excess + offset for offset in (0, 2, 3, 5, 7)]
+            values = [sequence[root] for root in roots]
+            interaction = values[4] - values[1] - values[3] + values[0]
+            assert interaction == sequence[roots[0]] - sequence[roots[1]]
+            assert interaction in (-5, -4, -1, 0, 1, 4, 5)
+            for target_order in range(order, 25, -1):
+                values = [sequence[root] for root in roots]
+                assert values[4] - values[1] - values[3] + values[0] == interaction
+                inherited_window_states += 5
+                if target_order > 26:
+                    roots = [splits[root] for root in roots]
     window_order = 26
     window_gap = 97
     window_base = fibonacci[window_order] - window_gap
@@ -1476,6 +1582,18 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
                 strengthened_base_order=26, strengthened_base_gap_interval_inclusive=[86, 93],
                 strengthened_base_values=strengthened_base_values,
                 extended_generated_band='Q_K(V_K+j)=4 for1<=j<=8, K>=26; first spine keeps j to order26',
+                ternary_base_gap_interval_inclusive=[94, 98], ternary_base_values=ternary_base_values,
+                ternary_tail=dict(base_order=26, response_positions_inclusive=[9, 13],
+                                  response_alphabet=[4, 8, 9], response_word_bits=8,
+                                  complete_response_words=243, complete_word_graphs=complete_word_graphs,
+                                  complete_word_decodings=complete_word_decodings,
+                                  distinct_complete_option_descriptors=len(word_descriptors),
+                                  actual_words=ternary_rows, actual_selected_roots=ternary_selected_roots,
+                                  actual_periodic_phases=ternary_periodic_phases,
+                                  actual_first_spine_states=ternary_spine_states,
+                                  inherited_five_pattern_states=inherited_window_states,
+                                  scalar_interaction_alphabet=[-5, -4, -1, 0, 1, 4, 5],
+                                  scope='Five additional order26 values start the actual ternary-alphabet induction. Every actual tail1..13 at K>=26 has caps4,8,9; above26 all periodic vertices lie at excesses d,d-4,d-5 and the predecessor needs at most three response reads. One five-trit word serves all rows; eight bits is exact for the complete relaxed option-table contract, not actual independent inputs or selected-validity certificates. The actual word evolution and global closure remain open.'),
                 lower_child_bound='Q_l(q)<=max(0,q-12), l>=23',
                 lower_bound_positions=lower_bound_positions,
                 symbolic_inequality_orders_inclusive=[25, 100], symbolic_inequalities=symbolic_inequalities,

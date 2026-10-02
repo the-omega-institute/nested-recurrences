@@ -1327,6 +1327,10 @@ generated, leaving at most max(0,D-8) unknown entries of height max(4,D).
 Their sufficient packing bound is independent of K; exact residual-response
 construction and wider allocations remain open. The K25/26 boundary layers
 use the earlier height9 bound.
+In the first thirteen tail positions a further actual induction closes
+the response alphabet to{4,8,9}. One five-trit word serves all rows, and
+the periodic predecessor takes at most three reads. The word evolution
+is still unknown; this is scoped actual closure down to the order26 base.
 
 ### Cap4 query profiles and the information they carry
 

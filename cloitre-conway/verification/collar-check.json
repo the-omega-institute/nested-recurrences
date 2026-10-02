@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "32a47aae3c9c29b8f03fec3414d0b6a1cec5204c61a25cc38af8871a94cdc848",
+  "source_sha256": "3c48382b0c8a01ab3aac30adc3f3140a99a72cfaa194aef41e07aeeda28e5091",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -5429,7 +5429,7 @@
           ],
           "base_tail_values": 153,
           "base_tail_sha256": "b31eda0623a04cf285ba6a230b5056e18bfab7aeb59cb5d0f111bae672b7e0fa",
-          "literal_endpoint_updates": 6946284,
+          "literal_endpoint_updates": 7321371,
           "shelf_formula": "4<=Q_K(v)<=max(9,v-(4K-19)) for K>=24; sharper max(4,v-(4K-19)) for K>=26",
           "strengthened_base_order": 26,
           "strengthened_base_gap_interval_inclusive": [
@@ -5447,6 +5447,100 @@
             4
           ],
           "extended_generated_band": "Q_K(V_K+j)=4 for1<=j<=8, K>=26; first spine keeps j to order26",
+          "ternary_base_gap_interval_inclusive": [
+            94,
+            98
+          ],
+          "ternary_base_values": [
+            8,
+            4,
+            9,
+            9,
+            8
+          ],
+          "ternary_tail": {
+            "base_order": 26,
+            "response_positions_inclusive": [
+              9,
+              13
+            ],
+            "response_alphabet": [
+              4,
+              8,
+              9
+            ],
+            "response_word_bits": 8,
+            "complete_response_words": 243,
+            "complete_word_graphs": 1215,
+            "complete_word_decodings": 3645,
+            "distinct_complete_option_descriptors": 243,
+            "actual_words": [
+              {
+                "order": 26,
+                "response_word": [
+                  8,
+                  4,
+                  9,
+                  9,
+                  8
+                ]
+              },
+              {
+                "order": 27,
+                "response_word": [
+                  8,
+                  4,
+                  4,
+                  9,
+                  8
+                ]
+              },
+              {
+                "order": 28,
+                "response_word": [
+                  4,
+                  4,
+                  4,
+                  4,
+                  8
+                ]
+              },
+              {
+                "order": 29,
+                "response_word": [
+                  4,
+                  4,
+                  4,
+                  4,
+                  8
+                ]
+              },
+              {
+                "order": 30,
+                "response_word": [
+                  4,
+                  4,
+                  4,
+                  4,
+                  4
+                ]
+              }
+            ],
+            "actual_selected_roots": 52,
+            "actual_periodic_phases": 59,
+            "actual_first_spine_states": 182,
+            "inherited_five_pattern_states": 350,
+            "scalar_interaction_alphabet": [
+              -5,
+              -4,
+              -1,
+              0,
+              1,
+              4,
+              5
+            ],
+            "scope": "Five additional order26 values start the actual ternary-alphabet induction. Every actual tail1..13 at K>=26 has caps4,8,9; above26 all periodic vertices lie at excesses d,d-4,d-5 and the predecessor needs at most three response reads. One five-trit word serves all rows; eight bits is exact for the complete relaxed option-table contract, not actual independent inputs or selected-validity certificates. The actual word evolution and global closure remain open."
+          },
           "lower_child_bound": "Q_l(q)<=max(0,q-12), l>=23",
           "lower_bound_positions": 300106,
           "symbolic_inequality_orders_inclusive": [
