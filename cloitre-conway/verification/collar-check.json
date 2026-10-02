@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "53794c27be6983b20ab7dc44eb4e9aa3118c9e0409a09f8421ace3253bbdf795",
+  "source_sha256": "8baf632b61225aa1bfa8a0f31e4136e1a2526ad20808185ee9d762caab55b609",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -7428,6 +7428,1001 @@
             }
           ],
           "scope": "General selected {4,e} two-cycle phase decoder and reset/adjacent-variation tradeoff are infinite written deductions from existing premises. Reset precursors can be lower holes, upper cap4 points or upper same-high-cap points. Actual196314 resets and copies with no odd lower cap4 hole. Binary sharpness is a relaxed clock envelope, not actual history sharpness. Adjacent migration counts cross orders and are not bounded by the single-spine15-drop budget or additive martingale occupation. Actual entry/word generation and global dispersion remain open."
+        },
+        "ternary_support": {
+          "seed_order": 34,
+          "new_scalar_premises": [
+            {
+              "position": 20,
+              "index": 5702750,
+              "response": 4,
+              "value": 3524574,
+              "split": 3524445
+            },
+            {
+              "position": 21,
+              "index": 5702749,
+              "response": 4,
+              "value": 3524574,
+              "split": 3524448
+            },
+            {
+              "position": 22,
+              "index": 5702748,
+              "response": 4,
+              "value": 3524574,
+              "split": 3524447
+            },
+            {
+              "position": 23,
+              "index": 5702747,
+              "response": 4,
+              "value": 3524574,
+              "split": 3524442
+            },
+            {
+              "position": 24,
+              "index": 5702746,
+              "response": 4,
+              "value": 3524574,
+              "split": 3524446
+            },
+            {
+              "position": 25,
+              "index": 5702745,
+              "response": 8,
+              "value": 3524570,
+              "split": 3524444
+            },
+            {
+              "position": 26,
+              "index": 5702744,
+              "response": 8,
+              "value": 3524570,
+              "split": 3524443
+            },
+            {
+              "position": 27,
+              "index": 5702743,
+              "response": 4,
+              "value": 3524574,
+              "split": 3524438
+            },
+            {
+              "position": 28,
+              "index": 5702742,
+              "response": 4,
+              "value": 3524574,
+              "split": 3524437
+            },
+            {
+              "position": 29,
+              "index": 5702741,
+              "response": 9,
+              "value": 3524569,
+              "split": 3524441
+            },
+            {
+              "position": 30,
+              "index": 5702740,
+              "response": 8,
+              "value": 3524570,
+              "split": 3524439
+            },
+            {
+              "position": 31,
+              "index": 5702739,
+              "response": 4,
+              "value": 3524574,
+              "split": 3524434
+            },
+            {
+              "position": 32,
+              "index": 5702738,
+              "response": 4,
+              "value": 3524574,
+              "split": 3524438
+            },
+            {
+              "position": 33,
+              "index": 5702737,
+              "response": 4,
+              "value": 3524574,
+              "split": 3524432
+            },
+            {
+              "position": 34,
+              "index": 5702736,
+              "response": 8,
+              "value": 3524570,
+              "split": 3524435
+            },
+            {
+              "position": 35,
+              "index": 5702735,
+              "response": 4,
+              "value": 3524574,
+              "split": 3524430
+            },
+            {
+              "position": 36,
+              "index": 5702734,
+              "response": 4,
+              "value": 3524574,
+              "split": 3524434
+            },
+            {
+              "position": 37,
+              "index": 5702733,
+              "response": 4,
+              "value": 3524574,
+              "split": 3524432
+            },
+            {
+              "position": 38,
+              "index": 5702732,
+              "response": 8,
+              "value": 3524570,
+              "split": 3524431
+            },
+            {
+              "position": 39,
+              "index": 5702731,
+              "response": 4,
+              "value": 3524574,
+              "split": 3524430
+            },
+            {
+              "position": 40,
+              "index": 5702730,
+              "response": 4,
+              "value": 3524574,
+              "split": 3524430
+            },
+            {
+              "position": 41,
+              "index": 5702729,
+              "response": 8,
+              "value": 3524570,
+              "split": 3524428
+            },
+            {
+              "position": 42,
+              "index": 5702728,
+              "response": 8,
+              "value": 3524570,
+              "split": 3524427
+            },
+            {
+              "position": 43,
+              "index": 5702727,
+              "response": 8,
+              "value": 3524570,
+              "split": 3524426
+            },
+            {
+              "position": 44,
+              "index": 5702726,
+              "response": 8,
+              "value": 3524570,
+              "split": 3524425
+            },
+            {
+              "position": 45,
+              "index": 5702725,
+              "response": 8,
+              "value": 3524570,
+              "split": 3524424
+            },
+            {
+              "position": 46,
+              "index": 5702724,
+              "response": 8,
+              "value": 3524570,
+              "split": 3524423
+            },
+            {
+              "position": 47,
+              "index": 5702723,
+              "response": 8,
+              "value": 3524570,
+              "split": 3524422
+            }
+          ],
+          "seed_word": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            8,
+            8,
+            4,
+            4,
+            9,
+            8,
+            4,
+            4,
+            4,
+            8,
+            4,
+            4,
+            4,
+            8,
+            4,
+            4,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8
+          ],
+          "prefix_limit": 5702769,
+          "independent_brent_agrees_through": 5702769,
+          "prefix_sha256": "f20b5deb7b2ed377ef3fc20e68576d681a2475df0d01e0430332856c356d8c9d",
+          "literal_endpoint_updates": 98688015,
+          "response_alphabet": [
+            4,
+            8,
+            9
+          ],
+          "response_support8": [
+            25,
+            26,
+            29,
+            30,
+            31,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47
+          ],
+          "response_support9": [
+            29,
+            33,
+            34,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47
+          ],
+          "flat_positions_inclusive": [
+            1,
+            24
+          ],
+          "additional_permanent_flat_positions": [
+            27,
+            28,
+            32
+          ],
+          "binary_prefix_positions_inclusive": [
+            1,
+            28
+          ],
+          "sufficient_full_word_bits": 28,
+          "maximum_strict_drops_above_seed_by_cap": {
+            "8": 5,
+            "9": 4
+          },
+          "ternary_maps": 27,
+          "map_direct_updates": 1944,
+          "map_profile_graphs": 27,
+          "possible_periods": [
+            1,
+            2,
+            3
+          ],
+          "shared_positions": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "shared_contracts": [
+            {
+              "excess": 16,
+              "words": 1,
+              "word_bits": 0,
+              "maximum_options": 1,
+              "output_bits": 0,
+              "sharp_word": [
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 17,
+              "words": 1,
+              "word_bits": 0,
+              "maximum_options": 1,
+              "output_bits": 0,
+              "sharp_word": [
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 18,
+              "words": 1,
+              "word_bits": 0,
+              "maximum_options": 1,
+              "output_bits": 0,
+              "sharp_word": [
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 19,
+              "words": 1,
+              "word_bits": 0,
+              "maximum_options": 1,
+              "output_bits": 0,
+              "sharp_word": [
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 20,
+              "words": 1,
+              "word_bits": 0,
+              "maximum_options": 1,
+              "output_bits": 0,
+              "sharp_word": [
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 21,
+              "words": 1,
+              "word_bits": 0,
+              "maximum_options": 1,
+              "output_bits": 0,
+              "sharp_word": [
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 22,
+              "words": 1,
+              "word_bits": 0,
+              "maximum_options": 1,
+              "output_bits": 0,
+              "sharp_word": [
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 23,
+              "words": 1,
+              "word_bits": 0,
+              "maximum_options": 1,
+              "output_bits": 0,
+              "sharp_word": [
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 24,
+              "words": 1,
+              "word_bits": 0,
+              "maximum_options": 1,
+              "output_bits": 0,
+              "sharp_word": [
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 25,
+              "words": 2,
+              "word_bits": 1,
+              "maximum_options": 2,
+              "output_bits": 1,
+              "sharp_word": [
+                8,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 26,
+              "words": 2,
+              "word_bits": 1,
+              "maximum_options": 2,
+              "output_bits": 1,
+              "sharp_word": [
+                8,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 27,
+              "words": 2,
+              "word_bits": 1,
+              "maximum_options": 2,
+              "output_bits": 1,
+              "sharp_word": [
+                4,
+                8,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 28,
+              "words": 4,
+              "word_bits": 2,
+              "maximum_options": 4,
+              "output_bits": 2,
+              "sharp_word": [
+                4,
+                8,
+                8,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 29,
+              "words": 12,
+              "word_bits": 4,
+              "maximum_options": 6,
+              "output_bits": 3,
+              "sharp_word": [
+                9,
+                4,
+                8,
+                8,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 30,
+              "words": 8,
+              "word_bits": 3,
+              "maximum_options": 4,
+              "output_bits": 2,
+              "sharp_word": [
+                4,
+                4,
+                4,
+                8,
+                8,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 31,
+              "words": 24,
+              "word_bits": 5,
+              "maximum_options": 12,
+              "output_bits": 4,
+              "sharp_word": [
+                8,
+                9,
+                4,
+                4,
+                8,
+                8,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 32,
+              "words": 24,
+              "word_bits": 5,
+              "maximum_options": 12,
+              "output_bits": 4,
+              "sharp_word": [
+                4,
+                4,
+                9,
+                4,
+                4,
+                8,
+                8,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 33,
+              "words": 144,
+              "word_bits": 8,
+              "maximum_options": 24,
+              "output_bits": 5,
+              "sharp_word": [
+                8,
+                8,
+                4,
+                9,
+                4,
+                4,
+                8,
+                4,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 34,
+              "words": 144,
+              "word_bits": 8,
+              "maximum_options": 18,
+              "output_bits": 5,
+              "sharp_word": [
+                4,
+                4,
+                8,
+                8,
+                9,
+                4,
+                4,
+                4,
+                8,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 35,
+              "words": 288,
+              "word_bits": 9,
+              "maximum_options": 12,
+              "output_bits": 4,
+              "sharp_word": [
+                4,
+                8,
+                4,
+                8,
+                4,
+                9,
+                4,
+                4,
+                8,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 36,
+              "words": 864,
+              "word_bits": 10,
+              "maximum_options": 108,
+              "output_bits": 7,
+              "sharp_word": [
+                8,
+                4,
+                8,
+                4,
+                8,
+                8,
+                9,
+                4,
+                4,
+                4,
+                8,
+                4
+              ]
+            },
+            {
+              "excess": 37,
+              "words": 2592,
+              "word_bits": 12,
+              "maximum_options": 36,
+              "output_bits": 6,
+              "sharp_word": [
+                8,
+                4,
+                4,
+                9,
+                4,
+                8,
+                8,
+                9,
+                4,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 38,
+              "words": 2592,
+              "word_bits": 12,
+              "maximum_options": 72,
+              "output_bits": 7,
+              "sharp_word": [
+                4,
+                8,
+                4,
+                8,
+                9,
+                4,
+                8,
+                4,
+                8,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 39,
+              "words": 3888,
+              "word_bits": 12,
+              "maximum_options": 54,
+              "output_bits": 6,
+              "sharp_word": [
+                4,
+                8,
+                8,
+                8,
+                9,
+                9,
+                4,
+                4,
+                4,
+                8,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 40,
+              "words": 7776,
+              "word_bits": 13,
+              "maximum_options": 108,
+              "output_bits": 7,
+              "sharp_word": [
+                4,
+                4,
+                8,
+                8,
+                4,
+                8,
+                9,
+                4,
+                8,
+                4,
+                8,
+                4
+              ]
+            },
+            {
+              "excess": 41,
+              "words": 34992,
+              "word_bits": 16,
+              "maximum_options": 162,
+              "output_bits": 8,
+              "sharp_word": [
+                4,
+                4,
+                4,
+                9,
+                8,
+                8,
+                9,
+                8,
+                4,
+                4,
+                4,
+                8
+              ]
+            },
+            {
+              "excess": 42,
+              "words": 23328,
+              "word_bits": 15,
+              "maximum_options": 108,
+              "output_bits": 7,
+              "sharp_word": [
+                4,
+                4,
+                4,
+                8,
+                9,
+                8,
+                8,
+                9,
+                8,
+                4,
+                4,
+                4
+              ]
+            },
+            {
+              "excess": 43,
+              "words": 34992,
+              "word_bits": 16,
+              "maximum_options": 108,
+              "output_bits": 7,
+              "sharp_word": [
+                4,
+                4,
+                4,
+                8,
+                9,
+                9,
+                8,
+                4,
+                4,
+                8,
+                4,
+                4
+              ]
+            }
+          ],
+          "shared_word_graphs": 140,
+          "shared_words_checked": 111687,
+          "exact_relaxed_max_word_bits": 16,
+          "exact_relaxed_max_output_bits": 8,
+          "relaxed_next_word": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            8,
+            8,
+            4,
+            4,
+            9,
+            8,
+            4,
+            4,
+            4,
+            9,
+            4,
+            4,
+            4,
+            8,
+            4,
+            4,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8
+          ],
+          "reachable_relaxed_three_cycle": {
+            "order": 36,
+            "excess": 38,
+            "map_values": [
+              8,
+              9,
+              4
+            ],
+            "cycle": [
+              4,
+              8,
+              9
+            ],
+            "period": 3
+          },
+          "scope": "Twenty-eight independently regenerated/literal scalar premises extend actual alphabet closure to{4,8,9}, first24 flat responses, permanent holes27/28/32 and binary prefix28 for every order>=34. Spatial4/5 support cones and cap-specific strict-drop bounds are infinite deductions. Full-word28-bit packing and exact five-row16/8-bit contracts describe relaxed support-compatible words, not actual input minima. A periodic-only update of the actual order34 seed permits a three-cycle at order36, but is not claimed to be the actual selected recurrence. Exterior landing and modulo3 clock construction, generic copy frequency and additive occupation/global dispersion remain open."
         },
         "scope": "Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open."
       },

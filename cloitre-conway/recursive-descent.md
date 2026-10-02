@@ -2072,6 +2072,11 @@ H_d^(D-eta-2)(s), D=C(N-1). A supplied D mod6 and eta mod3 suffice
 for all three periods; even eta mod3 uniquely determines eta mod6.
 For period1/2 no landing residue is needed; period3 retains three
 landing-clock classes. Deriving those exterior data remains separate.
+The exact depth is D=F_(h-1)-R_h(d+1). Since(F_24,F_25) is(0,1)
+modulo6, Fibonacci residues modulo6 repeat after24 orders. Thus the
+supplied order and one current adjacent response derive D mod6;
+the exact large depth need not be stored. Generating that adjacent
+response and the qualified landing is still part of the interface.
 
 There is a stronger obstruction than an arbitrary three-state coloring.
 Start with the actual order34 word, allow each row to choose any of its
