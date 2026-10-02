@@ -70,6 +70,11 @@ conjectures remain finite observations. No Lean formalization is included.
    derives periods of at most two from two response values. Five checked
    premises extend the explicit actual tail and its selected descendants;
    wider response words and exterior entrances still need construction.
+   [Arithmetic support cones](cloitre-conway/recursive-descent.md#arithmetic-support-cones-shrink-the-shared-response-word)
+   further restrict the actual tail to three responses and generate
+   additional noncontinuous flat positions. Their shared-word bounds
+   sharpen the local interface; periodic qualification alone still
+   permits a three-cycle and leaves the exterior clock problem open.
 3. **Inner dynamics between Fibonacci indices.** Control periods,
    landing times, and selected phases in the wider block interiors.
 

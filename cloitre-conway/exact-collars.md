@@ -1493,6 +1493,11 @@ The [binary-prefix theorem](recursive-descent.md#binary-prefixes-close-with-two-
 does certify period at most two under a two-letter response condition.
 Five new scalar premises give an explicit first-nineteen-position word
 and its selected descent; the wider six-letter problem remains open.
+The later [support-cone theorem](recursive-descent.md#arithmetic-support-cones-shrink-the-shared-response-word)
+reduces the actual47-position alphabet to{4,8,9} from order34, proves
+additional permanent flat positions and sharpens the high-cap spine
+drop bounds. Its spatial invariant does not construct all selected
+phases or exclude longer zero-drop copy runs.
 
 ### A moving frontier needs recurring cap4 holes
 
