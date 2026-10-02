@@ -2286,6 +2286,215 @@ def two_generation_bottleneck_audit(sequence, selected_splits, fibonacci):
                 scope='Exact finite two-generation optimization at actual125952 with supplied actual child profiles and nodewise moment constraints. Root moment admissibility forces77846. Independent affine dual certificates verify full child optima over4561 geometric splits; terminal laws independently reproduce variance and scalar means. Scalar-valid maximum is below the quadratic constant1; every nodewise deterministic moment policy is below constant2. Randomizing only child77846 reaches constant2, while two mixed children attain the full maximum. This is a proof decomposition for existing C values, not the prescribed selected tree, an actual input minimum, a uniform dispersion theorem or a global rate.')
 
 
+def horizon_terminal_audit(sequence, fibonacci):
+    def choices(order, index):
+        if order <= 5:
+            return (None,)
+        lower = max(fibonacci[order - 1], index - fibonacci[order - 1])
+        upper = min(fibonacci[order], index - fibonacci[order - 2])
+        return range(lower, upper + 1)
+
+    def terminal_leaves(order, index, point):
+        return ((order, index),) if point is None else ((order - 1, point), (order - 2, index - point))
+
+    def upper_cap(order, index):
+        return fibonacci[order - 1] + min(index - fibonacci[order], fibonacci[order - 2])
+
+    trees_checked = 0
+    strict_improvements = 0
+    upper_cap_equal_trees = 0
+    for index in range(8, 90):
+        order = bisect_right(fibonacci, index) - 1
+        root_x = Fraction(fibonacci[order], index)
+        by_scalar = {}
+        nodewise_rows = []
+        for point in choices(order, index):
+            child_moments = []
+            child_options = []
+            for child_order, child in ((order - 1, point), (order - 2, index - point)):
+                rows = tuple((split, sequence[child] if split is None else
+                              sequence[split] + sequence[child - split],
+                              Fraction() if split is None else split_variance(child_order, child, split, fibonacci))
+                             for split in choices(child_order, child))
+                child_moments.append(optimal_moment_policy(rows, sequence[child])[0])
+                child_options.append(tuple(row[0] for row in rows))
+            nodewise_rows.append((point, sequence[point] + sequence[index - point],
+                                  split_variance(order, index, point, fibonacci)
+                                  + Fraction(point, index) * child_moments[0]
+                                  + Fraction(index - point, index) * child_moments[1]))
+            for left_split, right_split in product(*child_options):
+                leaves = (terminal_leaves(order - 1, point, left_split)
+                          + terminal_leaves(order - 2, index - point, right_split))
+                variance = sum((Fraction(leaf, index) * (Fraction(fibonacci[leaf_order], leaf) - root_x) ** 2
+                                for leaf_order, leaf in leaves), Fraction())
+                recursive_variance = split_variance(order, index, point, fibonacci)
+                for child_order, child, split in ((order - 1, point, left_split),
+                                                   (order - 2, index - point, right_split)):
+                    if split is not None:
+                        recursive_variance += Fraction(child, index) * split_variance(
+                            child_order, child, split, fibonacci)
+                assert variance == recursive_variance
+                scalar = sum(sequence[leaf] for leaf_order, leaf in leaves)
+                if scalar not in by_scalar or variance > by_scalar[scalar][2]:
+                    by_scalar[scalar] = ((point, left_split, right_split), scalar, variance)
+                deficits = [upper_cap(order, index) - upper_cap(order - 1, point)
+                            - upper_cap(order - 2, index - point)]
+                for child_order, child, split in ((order - 1, point, left_split),
+                                                   (order - 2, index - point, right_split)):
+                    if split is not None:
+                        deficits.append(upper_cap(child_order, child)
+                                        - upper_cap(child_order - 1, split)
+                                        - upper_cap(child_order - 2, child - split))
+                assert min(deficits) >= 0
+                terminal_deficit = upper_cap(order, index) - sum(upper_cap(leaf_order, leaf)
+                                                                for leaf_order, leaf in leaves)
+                assert terminal_deficit == sum(deficits)
+                if terminal_deficit == 0:
+                    assert not any(deficits)
+                    upper_cap_equal_trees += 1
+                trees_checked += 1
+        horizon = optimal_moment_policy(tuple(by_scalar.values()), sequence[index])[0]
+        nodewise = optimal_moment_policy(tuple(nodewise_rows), sequence[index])[0]
+        assert horizon >= nodewise
+        strict_improvements += horizon > nodewise
+    assert strict_improvements > 0
+    return dict(roots_inclusive=[8, 89], deterministic_trees_checked=trees_checked,
+                strict_horizon_improvements_over_nodewise=strict_improvements,
+                upper_cap_terminal_equal_trees=upper_cap_equal_trees,
+                scope='Complete small two-generation geometric tree enumeration independently equates leaf variance and recursive variance, compares horizon/nodewise optimizers and checks telescoping nonnegative upper-cap deficits. Infinite support and collapse claims use the written arguments.')
+
+
+def two_generation_horizon_audit(sequence, fibonacci):
+    root, order = 125952, 26
+    target = sequence[root]
+    defect_squared = Fraction(target - g_closed(root), root) ** 2
+    trees = ((76851, 46389, 30462), (77160, 48499, 30102))
+    certificates = []
+    for root_split, left_split, right_split in trees:
+        leaves = ((24, left_split), (23, root_split - left_split),
+                  (23, right_split), (22, root - root_split - right_split))
+        for parent_order, index, point in ((26, root, root_split),
+                                          (25, root_split, left_split),
+                                          (24, root - root_split, right_split)):
+            assert fibonacci[parent_order - 1] <= point <= fibonacci[parent_order]
+            assert fibonacci[parent_order - 2] <= index - point <= fibonacci[parent_order - 1]
+        scalar = sum(sequence[point] for leaf_order, point in leaves)
+        reward = sum((Fraction(fibonacci[leaf_order] ** 2, point)
+                      for leaf_order, point in leaves), Fraction())
+        variance = reward / root - Fraction(fibonacci[order], root) ** 2
+        assert sum(Fraction(point, root) for leaf_order, point in leaves) == 1
+        assert sum(Fraction(fibonacci[leaf_order], root) for leaf_order, point in leaves) == Fraction(
+            fibonacci[order], root)
+        assert variance == sum(Fraction(point, root) * (
+            Fraction(fibonacci[leaf_order], point) - Fraction(fibonacci[order], root)) ** 2
+            for leaf_order, point in leaves)
+        certificates.append(dict(root_split=root_split, child_splits=[left_split, right_split],
+                                  root_readout=sequence[root_split] + sequence[root - root_split],
+                                  child_targets=[sequence[root_split], sequence[root - root_split]],
+                                  child_readouts=[sequence[left_split] + sequence[root_split - left_split],
+                                                 sequence[right_split] + sequence[root - root_split - right_split]],
+                                  terminal_scalar=scalar, terminal_reward=str(reward), variance=str(variance),
+                                  quadratic_ratio=str(variance / defect_squared),
+                                  leaves=[dict(order=leaf_order, index=point, value=sequence[point],
+                                               probability=str(Fraction(point, root)))
+                                          for leaf_order, point in leaves]))
+    assert [row['terminal_scalar'] for row in certificates] == [79488, 79517]
+    assert [row['root_readout'] for row in certificates] == [79450, 79434]
+    assert target == 79505
+    assert Fraction(certificates[1]['variance']) > 2 * defect_squared
+    multiplier = (Fraction(certificates[0]['terminal_reward'])
+                  - Fraction(certificates[1]['terminal_reward'])) / 29
+    assert multiplier > 0
+    numerator, denominator = multiplier.numerator, multiplier.denominator
+    lower = max(fibonacci[order - 1], root - fibonacci[order - 1])
+    upper = min(fibonacci[order], root - fibonacci[order - 2])
+    child_scores = {}
+    child_choices = {}
+    digest = hashlib.sha256()
+    child_candidates = 0
+    support_children = {trees[0][0], root - trees[0][0], trees[1][0], root - trees[1][0]}
+    support_duals = []
+    for child_order, indices in ((25, range(lower, upper + 1)),
+                                 (24, range(root - upper, root - lower + 1))):
+        first_squared = fibonacci[child_order - 1] ** 2
+        second_squared = fibonacci[child_order - 2] ** 2
+        for index in indices:
+            child_lower = max(fibonacci[child_order - 1], index - fibonacci[child_order - 1])
+            child_upper = min(fibonacci[child_order], index - fibonacci[child_order - 2])
+            best_numerator = best_denominator = None
+            maximizing = []
+            for point in range(child_lower, child_upper + 1):
+                complement = index - point
+                readout = sequence[point] + sequence[complement]
+                candidate_denominator = point * complement
+                candidate_numerator = (denominator * (first_squared * complement + second_squared * point)
+                                       + numerator * readout * candidate_denominator)
+                comparison = (1 if best_numerator is None else
+                              candidate_numerator * best_denominator - best_numerator * candidate_denominator)
+                if comparison > 0:
+                    best_numerator, best_denominator = candidate_numerator, candidate_denominator
+                    maximizing = [point]
+                elif comparison == 0:
+                    maximizing.append(point)
+                child_candidates += 1
+            score = Fraction(best_numerator, denominator * best_denominator)
+            child_scores[child_order, index] = score
+            child_choices[child_order, index] = maximizing
+            digest.update(f'{child_order},{index},{maximizing},{score}\n'.encode('ascii'))
+            if index in support_children:
+                support_duals.append(dict(order=child_order, index=index, maximizing_splits=maximizing,
+                                          score=str(score), candidate_splits=child_upper - child_lower + 1))
+    root_scores = {point: child_scores[25, point] + child_scores[24, root - point]
+                   for point in range(lower, upper + 1)}
+    maximum = max(root_scores.values())
+    maximizing_roots = [point for point, score in root_scores.items() if score == maximum]
+    assert maximizing_roots == [76851, 77160, 78601], maximizing_roots
+    expected_child_splits = {trees[0][0]: trees[0][1], root - trees[0][0]: trees[0][2],
+                             trees[1][0]: trees[1][1], root - trees[1][0]: trees[1][2]}
+    assert all(row['maximizing_splits'] == [expected_child_splits[row['index']]] for row in support_duals)
+    maximizing_trees = []
+    for point in maximizing_roots:
+        left_choices, right_choices = child_choices[25, point], child_choices[24, root - point]
+        assert len(left_choices) == len(right_choices) == 1
+        left_split, right_split = left_choices[0], right_choices[0]
+        scalar = (sequence[left_split] + sequence[point - left_split]
+                  + sequence[right_split] + sequence[root - point - right_split])
+        maximizing_trees.append(dict(root_split=point, child_splits=[left_split, right_split],
+                                      terminal_scalar=scalar))
+    assert [tree['terminal_scalar'] for tree in maximizing_trees] == [79488, 79517, 79517]
+    for certificate in certificates:
+        assert Fraction(certificate['terminal_reward']) + multiplier * certificate['terminal_scalar'] == maximum
+    weight = Fraction(certificates[1]['terminal_scalar'] - target, 29)
+    assert weight == Fraction(12, 29)
+    optimum = weight * Fraction(certificates[0]['variance']) + (1 - weight) * Fraction(certificates[1]['variance'])
+    assert optimum == (maximum - multiplier * target) / root - Fraction(fibonacci[order], root) ** 2
+    assert optimum > Fraction(certificates[1]['variance']) > 2 * defect_squared
+    combined_leaves = [(leaf, mixture_weight * Fraction(leaf['probability']))
+                       for certificate, mixture_weight in zip(certificates, (weight, 1 - weight))
+                       for leaf in certificate['leaves']]
+    assert sum(probability for leaf, probability in combined_leaves) == 1
+    assert sum(probability * Fraction(leaf['value'], leaf['index'])
+               for leaf, probability in combined_leaves) == Fraction(target, root)
+    assert sum(probability * Fraction(fibonacci[leaf['order']], leaf['index'])
+               for leaf, probability in combined_leaves) == Fraction(fibonacci[order], root)
+    assert sum(probability * (Fraction(fibonacci[leaf['order']], leaf['index'])
+                              - Fraction(fibonacci[order], root)) ** 2
+               for leaf, probability in combined_leaves) == optimum
+    assert len(child_scores) == 9120 and child_candidates == 20798160
+    return dict(index=root, order=order, target=target, deterministic_trees=certificates,
+                small_complete_terminal_audit=horizon_terminal_audit(sequence, fibonacci),
+                low_scalar_tree_weight=str(weight), dual_multiplier=str(multiplier),
+                child_states=len(child_scores), child_candidate_comparisons=child_candidates,
+                child_dual_scores_sha256=digest.hexdigest(), supporting_child_duals=support_duals,
+                root_candidate_comparisons=len(root_scores), maximizing_root_splits=maximizing_roots,
+                maximizing_trees=maximizing_trees,
+                dual_tree_score=str(maximum), optimal_variance=str(optimum),
+                optimal_quadratic_ratio=str(optimum / defect_squared),
+                minimum_split_randomization_for_quadratic_constant_two=0,
+                minimum_deterministic_tree_support_for_optimum=2,
+                scope='Exact two-generation horizon-mean proof-policy optimum for supplied actual C values. One deterministic tree reaches constant2 despite a root scalar deficit71; its child gains19/64 give terminal surplus12. The full optimum mixes two complete deterministic trees with weight12/29 and preserves only the block-terminal mean. Exact integer comparisons cover20798160 child choices and4560 roots. Three dual-maximizing trees have unique child optima and only two distinct terminal laws, with scalar means79488/79517; attaining the full optimum therefore requires two trees. This broader contract does not correct or contradict the nodewise PR32 minimum, change the recurrence, reconstruct actual selected five-windows or prove uniform dispersion/convergence.')
+
+
 def moment_simplex_audit():
     contexts = infeasible = two_support = grid_points = 0
     table_entries = tuple(product((0, 2, 4), (0, 1, 3)))
@@ -2505,6 +2714,7 @@ def moment_dispersion_audit(sequence, selected_splits, fibonacci):
                 upper_cap_knee_contexts=upper_cap_contexts,
                 actual_geometric_moment_bottleneck=bottleneck,
                 two_generation_bottleneck=two_generation_bottleneck_audit(sequence, selected_splits, fibonacci),
+                two_generation_horizon=two_generation_horizon_audit(sequence, fibonacci),
                 scope='Written paired and cycle-average quadratic bounds plus moment-submartingale decay criterion and sharp two-support conditional optimizer. Finite audits verify supplied mean conditions, not a uniform global inequality; original selector is unchanged.')
 
 

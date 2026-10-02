@@ -20,6 +20,7 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 - [Diophantine dispersion in cube-root Fibonacci neighborhoods](#diophantine-dispersion-in-cube-root-fibonacci-neighborhoods)
 - [Additive dispersion policies without orbit qualification](#additive-dispersion-policies-without-orbit-qualification)
 - [Two-split moment policies and cycle-average dispersion](#two-split-moment-policies-and-cycle-average-dispersion)
+- [Block-terminal means remove intermediate scalar constraints](#block-terminal-means-remove-intermediate-scalar-constraints)
 - [Finite prefixes and exact collars do not force convergence](#finite-prefixes-and-exact-collars-do-not-force-convergence)
 - [Exact small-cap closure still does not force convergence](#exact-small-cap-closure-still-does-not-force-convergence)
 
@@ -1512,6 +1513,210 @@ checks the root and its two actual children. The complete finite
 certificate does not imply a uniform E_2 bound, a decay exponent, or
 control of the actual selected tree's marked-leaf occupation. Campbell's
 endpoint recurrence lacks the additive moment identity used here.
+
+### Block-terminal means remove intermediate scalar constraints
+
+The decay proof checks scalar means only at the boundaries of its
+fixed-length blocks. Requiring a submartingale at every intermediate
+node is sufficient but stronger than necessary. A block-terminal
+contract permits temporary scalar deficits, compensated before the block
+ends. This enlarges the proof-policy interface without changing C or
+reconstructing its prescribed selected windows.
+
+**Terminal certificate and conditional decay.** At a closed state(j,N),
+let T be any deterministic occurrence tree of geometric splits from
+K_j(N), expanded for m generations, with branches stopped at orders4/5. Each terminal
+occurrence has inherited state(h,t). Define
+
+$$
+S_T=\sum_{(h,t)\in\operatorname{Leaves}(T)}C(t),\qquad
+R_T=\frac1N\sum_{(h,t)\in\operatorname{Leaves}(T)}\frac{F_h^2}{t}
+       -\left(\frac{F_j}{N}\right)^2. \tag{B.1}
+$$
+
+Occurrences, including repeated physical indices, are counted with
+multiplicity. Their sizes sum to N and their Fibonacci anchors sum to
+F_j. Under ordinary size-biased child selection a leaf has probability
+t/N. Therefore R_T is exactly the accumulated X variance and the mean
+terminal Z is S_T/N-alpha. These assertions use only geometric splitting,
+the root index/order and terminal values. Intermediate C values, inner
+basins, entry clocks and selected phases are absent from this certificate.
+They remain necessary resources in other evaluation contracts.
+
+For a distribution on these complete trees, impose only
+
+$$
+\mathbb E S_T\ge C(N),\qquad
+\mathcal B_m(j,N)=\max\mathbb E R_T. \tag{B.2}
+$$
+
+The actual selected tree makes this finite problem feasible. Every
+nodewise moment policy also satisfies(B.2) by conditional expectation,
+so B_m>=E_m>=M_m>=V_m. Randomization between complete trees adds no
+variance of their X means: every tree has mean F_j/N.
+
+If fixed m>=1,q>=1,kappa>0,J satisfy
+
+$$
+\mathcal B_m(j,N)\ge\kappa
+       \left(\frac{C(N)-G(N)}N\right)^q
+\quad(j\ge J), \tag{B.3}
+$$
+
+then C(n)-alpha*n=O(n/(log n)^(1/q)). To prove this, concatenate
+L=floor(j/(4m)) maximizing blocks. X remains a martingale at every
+step and has total variance at most1. Z need only be a submartingale
+at block boundaries, where(B.2) supplies exactly that property.
+All encountered orders are at least floor(j/2). With
+epsilon=alpha/F_floor(j/2), the golden rounding bound and Jensen give
+the same inequality L*kappa*max(Z_0-epsilon,0)^q<=1 as before.
+This proves the conditional implication; no uniform(B.3) is established.
+
+**Two complete trees suffice, and a scalar dual generates the optimizer.**
+Apply the finite linear-program argument of(M.5) to the table(S_T,R_T).
+An optimum uses one tree with S_T>=C(N), or two with
+S_-<C(N)<S_+, weighted by
+
+$$
+w_-=(S_+-C(N))/(S_+-S_-),\qquad w_+=1-w_-. \tag{B.4}
+$$
+
+Since0<S_T<N, these weights have O(log N)-bit integer numerators and
+denominators. There is one choice between complete plans, rather than a
+separate split mixture at each internal node. The complete plans and
+terminal C values still have a cost; two-tree support does not give a
+two-bit total certificate or an actual five-window input minimum.
+
+**Terminal positions are unnecessary in this contract.** The truncated
+order tree has a fixed shape. Retain only the multiplicities of each
+terminal pair(h,t), with t in[F_h,F_(h+1)], the required number of leaves
+at each order, and total size N. Assign these indices to the corresponding
+leaf-order positions in any fixed order and sum upward. At an internal
+state of order h, the two child sums lie in[F_(h-1),F_h] and
+[F_(h-2),F_(h-1)], so their sum lies in[F_h,F_(h+1)]. Induction therefore
+generates a geometrically valid tree with the desired root N.
+Every such assignment has the same S_T and R_T. This extends the earlier
+[reverse terminal-code construction](recursive-descent.md#seven-terminal-symbols-and-the-full-geometric-selector-code)
+to the truncated horizon and shows that its histogram suffices for this
+proof-policy certificate. A positional ordinal is needed to reconstruct
+a prescribed selector tree, but adds no scalar or variance information here.
+
+In two generations at j>=8 the leaves have orders(j-2,j-3,j-3,j-4).
+Four supplied indices(u,v,w,z) in those natural blocks, summing to N,
+generate the splits(u+v,u,w). Exchanging v and w changes the root split
+to u+w while preserving both terminal observables. No intermediate
+scalar values or separately supplied child addresses are needed.
+This does not assert that the generated endpoints are the prescribed
+ones, or that distinct histograms always have distinct observables.
+
+A useful exact dual avoids enumerating every complete tree. For lambda>=0,
+set J_0^lambda(j,N)=F_j^2/N+lambda*C(N), retain this value at stopped
+orders, and elsewhere set
+
+$$
+J_m^\lambda(j,N)=\max_{a\in K_j(N)}
+ \left[J_{m-1}^\lambda(j-1,a)+J_{m-1}^\lambda(j-2,N-a)\right]. \tag{B.5}
+$$
+
+Backward induction gives J_m^lambda=max_T[sum F_h^2/t+lambda*S_T].
+Consequently the finite moment dual is
+
+$$
+\mathcal B_m(j,N)=\min_{\lambda\ge0}
+ \left[\frac{J_m^\lambda(j,N)-\lambda C(N)}N
+                  -\left(\frac{F_j}{N}\right)^2\right]. \tag{B.6}
+$$
+
+The upper bound follows by averaging the affine majorant; equality is
+finite linear-program duality, equivalently a supporting line of the
+upper convex hull of the finite table. The terminal enumeration below
+independently checks the variance identity and strict enlargement in
+small cases; it is not the proof of(B.1)--(B.6).
+
+**A deterministic repair at125952.** Continue with N=125952,j=26,
+C(N)=79505,delta=1662/N. Choose root split77160 and second-generation
+splits48499 and30102. The tree is
+
+| Parent | Split | Complement | Actual C values | Scalar sum |
+|---:|---:|---:|---|---:|
+|125952|77160|48792|48454,30980|79434|
+|77160|48499|28661|30758,17715|48473|
+|48792|30102|18690|19135,11909|31044|
+
+Its root scalar loses71; its two children gain19 and64. Thus its
+terminal sum is79517, exceeding the root target by12. Its variance is
+
+$$
+R_+=\frac{1514430909993737622619}{3872098572350303706808320},
+\qquad R_+/\delta^2=2.24621414\ldots>2. \tag{B.7}
+$$
+
+The four leaf probabilities are48499/N,28661/N,30102/N,18690/N,
+with inherited orders24,23,23,22. They recover(B.7) directly.
+This lower-bound certificate requires the root target and four terminal
+C values; the intermediate values in the table only explain the
+compensation. Zero split randomization is therefore sufficient, and
+minimal, to reach constant2 in the block-terminal contract. The earlier
+one-randomized-child minimum remains valid for its stronger nodewise
+contract; the two statements concern different admissible policies.
+
+**Full two-generation optimum.** A second tree uses root split76851
+and child splits46389,30462. Its inherited terminal states are
+(24,46389),(23,30462),(23,30462),(22,18639), with C values
+28678,19475,19475,11860. Its scalar sum is79488 and
+
+$$
+R_- =\frac{834633144811890071}{1105387041563461287936}.
+$$
+
+Mix this tree with weight12/29 and the tree in(B.7) with17/29.
+The terminal scalar mean is79505 exactly, and
+
+$$
+\mathcal B_2(26,125952)
+=\frac{12R_-+17R_+}{29},\qquad
+\mathcal B_2/\delta^2=3.11111871\ldots . \tag{B.8}
+$$
+
+This exceeds the nodewise optimum E_2/delta^2=2.11432603... .
+An exact optimality certificate takes
+lambda=N*(R_--R_+)/29>0 in(B.5). Integer cross multiplication checks
+every candidate of the9120 possible child states:20798160 child
+comparisons and4560 root comparisons. The maximizing root splits are
+precisely76851,77160,78601; each has unique maximizing child splits.
+The last is the(B.7) tree with its two order23 leaves exchanged, so
+these three trees have only the two displayed terminal laws and scalar
+sums79488,79517. Both laws attain the same affine dual bound.
+Since lambda>0, an optimal feasible mixture must have terminal mean
+exactly79505 and be supported on those laws. No single deterministic
+tree attains(B.8); two suffice, and their law weights are forced by(B.4).
+Only one complete-plan choice needs randomization for the full optimum.
+
+**The missing actual-profile restriction remains.** If a profile P has
+P(a)+P(N-a)<=P(N) at every geometric split, a tree's terminal deficit
+is the sum of its nonnegative internal scalar deficits. A terminal-mean
+policy with mean at least P(N) must therefore use only trees with zero
+deficit at every internal node. Thus its block, nodewise-moment and
+scalar-valid optima coincide.
+
+The earlier upper-cap counterfamily U has this property: for N=F_j+u,
+a=F_(j-1)+r, its child cap sum is
+min(r,F_(j-3))+min(u-r,F_(j-4))<=min(u,F_(j-2)). At its knees the
+unique scalar-valid splits therefore remain forced under(B.2).
+For each fixed m the same O(F_j^(-4)) variance and positive limiting
+relative defect persist. The broader contract does not make static
+Fibonacci geometry sufficient for convergence. Uniform actual terminal
+compensation and dispersion still need proof. Campbell's endpoint rule
+also remains outside this additive golden-defect argument.
+
+The [selector checker](verification/selector_payload_check.py) records
+the terminal laws, complete integer dual audit and sharp support under
+**two_generation_horizon**. Independent small enumeration checks8444
+trees at roots8..89, finds23 strict block improvements, and verifies
+the upper-cap deficit collapse. Actual C inputs come from the independently
+agreeing full-orbit/Brent prefix. These are proof-policy certificates,
+not prescribed-orbit reconstruction, a full five-window minimum,
+a uniform dispersion theorem or a global decay rate.
 
 ### Finite prefixes and exact collars do not force convergence
 

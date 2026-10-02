@@ -42,8 +42,11 @@ conjectures remain finite observations. No Lean formalization is included.
    lower bound for maxima is a separate question.
    An [exact two-generation policy certificate](cloitre-conway/dispersion.md#a-two-generation-certificate-at-the-forced-geometric-bottleneck)
    repairs a checked one-step bottleneck and separates scalar-preserving
-   from moment-preserving proof policies. Its finite minimum uses one
-   randomized split state; a uniform dispersion bound remains open.
+   from nodewise moment-preserving proof policies. Its finite minimum uses
+   one randomized split state. A [block-terminal criterion](cloitre-conway/dispersion.md#block-terminal-means-remove-intermediate-scalar-constraints)
+   removes intermediate scalar constraints and repairs that threshold
+   with a deterministic tree; two complete trees attain the larger finite
+   optimum. Uniform terminal compensation and dispersion remain open.
 2. **The full recursive interface.** Determine what scale, position,
    profile, branch, and phase information suffices beyond the exact
    Fibonacci neighborhoods. Five digit labels or a candidate geometric
