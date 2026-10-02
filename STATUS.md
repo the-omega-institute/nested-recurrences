@@ -53,6 +53,9 @@ conjectures remain finite observations. No Lean formalization is included.
    A [finite-alphabet extension](cloitre-conway/exact-collars.md#a-finite-alphabet-propagates-beyond-the-zero-allocation-corridor)
    propagates wider bounded responses and zero allocation. Persistent
    high-member choices on two-cycles remain a profile-evolution obstacle.
+   At the first nonflat position, an
+   [even landing and one response](cloitre-conway/recursive-descent.md#an-even-landing-determines-a-frontier-phase)
+   determine the phase; generating that exterior landing locally remains open.
 3. **Inner dynamics between Fibonacci indices.** Control periods,
    landing times, and selected phases in the wider block interiors.
 

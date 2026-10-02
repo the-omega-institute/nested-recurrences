@@ -43,6 +43,7 @@ Fibonacci neighborhood, even when its support has holes.
 - [Seven terminal symbols and the full geometric selector code](#seven-terminal-symbols-and-the-full-geometric-selector-code)
 - [Growing actual defects and the remaining occupation problem](#growing-actual-defects-and-the-remaining-occupation-problem)
 - [Actual defect allocation and phase information](#actual-defect-allocation-and-phase-information)
+- [An even landing determines a frontier phase](#an-even-landing-determines-a-frontier-phase)
 - [Cap4 query profiles and the information they carry](#cap4-query-profiles-and-the-information-they-carry)
 
 ### Recursive windows with a parameter at every row
@@ -1346,6 +1347,143 @@ fifteen times; every other edge is a selected high member of a two-cycle
 with readouts{4,e}. Two actual contexts show that the local response word,
 cycle and depth parity alone do not determine that high-member choice.
 Long copy-run control and wider word construction remain open.
+
+### An even landing determines a frontier phase
+
+The finite-alphabet theorem leaves actual word construction open. At its
+first nonflat tail position, however, a specified even landing determines
+the missing phase with at most one further tail response. No entry clock
+or parent value is supplied to this decoder. Computing or certifying that
+landing still uses the actual exterior orbit.
+
+**Frontier hypotheses.** Let K>=27, A=F_(K-1), B=F_(K-2),
+U=V_(K-1), W=Z_(K-1), and9<=d<=43. Assume
+
+$$
+Q_{K-1}(U+j)=4\quad(1\le j<d),\qquad
+e=Q_{K-1}(U+d)>4. \tag{R.1}
+$$
+
+The [forty-seven-position alphabet theorem](exact-collars.md#a-finite-alphabet-propagates-beyond-the-zero-allocation-corridor)
+gives e in{7,8,9,10,13} and every needed response in{4,7,8,9,10,13}.
+Set v=V_K+d, N=F_K-v and
+
+$$
+\ell=A-U-d=N-B+4,\qquad u=\ell+e-4.
+$$
+
+The unique periodic cycle is(ell,u), with readouts C(ell)=B-e and
+C(u)=B-4. Both complementary children have cap0. Indeed the cap3 shelf
+confines periodic gaps to W<r<=U+d; all readouts there are4 except
+at r=U+d, where they are e. The upper shelf gives e<=d. Hence the
+partner has translated excess d+4-e in1..d-1 and readout4, and the
+two-cycle is the only possible cycle.
+
+**The even landing.** Let x_0=N-1 and x_(t+1)=N-C(x_t). Define
+
+$$
+\eta=\min\{2t:x_{2t}\le A\},\qquad X=x_\eta. \tag{R.2}
+$$
+
+Then eta exists, eta=O(K), and ell<=X<=A. To see the lower bound,
+every earlier even point exceeds A, where the golden lower bound gives
+C(x)>=B+1. Its odd successor is therefore below ell. Below ell,
+the cap3 sublevel and the global upper cap give C(y)<=B-4, so the
+next even point is at least ell. Fibonacci capture eventually reaches
+[A-v,A], giving existence and the logarithmic-in-N bound. A pair walk
+stopping when its even point is<=A constructs X using O(K) actual-C
+queries. The exact entry clock is unnecessary. Materialized indices,
+read-only exterior values and verification of the stopping event are
+separate resources.
+
+**One response determines the reset bit.** Define sigma as follows:
+
+| Even landing X | sigma |
+|---|---|
+| X=ell |1|
+| ell<X<A-W |0|
+| A-W<=X<=A | Read c=Q_(K-1)(A-X) in0..3, then q=Q_(K-1)(U+d+4-c); set sigma=1 exactly when q=4. |
+
+The read c is arithmetic from the cap0..3 widths. The only extra query
+is at translated position d+1..d+4, within the certified first47.
+The actual selected split and parent cap are
+
+$$
+\boxed{g=\ell,\ Q_K(v)=e\quad\Longleftrightarrow\quad
+       C(N-1)-\sigma\text{ is odd};}
+\qquad
+g=u,\ Q_K(v)=4\text{ otherwise}. \tag{R.3}
+$$
+
+**Proof of the reset rule.** If X=ell, the high member is at an even
+clock. If ell<X<A-W, the entire interval has readout B-4, so the next
+point is ell at an odd clock. In the third case the odd successor y has
+gap U+d+4-c. When q=4 it maps to ell at the next even clock. Otherwise
+q>4 and the next even point is ell+q-4. Since q<=13 and
+U+d-W>9, this lies strictly between ell and A-W, in the cap4 band.
+It therefore maps to ell at an odd clock. Once ell is reached, the
+orbit alternates on the stated two-cycle. The prescribed depth reaches
+that cycle by the foundations theorem, proving(R.3). QED.
+
+Only the depth parity p is needed. With z=Q_K(v+1), it is
+p=(F_(K-1)-z) mod2, and the Fibonacci parity depends on K mod3.
+Thus a supplied adjacent-depth parity and the reset bit determine the
+frontier value and split from the preceding word, without a supplied
+current parent cap. The reset bit is derived from the qualified even
+landing and at most one tail read; the landing is not yet generated
+arithmetically from these local inputs alone.
+
+**A five-pattern interaction changes channel with the phase.** Use the
+additive offsets w=(0,2,3,5,7), labeled000,100,010,001,101. Every row
+except000 is before the frontier and has cap4 and split A-v+w_i+4.
+With offsets measured from A-v, the two possible complete row outputs are
+
+| Selected frontier member | Parent caps | Child offsets | Scalar joint coefficient I_C | Index joint coefficient I_g |
+|---|---|---|---|---|
+| ell |(e,4,4,4,4)|(4,6,7,9,11)|4-e|0|
+| u |(4,4,4,4,4)|(e,6,7,9,11)|0|e-4|
+
+Here I_f=f(101)-f(100)-f(001)+f(000). Consequently
+
+$$
+\boxed{I_g-I_C=e-4} \tag{R.4}
+$$
+
+is independent of the selected phase. Write g(x) for the selected split
+at N+2x_1+3x_2+5x_3. The entire response g-C on these five patterns is
+phase independent:
+
+$$
+g(x)-C(N+2x_1+3x_2+5x_3)
+=-v+e+4+(6-e)x_1+(7-e)x_2+(9-e)x_3+(e-4)x_1x_3. \tag{R.5}
+$$
+
+The two-cycle identity C(ell)+C(u)=2B-e-4 gives the same conclusion
+directly. A phase switch can hide the joint interaction in scalar values
+while exposing it in the selected child indices. Canonical FIB feature
+interpretation additionally requires a common higher word at these roots;
+additive labels alone do not certify it. This is a one-edge theorem, not
+an unchanged canonical descendant context or a full word-evolution rule.
+
+With the preceding word, order/gaps and depth parity supplied, the declared
+two-periodic-option table has two different five-row outputs. Its exact
+fixed-length phase code is one bit, shared by the whole window. This counts
+the option-table contract, not independent inputs of an actual evaluator;
+the qualified landing derives the bit. Current parent values, if supplied,
+already distinguish these phases by(R.3).
+
+For the actual orders29/30 examples, eta=12 in both cases. Their landings
+have offsets-87 and-65 from A. The former is in the cap4 band; the latter
+has c=3 and queries translated position14, whose response is4. Thus sigma
+is0/1, despite both depths being odd. The scalar/index interactions are
+(-4,0) and(0,4), and their difference is4. The order29 root514119 has
+a verified common canonical higher word; order30 root831926 does not.
+Only the former is asserted to be a canonical FIB window.
+
+The [checker](verification/collar_check.py) records symbolic landing cases,
+actual first-even landings, literal five-row endpoints and interaction
+identities under `frontier_reset`. General nonfrontier copy runs, deriving
+the landing from local arithmetic and global dispersion remain open.
 
 ### Cap4 query profiles and the information they carry
 

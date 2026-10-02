@@ -1472,6 +1472,13 @@ uses the bounded complementary gaps and applies to every periodic phase.
 The [checker](verification/collar_check.py) records the literal seed,
 actual copy edges and parity witnesses under `finite_tail_alphabet`.
 Wider word construction, copy-run control and global convergence remain open.
+At the first nonflat tail position, the
+[even-landing decoder](recursive-descent.md#an-even-landing-determines-a-frontier-phase)
+derives the selected frontier cap without a supplied parent value or entry
+clock. It uses a qualified exterior landing and at most one tail response.
+The phase changes whether a five-pattern joint interaction appears in
+the scalar values or the selected indices; their difference is invariant.
+The exterior landing and general nonfrontier copy runs remain unresolved.
 
 ### Adjacent-gap parity closure and the entrance condition
 

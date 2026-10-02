@@ -1839,6 +1839,185 @@ def finite_tail_alphabet_audit(sequence, splits, fibonacci):
                 scope='The47-value actual order26 seed propagates its alphabet at all orders>=26; every higher-order periodic phase has zero second cap and at most six periodic vertices. Wider words and parent caps remain supplied outside generated regions. High-cap spines have at most15 strict translated-excess drops, so arbitrarily long high spines require long high-member two-cycle copy runs. Actual local-word/depth-parity collisions need entry clocks; these different-order examples are not independent-input lower bounds with full order supplied. Alphabet packing bounds are not exact actual costs. Seed26 internal allocation, copy-run control, wider profile construction and global dispersion/convergence remain outside this theorem.')
 
 
+def even_anchor_landing(sequence, root, anchor):
+    point = root - 1
+    pairs = 0
+    while point > anchor:
+        following = root - sequence[point]
+        point = root - sequence[following]
+        pairs += 1
+    return point, pairs
+
+
+def frontier_reset_from_landing(order, excess, landing_gap, response):
+    assert order >= 27 and 9 <= excess <= 43
+    previous_width = cap4_generated_width(order - 1)
+    frontier = higher_cap_width(order - 1, 3)
+    high_gap = previous_width + excess
+    assert 0 <= landing_gap <= high_gap and high_gap - frontier > 9
+    if landing_gap == high_gap:
+        return 1, None, None
+    if landing_gap > frontier:
+        return 0, None, None
+    landing_cap = generated_cap4_profile(order - 1, landing_gap)
+    assert 0 <= landing_cap <= 3
+    query_excess = excess + 4 - landing_cap
+    queried_cap = response(query_excess)
+    assert queried_cap in (4, 7, 8, 9, 10, 13)
+    return int(queried_cap == 4), query_excess, queried_cap
+
+
+def frontier_reset_audit(sequence, splits, fibonacci):
+    alphabet = (4, 7, 8, 9, 10, 13)
+    offsets = (0, 2, 3, 5, 7)
+    patterns = ((0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1), (1, 0, 1))
+    symbolic_cases = 0
+    symbolic_updates = 0
+    branch_counts = {'high_member_landing': 0, 'cap4_band_landing': 0, 'one_tail_query': 0}
+    for order in range(27, 61):
+        previous_width = cap4_generated_width(order - 1)
+        frontier = higher_cap_width(order - 1, 3)
+        for excess in range(9, 44):
+            gap = cap4_generated_width(order) + excess
+            high_gap = previous_width + excess
+            landing_gaps = sorted({0, negative_plateau_width(order - 1),
+                                   unit_defect_width(order - 1), higher_cap_width(order - 1, 2),
+                                   frontier, frontier + 1, high_gap - 1, high_gap})
+            for high_cap in alphabet[1:]:
+                if high_cap > excess:
+                    continue
+                for landing_gap in landing_gaps:
+                    query_choices = alphabet if landing_gap <= frontier else (4,)
+                    for queried_cap in query_choices:
+                        if landing_gap <= frontier:
+                            query_excess = excess + 4 - generated_cap4_profile(order - 1, landing_gap)
+                            if queried_cap > query_excess:
+                                continue
+                        reset, query_excess, response_cap = frontier_reset_from_landing(
+                            order, excess, landing_gap, lambda position: queried_cap)
+                        def profile(point):
+                            if point <= previous_width:
+                                return generated_cap4_profile(order - 1, point)
+                            if point < high_gap:
+                                return 4
+                            if point == high_gap:
+                                return high_cap
+                            assert query_excess is not None and point == previous_width + query_excess
+                            return response_cap
+                        for depth_parity in (0, 1):
+                            point = landing_gap
+                            for iteration in range(8 + depth_parity):
+                                point = gap - profile(point)
+                                symbolic_updates += 1
+                            selected_high = depth_parity != reset
+                            assert point == (gap - 4 if selected_high else gap - high_cap)
+                            selected_cap = profile(point)
+                            assert selected_cap == (high_cap if selected_high else 4)
+                            values = [-selected_cap, -4, -4, -4, -4]
+                            children = [gap - point, 6, 7, 9, 11]
+                            scalar_joint = values[4] - values[1] - values[3] + values[0]
+                            index_joint = children[4] - children[1] - children[3] + children[0]
+                            assert scalar_joint == (4 - high_cap if selected_high else 0)
+                            assert index_joint == (0 if selected_high else high_cap - 4)
+                            assert index_joint - scalar_joint == high_cap - 4
+                            for pattern, child, value in zip(patterns, children, values):
+                                first_digit, second_digit, third_digit = pattern
+                                polynomial = (-gap + high_cap + 4 + (6 - high_cap) * first_digit
+                                              + (7 - high_cap) * second_digit + (9 - high_cap) * third_digit
+                                              + (high_cap - 4) * first_digit * third_digit)
+                                assert child - value - gap == polynomial
+                            branch = ('high_member_landing' if landing_gap == high_gap
+                                      else 'cap4_band_landing' if landing_gap > frontier else 'one_tail_query')
+                            branch_counts[branch] += 1
+                            symbolic_cases += 1
+    actual_rows = []
+    literal_updates = 0
+    wall_positions = 0
+    actual_pattern_rows = 0
+    for order in range(27, 31):
+        anchor = fibonacci[order - 1]
+        first_cap = fibonacci[order - 2]
+        previous_width = cap4_generated_width(order - 1)
+        excess = next(position for position in range(1, 44)
+                      if first_cap - sequence[anchor - previous_width - position] > 4)
+        high_cap = first_cap - sequence[anchor - previous_width - excess]
+        gap = cap4_generated_width(order) + excess
+        root = fibonacci[order] - gap
+        high_member = anchor - previous_width - excess
+        threshold = first_cap - 4
+        for point in range(1, root):
+            if point < high_member:
+                assert sequence[point] <= threshold
+            elif point > high_member:
+                assert sequence[point] >= threshold
+            wall_positions += 1
+        trajectory, transient, period = full_orbit(sequence, root)
+        assert period == 2
+        landing, pairs = even_anchor_landing(sequence, root, anchor)
+        clock = 2 * pairs
+        assert trajectory[clock] == landing
+        assert all(point > anchor for point in trajectory[:clock:2])
+        assert high_member <= landing <= anchor
+        assert pairs <= capture_pair_budget(root - 1 - anchor)
+        response = lambda position: first_cap - sequence[anchor - previous_width - position]
+        reset, query_excess, queried_cap = frontier_reset_from_landing(
+            order, excess, anchor - landing, response)
+        first_hit = next(clock for clock, point in enumerate(trajectory) if sequence[point] == threshold)
+        assert first_hit % 2 == int(trajectory[first_hit] < high_member) == reset
+        depth_parity = sequence[root - 1] % 2
+        selected_high = depth_parity != reset
+        predicted_cap = high_cap if selected_high else 4
+        predicted_split = high_member if selected_high else high_member + high_cap - 4
+        assert splits[root] == predicted_split
+        assert anchor - sequence[root] == predicted_cap
+        values = [sequence[root + offset] for offset in offsets]
+        children = [splits[root + offset] - (anchor - gap) for offset in offsets]
+        assert [anchor - value for value in values] == [predicted_cap, 4, 4, 4, 4]
+        assert children == [4 if selected_high else high_cap, 6, 7, 9, 11]
+        scalar_joint = values[4] - values[1] - values[3] + values[0]
+        index_joint = children[4] - children[1] - children[3] + children[0]
+        assert index_joint - scalar_joint == high_cap - 4
+        for offset, child, value, pattern in zip(offsets, children, values, patterns):
+            current = root + offset
+            endpoint = current - 1
+            for iteration in range(sequence[current - 1]):
+                endpoint = current - sequence[endpoint]
+            assert endpoint == splits[current]
+            assert sequence[endpoint] + sequence[current - endpoint] == sequence[current]
+            literal_updates += sequence[current - 1]
+            first_digit, second_digit, third_digit = pattern
+            polynomial = (-gap + high_cap + 4 + (6 - high_cap) * first_digit
+                          + (7 - high_cap) * second_digit + (9 - high_cap) * third_digit
+                          + (high_cap - 4) * first_digit * third_digit)
+            assert splits[current] - value == polynomial
+            actual_pattern_rows += 1
+        higher = set(canonical_fibonacci_indices(root, fibonacci))
+        canonical = (min(higher) >= 7 and all(set(canonical_fibonacci_indices(root + offset, fibonacci))
+                     == higher | set(canonical_fibonacci_indices(offset, fibonacci)) for offset in offsets))
+        actual_rows.append(dict(order=order, root=root, frontier_excess=excess,
+                                first_high_cap=high_cap, even_landing_clock=clock,
+                                landing_offset_from_anchor=landing - anchor,
+                                reset_bit=reset, query_excess=query_excess, queried_cap=queried_cap,
+                                depth_parity=depth_parity, selected_cap=predicted_cap,
+                                child_offsets=children, scalar_joint=scalar_joint, index_joint=index_joint,
+                                joint_difference=index_joint - scalar_joint,
+                                common_canonical_higher_word=canonical))
+    assert [row['common_canonical_higher_word'] for row in actual_rows] == [False, False, True, False]
+    assert actual_rows[2]['even_landing_clock'] == actual_rows[3]['even_landing_clock'] == 12
+    assert actual_rows[2]['reset_bit'] == 0 and actual_rows[3]['reset_bit'] == 1
+    return dict(symbolic_orders_inclusive=[27, 60], frontier_positions_inclusive=[9, 43],
+                symbolic_landing_phase_cases=symbolic_cases, symbolic_map_updates=symbolic_updates,
+                symbolic_branch_counts=branch_counts,
+                actual_orders_inclusive=[27, 30], actual_frontiers=len(actual_rows),
+                actual_five_pattern_rows=actual_pattern_rows, literal_endpoint_updates=literal_updates,
+                global_threshold_wall_positions=wall_positions, actual_rows=actual_rows,
+                entry_rule='First even point at or below F_(K-1); no supplied entry clock/current parent cap. One arithmetic low-cap read and at most one tail query derive a reset bit.',
+                maximum_tail_lookahead=4,
+                joint_identity='I_selected_child_index-I_parent_scalar=e-4; the entire g-C five-pattern response is phase independent.',
+                conditional_periodic_option_count=2, conditional_fixed_width_phase_bits=1,
+                scope='A written frontier theorem follows from the existing alphabet, shelves, capture and depth-in-cycle results; no new infinite finite-base premise. Symbolic landing cases corroborate local phase and feature formulas, not exterior stopping qualification. Actual first-even landings and literal endpoints verify orders27..30. Only the order29 root is a certified canonical FIB window. The one-bit phase cost counts the declared two-periodic-option table; a qualified landing derives it and it is not an independent-input lower bound with full order supplied. Exterior landing construction uses actual global sequence queries; general nonfrontier copy runs, wider word evolution and global dispersion/convergence remain open.')
+
+
 def cap4_tail_query_domain(order, gap):
     frontier = higher_cap_width(order - 1, 3)
     excess = gap - frontier
@@ -2152,6 +2331,7 @@ def higher_projection_and_allocation_audit(sequence, splits, fibonacci):
                 cap4_generated_band=cap4_generated_band_audit(sequence, splits, fibonacci),
                 bounded_tail_shelf=bounded_tail_shelf_audit(sequence, splits, fibonacci),
                 finite_tail_alphabet=finite_tail_alphabet_audit(sequence, splits, fibonacci),
+                frontier_reset=frontier_reset_audit(sequence, splits, fibonacci),
                 scope='Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open.')
 
 

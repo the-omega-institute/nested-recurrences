@@ -94,6 +94,11 @@ propagates a wider bounded response alphabet and zero allocation from one
 seed. A high-cap spine has only finitely many strict position drops;
 eventual flattening would require control of persistent high-member choices
 on two-cycles. A local depth-parity shortcut fails in actual examples.
+The [frontier reset rule](recursive-descent.md#an-even-landing-determines-a-frontier-phase)
+replaces the full entry clock by a bit derived from a qualified even landing
+and one tail response. The same phase bit transfers a five-pattern joint
+interaction between scalar values and child indices. Generating the exterior
+landing locally remains open.
 
 The local interface theorems state exactly which context is supplied.
 For a bounded natural-cap domain, the
