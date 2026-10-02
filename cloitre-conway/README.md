@@ -126,6 +126,11 @@ only by four or five positions; this generates permanent holes beyond
 the initial flat band and reduces the shared five-row response word.
 A periodic-only update of the actual seed still permits a three-cycle,
 so constructing its exterior clock remains a distinct task.
+For the separate asymptotic route, an
+[exact two-generation certificate](dispersion.md#a-two-generation-certificate-at-the-forced-geometric-bottleneck)
+repairs a full-geometric one-step bottleneck using a moment policy.
+One randomized child split is necessary and sufficient in that finite
+contract; the uniform inequality and actual occupation law remain open.
 
 The local interface theorems state exactly which context is supplied.
 For a bounded natural-cap domain, the
