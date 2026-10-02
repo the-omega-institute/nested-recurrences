@@ -371,16 +371,20 @@ their scoped arithmetic data; the wider Cloitre profile problem stays open.
 
 The [actual upper shelf](../cloitre-conway/exact-collars.md#a-bounded-upper-shelf-and-a-wider-zero-allocation-corridor)
 also bounds a fixed D-position Cloitre tail by height max(4,D) at K>=27.
-The first eight entries are generated; the remaining response packing uses
-O(max(0,D-8) log(D+1)) bits independently of the supplied order.
+The actual first thirteen entries are generated; the remaining response
+packing uses O(max(0,D-13) log(D+1)) bits independently of the supplied
+order. At K>=31 the generated prefix extends through position16.
 It derives zero allocation in a wider corridor, but still requires the
 tail responses and parent value. Campbell's formula supplies its arithmetic
 data directly; this bounded response envelope does not yet do so for C.
 In Cloitre's first thirteen translated-tail positions the actual alphabet
 closes to{4,8,9}. Its five-response word has an8-bit full-envelope code
-and at most three periodic points, but the words' dependence on the order
-remains to be proved. A finite local interface is therefore available
-without assuming that it supplies Campbell's explicit arithmetic evolution.
+and at most three periodic points. Four finite boundary words and a
+propagated flat band make this actual word explicit in the order; its
+decoder needs no residual word or cap labels with order and gaps supplied.
+The wider response problem remains open. This scoped arithmetic evolution
+is now derived for both families, with their different scale rules and
+the autonomous FIB memory requirements kept separate.
 
 The shared [selector checker](../cloitre-conway/verification/selector_payload_check.py)
 independently evaluates Campbell's first32 terms by literal iteration and

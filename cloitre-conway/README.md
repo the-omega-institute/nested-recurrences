@@ -85,9 +85,10 @@ region. A [canonical family](exact-collars.md#a-canonical-cap4-window-reaches-th
 shows why even its first edge can need a higher Fibonacci digit in the output.
 The [bounded-tail theorem](exact-collars.md#a-bounded-upper-shelf-and-a-wider-zero-allocation-corridor)
 bounds the remaining responses near that band and derives zero allocation
-in a wider region, including higher caps. Exact tail profiles remain open.
+in a wider region, including higher caps.
 Its first thirteen translated-tail positions have the proved alphabet
-{4,8,9}; one five-response word serves all rows above the generated part.
+{4,8,9}; the word is explicit, so order and gaps suffice for their descent.
+Profiles beyond this arithmetic region remain open.
 
 The local interface theorems state exactly which context is supplied.
 For a bounded natural-cap domain, the

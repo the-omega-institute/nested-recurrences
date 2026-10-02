@@ -1329,8 +1329,11 @@ construction and wider allocations remain open. The K25/26 boundary layers
 use the earlier height9 bound.
 In the first thirteen tail positions a further actual induction closes
 the response alphabet to{4,8,9}. One five-trit word serves all rows, and
-the periodic predecessor takes at most three reads. The word evolution
-is still unknown; this is scoped actual closure down to the order26 base.
+the periodic predecessor takes at most three reads. Four finite boundary
+words and a propagated flat tail make this word explicit in the order;
+the actual thirteen-position interface supplies no residual word or cap
+inputs and closes down to26. The generated band reaches16 positions at
+order30 and later. Wider word evolution and the full interface remain open.
 
 ### Cap4 query profiles and the information they carry
 

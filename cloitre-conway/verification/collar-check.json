@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "3c48382b0c8a01ab3aac30adc3f3140a99a72cfaa194aef41e07aeeda28e5091",
+  "source_sha256": "3e7d23d6a5bdac4210ca3b0e0c16b5434be45b5c513906c9f4b8e0e0775c6d2c",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -5429,7 +5429,7 @@
           ],
           "base_tail_values": 153,
           "base_tail_sha256": "b31eda0623a04cf285ba6a230b5056e18bfab7aeb59cb5d0f111bae672b7e0fa",
-          "literal_endpoint_updates": 7321371,
+          "literal_endpoint_updates": 14613200,
           "shelf_formula": "4<=Q_K(v)<=max(9,v-(4K-19)) for K>=24; sharper max(4,v-(4K-19)) for K>=26",
           "strengthened_base_order": 26,
           "strengthened_base_gap_interval_inclusive": [
@@ -5539,7 +5539,33 @@
               4,
               5
             ],
-            "scope": "Five additional order26 values start the actual ternary-alphabet induction. Every actual tail1..13 at K>=26 has caps4,8,9; above26 all periodic vertices lie at excesses d,d-4,d-5 and the predecessor needs at most three response reads. One five-trit word serves all rows; eight bits is exact for the complete relaxed option-table contract, not actual independent inputs or selected-validity certificates. The actual word evolution and global closure remain open."
+            "terminal_flat_seed_order": 30,
+            "terminal_flat_seed_gap_interval_inclusive": [
+              110,
+              117
+            ],
+            "terminal_flat_seed_values": [
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4
+            ],
+            "eventual_generated_band": "Q_K(V_K+j)=4 for1<=j<=16, K>=30; first spine keeps j above finite order30",
+            "explicit_word_boundary_orders_inclusive": [
+              26,
+              29
+            ],
+            "explicit_word_late_orders_inclusive": [
+              31,
+              120
+            ],
+            "explicit_word_late_symbolic_states": 1170,
+            "actual_residual_word_or_parent_cap_inputs": 0,
+            "scope": "Five order26 values start the actual ternary-alphabet induction; fifteen order27..29 entries give its boundary words. An eight-value order30 flat seed propagates the first16 tail entries. The actual thirteen-position word and selector are therefore arithmetic in the order and excess, with zero residual word/cap/phase inputs above finite order26. Eight bits is exact only for the larger complete relaxed option-table contract. The general wider tail response construction, full minimum and global closure remain open."
           },
           "lower_child_bound": "Q_l(q)<=max(0,q-12), l>=23",
           "lower_bound_positions": 300106,
@@ -5844,21 +5870,48 @@
             },
             {
               "tail_positions": 9,
-              "relaxed_profile_words": 6,
-              "packed_bits": 3
+              "relaxed_profile_words": 1,
+              "packed_bits": 0
             },
             {
               "tail_positions": 12,
-              "relaxed_profile_words": 3024,
-              "packed_bits": 12
+              "relaxed_profile_words": 1,
+              "packed_bits": 0
             },
             {
               "tail_positions": 24,
-              "relaxed_profile_words": 425757851430912000,
-              "packed_bits": 59
+              "relaxed_profile_words": 14079294028800,
+              "packed_bits": 44
             }
           ],
-          "scope": "A153-value order24 shelf premise propagates height9; eight order26 cap4 values sharpen the shelf to height4 and generate eight further entries. At K>=27 the moving tail has height max(4,D), at most max(0,D-8) unknown profile entries and at most max(4,D)-3 periodic vertices. Actual zero-allocation selection is derived on its scoped corridor from the parent cap and shared lower responses; residual profiles and initial tail caps remain supplied. Packing counts relaxed response words, not actual independent inputs or an optimal whole-recursion code. High-cap allocations and global dispersion/convergence remain open."
+          "late_relaxed_tail_profile_capacities": [
+            {
+              "tail_positions": 1,
+              "relaxed_profile_words": 1,
+              "packed_bits": 0
+            },
+            {
+              "tail_positions": 5,
+              "relaxed_profile_words": 1,
+              "packed_bits": 0
+            },
+            {
+              "tail_positions": 9,
+              "relaxed_profile_words": 1,
+              "packed_bits": 0
+            },
+            {
+              "tail_positions": 12,
+              "relaxed_profile_words": 1,
+              "packed_bits": 0
+            },
+            {
+              "tail_positions": 24,
+              "relaxed_profile_words": 8204716800,
+              "packed_bits": 33
+            }
+          ],
+          "scope": "A153-value order24 shelf premise propagates height9; thirteen order26 values give height4, eight generated positions and a ternary tail. Fifteen order27..29 entries and an eight-value order30 flat seed supply the actual thirteen-position word explicitly and extend the generated band to16. At K>=27 only positions above13 remain unknown; at K>=31 only positions above16 remain unknown. Their height is max(4,D), with parent cap still supplied outside the generated profiles. Packing counts relaxed response words, not actual independent inputs or an optimal whole-recursion code. High-cap allocations and global dispersion/convergence remain open."
         },
         "scope": "Direct cap2/3 projection and cap4 single-defect closure/periodic seed follow from existing higher-cap shelves. A supplied actual second-child cap determines the periodic predecessor without separate entrance/depth/cycle labels; its admissible range is0..e-4 at K>=22. Exact phase-code size counts scalar-valid allocation options, not independent-input lower bounds for actual C. Actual310 five-cycle and17629 branching each realize two options. Full profile construction, wide-block allocation and global dispersion remain open."
       },

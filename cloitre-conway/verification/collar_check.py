@@ -1230,6 +1230,22 @@ def three_symbol_tail_predecessor(excess, parent_cap, word):
     return None
 
 
+def actual_thirteen_tail_word(order):
+    assert order >= 26
+    boundary = {26: (8, 4, 9, 9, 8), 27: (8, 4, 4, 9, 8),
+                28: (4, 4, 4, 4, 8), 29: (4, 4, 4, 4, 8)}
+    return boundary.get(order, (4, 4, 4, 4, 4))
+
+
+def actual_thirteen_tail_selector(order, excess):
+    assert order >= 27 and 1 <= excess <= 13
+    parent_cap = 4 if excess <= 8 else actual_thirteen_tail_word(order)[excess - 9]
+    decoded = three_symbol_tail_predecessor(excess, parent_cap, actual_thirteen_tail_word(order - 1))
+    assert decoded is not None
+    selected_excess, period = decoded
+    return cap4_generated_width(order - 1) + selected_excess, parent_cap, period
+
+
 def bounded_tail_shelf_audit(sequence, splits, fibonacci):
     base_order = 24
     base_width = cap4_generated_width(base_order)
@@ -1429,7 +1445,17 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
         word = [fibonacci[order - 1] - sequence[fibonacci[order] - width - excess]
                 for excess in range(9, 14)]
         assert set(word) <= {4, 8, 9}
+        assert tuple(word) == actual_thirteen_tail_word(order)
         ternary_rows.append(dict(order=order, response_word=word))
+        if 27 <= order <= 29:
+            for excess in range(9, 14):
+                root = fibonacci[order] - width - excess
+                endpoint = root - 1
+                for iteration in range(sequence[root - 1]):
+                    endpoint = root - sequence[endpoint]
+                assert endpoint == splits[root]
+                assert sequence[endpoint] + sequence[root - endpoint] == sequence[root]
+                literal_updates += sequence[root - 1]
         if order == 26:
             continue
         previous_word = [fibonacci[order - 2] - sequence[
@@ -1443,6 +1469,8 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
             decoded = three_symbol_tail_predecessor(excess, parent_cap, previous_word)
             assert decoded is not None
             selected_excess, period = decoded
+            assert actual_thirteen_tail_selector(order, excess) == (
+                cap4_generated_width(order - 1) + selected_excess, parent_cap, period)
             assert splits[root] == fibonacci[order - 1] - cap4_generated_width(order - 1) - selected_excess
             profile = [fibonacci[order - 2] - sequence[fibonacci[order - 1] - point]
                        for point in range(gap + 1)]
@@ -1477,6 +1505,24 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
                 inherited_window_states += 5
                 if target_order > 26:
                     roots = [splits[root] for root in roots]
+    terminal_flat_values = []
+    for excess in range(9, 17):
+        root = fibonacci[30] - cap4_generated_width(30) - excess
+        assert fibonacci[29] - sequence[root] == 4
+        endpoint = root - 1
+        for iteration in range(sequence[root - 1]):
+            endpoint = root - sequence[endpoint]
+        assert endpoint == splits[root]
+        assert sequence[endpoint] + sequence[root - endpoint] == sequence[root]
+        terminal_flat_values.append(4)
+        literal_updates += sequence[root - 1]
+    late_arithmetic_states = 0
+    for order in range(31, 121):
+        assert actual_thirteen_tail_word(order) == (4, 4, 4, 4, 4)
+        for excess in range(1, 14):
+            assert actual_thirteen_tail_selector(order, excess) == (
+                cap4_generated_width(order - 1) + excess, 4, 1)
+            late_arithmetic_states += 1
     window_order = 26
     window_gap = 97
     window_base = fibonacci[window_order] - window_gap
@@ -1568,12 +1614,18 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
         if order > 26:
             current_roots = [splits[root] for root in current_roots]
     capacities = []
+    late_capacities = []
     for width in (1, 5, 9, 12, 24):
         capacity = 1
-        for position in range(9, width + 1):
+        for position in range(14, width + 1):
             capacity *= position - 3
         capacities.append(dict(tail_positions=width, relaxed_profile_words=capacity,
                                packed_bits=(capacity - 1).bit_length()))
+        late_capacity = 1
+        for position in range(17, width + 1):
+            late_capacity *= position - 3
+        late_capacities.append(dict(tail_positions=width, relaxed_profile_words=late_capacity,
+                                    packed_bits=(late_capacity - 1).bit_length()))
     return dict(base_order=base_order, base_tail_gap_interval_inclusive=[base_width + 1, 3 * base_width - 1],
                 base_tail_values=len(base_values), base_tail_sha256=hashlib.sha256(
                     ','.join(map(str, base_values)).encode('ascii')).hexdigest(),
@@ -1593,7 +1645,15 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
                                   actual_first_spine_states=ternary_spine_states,
                                   inherited_five_pattern_states=inherited_window_states,
                                   scalar_interaction_alphabet=[-5, -4, -1, 0, 1, 4, 5],
-                                  scope='Five additional order26 values start the actual ternary-alphabet induction. Every actual tail1..13 at K>=26 has caps4,8,9; above26 all periodic vertices lie at excesses d,d-4,d-5 and the predecessor needs at most three response reads. One five-trit word serves all rows; eight bits is exact for the complete relaxed option-table contract, not actual independent inputs or selected-validity certificates. The actual word evolution and global closure remain open.'),
+                                  terminal_flat_seed_order=30,
+                                  terminal_flat_seed_gap_interval_inclusive=[110, 117],
+                                  terminal_flat_seed_values=terminal_flat_values,
+                                  eventual_generated_band='Q_K(V_K+j)=4 for1<=j<=16, K>=30; first spine keeps j above finite order30',
+                                  explicit_word_boundary_orders_inclusive=[26, 29],
+                                  explicit_word_late_orders_inclusive=[31, 120],
+                                  explicit_word_late_symbolic_states=late_arithmetic_states,
+                                  actual_residual_word_or_parent_cap_inputs=0,
+                                  scope='Five order26 values start the actual ternary-alphabet induction; fifteen order27..29 entries give its boundary words. An eight-value order30 flat seed propagates the first16 tail entries. The actual thirteen-position word and selector are therefore arithmetic in the order and excess, with zero residual word/cap/phase inputs above finite order26. Eight bits is exact only for the larger complete relaxed option-table contract. The general wider tail response construction, full minimum and global closure remain open.'),
                 lower_child_bound='Q_l(q)<=max(0,q-12), l>=23',
                 lower_bound_positions=lower_bound_positions,
                 symbolic_inequality_orders_inclusive=[25, 100], symbolic_inequalities=symbolic_inequalities,
@@ -1619,7 +1679,8 @@ def bounded_tail_shelf_audit(sequence, splits, fibonacci):
                                                   selected_child_offsets=late_children,
                                                   inherited_first_spine=late_spine),
                 relaxed_tail_profile_capacities=capacities,
-                scope='A153-value order24 shelf premise propagates height9; eight order26 cap4 values sharpen the shelf to height4 and generate eight further entries. At K>=27 the moving tail has height max(4,D), at most max(0,D-8) unknown profile entries and at most max(4,D)-3 periodic vertices. Actual zero-allocation selection is derived on its scoped corridor from the parent cap and shared lower responses; residual profiles and initial tail caps remain supplied. Packing counts relaxed response words, not actual independent inputs or an optimal whole-recursion code. High-cap allocations and global dispersion/convergence remain open.')
+                late_relaxed_tail_profile_capacities=late_capacities,
+                scope='A153-value order24 shelf premise propagates height9; thirteen order26 values give height4, eight generated positions and a ternary tail. Fifteen order27..29 entries and an eight-value order30 flat seed supply the actual thirteen-position word explicitly and extend the generated band to16. At K>=27 only positions above13 remain unknown; at K>=31 only positions above16 remain unknown. Their height is max(4,D), with parent cap still supplied outside the generated profiles. Packing counts relaxed response words, not actual independent inputs or an optimal whole-recursion code. High-cap allocations and global dispersion/convergence remain open.')
 
 
 def cap4_tail_query_domain(order, gap):
