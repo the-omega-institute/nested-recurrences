@@ -390,7 +390,8 @@ The [finite-alphabet Cloitre tail](../cloitre-conway/exact-collars.md#a-finite-a
 has at most six periodic vertices and zero second-cap allocation through
 forty-seven translated positions, but its wider response word remains an
 input. High-cap spines have at most fifteen strict excess drops; all other
-edges copy that excess by selecting the high member of a{4,e} two-cycle.
+edges copy that excess. A{4,e} two-cycle additionally requires its
+successor's response to be4; zero drop alone does not certify it.
 Actual orders29/30 have the same local tail word, cycle and depth parity,
 yet select different members because their entry clocks differ. Campbell's
 complete ternary templates determine its entry and parity data; a cycle
@@ -431,6 +432,12 @@ forces resets or adjacent-row migrations, with additional reset entry
 channels. An actual high-cap duplicate sustains a hole-free copy.
 Campbell's derived entry templates avoid supplying these events as inputs;
 controlling their recurrence in Cloitre's wider words remains open.
+The [binary-prefix refinement](../cloitre-conway/recursive-descent.md#binary-prefixes-close-with-two-response-states)
+derives period at most two when the responses are restricted to{4,8}.
+Its actual first nineteen tail positions now have arithmetic values and
+selected splits down to a finite base, paralleling Campbell's derived
+entry data in a restricted domain. Nine shared map bits and five periodic
+output bits describe relaxed wider binary words, not actual input minima.
 
 The shared [selector checker](../cloitre-conway/verification/selector_payload_check.py)
 independently evaluates Campbell's first32 terms by literal iteration and
