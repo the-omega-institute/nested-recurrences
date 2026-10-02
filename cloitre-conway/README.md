@@ -89,6 +89,11 @@ in a wider region, including higher caps.
 Its first thirteen translated-tail positions have the proved alphabet
 {4,8,9}; the word is explicit, so order and gaps suffice for their descent.
 Profiles beyond this arithmetic region remain open.
+The [finite-alphabet extension](exact-collars.md#a-finite-alphabet-propagates-beyond-the-zero-allocation-corridor)
+propagates a wider bounded response alphabet and zero allocation from one
+seed. A high-cap spine has only finitely many strict position drops;
+eventual flattening would require control of persistent high-member choices
+on two-cycles. A local depth-parity shortcut fails in actual examples.
 
 The local interface theorems state exactly which context is supplied.
 For a bounded natural-cap domain, the

@@ -50,6 +50,9 @@ conjectures remain finite observations. No Lean formalization is included.
    A [new upper shelf](cloitre-conway/exact-collars.md#a-bounded-upper-shelf-and-a-wider-zero-allocation-corridor)
    bounds the missing responses and derives zero child allocation in a
    wider neighborhood; it does not construct the exact profiles there.
+   A [finite-alphabet extension](cloitre-conway/exact-collars.md#a-finite-alphabet-propagates-beyond-the-zero-allocation-corridor)
+   propagates wider bounded responses and zero allocation. Persistent
+   high-member choices on two-cycles remain a profile-evolution obstacle.
 3. **Inner dynamics between Fibonacci indices.** Control periods,
    landing times, and selected phases in the wider block interiors.
 
