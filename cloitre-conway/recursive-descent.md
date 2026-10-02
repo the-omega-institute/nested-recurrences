@@ -1503,7 +1503,7 @@ $$
 R(j)=Q_{K-1}(U+j),\qquad R(0)=4.
 $$
 
-Only the following six responses define the map H_d on A:
+Only the following six responses define H_d on the response alphabet:
 
 $$
 H_d(a)=R(d+4-a),\qquad
@@ -1512,7 +1512,8 @@ $$
 
 Every query position lies in 0..43, so the existing
 [forty-seven-position alphabet theorem](exact-collars.md#a-finite-alphabet-propagates-beyond-the-zero-allocation-corridor)
-makes H_d a map A -> A. In gap coordinates r=A-x, the inner map
+makes H_d a map from the response alphabet to itself. In gap coordinates
+r=A-x, the inner map
 is r -> v-Q_(K-1)(r). The injection
 
 $$
@@ -1521,7 +1522,8 @@ $$
 
 conjugates H_d to that map on these six points. The cap3 shelf confines
 every periodic gap to the generated cap4 band or certified translated
-tail, and both its readout and its predecessor's readout belong to A.
+tail, and both its readout and its predecessor's readout belong to the
+response alphabet.
 The latter equals v-r. Thus (S.2) gives **all** periodic vertices and
 cycles, including their order, not merely a bound on their number.
 The complementary cap is zero at every such vertex. A periodic response
@@ -1559,11 +1561,13 @@ c=Q_{K-1}(A-X),\qquad s=Q_{K-1}(v-c). \tag{S.5}
 $$
 
 The first read is arithmetic if A-X<=U; otherwise it is one tail read
-at position at most d. Here c lies in {0,1,2,3} union A. The second
+at position at most d. Here c lies in {0,1,2,3,4,7,8,9,10,13}. The second
 query has translated position d+4-c in 0..47 and therefore s belongs
-to A. Two inner steps from X reach A-v+s at the even clock eta+2.
+to the response alphabet. Two inner steps from X reach A-v+s at the
+even clock eta+2.
 This proves the decoder with at most two landing-response queries.
-For c in A the second response is already an edge of the six-read stencil.
+For c in the response alphabet, the second response is already an edge
+of the six-read stencil.
 For c<=3 it needs at most four-position lookahead.
 
 Let D=C(N-1). Its exact value is unnecessary after the response orbit
@@ -1600,8 +1604,9 @@ H = (8,8,9,4,4,9).
 
 It has the cycle 8 -> 9 -> 4 -> 8. The first even landing is A-123
 at clock14, and (S.5) gives s=8. The qualified clock in (S.6)
-selects a_D=9, with parent cap4. Omitting eta from this calculation
-changes the selected output. This is a finite actual witness, checked
+selects a_D=9 at depth1346261, with split1346136 and parent cap4.
+Omitting eta selects state8 instead, with a different split and cap9.
+This is a finite actual witness, checked
 by independently agreeing full-orbit and Brent prefixes and literal
 prescribed iteration. It is not an infinite three-cycle family or an
 independent-input lower bound for actual C.
@@ -1632,7 +1637,8 @@ lower bound:
    them uniquely. This bound is sharp in the relaxed response-word class:
    take K>=31, d=33, keep the generated first16 tail positions at4,
    and choose every response at positions17..33 appearing in(S.7) freely
-   in A. These choices obey the sharper shelf since each position is>=17.
+   in the response alphabet. These choices obey the sharper shelf since
+   each position is>=17.
 2. Given the shared word, let P_i be the periodic vertices of H_(d-w_i).
    The complete independent-row periodic-output contract has exactly
    M=product_i |P_i| options and needs ceil(log_2 M) bits. Always
@@ -1640,12 +1646,13 @@ lower bound:
    word: the following one coloring of S supplies all five maps as
    permutations, so every row has six periodic vertices.
 
-| j in increasing order |0|2|3|4|5|6|7|8|9|10|11|12|13|14|16|
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| R(33-j) |7|8|9|13|4|10|7|13|8|10|9|4|8|7|13|
+```text
+j       = (0,2,3,4,5,6,7,8,9,10,11,12,13,14,16)
+R(33-j) = (7,8,9,13,4,10,7,13,8,10,9,4,8,7,13).
+```
 
 Each row's positions w_i+{0,3,4,5,6,9} have all six different colors.
-Its map is therefore a permutation on A. With all distinct physical
+Its map is therefore a permutation on the response alphabet. With all distinct physical
 rows allowed independently, all6^5 output choices exist in this contract,
 and log_2(6^5) lies strictly between12 and13. Supplying a qualified
 landing and the needed clock residue derives the actual choice instead;
