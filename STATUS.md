@@ -82,6 +82,11 @@ conjectures remain finite observations. No Lean formalization is included.
    additional noncontinuous flat positions. Their shared-word bounds
    sharpen the local interface; periodic qualification alone still
    permits a three-cycle and leaves the exterior clock problem open.
+   The [first exterior pair](cloitre-conway/recursive-descent.md#the-exterior-replay-reaches-an-unbounded-profile-after-two-steps)
+   is now generated from local responses at two orders. Its next lookup
+   enters an unbounded-cap block interior while retaining the shared
+   five-row stencil. Constructing those interior readouts and the rest
+   of the clock remains necessary for this replay route.
 3. **Inner dynamics between Fibonacci indices.** Control periods,
    landing times, and selected phases in the wider block interiors.
 

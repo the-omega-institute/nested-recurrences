@@ -2816,7 +2816,134 @@ def ternary_support_audit(sequence=None, splits=None):
                 relaxed_next_word=relaxed_next_word,
                 reachable_relaxed_three_cycle=dict(order=36, excess=38, map_values=[8, 9, 4],
                                                    cycle=[4, 8, 9], period=3),
+                exterior_gateway=exterior_gateway_audit(sequence, splits, fibonacci),
                 scope='Twenty-eight independently regenerated/literal scalar premises extend actual alphabet closure to{4,8,9}, first24 flat responses, permanent holes27/28/32 and binary prefix28 for every order>=34. Spatial4/5 support cones and cap-specific strict-drop bounds are infinite deductions. Full-word28-bit packing and exact five-row16/8-bit contracts describe relaxed support-compatible words, not actual input minima. A periodic-only update of the actual order34 seed permits a three-cycle at order36, but is not claimed to be the actual selected recurrence. Exterior landing and modulo3 clock construction, generic copy frequency and additive occupation/global dispersion remain open.')
+
+
+def exterior_gateway_audit(sequence, splits, fibonacci):
+    alphabet = (4, 7, 8, 9, 10, 13)
+    offsets = (0, 2, 3, 5, 7)
+    stencil = sorted({offset + letter - 4 for offset in offsets for letter in alphabet})
+    ternary_stencil = sorted({offset + letter - 4 for offset in offsets for letter in (4, 8, 9)})
+    assert stencil == [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16]
+    assert ternary_stencil == [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    symbolic_fibonacci = [0, 1]
+    while len(symbolic_fibonacci) <= 120:
+        symbolic_fibonacci.append(sum(symbolic_fibonacci[-2:]))
+    symbolic_cases = 0
+    for order in range(28, 121):
+        anchor, lower = symbolic_fibonacci[order - 1], symbolic_fibonacci[order - 2]
+        assert 24 * (4 * order + 20) <= lower
+        if order >= 29:
+            assert 2 * lower - 4 * order - 20 >= 349525
+            assert 1327 * lower >= 182360 * (4 * order + 20)
+        for excess in range(9, 44):
+            gap = cap4_generated_width(order) + excess
+            for adjacent_cap, first_cap in product(alphabet, repeat=2):
+                lower_excess = excess + 8 - adjacent_cap
+                first = lower - gap + adjacent_cap
+                second = 2 * lower - gap + first_cap
+                assert 4 <= lower_excess <= 47
+                assert first == lower - cap4_generated_width(order - 2) - lower_excess
+                assert second == (symbolic_fibonacci[order] - gap
+                                  - (symbolic_fibonacci[order - 3] - first_cap))
+                assert 3 * (second - anchor) >= lower
+                assert second - anchor < symbolic_fibonacci[order] - second
+                if order >= 29:
+                    assert 20 * (4559 * second - 13459 * symbolic_fibonacci[order - 3]) >= 13459 * lower
+                symbolic_cases += 1
+    actual_rows = 0
+    actual_windows = 0
+    distinct_query_counts = set()
+    minimum_cap_ratio = None
+    canonical_rows = None
+    for order in range(28, 35):
+        anchor, lower = fibonacci[order - 1], fibonacci[order - 2]
+        for excess in range(16, 44):
+            gap = cap4_generated_width(order) + excess
+            root = fibonacci[order] - gap
+            base = 2 * lower - gap
+            rows = []
+            for offset in offsets:
+                index = root + offset
+                row_gap = gap - offset
+                adjacent_cap = anchor - sequence[index - 1]
+                first = index - sequence[index - 1]
+                lower_excess = excess - offset + 8 - adjacent_cap
+                first_cap = fibonacci[order - 3] - sequence[first]
+                second = index - sequence[first]
+                assert adjacent_cap in alphabet and first_cap in alphabet
+                assert first == lower - row_gap + adjacent_cap
+                assert 4 <= lower_excess <= 47
+                assert first == lower - cap4_generated_width(order - 2) - lower_excess
+                assert lower_excess in {excess + 4 - position for position in stencil}
+                assert second == base + offset + first_cap
+                assert second in {base + 4 + position for position in stencil}
+                assert 3 * (second - anchor) >= lower
+                natural_cap = second - fibonacci[order - 3] - sequence[second]
+                if order >= 29:
+                    assert 13459 * sequence[second] <= 8900 * second
+                    assert 20 * natural_cap >= lower
+                    ratio = Fraction(natural_cap, lower)
+                    minimum_cap_ratio = ratio if minimum_cap_ratio is None else min(minimum_cap_ratio, ratio)
+                rows.append(dict(offset=offset, index=index, adjacent_cap=adjacent_cap,
+                                 first_iterate=first, lower_excess=lower_excess, first_cap=first_cap,
+                                 second_iterate=second, gateway_value=sequence[second],
+                                 gateway_natural_cap=natural_cap,
+                                 third_iterate=index - sequence[second]))
+                actual_rows += 1
+            distinct_query_counts.add(len({row['second_iterate'] for row in rows}))
+            actual_windows += 1
+            if order == 32 and excess == 35:
+                canonical_rows = rows
+    assert actual_rows == 980 and actual_windows == 196
+    root = canonical_rows[0]['index']
+    higher = {13, 15, 17, 19, 21, 23, 25, 27, 29, 31}
+    assert all(set(canonical_fibonacci_indices(row['index'], fibonacci)) == (
+        higher | set(canonical_fibonacci_indices(row['offset'], fibonacci))) for row in canonical_rows)
+    assert [row['first_cap'] for row in canonical_rows] == [8] * 5
+    gateways = [row['second_iterate'] for row in canonical_rows]
+    assert gateways == [1663944, 1663946, 1663947, 1663949, 1663951]
+    values = [row['gateway_value'] for row in canonical_rows]
+    assert values == [1095358, 1095294, 1095357, 1095552, 1095322]
+    joint = values[4] - values[1] - values[3] + values[0]
+    assert joint == -166
+    root_values = [sequence[row['index']] for row in canonical_rows]
+    assert root_values[4] - root_values[1] - root_values[3] + root_values[0] == 0
+    assert gateways[4] - gateways[1] - gateways[3] + gateways[0] == 0
+    gateway_digits = [list(canonical_fibonacci_indices(index, fibonacci)) for index in gateways]
+    gateway_higher = {13, 15, 17, 19, 21, 23, 25, 27, 31}
+    low_digits = [{6}, {6, 3}, {6, 4}, {7}, {7, 3}]
+    assert all(set(digits) == gateway_higher | low for digits, low in zip(gateway_digits, low_digits))
+    literal_updates = 0
+    for index in gateways:
+        endpoint = index - 1
+        for iteration in range(sequence[index - 1]):
+            endpoint = index - sequence[endpoint]
+        assert endpoint == splits[index]
+        assert sequence[endpoint] + sequence[index - endpoint] == sequence[index]
+        literal_updates += sequence[index - 1]
+    perturbed = gateways[0]
+    assert g_closed(perturbed) < sequence[perturbed] + 1
+    assert 13459 * (sequence[perturbed] + 1) <= 8900 * perturbed
+    assert sequence[perturbed] + 1 <= perturbed - fibonacci[29]
+    assert all(not (fibonacci[order] - cap4_generated_width(order) - 47 <= perturbed <= fibonacci[order])
+               for order in range(26, 33))
+    return dict(symbolic_orders_inclusive=[28, 120], symbolic_first_pair_cases=symbolic_cases,
+                actual_orders_inclusive=[28, 34], actual_five_windows=actual_windows,
+                actual_first_pair_rows=actual_rows, distinct_gateway_queries_per_window=sorted(distinct_query_counts),
+                minimum_actual_natural_cap_over_F_order_minus_two=str(minimum_cap_ratio),
+                full_stencil=stencil, ternary_stencil=ternary_stencil,
+                canonical_root=root, canonical_higher_indices=sorted(higher), canonical_rows=canonical_rows,
+                gateway_digits=gateway_digits, gateway_common_higher_indices=sorted(gateway_higher),
+                gateway_low_digit_sets=[sorted(low) for low in low_digits],
+                root_scalar_joint=0, gateway_index_joint=0, gateway_readout_joint=joint,
+                additive_prediction_at_101=values[1] + values[3] - values[0],
+                actual_readout_at_101=values[4], literal_gateway_updates=literal_updates,
+                protected_tail_perturbation=dict(index=perturbed, increment=1,
+                                                 changed_third_iterate=-1,
+                                                 scope='One-step shared profile envelope only: G/cap/ratio bounds, root depth and protected local tails stay fixed; the perturbed prefix is not generated by the original recurrence.'),
+                scope='Infinite first-pair arithmetic and shared stencil theorem from existing actual alphabet premises. Every row enters a macroscopic interior query after two steps, at distance>=F_(K-2)/3 from its nearest Fibonacci anchor; at K>=29 its actual natural-cap defect is>=F_(K-2)/20, using the proved global8900/13459 upper ratio. Ternary stencil reduction applies at K>=36. Finite canonical example has affine gateway addresses but inherited readout interaction-166 and a derived Fibonacci carry at001/101. These are exterior replay dependencies, not lower bounds on actual evaluation inputs: already arithmetic fixed-cycle outputs can skip replay. Full exterior clock/word construction and uniform dispersion remain open.')
 
 
 def six_response_map_audit(sequence, splits, fibonacci):

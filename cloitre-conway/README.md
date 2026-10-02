@@ -126,6 +126,11 @@ only by four or five positions; this generates permanent holes beyond
 the initial flat band and reduces the shared five-row response word.
 A periodic-only update of the actual seed still permits a three-cycle,
 so constructing its exterior clock remains a distinct task.
+The [first exterior pair](recursive-descent.md#the-exterior-replay-reaches-an-unbounded-profile-after-two-steps)
+is generated from local words, but its next query lies in a macroscopic
+interior with unbounded natural-cap defect. Five rows share the same
+stencil there; their interior readouts and the remaining clock still
+need construction.
 For the separate asymptotic route, an
 [exact two-generation certificate](dispersion.md#a-two-generation-certificate-at-the-forced-geometric-bottleneck)
 repairs a full-geometric one-step bottleneck using a moment policy.

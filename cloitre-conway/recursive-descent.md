@@ -48,6 +48,7 @@ Fibonacci neighborhood, even when its support has holes.
 - [Copy runs trade reset events against adjacent migrations](#copy-runs-trade-reset-events-against-adjacent-migrations)
 - [Binary prefixes close with two response states](#binary-prefixes-close-with-two-response-states)
 - [Arithmetic support cones shrink the shared response word](#arithmetic-support-cones-shrink-the-shared-response-word)
+- [The exterior replay reaches an unbounded profile after two steps](#the-exterior-replay-reaches-an-unbounded-profile-after-two-steps)
 - [Cap4 query profiles and the information they carry](#cap4-query-profiles-and-the-information-they-carry)
 
 ### Recursive windows with a parameter at every row
@@ -2153,6 +2154,195 @@ The actual seed verification uses an independently regenerated prefix;
 the support and decoder theorems are infinite deductions from that seed.
 Wider profile/entry construction, generic copy frequency and Benoît's
 additive occupation/global dispersion problem remain open.
+
+### The exterior replay reaches an unbounded profile after two steps
+
+The local periodic maps leave exterior landings and clocks as supplied
+data. The first two prescribed steps can now be generated from local
+responses at two orders. The next query lies in a macroscopic block
+interior, with an unbounded natural-cap defect. Thus replaying that
+exterior path does not remain inside the bounded-tail interface.
+Five rows nevertheless share the same stencil shape at this transition.
+
+**First-pair theorem.** Let K>=28,9<=d<=43, A=F_(K-1), B=F_(K-2),
+V_h=4h-19, v=V_K+d and N=F_K-v. Set
+
+$$
+z=Q_K(v+1),\qquad
+j=d+8-z,\qquad q=Q_{K-2}(V_{K-2}+j). \tag{G.1}
+$$
+
+Both z and q belong to the proved alphabet{4,7,8,9,10,13}, and
+4<=j<=47. The prescribed exterior orbit starts exactly as
+
+$$
+x_0=N-1,\qquad x_1=B-v+z,\qquad
+\boxed{x_2=2B-v+q}. \tag{G.2}
+$$
+
+Indeed C(N-1)=A-z. The gap of x_1 below B is v-z, equal to
+V_(K-2)+d+8-z, so C(x_1)=F_(K-3)-q. The Fibonacci identity
+F_K-F_(K-3)=2B proves(G.2). Thus a current adjacent-depth response
+and one lower-tail response generate the first pair with no exterior
+table or landing input. The current adjacent response itself remains
+supplied outside the already generated positions.
+
+**A genuinely interior next query.** Write D=F_(K-4) and t=v-q.
+Then4K-23<=t<=4K+20 and x_2=A+D-t. Since
+D/B>=3/8 and B>=24(4K+20) for K>=28,
+
+$$
+\operatorname{dist}(x_2,\{F_h:h\ge2\})=x_2-A
+\ge B/3. \tag{G.3}
+$$
+
+Here x_2>A, and its distance to F_K is F_(K-3)+t, larger than
+D-t; all other anchors are farther away. The displayed linear-versus-
+Fibonacci inequality holds at28 and persists as B grows by a factor
+at least3/2 while its right side grows by a smaller factor.
+The ratio interval[3/5,5/8] is invariant under r ->1/(1+r), starting
+at F_4/F_5=3/5; this gives D/B>=3/8 and F_(K-3)/B<=5/8.
+In particular the distance divided by N tends to alpha^4>0 at fixed d.
+This query is outside every sublinear-width Fibonacci collar.
+
+The [two-anchor core](fibonacci-collars.md#intersecting-the-anchor-bounds)
+for the recurrence at x_2 is[B,x_2-F_(K-3)], of width D-t>=B/3.
+At2B that width reaches its block maximum D. Thus the next lookup is
+within O(K) of a width-maximizing interior knee, even though the original
+root has a bounded-response tail. This is a geometric core width, not
+a lower bound on the actual period.
+
+Its inherited block order is K-1 and its upper cap is
+U(x_2)=x_2-F_(K-3). For K>=29, the proved
+[global ratio bound](golden-proof.md#8-shorter-certificates-and-the-global-limsup)
+C(n)/n<=8900/13459, n>=349525, gives the stronger actual restriction
+
+$$
+\lambda(x_2):=U(x_2)-C(x_2)\ge B/20>x_2/40. \tag{G.4}
+$$
+
+To check the constants, x_2>=2B-4K-20>=349525 and
+F_(K-3)<=5B/8. Hence
+
+$$
+\lambda(x_2)\ge\frac{5649}{107672}B
+                    -\frac{4559}{13459}(4K+20)\ge B/20.
+$$
+
+The last inequality is equivalent to
+1327B>=182360(4K+20), first true at29 and then preserved by growth.
+This is the natural-cap deficit U-C, not the golden defect C-G.
+It proves that this actual exterior query escapes every fixed natural-cap
+class; it does not give a positive limiting golden defect.
+
+**Five rows retain the shared stencil.** Let w=(0,2,3,5,7),16<=d<=43,
+and use root N+w_i. Its current adjacent response is
+z_i=Q_K(V_K+d-w_i+1). The first lower query and the gateway are
+
+$$
+j_i=d-w_i+8-z_i,\quad
+q_i=Q_{K-2}(V_{K-2}+j_i),\quad
+x_{2,i}=M+w_i+q_i,\qquad M=2B-v. \tag{G.5}
+$$
+
+With the same fifteen-position set S from(S.7), all lower queries lie
+in d+4-S and all gateway addresses lie in M+4+S. This follows from
+j_i=d+4-(w_i+z_i-4) and x_(2,i)=M+4+(w_i+q_i-4).
+Thus one shifted shared word at order K-2 generates all first pairs;
+at most five distinct interior C queries give their next points
+x_(3,i)=N+w_i-C(x_(2,i)). Repeated gateway indices share one readout.
+For the complete next-point vector this readout table is lossless:
+C(x_(2,i))=N+w_i-x_(3,i). This is a conditional lookup interface,
+not an independent-input minimum for actual C.
+
+At K>=36, the three-response theorem applies also at K-2. Replace S
+by the twelve-position set P from(T.5), with z_i,q_i in{4,8,9}.
+The lower and interior stencil shapes still agree, shifted and reflected.
+The interior readouts do not inherit the three-letter alphabet; (G.4)
+puts them in an unbounded-cap region. Constructing their actual values
+and the rest of the exterior clock is the remaining task.
+
+**An interaction reappears at the interior lookup.** The already verified
+canonical root h=2178165 at K32,d35 has common higher Fibonacci indices
+{13,15,17,19,21,23,25,27,29,31} on the five legal low patterns.
+All five q_i are8, so their gateway addresses are affine in those
+original pattern labels:
+
+$$
+Y(x)=1663944+2x_1+3x_2+5x_3.
+$$
+
+Here Y is the second orbit iterate, viewed as a function of the original
+Boolean features. The exact interior readouts are
+
+| Original low pattern | Gateway index | C at gateway |
+|---|---:|---:|
+|000|1663944|1095358|
+|100|1663946|1095294|
+|010|1663947|1095357|
+|001|1663949|1095552|
+|101|1663951|1095322|
+
+Both the parent scalar joint coefficient and the gateway-index joint
+coefficient are zero. The gateway readout instead has
+
+$$
+C(Y(x))=1095358-64x_1-x_2+194x_3-166x_1x_3. \tag{G.6}
+$$
+
+An additive fit to000 and the three single features predicts1095488
+at101, whereas the actual value is1095322. Its error is166. Thus even
+an affine query map and a vanishing parent interaction can expose a
+nonzero interaction at the next lookup. This is a finite actual example,
+not a growth law or an infinite interaction family.
+
+More generally, synchronize the five exterior rows at a common clock t
+and keep their original labels. If I denotes the joint coefficient,
+their update always gives
+
+$$
+I_{x_{t+1}}=-I_{C(x_t)}, \tag{G.7}
+$$
+
+because I_(N+w)=0. In this example the index coefficients at clocks
+0,1,2,3 are(0,6,0,166), and the three lookup coefficients are
+(-6,0,-166). This exactly locates when the hidden interaction affects
+the next orbit points. It concerns synchronized steps; the prescribed
+final iteration depths can differ between rows.
+
+The gateway rows also cross a canonical seam. Their common part has
+indices{13,15,17,19,21,23,25,27,31}; the remaining digits are
+{6},{6,3},{6,4},{7},{7,3}. At001/101, F_6+F_5=F_7 carries into the
+next window. The carry flag is the already supplied feature x_3, so
+adds no independent bit in this example. The five gateway rows do not
+share one unchanged canonical higher word. Their response interaction
+is asserted under the original inherited labels, with this carry recorded.
+
+**Scope of the dependency.** Changing C(1663944) by1 preserves the
+G/upper-cap/ratio bounds, the actual root depths and every tail through
+position47 at orders26..32, but changes the000 third iterate by-1.
+This supplies a one-step profile-envelope witness that those local
+tables and bounds do not determine the interior readout. The changed
+prefix is not generated by the original recurrence. It is not an
+actual-C counterexample or a lower bound for an evaluator using further
+nesting identities.
+
+In particular, a fixed-cycle root whose selected value and split are
+already arithmetic can skip exterior replay altogether. An expensive
+orbit trace does not by itself imply expensive evaluation. Campbell's
+ternary templates generate every prescribed orbit after at most four
+transient steps from its scale and parity, including exterior indices.
+For Cloitre, the theorem identifies the interior family that a comparable
+arithmetic entrance construction must handle; it does not construct
+that family or the final clock.
+
+The [collar checker](verification/collar_check.py) records the arithmetic
+inequalities,196 five-row windows at orders28..34 and this canonical
+example under **ternary_support.exterior_gateway**. Its C inputs use the
+independently agreeing full-orbit/Brent prefix; five interior readouts
+also pass literal prescribed iteration. No new finite premise is added
+to the infinite theorem. Full word/landing construction, the actual
+five-window minimum and uniform dispersion remain open.
 
 ### Cap4 query profiles and the information they carry
 
