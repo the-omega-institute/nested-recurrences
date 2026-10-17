@@ -2,8 +2,9 @@
 
 [Project home](../README.md) · [Research map](README.md#technical-research-map)
 
-This note proves the martingale identities and the conditional route from
-four-generation dispersion to an upper decay rate. It then develops basin
+This note gives a one-sided landing-displacement criterion for convergence,
+then proves the martingale identities and the conditional route from
+four-generation dispersion to an upper decay rate. It develops basin
 lower envelopes and scalar-valid policies. Uniform dispersion remains open.
 Explicit nonconvergent extensions show why golden bounds, finite prefixes,
 and exact collars alone cannot prove the actual limit.
@@ -12,6 +13,7 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 
 ## Contents
 
+- [A one-sided landing-displacement criterion](#a-one-sided-landing-displacement-criterion)
 - [Size-biased martingales and the four-generation dispersion criterion](#size-biased-martingales-and-the-four-generation-dispersion-criterion)
 - [A phase-free lower bound from the prescribed basin](#a-phase-free-lower-bound-from-the-prescribed-basin)
 - [Quadratic basin dispersion in the unit-defect family](#quadratic-basin-dispersion-in-the-unit-defect-family)
@@ -23,6 +25,135 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 - [Block-terminal means remove intermediate scalar constraints](#block-terminal-means-remove-intermediate-scalar-constraints)
 - [Finite prefixes and exact collars do not force convergence](#finite-prefixes-and-exact-collars-do-not-force-convergence)
 - [Exact small-cap closure still does not force convergence](#exact-small-cap-closure-still-does-not-force-convergence)
+
+### A one-sided landing-displacement criterion
+
+For the prescribed split g=T_n^C(n-1)(n-1), define
+
+$$
+e(n)=T_n(g)-g=n-C(g)-g,\qquad d(n)=C(n)/n-\alpha.
+$$
+
+This is the one-step displacement at the selected landing point, not
+the deviation C(n)-alpha*n. Put
+
+$$
+L=\limsup_{n\to\infty}d(n),\qquad
+E_-=\limsup_{n\to\infty}\frac{\max(0,-e(n))}{n}.
+$$
+
+**Theorem (extremal phase and one-sided displacement).** For the actual
+recurrence, using the established golden structure,
+
+$$
+0\le L\le\phi E_-.
+$$
+
+Consequently C(n)/n tends to alpha if and only if
+`max(0,-e(n))=o(n)`. In that case the entire eventual cycle reached from
+n-1, not just its selected step, has diameter o(n).
+
+The proposed route from small displacement through near-extremal children
+and Fibonacci phase is due to Benoît Cloitre. The argument below completes
+the conditional reduction by minimizing phase among extremal subsequences;
+it needs only the negative part of the selected displacement. It does not
+prove that this part is sublinear, or give a decay rate for C.
+
+**Proof of the bound.** The exact child identity is
+
+$$
+d(n)=\frac gn d(g)+\frac{n-g}{n}d(n-g).
+$$
+
+Both child fractions are bounded away from zero for large n: the proved
+split restriction is 5/9<g/n<2/3. Thus, along any sequence with d(n)->L,
+both d(g) and d(n-g) tend to L. Indeed each is at most L+o(1), and a
+fixed positive deficit in either would give a positive deficit at n.
+
+If L=0 there is nothing to prove. Suppose L>0. For F_k<=n<F_(k+1),
+write theta(n)=n/F_k. The cluster set of (d(n),theta(n)) as n tends to
+infinity is compact, with 1<=theta<=phi at its limits. Among its points
+whose first coordinate is L choose one with minimum second coordinate
+theta_*. Take a sequence realizing (L,theta_*).
+
+The capture theorem gives F_(k-1)<=g<=F_k. Fibonacci endpoints have
+d(g)->0, so neither endpoint can occur infinitely often on this sequence.
+Eventually g is strictly inside that block, and its canonical order is
+k-1. Pass to a subsequence with g/n->lambda. Since d(g)->L, minimality
+of theta_* and F_k/F_(k-1)->phi give
+
+$$
+\theta_*\le\lim\frac{g}{F_{k-1}}
+  =\lambda\phi\theta_*,\qquad \lambda\ge\alpha.
+$$
+
+The selected-step identity now yields
+
+$$
+\lim\frac{e(n)}n
+ =1-\lambda(1+\alpha+L)
+ \le1-\alpha(\phi+L)=-\alpha L.
+$$
+
+Therefore E_->=alpha*L, proving L<=phi*E_-. This also proves a useful
+contrapositive: a positive limiting excess forces negative jumps of
+macroscopic size along an extremal subsequence. No assertion about an
+infinite descent crossing a phase boundary is needed.
+
+**Converse and cycle diameter.** For completeness there is also a
+quantitative reverse estimate. Let J(n) be the largest absolute step
+on any cycle of T_n. All cycle points exceed n/4 by the established
+three-quarter bound. Fix epsilon>0, and set
+`m=alpha-epsilon`, `r=alpha+L+epsilon`. For large n, all their arguments
+satisfy m*x<=C(x)<=r*x. Choose epsilon small enough that 0<m<=r<1.
+If u and v are respectively the minimum and maximum over all cycle
+points, existence of a cycle predecessor for each point gives
+
+$$
+u\ge n-rv,\qquad v\le n-mu.
+$$
+
+Hence
+
+$$
+u\ge\frac{1-r}{1-mr}n,\qquad
+v\le\frac{1-m}{1-mr}n,\qquad
+J(n)\le v-u\le\frac{r-m}{1-mr}n.
+$$
+
+Letting epsilon decrease to zero proves
+
+$$
+\limsup_{n\to\infty}\frac{J(n)}n
+ \le\frac{\phi L}{1-L}.
+$$
+
+If L=0 this gives J(n)=o(n), and in particular E_-=0. Conversely
+E_-=0 gives L=0 by the first bound; the established liminf is alpha,
+so the full ratio converges. QED.
+
+**Finite evidence and the remaining lemma.** The
+[landing-displacement check](verification/landing_displacement.py) reports
+exact dyadic-shell extrema and independently checks sequence values,
+selected splits and the sign/indexing of e(n). Its
+[recorded output](verification/landing-displacement.json) is finite evidence.
+The last complete dyadic shells give the following maxima of
+`max(0,-e(n))/n`:
+
+| Shell (lower exclusive, upper inclusive) | Maximum |
+|---|---:|
+| (1,048,576, 2,097,152] | 0.005655816384 |
+| (2,097,152, 4,194,304] | 0.005677227902 |
+| (4,194,304, 8,388,608] | 0.005189825549 |
+| (8,388,608, 16,777,216] | 0.004939054055 |
+
+In the last shell the exact maximum is 45807/9274448, at n=9274448,
+with g=5749282 and T_n(g)=5703475. The positive-jump maximum there is
+46178/9274077=0.004979255618. The negative maxima are not monotone.
+These computations do not bound E_-: even a decreasing list of finite
+maxima cannot establish the required uniform tail estimate. Proving that estimate for
+the actual selected orbit remains the convergence problem in this form.
+Reproduce with `python3 cloitre-conway/verification/landing_displacement.py`.
 
 ### Size-biased martingales and the four-generation dispersion criterion
 

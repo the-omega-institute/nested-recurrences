@@ -26,6 +26,7 @@ and iteration depth in [the definition](cloitre-conway/README.md#definition).
 | The sequence is well defined; its prescribed depth reaches an inner cycle. | [Foundations](cloitre-conway/proof.md) |
 | C(n)>=floor(alpha(n+1)), C(F_k)=F_(k-1), and liminf C(n)/n=alpha. The exact equality set and global upper bounds are proved. | [Global golden structure](cloitre-conway/golden-proof.md) |
 | The ratio converges to alpha in neighborhoods of Fibonacci indices whose width is sublinear in the index. Exact nearby values and selected phases are known, including a growing constant band below each Fibonacci index. | [Orbit bounds](cloitre-conway/fibonacci-collars.md) · [Exact neighborhoods](cloitre-conway/exact-collars.md) |
+| Full convergence is equivalent to sublinear negative displacement at the selected inner landing point. A quantitative limsup bound follows from the minimum Fibonacci phase of extremal subsequences; the required displacement estimate remains open. | [One-sided displacement criterion](cloitre-conway/dispersion.md#a-one-sided-landing-displacement-criterion) |
 | Local recursive interfaces and variance estimates are proved under explicit context and domain hypotheses. They give partial routes toward convergence; the uniform dispersion inequality remains open. | [Technical research map](cloitre-conway/README.md#technical-research-map) |
 
 The global induction and some exact-neighborhood results are
@@ -37,6 +38,9 @@ conjectures remain finite observations. No Lean formalization is included.
 
 1. **Convergence and decay over all integers.** Prove C(n)/n -> alpha,
    including the interiors of the Fibonacci blocks. The
+   [one-sided displacement criterion](cloitre-conway/dispersion.md#a-one-sided-landing-displacement-criterion)
+   reduces convergence to controlling negative jumps at the prescribed
+   landing point; it does not yet prove those jumps are sublinear. The
    [dispersion note](cloitre-conway/dispersion.md) gives a conditional decay
    theorem; its required uniform inequality is still open. A matching
    lower bound for maxima is a separate question.

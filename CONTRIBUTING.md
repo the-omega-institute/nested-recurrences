@@ -106,3 +106,11 @@ does not prove a limit or universal shifted-family law.
 
 The [Campbell guide](campbell/README.md#optional-computational-checks) explains
 optional PDF rebuilding.
+
+For selected landing displacements through 2^24, run
+`python3 cloitre-conway/verification/landing_displacement.py`.
+It reports exact dyadic-shell extrema, checks the prescribed depth and
+successor indexing, and compares with independent evaluators and literal
+nesting. This separate larger check is not part of the eight default
+replays. Its finite shell maxima do not prove an asymptotic displacement
+bound; see the [one-sided criterion](cloitre-conway/dispersion.md#a-one-sided-landing-displacement-criterion).
