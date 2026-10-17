@@ -1,0 +1,1060 @@
+{
+  "status": "Finite exact orbit computation; no extrapolation to a displacement bound or a limit.",
+  "definition": "g=T_n^C(n-1)(n-1); e(n)=T_n(g)-g=n-C(g)-g",
+  "limit": 16777216,
+  "cycle_selection_and_jump_checked_through": 16777216,
+  "golden_lower_cap_and_selected_capture_checked_through": 16777216,
+  "independent_brent_values_through": 1048576,
+  "independent_full_orbit_values_and_splits_through": 131072,
+  "literal_values_selected_splits_and_jumps_through": 4096,
+  "literal_updates": 5467850,
+  "shells": [
+    {
+      "lower_exclusive": 2,
+      "upper_inclusive": 4,
+      "count": 2,
+      "negative_count": 1,
+      "zero_count": 1,
+      "positive_count": 0,
+      "max_negative_jump": {
+        "numerator": 1,
+        "denominator": 4,
+        "witness": {
+          "index": 4,
+          "value": 3,
+          "split": 3,
+          "next_point": 2,
+          "jump": -1
+        },
+        "decimal": 0.25
+      },
+      "max_positive_jump": {
+        "numerator": 0,
+        "denominator": 1,
+        "witness": null,
+        "decimal": 0.0
+      },
+      "max_ratio": {
+        "numerator": 3,
+        "denominator": 4,
+        "witness": {
+          "index": 4,
+          "value": 3,
+          "split": 3,
+          "next_point": 2,
+          "jump": -1
+        },
+        "decimal": 0.75
+      },
+      "max_period": 2,
+      "max_transient": 0
+    },
+    {
+      "lower_exclusive": 4,
+      "upper_inclusive": 8,
+      "count": 4,
+      "negative_count": 0,
+      "zero_count": 2,
+      "positive_count": 2,
+      "max_negative_jump": {
+        "numerator": 0,
+        "denominator": 1,
+        "witness": null,
+        "decimal": 0.0
+      },
+      "max_positive_jump": {
+        "numerator": 2,
+        "denominator": 5,
+        "witness": {
+          "index": 5,
+          "value": 3,
+          "split": 2,
+          "next_point": 4,
+          "jump": 2
+        },
+        "decimal": 0.4
+      },
+      "max_ratio": {
+        "numerator": 5,
+        "denominator": 7,
+        "witness": {
+          "index": 7,
+          "value": 5,
+          "split": 4,
+          "next_point": 4,
+          "jump": 0
+        },
+        "decimal": 0.7142857142857143
+      },
+      "max_period": 2,
+      "max_transient": 4
+    },
+    {
+      "lower_exclusive": 8,
+      "upper_inclusive": 16,
+      "count": 8,
+      "negative_count": 3,
+      "zero_count": 2,
+      "positive_count": 3,
+      "max_negative_jump": {
+        "numerator": 2,
+        "denominator": 10,
+        "witness": {
+          "index": 10,
+          "value": 7,
+          "split": 7,
+          "next_point": 5,
+          "jump": -2
+        },
+        "decimal": 0.2
+      },
+      "max_positive_jump": {
+        "numerator": 2,
+        "denominator": 15,
+        "witness": {
+          "index": 15,
+          "value": 10,
+          "split": 8,
+          "next_point": 10,
+          "jump": 2
+        },
+        "decimal": 0.13333333333333333
+      },
+      "max_ratio": {
+        "numerator": 7,
+        "denominator": 10,
+        "witness": {
+          "index": 10,
+          "value": 7,
+          "split": 7,
+          "next_point": 5,
+          "jump": -2
+        },
+        "decimal": 0.7
+      },
+      "max_period": 2,
+      "max_transient": 6
+    },
+    {
+      "lower_exclusive": 16,
+      "upper_inclusive": 32,
+      "count": 16,
+      "negative_count": 5,
+      "zero_count": 7,
+      "positive_count": 4,
+      "max_negative_jump": {
+        "numerator": 3,
+        "denominator": 26,
+        "witness": {
+          "index": 26,
+          "value": 18,
+          "split": 17,
+          "next_point": 14,
+          "jump": -3
+        },
+        "decimal": 0.11538461538461539
+      },
+      "max_positive_jump": {
+        "numerator": 4,
+        "denominator": 25,
+        "witness": {
+          "index": 25,
+          "value": 16,
+          "split": 13,
+          "next_point": 17,
+          "jump": 4
+        },
+        "decimal": 0.16
+      },
+      "max_ratio": {
+        "numerator": 12,
+        "denominator": 17,
+        "witness": {
+          "index": 17,
+          "value": 12,
+          "split": 10,
+          "next_point": 10,
+          "jump": 0
+        },
+        "decimal": 0.7058823529411765
+      },
+      "max_period": 2,
+      "max_transient": 7
+    },
+    {
+      "lower_exclusive": 32,
+      "upper_inclusive": 64,
+      "count": 32,
+      "negative_count": 10,
+      "zero_count": 11,
+      "positive_count": 11,
+      "max_negative_jump": {
+        "numerator": 5,
+        "denominator": 41,
+        "witness": {
+          "index": 41,
+          "value": 28,
+          "split": 27,
+          "next_point": 22,
+          "jump": -5
+        },
+        "decimal": 0.12195121951219512
+      },
+      "max_positive_jump": {
+        "numerator": 6,
+        "denominator": 40,
+        "witness": {
+          "index": 40,
+          "value": 26,
+          "split": 21,
+          "next_point": 27,
+          "jump": 6
+        },
+        "decimal": 0.15
+      },
+      "max_ratio": {
+        "numerator": 32,
+        "denominator": 46,
+        "witness": {
+          "index": 46,
+          "value": 32,
+          "split": 27,
+          "next_point": 27,
+          "jump": 0
+        },
+        "decimal": 0.6956521739130435
+      },
+      "max_period": 2,
+      "max_transient": 9
+    },
+    {
+      "lower_exclusive": 64,
+      "upper_inclusive": 128,
+      "count": 64,
+      "negative_count": 23,
+      "zero_count": 16,
+      "positive_count": 25,
+      "max_negative_jump": {
+        "numerator": 7,
+        "denominator": 71,
+        "witness": {
+          "index": 71,
+          "value": 48,
+          "split": 46,
+          "next_point": 39,
+          "jump": -7
+        },
+        "decimal": 0.09859154929577464
+      },
+      "max_positive_jump": {
+        "numerator": 6,
+        "denominator": 70,
+        "witness": {
+          "index": 70,
+          "value": 46,
+          "split": 39,
+          "next_point": 45,
+          "jump": 6
+        },
+        "decimal": 0.08571428571428572
+      },
+      "max_ratio": {
+        "numerator": 50,
+        "denominator": 72,
+        "witness": {
+          "index": 72,
+          "value": 50,
+          "split": 46,
+          "next_point": 40,
+          "jump": -6
+        },
+        "decimal": 0.6944444444444444
+      },
+      "max_period": 6,
+      "max_transient": 13
+    },
+    {
+      "lower_exclusive": 128,
+      "upper_inclusive": 256,
+      "count": 128,
+      "negative_count": 47,
+      "zero_count": 38,
+      "positive_count": 43,
+      "max_negative_jump": {
+        "numerator": 16,
+        "denominator": 251,
+        "witness": {
+          "index": 251,
+          "value": 162,
+          "split": 161,
+          "next_point": 145,
+          "jump": -16
+        },
+        "decimal": 0.06374501992031872
+      },
+      "max_positive_jump": {
+        "numerator": 17,
+        "denominator": 250,
+        "witness": {
+          "index": 250,
+          "value": 160,
+          "split": 144,
+          "next_point": 161,
+          "jump": 17
+        },
+        "decimal": 0.068
+      },
+      "max_ratio": {
+        "numerator": 127,
+        "denominator": 185,
+        "witness": {
+          "index": 185,
+          "value": 127,
+          "split": 114,
+          "next_point": 106,
+          "jump": -8
+        },
+        "decimal": 0.6864864864864865
+      },
+      "max_period": 5,
+      "max_transient": 21
+    },
+    {
+      "lower_exclusive": 256,
+      "upper_inclusive": 512,
+      "count": 256,
+      "negative_count": 116,
+      "zero_count": 50,
+      "positive_count": 90,
+      "max_negative_jump": {
+        "numerator": 15,
+        "denominator": 257,
+        "witness": {
+          "index": 257,
+          "value": 167,
+          "split": 164,
+          "next_point": 149,
+          "jump": -15
+        },
+        "decimal": 0.058365758754863814
+      },
+      "max_positive_jump": {
+        "numerator": 19,
+        "denominator": 396,
+        "witness": {
+          "index": 396,
+          "value": 251,
+          "split": 233,
+          "next_point": 252,
+          "jump": 19
+        },
+        "decimal": 0.047979797979797977
+      },
+      "max_ratio": {
+        "numerator": 207,
+        "denominator": 302,
+        "witness": {
+          "index": 302,
+          "value": 207,
+          "split": 184,
+          "next_point": 176,
+          "jump": -8
+        },
+        "decimal": 0.6854304635761589
+      },
+      "max_period": 6,
+      "max_transient": 25
+    },
+    {
+      "lower_exclusive": 512,
+      "upper_inclusive": 1024,
+      "count": 512,
+      "negative_count": 189,
+      "zero_count": 130,
+      "positive_count": 193,
+      "max_negative_jump": {
+        "numerator": 32,
+        "denominator": 651,
+        "witness": {
+          "index": 651,
+          "value": 417,
+          "split": 414,
+          "next_point": 382,
+          "jump": -32
+        },
+        "decimal": 0.04915514592933948
+      },
+      "max_positive_jump": {
+        "numerator": 33,
+        "denominator": 652,
+        "witness": {
+          "index": 652,
+          "value": 416,
+          "split": 382,
+          "next_point": 415,
+          "jump": 33
+        },
+        "decimal": 0.05061349693251534
+      },
+      "max_ratio": {
+        "numerator": 349,
+        "denominator": 516,
+        "witness": {
+          "index": 516,
+          "value": 349,
+          "split": 316,
+          "next_point": 303,
+          "jump": -13
+        },
+        "decimal": 0.6763565891472868
+      },
+      "max_period": 10,
+      "max_transient": 25
+    },
+    {
+      "lower_exclusive": 1024,
+      "upper_inclusive": 2048,
+      "count": 1024,
+      "negative_count": 438,
+      "zero_count": 150,
+      "positive_count": 436,
+      "max_negative_jump": {
+        "numerator": 44,
+        "denominator": 1091,
+        "witness": {
+          "index": 1091,
+          "value": 709,
+          "split": 686,
+          "next_point": 642,
+          "jump": -44
+        },
+        "decimal": 0.04032997250229148
+      },
+      "max_positive_jump": {
+        "numerator": 50,
+        "denominator": 1097,
+        "witness": {
+          "index": 1097,
+          "value": 706,
+          "split": 642,
+          "next_point": 692,
+          "jump": 50
+        },
+        "decimal": 0.04557885141294439
+      },
+      "max_ratio": {
+        "numerator": 891,
+        "denominator": 1318,
+        "witness": {
+          "index": 1318,
+          "value": 891,
+          "split": 802,
+          "next_point": 776,
+          "jump": -26
+        },
+        "decimal": 0.6760242792109257
+      },
+      "max_period": 10,
+      "max_transient": 41
+    },
+    {
+      "lower_exclusive": 2048,
+      "upper_inclusive": 4096,
+      "count": 2048,
+      "negative_count": 806,
+      "zero_count": 439,
+      "positive_count": 803,
+      "max_negative_jump": {
+        "numerator": 95,
+        "denominator": 2756,
+        "witness": {
+          "index": 2756,
+          "value": 1765,
+          "split": 1732,
+          "next_point": 1637,
+          "jump": -95
+        },
+        "decimal": 0.03447024673439768
+      },
+      "max_positive_jump": {
+        "numerator": 99,
+        "denominator": 2760,
+        "witness": {
+          "index": 2760,
+          "value": 1761,
+          "split": 1637,
+          "next_point": 1736,
+          "jump": 99
+        },
+        "decimal": 0.035869565217391305
+      },
+      "max_ratio": {
+        "numerator": 1398,
+        "denominator": 2079,
+        "witness": {
+          "index": 2079,
+          "value": 1398,
+          "split": 1238,
+          "next_point": 1248,
+          "jump": 10
+        },
+        "decimal": 0.6724386724386724
+      },
+      "max_period": 12,
+      "max_transient": 51
+    },
+    {
+      "lower_exclusive": 4096,
+      "upper_inclusive": 8192,
+      "count": 4096,
+      "negative_count": 1743,
+      "zero_count": 593,
+      "positive_count": 1760,
+      "max_negative_jump": {
+        "numerator": 144,
+        "denominator": 4535,
+        "witness": {
+          "index": 4535,
+          "value": 2924,
+          "split": 2838,
+          "next_point": 2694,
+          "jump": -144
+        },
+        "decimal": 0.03175303197353914
+      },
+      "max_positive_jump": {
+        "numerator": 139,
+        "denominator": 4498,
+        "witness": {
+          "index": 4498,
+          "value": 2873,
+          "split": 2676,
+          "next_point": 2815,
+          "jump": 139
+        },
+        "decimal": 0.030902623388172522
+      },
+      "max_ratio": {
+        "numerator": 3699,
+        "denominator": 5531,
+        "witness": {
+          "index": 5531,
+          "value": 3699,
+          "split": 3313,
+          "next_point": 3305,
+          "jump": -8
+        },
+        "decimal": 0.6687759898752486
+      },
+      "max_period": 19,
+      "max_transient": 70
+    },
+    {
+      "lower_exclusive": 8192,
+      "upper_inclusive": 16384,
+      "count": 8192,
+      "negative_count": 3501,
+      "zero_count": 1162,
+      "positive_count": 3529,
+      "max_negative_jump": {
+        "numerator": 233,
+        "denominator": 11578,
+        "witness": {
+          "index": 11578,
+          "value": 7380,
+          "split": 7202,
+          "next_point": 6969,
+          "jump": -233
+        },
+        "decimal": 0.020124373812402833
+      },
+      "max_positive_jump": {
+        "numerator": 287,
+        "denominator": 11602,
+        "witness": {
+          "index": 11602,
+          "value": 7386,
+          "split": 6955,
+          "next_point": 7242,
+          "jump": 287
+        },
+        "decimal": 0.024737114290639545
+      },
+      "max_ratio": {
+        "numerator": 5830,
+        "denominator": 8722,
+        "witness": {
+          "index": 8722,
+          "value": 5830,
+          "split": 5250,
+          "next_point": 5220,
+          "jump": -30
+        },
+        "decimal": 0.6684246732400826
+      },
+      "max_period": 26,
+      "max_transient": 69
+    },
+    {
+      "lower_exclusive": 16384,
+      "upper_inclusive": 32768,
+      "count": 16384,
+      "negative_count": 7092,
+      "zero_count": 2279,
+      "positive_count": 7013,
+      "max_negative_jump": {
+        "numerator": 385,
+        "denominator": 18399,
+        "witness": {
+          "index": 18399,
+          "value": 11621,
+          "split": 11487,
+          "next_point": 11102,
+          "jump": -385
+        },
+        "decimal": 0.02092505027447144
+      },
+      "max_positive_jump": {
+        "numerator": 428,
+        "denominator": 19206,
+        "witness": {
+          "index": 19206,
+          "value": 12316,
+          "split": 11502,
+          "next_point": 11930,
+          "jump": 428
+        },
+        "decimal": 0.022284702697073833
+      },
+      "max_ratio": {
+        "numerator": 15225,
+        "denominator": 22877,
+        "witness": {
+          "index": 22877,
+          "value": 15225,
+          "split": 13765,
+          "next_point": 13712,
+          "jump": -53
+        },
+        "decimal": 0.665515583336976
+      },
+      "max_period": 32,
+      "max_transient": 92
+    },
+    {
+      "lower_exclusive": 32768,
+      "upper_inclusive": 65536,
+      "count": 32768,
+      "negative_count": 14609,
+      "zero_count": 3455,
+      "positive_count": 14704,
+      "max_negative_jump": {
+        "numerator": 800,
+        "denominator": 48689,
+        "witness": {
+          "index": 48689,
+          "value": 30907,
+          "split": 30235,
+          "next_point": 29435,
+          "jump": -800
+        },
+        "decimal": 0.016430815995399372
+      },
+      "max_positive_jump": {
+        "numerator": 837,
+        "denominator": 48993,
+        "witness": {
+          "index": 48993,
+          "value": 31140,
+          "split": 29573,
+          "next_point": 30410,
+          "jump": 837
+        },
+        "decimal": 0.01708407323495193
+      },
+      "max_ratio": {
+        "numerator": 39071,
+        "denominator": 58812,
+        "witness": {
+          "index": 58812,
+          "value": 39071,
+          "split": 35423,
+          "next_point": 35291,
+          "jump": -132
+        },
+        "decimal": 0.6643372100931783
+      },
+      "max_period": 43,
+      "max_transient": 100
+    },
+    {
+      "lower_exclusive": 65536,
+      "upper_inclusive": 131072,
+      "count": 65536,
+      "negative_count": 28989,
+      "zero_count": 7181,
+      "positive_count": 29366,
+      "max_negative_jump": {
+        "numerator": 1026,
+        "denominator": 79704,
+        "witness": {
+          "index": 79704,
+          "value": 50872,
+          "split": 49261,
+          "next_point": 48235,
+          "jump": -1026
+        },
+        "decimal": 0.012872628726287264
+      },
+      "max_positive_jump": {
+        "numerator": 1038,
+        "denominator": 77176,
+        "witness": {
+          "index": 77176,
+          "value": 48450,
+          "split": 46938,
+          "next_point": 47976,
+          "jump": 1038
+        },
+        "decimal": 0.013449777132787395
+      },
+      "max_ratio": {
+        "numerator": 64136,
+        "denominator": 96723,
+        "witness": {
+          "index": 96723,
+          "value": 64136,
+          "split": 58173,
+          "next_point": 58114,
+          "jump": -59
+        },
+        "decimal": 0.6630894409809456
+      },
+      "max_period": 52,
+      "max_transient": 135
+    },
+    {
+      "lower_exclusive": 131072,
+      "upper_inclusive": 262144,
+      "count": 131072,
+      "negative_count": 60656,
+      "zero_count": 10128,
+      "positive_count": 60288,
+      "max_negative_jump": {
+        "numerator": 1952,
+        "denominator": 199800,
+        "witness": {
+          "index": 199800,
+          "value": 124743,
+          "split": 124076,
+          "next_point": 122124,
+          "jump": -1952
+        },
+        "decimal": 0.00976976976976977
+      },
+      "max_positive_jump": {
+        "numerator": 1834,
+        "denominator": 200959,
+        "witness": {
+          "index": 200959,
+          "value": 125788,
+          "split": 122773,
+          "next_point": 124607,
+          "jump": 1834
+        },
+        "decimal": 0.009126239680730895
+      },
+      "max_ratio": {
+        "numerator": 103088,
+        "denominator": 155677,
+        "witness": {
+          "index": 155677,
+          "value": 103088,
+          "split": 93682,
+          "next_point": 93606,
+          "jump": -76
+        },
+        "decimal": 0.6621915889951631
+      },
+      "max_period": 71,
+      "max_transient": 142
+    },
+    {
+      "lower_exclusive": 262144,
+      "upper_inclusive": 524288,
+      "count": 262144,
+      "negative_count": 119035,
+      "zero_count": 23050,
+      "positive_count": 120059,
+      "max_negative_jump": {
+        "numerator": 2447,
+        "denominator": 323685,
+        "witness": {
+          "index": 323685,
+          "value": 202222,
+          "split": 200604,
+          "next_point": 198157,
+          "jump": -2447
+        },
+        "decimal": 0.007559818959791155
+      },
+      "max_positive_jump": {
+        "numerator": 2572,
+        "denominator": 325066,
+        "witness": {
+          "index": 325066,
+          "value": 203398,
+          "split": 198815,
+          "next_point": 201387,
+          "jump": 2572
+        },
+        "decimal": 0.00791223936062215
+      },
+      "max_ratio": {
+        "numerator": 267000,
+        "denominator": 403770,
+        "witness": {
+          "index": 403770,
+          "value": 267000,
+          "split": 243062,
+          "next_point": 243062,
+          "jump": 0
+        },
+        "decimal": 0.6612675533100527
+      },
+      "max_period": 82,
+      "max_transient": 188
+    },
+    {
+      "lower_exclusive": 524288,
+      "upper_inclusive": 1048576,
+      "count": 524288,
+      "negative_count": 246598,
+      "zero_count": 29637,
+      "positive_count": 248053,
+      "max_negative_jump": {
+        "numerator": 3376,
+        "denominator": 524524,
+        "witness": {
+          "index": 524524,
+          "value": 327947,
+          "split": 324697,
+          "next_point": 321321,
+          "jump": -3376
+        },
+        "decimal": 0.00643631177982323
+      },
+      "max_positive_jump": {
+        "numerator": 3309,
+        "denominator": 533216,
+        "witness": {
+          "index": 533216,
+          "value": 336044,
+          "split": 325781,
+          "next_point": 329090,
+          "jump": 3309
+        },
+        "decimal": 0.006205740262857829
+      },
+      "max_ratio": {
+        "numerator": 442578,
+        "denominator": 670341,
+        "witness": {
+          "index": 670341,
+          "value": 442578,
+          "split": 403681,
+          "next_point": 403469,
+          "jump": -212
+        },
+        "decimal": 0.6602281525372907
+      },
+      "max_period": 106,
+      "max_transient": 211
+    },
+    {
+      "lower_exclusive": 1048576,
+      "upper_inclusive": 2097152,
+      "count": 1048576,
+      "negative_count": 494731,
+      "zero_count": 57887,
+      "positive_count": 495958,
+      "max_negative_jump": {
+        "numerator": 7707,
+        "denominator": 1362668,
+        "witness": {
+          "index": 1362668,
+          "value": 848309,
+          "split": 844156,
+          "next_point": 836449,
+          "jump": -7707
+        },
+        "decimal": 0.005655816383741307
+      },
+      "max_positive_jump": {
+        "numerator": 7881,
+        "denominator": 1354386,
+        "witness": {
+          "index": 1354386,
+          "value": 840018,
+          "split": 832158,
+          "next_point": 840039,
+          "jump": 7881
+        },
+        "decimal": 0.0058188729062468155
+      },
+      "max_ratio": {
+        "numerator": 695984,
+        "denominator": 1055020,
+        "witness": {
+          "index": 1055020,
+          "value": 695984,
+          "split": 636119,
+          "next_point": 635520,
+          "jump": -599
+        },
+        "decimal": 0.6596879680006066
+      },
+      "max_period": 112,
+      "max_transient": 266
+    },
+    {
+      "lower_exclusive": 2097152,
+      "upper_inclusive": 4194304,
+      "count": 2097152,
+      "negative_count": 997591,
+      "zero_count": 99336,
+      "positive_count": 1000225,
+      "max_negative_jump": {
+        "numerator": 20126,
+        "denominator": 3545040,
+        "witness": {
+          "index": 3545040,
+          "value": 2198771,
+          "split": 2198603,
+          "next_point": 2178477,
+          "jump": -20126
+        },
+        "decimal": 0.005677227901518742
+      },
+      "max_positive_jump": {
+        "numerator": 20144,
+        "denominator": 3545022,
+        "witness": {
+          "index": 3545022,
+          "value": 2198350,
+          "split": 2178459,
+          "next_point": 2198603,
+          "jump": 20144
+        },
+        "decimal": 0.005682334270422017
+      },
+      "max_ratio": {
+        "numerator": 1846039,
+        "denominator": 2801210,
+        "witness": {
+          "index": 2801210,
+          "value": 1846039,
+          "split": 1688078,
+          "next_point": 1687941,
+          "jump": -137
+        },
+        "decimal": 0.6590148542951082
+      },
+      "max_period": 144,
+      "max_transient": 339
+    },
+    {
+      "lower_exclusive": 4194304,
+      "upper_inclusive": 8388608,
+      "count": 4194304,
+      "negative_count": 2014689,
+      "zero_count": 160984,
+      "positive_count": 2018631,
+      "max_negative_jump": {
+        "numerator": 29753,
+        "denominator": 5732948,
+        "witness": {
+          "index": 5732948,
+          "value": 3554639,
+          "split": 3554485,
+          "next_point": 3524732,
+          "jump": -29753
+        },
+        "decimal": 0.005189825548740369
+      },
+      "max_positive_jump": {
+        "numerator": 29124,
+        "denominator": 5733577,
+        "witness": {
+          "index": 5733577,
+          "value": 3554841,
+          "split": 3525361,
+          "next_point": 3554485,
+          "jump": 29124
+        },
+        "decimal": 0.005079551560919126
+      },
+      "max_ratio": {
+        "numerator": 2908674,
+        "denominator": 4419417,
+        "witness": {
+          "index": 4419417,
+          "value": 2908674,
+          "split": 2666318,
+          "next_point": 2665521,
+          "jump": -797
+        },
+        "decimal": 0.6581578520424752
+      },
+      "max_period": 187,
+      "max_transient": 344
+    },
+    {
+      "lower_exclusive": 8388608,
+      "upper_inclusive": 16777216,
+      "count": 8388608,
+      "negative_count": 4031175,
+      "zero_count": 305705,
+      "positive_count": 4051728,
+      "max_negative_jump": {
+        "numerator": 45807,
+        "denominator": 9274448,
+        "witness": {
+          "index": 9274448,
+          "value": 5749870,
+          "split": 5749282,
+          "next_point": 5703475,
+          "jump": -45807
+        },
+        "decimal": 0.0049390540547534474
+      },
+      "max_positive_jump": {
+        "numerator": 46178,
+        "denominator": 9274077,
+        "witness": {
+          "index": 9274077,
+          "value": 5748707,
+          "split": 5703104,
+          "next_point": 5749282,
+          "jump": 46178
+        },
+        "decimal": 0.004979255617567117
+      },
+      "max_ratio": {
+        "numerator": 7705122,
+        "denominator": 11713440,
+        "witness": {
+          "index": 11713440,
+          "value": 7705122,
+          "split": 7066175,
+          "next_point": 7064412,
+          "jump": -1763
+        },
+        "decimal": 0.657801807154858
+      },
+      "max_period": 271,
+      "max_transient": 579
+    }
+  ],
+  "interpretation": "A finite shell maximum is not a bound on a limsup. The criterion L<=phi*E applies to infinite tail limsups, not these individual shells."
+}

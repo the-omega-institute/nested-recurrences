@@ -42,7 +42,8 @@ indices, and then establish a decay rate.
    The ratio converges in sublinear-width neighborhoods. The
    [exact-neighborhood note](exact-collars.md) gives exact values and phases.
 3. **[Read the remaining convergence problem](dispersion.md).** Exact
-   martingale identities give a conditional decay theorem; the required
+   extremal-phase reasoning gives a one-sided landing-displacement
+   criterion. Martingale identities give a conditional decay theorem; the required
    uniform dispersion inequality is still open.
 
 All notes can be read in your browser, without installing software.
