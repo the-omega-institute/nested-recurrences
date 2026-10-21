@@ -138,6 +138,10 @@ def main():
         assert output_u == fibonacci[order] - fibonacci[order - 5]
         assert abs(output_v - rounded_value(source)) <= 10
         assert output_v - output_u >= fibonacci[order - 5] - 10
+        if order >= 9:
+            assert rounded_value(source - 1) == fibonacci[order] - 2
+            assert selected_v == fibonacci[order - 1] + fibonacci[order - 3]
+            assert output_v == fibonacci[order] - 2
         knee_checks += 1
         last_knee = dict(order=order, source=source, output_difference=output_v - output_u)
     print(json.dumps(dict(
@@ -149,7 +153,8 @@ def main():
                            independent_selector_comparisons=limit - 2,
                            literal_limit=min(limit, 4096), literal_updates=literal_updates,
                            odd_clocks=odd_clock_count, drawdowns=[drawdown_c, drawdown_r]),
-        instability_knees=dict(orders=[6, 180, 3], count=knee_checks, last=last_knee),
+        instability_knees=dict(orders=[6, 180, 3], count=knee_checks,
+                               exact_v_formula_checks=knee_checks - 1, last=last_knee),
         scope='The literal finite premise supports the written universal bound 10. '
               'The observed bound 2 and additional knee checks are finite corroboration only. '
               'V is an explicit comparison sequence, not canonical Cloitre values.'), indent=2))

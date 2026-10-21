@@ -2767,28 +2767,48 @@ n=3,...,511 gives [-2,2], completing the proof with that finite premise.
 
 **Corollary (macroscopic operator instability).** A uniformly one-unit
 input change can produce a linear output change under the full clock.
-For j divisible by three, put n_j=F_j+F_(j-2)=S+B. Then
+For j>=15 divisible by three, put n_j=F_j+F_(j-2)=S+B. Then
 
 $$
 \|U-V\|_\infty\le1,\qquad
 \mathcal F[U](n_j)=S-F_{j-5},\qquad
-\mathcal F[V](n_j)\ge S-10,
+\mathcal F[V](n_j)=S-2,
 $$
 
 and hence
 
 $$
-\liminf_{\substack{j\to\infty\\3\mid j}}
+\lim_{\substack{j\to\infty\\3\mid j}}
 \frac{\mathcal F[V](n_j)-\mathcal F[U](n_j)}{n_j}
-\ge\frac{\alpha^5}{1+\alpha^2}>0.
+=\frac{\alpha^5}{1+\alpha^2}>0.
 $$
 
-Indeed S is even and h_U=U(n_j-1)=S-1 is odd. The U-cycle reached
-from the maximal seed has extremes A+D and A+E=2B. Its odd depth
-selects the lower extreme 2B, with readout 2B+E=S-F_(j-5).
-Both clocks reach their cycles for sufficiently large j by the orbit
-count above. No stopping phase has been assigned by hand. This is why
-uniformly close scalar profiles need not control this nested operator.
+Here is a direct exact calculation, independent of the general residual
+bound. S,D are even and A,B,E are odd. At n_j-1 the cap is S-1;
+the argument is far from the anchors, so the sparse-odd lemma gives
+h_V=S-2, an even depth. Put R=A+D. At R and n_j-R=B+E, the cap
+values are respectively A and B, both odd, and the arguments are far
+from anchors. Thus V(R)=A-1 and V(n_j-R)=B-1. Similarly,
+V(2B+1)=B+E=V(2B). It follows that
+
+$$
+T_{n_j}^V(R)=2B+1,\qquad T_{n_j}^V(2B+1)=R.
+$$
+
+For R<x<=S, the value V(x) is A-1 or A; therefore
+(T_(n_j)^V)^2(x)=R. At the only remaining possible larger periodic
+point x=S+1, its square image is at most R+2<S+1. Capture excludes
+points above S+1, so R is the greatest periodic point. The even
+prescribed depth selects R, giving readout (A-1)+(B-1)=S-2.
+All arguments to which the sparse-odd lemma was applied are at least128
+and more than one from every anchor for j>=15.
+
+For U, h_U=S-1 is odd. The cycle reached from the maximal seed has
+extremes A+D and A+E=2B, so the odd depth selects 2B and its readout
+is 2B+E=S-F_(j-5). Both prescribed depths reach their cycles by the
+orbit count above, since n_j>=843. No stopping phase has been assigned
+by hand. Uniformly close scalar profiles therefore need not control
+this nested operator.
 
 **Corollary (any finite actual prefix).** Fix N and put W(n)=C(n) for
 n<=N and W(n)=V(n) afterwards. Then W retains the two limiting ratios,
