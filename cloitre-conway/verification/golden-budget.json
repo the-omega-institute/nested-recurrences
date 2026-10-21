@@ -158,5 +158,15 @@
     "terminal": 32,
     "terminal_defect": 1
   },
+  "value_iteration": {
+    "integer_potential_checks": 131070,
+    "normalized_budget_checks": 131070,
+    "direct_rational_chain_checks": 4095,
+    "direct_value_steps": 20768,
+    "maximum_sum_index": 121838,
+    "maximum_normalized_sum": "374690593284139040351492432594255707257937/1263426773753873716193851331853431561953800",
+    "universal_bound": "4/9",
+    "scope": "The written phase-potential argument proves the bound for all value orbits. These finite checks corroborate it; value iteration is distinct from the actual selected child tree."
+  },
   "scope": "The written proof supplies all indices >=65536. Independent finite base checks supply smaller indices. Tree and spine checks corroborate the proved consequences; no uniform dispersion or full convergence claim."
 }

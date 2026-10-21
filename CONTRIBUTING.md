@@ -331,6 +331,7 @@ Compare its JSON with
 [golden-budget.json](cloitre-conway/verification/golden-budget.json).
 Full-orbit and Brent construction agree through131072; literal construction
 and selected phases agree through4096. The explicit finite premise is every
-actual split below65536. Higher cases and tree/spine counts corroborate the
+actual split below65536. Higher cases, tree/spine counts and the separate
+value-iteration potential and rational telescopes corroborate the
 [infinite budget proof](cloitre-conway/golden-proof.md#9-a-global-integer-budget-for-the-selected-recursion-tree).
 This separate check does not claim global dispersion or convergence.
