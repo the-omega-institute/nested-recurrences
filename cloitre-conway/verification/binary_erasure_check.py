@@ -1,4 +1,5 @@
 import collections
+import itertools
 import json
 import math
 
@@ -51,6 +52,57 @@ def certificate():
     assert [row['successors'] for row in rows] == expected
     return dict(states=len(states), transitions=4 * len(states),
                 first_two_identically_zero_orders=[9, 10], rows=rows)
+
+
+def even_profiles(width, endpoint, parity):
+    positions = [offset for offset in range(width + 2, endpoint + 1)
+                 if offset % 2 == parity]
+    for values in itertools.product((0, 2), repeat=len(positions)):
+        row = [0] * (endpoint + 1)
+        for offset, value in zip(positions, values):
+            row[offset] = value
+        yield row
+
+
+def pure_two_check():
+    pairs = zero_class = lower_zero = positive = 0
+    for width in range(2, 13):
+        endpoint = 2 * width
+        inner = (math.isqrt(5 * endpoint * endpoint) - endpoint) // 2
+        for phase in range(3):
+            parent_parity = int((phase - 1) % 3 != 0)
+            source_parity = int((phase - 2) % 3 != 0)
+            lower_parity = int((phase - 3) % 3 != 0)
+            for source in even_profiles(width, endpoint, source_parity):
+                for lower in even_profiles(width, endpoint, lower_parity):
+                    pairs += 1
+                    routed = []
+                    for offset in range(endpoint + 1):
+                        contact = offset
+                        while source[contact]:
+                            assert source[contact] == 2 and contact >= width + 2
+                            contact -= 2
+                        assert contact % 2 == offset % 2
+                        routed.append(lower[contact])
+                    for offset in range(1, inner + 1):
+                        outputs = {0}
+                        if offset % 2 == parent_parity:
+                            outputs = {routed[offset]}
+                            if source[offset + 1] == 2:
+                                outputs.add(routed[offset - 1])
+                        if phase == 0:
+                            assert outputs == {0}
+                            zero_class += 1
+                        if phase == 2 and not any(lower[:inner + 1]):
+                            assert outputs == {0}
+                            lower_zero += 1
+                        positive += 2 in outputs
+    return dict(source_lower_pairs=pairs, impossible_order_zero_mod3_outputs=zero_class,
+                lower_zero_order_two_mod3_outputs=lower_zero,
+                positive_candidates_other_phases=positive,
+                scope='Finite corroboration of the written parity proof, using abstract '
+                      'saturated profiles with the derived support restrictions. '
+                      'Not a canonical sequence construction or an infinite premise.')
 
 
 def canonical_check():
@@ -121,6 +173,7 @@ def main():
     if not __debug__:
         raise SystemExit('Run without -O; assertions perform the mathematical checks.')
     print(json.dumps(dict(status='PASS', binary_certificate=certificate(),
+                          pure_amplitude_two=pure_two_check(),
                           canonical=canonical_check()), indent=2))
 
 
