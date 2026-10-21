@@ -6,7 +6,7 @@ The outermost cap contacts have a limiting relative width b. This note proves
 that b vanishes exactly when the prescribed orbits at those contacts take
 increasingly many steps to enter their captured intervals. It also proves
 that an isolated contact satisfying a one-sided barrier forces a precisely
-measured adjacent downward jump within five inputs at the next level.
+measured adjacent difference within five inputs at the next level.
 Neither result establishes b=0 or full convergence.
 
 We use Cloitre's recurrence with its prescribed start and depth:
@@ -215,6 +215,9 @@ $$
 \boxed{C(n_d)-C(n_d+1)=\delta-1.} \tag{8}
 $$
 
+This is a strict downward jump when delta>=2; delta=1 forces equal
+adjacent outputs.
+
 **Proof.** In offsets from F_j the map is H_d(u)=r+d-R_j(u), extending
 R_j to every permitted argument. The gate extends to u above its native
 block: the lower comparison there gives R_j(u)>=F_(j-2)>=r. For u<=d,
@@ -269,7 +272,15 @@ a positive-width frontier must eventually be ungated.
 
 Gating does not follow from being the last contact. Already t_9=8,
 C(42)=29 and C(43)=28, so R_9(9)=7<8. The proof does not cover such
-frontiers. Bounded first capture also leaves the interior transient and
+frontiers. Moreover, removing the gate falsifies the five-input conclusion
+even when all its other hypotheses hold. At j=21 the frontier is r=203,
+delta=E_20(203)=3, and the five inputs 17914..17918 have defects
+7,1,3,0,1. Their four adjacent differences are -7,1,-4,0; none reaches
+delta-1=2. The source gate fails by only three:
+R_21(203)=203, while R_21(207)=200. An error-dependent inequality or a
+longer input interval remains possible.
+
+Bounded first capture also leaves the interior transient and
 the residue of the prescribed clock on the reached cycle uncontrolled.
 These are actual remaining gaps in proving cumulative contact erosion.
 

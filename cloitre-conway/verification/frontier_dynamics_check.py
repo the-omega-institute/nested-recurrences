@@ -3,7 +3,7 @@
 from fractions import Fraction
 import json
 
-from conway_explore import generate, literal_generate
+from conway_explore import brent_generate, generate, literal_generate
 
 
 def main():
@@ -121,6 +121,22 @@ def main():
                                transition_offsets=drops, rows=rows))
     assert next(row for row in gated_rows if row['level'] == 16)['lower_defect'] == 3
     assert frontiers[9] == 8 and values[42] == 29 and values[43] == 28
+    ungated_parents = list(range(17914, 17919))
+    assert values[:17919] == brent_generate(17918)
+    assert 21 in ungated_rows and frontiers[21] == 203
+    ungated_delta = defect(20, 203)
+    assert ungated_delta == 3
+    assert values[11149] - 6765 == 203 and values[11153] - 6765 == 200
+    ungated_defects = [defect(22, 203 + small) for small in range(5)]
+    ungated_drops = [values[parent] - values[parent + 1] for parent in ungated_parents[:-1]]
+    assert ungated_defects == [7, 1, 3, 0, 1]
+    assert ungated_drops == [-7, 1, -4, 0]
+    assert max(ungated_drops) < ungated_delta - 1
+    for parent in ungated_parents:
+        point = parent - 1
+        for step in range(values[parent - 1]):
+            point = parent - values[point]
+        assert point == selected[parent]
     print(json.dumps(dict(limit=limit, evaluator='full visited-state orbits',
                           literal_values_checked_through=2584,
                           right_minorant_positions=lower_bound_checks,
@@ -129,6 +145,12 @@ def main():
                           cycle_positions=cycle_position_checks,
                           frontiers=frontier_rows, gated_frontiers=gated_rows,
                           ungated_frontiers_with_other_hypotheses=ungated_rows,
+                          ungated_five_input_counterexample=dict(
+                              level=21, frontier=203, lower_defect=ungated_delta,
+                              inputs=ungated_parents, parent_defects=ungated_defects,
+                              adjacent_differences=ungated_drops,
+                              Brent_values_checked_through=17918,
+                              literal_selected_points_checked=5),
                           ungated_example=dict(level=9, frontier=8, at_contact=29, next_value=28)), indent=2))
 
 
