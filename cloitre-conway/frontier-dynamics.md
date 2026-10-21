@@ -934,7 +934,11 @@ $$
 The [doubled-band theorem](exact-collars.md#canonical-copying-in-a-doubled-saturated-band)
 and saturation propagation preserve these properties through the original B. Write
 a_r(u)=E_r(u)/3 and let z_r be the Boolean version of the routed lower
-profile in (17). At row r>=K+2 and W<u<=T, call an entrance
+profile in (17). The actual depth satisfies
+h_r(u)=F_(r-1)+u-1-3a_r(u-1), hence
+F_(r-1)+u-a_r(u-1)=h_r(u)+1 modulo 2. Thus the even branch in
+(D.1) is exactly the decoder's odd actual clock.
+At row r>=K+2 and W<u<=T, call an entrance
 **effective** if its actual clock is odd and
 
 $$
