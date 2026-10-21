@@ -69,6 +69,7 @@ exact definitions, domains and supplied inputs.
 | Fibonacci neighborhoods | [Orbit bounds](fibonacci-collars.md) → [Exact values and phases](exact-collars.md) | Global theorems; stated finite seeds |
 | Local cycles and actual recursive choices | [Five-window interface](five-window-closure.md) → [Inverse reconstruction](inverse-reconstruction.md) → [Recursive descent](recursive-descent.md) | Global structure; the supplied profiles and context in each theorem |
 | Convergence and decay | [Martingales and dispersion](dispersion.md) | Additive child blocks; the stated scalar or moment conditions |
+| Contact-frontier dynamics | [Contact budget](dispersion.md#an-exact-budget-for-the-outermost-cap-contacts) → [Entrance and exact clock](frontier-dynamics.md) | Golden bounds; anchor capture; exact left plateau |
 | Digit encoding and feature interactions | [Cloitre memory theorem](five-window-closure.md#exact-state-bit-order-for-every-bounded-cap-graph) · [Cloitre interactions](exact-collars.md#a-persistent-interaction-on-canonical-index-words) · [Campbell comparison](../campbell/scale-memory.md) | Fibonacci digits; exact neighborhood and ternary formulas |
 | Supporting arithmetic and related variants | [Landing and shifted-family audit](landing.md) | Foundations |
 

@@ -137,3 +137,35 @@ orbit evaluator through 131072. These optional larger checks are separate
 from the eight default replays. Only the finite-window maximum principle
 turns its stated finite comparisons into an infinite-tail assertion;
 the contact and clock observations do not establish global convergence.
+
+For the complementary-drawdown conjecture and parity geometry, build
+the separate two-evaluator check:
+
+```sh
+c++ -O3 -std=c++17 -Wall -Wextra -Werror cloitre-conway/verification/drawdown_geometry.cpp -o /tmp/drawdown_geometry
+/tmp/drawdown_geometry 134217728
+/tmp/drawdown_geometry 134217728 --visited
+```
+
+The two commands must return identical JSON, recorded in
+[drawdown-geometry.json](cloitre-conway/verification/drawdown-geometry.json).
+The default route uses Brent cycle skipping and about 512 MiB for this
+prefix; `--visited` stores each full orbit with timestamped state arrays
+and uses about 1.5 GiB. Both check literal values and selected splits
+through 4096. Run either with a smaller limit while developing.
+The recorded 495-term witness is a fixed interval; a larger run can find
+a different longest interval. The prefix observations do not prove the
+conjectured inequality or a convergence rate.
+
+For the contact-frontier entrance bounds and five-input clock theorem:
+
+```sh
+python3 cloitre-conway/verification/frontier_dynamics_check.py
+```
+
+Compare its JSON with
+[frontier-dynamics.json](cloitre-conway/verification/frontier-dynamics.json).
+This separate check tests both propagated minorants, quantitative first
+capture, cycle localization, all eligible gated frontiers in its prefix,
+and the explicit nongating counterexample. The infinite conclusions use
+the written arguments in [frontier dynamics](cloitre-conway/frontier-dynamics.md).
