@@ -16,6 +16,7 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 
 - [A one-sided landing-displacement criterion](#a-one-sided-landing-displacement-criterion)
 - [A finite-window maximum principle](#a-finite-window-maximum-principle)
+- [A smaller tail bound from cycle enclosures](#a-smaller-tail-bound-from-cycle-enclosures)
 - [An exact budget for the outermost cap contacts](#an-exact-budget-for-the-outermost-cap-contacts)
 - [Defect production by the canonical clock](#defect-production-by-the-canonical-clock)
 - [Contact residues on longer cycles](#contact-residues-on-longer-cycles)
@@ -202,6 +203,112 @@ The 165580141 integer comparisons, the maximum, and literal checks of
 both values and selected splits through 4096 are recorded in
 [compact evidence](verification/canonical-erosion.json).
 This is a computer-assisted infinite-tail bound, not a convergence proof.
+
+### A smaller tail bound from cycle enclosures
+
+The preceding certificate supplies M=42085100/64203827 on the whole
+tail from F_40. Cycle enclosures improve it using only a shorter, already
+verified canonical prefix. The later sources are bounded by intervals;
+their canonical values and prescribed clocks are not computed.
+
+**Theorem (computer-assisted tail bound).** For every n>=F_41=165580141,
+
+$$
+\frac{C(n)}n\le
+K:=\frac{19580084505646265}{29872542956223744}
+<0.65545423.
+$$
+
+The improvement over M is approximately 0.0000378529. It does not
+establish convergence to alpha.
+
+**The interval certificate.** Partition the indices into consecutive
+cells of width 512. The retained canonical prefix supplies exact minimum
+and maximum values on each complete cell through 141422079. Two independent
+full-clock evaluators had previously agreed at every index through 141422324.
+The certificate then bounds C on every remaining source cell through
+F_42-1=267914295, using only earlier cell bounds.
+
+For a source interval I=[a,b], the
+[cycle-capture theorem](golden-proof.md#6-the-upper-cap-fibonacci-identities-and-the-full-equality-set)
+and the strict cycle-point bounds give an initial interval J containing
+every periodic point for every source in I. On a natural block, its
+endpoints are
+
+$$
+\ell(n)=\max(F_{j-1},n-F_{j-1}),\qquad
+r(n)=\min(F_j,n-F_{j-2}).
+$$
+
+Both are nondecreasing, including across Fibonacci boundaries, so
+J=[ell(a),r(b)] can be intersected with the integer bounds
+5a/9<x<2b/3. Suppose all relevant periodic points lie in J, and earlier
+cell bounds give
+
+$$
+c_-\le C(x)\le c_+\qquad(x\in J).
+$$
+
+Every periodic point has a periodic predecessor in J. Hence it also
+lies in [a-c_+,b-c_-]. Replace J by
+
+$$
+J\cap[a-c_+,b-c_-].
+$$
+
+Repeating this operation preserves containment of every cycle. The
+certificate performs at most 100 rounds; reaching a fixed interval is
+unnecessary for correctness. It includes cycles of every period.
+
+Partition the final J into slices [u,v] lying within individual argument
+cells. If the selected point belongs to such a slice, its complement
+belongs to [a-v,b-u]. Earlier range bounds for C on these two intervals
+therefore bound their sum. Taking the minimum lower bound and maximum
+upper bound over all slices bounds C(n) throughout the source cell.
+Intersect these bounds with G(a), U(b), and floor(M*b).
+
+Every range query is widened to complete cells. Its returned lower bound
+is the minimum of their lower bounds, and its upper bound the maximum of
+their upper bounds. Every queried cell is strictly earlier than its
+source cell. Induction on cells therefore validates the entire
+certificate; none of the new bounds supports itself.
+
+The [C++ checker](verification/cycle_enclosure.cpp) uses a segment tree
+for range queries. An [independent checker](verification/cycle_enclosure_check.py)
+recomputes the prefix-cell extrema with NumPy and uses sparse tables for
+the later queries. It verifies all 247056 derived cells, 24705600 cycle
+enclosure queries and 15073001 readout slices. Every lower and upper
+endpoint agrees. The [compact evidence](verification/cycle-enclosure.json)
+records the result
+
+$$
+\frac{C(n)}n\le
+R:=\frac{33883719}{51697408}
+\quad(F_{41}\le n<F_{42}).
+$$
+
+Here each cell's upper value is divided by its smallest source in this
+row. The exact anchor C(F_42)=F_41 extends the same bound to n=F_42.
+The exporter has independent Brent and visited-orbit modes, both checked
+against the retained prefix through 131072 and literal clocks through 4096.
+A width 256 refinement gives a slightly stronger row estimate; the
+displayed theorem uses only the width 512 certificate.
+
+**Propagation to the infinite tail.** If F_42<=n<F_43, the selected high
+child a lies in [F_41,F_42], and the other child b in [F_40,F_41].
+Thus C(a)<=R*a, C(b)<=M*b, and a/n>5/9. Since R<M,
+
+$$
+\frac{C(n)}n
+\le\frac anR+\frac bnM
+\le\frac59R+\frac49M=K.
+$$
+
+The preceding row already has R<K. Applying the finite-window maximum
+principle at j=41 now gives the stated bound for every n>=F_41.
+Every interval endpoint and the final bound are checked by integer
+arithmetic; the infinite-tail conclusion uses this argument rather than extrapolation
+from the bounded range.
 
 ### An exact budget for the outermost cap contacts
 

@@ -359,3 +359,28 @@ is sources3..63; the infinite dilation argument proves exact nesting for
 every n>=11. The independent selectors, literal clocks and half-scale
 greatest-periodic-point calculation corroborate that argument. This is a
 different ten-term initialization, not the canonical sequence C.
+
+For the [improved tail bound from cycle enclosures](cloitre-conway/dispersion.md#a-smaller-tail-bound-from-cycle-enclosures):
+
+```sh
+c++ -O3 -std=c++17 -Wall -Wextra -Werror cloitre-conway/verification/cycle_enclosure.cpp -o /tmp/cycle_enclosure
+/tmp/cycle_enclosure --generate-values 141422079 /tmp/conway-values.u32
+/tmp/cycle_enclosure /tmp/conway-values.u32 512 /tmp/cycle-bounds.u32
+python3 cloitre-conway/verification/cycle_enclosure_check.py /tmp/conway-values.u32 /tmp/cycle-bounds.u32
+```
+
+The independent Python checker requires NumPy. Compare both outputs with
+[cycle-enclosure.json](cloitre-conway/verification/cycle-enclosure.json).
+The prefix file contains little-endian uint32 values, including unused index
+zero, and takes about 540 MiB. An existing independently checked prefix can be
+reused, skipping generation; only complete 512-term cells through 141422079 are
+used in the recorded run. The optional generation mode --visited provides an
+independent full-orbit selector for reproducing the same prefix. Both modes
+check literal clocks through 4096.
+
+The enclosure computes value intervals at later sources, using only earlier
+cells. Its independent verifier checks every interval and readout slice with
+a different range-query algorithm. The temporary bounds file is reproducible
+and is not a sequence-value array. This optional check is separate from the
+eight default replays; the written propagation argument supplies the infinite
+tail bound. Full golden-ratio convergence remains open.
