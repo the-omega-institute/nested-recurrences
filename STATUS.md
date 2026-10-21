@@ -103,6 +103,14 @@ history also attains every site deadline in a specified phase. These are
 limitations of that relaxation, not
 canonical counterexamples.
 
+Even retaining the full prescribed seed and depth, an explicit nonconvergent
+comparison sequence has a uniformly bounded additive recurrence error and
+bounded drawdowns in both complementary sequences. A one-unit input change
+can also produce a linear change in the nested operator's output. The
+[bounded-forcing theorem](cloitre-conway/dispersion.md#bounded-forcing-with-the-complete-prescribed-clock)
+shows why small scalar errors do not control the actual clock. These are
+limitations of approximation arguments; the canonical equation has zero error.
+
 ## Questions that remain open
 
 1. **Convergence and decay over all integers.** Prove C(n)/n -> alpha,
