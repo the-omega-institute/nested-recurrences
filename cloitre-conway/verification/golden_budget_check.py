@@ -2,8 +2,66 @@
 
 import json
 import math
+from bisect import bisect_right
+from fractions import Fraction
 
 from conway_explore import brent_generate, generate, literal_generate
+
+
+def value_chain_check(values, budgets, fibonacci):
+    limit = len(values) - 1
+    anchors = set(fibonacci)
+    sums = [Fraction(0)] * (limit + 1)
+    maximum = Fraction(0)
+    maximizing_index = 0
+    potential_checks = 0
+    for index in range(3, limit + 1):
+        order = bisect_right(fibonacci, index) - 1
+        anchor, previous = fibonacci[order], fibonacci[order - 1]
+        determinant = anchor * values[index] - previous * index
+        assert determinant >= anchor * budgets[index]
+        potential_checks += 1
+        if index in anchors:
+            assert budgets[index] == 0
+        else:
+            sums[index] = Fraction(budgets[index], index) + sums[values[index]]
+            assert sums[index] <= Fraction(4, 9)
+        if sums[index] > maximum:
+            maximum, maximizing_index = sums[index], index
+
+    direct_checks = direct_steps = 0
+    roots = list(range(3, 4097)) + [maximizing_index]
+    for root in roots:
+        point = root
+        order = bisect_right(fibonacci, point) - 1
+        initial_phase = Fraction(point, fibonacci[order])
+        phase_gain = Fraction(0)
+        normalized = Fraction(0)
+        while point not in anchors:
+            next_point = values[point]
+            increment = (Fraction(next_point, fibonacci[order - 1])
+                         - Fraction(point, fibonacci[order]))
+            assert increment >= Fraction(budgets[point], fibonacci[order - 1])
+            normalized += Fraction(budgets[point], point)
+            phase_gain += increment
+            point = next_point
+            order -= 1
+            direct_steps += 1
+        assert phase_gain == Fraction(point, fibonacci[order]) - initial_phase
+        assert normalized == sums[root]
+        assert normalized <= Fraction(2, 3) * phase_gain <= Fraction(4, 9)
+        direct_checks += 1
+
+    return dict(integer_potential_checks=potential_checks,
+                normalized_budget_checks=limit - 2,
+                direct_rational_chain_checks=direct_checks,
+                direct_value_steps=direct_steps,
+                maximum_sum_index=maximizing_index,
+                maximum_normalized_sum=str(maximum),
+                universal_bound='4/9',
+                scope='The written phase-potential argument proves the bound for all '
+                      'value orbits. These finite checks corroborate it; value iteration '
+                      'is distinct from the actual selected child tree.')
 
 
 def main():
@@ -113,6 +171,7 @@ def main():
                           positive_occurrence_count_checks=limit - 2,
                           total_greedy_spine_edges=total_spine_edges,
                           longest_retained_spine=maximum_spine,
+                          value_iteration=value_chain_check(values, budgets, fibonacci),
                           scope='The written proof supplies all indices >=65536. Independent finite base checks supply smaller indices. Tree and spine checks corroborate the proved consequences; no uniform dispersion or full convergence claim.'), indent=2))
 
 

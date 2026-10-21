@@ -547,3 +547,97 @@ It does not establish convergence: if D(n) is proportional to n, its
 positive budget is still proportional to n, and the retained path can
 have length of order log n. A uniform dispersion estimate or an additional
 mechanism controlling normalized excess remains necessary.
+
+### A uniform budget along value iteration
+
+There is a second global budget for the same shifted excess P. Start at
+any positive integer n_0 and iterate the values themselves,
+
+$$
+n_{r+1}=C(n_r).
+$$
+
+**Theorem (value-iteration budget).** Along every such orbit,
+
+$$
+\boxed{\sum_{r\ge0}\frac{P(n_r)}{n_r}\le\frac49.} \tag{9.4}
+$$
+
+Consequently, for any epsilon>0, there are at most 4/(9epsilon) orbit
+positions with P(n_r)/n_r>=epsilon. There are at most 8/(9epsilon)
+positions with both D(n_r)/n_r>=epsilon and n_r>=2/epsilon.
+These bounds are independent of the starting index.
+
+**Proof.** For a canonical block F_j<=n<F_(j+1), write S=F_j and
+A=F_(j-1). We first prove the exact potential inequality
+
+$$
+S C(n)-A n\ge S P(n)\qquad(n\ge3). \tag{9.5}
+$$
+
+If D(n)>=1, then P(n)=D(n)-1. Since
+|A/S-alpha|=alpha^j/S, n<2S and j>=4,
+
+$$
+G(n)-\frac AS n
+> -\alpha^2-2\alpha^j>-1.
+$$
+
+This gives C(n)-(A/S)n>P(n). The remaining n>=3 with D(n)=0 are
+classified by the equality set in the opening theorem. At n=S the
+determinant in (9.5) is zero; at n=S+1 it is S-A. At a nonanchor
+zero n=F_(j+1)-1, C(n)=S and Cassini's identity gives
+
+$$
+S^2-A(S+A-1)=A+(-1)^{j-1}>0.
+$$
+
+The four exceptional zeros 11,24,25,59 have determinants 1,3,11,29.
+Thus (9.5) holds in every case.
+
+Stop the value orbit at its first Fibonacci anchor n_H. Such a hit
+occurs because C(n)<n for n>=2 and both initial indices are anchors.
+Afterwards every iterate is an anchor and P remains zero, so only
+0<=r<H contributes to (9.4). If n_0 is already an anchor, the sum is
+zero. Otherwise let j_0 be its canonical block order. The golden bound
+and cap place C(n) in [F_(j-1),F_j]. Before the first anchor hit, each
+step therefore lowers the canonical block order by exactly one.
+Give the terminal anchor its inherited order j_0-H, including an upper
+endpoint if that is where it lands. Define
+
+$$
+\theta_r=\frac{n_r}{F_{j_0-r}}\qquad(0\le r\le H).
+$$
+
+Applying (9.5) at each nonterminal point gives
+
+$$
+\theta_{r+1}-\theta_r
+\ge\frac{P(n_r)}{F_{j_0-r-1}}\ge0. \tag{9.6}
+$$
+
+All nonterminal orders are at least 4, and the terminal inherited
+order is at least 3. The relevant consecutive Fibonacci ratios give
+1<=theta_r<=5/3 and F_(j-1)/n<=2/3 at every nonterminal point.
+Multiplying (9.6) by this last ratio and summing yields
+
+$$
+\sum_{r=0}^{H-1}\frac{P(n_r)}{n_r}
+\le\frac23(\theta_H-\theta_0)
+\le\frac49.
+$$
+
+This proves (9.4). The first counting bound follows by summing epsilon
+over the indicated positions. For the second, D(n)/n>=epsilon and
+n>=2/epsilon imply P(n)/n>=epsilon/2. QED.
+
+The [budget checker](verification/golden_budget_check.py) verifies (9.5)
+and (9.4) throughout its independently generated prefix, and directly
+replays exact rational phase telescopes. These are corroborations of the
+written proof, with no additional finite induction premise.
+
+Value iteration and the selected child tree impose different constraints.
+The upper-cap table U also has a finite value-orbit budget, while its
+artificial proportional child policies can preserve positive relative
+excess. Thus (9.4) does not establish convergence of C(n)/n. Connecting
+this budget to the actual prescribed orbit selection remains necessary.
