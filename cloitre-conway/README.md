@@ -43,7 +43,9 @@ indices, and then establish a decay rate.
    [exact-neighborhood note](exact-collars.md) gives exact values and phases.
 3. **[Read the remaining convergence problem](dispersion.md).** Exact
    extremal-phase reasoning gives a one-sided landing-displacement
-   criterion. Martingale identities give a conditional decay theorem; the required
+   criterion. A maximum principle certifies an infinite-tail upper bound;
+   contact-loss budgets and canonical clock rules isolate remaining obstacles.
+   Martingale identities give a conditional decay theorem; the required
    uniform dispersion inequality is still open.
 
 All notes can be read in your browser, without installing software.

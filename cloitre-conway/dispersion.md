@@ -3,7 +3,8 @@
 [Project home](../README.md) · [Research map](README.md#technical-research-map)
 
 This note gives a one-sided landing-displacement criterion for convergence,
-then proves the martingale identities and the conditional route from
+then gives a finite-window maximum principle, a contact-loss budget and
+canonical clock restrictions. It also proves the martingale identities and the conditional route from
 four-generation dispersion to an upper decay rate. It develops basin
 lower envelopes and scalar-valid policies. Uniform dispersion remains open.
 Explicit nonconvergent extensions show why golden bounds, finite prefixes,
@@ -14,6 +15,11 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 ## Contents
 
 - [A one-sided landing-displacement criterion](#a-one-sided-landing-displacement-criterion)
+- [A finite-window maximum principle](#a-finite-window-maximum-principle)
+- [An exact budget for the outermost cap contacts](#an-exact-budget-for-the-outermost-cap-contacts)
+- [Defect production by the canonical clock](#defect-production-by-the-canonical-clock)
+- [Contact residues on longer cycles](#contact-residues-on-longer-cycles)
+- [Synchronized negative-jump intervals under sublinear drawdown](#synchronized-negative-jump-intervals-under-sublinear-drawdown)
 - [Size-biased martingales and the four-generation dispersion criterion](#size-biased-martingales-and-the-four-generation-dispersion-criterion)
 - [A phase-free lower bound from the prescribed basin](#a-phase-free-lower-bound-from-the-prescribed-basin)
 - [Quadratic basin dispersion in the unit-defect family](#quadratic-basin-dispersion-in-the-unit-defect-family)
@@ -154,6 +160,404 @@ These computations do not bound E_-: even a decreasing list of finite
 maxima cannot establish the required uniform tail estimate. Proving that estimate for
 the actual selected orbit remains the convergence problem in this form.
 Reproduce with `python3 cloitre-conway/verification/landing_displacement.py`.
+
+### A finite-window maximum principle
+
+**Theorem (Cloitre).** For every j>=8,
+
+$$
+\sup_{n\ge F_j}\frac{C(n)}n
+=\max_{F_j\le n<F_{j+2}}\frac{C(n)}n.
+$$
+
+**Proof.** For n>=F_(j+2), the closed-block child bounds in the
+[capture theorem](golden-proof.md#6-the-upper-cap-fibonacci-identities-and-the-full-equality-set)
+give both children at least F_j. Both are strictly smaller than n.
+The parent ratio is their weighted average:
+
+$$
+\frac{C(n)}n=\frac gn\frac{C(g)}g
++\frac{n-g}{n}\frac{C(n-g)}{n-g}.
+$$
+
+Strong induction extends the maximum on the stated finite window to
+every later n. The reverse inequality is immediate. QED.
+
+An independent evaluation of every n in
+[F_40,F_42)=[102334155,267914296) gives
+
+$$
+\max_{F_{40}\le n<F_{42}}\frac{C(n)}n
+=\frac{84170200}{128407654}
+=\frac{42085100}{64203827}<0.65549208.
+$$
+
+Equality holds at n=128407654. Thus the same exact upper bound holds
+for **every n>=F_40**. This confirms Cloitre's finite certificate using
+an independently implemented Brent evaluator, without reading his array.
+The 165580141 integer comparisons, the maximum, and literal checks of
+both values and selected splits through 4096 are recorded in
+[compact evidence](verification/canonical-erosion.json).
+This is a computer-assisted infinite-tail bound, not a convergence proof.
+
+### An exact budget for the outermost cap contacts
+
+Use inherited Fibonacci labels and define, on the whole natural block,
+
+$$
+E_k(t)=F_{k-1}+t-C(F_k+t),\qquad 0\le t\le F_{k-1}.
+$$
+
+The upper cap gives E_k>=0. A zero can occur only for t<=F_(k-2).
+Put
+
+$$
+Z_k=\{0\le t\le F_{k-2}:E_k(t)=0\},\qquad
+t_k=\max Z_k,\qquad B_k(0)=\frac{t_k}{F_{k-1}}.
+$$
+
+The anchor and offset-one identity ensure t_k>=1 for k>=8.
+For a selected split g=F_(k-1)+s, profile additivity says
+
+$$
+E_k(t)=E_{k-1}(s)+E_{k-2}(t-s).
+$$
+
+Both terms are nonnegative. Consequently a contact requires two child
+contacts. Each child zero is in its own linear-cap range, even when
+the inherited profile is defined on a larger block. Cloitre's contact recursion gives
+
+$$
+t_k\le t_{k-1}+t_{k-2}\qquad(k\ge10).
+$$
+
+The following exact budget is a consequence of that recursion; it adds
+no unproved strict contraction assumption. Let
+
+$$
+\Delta_k=t_{k-1}+t_{k-2}-t_k,\qquad
+r_k=\frac{\Delta_k}{t_{k-1}+t_{k-2}},\qquad
+P_k=\alpha^{k-1}(t_k+\alpha t_{k-1}).
+$$
+
+**Theorem (contact-loss budget).** The sequence P_k decreases to a limit
+P_infinity>=0, and B_k(0) has a limit b=P_infinity/alpha. Moreover
+
+$$
+B_k(0)\longrightarrow0
+\quad\Longleftrightarrow\quad
+\sum_{k\ge10}r_k=\infty.
+$$
+
+For any K>=9,
+
+$$
+P_k\le P_K\exp\left(-\alpha\sum_{j=K+1}^{k}r_j\right).
+$$
+
+In particular a lower bound on the partial sums of the form
+gamma*log(k)-O(1) implies B_k(0)=O(k^(-alpha*gamma)).
+
+**Proof.** Since alpha+alpha^2=1,
+
+$$
+P_{k-1}-P_k=\alpha^{k-1}\Delta_k,\qquad
+\frac{P_k}{P_{k-1}}=1-c_kr_k,\qquad
+c_k=\frac{\alpha(t_{k-1}+t_{k-2})}
+{t_{k-1}+\alpha t_{k-2}}\in[\alpha,1].
+$$
+
+All factors are positive because t_k>=1. The infinite product is zero
+exactly when sum(c_k*r_k) diverges, equivalently when sum(r_k) diverges.
+The exponential estimate follows from 1-x<=exp(-x).
+
+For the asserted limit, set u_k=alpha^(k-1)*t_k. Then
+u_k=P_k-alpha^2*u_(k-1). This stable linear recurrence, whose multiplier
+has absolute value less than one, gives
+u_k -> P_infinity/(1+alpha^2). Binet's formula gives
+alpha^(k-1)*F_(k-1) -> 1/sqrt(5); using
+1+alpha^2=sqrt(5)*alpha proves b=P_infinity/alpha. Also
+u_k<=P_k, which transfers the exponential estimate to B_k(0). QED.
+
+The [independent contact enumeration](verification/canonical-erosion.json)
+reaches 2^25 and covers complete contact domains through k=37.
+It gives t_37=169398 and Delta_37=11699, with
+t_36+t_35=181097. These finite losses do not prove their sum diverges.
+Even contact collapse B_k(0)->0 would not alone imply full convergence:
+positive profile sublevels, or the selected negative displacements,
+must still be controlled.
+
+The contact subsequence itself gives the quantitative obstruction
+
+$$
+L\ge\frac{\alpha^3b}{1+\alpha b}.
+$$
+
+Indeed, at n=F_k+t_k the ratio tends to (1+b)/(phi+b), and subtracting
+alpha gives the displayed expression. Thus a positive surviving contact
+width would force a positive global limiting excess.
+
+### Defect production by the canonical clock
+
+Here the precise entrance and depth yield more than profile additivity.
+This extends Cloitre's selection argument under a doubled contact collar
+to a single source contact with a one-sided barrier.
+Fix k>=10 and write A=F_(k-1), B=F_(k-2), Q=F_(k-3).
+On the source block put P(u)=C(A+u)-B=u-E_(k-1)(u), 0<=u<=B.
+Suppose 1<=t<=Q and
+
+$$
+P(t)=t,\qquad P(u)\ge t\quad(t<u\le B). \tag{G}
+$$
+
+This requires a source contact and no later drop below its value in
+that source block; earlier defects are allowed. Only offsets
+t<u<=min(2t-2,B-1) require checking: the lower envelope gives
+G(A+2t-1)>=B+t, and P(B)=Q>=t.
+
+**Selection lemma.** Under (G), with h=C(F_k+t-1),
+
+$$
+g(F_k+t)=\begin{cases}A+t,&h\text{ even},\\A,&h\text{ odd},\end{cases}
+\qquad
+E_k(t)=\mathbf1_{\{h\text{ odd}\}}E_{k-2}(t),
+\qquad e(F_k+t)=-(-1)^ht.
+$$
+
+**Proof.** In offsets from A the map is
+R(u)=t-[C(A+u)-B]. For u<0 the monotone upper cap gives R(u)>=t.
+For u>t, condition (G) gives R(u)<=0 when u<=B; when u>B the
+lower envelope and t<=Q give the same inequality. The initial offset
+B+t-1 is above t. Until entry into [0,t], even ranks are above t
+and odd ranks below zero. The capture lemma ensures eventual entry.
+The first entry can only be at zero at an odd rank or at t at an
+even rank. The anchor and source contact give R(0)=t, R(t)=0,
+so these parities persist. The established cycle-entry theorem puts
+the prescribed rank h on this two-cycle. Profile additivity proves
+the defect formula, and the definition of e gives its sign. QED.
+
+**Adjacent-parent consequence.** If both t and t+1 satisfy (G), and
+A+t is odd, then
+
+$$
+E_k(t)+E_k(t+1)\ge
+\min\{E_{k-2}(t),E_{k-2}(t+1)\}.
+$$
+
+More precisely, if E_(k-2)(t)>M_t>=0 and
+E_(k-2)(t+1)>M_(t+1)>=0, at least one of the two parent defects
+exceeds its corresponding threshold. If the first depth is odd, it
+inherits the first lower defect. If it is even, the first output is
+A+t, an odd number; that becomes the next depth and forces inheritance
+of the second lower defect. Independent choices of split phase would
+not justify this argument.
+
+For example k=10, t=3,4 satisfy (G), and E_8(3)=E_8(4)=1.
+At n=58 the even depth 36 selects g=37 and gives E_10(3)=0.
+That output C(58)=37 is the next depth: at n=59 it selects g=34
+and gives E_10(4)=1.
+
+There is also an explicit alternative when (G) fails. Suppose every
+t in I=[a,b] is a source contact, with 1<=a<=b<=Q. Let
+
+$$
+\mu=\min_{b\le u\le B}P(u),\qquad \Delta=b-\mu,\qquad L=b-a+1.
+$$
+
+Exactly the prefix I intersect (-infinity,mu] satisfies (G), with
+length max(0,L-Delta). Pair its consecutive offsets with A+t odd.
+If E_(k-2)(t)>M_t>=0 throughout I, then either
+
+$$
+\Delta\ge L/2,\qquad\text{or}\qquad
+\#\{t\in I:E_k(t)>M_t\}\ge\lfloor L/4\rfloor.
+$$
+
+Indeed, when Delta<L/2 that prefix has at least floor(L/2)+1
+positions and at least floor(L/4) disjoint aligned pairs. If Delta>0,
+a minimizer u is strictly between b and B, and the lower envelope
+forces u<=2b-2. It witnesses
+
+$$
+C(A+b)-C(A+u)=\Delta,\qquad E_{k-1}(u)=u-b+\Delta.
+$$
+
+Thus an interval with separated lower defects either loses many
+low-defect parents or exhibits a measured source drawdown. This controls
+counts under explicit hypotheses, not the last surviving contact.
+Neither interval coverage nor lower-defect separation is proved globally.
+
+### Contact residues on longer cycles
+
+Longer cycles cannot be discarded. For n=F_k+t with k>=10 and
+0<t<=F_(k-1), let a=t_(k-1), b=t_(k-2), and suppose t>2b.
+Consider a reached primitive cycle of period p>2, with offsets u_i
+from F_(k-1) in transition order. Mark a phase precisely when it is
+a legal split and both child defects are zero. Let m be the number
+of marked phases and D=a+b-t. If m>0, then
+
+$$
+D\ge0,\qquad m\le D+1,\qquad
+\frac mp\le\frac{D+1}{2D+3}<\frac12.
+$$
+
+**Proof.** Marked offsets lie in [t-b,a], an integer interval of
+length D+1. Write H(u)=t-u+widehat_E(u), where
+widehat_E(u)=F_(k-2)+u-C(F_(k-1)+u)>=0 on [0,t];
+on its native block it equals E_(k-1). A marked u has H(u)=t-u<=b,
+so its successor cannot be marked. If H^2(u) is marked as well, then
+
+$$
+H^2(u)-u=\widehat E(t-u)>0.
+$$
+
+Equality would give period at most two, so integrality makes each such
+increase at least one. A run of marks two ranks apart therefore has at
+most D+1 marks. Marks cannot alternate around the entire cycle, because
+the offsets would strictly increase back to their starting point.
+If there are r maximal runs, then m<=r(D+1), while the separating gaps
+have at least three ranks, giving p>=2m+r. Combining proves the bound.
+QED.
+
+If tau is the actual cycle-entry rank, the parent is a contact exactly
+when (C(n-1)-tau) mod p is marked. This restricts acceptable clock
+residues but does not prove that the deterministic clock avoids them.
+There is no equidistribution assumption here.
+
+For an important finite caution, n=29053=F_23+396 is a contact with
+depth 18098 and g=18007. Its reached four-cycle, in offsets from
+F_22=17711, is 296 -> 100 -> 297 -> 101 -> 296, with source defects
+0,1,2,1. Thus a parent contact need not have period two, and its entire
+cycle need not consist of contacts. At n=122805 the outermost contact
+of level 26 has period six. Both complete witnesses are in the
+[recorded evidence](verification/canonical-erosion.json).
+
+The gate, adjacent-parent and residue assertions were independently
+checked using full visited-state orbits through 131072; see
+[the checker](verification/canonical_erosion_check.py). Omitting the gate
+already fails at n=63: the source contact t=8 has P(9)=7<8 and the
+actual selector is 35, not an endpoint of {34,42}.
+The general statements follow from their proofs, not from these finite checks.
+
+### Synchronized negative-jump intervals under sublinear drawdown
+
+Define the largest forward drawdown before N by
+
+$$
+Q(N)=\max\bigl(\{0\}\cup\{C(u)-C(v):1\le u<v<N\}\bigr).
+$$
+
+The following theorem is conditional on Q(N)=o(N); that estimate itself
+is not proved. It strengthens the description of a possible failure of
+convergence, rather than proving that sublinear drawdown implies convergence.
+
+**Extremal phase locking (unconditional).** Suppose L>0, and let theta_*
+be the least limiting Fibonacci phase among sequences with d(n)->L,
+as in the first section. Along any sequence realizing this extremum,
+
+$$
+\frac{g(n)}n\longrightarrow\alpha,\qquad
+\frac{n-g(n)}n\longrightarrow\alpha^2,\qquad
+\frac{e(n)}n\longrightarrow-\alpha L.
+$$
+
+Every fixed canonical descendant word also has d->L and inherited phase
+theta_*. To see the stronger assertion, both children have d->L by the
+weighted-average argument. Their limiting inherited phases theta_1 and
+theta_2 are at least theta_* by minimality. Positive L and the cap exclude
+Fibonacci endpoint phases. The exact size identity gives
+
+$$
+\theta_*=\alpha\theta_1+\alpha^2\theta_2.
+$$
+
+Since alpha+alpha^2=1, both child phases equal theta_*.
+This fixes the child fractions, and the exact e identity fixes its limit.
+Induction proves the assertion for every fixed descendant word.
+
+**Theorem (synchronized intervals).** Assume Q(N)=o(N) and L>0.
+There exist eta>0 and 1<S_0<S_1<phi such that for every fixed R>=0
+there are arbitrarily large k with
+
+$$
+e(n)\le-\eta n
+\quad\text{for all }j\in\{k-R,\ldots,k\},\quad
+n\in\mathbb Z\cap[S_0F_j,S_1F_j].
+$$
+
+**Proof.** Extremal phase locking has a uniform stability form. For any
+epsilon>0 there are zeta>0 and N_0 such that n>=N_0,
+d(n)>=L-zeta and |n/F_j-theta_*|<=zeta imply
+|e(n)/n+alpha*L|<epsilon. Otherwise counterexamples with zeta tending
+to zero would contradict the phase-locking limit.
+
+Follow the first child r times from an extremal sequence, for each fixed
+0<=r<=R. Its indices m_r have m_r/F_(k-r)->theta_* and
+C(m_r)/F_(k-r)->(alpha+L)*theta_*.
+Choose a small fixed rho>0 and consider all n in
+[(theta_*+rho)F_j,(theta_*+2rho)F_j]. Both n and n-1 eventually
+lie to the right of m_r. The drawdown hypothesis gives, uniformly,
+
+$$
+C(n),C(n-1)\ge(\alpha+L)\theta_*F_j-o(F_j).
+$$
+
+Thus d(n)>=(alpha+L)*theta_*/(theta_*+2rho)-alpha-o(1).
+Choose rho small enough for this bound and the phase to fall within
+the uniform stability neighborhood. With epsilon<alpha*L/2,
+the desired inequality holds with eta=alpha*L/2. The same rho works
+for every fixed R: only the required starting index changes.
+The cap gives 1<theta_*<phi, so rho can also ensure S_1<phi. QED.
+
+Consequently, under Q=o(N), full convergence is equivalent to the absence
+of macroscopic intervals with e(n)<=-eta*n in every fixed interior core,
+for each eta>0. Here a core is
+[F_k+delta*F_(k-1),F_(k+1)-delta*F_(k-1)], with any fixed
+0<delta<1/2. More precisely their maximum lengths must be o(F_k).
+The forward implication follows because convergence makes every selected
+jump o(n); the converse follows from the synchronized-interval theorem.
+
+There is a spatial constraint on every odd-depth member of a surviving
+interval. Fix n, put q=Q(n), and define
+
+$$
+V_n=\max\bigl(\{0\}\cup
+\{C(v)-C(u):1\le u<v<n,\ v-u\le q\}\bigr),\qquad
+\epsilon_n=\max(q,V_n).
+$$
+
+**Crossing lemma.** Let h=C(n-1), g=T_n^h(n-1), and e=T_n(g)-g.
+If (-1)^h*e>0, set a=min(g,T_n(g)), b=max(g,T_n(g)).
+For every integer a+q<z<=b,
+
+$$
+z-\epsilon_n\le T_n^2(z)\le z+\epsilon_n-1.
+$$
+
+This conclusion does not require a period bound or even cyclic selection.
+
+**Proof.** First S=T_n^2 is almost increasing: for x<y,
+S(x)<=S(y)+epsilon_n. If T_n(x)>=T_n(y), the difference is bounded
+by q; otherwise 0<T_n(y)-T_n(x)<=q and the difference is bounded
+by V_n.
+
+The sign condition says that the literal even-rank orbit reaches a and
+the odd-rank orbit reaches b. The even subsequence starts at n-1>=b.
+The point a occurs at positive rank; if T_n(v)=a is its predecessor,
+then T_n(n-1)<=T_n(v)+q=a+q. The odd subsequence therefore starts
+at or below a+q. For each indicated z the even subsequence has a
+downward crossing, S(x)<z<=x, and the odd subsequence an upward
+crossing, w<z<=S(w). Almost monotonicity gives the two stated bounds.
+QED.
+
+At an odd depth with e(n)<=-eta*n, this forces an interval of at least
+eta*n-Q(n) integers on which |T_n^2(z)-z|<=epsilon_n.
+Sublinear Q alone does not establish sublinear V_n, nor does a bound on
+these intervals exclude long runs of even depths. The remaining task is
+to rule out the synchronized stacks using recursive consistency across
+parents and scales. The exact crossing inequalities have been independently
+checked on actual prescribed orbits in the
+[clock checker](verification/canonical_erosion_check.py).
 
 ### Size-biased martingales and the four-generation dispersion criterion
 

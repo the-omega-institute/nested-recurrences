@@ -114,3 +114,26 @@ successor indexing, and compares with independent evaluators and literal
 nesting. This separate larger check is not part of the eight default
 replays. Its finite shell maxima do not prove an asymptotic displacement
 bound; see the [one-sided criterion](cloitre-conway/dispersion.md#a-one-sided-landing-displacement-criterion).
+
+For the [maximum principle, contact budget and canonical clock rules](cloitre-conway/dispersion.md#a-finite-window-maximum-principle),
+the compact evidence is
+[canonical-erosion.json](cloitre-conway/verification/canonical-erosion.json).
+Its three components have separate reproduction commands:
+
+```sh
+c++ -O3 -std=c++17 -Wall -Wextra -Werror cloitre-conway/verification/canonical_erosion.cpp -o /tmp/canonical_erosion
+/tmp/canonical_erosion 267914295 --certificate
+/tmp/canonical_erosion 33554432
+python3 cloitre-conway/verification/canonical_erosion_check.py
+```
+
+The first run reproduces `tail_certificate`, the second `contacts`, and
+the Python run `clock_check`. Source hashes are recorded alongside them.
+The full certificate stores about 1 GiB of sequence values and checks
+every index in [F_40,F_42); it does not depend on an author-supplied array.
+The contact run stores about 256 MiB and covers complete contact domains
+through level 37. The Python checker uses a different, full visited-state
+orbit evaluator through 131072. These optional larger checks are separate
+from the eight default replays. Only the finite-window maximum principle
+turns its stated finite comparisons into an infinite-tail assertion;
+the contact and clock observations do not establish global convergence.
