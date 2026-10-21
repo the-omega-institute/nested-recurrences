@@ -78,6 +78,11 @@ routes must leave one contact among the last four offsets; their first
 returns remain outside the known terminal shelves. Complete synchronization
 and a cross-level reset estimate remain open.
 
+The [default-channel extinction theorem](cloitre-conway/frontier-dynamics.md#persistent-amplitude-three-defects-need-effective-nondefault-entrances)
+shows that a persistent amplitude-three defect needs repeated effective
+nondefault entrances, with a quantitative backward chain of guarded events.
+Bounding the frequency of those actual channel choices remains open.
+
 A [traveling amplitude-three history](cloitre-conway/exact-collars.md#an-amplitude-three-traveling-history-limits-the-relaxed-routing-method)
 shows that the local necessary routing rules alone cannot extend uniform
 extinction to larger alphabets. It satisfies the zero left boundary and

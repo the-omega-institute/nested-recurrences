@@ -860,6 +860,145 @@ constrains those paths individually. A split with one nearby and one
 distant contact remains possible under these restrictions; neither full
 synchronization nor uniform extinction follows.
 
+### Persistent amplitude-three defects need effective nondefault entrances
+
+The three-route decoder separates spatial routing from the exterior choice
+of channel. The default channel alone cannot sustain amplitude three.
+This gives a necessary frequency condition on the actual channel choices,
+without assuming synchronization of the diagnostic seeds.
+
+**Default-only extinction.** Let a_i(t) be Boolean rows, zero for t<=W,
+with a_0,a_1 also zero at W+1,W+2 and otherwise arbitrary. Set
+f_i=1 unless i+sigma=0 modulo 3, when f_i=0, for sigma in {0,1,2}.
+For i>=2 define z_i(t)=0 through W and then, from left to right,
+
+$$
+z_i(t)=\begin{cases}a_{i-2}(t),&a_{i-1}(t)=0,\\
+z_i(t-3),&a_{i-1}(t)=1,\end{cases}\qquad
+a_i(t)=\begin{cases}z_i(t),&f_i+t-a_i(t-1)\text{ even},\\
+0,&f_i+t-a_i(t-1)\text{ odd}.
+\end{cases} \tag{D.1}
+$$
+
+For every spatial length, including the entire half-line,
+
+$$
+\boxed{a_i(t)=0\quad\text{for all }i\ge16-\sigma.} \tag{D.2}
+$$
+
+This is a computer-assisted theorem about the default-only rule. Its
+finite premises concern exact languages of arbitrary-length words,
+rather than profiles tested up to a spatial cutoff.
+
+**Proof and finite certificate.** Encode a pair of preceding rows as a
+word of letters (a,b) in {0,1}^2. Its first two letters are (0,0), and
+every later letter is unrestricted. Admit shorter zero prefixes as well.
+All real states of the recognizing automaton accept. One update is an
+exact synchronous transduction. Its state retains the preceding-language
+state, site parity, three previous z-values, and the preceding output.
+On input (a,b), compute z=a if b=0 and z=z(t-3) otherwise; compute c
+from the clock in (D.1), emit (b,c), shift the route register and toggle
+parity. There is no lookahead or right-boundary condition.
+
+The [checker](verification/ternary_erasure_check.py), with
+`--default-three`, implements this update twice, using explicit history
+tuples and a packed three-bit register, with separate determinization
+and minimization implementations. It compares the resulting languages
+by a complete product traversal after every update. For both parities of
+W, its finite identities are:
+
+| sigma | Last row admitting a positive output | Consecutive zero rows | Final pair-language |
+|---|---|---|---|
+| 0 | 15 | 16,17 | Only the letter (0,0), repeated arbitrarily |
+| 1 | 14 | 15,16 | Only the letter (0,0), repeated arbitrarily |
+| 2 | 13 | 14,15 | Only the letter (0,0), repeated arbitrarily |
+
+The [evidence](verification/ternary-erasure.json) records every intermediate
+state count and exact language comparison under `default_three`.
+The transducer construction proves by induction that each recognized
+language is precisely the possible row-pair language. Its final one-state
+automaton therefore proves the two indicated zero rows at every site.
+Two zero rows remain zero under (D.1), proving (D.2) for all later rows.
+Since the rule reads only offsets at or to the left of its output,
+every finite prefix has the same evolution as the corresponding half-line
+prefix. This also proves the assertion for arbitrary infinite inputs. QED.
+
+**Actual effective entrances.** Return to inherited canonical windows:
+K>=20, 2<=W<=B<=min(2W,F_(K-1)), complete saturation at W in rows
+K,K+1, and E_K,E_(K+1) in {0,3} through B. Put
+
+$$
+T=\min(\lfloor\alpha B\rfloor,B-3).
+$$
+
+The [doubled-band theorem](exact-collars.md#canonical-copying-in-a-doubled-saturated-band)
+and saturation propagation preserve these properties through the original B. Write
+a_r(u)=E_r(u)/3 and let z_r be the Boolean version of the routed lower
+profile in (17). The actual depth satisfies
+h_r(u)=F_(r-1)+u-1-3a_r(u-1), hence
+F_(r-1)+u-a_r(u-1)=h_r(u)+1 modulo 2. Thus the even branch in
+(D.1) is exactly the decoder's odd actual clock.
+At row r>=K+2 and W<u<=T, call an entrance
+**effective** if its actual clock is odd and
+
+$$
+z_r(u-d_r(u))\ne z_r(u), \tag{D.3}
+$$
+
+where d_r(u) is the channel selected by the actual preceding defect.
+Thus an effective entrance changes the actual output relative to the
+default rule at that same site and same preceding output. It may create
+or suppress a positive defect. It necessarily has d=1 or 2, terminates
+on the corresponding Q=2 or Q=1 shelf, and requires the actual source
+guard E_(r-1)(u+2)=3 or E_(r-1)(u+1)=3 respectively.
+
+If J>=K+16 and W<t<=T, then
+
+$$
+\boxed{E_J(t)=3\quad\Longrightarrow\quad
+\text{an effective entrance occurs at some }
+J-14\le r\le J,\quad W<u\le t.} \tag{D.4}
+$$
+
+Indeed, if no such entrance occurs, the actual prefix through t satisfies
+the default rule on that entire slab, with initial rows J-16,J-15.
+The native saturation and alphabet force both initial rows to vanish at
+W+1,W+2: a defect three there would give P(u)=u-3<W. The normalized
+actual clock is exactly (D.1), with sigma=J-17 modulo 3. By (D.2), its
+row sixteen is zero, contradicting E_J(t)=3. Induction in row and then
+site makes this comparison exact even though the clock reads the preceding
+current-row output. The source guard for (D.3) is available because
+u+3<=B throughout the chosen inner band.
+
+**A backward chain of entrances.** Define
+
+$$
+L=\min\left(
+\left\lfloor\frac{J-K-1}{15}\right\rfloor,
+1+\left\lfloor\frac{T-t}{2}\right\rfloor\right).
+$$
+
+If E_J(t)=3, there are at least L distinct effective entrances at
+strictly decreasing row indices. Their sites can be chosen with
+u_ell<=t+2(ell-1). Each entrance has a positive source guard at its
+preceding row and at site u_ell+1 or u_ell+2.
+
+To prove this, apply (D.4) to the current positive site. An entrance in
+its last fifteen rows supplies such a positive guard, whose row is
+between one and fifteen below the current positive row and whose site
+is at most two larger. Use this guard as the next positive site.
+Before step ell<=L its row is at least J-15(ell-1)>=K+16 and its site
+is at most t+2(ell-1)<=T, so (D.4) applies again. The next entrance
+row is strictly below the previous entrance row, making all L distinct.
+This proves the count.
+
+Thus a persistent amplitude-three defect requires repeated actual
+nondefault terminal-shelf choices, including choices that suppress a
+default positive value. The theorem gives a necessary entrance count;
+it supplies no upper bound on those events or extinction of the actual
+three-channel system. The relaxed traveling history remains compatible
+with this requirement. Full convergence remains open.
+
 ### A seeded branch exclusion at level 33
 
 Take j=33, W=225, B=450 and t=260. The independently regenerated earlier
