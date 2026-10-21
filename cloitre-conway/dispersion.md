@@ -2878,14 +2878,14 @@ $$
 For the full prescribed operator,
 
 $$
-\mathcal F[A](n)=A(n)\quad(n\ge11).
+\mathcal F[A]\,(n)=A(n)\quad(n\ge11).
 $$
 
 The only nonzero residuals at n>=3 are
 
 | Source n | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| \(\mathcal F[A](n)-A(n)\) | 1 | -1 | 1 | -1 | 1 | 1 | 1 |
+| $\mathcal F[A]\,(n)-A(n)$ | 1 | -1 | 1 | -1 | 1 | 1 | 1 |
 
 In particular, the same nested recurrence with the initial ten values
 
@@ -2931,6 +2931,9 @@ $$
 
 It is the greatest point that is needed here. An arbitrary U-periodic
 point does not have this readout identity.
+The map T_m^U sends {1,...,m} into {1,...,m-1}, since U is positive
+and U(m)<=m-1. Every periodic point is consequently in the smaller
+domain. In particular R_m is also its greatest periodic point there.
 
 If n=2m, the exact depth is h=2U(m), an even integer at least m.
 From the first step onwards the original orbit is even, and
@@ -2946,7 +2949,7 @@ greatest periodic point. Therefore
 
 $$
 g_A=2R_m,\qquad
-\mathcal F[A](2m)=2U(R_m)+2U(m-R_m)=2U(m)=A(2m).
+\mathcal F[A]\,(2m)=2U(R_m)+2U(m-R_m)=2U(m)=A(2m).
 $$
 
 If n=2m-1, then h=2U(m-1) is even and at least m-1.
@@ -2961,7 +2964,7 @@ The maximal seed and even depth select R_m. Thus
 
 $$
 g_A=2R_m-1,\qquad
-\mathcal F[A](2m-1)=2U(R_m)+2U(m-R_m)=2U(m)=A(2m-1).
+\mathcal F[A]\,(2m-1)=2U(R_m)+2U(m-R_m)=2U(m)=A(2m-1).
 $$
 
 These arguments prove exact nesting at every n>=64. Literal calculation
@@ -2982,7 +2985,7 @@ both readout arguments exceed N by the preceding n/4 and n/8 bounds.
 Consequently the entire prescribed calculation is that of A, and
 
 $$
-\mathcal F[W](n)=W(n)\qquad(n>\max(8N,64)).
+\mathcal F[W]\,(n)=W(n)\qquad(n>\max(8N,64)).
 $$
 
 The two limiting ratios are unchanged. Tail drawdowns are bounded by
