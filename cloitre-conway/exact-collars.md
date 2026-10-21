@@ -2994,7 +2994,8 @@ rule alone.
 
 For any allowed history let p_i be its first positive site, with
 p_i=infinity for a zero row. Require both initial rows to vanish through
-W+2; the update preserves these two additional zero sites. Then
+W+2. At these two sites all lower, source and candidate route values
+are zero, so row induction preserves this initial prefix. Then
 
 $$
 \liminf_{i\to\infty}\frac{p_i}{i}\ge\frac13,
@@ -3017,9 +3018,14 @@ therefore applies with starting class (kappa+sigma+1) modulo 3. It
 permits arbitrary suppression of a positive copy. For an even u the
 three delays are 2,4,3; for an odd u they are 6,5,4. Every even-offset
 update ends in starting class 2, and every odd-offset update in class 0.
+More explicitly put u_m=W+2+m, kappa_0=0, and choose the certification
+time kappa_m by adding the table delay at u_m to kappa_(m-1), using
+class (kappa_(m-1)+sigma+1) modulo 3. These are sufficient certification
+times, not the earliest times in each individual history.
 After the first new site, successive delay pairs are consequently 2+4
-or 4+2. Starting from the permanent zero prefix through W+2, its m-th
-additional site is permanently zero by a threshold kappa_m<=3m+3.
+or 4+2. The first pair totals at most eight and every subsequent pair
+totals six; at odd m the last unpaired delay gives at most 3m+3 as well.
+Thus the m-th additional site is permanently zero by kappa_m<=3m+3.
 Thus, for i>=3,
 
 $$
@@ -3062,8 +3068,11 @@ p_{6q+r}=U+2q+c_r,\qquad \lim_{i\to\infty}\frac{p_i}{i}=\frac13.
 $$
 
 The initial pair vanishes through W+2, and every later positive remains
-strictly above W. Shifting the row origin gives examples for the other
-two clock phases. Thus the leading coefficient is sharp even with
+strictly above W. For a specified phase sigma, use the forward shift
+a_i^(sigma)(t)=a_(i+sigma)^(0)(t). Its clock is exactly f_i^(sigma),
+its initial pair still vanishes through W+2, and its front has the same
+limiting speed. Thus the leading coefficient is sharp for every fixed
+W and sigma, even with
 the zero boundary and the neighbor guards. These are relaxed histories;
 an improvement for the actual recurrence must use further information
 from its profiles or its exterior orbit selection.
