@@ -2616,6 +2616,17 @@ The [existing checker](verification/binary_erasure_check.py) also exhausts
 restrictions, confirming both residue-class exclusions above. This is
 finite corroboration of the written parity proof, not its infinite premise.
 
+**Mixed-amplitude witness.** For K>=11 and W>=2, retain the two complete
+saturated initial profiles. If j>=K+11, E_j(t)>0 and
+B=ceil(t/alpha)<=min(2W,F_(K-1)), then the initial windows
+W<v<=B contain either a defect at least 3, or both a unit defect and
+a defect of amplitude 2. The two smaller witnesses may lie in different
+rows or at different offsets. Indeed, in the absence of a defect at least
+3, omitting amplitude 2 gives binary extinction, while omitting amplitude
+1 gives pure amplitude-two extinction. Both contradict the surviving
+defect. This is a statement about actual earlier values, rather than
+independently chosen local phases.
+
 The binary and pure amplitude-two theorems each use one common positive
 amplitude in the two initial windows. Mixed {0,1,2} windows remain open:
 unit defects can change the routed parity, while amplitude-two neighbors
