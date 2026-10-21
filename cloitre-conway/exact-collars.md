@@ -3112,14 +3112,19 @@ displayed formula.
 
 One history attains every deadline at once. Take the preceding wave
 with U=2, delete its initial bit a_0(2)=1, and leave all other prescribed
-outputs unchanged. The new initial pair vanishes through 2. In row 2,
+outputs unchanged. The new initial pair vanishes through 2.
+U=2 puts the physical boundary at x<=-2-2q, where every route table
+is zero; the negative route exception is still strictly above it.
+In row 2,
 the deleted lower-row bit changes only the route values at moving
 coordinates x=0,3, or absolute sites 2,5. The next possible three-step
 propagation is reset by the zero source at x=6. Both changed values
 occur at closed clocks. The only shifted selector in that row reads
 x-1 at x=2 modulo 6, so it never reads a changed route. The source
-guards are unchanged. Thus row 2 remains exactly the prescribed wave;
-every later row then has unchanged predecessors and remains valid.
+guards are unchanged. Left-to-right induction first identifies its preceding
+generated output, then its clock, and hence its checked current output.
+Thus row 2 remains exactly the prescribed wave. Every later row then
+has unchanged predecessors and remains valid.
 The checker verifies this local modification directly.
 
 For odd t=2q+3, the value a_(6q+4)(t)=P_4(1)=1 occurs at
