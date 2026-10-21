@@ -1,0 +1,416 @@
+{
+  "source_sha256": {
+    "cloitre-conway/verification/canonical_erosion.cpp": "12ae3ce174b8dfd9919814c451ffa5619fef7cfdb870a40bd390dbeecdcdff24",
+    "cloitre-conway/verification/canonical_erosion_check.py": "b77e10c1a61415f9f223f54394f8515925bf732958a4aac9ec364aae39557d7d",
+    "cloitre-conway/verification/conway_explore.py": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4"
+  },
+  "tail_certificate": {
+    "limit": 267914295,
+    "method": "Independent Brent cycle skipping with exact prescribed depth, no author-generated array",
+    "literal_check_through": 4096,
+    "certificate_indices": 165580141,
+    "certificate_failures": 0,
+    "maximum_index": 128407654,
+    "maximum_value": 84170200
+  },
+  "contacts": {
+    "limit": 33554432,
+    "literal_check_through": 4096,
+    "levels": [
+      {
+        "k": 8,
+        "tstar": 6,
+        "contacts": 4,
+        "s": 4,
+        "period": 2
+      },
+      {
+        "k": 9,
+        "tstar": 8,
+        "contacts": 6,
+        "s": 6,
+        "period": 2
+      },
+      {
+        "k": 10,
+        "tstar": 7,
+        "contacts": 5,
+        "s": 7,
+        "period": 2,
+        "slack": 7,
+        "denominator": 14
+      },
+      {
+        "k": 11,
+        "tstar": 10,
+        "contacts": 10,
+        "s": 7,
+        "period": 2,
+        "slack": 5,
+        "denominator": 15
+      },
+      {
+        "k": 12,
+        "tstar": 17,
+        "contacts": 10,
+        "s": 10,
+        "period": 2,
+        "slack": 0,
+        "denominator": 17
+      },
+      {
+        "k": 13,
+        "tstar": 19,
+        "contacts": 15,
+        "s": 17,
+        "period": 2,
+        "slack": 8,
+        "denominator": 27
+      },
+      {
+        "k": 14,
+        "tstar": 26,
+        "contacts": 17,
+        "s": 19,
+        "period": 2,
+        "slack": 10,
+        "denominator": 36
+      },
+      {
+        "k": 15,
+        "tstar": 28,
+        "contacts": 22,
+        "s": 26,
+        "period": 2,
+        "slack": 17,
+        "denominator": 45
+      },
+      {
+        "k": 16,
+        "tstar": 40,
+        "contacts": 25,
+        "s": 28,
+        "period": 2,
+        "slack": 14,
+        "denominator": 54
+      },
+      {
+        "k": 17,
+        "tstar": 55,
+        "contacts": 39,
+        "s": 40,
+        "period": 2,
+        "slack": 13,
+        "denominator": 68
+      },
+      {
+        "k": 18,
+        "tstar": 67,
+        "contacts": 43,
+        "s": 55,
+        "period": 2,
+        "slack": 28,
+        "denominator": 95
+      },
+      {
+        "k": 19,
+        "tstar": 87,
+        "contacts": 58,
+        "s": 67,
+        "period": 2,
+        "slack": 35,
+        "denominator": 122
+      },
+      {
+        "k": 20,
+        "tstar": 148,
+        "contacts": 91,
+        "s": 87,
+        "period": 2,
+        "slack": 6,
+        "denominator": 154
+      },
+      {
+        "k": 21,
+        "tstar": 203,
+        "contacts": 108,
+        "s": 122,
+        "period": 2,
+        "slack": 32,
+        "denominator": 235
+      },
+      {
+        "k": 22,
+        "tstar": 296,
+        "contacts": 167,
+        "s": 203,
+        "period": 2,
+        "slack": 55,
+        "denominator": 351
+      },
+      {
+        "k": 23,
+        "tstar": 449,
+        "contacts": 238,
+        "s": 296,
+        "period": 2,
+        "slack": 50,
+        "denominator": 499
+      },
+      {
+        "k": 24,
+        "tstar": 586,
+        "contacts": 333,
+        "s": 441,
+        "period": 2,
+        "slack": 159,
+        "denominator": 745
+      },
+      {
+        "k": 25,
+        "tstar": 902,
+        "contacts": 470,
+        "s": 586,
+        "period": 2,
+        "slack": 133,
+        "denominator": 1035
+      },
+      {
+        "k": 26,
+        "tstar": 1412,
+        "contacts": 664,
+        "s": 892,
+        "period": 6,
+        "slack": 76,
+        "denominator": 1488
+      },
+      {
+        "k": 27,
+        "tstar": 2304,
+        "contacts": 983,
+        "s": 1412,
+        "period": 2,
+        "slack": 10,
+        "denominator": 2314
+      },
+      {
+        "k": 28,
+        "tstar": 3593,
+        "contacts": 1519,
+        "s": 2304,
+        "period": 2,
+        "slack": 123,
+        "denominator": 3716
+      },
+      {
+        "k": 29,
+        "tstar": 5145,
+        "contacts": 2073,
+        "s": 3593,
+        "period": 2,
+        "slack": 752,
+        "denominator": 5897
+      },
+      {
+        "k": 30,
+        "tstar": 8137,
+        "contacts": 3174,
+        "s": 5145,
+        "period": 2,
+        "slack": 601,
+        "denominator": 8738
+      },
+      {
+        "k": 31,
+        "tstar": 12268,
+        "contacts": 5147,
+        "s": 7440,
+        "period": 2,
+        "slack": 1014,
+        "denominator": 13282
+      },
+      {
+        "k": 32,
+        "tstar": 20294,
+        "contacts": 6938,
+        "s": 12157,
+        "period": 2,
+        "slack": 111,
+        "denominator": 20405
+      },
+      {
+        "k": 33,
+        "tstar": 29907,
+        "contacts": 11590,
+        "s": 19404,
+        "period": 2,
+        "slack": 2655,
+        "denominator": 32562
+      },
+      {
+        "k": 34,
+        "tstar": 46395,
+        "contacts": 18373,
+        "s": 27530,
+        "period": 2,
+        "slack": 3806,
+        "denominator": 50201
+      },
+      {
+        "k": 35,
+        "tstar": 71546,
+        "contacts": 26371,
+        "s": 44751,
+        "period": 2,
+        "slack": 4756,
+        "denominator": 76302
+      },
+      {
+        "k": 36,
+        "tstar": 109551,
+        "contacts": 41469,
+        "s": 67818,
+        "period": 2,
+        "slack": 8390,
+        "denominator": 117941
+      },
+      {
+        "k": 37,
+        "tstar": 169398,
+        "contacts": 68048,
+        "s": 101258,
+        "period": 2,
+        "slack": 11699,
+        "denominator": 181097
+      }
+    ],
+    "total_positive_contacts": 188010,
+    "contacts_with_period_other_than_two": 66,
+    "first_non_two_parent": 38,
+    "non_contact_cycle_points": 472,
+    "first_non_contact_parent": 29053,
+    "witnesses": [
+      {
+        "n": 29053,
+        "k": 23,
+        "offset": 396,
+        "C": 18107,
+        "depth": 18098,
+        "g": 18007,
+        "cycle": [
+          {
+            "x": 18007,
+            "C": 11242,
+            "offset": 296,
+            "E": 0
+          },
+          {
+            "x": 17811,
+            "C": 11045,
+            "offset": 100,
+            "E": 1
+          },
+          {
+            "x": 18008,
+            "C": 11241,
+            "offset": 297,
+            "E": 2
+          },
+          {
+            "x": 17812,
+            "C": 11046,
+            "offset": 101,
+            "E": 1
+          }
+        ]
+      },
+      {
+        "n": 122805,
+        "k": 26,
+        "offset": 1412,
+        "C": 76437,
+        "depth": 76414,
+        "g": 75917,
+        "cycle": [
+          {
+            "x": 75917,
+            "C": 47260,
+            "offset": 892,
+            "E": 0
+          },
+          {
+            "x": 75545,
+            "C": 46880,
+            "offset": 520,
+            "E": 8
+          },
+          {
+            "x": 75925,
+            "C": 47265,
+            "offset": 900,
+            "E": 3
+          },
+          {
+            "x": 75540,
+            "C": 46875,
+            "offset": 515,
+            "E": 8
+          },
+          {
+            "x": 75930,
+            "C": 47252,
+            "offset": 905,
+            "E": 21
+          },
+          {
+            "x": 75553,
+            "C": 46888,
+            "offset": 528,
+            "E": 8
+          }
+        ]
+      }
+    ]
+  },
+  "clock_check": {
+    "limit": 131072,
+    "evaluator": "full visited-state orbits",
+    "gates_checked": 897,
+    "gates_after_first_source_defect": 503,
+    "aligned_pairs_checked": 376,
+    "pairs_with_positive_lower_defects": 40,
+    "long_cycles_checked": 77614,
+    "marked_long_cycles_in_separation_range": 11,
+    "gate_counterexample": {
+      "n": 63,
+      "t": 8,
+      "source_contact": true,
+      "later_offset": 9,
+      "later_source_value": 7,
+      "g": 35
+    },
+    "examples": [
+      {
+        "n": 58,
+        "depth": 36,
+        "g": 37,
+        "C": 37,
+        "E": 0
+      },
+      {
+        "n": 59,
+        "depth": 37,
+        "g": 34,
+        "C": 37,
+        "E": 1
+      },
+      {
+        "n": 62,
+        "depth": 40,
+        "g": 41,
+        "C": 41,
+        "E": 0
+      }
+    ]
+  }
+}
