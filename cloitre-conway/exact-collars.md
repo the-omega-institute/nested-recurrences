@@ -27,6 +27,7 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 - [Canonical copying in a doubled saturated band](#canonical-copying-in-a-doubled-saturated-band)
 - [Simultaneous extinction of binary cap defects](#simultaneous-extinction-of-binary-cap-defects)
 - [Pure amplitude-two extinction by parity](#pure-amplitude-two-extinction-by-parity)
+- [Simultaneous extinction of ternary cap defects](#simultaneous-extinction-of-ternary-cap-defects)
 - [Five legal bit patterns and eventual vanishing of a local interaction](#five-legal-bit-patterns-and-eventual-vanishing-of-a-local-interaction)
 - [A canonical cap4 window reaches the next Fibonacci digit](#a-canonical-cap4-window-reaches-the-next-fibonacci-digit)
 - [A persistent interaction on canonical index words](#a-persistent-interaction-on-canonical-index-words)
@@ -2628,10 +2629,246 @@ defect. This is a statement about actual earlier values, rather than
 independently chosen local phases.
 
 The binary and pure amplitude-two theorems each use one common positive
-amplitude in the two initial windows. Mixed {0,1,2} windows remain open:
+amplitude in the two initial windows. Mixed {0,1,2} windows require the
+whole-word argument below:
 unit defects can change the routed parity, while amplitude-two neighbors
 can open the alternate entry. Neither theorem supplies the larger
 surrounding windows needed for repeated collar enlargement.
+
+### Simultaneous extinction of ternary cap defects
+
+Allowing unit and amplitude-two defects together introduces an extra
+possible core entry. Keeping the source's right neighbor in the recursive
+state still forces extinction throughout a wider inner band.
+
+**Ternary extinction theorem.** Let K>=11 and
+2<=W<=B<=min(2W,F_(K-1)). Suppose both complete natural profiles
+q=K,K+1 satisfy P_q(u)>=min(u,W) for 0<=u<=F_(q-1), and both have
+E_q(u) in {0,1,2} for every 0<=u<=B. Put
+
+$$
+\begin{aligned}
+\delta&=(1-K)\bmod3\in\{0,1,2\},\qquad K_*=K+\delta,\\
+L&=\lfloor\alpha B\rfloor,\qquad
+J=K_*+13,\qquad R=\max\{W,L-10\}.
+\end{aligned}
+$$
+
+Then E_j(t)=0 for every j>=J and 0<=t<=R. The sufficient delays J-K
+for K modulo 3 equal to 0,1,2 are 14,13,15. In a doubled window B=2W,
+the new exact width is max(W,floor(2alpha W)-10), strictly larger than
+W for W>=47 and asymptotic to (sqrt(5)-1)W.
+
+This is a computer-assisted theorem: the actual-orbit and finite-window
+arguments below use an exhaustive finite automaton identity for words of
+arbitrary length. No spatial cutoff or canonical-prefix fit enters that
+identity.
+
+**Actual gated routing.** Two-row saturated-barrier propagation preserves
+complete saturated profiles and exactness through W at every later order.
+Doubled-band copying then propagates the ternary amplitude bound throughout
+the original [0,B] by induction, since B<=F_(j-3) for j>=K+2. Fix such j and
+W<t<=L; smaller offsets are already exact. The true depth and first
+iterate are
+
+$$
+h=F_{j-1}+t-1-E_j(t-1),\qquad
+T_{F_j+t}(F_j+t-1)=F_{j-2}+1+E_j(t-1).
+$$
+
+The latter lies between F_(j-2)+1 and F_(j-2)+3. Since j>=13, it is
+strictly below F_(j-1) in the earlier-row invariant interval used in the
+binary proof. That same interval calculation and golden localization
+exclude core entry from source offsets greater than B.
+
+The [all-cycle capture theorem](fibonacci-collars.md#1-all-cycles-near-a-fibonacci-index)
+says that every orbit enters [F_(j-1),F_(j-1)+t], and every cycle lies
+there. Together with the prescribed-depth theorem, it places the actual
+terminal state on a cycle inside this core. The preceding localization
+restricts the possible entrance offsets; core capture itself uses this
+established theorem and excludes every exterior cycle.
+
+For the lower entrance, use the full [global upper cap](golden-proof.md#5-cycle-capture-from-a-fibonacci-anchor):
+C(x)<=U(x), where U(x)=min(x-F_(ell-2),F_ell) for
+F_ell<=x<F_(ell+1). The cap U is nondecreasing and
+U(F_(j-1))=F_(j-2). Hence every x<F_(j-1) has C(x)<=F_(j-2).
+This concerns the cap U; no monotonicity of C is assumed.
+
+An upper exterior point of source offset v>t enters the core at
+d=t-v+E_(j-1)(v). Under the ternary bound, d is 0 or 1 when nonnegative;
+entry at 1 requires v=t+1 and E_(j-1)(t+1)=2. Entry from below remains
+exactly at t. Absolute-rank alternation from the original seed makes
+upper entry odd and lower entry even. Thus the even-rank high start is
+t, or t-1 only when the neighboring source defect is 2.
+
+Write e(v)=E_(j-1)(v). At a high offset with e(v)>0, saturation gives
+v>=W+e(v). Its next two source offsets are
+
+$$
+v\longmapsto t-v+e(v)\longmapsto v-e(v).
+$$
+
+The intermediate offset is at most t-W<W and is exact. High offsets
+therefore decrease by one or two to a contact R_e(a) in [W,a]. The
+eventual high/low pair has even/odd absolute ranks. At the actual stopping
+depth, native child-defect additivity gives zero at even depth and
+E_(j-2)(R_e(a)) at odd depth. All routed child offsets are at most
+t<=B<=F_(j-3), within both earlier native domains.
+
+Define z_j(t)=E_(j-2)(R_e(t)); it vanishes through W and satisfies
+
+$$
+z_j(t)=\begin{cases}
+E_{j-2}(t),&e(t)=0,\\
+z_j(t-1),&e(t)=1,\\
+z_j(t-2),&e(t)=2.
+\end{cases} \tag{R.1}
+$$
+
+The exact depth gives the following necessary restriction on the actual
+output:
+
+$$
+\begin{cases}
+E_j(t)=0,&F_{j-1}+t-E_j(t-1)\text{ odd},\\
+E_j(t)\in\{z_j(t)\}\cup
+\bigl(\{z_j(t-1)\}\text{ if }E_{j-1}(t+1)=2\bigr),
+&F_{j-1}+t-E_j(t-1)\text{ even}.
+\end{cases} \tag{R.2}
+$$
+
+The right query t+1 is at most B because t<=L<B. We allow every branch
+in (R.2) when proving extinction. This enlarges the possible histories
+and includes every actual basin choice.
+
+**A whole-word language identity.** Rebase to K_*=1 modulo 3 and set
+A_i(t)=E_(K_*+i)(t). The propagated source profiles justify this rebase.
+The Fibonacci phase f_i=F_(K_*+i-1) modulo 2 is zero exactly when i=0
+modulo 3. Start with arbitrary ternary input rows A_0,A_1, both zero
+through W, and apply (R.1)-(R.2) with these phases. Then
+
+$$
+A_{11}=0,\qquad A_{13}=A_{14}=0 \tag{R.3}
+$$
+
+for arbitrary spatial length. The finite certificate establishing this
+identity recognizes adjacent-row words over the nine-letter alphabet
+(a,b) in {0,1,2}^2, encoded as 3a+b. The initial language has one accepting
+state with all nine self-loops. Each row update maps input words (a,b)
+to output words (b,c), retaining the source word's correlations.
+
+For completeness, the pending-site transducer state is
+(q,p,b,z,z_previous,c_previous). Here q is the input automaton state
+after the pending site t; p=t modulo 2; b=b(t); z=z(t); and the last
+two registers store z(t-1),c(t-1). Read the next input (a',b') and move
+the input state to q'. Set z'=a' if b'=0, z'=z if b'=1, and
+z'=z_previous if b'=2. If f_i+p-c_previous is odd, emit c=0.
+Otherwise emit c=z, with c=z_previous also permitted exactly when b'=2.
+Emit the letter (b,c) and enter
+(q',1-p,b',z',z,c).
+
+After reading the first input letter (a,b), the initial pending state is
+(q,(W+1) modulo 2,b,a if b=0 else 0,0,0). The zero collar supplies
+z(W)=z(W-1)=c(W)=0. All reachable nonempty subsets are accepting;
+subset determinization and minimization with an implicit rejecting sink
+preserve the complete emitted language. An output word of length m uses
+an input word of length m+1, including its final right neighbor.
+
+The [checker](verification/ternary_erasure_check.py) reconstructs every
+reachable transition for both parities of W. The minimized state counts are:
+
+| Output row i | W even | W odd |
+|---|---:|---:|
+| 2 | 119 | 119 |
+| 3 | 176 | 175 |
+| 4 | 215 | 214 |
+| 5 | 98 | 98 |
+| 6 | 183 | 182 |
+| 7 | 252 | 251 |
+| 8 | 189 | 188 |
+| 9 | 77 | 76 |
+| 10 | 77 | 76 |
+| 11 | 51 | 50 |
+| 12 | 14 | 15 |
+| 13 | 14 | 15 |
+| 14 | 1 | 1 |
+
+At stage 11, all transition labels are (0,0),(1,0),(2,0), proving the
+second row A_11 vanishes. At stage 14 the sole accepting state has only
+the (0,0) self-loop, proving the zero pair A_13,A_14. These statements
+hold for every accepted word length.
+
+A separately written implementation emits at the current site and tags
+an alternate output with a requirement that the next source symbol be 2.
+It retains a state only when a compatible right continuation exists.
+It uses its own determinization and minimization. The checker compares
+the two languages by a product-state traversal at every stage, in
+addition to checking the counts and zero identities. The
+[compact evidence](verification/ternary-erasure.json) records these checks.
+
+**Finite-window transfer.** If L-10<=W, persistent saturation already
+proves the claimed width. Otherwise the actual adjacent-row prefix
+(A_(i-1),A_i) through
+
+$$
+T_i=L-(i-2)
+$$
+
+belongs to the stage-i language. At i=2, the entry rule is valid through
+L and queries the initial source only through L+1<=B. Each further image
+loses one site: a prefix through T_i requires the preceding pair through
+T_i+1=T_(i-1). All other routing and clock dependencies are leftward.
+Consequently (R.3) gives A_11(t)=0 for t<=T=L-9. Doubled-band copying
+then gives A_13(t)=0 through the same T.
+
+For t<=T-1, both A_11(t) and A_11(t+1) vanish. Row 12 therefore has
+identity routing and no alternate entry. Since f_12=0,
+
+$$
+A_{12}(t)=A_{10}(t)
+\mathbf1_{\{t-A_{12}(t-1)\text{ even}\}}. \tag{R.4}
+$$
+
+If t=W+1 is odd, A_12(W)=0 and (R.4) already forces A_12(t)=0.
+At a later odd site, a positive value would force A_12(t-1) odd and positive.
+At that preceding positive site (R.4) gives A_10(t-1)=A_12(t-1) odd;
+at t it gives A_10(t)>0. But row 10 has phase f_10=1, so its actual
+necessary clock gate requires 1+t-A_10(t-1) even, forcing A_10(t-1)
+even at odd t. This contradiction shows A_12 vanishes at odd sites
+through T-1.
+
+Similarly, A_13 zero through T gives identity routing and no alternate
+entry for row 14 through T-1. Its phase f_14=1 yields
+
+$$
+A_{14}(t)=A_{12}(t)
+\mathbf1_{\{1+t-A_{14}(t-1)\text{ even}\}}. \tag{R.5}
+$$
+
+At its first positive site the preceding value would be zero, forcing
+odd t. But A_12 vanishes at every such site. Thus A_14 vanishes through
+T-1=L-10. The consecutive actual rows J=K_*+13 and J+1 are exact
+through R=max(W,L-10). Native additivity, or doubled-band copying,
+propagates that collar forever. This proves the theorem. QED.
+
+**Necessary amplitude-three witness.** Retain K>=11, W>=2 and the two
+complete saturated initial profiles, without an amplitude premise.
+Suppose j>=K+15, E_j(t)>0 and
+
+$$
+B_t=\left\lceil\frac{t+10}{\alpha}\right\rceil
+\le\min(2W,F_{K-1}).
+$$
+
+Then some q in {K,K+1} and some W<v<=B_t have E_q(v)>=3. Otherwise
+both initial windows through B_t would be ternary, and the theorem would
+force zero at t because floor(alpha B_t)-10>=t. Saturation excludes
+the witness from offsets through W.
+
+The theorem preserves amplitude control only through the original B.
+Another doubled-window enlargement would require new ternary control
+outside that band. This remaining surrounding-window question prevents
+an unconditional faster collar rate or a global convergence conclusion.
 
 ### Five legal bit patterns and eventual vanishing of a local interaction
 
