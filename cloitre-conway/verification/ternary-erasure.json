@@ -426,5 +426,294 @@
     "alternate_positive_cases": 8,
     "scope": "An exact prefix and periodic-tail certificate for a persistent relaxed amplitude-three history with a zero left boundary. The written proof covers all spatial offsets and both collar parities. This is not a canonical recurrence counterexample."
   },
-  "scope": "Two independently implemented exact whole-word transductions recognize the same arbitrary-length languages. Their closed finite automata prove the ternary identity. Actual recurrence application and the finite-window loss use the written proof; this program uses no canonical sequence data or spatial cutoff."
+  "scope": "Two independently implemented exact whole-word transductions recognize the same arbitrary-length languages. Their closed finite automata prove the ternary identity. Actual recurrence application and the finite-window loss use the written proof; this program uses no canonical sequence data or spatial cutoff.",
+  "default_three": {
+    "status": "PASS",
+    "uniform_zero_from_row": 16,
+    "phases": [
+      {
+        "phase_offset": 0,
+        "width_parity": 0,
+        "orders": [
+          2,
+          17
+        ],
+        "minimized_states": [
+          39,
+          93,
+          84,
+          117,
+          85,
+          85,
+          33,
+          27,
+          27,
+          30,
+          42,
+          42,
+          42,
+          32,
+          32,
+          1
+        ],
+        "equivalent_language_state_pairs": [
+          39,
+          93,
+          84,
+          117,
+          85,
+          85,
+          33,
+          27,
+          27,
+          30,
+          42,
+          42,
+          42,
+          32,
+          32,
+          1
+        ],
+        "last_possible_positive_row": 15,
+        "final_zero_pair": [
+          16,
+          17
+        ]
+      },
+      {
+        "phase_offset": 0,
+        "width_parity": 1,
+        "orders": [
+          2,
+          17
+        ],
+        "minimized_states": [
+          39,
+          93,
+          84,
+          114,
+          84,
+          84,
+          32,
+          26,
+          26,
+          29,
+          41,
+          41,
+          41,
+          31,
+          31,
+          1
+        ],
+        "equivalent_language_state_pairs": [
+          39,
+          93,
+          84,
+          114,
+          84,
+          84,
+          32,
+          26,
+          26,
+          29,
+          41,
+          41,
+          41,
+          31,
+          31,
+          1
+        ],
+        "last_possible_positive_row": 15,
+        "final_zero_pair": [
+          16,
+          17
+        ]
+      },
+      {
+        "phase_offset": 1,
+        "width_parity": 0,
+        "orders": [
+          2,
+          16
+        ],
+        "minimized_states": [
+          39,
+          93,
+          93,
+          56,
+          56,
+          51,
+          32,
+          32,
+          35,
+          44,
+          44,
+          42,
+          32,
+          32,
+          1
+        ],
+        "equivalent_language_state_pairs": [
+          39,
+          93,
+          93,
+          56,
+          56,
+          51,
+          32,
+          32,
+          35,
+          44,
+          44,
+          42,
+          32,
+          32,
+          1
+        ],
+        "last_possible_positive_row": 14,
+        "final_zero_pair": [
+          15,
+          16
+        ]
+      },
+      {
+        "phase_offset": 1,
+        "width_parity": 1,
+        "orders": [
+          2,
+          16
+        ],
+        "minimized_states": [
+          39,
+          93,
+          90,
+          54,
+          54,
+          50,
+          31,
+          31,
+          34,
+          43,
+          43,
+          41,
+          31,
+          31,
+          1
+        ],
+        "equivalent_language_state_pairs": [
+          39,
+          93,
+          90,
+          54,
+          54,
+          50,
+          31,
+          31,
+          34,
+          43,
+          43,
+          41,
+          31,
+          31,
+          1
+        ],
+        "last_possible_positive_row": 14,
+        "final_zero_pair": [
+          15,
+          16
+        ]
+      },
+      {
+        "phase_offset": 2,
+        "width_parity": 0,
+        "orders": [
+          2,
+          15
+        ],
+        "minimized_states": [
+          39,
+          76,
+          70,
+          81,
+          78,
+          68,
+          68,
+          91,
+          48,
+          48,
+          21,
+          16,
+          16,
+          1
+        ],
+        "equivalent_language_state_pairs": [
+          39,
+          76,
+          70,
+          81,
+          78,
+          68,
+          68,
+          91,
+          48,
+          48,
+          21,
+          16,
+          16,
+          1
+        ],
+        "last_possible_positive_row": 13,
+        "final_zero_pair": [
+          14,
+          15
+        ]
+      },
+      {
+        "phase_offset": 2,
+        "width_parity": 1,
+        "orders": [
+          2,
+          15
+        ],
+        "minimized_states": [
+          39,
+          74,
+          68,
+          79,
+          79,
+          69,
+          69,
+          92,
+          49,
+          49,
+          22,
+          17,
+          17,
+          1
+        ],
+        "equivalent_language_state_pairs": [
+          39,
+          74,
+          68,
+          79,
+          79,
+          69,
+          69,
+          92,
+          49,
+          49,
+          22,
+          17,
+          17,
+          1
+        ],
+        "last_possible_positive_row": 13,
+        "final_zero_pair": [
+          14,
+          15
+        ]
+      }
+    ],
+    "scope": "Two independent exact whole-word transductions prove default-only amplitude-three extinction for arbitrary-length initial rows with two zero sites after the collar. No spatial cutoff, canonical sequence data, actual entrance frequency or convergence claim."
+  }
 }

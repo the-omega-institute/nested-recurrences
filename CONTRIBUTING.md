@@ -200,6 +200,19 @@ unsigned-32-bit prefix may be reused with `--values-u32 PATH`; that mode
 checks the certificate but does not regenerate or authenticate the prefix.
 The original command continues to reproduce the level-20 object alone.
 
+For default-only amplitude-three extinction and its arbitrary-length
+word-language certificate:
+
+```sh
+python3 cloitre-conway/verification/ternary_erasure_check.py --default-three
+```
+
+Compare with `default_three` in `cloitre-conway/verification/ternary-erasure.json`.
+Two exact transductions agree after every update for all three Fibonacci
+clock phases and both collar parities, ending at the all-zero pair language.
+The actual entrance-chain consequence uses the written proof; this program
+does not estimate the frequency of actual nondefault entrances.
+
 For sparse continuation from a shorter earlier prefix:
 
 ```sh

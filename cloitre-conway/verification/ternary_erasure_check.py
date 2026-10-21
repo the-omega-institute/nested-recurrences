@@ -1,3 +1,4 @@
+import argparse
 import json
 
 from collections import deque
@@ -252,6 +253,123 @@ def equivalent(left, right):
     return len(seen)
 
 
+def default_three_transform(graph, phase, width_parity):
+    initial = (0, 1 - width_parity, (0, 0, 0), 0)
+    queue = deque([initial])
+    seen = {initial}
+    arrows = {}
+    while queue:
+        node = queue.popleft()
+        state, parity, history, previous = node
+        outgoing = [set() for symbol in range(9)]
+        for symbol, target in enumerate(graph[state]):
+            if target < 0:
+                continue
+            lower, source = divmod(symbol, 3)
+            assert lower in (0, 1) and source in (0, 1)
+            route = history[0] if source else lower
+            output = route if (phase + parity - previous) % 2 == 0 else 0
+            successor = (target, 1 - parity, history[1:] + (route,), output)
+            outgoing[3 * source + output].add(successor)
+            if successor not in seen:
+                seen.add(successor)
+                queue.append(successor)
+        arrows[node] = outgoing
+    root = frozenset([initial])
+    subsets = [root]
+    indices = {root: 0}
+    deterministic = []
+    for subset in subsets:
+        transitions = []
+        for symbol in range(9):
+            target = frozenset().union(*(arrows[node][symbol] for node in subset))
+            if not target:
+                transitions.append(-1)
+                continue
+            if target not in indices:
+                indices[target] = len(subsets)
+                subsets.append(target)
+            transitions.append(indices[target])
+        deterministic.append(tuple(transitions))
+    return quotient(deterministic)
+
+
+def default_three_advance(graph, phase, width_parity):
+    root = (1 - width_parity) << 4
+    nodes = [root]
+    indices = {root: 0}
+    arrows = []
+    for node in nodes:
+        state = node >> 5
+        parity = (node >> 4) & 1
+        previous = (node >> 3) & 1
+        register = node & 7
+        outgoing = [set() for symbol in range(9)]
+        for symbol, target_state in enumerate(graph[state]):
+            if target_state < 0:
+                continue
+            lower, source = divmod(symbol, 3)
+            assert lower < 2 and source < 2
+            route = (register >> 2) if source else lower
+            output = int((phase + parity + previous) % 2 == 0) * route
+            next_register = ((register << 1) | route) & 7
+            target = (target_state << 5) | ((1 - parity) << 4) | (output << 3) | next_register
+            if target not in indices:
+                indices[target] = len(nodes)
+                nodes.append(target)
+            outgoing[3 * source + output].add(indices[target])
+        arrows.append(outgoing)
+    subsets = [frozenset([0])]
+    subset_indices = {subsets[0]: 0}
+    deterministic = []
+    for subset in subsets:
+        row = []
+        for symbol in range(9):
+            target = frozenset(destination for state in subset for destination in arrows[state][symbol])
+            if not target:
+                row.append(-1)
+                continue
+            if target not in subset_indices:
+                subset_indices[target] = len(subsets)
+                subsets.append(target)
+            row.append(subset_indices[target])
+        deterministic.append(tuple(row))
+    return minimize(deterministic)
+
+
+def default_three_certificate():
+    evidence = []
+    for phase_offset in range(3):
+        for width_parity in (0, 1):
+            initial = [(1,) + (-1,) * 8, (2,) + (-1,) * 8,
+                       (2, 2, -1, 2, 2, -1, -1, -1, -1)]
+            history_graph = register_graph = initial
+            counts, compared, positive_rows = [], [], []
+            for order in range(2, 18 - phase_offset):
+                phase = int((order + phase_offset) % 3 != 0)
+                history_graph = default_three_transform(history_graph, phase, width_parity)
+                register_graph = default_three_advance(register_graph, phase, width_parity)
+                compared.append(equivalent(history_graph, register_graph))
+                assert len(history_graph) == len(register_graph)
+                counts.append(len(history_graph))
+                if any(target >= 0 and symbol % 3 for row in history_graph
+                       for symbol, target in enumerate(row)):
+                    positive_rows.append(order)
+            zero_pair = [16 - phase_offset, 17 - phase_offset]
+            assert max(positive_rows) == zero_pair[0] - 1
+            assert history_graph == register_graph == [(0,) + (-1,) * 8]
+            evidence.append(dict(phase_offset=phase_offset, width_parity=width_parity,
+                                 orders=[2, zero_pair[1]], minimized_states=counts,
+                                 equivalent_language_state_pairs=compared,
+                                 last_possible_positive_row=max(positive_rows),
+                                 final_zero_pair=zero_pair))
+    return dict(status='PASS', uniform_zero_from_row=16, phases=evidence,
+                scope='Two independent exact whole-word transductions prove default-only '
+                      'amplitude-three extinction for arbitrary-length initial rows with '
+                      'two zero sites after the collar. No spatial cutoff, canonical '
+                      'sequence data, actual entrance frequency or convergence claim.')
+
+
 def amplitude_three_obstruction():
     profiles = [('001011001011', '001011'),
                 ('000100010110', '010110'),
@@ -299,8 +417,15 @@ def amplitude_three_obstruction():
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--default-three', action='store_true',
+                        help='Prove default-only amplitude-three extinction by whole-word automata.')
+    arguments = parser.parse_args()
     if not __debug__:
         raise SystemExit('Run without -O; assertions perform the mathematical checks.')
+    if arguments.default_three:
+        print(json.dumps(default_three_certificate(), indent=2))
+        return
     expected = [[119, 176, 215, 98, 183, 252, 189, 77, 77, 51, 14, 14, 1],
                 [119, 175, 214, 98, 182, 251, 188, 76, 76, 50, 15, 15, 1]]
     evidence = []
