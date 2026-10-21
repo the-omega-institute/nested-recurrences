@@ -1,0 +1,410 @@
+{
+  "status": "PASS",
+  "aligned_initial_order_modulo_three": 1,
+  "zero_output_rows": [
+    11,
+    13,
+    14
+  ],
+  "phases": [
+    {
+      "width_parity": 0,
+      "stages": [
+        {
+          "order": 2,
+          "minimized_states": 119,
+          "obligation_nondeterministic_states": 40,
+          "obligation_subset_states": 121,
+          "equivalent_language_state_pairs": 119,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "order": 3,
+          "minimized_states": 176,
+          "obligation_nondeterministic_states": 526,
+          "obligation_subset_states": 2931,
+          "equivalent_language_state_pairs": 176,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "order": 4,
+          "minimized_states": 215,
+          "obligation_nondeterministic_states": 566,
+          "obligation_subset_states": 5731,
+          "equivalent_language_state_pairs": 215,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "order": 5,
+          "minimized_states": 98,
+          "obligation_nondeterministic_states": 441,
+          "obligation_subset_states": 2693,
+          "equivalent_language_state_pairs": 98,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "order": 6,
+          "minimized_states": 183,
+          "obligation_nondeterministic_states": 202,
+          "obligation_subset_states": 469,
+          "equivalent_language_state_pairs": 183,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "order": 7,
+          "minimized_states": 252,
+          "obligation_nondeterministic_states": 262,
+          "obligation_subset_states": 816,
+          "equivalent_language_state_pairs": 252,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "order": 8,
+          "minimized_states": 189,
+          "obligation_nondeterministic_states": 299,
+          "obligation_subset_states": 1982,
+          "equivalent_language_state_pairs": 189,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "order": 9,
+          "minimized_states": 77,
+          "obligation_nondeterministic_states": 211,
+          "obligation_subset_states": 369,
+          "equivalent_language_state_pairs": 77,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ]
+        },
+        {
+          "order": 10,
+          "minimized_states": 77,
+          "obligation_nondeterministic_states": 90,
+          "obligation_subset_states": 80,
+          "equivalent_language_state_pairs": 77,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ]
+        },
+        {
+          "order": 11,
+          "minimized_states": 51,
+          "obligation_nondeterministic_states": 81,
+          "obligation_subset_states": 118,
+          "equivalent_language_state_pairs": 51,
+          "alphabet": [
+            0,
+            3,
+            6
+          ]
+        },
+        {
+          "order": 12,
+          "minimized_states": 14,
+          "obligation_nondeterministic_states": 54,
+          "obligation_subset_states": 100,
+          "equivalent_language_state_pairs": 14,
+          "alphabet": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "order": 13,
+          "minimized_states": 14,
+          "obligation_nondeterministic_states": 15,
+          "obligation_subset_states": 14,
+          "equivalent_language_state_pairs": 14,
+          "alphabet": [
+            0,
+            3,
+            6
+          ]
+        },
+        {
+          "order": 14,
+          "minimized_states": 1,
+          "obligation_nondeterministic_states": 16,
+          "obligation_subset_states": 12,
+          "equivalent_language_state_pairs": 1,
+          "alphabet": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "width_parity": 1,
+      "stages": [
+        {
+          "order": 2,
+          "minimized_states": 119,
+          "obligation_nondeterministic_states": 40,
+          "obligation_subset_states": 122,
+          "equivalent_language_state_pairs": 119,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "order": 3,
+          "minimized_states": 175,
+          "obligation_nondeterministic_states": 527,
+          "obligation_subset_states": 2932,
+          "equivalent_language_state_pairs": 175,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "order": 4,
+          "minimized_states": 214,
+          "obligation_nondeterministic_states": 565,
+          "obligation_subset_states": 5727,
+          "equivalent_language_state_pairs": 214,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "order": 5,
+          "minimized_states": 98,
+          "obligation_nondeterministic_states": 441,
+          "obligation_subset_states": 2695,
+          "equivalent_language_state_pairs": 98,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "order": 6,
+          "minimized_states": 182,
+          "obligation_nondeterministic_states": 201,
+          "obligation_subset_states": 468,
+          "equivalent_language_state_pairs": 182,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "order": 7,
+          "minimized_states": 251,
+          "obligation_nondeterministic_states": 262,
+          "obligation_subset_states": 816,
+          "equivalent_language_state_pairs": 251,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "order": 8,
+          "minimized_states": 188,
+          "obligation_nondeterministic_states": 298,
+          "obligation_subset_states": 1981,
+          "equivalent_language_state_pairs": 188,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "order": 9,
+          "minimized_states": 76,
+          "obligation_nondeterministic_states": 211,
+          "obligation_subset_states": 366,
+          "equivalent_language_state_pairs": 76,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ]
+        },
+        {
+          "order": 10,
+          "minimized_states": 76,
+          "obligation_nondeterministic_states": 90,
+          "obligation_subset_states": 80,
+          "equivalent_language_state_pairs": 76,
+          "alphabet": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ]
+        },
+        {
+          "order": 11,
+          "minimized_states": 50,
+          "obligation_nondeterministic_states": 80,
+          "obligation_subset_states": 117,
+          "equivalent_language_state_pairs": 50,
+          "alphabet": [
+            0,
+            3,
+            6
+          ]
+        },
+        {
+          "order": 12,
+          "minimized_states": 15,
+          "obligation_nondeterministic_states": 54,
+          "obligation_subset_states": 99,
+          "equivalent_language_state_pairs": 15,
+          "alphabet": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "order": 13,
+          "minimized_states": 15,
+          "obligation_nondeterministic_states": 16,
+          "obligation_subset_states": 15,
+          "equivalent_language_state_pairs": 15,
+          "alphabet": [
+            0,
+            3,
+            6
+          ]
+        },
+        {
+          "order": 14,
+          "minimized_states": 1,
+          "obligation_nondeterministic_states": 17,
+          "obligation_subset_states": 13,
+          "equivalent_language_state_pairs": 1,
+          "alphabet": [
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "Two independently implemented exact whole-word transductions recognize the same arbitrary-length languages. Their closed finite automata prove the ternary identity. Actual recurrence application and the finite-window loss use the written proof; this program uses no canonical sequence data or spatial cutoff."
+}

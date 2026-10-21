@@ -220,6 +220,23 @@ proved parity restrictions to corroborate the separate
 [pure amplitude-two argument](cloitre-conway/exact-collars.md#pure-amplitude-two-extinction-by-parity).
 That argument is a written proof and does not require a finite-state certificate.
 
+For simultaneous extinction of mixed zero/unit/amplitude-two cap defects:
+
+```sh
+python3 cloitre-conway/verification/ternary_erasure_check.py
+```
+
+Compare its JSON with
+[ternary-erasure.json](cloitre-conway/verification/ternary-erasure.json).
+Two separately implemented whole-word transductions agree as languages at
+every stage, for both collar parities, and certify the arbitrary-length zero
+rows. The [written argument](cloitre-conway/exact-collars.md#simultaneous-extinction-of-ternary-cap-defects)
+derives the actual gated routing rule and accounts for the right boundary
+of the finite source window. No sequence data or spatial cutoff enters the
+automaton certificate. This optional check is separate from the eight default
+replays; it does not establish an unconditional collar-growth rate or full
+convergence.
+
 For the global selected-tree golden-excess budget:
 
 ```sh
