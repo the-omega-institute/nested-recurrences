@@ -511,7 +511,9 @@ The cap gives 1<theta_*<phi, so rho can also ensure S_1<phi. QED.
 
 Consequently, under Q=o(N), full convergence is equivalent to the absence
 of macroscopic intervals with e(n)<=-eta*n in every fixed interior core,
-for each eta>0. More precisely their maximum lengths must be o(F_k).
+for each eta>0. Here a core is
+[F_k+delta*F_(k-1),F_(k+1)-delta*F_(k-1)], with any fixed
+0<delta<1/2. More precisely their maximum lengths must be o(F_k).
 The forward implication follows because convergence makes every selected
 jump o(n); the converse follows from the synchronized-interval theorem.
 
