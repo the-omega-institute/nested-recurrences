@@ -87,9 +87,10 @@ Allowing arbitrary suppression still gives
 [bounded extinction without positive creation](cloitre-conway/frontier-dynamics.md#positive-creating-entrances-have-strictly-leftward-ancestry).
 Persistent amplitude-three defects therefore require positive-creating
 entrances with a strictly leftward chain of lower contacts, staying
-inside the controlled band. This gives an advancing exact prefix and
-eventual extinction throughout its fixed inner band. Control of the
-surrounding windows needed for repeated enlargement remains open.
+inside the controlled band. This refines the mechanism of persistence;
+the existing one-offset theorem already gives faster exact-prefix growth.
+Control of the surrounding windows needed for repeated enlargement
+remains open.
 
 A [traveling amplitude-three history](cloitre-conway/exact-collars.md#an-amplitude-three-traveling-history-limits-the-relaxed-routing-method)
 shows that the local necessary routing rules alone cannot extend uniform

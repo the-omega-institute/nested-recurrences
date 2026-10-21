@@ -1136,12 +1136,44 @@ J>=K+23(T-W-2). If T<=W+2, it is already exact at row K.
 Thus fixed inherited homogeneous windows have an effective extinction
 bound even when every locally available channel may be selected.
 
+This bound records the cost of the positive-creation ancestry argument.
+It is not a faster collar-growth estimate: the existing
+[one-offset persistence lemma](exact-collars.md#every-fixed-positive-offset-eventually-becomes-linear)
+already advances a permanently exact prefix at asymptotic rate one site
+per three orders. The new information is the required repeated creation
+of positive values from strictly leftward lower contacts.
+
 This advances the exact prefix inside the original controlled band.
-It does not establish complete saturation at the larger prefix width,
-nor the homogeneous surrounding windows needed to repeat the
-enlargement. The relaxed traveling history remains possible: its front
-can move to the right while every fixed site becomes zero. Global
-convergence and actual exterior channel-selection estimates remain open.
+After the whole inner band is zero, complete saturation does improve
+to W'=max(W,T-2). Through T the profile is the identity; at
+T<u<=B the alphabet gives P_j(u)>=u-3>=T-2; and at u>B the golden
+lower bound gives
+
+$$
+P_j(u)\ge\left\lfloor\alpha(u+1)+(-1)^{j-1}\alpha^j\right\rfloor
+\ge\lfloor\alpha B\rfloor\ge T.
+$$
+
+The middle inequality follows from u>=B+1 and j>=20. However,
+restarting with this improved saturation and the same alphabet band B
+leaves the same inner endpoint T. The homogeneous surrounding windows
+needed to enlarge B remain uncontrolled. The relaxed traveling history
+also remains possible: its front moves right while every fixed site
+becomes zero.
+
+Finally, exactness is a local property near the Fibonacci anchor. The
+identity
+
+$$
+C(F_j+u)-\alpha(F_j+u)
+=(-1)^j\alpha^j+\alpha^2u-E_j(u)
+$$
+
+shows that the global limit requires uniform upper-error control
+sup_u(alpha^2u-E_j(u))=o(F_j) on the native row. A zero defect at a
+macroscopic positive offset would instead give a ratio above alpha.
+The present argument does not provide the required macroscopic profile
+or an estimate for the actual exterior channel choices.
 
 ### A seeded branch exclusion at level 33
 
