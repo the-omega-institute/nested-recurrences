@@ -52,6 +52,12 @@ restricts every scaled cycle limit to at most two reflected intervals.
 Odd frontier periods must diverge; bounded periods give two limiting
 positions. The sublinear drawdown hypothesis remains unproved.
 
+An [earlier-row feedback theorem](cloitre-conway/frontier-dynamics.md#earlier-row-feedback-preserves-the-prescribed-clock)
+expresses every possible contact candidate using fixed earlier rows and one
+preceding defect, retaining its exact seed and clock. A finite certificate
+excludes a terminal interval uniformly over all capped preceding states.
+A cross-level lower bound on these excluded widths remains open.
+
 ## Questions that remain open
 
 1. **Convergence and decay over all integers.** Prove C(n)/n -> alpha,

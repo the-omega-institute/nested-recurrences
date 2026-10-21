@@ -170,3 +170,18 @@ capture, cycle localization, all eligible gated frontiers in its prefix,
 the explicit nongating counterexample, and the exact cycle-geometry
 inequalities at all non-anchor contacts in its prefix. The infinite conclusions use
 the written arguments in [frontier dynamics](cloitre-conway/frontier-dynamics.md).
+
+For the exact earlier-row feedback and uniform basin exclusion:
+
+```sh
+python3 cloitre-conway/verification/earlier_row_check.py
+```
+
+Compare its JSON with
+[earlier-row.json](cloitre-conway/verification/earlier-row.json).
+The checker uses only values below F_20 to evaluate all 909 paired seeds
+and remaining clocks, then repeats every case by literal iteration. It
+checks the interval synchronization certificate and compares the earlier
+prefix with an independent literal construction through 6919. The finite
+certificate proves its stated six-input exclusion; it gives no uniform
+asymptotic contraction.
