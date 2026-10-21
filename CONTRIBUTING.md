@@ -225,6 +225,17 @@ transductions include every allowed zero choice and retain its subsequent
 clock. The final zero-pair identities prove a uniform row-23 bound.
 The actual creation and lower-contact chain use the written proof.
 
+To check the slow traveling history and the sharp relaxed front speed:
+
+```sh
+python3 cloitre-conway/verification/ternary_erasure_check.py --slow-three
+```
+
+Compare with `slow_three` in the same evidence file. The checker verifies
+the prefix and complete periodic-tail identities, and independently
+enumerates the one-offset extinction table. The written induction proves
+that the leading front speed is exactly 1/3 for the relaxed rule.
+
 For sparse continuation from a shorter earlier prefix:
 
 ```sh

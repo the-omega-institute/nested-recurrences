@@ -96,7 +96,9 @@ A [traveling amplitude-three history](cloitre-conway/exact-collars.md#an-amplitu
 shows that the local necessary routing rules alone cannot extend uniform
 extinction to larger alphabets. It satisfies the zero left boundary and
 clock parity but leaves the actual seed-selected entrance unconstrained;
-it is a limitation of that relaxation, not a canonical counterexample.
+its slowest asymptotic front speed is exactly 1/3, matching the existing
+one-offset argument. These are limitations of that relaxation, not
+canonical counterexamples.
 
 ## Questions that remain open
 

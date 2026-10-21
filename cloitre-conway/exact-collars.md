@@ -2986,6 +2986,88 @@ every local entrance cannot by itself extend the extinction theorem.
 An extension must restore constraints from that exterior orbit or use
 additional arithmetic properties of the actual profiles.
 
+**Sharp outward drift in the relaxed rule.** The traveling history above
+has speed 2/3. A slower history attains speed 1/3, matching the leading
+coefficient forced by the one-offset persistence argument. This gives a
+precise limitation on improving that argument using the guarded routing
+rule alone.
+
+For any allowed history let p_i be its first positive site, with
+p_i=infinity for a zero row. Require both initial rows to vanish through
+W+2; the update preserves these two additional zero sites. Then
+
+$$
+\liminf_{i\to\infty}\frac{p_i}{i}\ge\frac13,
+$$
+
+and equality is attained by an explicit allowed history. The same lower
+bound holds with any phase f_i=0 at i+sigma=0 modulo 3.
+
+To prove the bound, write a_i=A_i/3. Suppose all offsets below u are
+zero in every row i>=kappa. At i>=kappa+2, every route at a smaller
+offset is zero, so a positive output at u can only be a default copy:
+
+$$
+a_i(u)=a_{i-2}(u)=1,\qquad a_{i-1}(u)=0,\qquad f_i+u\text{ even}.
+$$
+
+The previous current-row output also vanishes. The
+[one-offset extinction table](#every-fixed-positive-offset-eventually-becomes-linear)
+therefore applies with starting class (kappa+sigma+1) modulo 3. It
+permits arbitrary suppression of a positive copy. For an even u the
+three delays are 2,4,3; for an odd u they are 6,5,4. Every even-offset
+update ends in starting class 2, and every odd-offset update in class 0.
+After the first new site, successive delay pairs are consequently 2+4
+or 4+2. Starting from the permanent zero prefix through W+2, its m-th
+additional site is permanently zero by a threshold kappa_m<=3m+3.
+Thus, for i>=3,
+
+$$
+a_i(t)=0\qquad\left(t\le W+2+\left\lfloor\frac{i-3}{3}\right\rfloor\right).
+$$
+
+This proves the lower drift bound for every history, independently of
+the right tail or chosen channels.
+
+For equality choose an even U>=W+3 and set
+A_(6q+r)(t)=3P_r(t-U-2q). Extend the following patterns by zero at
+negative arguments:
+
+| r | P_r twelve-bit prefix | P_r repeated six-bit tail |
+|---|---|---|
+| 0 | `000010110010` | `000010` |
+| 1 | `011001010110` | `011000` |
+| 2 | `000001100110` | `010001` |
+| 3 | `001000001011` | `001100` |
+| 4 | `000001100101` | `100001` |
+| 5 | `000110000100` | `000110` |
+
+The [checker](verification/ternary_erasure_check.py), with `--slow-three`,
+supplies the six route profiles as a 24-bit prefix and six-bit tail.
+It verifies their route equations, clock gates and guarded output
+choices for offsets -4..32. Every query in those identities lies in a
+six-periodic tail when the output offset is at least 27, including the
+route query three places left. The complete period 27..32 therefore
+proves every later identity; the remaining finite prefix is checked
+directly. All lower, source, route and output bits are zero at negative
+offsets. Translation by six rows and two sites preserves both the phase
+and parity, proving every forward update. The
+[evidence](verification/ternary-erasure.json) records the tables under
+`slow_three`.
+
+The first positive offsets of P_0,...,P_5 are c=(4,1,5,2,5,3), giving
+
+$$
+p_{6q+r}=U+2q+c_r,\qquad \lim_{i\to\infty}\frac{p_i}{i}=\frac13.
+$$
+
+The initial pair vanishes through W+2, and every later positive remains
+strictly above W. Shifting the row origin gives examples for the other
+two clock phases. Thus the leading coefficient is sharp even with
+the zero boundary and the neighbor guards. These are relaxed histories;
+an improvement for the actual recurrence must use further information
+from its profiles or its exterior orbit selection.
+
 ### Five legal bit patterns and eventual vanishing of a local interaction
 
 The five legal patterns in a three-bit Zeckendorf window are
