@@ -238,6 +238,12 @@ automaton certificate. This optional check is separate from the eight default
 replays; it does not establish an unconditional collar-growth rate or full
 convergence.
 
+The same checker verifies an explicit amplitude-three traveling history
+for the relaxed routing rule. Its finite prefix and periodic tail give an
+infinite obstruction to extending that relaxation's uniform extinction
+claim. This is not a counterexample to the canonical recurrence; see the
+[method limitation](cloitre-conway/exact-collars.md#an-amplitude-three-traveling-history-limits-the-relaxed-routing-method).
+
 For the global selected-tree golden-excess budget:
 
 ```sh

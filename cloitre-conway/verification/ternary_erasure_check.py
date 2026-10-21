@@ -252,6 +252,52 @@ def equivalent(left, right):
     return len(seen)
 
 
+def amplitude_three_obstruction():
+    profiles = [('001011001011', '001011'),
+                ('000100010110', '010110'),
+                ('000001100110', '010110')]
+    routes = [('010011011001', '001001'),
+              ('000100010010', '010010'),
+              ('001011011011', '011011')]
+
+    def bit(table, row, offset):
+        if offset < 0:
+            return 0
+        prefix, tail = table[row]
+        return int(prefix[offset] if offset < 12 else tail[(offset - 12) % 6])
+
+    def profile(row, offset):
+        quotient, residue = divmod(row, 3)
+        return bit(profiles, residue, offset - 2 * quotient)
+
+    alternate_positive = 0
+    for row in range(3):
+        for offset in range(-3, 21):
+            lower = profile(row - 2, offset)
+            source = profile(row - 1, offset)
+            route = bit(routes, row, offset)
+            assert route == (lower if source == 0 else bit(routes, row, offset - 3))
+            gate = (int(row % 3 != 0) + offset - profile(row, offset - 1)) % 2 == 0
+            choices = {0} if not gate else {route}
+            if gate and profile(row - 1, offset + 2):
+                choices.add(bit(routes, row, offset - 1))
+            if gate and profile(row - 1, offset + 1):
+                choices.add(bit(routes, row, offset - 2))
+            output = profile(row, offset)
+            assert output in choices
+            alternate_positive += int(output == 1 and route == 0)
+        assert all(profile(row, offset) == 0 for offset in range(-3, 2))
+    assert alternate_positive > 0
+    return dict(status='PASS', profiles=profiles, routes=routes,
+                checked_row_phases=3, checked_offsets=[-3, 20],
+                tail_identity_start=15, tail_period=6,
+                row_translation=[3, 2], alternate_positive_cases=alternate_positive,
+                scope='An exact prefix and periodic-tail certificate for a persistent '
+                      'relaxed amplitude-three history with a zero left boundary. '
+                      'The written proof covers all spatial offsets and both collar '
+                      'parities. This is not a canonical recurrence counterexample.')
+
+
 def main():
     if not __debug__:
         raise SystemExit('Run without -O; assertions perform the mathematical checks.')
@@ -282,6 +328,7 @@ def main():
     print(json.dumps(dict(status='PASS', aligned_initial_order_modulo_three=1,
                           zero_output_rows=[11, 13, 14],
                           phases=evidence,
+                          amplitude_three_obstruction=amplitude_three_obstruction(),
                           scope='Two independently implemented exact whole-word transductions '
                                 'recognize the same arbitrary-length languages. Their closed '
                                 'finite automata prove the ternary identity. Actual recurrence '
