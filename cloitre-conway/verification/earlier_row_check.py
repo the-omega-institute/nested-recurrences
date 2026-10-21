@@ -5,6 +5,8 @@ import itertools
 import json
 import mmap
 
+from array import array
+
 from conway_explore import brent_generate, g_closed, generate, literal_generate
 
 
@@ -226,6 +228,19 @@ ZERO_ROW_CERTIFICATES = ((20, 17, 1), (22, 48, 1), (24, 113, 1), (26, 113, 1),
                          (35, 487, 9), (36, 2245, 34), (38, 2245, 34), (40, 2494, 25))
 
 
+def zero_row_prefix(limit, visited):
+    prefix = array('I', (0, 1, 1))
+    for parent in range(3, limit + 1):
+        depth = prefix[parent - 1]
+        if visited:
+            selected = coupled_selector(prefix, parent, parent - 1, depth, 1, parent,
+                                        literal=False)
+        else:
+            selected = brent_selector(prefix, parent, parent - 1, depth)
+        prefix.append(prefix[selected] + prefix[parent - selected])
+    return prefix
+
+
 def zero_row_certificate(prefix, through_order):
     fibonacci = [0, 1]
     for order in range(2, through_order + 2):
@@ -344,8 +359,8 @@ def main():
                         for base in range(20, order + 1)}
             limit = max(fibonacci[level] + first
                         for level, first, amplitude in ZERO_ROW_CERTIFICATES if level in required)
-            prefix, _, _, _ = generate(limit)
-            assert prefix == brent_generate(limit)
+            prefix = zero_row_prefix(limit, visited=True)
+            assert prefix == zero_row_prefix(limit, visited=False)
             report = zero_row_certificate(prefix, order)
         print(json.dumps(report, indent=2))
         return
