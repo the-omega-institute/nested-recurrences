@@ -429,43 +429,47 @@ def amplitude_three_obstruction():
 
 
 def slow_three_front_certificate():
-    profiles = [('000010110010', '000010'), ('011001010110', '011000'),
-                ('000001100110', '010001'), ('001000001011', '001100'),
-                ('000001100101', '100001'), ('000110000100', '000110')]
-    routes = [('000110010110010110010110', '010110'),
-              ('011010010010011010011010', '011010'),
-              ('000010110110010010010010', '010010'),
-              ('011001010010011001001001', '001001'),
-              ('000001101101011001011001', '011001'),
-              ('001001001011001101101101', '101101')]
+    profiles = ['110000', '000110', '011000', '000010', '011000', '000001']
+    routes = [('100101', '100101'), ('000100', '100100'),
+              ('110110', '110110'), ('000110', '010110'),
+              ('011010', '011010'), ('000010', '010010')]
+    selectors = {(0, 1): 1, (1, 4): 1, (2, 2): 1, (5, 1): 2, (5, 5): 1}
 
-    def bit(table, row, offset):
+    def route(row, offset):
         if offset < 0:
-            return 0
-        prefix, tail = table[row]
-        return int(prefix[offset] if offset < len(prefix)
-                   else tail[(offset - len(prefix)) % 6])
+            return int(row == 0 and offset == -1)
+        prefix, tail = routes[row]
+        return int(prefix[offset] if offset < 6 else tail[offset % 6])
 
     def profile(row, offset):
         quotient, phase = divmod(row, 6)
-        return bit(profiles, phase, offset - 2 * quotient)
+        position = offset - 2 * quotient
+        return 0 if position < 0 else int(profiles[phase][position % 6])
 
     for row in range(6):
-        for offset in range(-4, 33):
-            route = bit(routes, row, offset)
+        for offset in range(-4, 21):
             lower, source = profile(row - 2, offset), profile(row - 1, offset)
-            assert route == (bit(routes, row, offset - 3) if source else lower)
+            assert route(row, offset) == (route(row, offset - 3) if source else lower)
+            shift = selectors.get((row, offset % 6), 0) if offset >= 0 else 0
+            if shift:
+                assert profile(row - 1, offset + 3 - shift)
             clock = (int(row % 3 != 0) + offset - profile(row, offset - 1)) % 2
-            choices = {0} if clock else {route}
-            if not clock and profile(row - 1, offset + 2):
-                choices.add(bit(routes, row, offset - 1))
-            if not clock and profile(row - 1, offset + 1):
-                choices.add(bit(routes, row, offset - 2))
-            assert profile(row, offset) in choices
-        assert all(not profile(row, offset) for offset in range(-4, 1))
-    fronts = [next(offset for offset in range(12) if bit(profiles, row, offset))
-              for row in range(6)]
-    assert fronts == [4, 1, 5, 2, 5, 3]
+            assert profile(row, offset) == (0 if clock else route(row, offset - shift))
+    fronts = [word.index('1') for word in profiles]
+    assert fronts == [0, 3, 1, 4, 1, 5]
+    modified_routes = {}
+    changed = []
+    for offset in range(-4, 21):
+        lower = 0 if offset == 0 else profile(0, offset)
+        source = profile(1, offset)
+        modified_routes[offset] = modified_routes.get(offset - 3, 0) if source else lower
+        if modified_routes[offset] != route(2, offset):
+            changed.append(offset)
+        shift = selectors.get((2, offset % 6), 0) if offset >= 0 else 0
+        clock = (1 + offset - profile(2, offset - 1)) % 2
+        selected = modified_routes.get(offset - shift, 0)
+        assert profile(2, offset) == (0 if clock else selected)
+    assert changed == [0, 3]
     delays = []
     for initial_class in range(3):
         pair = []
@@ -484,10 +488,17 @@ def slow_three_front_certificate():
         delays.append(pair)
     assert delays == [[2, 6], [4, 5], [3, 4]]
     return dict(status='PASS', profiles=profiles, routes=routes,
-                checked_row_phases=6, checked_offsets=[-4, 32],
-                tail_identity_start=27, tail_period=6, row_translation=[6, 2],
+                negative_route_exception=[0, -1, 1],
+                selected_channels=[[phase, residue, shift]
+                                   for (phase, residue), shift in selectors.items()],
+                checked_row_phases=6, checked_offsets=[-4, 20],
+                tail_identity_start=9, tail_period=6, row_translation=[6, 2],
                 first_positive_offsets=fronts, asymptotic_front_speed='1/3',
                 one_offset_delays_even_odd=delays,
+                modified_seed_lower_offset=0, changed_row_two_route_offsets=changed,
+                exact_last_positive_row_odd='3t-5 (t>=3)',
+                exact_last_positive_row_even='3t-6 (t>=4)',
+                exact_cutoff_scope='W=0,sigma=0; also every even W by spatial translation',
                 scope='Exact prefix/periodic-tail identities attain the universal '
                       'one-offset drift coefficient 1/3 in the guarded relaxed rule. '
                       'The written proof supplies the infinite induction and rate. '

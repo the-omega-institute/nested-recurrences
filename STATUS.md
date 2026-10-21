@@ -97,7 +97,9 @@ shows that the local necessary routing rules alone cannot extend uniform
 extinction to larger alphabets. It satisfies the zero left boundary and
 clock parity but leaves the actual seed-selected entrance unconstrained.
 For this relaxed rule the optimal lower bound on asymptotic front speed
-is 1/3, matching the existing one-offset argument. These are limitations of that relaxation, not
+is 1/3, matching the existing one-offset argument. One explicitly adjusted
+history also attains every site deadline in a specified phase. These are
+limitations of that relaxation, not
 canonical counterexamples.
 
 ## Questions that remain open

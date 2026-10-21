@@ -234,7 +234,9 @@ python3 cloitre-conway/verification/ternary_erasure_check.py --slow-three
 Compare with `slow_three` in the same evidence file. The checker verifies
 the prefix and complete periodic-tail identities, and independently
 enumerates the one-offset extinction table. The written induction proves
-that the leading front speed is exactly 1/3 for the relaxed rule.
+that the leading front speed is exactly 1/3 for the relaxed rule. A
+checked one-bit seed modification attains the exact site deadlines in
+the stated phase.
 
 For sparse continuation from a shorter earlier prefix:
 

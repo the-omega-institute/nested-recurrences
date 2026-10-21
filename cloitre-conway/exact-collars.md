@@ -3036,32 +3036,52 @@ This proves the lower drift bound for every history, independently of
 the right tail or chosen channels.
 
 For equality choose an even U>=W+3 and set
-A_(6q+r)(t)=3P_r(t-U-2q). Extend the following patterns by zero at
-negative arguments:
+A_(6q+r)(t)=3P_r(x), x=t-U-2q. Each P_r is the following six-bit
+word repeated from x=0 and is zero at negative arguments. The route
+Z_i(t)/3=V_r(x) has the displayed initial block at x=0,...,5, followed
+by repetitions of its tail block:
 
-| r | P_r twelve-bit prefix | P_r repeated six-bit tail |
+| r | P_r repeated word | V_r initial block | V_r repeated tail |
+|---|---|---|---|
+| 0 | `110000` | `100101` | `100101` |
+| 1 | `000110` | `000100` | `100100` |
+| 2 | `011000` | `110110` | `110110` |
+| 3 | `000010` | `000110` | `010110` |
+| 4 | `011000` | `011010` | `011010` |
+| 5 | `000001` | `000010` | `010010` |
+
+At negative x all route values are zero except V_0(-1)=1. Indeed
+the phase-zero lower profile is P_4(x+2), which is one at x=-1;
+the source is P_5(x+2), which is zero there. The output remains zero
+because that clock is odd. The exceptional route lies to the right
+of the physical boundary, since U-1>=W+2.
+
+At an open clock and x>=0, choose d=0 except at these phase/residue
+pairs, where the output is V_r(x-d):
+
+| (r,x modulo 6) | d | Required source guard in moving coordinates |
 |---|---|---|
-| 0 | `000010110010` | `000010` |
-| 1 | `011001010110` | `011000` |
-| 2 | `000001100110` | `010001` |
-| 3 | `001000001011` | `001100` |
-| 4 | `000001100101` | `100001` |
-| 5 | `000110000100` | `000110` |
+| (0,1) | 1 | P_5(x+4)=1 |
+| (1,4) | 1 | P_0(x+2)=1 |
+| (2,2) | 1 | P_1(x+2)=1 |
+| (5,1) | 2 | P_4(x+1)=1 |
+| (5,5) | 1 | P_4(x+2)=1 |
 
-The [checker](verification/ternary_erasure_check.py), with `--slow-three`,
-supplies the six route profiles as a 24-bit prefix and six-bit tail.
-It verifies their route equations, clock gates and guarded output
-choices for offsets -4..32. Every query in those identities lies in a
-six-periodic tail when the output offset is at least 27, including the
-route query three places left. The complete period 27..32 therefore
-proves every later identity; the remaining finite prefix is checked
-directly. All lower, source, route and output bits are zero at negative
-offsets. Translation by six rows and two sites preserves both the phase
-and parity, proving every forward update. The
-[evidence](verification/ternary-erasure.json) records the tables under
-`slow_three`.
+At negative x choose the default channel. The
+[checker](verification/ternary_erasure_check.py), with `--slow-three`,
+verifies the route equations, every required guard, and the exact
+selected output for offsets -4..20. Every query lies in a six-periodic
+region when the output offset is at least 9, including the route query
+three places left. A complete six-site period therefore proves every
+later identity. The finite prefix covers the exceptional route; all
+inputs vanish at x<-4. Translation by six rows and two sites preserves
+the phase and parity. The routes are zero at the fixed physical
+boundary, so their recurrence identifies these tables with the actual
+left-to-right routes. This proves every forward update. The
+[evidence](verification/ternary-erasure.json) records the tables and
+selector under `slow_three`.
 
-The first positive offsets of P_0,...,P_5 are c=(4,1,5,2,5,3), giving
+The first positive offsets of P_0,...,P_5 are c=(0,3,1,4,1,5), giving
 
 $$
 p_{6q+r}=U+2q+c_r,\qquad \lim_{i\to\infty}\frac{p_i}{i}=\frac13.
@@ -3076,6 +3096,47 @@ W and sigma, even with
 the zero boundary and the neighbor guards. These are relaxed histories;
 an improvement for the actual recurrence must use further information
 from its profiles or its exterior orbit selection.
+
+**Simultaneous sharpness of the site deadlines.** For W=0 and sigma=0,
+the same one-offset table gives the exact universal deadlines
+
+$$
+T(t)=\begin{cases}3t-4,&t\ge3\text{ odd},\\
+3t-5,&t\ge4\text{ even}.\end{cases}
+$$
+
+Every legal history is zero at all sites through t in every row
+i>=T(t). The first new site t=3 costs five rows; the subsequent
+even and odd sites cost two and four rows respectively, giving the
+displayed formula.
+
+One history attains every deadline at once. Take the preceding wave
+with U=2, delete its initial bit a_0(2)=1, and leave all other prescribed
+outputs unchanged. The new initial pair vanishes through 2. In row 2,
+the deleted lower-row bit changes only the route values at moving
+coordinates x=0,3, or absolute sites 2,5. The next possible three-step
+propagation is reset by the zero source at x=6. Both changed values
+occur at closed clocks. The only shifted selector in that row reads
+x-1 at x=2 modulo 6, so it never reads a changed route. The source
+guards are unchanged. Thus row 2 remains exactly the prescribed wave;
+every later row then has unchanged predecessors and remains valid.
+The checker verifies this local modification directly.
+
+For odd t=2q+3, the value a_(6q+4)(t)=P_4(1)=1 occurs at
+i=3t-5=T(t)-1. For even t=2q+2>=4, the value
+a_(6q)(t)=P_0(0)=1 occurs at i=3t-6=T(t)-1. The universal deadline
+excludes all later positives. Hence this single legal history has
+last positive row
+
+$$
+L(t)=\begin{cases}3t-5,&t\ge3\text{ odd},\\
+3t-6,&t\ge4\text{ even},\end{cases}
+$$
+
+at every site t>=3. An even spatial translation gives the same exact
+cutoffs in t-W for every even W. The leading drift bound holds for
+all boundary parities and clock phases; the exact-deadline attainment
+just established concerns this specified phase and boundary parity.
 
 ### Five legal bit patterns and eventual vanishing of a local interaction
 
