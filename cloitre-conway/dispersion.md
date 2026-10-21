@@ -258,7 +258,9 @@ $$
 
 Repeating this operation preserves containment of every cycle. The
 certificate performs at most 100 rounds; reaching a fixed interval is
-unnecessary for correctness. It includes cycles of every period.
+unnecessary for correctness. It includes cycles of every period. The
+prescribed depth reaches a cycle, so its actual selected point remains
+inside every refined interval.
 
 Partition the final J into slices [u,v] lying within individual argument
 cells. If the selected point belongs to such a slice, its complement

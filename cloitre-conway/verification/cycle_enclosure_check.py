@@ -13,7 +13,9 @@ def main():
     arguments = parser.parse_args()
     raw = np.fromfile(arguments.certificate, dtype='<u4')
     width, known, end = map(int, raw[:3])
-    assert width >= 16 and known < end
+    assert 16 <= width <= 65536
+    assert 102334155 <= known + 1 <= 165580141
+    assert end == 267914295
     bounds = raw[3:].reshape(-1, 2)
     cells = len(bounds)
     assert cells == end // width + 1
