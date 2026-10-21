@@ -61,6 +61,13 @@ preceding defect, retaining its exact seed and clock. A finite certificate
 excludes a terminal interval uniformly over all capped preceding states.
 A cross-level lower bound on these excluded widths remains open.
 
+In a saturated amplitude-three source window, an
+[exact seeded decoder](cloitre-conway/frontier-dynamics.md#an-exact-three-route-decoder-for-amplitude-three-windows)
+reduces every paired seed and clock to one of three routed lower values
+after logarithmically many earlier-row excursions. A finite level-33
+certificate excludes a locally permitted positive branch for every capped
+preceding state. A uniform reset estimate remains open.
+
 A [traveling amplitude-three history](cloitre-conway/exact-collars.md#an-amplitude-three-traveling-history-limits-the-relaxed-routing-method)
 shows that the local necessary routing rules alone cannot extend uniform
 extinction to larger alphabets. It satisfies the zero left boundary and
