@@ -39,6 +39,7 @@ def main():
 
     defects = [0] + [values[index] - golden(index) for index in range(1, limit + 1)]
     budgets = [max(defect - 1, 0) for defect in defects]
+    assert selected[12] == 7 and (defects[12], defects[7], defects[5]) == (0, 1, 0)
     heights = [0] * (limit + 1)
     positive_counts = [0] * (limit + 1)
     fibonacci = [0, 1]

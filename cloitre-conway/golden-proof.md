@@ -463,6 +463,8 @@ If D(n)>0, both D(a) and D(b) are at most D(n). If D(n)=0,
 both child excesses are at most1; they need not both vanish.
 These statements use the actual scalar values and selected split bounds.
 They impose no hypothesis on the reached cycle's period.
+The unit shift is necessary: n=12 has actual children7 and5, with
+(D(12),D(7),D(5))=(0,1,0), so D itself has no such additive budget.
 
 **Proof above the finite base.** Let n>=65536. Section4 gives
 D(n)=D(a)+D(b)+delta, with delta in{-1,0,1}.
