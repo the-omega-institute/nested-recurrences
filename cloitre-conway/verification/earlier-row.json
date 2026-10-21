@@ -1,4 +1,115 @@
 {
+  "amplitude_three": {
+    "status": "PASS",
+    "source_limit": 3524577,
+    "order": 33,
+    "width": 225,
+    "source_band": 450,
+    "offset": 260,
+    "parent": 3524838,
+    "paired_seed_clock_comparisons": 260,
+    "interval_extrema_lookups": 8384,
+    "rows": [
+      {
+        "step": 0,
+        "distance_interval": [
+          831780,
+          832039
+        ],
+        "negative_defect_interval": [
+          513970,
+          514228
+        ]
+      },
+      {
+        "step": 1,
+        "distance_interval": [
+          424025,
+          424891
+        ],
+        "negative_defect_interval": [
+          190842,
+          191963
+        ]
+      },
+      {
+        "step": 2,
+        "distance_interval": [
+          176000,
+          177784
+        ],
+        "negative_defect_interval": [
+          58636,
+          59583
+        ]
+      },
+      {
+        "step": 3,
+        "distance_interval": [
+          56804,
+          57996
+        ],
+        "negative_defect_interval": [
+          13776,
+          14365
+        ]
+      },
+      {
+        "step": 4,
+        "distance_interval": [
+          13498,
+          14358
+        ],
+        "negative_defect_interval": [
+          2351,
+          2540
+        ]
+      },
+      {
+        "step": 5,
+        "distance_interval": [
+          2310,
+          2538
+        ],
+        "negative_defect_interval": [
+          287,
+          323
+        ]
+      },
+      {
+        "step": 6,
+        "distance_interval": [
+          287,
+          323
+        ],
+        "negative_defect_interval": [
+          24,
+          26
+        ]
+      },
+      {
+        "step": 7,
+        "distance_interval": [
+          24,
+          26
+        ],
+        "negative_defect_interval": [
+          1,
+          1
+        ]
+      }
+    ],
+    "forced_contact": 255,
+    "feedback_image": [
+      0
+    ],
+    "selected_points": [
+      2178314,
+      2178564
+    ],
+    "locally_permitted_default_odd_depth_defect": 2,
+    "scope": "Finite corroboration of the exact seeded decoder. The interval certificate excludes a locally permitted positive branch for every capped preceding state. No uniform reset estimate or extinction claim."
+  },
   "actual_contact_at_148_verified": true,
   "basin_certificate": {
     "even_predecessor_defect_selects": 112,

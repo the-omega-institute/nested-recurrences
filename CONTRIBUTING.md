@@ -186,6 +186,20 @@ prefix with an independent literal construction through 6919. The finite
 certificate proves its stated six-input exclusion; it gives no uniform
 asymptotic contraction.
 
+For the amplitude-three seeded decoder and level-33 branch exclusion:
+
+```sh
+python3 cloitre-conway/verification/earlier_row_check.py --ternary
+```
+
+Compare with the `amplitude_three` object in the same evidence file. This
+optional check independently regenerates values through 3524577 by visited
+orbits and Brent cycle detection, then checks the eight interval enclosures
+and all 260 paired diagnostic seeds and clocks. A previously verified native
+unsigned-32-bit prefix may be reused with `--values-u32 PATH`; that mode
+checks the certificate but does not regenerate or authenticate the prefix.
+The original command continues to reproduce the level-20 object alone.
+
 For canonical copy or erasure in the doubled saturated band:
 
 ```sh

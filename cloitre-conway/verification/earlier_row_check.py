@@ -1,11 +1,13 @@
 """Check an earlier-row clock certificate without reading the current row."""
 
+import argparse
 import json
+import mmap
 
-from conway_explore import generate, literal_generate
+from conway_explore import brent_generate, g_closed, generate, literal_generate
 
 
-def coupled_selector(prefix, parent, seed, steps, invariant_lower, source_end):
+def coupled_selector(prefix, parent, seed, steps, invariant_lower, source_end, literal=True):
     orbit = []
     positions = {}
     point = seed
@@ -17,15 +19,148 @@ def coupled_selector(prefix, parent, seed, steps, invariant_lower, source_end):
     entry = positions[point]
     period = len(orbit) - entry
     selected = orbit[steps if steps < len(orbit) else entry + (steps - entry) % period]
-    literal = seed
-    for iteration in range(steps):
-        assert invariant_lower <= literal < source_end
-        literal = parent - prefix[literal]
-    assert selected == literal
+    if literal:
+        literal_point = seed
+        for iteration in range(steps):
+            assert invariant_lower <= literal_point < source_end
+            literal_point = parent - prefix[literal_point]
+        assert selected == literal_point
     return selected
 
 
+def ternary_feedback(prefix, fibonacci, order, offset, preceding, contacts):
+    anchor = fibonacci[order - 1]
+    lower_anchor = fibonacci[order - 2]
+    third_anchor = fibonacci[order - 3]
+    parent = fibonacci[order] + offset
+    distance = third_anchor - 1 - preceding
+    terminal_limit = 3 * (order - 1) + (order - 2) // 3 - 24
+    returns = 0
+    while distance > terminal_limit:
+        upper = parent - prefix[anchor - distance]
+        next_distance = prefix[upper] - lower_anchor - offset
+        assert 0 < next_distance <= 2 * distance // 3
+        distance = next_distance
+        returns += 1
+    negative_level = lower_anchor - prefix[anchor - distance]
+    assert negative_level in (0, 1, 2, 3)
+    deviation = 0
+    if negative_level in (1, 2):
+        neighbor = offset + negative_level
+        if lower_anchor + neighbor - prefix[anchor + neighbor] == 3:
+            deviation = 3 - negative_level
+    contact = contacts[offset - deviation]
+    depth = anchor + offset - 1 - preceding
+    selected = anchor + (offset - contact if depth % 2 else contact)
+    defect = (third_anchor + contact - prefix[lower_anchor + contact]) if depth % 2 else 0
+    return dict(selected=selected, defect=defect, contact=contact,
+                deviation=deviation, terminal_gap=distance,
+                terminal_negative_level=negative_level, exterior_returns=returns)
+
+
+def ternary_certificate(prefix):
+    fibonacci = [0, 1]
+    for order in range(2, 35):
+        fibonacci.append(sum(fibonacci[-2:]))
+    order, width, endpoint, offset = 33, 225, 450, 260
+    anchor, lower_anchor, third_anchor = fibonacci[32], fibonacci[31], fibonacci[30]
+    source_end = fibonacci[33]
+    assert len(prefix) >= source_end
+    assert 2 <= width < offset <= g_closed(endpoint - 1)
+    assert endpoint <= min(2 * width, third_anchor) and offset + 3 <= endpoint
+    source = [lower_anchor + position - prefix[anchor + position]
+              for position in range(endpoint + 1)]
+    assert set(source) == {0, 3}
+    assert all(position - source[position] >= min(position, width)
+               for position in range(endpoint + 1))
+    assert g_closed(anchor + endpoint + 1) - lower_anchor >= width
+    assert all(third_anchor + position == prefix[lower_anchor + position]
+               for position in range(width + 1))
+    contacts = list(range(endpoint + 1))
+    for position in range(width + 1, endpoint + 1):
+        if source[position]:
+            contacts[position] = contacts[position - 3]
+
+    expected = [(831780, 832039, 513970, 514228),
+                (424025, 424891, 190842, 191963),
+                (176000, 177784, 58636, 59583),
+                (56804, 57996, 13776, 14365),
+                (13498, 14358, 2351, 2540),
+                (2310, 2538, 287, 323),
+                (287, 323, 24, 26),
+                (24, 26, 1, 1)]
+    lower, upper = third_anchor - offset, third_anchor - 1
+    rows = []
+    lookups = 0
+    for step, expected_row in enumerate(expected):
+        assert (lower, upper) == expected_row[:2]
+        outputs = [lower_anchor - prefix[anchor - distance]
+                   for distance in range(lower, upper + 1)]
+        minimum, maximum = min(outputs), max(outputs)
+        assert (minimum, maximum) == expected_row[2:]
+        rows.append(dict(step=step, distance_interval=[lower, upper],
+                         negative_defect_interval=[minimum, maximum]))
+        lookups += upper - lower + 1
+        if step + 1 < len(expected):
+            returns = [prefix[anchor + offset + distance] - lower_anchor - offset
+                       for distance in range(minimum, maximum + 1)]
+            lower, upper = min(returns), max(returns)
+            assert lower > 0
+            lookups += maximum - minimum + 1
+
+    parent = source_end + offset
+    images, reached_contacts, selected_points = set(), set(), set()
+    for preceding in range(offset):
+        result = ternary_feedback(prefix, fibonacci, order, offset, preceding, contacts)
+        depth = anchor + offset - 1 - preceding
+        selected = coupled_selector(prefix, parent, lower_anchor + 1 + preceding,
+                                    depth - 1, lower_anchor + 1, source_end, literal=False)
+        assert result['selected'] == selected
+        direct_defect = anchor + offset - prefix[selected] - prefix[parent - selected]
+        assert direct_defect == result['defect'] == 0
+        assert result['terminal_negative_level'] == 1
+        images.add(result['defect'])
+        reached_contacts.add(result['contact'])
+        selected_points.add(selected)
+    assert images == {0} and reached_contacts == {255}
+    assert source[261] == source[258] == 3 and source[255] == source[260] == 0
+    assert third_anchor + 255 - prefix[lower_anchor + 255] == 0
+    assert third_anchor + 260 - prefix[lower_anchor + 260] == 2
+    return dict(status='PASS', source_limit=source_end - 1, order=order,
+                width=width, source_band=endpoint, offset=offset, parent=parent,
+                paired_seed_clock_comparisons=offset, interval_extrema_lookups=lookups,
+                rows=rows, forced_contact=255, feedback_image=sorted(images),
+                selected_points=sorted(selected_points),
+                locally_permitted_default_odd_depth_defect=2,
+                scope='Finite corroboration of the exact seeded decoder. The interval '
+                      'certificate excludes a locally permitted positive branch for every '
+                      'capped preceding state. No uniform reset estimate or extinction claim.')
+
+
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--ternary', action='store_true',
+                        help='Check the amplitude-three seeded branch exclusion.')
+    parser.add_argument('--values-u32',
+                        help='Reuse an independently verified native unsigned-32-bit prefix.')
+    arguments = parser.parse_args()
+    if not __debug__:
+        raise SystemExit('Run without -O; assertions perform the mathematical checks.')
+    if arguments.values_u32 and not arguments.ternary:
+        parser.error('--values-u32 requires --ternary')
+    if arguments.ternary:
+        if arguments.values_u32:
+            with open(arguments.values_u32, 'rb') as handle:
+                with mmap.mmap(handle.fileno(), 0, access=mmap.ACCESS_READ) as mapped:
+                    prefix = memoryview(mapped).cast('I')
+                    report = ternary_certificate(prefix)
+                    prefix.release()
+        else:
+            prefix, _, _, _ = generate(3524577)
+            assert prefix == brent_generate(3524577)
+            report = ternary_certificate(prefix)
+        print(json.dumps(report, indent=2))
+        return
     fibonacci = [0, 1]
     for level in range(2, 22):
         fibonacci.append(fibonacci[-1] + fibonacci[-2])

@@ -527,6 +527,221 @@ This finite certificate gives no uniform cross-level erosion estimate.
 Excluded widths w_k with sum(w_k/U_k)=infinity would force b=0 by the
 contact-loss budget; such widths remain unproved.
 
+### An exact three-route decoder for amplitude-three windows
+
+The [traveling-history obstruction](exact-collars.md#an-amplitude-three-traveling-history-limits-the-relaxed-routing-method)
+leaves the first core entrance free. The following formula determines that
+entrance from earlier values, keeping each diagnostic seed paired with its
+own clock. It applies to an actual source window with defects in {0,3}.
+
+Let j,W,B be integers with j>=22 and 2<=W<=B<=min(2W,F_(j-3)).
+Assume the complete natural profile P_(j-1)(u)=C(F_(j-1)+u)-F_(j-2) satisfies
+P_(j-1)(u)>=min(u,W), the lower profile E_(j-2) vanishes through W,
+and b(u)=E_(j-1)(u) belongs to {0,3} for 0<=u<=B. Write
+A=F_(j-1), D=F_(j-2), H=F_(j-3), and fix an integer
+W<t<=floor(alpha B) with t+3<=B. Set a(u)=E_(j-2)(u) and define
+
+$$
+z(u)=0\quad(0\le u\le W),\qquad
+z(u)=\begin{cases}a(u),&b(u)=0,\\z(u-3),&b(u)=3\end{cases}
+\quad(W<u\le B).
+$$
+
+For each diagnostic preceding defect 0<=e<=t-1, start at k=H-1-e
+and repeat the following exterior excursion while k>Z_(j-1):
+
+$$
+s=Q_{j-1}(k),\qquad
+k\longleftarrow P_{j-1}(t+s)-t
+=C(A+t+s)-D-t. \tag{16}
+$$
+
+Here Q_m(k)=F_(m-1)-C(F_m-k) and
+Z_m=3m+floor((m-1)/3)-24. At termination put q(e)=Q_(j-1)(k) and
+
+$$
+d(e)=\begin{cases}
+2,&q(e)=1\text{ and }b(t+1)=3,\\
+1,&q(e)=2\text{ and }b(t+2)=3,\\
+0,&\text{otherwise}.
+\end{cases}
+$$
+
+**Exact decoder theorem.** Algorithm (16) uses only C below F_j and
+terminates after O(log F_j) excursions. With h(e)=A+t-1-e, the feedback
+map in (14) is exactly
+
+$$
+\boxed{\Phi_{j,t}(e)=
+\begin{cases}0,&h(e)\text{ even},\\z(t-d(e)),&h(e)\text{ odd}.
+\end{cases}} \tag{17}
+$$
+
+Thus, after precomputing z, only three routed lower values can occur.
+The choice between them is fixed by the earlier exterior trajectory.
+
+**Proof.** The first diagnostic point is D+1+e=A-k, at absolute rank 1.
+The invariant interval in the feedback theorem is [D+1,F_j-1]. Its A-1
+points ensure the diagnostic endpoint is already cyclic at every allowed
+depth h(e)>=A; all-cycle capture puts that endpoint in [A,A+t].
+
+An exterior point A-k goes to A+t+s, then to A-k_new with k_new as in
+(16). Invariance ensures t+s<=D-1, within the complete source domain.
+The [negative shelves](exact-collars.md#two-higher-cap-levels-and-their-phase-selected-closure)
+give s>=4 when k>Z_(j-1). If t+s<=B, then
+k_new=s-b(t+s)>=1. If t+s>B, the
+[golden localization](exact-collars.md#simultaneous-extinction-of-binary-cap-defects)
+gives P_(j-1)(t+s)>=floor(alpha B)+1>t, again making k_new positive.
+For completeness, write m=j-1. The localization follows directly from the
+global golden lower bound. If v>B, then
+
+$$
+P_m(v)\ge\lfloor\alpha(v+1)+\delta_m\rfloor
+\ge\lfloor\alpha B\rfloor+1,\qquad
+\delta_m=(-1)^{m-1}\alpha^m,
+$$
+
+because v>=B+1 and 2alpha-alpha^m>1 for m=j-1>=21.
+Nonnegative native defects and the quantitative negative-anchor bound give
+
+$$
+1\le k_{\rm new}\le s\le\lfloor2k/3\rfloor.
+$$
+
+These excursions remain exterior and contract until k<=Z_(j-1).
+The exact shelves then give q(e) in {0,1,2,3}. When q=0, the next
+point is the high core endpoint A+t at an even absolute rank. For q>0,
+if b(t+q)=3, the next two points reach low offset 3-q and high offset
+t+q-3. If b(t+q)=0, the next lower distance is q<=3, in the negative
+zero plateau; the following point reaches high offset t. Hence the
+even-rank high start is t-d(e). Each exterior excursion takes two steps;
+the terminal branch takes one step when q=0 and three when q>0. Starting
+from the rank-one lower point, every resulting high start has even
+absolute rank. The case q=3 also gives high start t.
+All these queries lie in the controlled band because t+3<=B.
+
+The high start is at least W. In particular, if d=2 the guard
+b(t+1)=3 and saturation imply t+1-3>=W; if d=1 the other guard
+implies t+2-3>=W. A high offset u with b(u)=3 next visits low offset
+t-u+3 and high offset u-3. The low offset is at most t-W<=W and
+therefore exact. High offsets descend by three until a source contact
+R>=W is reached: whenever u>W and b(u)=3, saturation gives
+u-3=P_m(u)>=W, so a routing step cannot cross below W. At u=W
+saturation forces b(W)=0. The terminal pair is {R,t-R}, with high R at even
+absolute rank. At even depth its two child defects vanish; at odd
+depth their sum is a(R)=z(t-d(e)). This proves (17), and the selected
+point is A+R at even depth, A+t-R at odd depth. Finally, the nondecreasing
+golden lower envelope gives C(x)>=G(x)>=G(F_j)=A for x>=F_j.
+Together with the native cap this gives 0<=E_j(t-1)<=t-1, so the actual
+preceding defect is an allowed diagnostic state, and (14) gives the
+claimed actual recurrence. QED.
+
+This determines the first entrance, including the two guarded alternatives,
+without an alphabet assumption on source queries outside B. Bounding how
+often the terminal distance lands in the q=1 or q=2 strips remains open;
+(17) alone gives no uniform extinction or convergence estimate.
+
+### A protected distance interval and a necessary distant query
+
+Retain the decoder hypotheses and put m=j-1, M=floor(alpha B), V=M-t.
+Golden localization gives the following inverse restriction on (16):
+
+$$
+t+s>B\quad\Longrightarrow\quad
+k_{\rm new}=P_m(t+s)-t\ge V+1. \tag{19}
+$$
+
+Consequently every transition into the lower-distance interval [1,V]
+uses a controlled source query. Once k<=V, all subsequent exterior
+queries remain controlled too: t+Q_m(k)<=t+2k/3<=M<=B, and contraction
+keeps the next positive distance at most V. This conclusion permits
+arbitrary actual source defects outside B.
+
+Write L=L_m, R=R_m, S=S_m and Z=Z_m for the four exact shelf endpoints.
+Suppose the diagnostic path starts at k_0>Z, and its decoded high start
+is nondefault. It must first cross from some k_->Z to a positive
+distance r<=Z. The final shelf classification forces L<r<=S.
+If t+S<=M, (19) makes that incoming query controlled. With
+s=Q_m(k_-), it therefore satisfies
+
+$$
+L+1\le s\le S+3,\qquad
+r=s-b(t+s),\qquad b(t+s)\in\{0,3\}. \tag{20}
+$$
+
+The two entrance channels have the more precise necessary conditions:
+
+| Decoded high start | Incoming s if b(t+s)=0 | Incoming s if b(t+s)=3 | Neighbor guard |
+|---|---|---|---|
+| t-2 | L+1..R | L+4..R+3 | b(t+1)=3 |
+| t-1 | R+1..S | R+4..S+3 | b(t+2)=3 |
+
+For the first channel alone, the weaker margin t+R<=M suffices.
+Thus a nearby guard alone cannot determine a nondefault entrance:
+the actual contracting path must also visit a distant source query with
+the compatible value in this table. If the canonical preceding defect
+lies in {0,3}, then k_0>=H-4>Z for j>=22, so this necessary condition
+applies whenever its displayed margin holds.
+
+With the stronger margin t+Z<=M, every first crossing into [1,Z] is
+controlled and has 4<=s<=Z+3. Incoming labels
+
+$$
+s\in[4,L]\ \cup\ [S+4,Z+3]
+$$
+
+force the default high start: their returned distances lie respectively
+in the q=0 and q=3 shelves. These are excluded *labels*, not a frequency
+bound on actual crossings. Even a default entrance can copy a positive
+lower defect. The margins can be empty, and none of these restrictions
+yet bounds the delay to a zero output.
+
+### A seeded branch exclusion at level 33
+
+Take j=33, W=225, B=450 and t=260. The independently regenerated earlier
+prefix verifies the source hypotheses, including the complete barrier:
+its controlled part satisfies saturation, and the golden lower bound at
+B+1 bounds the whole remaining profile. Here
+A=2178309, D=1346269, H=832040 and Z_32=82. The entire diagnostic
+seed interval is k in [H-t,H-1]=[831780,832039]. Exact interval
+enclosures under (16) give:
+
+| Exterior distance k | Range of Q_32(k) |
+|---|---|
+| 831780..832039 | 513970..514228 |
+| 424025..424891 | 190842..191963 |
+| 176000..177784 | 58636..59583 |
+| 56804..57996 | 13776..14365 |
+| 13498..14358 | 2351..2540 |
+| 2310..2538 | 287..323 |
+| 287..323 | 24..26 |
+| 24..26 | 1..1 |
+
+Each next distance interval encloses C(A+t+s)-D-t for every integer s
+in the preceding right column. The last distance interval is inside the
+exact q=1 strip (L_32,R_32]=(18,36]. Therefore every capped preceding
+state has d(e)=2: b(261)=3 forces high start 258, b(258)=3 routes to
+255, and b(255)=0 stops there. Since E_31(255)=0,
+
+$$
+\boxed{\Phi_{33,260}(\{0,\ldots,259\})=\{0\}.} \tag{21}
+$$
+
+This excludes a positive branch that the relaxed rule permits: its default
+odd-depth route stops immediately at b(260)=0 and copies E_31(260)=2.
+The actual seeded route always stops at 255 instead. The selected points
+are A+255=2178564 at even depth and A+5=2178314 at odd depth.
+No current-row value is used to obtain this exclusion.
+
+The [same checker](verification/earlier_row_check.py), with `--ternary`,
+regenerates the prefix through F_33-1=3524577 by full visited orbits and
+independently by Brent cycle detection. It checks 8384 interval extrema
+lookups and compares all 260 paired seeds and clocks with direct visited
+orbits, including their selected points. The [compact evidence](verification/earlier-row.json)
+contains both this certificate and the earlier level-20 certificate.
+The level-33 exclusion is finite; a uniform cross-level reset estimate
+still requires a new argument.
+
 ## Independent checks
 
 The [checker](verification/frontier_dynamics_check.py) uses full visited-state
