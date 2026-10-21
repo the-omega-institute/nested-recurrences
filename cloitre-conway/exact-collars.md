@@ -2688,6 +2688,12 @@ terminal state on a cycle inside this core. The preceding localization
 restricts the possible entrance offsets; core capture itself uses this
 established theorem and excludes every exterior cycle.
 
+For the lower entrance, use the full [global upper cap](golden-proof.md#5-cycle-capture-from-a-fibonacci-anchor):
+C(x)<=U(x), where U(x)=min(x-F_(ell-2),F_ell) for
+F_ell<=x<F_(ell+1). The cap U is nondecreasing and
+U(F_(j-1))=F_(j-2). Hence every x<F_(j-1) has C(x)<=F_(j-2).
+This concerns the cap U; no monotonicity of C is assumed.
+
 An upper exterior point of source offset v>t enters the core at
 d=t-v+E_(j-1)(v). Under the ternary bound, d is 0 or 1 when nonnegative;
 entry at 1 requires v=t+1 and E_(j-1)(t+1)=2. Entry from below remains
