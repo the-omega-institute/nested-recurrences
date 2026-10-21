@@ -534,11 +534,11 @@ leaves the first core entrance free. The following formula determines that
 entrance from earlier values, keeping each diagnostic seed paired with its
 own clock. It applies to an actual source window with defects in {0,3}.
 
-Let j>=22 and 2<=W<=B<=min(2W,F_(j-3)). Assume the complete natural
-profile P_(j-1)(u)=C(F_(j-1)+u)-F_(j-2) satisfies
+Let j,W,B be integers with j>=22 and 2<=W<=B<=min(2W,F_(j-3)).
+Assume the complete natural profile P_(j-1)(u)=C(F_(j-1)+u)-F_(j-2) satisfies
 P_(j-1)(u)>=min(u,W), the lower profile E_(j-2) vanishes through W,
 and b(u)=E_(j-1)(u) belongs to {0,3} for 0<=u<=B. Write
-A=F_(j-1), D=F_(j-2), H=F_(j-3), and fix
+A=F_(j-1), D=F_(j-2), H=F_(j-3), and fix an integer
 W<t<=floor(alpha B) with t+3<=B. Set a(u)=E_(j-2)(u) and define
 
 $$
@@ -592,8 +592,8 @@ give s>=4 when k>Z_(j-1). If t+s<=B, then
 k_new=s-b(t+s)>=1. If t+s>B, the
 [golden localization](exact-collars.md#simultaneous-extinction-of-binary-cap-defects)
 gives P_(j-1)(t+s)>=floor(alpha B)+1>t, again making k_new positive.
-For completeness, the localization follows directly from the global golden
-lower bound. If v>B, then
+For completeness, write m=j-1. The localization follows directly from the
+global golden lower bound. If v>B, then
 
 $$
 P_m(v)\ge\lfloor\alpha(v+1)+\delta_m\rfloor
@@ -633,8 +633,8 @@ depth their sum is a(R)=z(t-d(e)). This proves (17), and the selected
 point is A+R at even depth, A+t-R at odd depth. Finally, the nondecreasing
 golden lower envelope gives C(x)>=G(x)>=G(F_j)=A for x>=F_j.
 Together with the native cap this gives 0<=E_j(t-1)<=t-1, so the actual
-preceding defect is an allowed
-diagnostic state, and (14) gives the claimed actual recurrence. QED.
+preceding defect is an allowed diagnostic state, and (14) gives the
+claimed actual recurrence. QED.
 
 This determines the first entrance, including the two guarded alternatives,
 without an alphabet assumption on source queries outside B. Bounding how
