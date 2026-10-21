@@ -708,6 +708,17 @@ without an alphabet assumption on source queries outside B. Bounding how
 often the terminal distance lands in the q=1 or q=2 strips remains open;
 (17) alone gives no uniform extinction or convergence estimate.
 
+One important initial class has a separate resolution. If one inherited
+initial row is zero through the original B, its whole row parity stays zero.
+On the other parity both nondefault guards are inactive. The
+[one-zero-row theorem](exact-collars.md#one-zero-initial-row-extinguishes-arbitrary-partner-amplitudes)
+then gives extinction through floor(alpha B) within eight orders, even with
+arbitrary partner amplitudes. A finite canonical certificate supplies that
+zero row for every inherited zero/three window starting at orders 20..40,
+for all later orders. Such windows cannot test coexistence of an active
+guard and a positive routed lower value. The general two-positive-row
+selector problem remains open.
+
 ### A protected distance interval and a necessary distant query
 
 Retain the decoder hypotheses and put m=j-1, M=floor(alpha B), V=M-t.
