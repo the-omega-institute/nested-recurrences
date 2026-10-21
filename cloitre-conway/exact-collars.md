@@ -2550,16 +2550,20 @@ $$
 
 Fix j>=K+2 and W<t<=L; there is nothing to prove at t<=W.
 Write A=F_(j-1), D=F_(j-2), n=F_j+t. Current-row saturation bounds
-E_j(t-1)<=B-W, so the true first iterate satisfies
+E_j(t-1)<=t-1-W, so the true first iterate satisfies
 
 $$
 D+1\le T_n(n-1)=D+1+E_j(t-1)
-\le D+1+B-W\le A+1-W<A.
+\le D+t-W\le A-W<A.
 $$
 
 Here B<=F_(j-3) and W>=2 justify the last inequalities. Thus the
 earlier-row invariant interval and golden localization from the binary
 proof remain valid. Entry from upper offsets greater than B is excluded.
+The [all-cycle capture theorem](fibonacci-collars.md#1-all-cycles-near-a-fibonacci-index)
+puts every cycle in [A,A+t] and guarantees that every orbit enters it.
+Together with the prescribed-depth theorem, it places the terminal state
+on a cycle inside this core.
 For an actual upper entry from t<v<=B, put a=P_(j-1)(v). Saturation
 gives W<=a<=t and E_(j-1)(v)>0. Since that defect is even,
 
@@ -2615,8 +2619,9 @@ by doubled-band copying, require a positive defect two rows below at an
 offset no larger than t. This proves the theorem and the stated delays.
 QED.
 
-**Necessary odd witness.** Under the same complete initial saturation,
-if j>=K+8, E_j(t)>0 and B_t=ceil(t/alpha)<=min(2W,F_(K-1)), then one
+**Necessary odd witness.** Retain K>=11, W>=2 and the two complete initial
+saturation hypotheses, without assuming even defects. If j>=K+8,
+E_j(t)>0 and B_t=ceil(t/alpha)<=min(2W,F_(K-1)), then one
 initial profile has an odd defect at some W<v<=B_t. Otherwise the
 even-defect theorem applied to B_t would force zero at t.
 
