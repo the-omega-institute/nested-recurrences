@@ -24,6 +24,7 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 - [The prescribed basin and phase in a positive collar](#the-prescribed-basin-and-phase-in-a-positive-collar)
 - [A saturated lower barrier and the exclusion of nearby proper cycles](#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)
 - [Every fixed positive offset eventually becomes linear](#every-fixed-positive-offset-eventually-becomes-linear)
+- [Canonical copying in a doubled saturated band](#canonical-copying-in-a-doubled-saturated-band)
 - [Five legal bit patterns and eventual vanishing of a local interaction](#five-legal-bit-patterns-and-eventual-vanishing-of-a-local-interaction)
 - [A canonical cap4 window reaches the next Fibonacci digit](#a-canonical-cap4-window-reaches-the-next-fibonacci-digit)
 - [A persistent interaction on canonical index words](#a-persistent-interaction-on-canonical-index-words)
@@ -2243,6 +2244,96 @@ evaluation through 832074, within the already published 2^20 range, checks
 the first new thresholds u=33 at orders 27..30 and u=34 at orders 29..30;
 their selected endpoints are rechecked by literal iteration. These are
 corroboration of the infinite argument, not its finite premises.
+
+### Canonical copying in a doubled saturated band
+
+The saturated barrier controls the prescribed scalar output beyond the
+interval where the outermost selected pair is known. Keep the native cap
+defect E_j(u)=u-P_j(u), separately from golden excess.
+
+**Doubled-band theorem.** Fix k>=8 and integers W,t with
+1<=W<t<=2W and t<=F_(k-3). Suppose
+
+$$
+\min(u,W)\le P_{k-1}(u)\le u\quad(0\le u\le F_{k-2}),
+\qquad E_{k-2}(v)=0\quad(0\le v\le W).
+$$
+
+Put A=F_(k-1), B=F_(k-2), n=F_k+t and h=C(n-1).
+Every cycle point A+r is a source contact: E_(k-1)(r)=0.
+If h is even, E_k(t)=0. If E_k(t)>0, h is odd and, for some
+W<v<=t,
+
+$$
+g(n)=A+t-v,\qquad E_{k-1}(v)=0,
+\qquad E_k(t)=E_{k-2}(v)>0. \tag{P.1}
+$$
+
+In particular no two positive child defects are added in this band, and
+
+$$
+E_k(t)\le
+\max\bigl(\{0\}\cup
+\{E_{k-2}(v):W<v\le t,\ E_{k-1}(v)=0\}\bigr). \tag{P.2}
+$$
+
+The positive amplitude is copied unchanged from two orders below, at an
+offset no larger than t. Its exact clock condition is
+F_(k-1)+t-E_k(t-1) even.
+
+**Proof.** In offsets from A, the map is
+H(u)=t-[C(A+u)-B]. Below zero the nondecreasing upper cap gives
+C(A+u)<=B, so H(u)>=t>W. For every u>W in the full orbit domain,
+C(A+u)>=B+W. Inside the source block this is the saturated barrier;
+above that block use G(F_k)=A and A-B=F_(k-3)>=W.
+Thus H(u)<=t-W for u>W. On [0,W], H(u)=t-u.
+
+Partition the orbit domain into
+L={u:u<t-W}, J=[t-W,W], and U={u:u>W}.
+The interval J is nonempty, H(J)=J, L maps into U, and U maps
+into L union J. The prescribed start B+t-1 lies in U.
+If the orbit enters J, reflection keeps it there, and both selected
+child offsets lie in [0,W], giving E_k(t)=0.
+
+Otherwise even ranks are in U and odd ranks in L. All-cycle capture
+puts every periodic offset in [0,t]. For a low periodic offset m,
+0<=m<t-W, its successor is t-m and
+
+$$
+H^2(m)=m+E_{k-1}(t-m)\ge m.
+$$
+
+Following low offsets around the finite cycle forces equality at every
+step. Its period is two, and both endpoints m,t-m are source contacts.
+The high endpoint is selected at even ranks; its lower child offset
+is m<=W, so its output defect is zero. At odd ranks the selected low
+endpoint has lower child offset v=t-m>W, giving (P.1).
+Finally h=A+t-1-E_k(t-1) gives the clock condition. QED.
+
+**Unconditional growing domain.** The existing width32 saturated seeds
+give this rule for every k>=25 and 33<=t<=64. More generally take
+W=W_(k-1) from the growing barrier above. For k>=25,
+W_(k-1)<=L_(k-2) and 2W_(k-1)<=F_(k-3), so the rule applies throughout
+W_(k-1)<t<=2W_(k-1). The second size inequality holds at k=25 and
+persists since L_j increases by at most one per order while the Fibonacci
+increments are already larger than two. For a fixed common saturated
+width, the set of positive amplitudes in (W,2W] at order k is a subset
+of the corresponding set at order k-2.
+
+The copied offset need not equal t. For example k=29, W=131, t=257
+has n=514486, depth318067, and reached offsets2,255. The selected
+offset2 copies defect2 from E_27(255); both source endpoints are contacts.
+This internal pair lies beyond the one-offset persistence argument.
+The example's whole-block barrier and lower collar are checked independently.
+
+The [checker](verification/doubled_band_check.py) compares full-orbit and
+Brent values through832302, replays every prescribed clock in326cases
+with112936122literal updates, and checks55044captured-seed cycles.
+Its abstract finite check includes9288profiles and24772terminal clock phases.
+The [evidence](verification/doubled-band.json) corroborates the proof;
+the infinite domain uses the already proved barriers. This rule does not
+identify the reached pair in advance, prove faster collar growth, or
+establish convergence.
 
 ### Five legal bit patterns and eventual vanishing of a local interaction
 
