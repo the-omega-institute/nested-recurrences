@@ -253,7 +253,7 @@ def equivalent(left, right):
     return len(seen)
 
 
-def default_three_transform(graph, phase, width_parity):
+def default_three_transform(graph, phase, width_parity, allow_suppression=False):
     initial = (0, 1 - width_parity, (0, 0, 0), 0)
     queue = deque([initial])
     seen = {initial}
@@ -269,11 +269,13 @@ def default_three_transform(graph, phase, width_parity):
             assert lower in (0, 1) and source in (0, 1)
             route = history[0] if source else lower
             output = route if (phase + parity - previous) % 2 == 0 else 0
-            successor = (target, 1 - parity, history[1:] + (route,), output)
-            outgoing[3 * source + output].add(successor)
-            if successor not in seen:
-                seen.add(successor)
-                queue.append(successor)
+            choices = {0, output} if allow_suppression else {output}
+            for choice in choices:
+                successor = (target, 1 - parity, history[1:] + (route,), choice)
+                outgoing[3 * source + choice].add(successor)
+                if successor not in seen:
+                    seen.add(successor)
+                    queue.append(successor)
         arrows[node] = outgoing
     root = frozenset([initial])
     subsets = [root]
@@ -294,7 +296,7 @@ def default_three_transform(graph, phase, width_parity):
     return quotient(deterministic)
 
 
-def default_three_advance(graph, phase, width_parity):
+def default_three_advance(graph, phase, width_parity, allow_suppression=False):
     root = (1 - width_parity) << 4
     nodes = [root]
     indices = {root: 0}
@@ -313,11 +315,13 @@ def default_three_advance(graph, phase, width_parity):
             route = (register >> 2) if source else lower
             output = int((phase + parity + previous) % 2 == 0) * route
             next_register = ((register << 1) | route) & 7
-            target = (target_state << 5) | ((1 - parity) << 4) | (output << 3) | next_register
-            if target not in indices:
-                indices[target] = len(nodes)
-                nodes.append(target)
-            outgoing[3 * source + output].add(indices[target])
+            choices = (0, 1) if allow_suppression and output else (output,)
+            for choice in choices:
+                target = (target_state << 5) | ((1 - parity) << 4) | (choice << 3) | next_register
+                if target not in indices:
+                    indices[target] = len(nodes)
+                    nodes.append(target)
+                outgoing[3 * source + choice].add(indices[target])
         arrows.append(outgoing)
     subsets = [frozenset([0])]
     subset_indices = {subsets[0]: 0}
@@ -337,7 +341,7 @@ def default_three_advance(graph, phase, width_parity):
     return minimize(deterministic)
 
 
-def default_three_certificate():
+def default_three_certificate(allow_suppression=False):
     evidence = []
     for phase_offset in range(3):
         for width_parity in (0, 1):
@@ -345,17 +349,18 @@ def default_three_certificate():
                        (2, 2, -1, 2, 2, -1, -1, -1, -1)]
             history_graph = register_graph = initial
             counts, compared, positive_rows = [], [], []
-            for order in range(2, 18 - phase_offset):
+            first_zero = (22, 21, 23)[phase_offset] if allow_suppression else 16 - phase_offset
+            for order in range(2, first_zero + 2):
                 phase = int((order + phase_offset) % 3 != 0)
-                history_graph = default_three_transform(history_graph, phase, width_parity)
-                register_graph = default_three_advance(register_graph, phase, width_parity)
+                history_graph = default_three_transform(history_graph, phase, width_parity, allow_suppression)
+                register_graph = default_three_advance(register_graph, phase, width_parity, allow_suppression)
                 compared.append(equivalent(history_graph, register_graph))
                 assert len(history_graph) == len(register_graph)
                 counts.append(len(history_graph))
                 if any(target >= 0 and symbol % 3 for row in history_graph
                        for symbol, target in enumerate(row)):
                     positive_rows.append(order)
-            zero_pair = [16 - phase_offset, 17 - phase_offset]
+            zero_pair = [first_zero, first_zero + 1]
             assert max(positive_rows) == zero_pair[0] - 1
             assert history_graph == register_graph == [(0,) + (-1,) * 8]
             evidence.append(dict(phase_offset=phase_offset, width_parity=width_parity,
@@ -363,6 +368,13 @@ def default_three_certificate():
                                  equivalent_language_state_pairs=compared,
                                  last_possible_positive_row=max(positive_rows),
                                  final_zero_pair=zero_pair))
+    if allow_suppression:
+        return dict(status='PASS', uniform_zero_from_row=23, phases=evidence,
+                    scope='Two independent exact whole-word transductions prove extinction '
+                          'of amplitude-three routing while allowing arbitrary suppression '
+                          'of default-positive outputs. Arbitrary-length initial rows have '
+                          'two zero sites after the collar. No spatial cutoff, canonical '
+                          'sequence data, actual creation-frequency upper bound or convergence claim.')
     return dict(status='PASS', uniform_zero_from_row=16, phases=evidence,
                 scope='Two independent exact whole-word transductions prove default-only '
                       'amplitude-three extinction for arbitrary-length initial rows with '
@@ -418,13 +430,16 @@ def amplitude_three_obstruction():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--default-three', action='store_true',
-                        help='Prove default-only amplitude-three extinction by whole-word automata.')
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument('--default-three', action='store_true',
+                       help='Prove default-only amplitude-three extinction by whole-word automata.')
+    modes.add_argument('--creation-three', action='store_true',
+                       help='Prove extinction allowing arbitrary deletion of default-positive outputs.')
     arguments = parser.parse_args()
     if not __debug__:
         raise SystemExit('Run without -O; assertions perform the mathematical checks.')
-    if arguments.default_three:
-        print(json.dumps(default_three_certificate(), indent=2))
+    if arguments.default_three or arguments.creation_three:
+        print(json.dumps(default_three_certificate(arguments.creation_three), indent=2))
         return
     expected = [[119, 176, 215, 98, 183, 252, 189, 77, 77, 51, 14, 14, 1],
                 [119, 175, 214, 98, 182, 251, 188, 76, 76, 50, 15, 15, 1]]
