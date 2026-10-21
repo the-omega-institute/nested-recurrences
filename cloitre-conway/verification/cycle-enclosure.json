@@ -1,0 +1,71 @@
+{
+  "prefix": {
+    "used_through": 141422079,
+    "previous_independent_comparison_through": 141422324,
+    "algorithms": [
+      "Full prescribed clock with Brent cycle skipping",
+      "Full prescribed clock with timestamped visited-state orbits"
+    ],
+    "literal_check_through": 4096,
+    "scope": "Previously retained canonical arrays were independently generated and compared in full. This check reuses their prefix; it generates interval bounds at later sources.",
+    "exporter_corroboration": {
+      "through": 131072,
+      "selectors": [
+        "Brent",
+        "visited"
+      ],
+      "all_values_equal_retained": true,
+      "literal_check_through": 4096
+    }
+  },
+  "enclosure": {
+    "cell_width": 512,
+    "known_prefix_through": 141422079,
+    "derived_through": 267914295,
+    "max_iterations": 100,
+    "total_iterations": 6929501,
+    "max_readout_cells": 1369,
+    "total_readout_cells": 15073001,
+    "row41_contact_cells": 0,
+    "row41_bound": [
+      135534876,
+      206789632
+    ]
+  },
+  "independent_verification": {
+    "cell_width": 512,
+    "known_prefix_through": 141422079,
+    "derived_through": 267914295,
+    "known_cells_verified": 276215,
+    "derived_cells_verified": 247056,
+    "independent_enclosure_queries": 24705600,
+    "readout_cells_verified": 15073001,
+    "row41_bound": "33883719/51697408",
+    "tail_bound": "19580084505646265/29872542956223744",
+    "tail_bound_float": 0.6554542254517668,
+    "improvement": 0.00003785292543028759,
+    "scope": "Independent NumPy reductions and sparse-table range queries verify every cell against earlier cells, including 100 cycle enclosure rounds and all final readout slices. No canonical values beyond the retained prefix are generated."
+  },
+  "refinement_256": {
+    "cell_width": 256,
+    "known_prefix_through": 141422079,
+    "derived_through": 267914295,
+    "max_iterations": 100,
+    "total_iterations": 14029538,
+    "max_readout_cells": 2659,
+    "total_readout_cells": 55765132,
+    "row41_contact_cells": 0,
+    "row41_bound": [
+      135379092,
+      206552064
+    ]
+  },
+  "tail": {
+    "threshold": 165580141,
+    "old_bound": "42085100/64203827",
+    "row41_bound": "33883719/51697408",
+    "bound": "19580084505646265/29872542956223744",
+    "bound_float": 0.6554542254517668,
+    "scope": "The written argument propagates the finite closed-row bound to every index at least F_41. Full convergence to the golden ratio remains open."
+  }
+}
