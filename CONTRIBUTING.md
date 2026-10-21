@@ -335,3 +335,19 @@ actual split below65536. Higher cases, tree/spine counts and the separate
 value-iteration potential and rational telescopes corroborate the
 [infinite budget proof](cloitre-conway/golden-proof.md#9-a-global-integer-budget-for-the-selected-recursion-tree).
 This separate check does not claim global dispersion or convergence.
+
+For the [bounded-forcing theorem with the complete clock](cloitre-conway/dispersion.md#bounded-forcing-with-the-complete-prescribed-clock):
+
+```sh
+python3 cloitre-conway/verification/bounded_forcing_check.py
+```
+
+Compare with [bounded-forcing.json](cloitre-conway/verification/bounded-forcing.json).
+The proof's sole finite premise is literal evaluation at every source3..511.
+Independent visited-orbit and Brent selectors agree through131072, with literal
+clocks through4096. Exact integer arithmetic also checks the operator-instability
+knees through Fibonacci order180 without constructing huge prefixes. The
+observed residual bound two on these finite domains is stronger than the
+proved universal bound ten, and remains a finite observation. This checker
+evaluates the explicit comparison sequence V, not the canonical sequence C;
+it is separate from the eight default replays.

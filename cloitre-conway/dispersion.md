@@ -31,6 +31,7 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 - [Two-split moment policies and cycle-average dispersion](#two-split-moment-policies-and-cycle-average-dispersion)
 - [Block-terminal means remove intermediate scalar constraints](#block-terminal-means-remove-intermediate-scalar-constraints)
 - [Finite prefixes and exact collars do not force convergence](#finite-prefixes-and-exact-collars-do-not-force-convergence)
+- [Bounded forcing with the complete prescribed clock](#bounded-forcing-with-the-complete-prescribed-clock)
 - [Exact small-cap closure still does not force convergence](#exact-small-cap-closure-still-does-not-force-convergence)
 
 ### A one-sided landing-displacement criterion
@@ -2571,6 +2572,286 @@ contexts through4096 are exhausted, and huge knee values and selected
 splits through order90 are checked by exact arithmetic. The nonconvergence
 and arbitrary-prefix conclusions have independent written proofs; they
 are not extrapolations from those finite tests.
+
+### Bounded forcing with the complete prescribed clock
+
+The preceding extensions assign additive splits. Here the seed and the entire
+iteration depth are retained instead. An explicit nonconvergent comparison
+sequence satisfies the nested equation up to a uniformly bounded additive
+error. This is a boundary for approximation arguments, not a second solution
+of Cloitre's exact recurrence.
+
+For any positive integer-valued sequence A with 1<=A(x)<=x, define
+
+$$
+T_n^A(x)=n-A(x),\qquad h_A=A(n-1),\qquad
+g_A=(T_n^A)^{h_A}(n-1),\qquad
+\mathcal F[A](n)=A(g_A)+A(n-g_A).
+$$
+
+The exponent means exactly h_A applications, including transient steps.
+For fixed n>=3 the domain is {1,...,n-1}. Since 1<=A(x)<=x, the
+map T_n^A sends that domain into itself, and both readout arguments
+are in the same domain.
+Let U be the existing golden upper cap and put
+
+$$
+U(n)=\min(n-F_{j-2},F_j)\quad(F_j\le n<F_{j+1}),\qquad
+V(n)=\max\{G(n),2\lfloor U(n)/2\rfloor\},\qquad U(1)=1.
+$$
+
+**Theorem (bounded forcing).** For every n>=3,
+
+$$
+|\mathcal F[V](n)-V(n)|\le10.
+$$
+
+The sequence V is nondecreasing, G<=V<=U, and U-1<=V. For u<v,
+
+$$
+V(u)-V(v)\le0,\qquad
+[u-V(u)]-[v-V(v)]\le1.
+$$
+
+It has V(F_j)=F_(j-1) for j>=2 and V(F_j+1)=F_(j-1)+1 for j>=3, but
+
+$$
+\liminf\frac{V(n)}n=\alpha,\qquad
+\limsup\frac{V(n)}n=\frac1{1+\alpha^2}>\alpha.
+$$
+
+Thus bounded error, both bounded drawdowns, the golden bounds and the exact
+Fibonacci identities do not force the limit, even with the full clock.
+The theorem uses the literal finite premise n=3,...,511, verified by the
+[standalone checker](verification/bounded_forcing_check.py) and recorded in
+[compact evidence](verification/bounded-forcing.json). The stronger observed
+residual interval [-2,2] on the checked prefix is not asserted universally.
+
+**Bounds and sparse odd values.** U is nondecreasing and 1-Lipschitz.
+On a block S=F_j, A=F_(j-1), n=S+t, the golden anchor identity and
+the zero-or-one increments of G give G(S+t)<=A+t. Monotonicity also
+gives G(n)<=G(F_(j+1))=S, so G(n)<=min(A+t,S)=U(n).
+The same monotonicity holds for V, but V can jump by two. We use only
+
+$$
+U-1\le V\le U,\qquad V(v)-V(u)\le v-u+1\quad(u<v).
+$$
+
+The drawdown claims follow. The anchor identities follow from G=U there;
+the limiting ratios follow from the anchors and knees F_j+F_(j-2), since
+V differs from U by at most one. Also V(n)>=G(n)>=ceil(n/2), and
+U(n)<=3n/4 for n>=2. On each block the largest U(n)/n is at its knee,
+where F_j/(F_j+F_(j-2))<=3/4; the initial indices also satisfy this bound.
+
+If V(x) is odd then U(x)=G(x). For x>=128, this can occur only within
+one of a Fibonacci anchor. To see this, set S=F_j, A=F_(j-1),
+epsilon_j=alpha*S-A, so |epsilon_j|=alpha^j. On the linear branch,
+
+$$
+U(S+t)=A+t,\qquad
+G(S+t)=A+\lfloor\alpha(t+1)+\epsilon_j\rfloor.
+$$
+
+For j>=5 and t>=2 the expression inside the floor is less than t.
+On the flat branch, writing x=F_(j+1)-v gives
+G(x)=S+floor(alpha*(1-v)+epsilon_(j+1))<S for v>=2.
+Consequently any integer interval of span at most nine whose arguments
+are at least 128 contains at most three odd-valued V arguments. It can
+meet only one triple {F_k-1,F_k,F_k+1}, since the eligible anchors are
+separated by at least 55.
+
+**Depth and capture.** Fix n>=512. The half and three-quarter bounds
+give, for the orbit from n-1,
+
+$$
+x_r\ge n/4\ (r\ge1),\qquad
+x_r\le7n/8\ (r\ge2),\qquad
+x_r\ge11n/32\ (r\ge3).
+$$
+
+Counting distinct states therefore gives mu+lambda<=17n/32+4. This is
+less than h_V>=floor(alpha*n)>3n/5-1 for n>=512, so the prescribed
+terminal is cyclic. As V is nondecreasing, T_n^V is antitone and has
+only periods one and two. Its square is nondecreasing. Iteration of
+that square from n-1 decreases to its largest fixed point; hence an
+even depth selects the largest periodic point.
+More explicitly, if z is fixed by f=(T_n^V)^2 and h_V is even, then
+z=f^(h_V/2)(z)<=f^(h_V/2)(n-1)=g_V. Once the orbit is cyclic,
+an odd depth instead selects the smallest periodic point: the antitone
+map sends the greatest periodic point to the smallest one. The same
+statements and depth bound apply to U, since G<=U<=3n/4.
+
+At an anchor A=F_k>=5, write B=F_(k-1). The following inequalities hold:
+
+$$
+\begin{array}{ll}
+V(x)\le B,&x<A,\\
+V(x)\ge B+x-A+1,&x\le A-2,\\
+V(A-1)\ge B-1,&\\
+B\le V(x)\le B+x-A,&x\ge A.
+\end{array}
+$$
+
+For the lower bound below A, put x=A-d. The difference between
+alpha*(A-d+1) and B-d+1 is alpha^2*(d-1)+epsilon_k>0 for d>=2.
+The case d=1 follows from floor(alpha*A)>=B-1. The bounds above A
+follow from U's anchor value and Lipschitz property.
+
+Let ell=min(A,n-B), r=max(A,n-B), and I=[ell,r]. The applications use
+anchors A<=n. The anchor inequalities make I intersected with the
+operator domain invariant. Below I, at x<=A-2, the image is at least
+ell and at most ell+r-x-1; it is inside I or above it at distance at
+most ell-x-1. The exceptional point A-1, if below I, has distance
+one and an image at distance at most one. Above I, the image is at
+most r and at least ell+r-x; it is inside I or below it without
+increasing distance. The next exterior step decreases any remaining
+distance greater than one. Thus
+distance greater than one decreases within two steps. Every periodic
+point is within distance one of I.
+
+Write, from now on,
+
+$$
+n=S+t,\quad S=F_j,\quad A=F_{j-1},\quad B=F_{j-2},\quad
+D=F_{j-3},\quad E=F_{j-4},\quad0\le t<A.
+$$
+
+Capture at A and at S puts every periodic point in [A-1,S+1] and
+at most A+t+1. For U the capture has no margin, because U(A-1)=B.
+On the intersection of its captured intervals, periodic offsets x=A+r
+obey r -> t-min(r,D).
+Its largest periodic point is
+
+$$
+R=A+\begin{cases}
+t,&0\le t\le D,\\
+D,&D\le t\le2D,\\
+t-D,&2D\le t<A.
+\end{cases}
+$$
+
+Direct substitution in the offset map proves maximality. The native-block
+identities U(A+r)=B+min(r,D) and U(B+s)=D+min(s,E) also give
+
+$$
+U(R)+U(n-R)=U(n).
+$$
+
+**Even depths: a uniform bound on the selected endpoint.** Put
+f=(T_n^V)^2 and f_0=(T_n^U)^2. Although V is not 1-Lipschitz,
+the one-sided perturbation 0<=U-V<=1 and U's Lipschitz property give
+
+$$
+f_0(x)-1\le f(x)\le f_0(x)+1.
+$$
+
+The map f_0 is nondecreasing and 1-Lipschitz, with f_0(R)=R.
+Thus f(x)>=x-1 for x<=R. Suppose f(x)<x at every one of the nine
+integers R-8,...,R. It follows that f(x)=x-1 at all nine. Put
+y_x=T_n^V(x); then V(y_x)=n-x+1 are nine distinct consecutive values,
+at least four of them odd. But the y_x span at most nine, since
+V(R)-V(R-8)<=9, and all satisfy y_x>=n/4>=128. This contradicts
+the sparse-odd bound. Some x>=R-8 therefore has f(x)>=x. Iterating
+the nondecreasing f from that x yields a fixed point at least x.
+The largest periodic point g_V is consequently at least R-8.
+The test integers are legal: R is a U-periodic point, so R>=n/4
+and R-8>=120, while R<n.
+
+For the upper bound, if t<=D capture gives g_V<=R+1. If t>=D and
+R<g_V<=S, then U(g_V)=A and
+
+$$
+f_0(g_V)=n-U(B+t)=R,
+$$
+
+so f(g_V)<=R+1. At the remaining possible point g_V=S+1, U(g_V)=A+1
+and f_0(g_V)=n-U(B+t-1)<=R+1, hence f(g_V)<=R+2. Because g_V=f(g_V),
+
+$$
+R-8\le g_V\le R+2.
+$$
+
+The readout H_U(x)=U(x)+U(n-x) is 1-Lipschitz: its two nonnegative
+increments are each bounded by the argument increment and enter with
+opposite signs. Therefore |H_U(g_V)-U(n)|<=8. Replacing the two child
+values by V loses at most two, and V(n) differs from U(n) by at most one.
+The residual is in [-10,9].
+
+**Odd depths.** An odd h_V=V(n-1) places n within {F_j,F_j+1,F_j+2}.
+Write n=F_j+d with 0<=d<=2. Capture at A=F_(j-1) puts the selected
+g_V in [A-1,A+d+1] and n-g_V in [B-1,B+d+1]. The U readout is in
+[A-2,A+6], so the V readout is in [A-4,A+6]. Meanwhile
+A<=V(n)<=A+2. The residual is in [-6,6]. Literal evaluation at
+n=3,...,511 gives [-2,2], completing the proof with that finite premise.
+
+**Corollary (macroscopic operator instability).** A uniformly one-unit
+input change can produce a linear output change under the full clock.
+For j>=15 divisible by three, put n_j=F_j+F_(j-2)=S+B. Then
+
+$$
+\|U-V\|_\infty\le1,\qquad
+\mathcal F[U](n_j)=S-F_{j-5},\qquad
+\mathcal F[V](n_j)=S-2,
+$$
+
+and hence
+
+$$
+\lim_{\substack{j\to\infty\\3\mid j}}
+\frac{\mathcal F[V](n_j)-\mathcal F[U](n_j)}{n_j}
+=\frac{\alpha^5}{1+\alpha^2}>0.
+$$
+
+Here is a direct exact calculation, independent of the general residual
+bound. S,D are even and A,B,E are odd. At n_j-1 the cap is S-1;
+the argument is far from the anchors, so the sparse-odd lemma gives
+h_V=S-2, an even depth. Put R=A+D. At R and n_j-R=B+E, the cap
+values are respectively A and B, both odd, and the arguments are far
+from anchors. Thus V(R)=A-1 and V(n_j-R)=B-1. Similarly,
+V(2B+1)=B+E=V(2B). It follows that
+
+$$
+T_{n_j}^V(R)=2B+1,\qquad T_{n_j}^V(2B+1)=R.
+$$
+
+For R<x<=S, the value V(x) is A-1 or A; therefore
+(T_(n_j)^V)^2(x)=R. At the only remaining possible larger periodic
+point x=S+1, its square image is at most R+2<S+1. Capture excludes
+points above S+1, so R is the greatest periodic point. The even
+prescribed depth selects R, giving readout (A-1)+(B-1)=S-2.
+All arguments to which the sparse-odd lemma was applied are at least128
+and more than one from every anchor for j>=15.
+
+For U, h_U=S-1 is odd. The cycle reached from the maximal seed has
+extremes A+D and A+E=2B, so the odd depth selects 2B and its readout
+is 2B+E=S-F_(j-5). Both prescribed depths reach their cycles by the
+orbit count above, since n_j>=843. No stopping phase has been assigned
+by hand. Uniformly close scalar profiles therefore need not control
+this nested operator.
+
+At n=843, for example, the two input values agree at the source, while
+their prescribed clocks and readouts differ:
+
+| Input sequence | Value at 843 | Prescribed depth | Selected split | Readout |
+|---|---:|---:|---:|---:|
+| U | 610 | 609 | 466 | 555 |
+| V | 610 | 608 | 521 | 608 |
+
+The reached cycles are respectively (466,521) and (467,521). The
+output difference is 53 although the sequences differ by at most one
+at every argument. The infinite formula above supplies the conclusion;
+this example makes the clock effect directly checkable.
+
+**Corollary (any finite actual prefix).** Fix N and put W(n)=C(n) for
+n<=N and W(n)=V(n) afterwards. Then W retains the two limiting ratios,
+both bounded drawdowns, G<=W<=U, and a uniformly bounded full-clock
+residual. For n>max(8N,512), the residual even obeys the same bound ten.
+Indeed every queried argument after the first step is at least n/4>N;
+after two steps the argument is at most 7n/8, so its complement exceeds
+N too. The seed and depth are beyond N, and the entire prescribed
+calculation coincides with V. The remaining sources form a finite set.
+This extension preserves any chosen finite canonical prefix, but its
+bounded additive forcing remains essential to the statement.
 
 ### Exact small-cap closure still does not force convergence
 
