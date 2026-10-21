@@ -46,6 +46,12 @@ collapse nor sublinear drawdown has been established. Complementary drawdown
 tests in the [dispersion note](cloitre-conway/dispersion.md#complementary-drawdowns-and-the-upward-modulus)
 remain finite observations.
 
+Under sublinear complementary drawdowns on the actual reached frontier
+cycles, the [cycle geometry theorem](cloitre-conway/frontier-dynamics.md#cycle-geometry-under-small-drawdowns)
+restricts every scaled cycle limit to at most two reflected intervals.
+Odd frontier periods must diverge; bounded periods give two limiting
+positions. The sublinear drawdown hypothesis remains unproved.
+
 ## Questions that remain open
 
 1. **Convergence and decay over all integers.** Prove C(n)/n -> alpha,
