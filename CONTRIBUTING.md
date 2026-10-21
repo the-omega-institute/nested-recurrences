@@ -200,7 +200,7 @@ and a finite abstract profile check corroborate the
 [infinite theorem](cloitre-conway/exact-collars.md#canonical-copying-in-a-doubled-saturated-band).
 This optional check is separate from the eight default replays.
 
-For simultaneous extinction of binary or pure amplitude-two cap defects:
+For simultaneous extinction of binary or even cap defects:
 
 ```sh
 python3 cloitre-conway/verification/binary_erasure_check.py
@@ -215,9 +215,10 @@ Independent full-orbit and Brent values through 832302, with a literal prefix
 through 4096, corroborate its canonical application. These finite sequence
 checks alone do not prove extinction. This optional check is separate from
 the eight default replays.
-The same program exhausts small saturated source/lower profiles with the
-proved parity restrictions to corroborate the separate
-[pure amplitude-two argument](cloitre-conway/exact-collars.md#pure-amplitude-two-extinction-by-parity).
+
+The same program exhausts small even source profiles and single-position
+lower probes, with the proved parity restrictions, to corroborate the
+[even-defect argument](cloitre-conway/exact-collars.md#even-cap-defects-vanish-by-parity).
 That argument is a written proof and does not require a finite-state certificate.
 
 For simultaneous extinction of mixed zero/unit/amplitude-two cap defects:

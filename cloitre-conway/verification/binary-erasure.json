@@ -303,12 +303,15 @@
       }
     ]
   },
-  "pure_amplitude_two": {
-    "source_lower_pairs": 10917,
-    "impossible_order_zero_mod3_outputs": 52976,
-    "lower_zero_order_two_mod3_outputs": 44912,
-    "positive_candidates_other_phases": 640,
-    "scope": "Finite corroboration of the written parity proof, using abstract saturated profiles with the derived support restrictions. Not a canonical sequence construction or an infinite premise."
+  "even_defects": {
+    "source_profile_lower_probe_pairs": 51731,
+    "all_possible_upper_entries": 158663,
+    "lower_entries": 101370,
+    "impossible_order_zero_mod3_outputs": 30018,
+    "lower_zero_order_two_mod3_outputs": 40968,
+    "positive_candidates_other_phases": 840,
+    "largest_defect_in_profiles": 10,
+    "scope": "Finite corroboration of the written even-defect proof, using all allowed small source profiles and single-position lower probes with the derived support restrictions. Not a canonical sequence construction or an infinite premise."
   },
   "canonical": {
     "limit": 832302,
