@@ -1,6 +1,7 @@
 """Check an earlier-row clock certificate without reading the current row."""
 
 import argparse
+import itertools
 import json
 import mmap
 
@@ -220,6 +221,88 @@ def ternary_certificate(prefix):
                       'capped preceding state. No uniform reset estimate or extinction claim.')
 
 
+ZERO_ROW_CERTIFICATES = ((20, 17, 1), (22, 48, 1), (24, 113, 1), (26, 113, 1),
+                         (28, 132, 1), (29, 209, 2), (31, 226, 9), (33, 487, 9),
+                         (35, 487, 9), (36, 2245, 34), (38, 2245, 34), (40, 2494, 25))
+
+
+def zero_row_certificate(prefix, through_order):
+    fibonacci = [0, 1]
+    for order in range(2, through_order + 2):
+        fibonacci.append(sum(fibonacci[-2:]))
+    coverage = []
+    required = set()
+    for base in range(20, through_order + 1):
+        source = next(row[0] for row in ZERO_ROW_CERTIFICATES if row[0] in (base, base + 1))
+        coverage.append(dict(base=base, zero_source=source))
+        required.add(source)
+    rows = []
+    comparisons = 0
+    for order, first, amplitude in ZERO_ROW_CERTIFICATES:
+        if order not in required:
+            continue
+        assert amplitude not in (0, 3)
+        assert len(prefix) > fibonacci[order] + first
+        for offset in range(first + 1):
+            parent = fibonacci[order] + offset
+            depth = prefix[parent - 1]
+            selected = coupled_selector(prefix, parent, parent - 1, depth, 1, parent,
+                                        literal=False)
+            independent = brent_selector(prefix, parent, parent - 1, depth)
+            assert selected == independent
+            assert prefix[parent] == prefix[selected] + prefix[parent - selected]
+            defect = fibonacci[order - 1] + offset - prefix[parent]
+            assert defect == (amplitude if offset == first else 0)
+            comparisons += 1
+        rows.append(dict(order=order, first_positive_offset=first, defect=amplitude))
+    clock_fibonacci = [0, 1]
+    for order in range(2, 30):
+        clock_fibonacci.append(sum(clock_fibonacci[-2:]))
+    parity_words = []
+    for base in (20, 21, 22):
+        for site_parity in (0, 1):
+            word = [(clock_fibonacci[base + 2 * update - 1] + site_parity) % 2
+                    for update in range(1, 5)]
+            assert word[0] == word[-1] and set(word) == {0, 1}
+            assert any(first < second for first, second in zip(word, word[1:]))
+            parity_words.append(dict(base_mod_three=base % 3, site_parity=site_parity,
+                                     required_preceding_bits=word))
+    integer_words = updates = 0
+    for base in (20, 21, 22):
+        for width in (2, 3):
+            for tail in itertools.product((0, 1, 2, 3, 9, 34), repeat=5):
+                initial = [0] * (width + 1) + list(tail)
+                previous = initial
+                previous_bits = [value % 2 for value in previous]
+                for update in range(1, 5):
+                    current = [0] * (width + 1)
+                    anchor = clock_fibonacci[base + 2 * update - 1]
+                    for offset in range(width + 1, len(initial)):
+                        depth = anchor + offset - 1 - current[offset - 1]
+                        current.append(previous[offset] if depth % 2 else 0)
+                        updates += 1
+                    assert all(value in (0, initial[offset])
+                               for offset, value in enumerate(current))
+                    assert all(value % 2 <= previous_bits[offset]
+                               for offset, value in enumerate(current))
+                    previous = current
+                    previous_bits = [value % 2 for value in current]
+                assert not any(previous)
+                integer_words += 1
+    return dict(status='PASS', starting_orders=[20, through_order],
+                source_limit=max(fibonacci[row['order']] + row['first_positive_offset']
+                                 for row in rows),
+                canonical_certificates=rows, coverage=coverage,
+                independent_prescribed_orbit_comparisons=comparisons,
+                four_clock_words=parity_words, integer_words=integer_words,
+                integer_clock_updates=updates,
+                scope='The written one-zero-row theorem allows arbitrary partner amplitudes '
+                      'and proves inner-band extinction by K+8. These finite canonical '
+                      'certificates supply one zero initial row for every inherited 0/3 '
+                      'window at the stated starting orders, at every later row. No general '
+                      'two-positive-row selector restriction or global convergence claim.')
+
+
 def main():
     parser = argparse.ArgumentParser()
     modes = parser.add_mutually_exclusive_group()
@@ -227,6 +310,8 @@ def main():
                        help='Check the amplitude-three seeded branch exclusion.')
     modes.add_argument('--sparse', action='store_true',
                        help='Continue a Fibonacci block using a shorter earlier prefix.')
+    modes.add_argument('--zero-row', action='store_true',
+                       help='Check one-zero-row extinction and bounded-start canonical premises.')
     parser.add_argument('--order', type=int)
     parser.add_argument('--offsets', type=int)
     parser.add_argument('--values-u32',
@@ -234,10 +319,36 @@ def main():
     arguments = parser.parse_args()
     if not __debug__:
         raise SystemExit('Run without -O; assertions perform the mathematical checks.')
-    if (arguments.order is not None or arguments.offsets is not None) and not arguments.sparse:
-        parser.error('--order and --offsets require --sparse')
-    if arguments.values_u32 and not (arguments.ternary or arguments.sparse):
-        parser.error('--values-u32 requires --ternary or --sparse')
+    if arguments.order is not None and not (arguments.sparse or arguments.zero_row):
+        parser.error('--order requires --sparse or --zero-row')
+    if arguments.offsets is not None and not arguments.sparse:
+        parser.error('--offsets requires --sparse')
+    if arguments.values_u32 and not (arguments.ternary or arguments.sparse or arguments.zero_row):
+        parser.error('--values-u32 requires --ternary, --sparse or --zero-row')
+    if arguments.zero_row:
+        order = 28 if arguments.order is None else arguments.order
+        if not 20 <= order <= 40:
+            parser.error('--zero-row requires order between 20 and 40')
+        if arguments.values_u32:
+            with open(arguments.values_u32, 'rb') as handle:
+                with mmap.mmap(handle.fileno(), 0, access=mmap.ACCESS_READ) as mapped:
+                    prefix = memoryview(mapped).cast('I')
+                    report = zero_row_certificate(prefix, order)
+                    prefix.release()
+        else:
+            fibonacci = [0, 1]
+            for level in range(2, 42):
+                fibonacci.append(sum(fibonacci[-2:]))
+            required = {next(row[0] for row in ZERO_ROW_CERTIFICATES
+                             if row[0] in (base, base + 1))
+                        for base in range(20, order + 1)}
+            limit = max(fibonacci[level] + first
+                        for level, first, amplitude in ZERO_ROW_CERTIFICATES if level in required)
+            prefix, _, _, _ = generate(limit)
+            assert prefix == brent_generate(limit)
+            report = zero_row_certificate(prefix, order)
+        print(json.dumps(report, indent=2))
+        return
     if arguments.ternary or arguments.sparse:
         if arguments.ternary:
             source_limit = 2692797

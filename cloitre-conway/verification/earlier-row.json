@@ -357,5 +357,366 @@
       "61": 1
     },
     "scope": "Sparse continuation from the exact Fibonacci anchor and an earlier prefix, with every residual query bounded separately at each offset. Visited-orbit and Brent selectors agree. No intervening-gap or current-row table is read; no convergence claim."
+  },
+  "zero_row": {
+    "status": "PASS",
+    "starting_orders": [
+      20,
+      28
+    ],
+    "source_limit": 317943,
+    "canonical_certificates": [
+      {
+        "order": 20,
+        "first_positive_offset": 17,
+        "defect": 1
+      },
+      {
+        "order": 22,
+        "first_positive_offset": 48,
+        "defect": 1
+      },
+      {
+        "order": 24,
+        "first_positive_offset": 113,
+        "defect": 1
+      },
+      {
+        "order": 26,
+        "first_positive_offset": 113,
+        "defect": 1
+      },
+      {
+        "order": 28,
+        "first_positive_offset": 132,
+        "defect": 1
+      }
+    ],
+    "coverage": [
+      {
+        "base": 20,
+        "zero_source": 20
+      },
+      {
+        "base": 21,
+        "zero_source": 22
+      },
+      {
+        "base": 22,
+        "zero_source": 22
+      },
+      {
+        "base": 23,
+        "zero_source": 24
+      },
+      {
+        "base": 24,
+        "zero_source": 24
+      },
+      {
+        "base": 25,
+        "zero_source": 26
+      },
+      {
+        "base": 26,
+        "zero_source": 26
+      },
+      {
+        "base": 27,
+        "zero_source": 28
+      },
+      {
+        "base": 28,
+        "zero_source": 28
+      }
+    ],
+    "independent_prescribed_orbit_comparisons": 428,
+    "four_clock_words": [
+      {
+        "base_mod_three": 2,
+        "site_parity": 0,
+        "required_preceding_bits": [
+          0,
+          1,
+          1,
+          0
+        ]
+      },
+      {
+        "base_mod_three": 2,
+        "site_parity": 1,
+        "required_preceding_bits": [
+          1,
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "base_mod_three": 0,
+        "site_parity": 0,
+        "required_preceding_bits": [
+          1,
+          0,
+          1,
+          1
+        ]
+      },
+      {
+        "base_mod_three": 0,
+        "site_parity": 1,
+        "required_preceding_bits": [
+          0,
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "base_mod_three": 1,
+        "site_parity": 0,
+        "required_preceding_bits": [
+          1,
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "base_mod_three": 1,
+        "site_parity": 1,
+        "required_preceding_bits": [
+          0,
+          0,
+          1,
+          0
+        ]
+      }
+    ],
+    "integer_words": 46656,
+    "integer_clock_updates": 933120,
+    "scope": "The written one-zero-row theorem allows arbitrary partner amplitudes and proves inner-band extinction by K+8. These finite canonical certificates supply one zero initial row for every inherited 0/3 window at the stated starting orders, at every later row. No general two-positive-row selector restriction or global convergence claim."
+  },
+  "zero_row_extended": {
+    "status": "PASS",
+    "starting_orders": [
+      20,
+      40
+    ],
+    "source_limit": 102336649,
+    "canonical_certificates": [
+      {
+        "order": 20,
+        "first_positive_offset": 17,
+        "defect": 1
+      },
+      {
+        "order": 22,
+        "first_positive_offset": 48,
+        "defect": 1
+      },
+      {
+        "order": 24,
+        "first_positive_offset": 113,
+        "defect": 1
+      },
+      {
+        "order": 26,
+        "first_positive_offset": 113,
+        "defect": 1
+      },
+      {
+        "order": 28,
+        "first_positive_offset": 132,
+        "defect": 1
+      },
+      {
+        "order": 29,
+        "first_positive_offset": 209,
+        "defect": 2
+      },
+      {
+        "order": 31,
+        "first_positive_offset": 226,
+        "defect": 9
+      },
+      {
+        "order": 33,
+        "first_positive_offset": 487,
+        "defect": 9
+      },
+      {
+        "order": 35,
+        "first_positive_offset": 487,
+        "defect": 9
+      },
+      {
+        "order": 36,
+        "first_positive_offset": 2245,
+        "defect": 34
+      },
+      {
+        "order": 38,
+        "first_positive_offset": 2245,
+        "defect": 34
+      },
+      {
+        "order": 40,
+        "first_positive_offset": 2494,
+        "defect": 25
+      }
+    ],
+    "coverage": [
+      {
+        "base": 20,
+        "zero_source": 20
+      },
+      {
+        "base": 21,
+        "zero_source": 22
+      },
+      {
+        "base": 22,
+        "zero_source": 22
+      },
+      {
+        "base": 23,
+        "zero_source": 24
+      },
+      {
+        "base": 24,
+        "zero_source": 24
+      },
+      {
+        "base": 25,
+        "zero_source": 26
+      },
+      {
+        "base": 26,
+        "zero_source": 26
+      },
+      {
+        "base": 27,
+        "zero_source": 28
+      },
+      {
+        "base": 28,
+        "zero_source": 28
+      },
+      {
+        "base": 29,
+        "zero_source": 29
+      },
+      {
+        "base": 30,
+        "zero_source": 31
+      },
+      {
+        "base": 31,
+        "zero_source": 31
+      },
+      {
+        "base": 32,
+        "zero_source": 33
+      },
+      {
+        "base": 33,
+        "zero_source": 33
+      },
+      {
+        "base": 34,
+        "zero_source": 35
+      },
+      {
+        "base": 35,
+        "zero_source": 35
+      },
+      {
+        "base": 36,
+        "zero_source": 36
+      },
+      {
+        "base": 37,
+        "zero_source": 38
+      },
+      {
+        "base": 38,
+        "zero_source": 38
+      },
+      {
+        "base": 39,
+        "zero_source": 40
+      },
+      {
+        "base": 40,
+        "zero_source": 40
+      }
+    ],
+    "independent_prescribed_orbit_comparisons": 8828,
+    "four_clock_words": [
+      {
+        "base_mod_three": 2,
+        "site_parity": 0,
+        "required_preceding_bits": [
+          0,
+          1,
+          1,
+          0
+        ]
+      },
+      {
+        "base_mod_three": 2,
+        "site_parity": 1,
+        "required_preceding_bits": [
+          1,
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "base_mod_three": 0,
+        "site_parity": 0,
+        "required_preceding_bits": [
+          1,
+          0,
+          1,
+          1
+        ]
+      },
+      {
+        "base_mod_three": 0,
+        "site_parity": 1,
+        "required_preceding_bits": [
+          0,
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "base_mod_three": 1,
+        "site_parity": 0,
+        "required_preceding_bits": [
+          1,
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "base_mod_three": 1,
+        "site_parity": 1,
+        "required_preceding_bits": [
+          0,
+          0,
+          1,
+          0
+        ]
+      }
+    ],
+    "integer_words": 46656,
+    "integer_clock_updates": 933120,
+    "scope": "The written one-zero-row theorem allows arbitrary partner amplitudes and proves inner-band extinction by K+8. These finite canonical certificates supply one zero initial row for every inherited 0/3 window at the stated starting orders, at every later row. No general two-positive-row selector restriction or global convergence claim."
   }
 }
