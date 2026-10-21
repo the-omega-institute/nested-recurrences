@@ -7,6 +7,18 @@ import mmap
 from conway_explore import brent_generate, g_closed, generate, literal_generate
 
 
+class BoundedPrefix:
+    def __init__(self, prefix, limit):
+        self.prefix = prefix
+        self.limit = limit
+        self.maximum_query = 0
+
+    def __getitem__(self, index):
+        assert 1 <= index <= self.limit
+        self.maximum_query = max(self.maximum_query, index)
+        return self.prefix[index]
+
+
 def coupled_selector(prefix, parent, seed, steps, invariant_lower, source_end, literal=True):
     orbit = []
     positions = {}
@@ -26,6 +38,73 @@ def coupled_selector(prefix, parent, seed, steps, invariant_lower, source_end, l
             literal_point = parent - prefix[literal_point]
         assert selected == literal_point
     return selected
+
+
+def brent_selector(prefix, parent, seed, steps):
+    power = period = 1
+    slow = seed
+    fast = parent - prefix[seed]
+    while slow != fast:
+        if power == period:
+            slow = fast
+            power *= 2
+            period = 0
+        fast = parent - prefix[fast]
+        period += 1
+    slow = fast = seed
+    for iteration in range(period):
+        fast = parent - prefix[fast]
+    entry = 0
+    while slow != fast:
+        slow = parent - prefix[slow]
+        fast = parent - prefix[fast]
+        entry += 1
+    residual = steps if steps < entry else entry + (steps - entry) % period
+    selected = seed
+    for iteration in range(residual):
+        selected = parent - prefix[selected]
+    return selected
+
+
+def sparse_certificate(prefix, order, endpoint):
+    fibonacci = [0, 1]
+    for level in range(2, order + 1):
+        fibonacci.append(sum(fibonacci[-2:]))
+    anchor, lower = fibonacci[order - 1], fibonacci[order - 2]
+    source_end = fibonacci[order]
+    source_limit = 2 * lower + endpoint - 1
+    assert order >= 11 and 1 <= endpoint <= fibonacci[order - 3]
+    assert len(prefix) > source_limit
+    preceding = 0
+    maximum_query = 0
+    first_positive = None
+    amplitudes = {}
+    for offset in range(1, endpoint + 1):
+        bounded = BoundedPrefix(prefix, 2 * lower + offset - 1)
+        depth = anchor + offset - 1 - preceding
+        seed = lower + 1 + preceding
+        assert 0 <= preceding < offset
+        selected = coupled_selector(bounded, source_end + offset, seed, depth - 1,
+                                    lower + 1, source_end, literal=False)
+        assert selected == brent_selector(bounded, source_end + offset, seed, depth - 1)
+        value = bounded[selected] + bounded[source_end + offset - selected]
+        preceding = anchor + offset - value
+        assert 0 <= preceding <= offset
+        maximum_query = max(maximum_query, bounded.maximum_query)
+        amplitudes[preceding] = amplitudes.get(preceding, 0) + 1
+        if preceding and first_positive is None:
+            first_positive = dict(offset=offset, defect=preceding, value=value,
+                                  selected_point=selected, depth=depth)
+    return dict(status='PASS', order=order, offsets=endpoint,
+                parent_anchor=source_end, source_limit=source_limit,
+                unread_earlier_interval=[source_limit + 1, source_end - 1],
+                maximum_query=maximum_query, paired_values_and_selected_points=endpoint,
+                first_positive_defect=first_positive,
+                defect_histogram=dict(sorted(amplitudes.items())),
+                scope='Sparse continuation from the exact Fibonacci anchor and an earlier '
+                      'prefix, with every residual query bounded separately at each offset. '
+                      'Visited-orbit and Brent selectors agree. No intervening-gap or '
+                      'current-row table is read; no convergence claim.')
 
 
 def ternary_feedback(prefix, fibonacci, order, offset, preceding, contacts):
@@ -65,7 +144,9 @@ def ternary_certificate(prefix):
     order, width, endpoint, offset = 33, 225, 450, 260
     anchor, lower_anchor, third_anchor = fibonacci[32], fibonacci[31], fibonacci[30]
     source_end = fibonacci[33]
-    assert len(prefix) >= source_end
+    source_limit = 2 * lower_anchor + offset - 1
+    assert len(prefix) > source_limit
+    prefix = BoundedPrefix(prefix, source_limit)
     assert 2 <= width < offset <= g_closed(endpoint - 1)
     assert endpoint <= min(2 * width, third_anchor) and offset + 3 <= endpoint
     source = [lower_anchor + position - prefix[anchor + position]
@@ -126,7 +207,9 @@ def ternary_certificate(prefix):
     assert source[261] == source[258] == 3 and source[255] == source[260] == 0
     assert third_anchor + 255 - prefix[lower_anchor + 255] == 0
     assert third_anchor + 260 - prefix[lower_anchor + 260] == 2
-    return dict(status='PASS', source_limit=source_end - 1, order=order,
+    return dict(status='PASS', source_limit=source_limit, order=order,
+                unread_earlier_interval=[source_limit + 1, source_end - 1],
+                maximum_query=prefix.maximum_query,
                 width=width, source_band=endpoint, offset=offset, parent=parent,
                 paired_seed_clock_comparisons=offset, interval_extrema_lookups=lookups,
                 rows=rows, forced_contact=255, feedback_image=sorted(images),
@@ -139,26 +222,48 @@ def ternary_certificate(prefix):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--ternary', action='store_true',
-                        help='Check the amplitude-three seeded branch exclusion.')
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument('--ternary', action='store_true',
+                       help='Check the amplitude-three seeded branch exclusion.')
+    modes.add_argument('--sparse', action='store_true',
+                       help='Continue a Fibonacci block using a shorter earlier prefix.')
+    parser.add_argument('--order', type=int)
+    parser.add_argument('--offsets', type=int)
     parser.add_argument('--values-u32',
                         help='Reuse an independently verified native unsigned-32-bit prefix.')
     arguments = parser.parse_args()
     if not __debug__:
         raise SystemExit('Run without -O; assertions perform the mathematical checks.')
-    if arguments.values_u32 and not arguments.ternary:
-        parser.error('--values-u32 requires --ternary')
-    if arguments.ternary:
+    if (arguments.order is not None or arguments.offsets is not None) and not arguments.sparse:
+        parser.error('--order and --offsets require --sparse')
+    if arguments.values_u32 and not (arguments.ternary or arguments.sparse):
+        parser.error('--values-u32 requires --ternary or --sparse')
+    if arguments.ternary or arguments.sparse:
+        if arguments.ternary:
+            source_limit = 2692797
+            evaluator = ternary_certificate
+        else:
+            order = 33 if arguments.order is None else arguments.order
+            endpoint = 512 if arguments.offsets is None else arguments.offsets
+            if order < 11 or endpoint < 1:
+                parser.error('Use order >= 11 and at least one offset.')
+            fibonacci = [0, 1]
+            for level in range(2, order + 1):
+                fibonacci.append(sum(fibonacci[-2:]))
+            if endpoint > fibonacci[order - 3]:
+                parser.error('The offset range must be at most F_(order-3).')
+            source_limit = 2 * fibonacci[order - 2] + endpoint - 1
+            evaluator = lambda prefix: sparse_certificate(prefix, order, endpoint)
         if arguments.values_u32:
             with open(arguments.values_u32, 'rb') as handle:
                 with mmap.mmap(handle.fileno(), 0, access=mmap.ACCESS_READ) as mapped:
                     prefix = memoryview(mapped).cast('I')
-                    report = ternary_certificate(prefix)
+                    report = evaluator(prefix)
                     prefix.release()
         else:
-            prefix, _, _, _ = generate(3524577)
-            assert prefix == brent_generate(3524577)
-            report = ternary_certificate(prefix)
+            prefix, _, _, _ = generate(source_limit)
+            assert prefix == brent_generate(source_limit)
+            report = evaluator(prefix)
         print(json.dumps(report, indent=2))
         return
     fibonacci = [0, 1]
@@ -191,10 +296,12 @@ def main():
     for offset in range(149, 155):
         parent = source_end + offset
         transitions = {}
+        bounded_source = BoundedPrefix(source, 2 * lower_anchor + offset - 1)
         for previous_defect in range(offset):
             seed = lower_anchor + 1 + previous_defect
             depth = anchor + offset - 1 - previous_defect
-            selected = coupled_selector(source, parent, seed, depth - 1, lower_anchor + 1, source_end)
+            selected = coupled_selector(bounded_source, parent, seed, depth - 1,
+                                        lower_anchor + 1, source_end)
             selected_offset = selected - anchor
             assert 0 <= selected_offset <= offset
             result = defect(19, selected_offset) + defect(18, offset - selected_offset)
@@ -240,7 +347,7 @@ def main():
     reached_phase_defects = [defect(19, argument) + defect(18, offset - argument) for argument in [45, 112]]
     assert reached_phase_defects == [4, 4]
     for previous_defect in range(offset):
-        selected = coupled_selector(source, parent, lower_anchor + 1 + previous_defect,
+        selected = coupled_selector(bounded_source, parent, lower_anchor + 1 + previous_defect,
                                     anchor + offset - 2 - previous_defect, lower_anchor + 1, source_end)
         assert selected - anchor == (112 if previous_defect % 2 == 0 else 45)
     assert anchor + 148 - literal[source_end + 148] == 0

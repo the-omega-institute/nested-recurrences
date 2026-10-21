@@ -61,12 +61,22 @@ preceding defect, retaining its exact seed and clock. A finite certificate
 excludes a terminal interval uniformly over all capped preceding states.
 A cross-level lower bound on these excluded widths remains open.
 
+The [shorter query-domain theorem](cloitre-conway/frontier-dynamics.md#a-shorter-source-prefix-and-sparse-continuation)
+computes a Fibonacci-row segment from the exact anchor and a shorter earlier
+prefix, skipping an intervening interval of earlier indices. It applies
+without an amplitude bound. Independent orbit selectors reproduce finite
+sparse continuations; this gives no global convergence or complexity claim.
+
 In a saturated amplitude-three source window, an
 [exact seeded decoder](cloitre-conway/frontier-dynamics.md#an-exact-three-route-decoder-for-amplitude-three-windows)
 reduces every paired seed and clock to one of three routed lower values
 after logarithmically many earlier-row excursions. A finite level-33
 certificate excludes a locally permitted positive branch for every capped
 preceding state. A uniform reset estimate remains open.
+Under inherited zero/three windows, a possible split between two diagnostic
+routes must leave one contact among the last four offsets; their first
+returns remain outside the known terminal shelves. Complete synchronization
+and a cross-level reset estimate remain open.
 
 A [traveling amplitude-three history](cloitre-conway/exact-collars.md#an-amplitude-three-traveling-history-limits-the-relaxed-routing-method)
 shows that the local necessary routing rules alone cannot extend uniform

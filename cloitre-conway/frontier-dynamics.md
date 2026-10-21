@@ -471,6 +471,73 @@ $$
 
 Every set in this certificate uses earlier rows alone.
 
+### A shorter source prefix and sparse continuation
+
+The feedback theorem needs fewer earlier values than its invariant interval
+suggests. Retain N=F_k, A=F_(k-1), B=F_(k-2), ell=F_(k-3), and put
+c=F_(k-4). For every integer k>=11 and 1<=t<=ell, define
+
+$$
+M_{k,t}=2B+t-1=F_k-1-(\ell-t).
+$$
+
+**Query-domain theorem.** For every capped diagnostic e, all residual
+orbit queries after the supplied first point B+1+e, and both selected
+child queries, lie in 1..M_(k,t). This theorem needs no bounded defect
+alphabet or saturation hypothesis. The preceding value C(N+t-1) is still
+supplied through its paired defect e and depth h_t(e); it is not an
+earlier-prefix query.
+
+**Proof.** The first point lies in [B+1,A]. The complete cap and golden
+lower envelope give ell+1<=C(B+1+e)<=B. Thus its next point is
+A+t+s, where 0<=s<=B-ell-1=c-1. In particular it is at most
+A+t+c-1=2B+t-1, and t+s<=ell+c-1=B-1 is a native source offset.
+
+At any exterior upper point A+t+s, the next point is A-r with
+r=P_(k-1)(t+s)-t=s-E_(k-1)(t+s). If r<=0, nonnegative P puts
+the new point in the core [A,A+t]. If r>0, then r<=s<=c-1<ell;
+the next lower point is at least B+1, and its next upper height obeys
+
+$$
+0\le Q_{k-1}(r)\le\lfloor2r/3\rfloor<s.
+$$
+
+Hence exterior upper heights decrease and never exceed c-1. The core
+is invariant, since T_(N+t)(A+u)=A+t-P_(k-1)(u) belongs to [A,A+t]
+for 0<=u<=t. Its upper endpoint A+t is at most M_(k,t), because
+M_(k,t)-(A+t)=c-1. Finally the selected children are A+u and
+B+t-u, bounded by A+t and A respectively. This proves the domain bound.
+For e=0, C(B+1)=ell+1 makes the second orbit point exactly M_(k,t),
+so this bound is attained within the diagnostic orbit interface. This is
+not an information lower bound for other methods of computing C. QED.
+
+**Sparse continuation.** Fix 1<=T<=ell. Supply the actual prefix only
+through M_(k,T), together with C(F_k)=A. Starting at E_k(0)=0, compute
+E_k(t)=Phi_(k,t)(E_k(t-1)) for t=1,...,T. At each step the preceding
+current-row value has already been computed; all residual orbit and child
+queries use the supplied shorter prefix. Induction proves that the resulting
+block is the canonical C, without reading any intervening values
+M_(k,T)+1,...,F_k-1. This does not give a sublinear algorithm for arbitrary
+indices or an asymptotic limit.
+
+The [checker](verification/earlier_row_check.py), with `--sparse`, performs
+this continuation with independent visited-orbit and Brent selectors.
+At k=33,T=512 it uses the prefix through 2693049 and skips 831528 earlier
+positions. Its first positive defect is 9 at offset 487. A larger optional
+certificate at k=41,T=4096 uses only the earlier prefix through 126496067,
+skipping 39084073 positions before F_41=165580141. Both selectors agree on
+all 4096 values and selected points; the first positive defect is 61 at
+offset 2705. This larger block is a finite consequence of the earlier
+verified prefix and this theorem; it was not independently regenerated
+as part of a complete prefix through its parent indices.
+
+The [evidence](verification/earlier-row.json) contains both sparse
+certificates. The level-33 branch certificate below now needs only values
+through 2692797 instead of F_33-1=3524577. Its eight interval rows and all
+260 paired diagnostic states remain unchanged. The level-20 feedback
+calls also enforce their individual shorter query bounds; its separate
+frontier and literal-prefix checks retain their original inputs.
+
 ### A uniform basin exclusion at level 20
 
 Here N=6765, A=4181, B=2584 and U_20=87+67=154. The
@@ -696,6 +763,103 @@ bound on actual crossings. Even a default entrance can copy a positive
 lower defect. The margins can be empty, and none of these restrictions
 yet bounds the delay to a zero output.
 
+### Two restrictions on a possible channel split
+
+Full synchronization of the diagnostic states e=0 and e=3 remains open.
+The following restrictions use inherited homogeneous windows, stronger
+than the single-source hypotheses of the decoder. Let K>=20 and
+2<=W<=B<=min(2W,F_(K-1)) be integers. Assume complete saturation at W
+in rows K,K+1 and defects in {0,3} through B in both rows. These
+properties propagate through the original B by the doubled-band theorem.
+Fix j>=K+2 and W+4<=t<=floor(alpha B), with t+3<=B, and put m=j-1,
+c=F_(j-4), c_0=F_(K-2). A channel is available if a capped diagnostic
+selects it, including its required guard. For an available d in {0,1,2},
+let rho_d be its source contact after successive subtractions of three.
+The labels R_0,R_3 refer to the separate diagnostics e=0,3; they are not
+assertions that both preceding defects occur at this same canonical term.
+
+**A split has a nearby contact.** At j>=K+3,
+
+$$
+R_0\ne R_3\quad\Longrightarrow\quad\max(R_0,R_3)\ge t-3.
+$$
+
+In particular two diagnostic contacts at most t-4 must coincide.
+Indeed rho_d=t-d modulo 3, so distinct channels have distinct contacts.
+Write chi(u)=E_m(u)/3. The source row is now itself propagated, and its
+actual even-depth-zero rule gives
+
+$$
+\chi(u)=1\quad\Longrightarrow\quad
+\chi(u-1)\equiv F_{m-1}+u\pmod2.
+$$
+
+Put epsilon=F_(m-1)+t modulo 2. Channel 1 requires chi(t+2)=1;
+channel 2 requires chi(t+1)=1. Applying the preceding source-clock
+constraint gives the exhaustive alternatives:
+
+| Distinct available channels | Forced nearby contact |
+|---|---|
+| 0,1 | rho_0=t or rho_1=t-1 |
+| 0,2 | rho_0=t, rho_2=t-2, or rho_0=t-3 |
+| 1,2 | rho_1=t-1 or rho_2=t-2 |
+
+For 0,1, epsilon=1 forces chi(t)=0; at epsilon=0, positivity at t
+forces chi(t-1)=0. For 0,2, epsilon=1 again forces chi(t)=0.
+At epsilon=0 the guard forces chi(t)=1; if chi(t-2)=1, its clock
+forces chi(t-3)=0, while chi(t-2)=0 already stops channel 2.
+Both guards in case 1,2 force epsilon=1; if chi(t-1)=1, its clock
+forces chi(t-2)=0. These cases prove the table and the stated bound.
+All used offsets lie strictly above W. No assertion is made at j=K+2,
+where the source row is one of the initial rows.
+
+**The first return remains exterior.** For either e=0 or e=3, the first
+scalar return satisfies
+
+$$
+k_1^{(e)}\ge
+\left\lfloor\frac{\alpha(c-1)}2+\delta_m\right\rfloor>Z_m,
+\qquad\delta_m=(-1)^{m-1}\alpha^m.
+$$
+
+This holds already at j=K+2 and throughout the displayed band, without
+the additional margins in the protected-distance result. First,
+k_0=H-1-e>=H-t+W>=(1-alpha)H+W>Z_m, since B<=H and t<=alpha B.
+The last comparison holds at m=21 and its Fibonacci lower bound grows
+by more than four per order, whereas Z_m grows by at most four.
+Thus the first scalar return is genuinely exterior. For the proof,
+e<=t-W-1 and t<=2W put 1+e<=W in the exact lower collar. Thus the
+first upper height is s_0=c-1-e, and its source offset is
+u=t+c-1-e>=c+W. The cap gives P_K(B)<=c_0; the homogeneous initial
+window then gives B<=c_0+3. Since W>=B/2 and c_0<=c,
+
+$$
+u-B\ge c+W-B\ge c-B/2\ge(c-3)/2.
+$$
+
+Golden localization at this actual exterior query, together with
+t<=floor(alpha B), now yields
+
+$$
+k_1^{(e)}=P_m(u)-t
+\ge\lfloor\alpha(u-B+1)+\delta_m\rfloor
+\ge\left\lfloor\frac{\alpha(c-1)}2+\delta_m\right\rfloor.
+$$
+
+At m=21 the last lower bound is 798>Z_21=45. Its unrounded value
+increases by alpha*F_(m-4)/2+delta_(m+1)-delta_m>4 at each order,
+while Z increases by at most four. This proves the strict inequality
+for all m>=21. The same proof applies to every diagnostic
+0<=e<=t-W-1. The first lower point and its first return have absolute
+ranks 1 and 3 and both lie outside the terminal shelves. A nondefault
+first core entrance therefore has rank at least 7.
+
+The contact bound uses the actual source clock and available guards;
+it does not compare the two exterior paths. The first-return bound
+constrains those paths individually. A split with one nearby and one
+distant contact remains possible under these restrictions; neither full
+synchronization nor uniform extinction follows.
+
 ### A seeded branch exclusion at level 33
 
 Take j=33, W=225, B=450 and t=260. The independently regenerated earlier
@@ -734,7 +898,7 @@ are A+255=2178564 at even depth and A+5=2178314 at odd depth.
 No current-row value is used to obtain this exclusion.
 
 The [same checker](verification/earlier_row_check.py), with `--ternary`,
-regenerates the prefix through F_33-1=3524577 by full visited orbits and
+regenerates the shorter prefix through 2692797 by full visited orbits and
 independently by Brent cycle detection. It checks 8384 interval extrema
 lookups and compares all 260 paired seeds and clocks with direct visited
 orbits, including their selected points. The [compact evidence](verification/earlier-row.json)
