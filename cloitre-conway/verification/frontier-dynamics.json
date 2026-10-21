@@ -6,6 +6,11 @@
   "left_minorant_positions": 225013,
   "capture_inputs": 408,
   "cycle_positions": 2075,
+  "contact_cycle_geometry": {
+    "contacts": 2315,
+    "two_step_edges": 4642,
+    "periods_above_two": 3
+  },
   "frontiers": [
     {
       "level": 10,

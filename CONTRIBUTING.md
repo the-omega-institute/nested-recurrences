@@ -167,5 +167,6 @@ Compare its JSON with
 [frontier-dynamics.json](cloitre-conway/verification/frontier-dynamics.json).
 This separate check tests both propagated minorants, quantitative first
 capture, cycle localization, all eligible gated frontiers in its prefix,
-and the explicit nongating counterexample. The infinite conclusions use
+the explicit nongating counterexample, and the exact cycle-geometry
+inequalities at all non-anchor contacts in its prefix. The infinite conclusions use
 the written arguments in [frontier dynamics](cloitre-conway/frontier-dynamics.md).

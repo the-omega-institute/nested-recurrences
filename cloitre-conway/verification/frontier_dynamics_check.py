@@ -3,7 +3,7 @@
 from fractions import Fraction
 import json
 
-from conway_explore import brent_generate, generate, literal_generate
+from conway_explore import brent_generate, full_orbit, generate, literal_generate
 
 
 def main():
@@ -137,12 +137,59 @@ def main():
         for step in range(values[parent - 1]):
             point = parent - values[point]
         assert point == selected[parent]
+    contact_cycles = 0
+    cycle_edges = 0
+    longer_contact_cycles = 0
+    for level in range(9, last_complete + 2):
+        anchor = fibonacci[level]
+        first_child = fibonacci[level - 1]
+        for offset in range(1, min(fibonacci[level - 2], limit - anchor) + 1):
+            parent = anchor + offset
+            if parent < 47 or defect(level, offset) != 0:
+                continue
+            trajectory, transient, period = full_orbit(values, parent)
+            cycle = [point - first_child for point in trajectory[transient:]]
+            ordered = sorted(cycle)
+            cycle_drawdown = 0
+            cycle_complement_drawdown = 0
+            value_maximum = values[first_child + ordered[0]]
+            complement_maximum = first_child + ordered[0] - value_maximum
+            for point in ordered:
+                value = values[first_child + point]
+                complement = first_child + point - value
+                cycle_drawdown = max(cycle_drawdown, value_maximum - value)
+                cycle_complement_drawdown = max(cycle_complement_drawdown,
+                                                 complement_maximum - complement)
+                value_maximum = max(value_maximum, value)
+                complement_maximum = max(complement_maximum, complement)
+            total_drawdown = cycle_drawdown + cycle_complement_drawdown
+            minimum, maximum = ordered[0], ordered[-1]
+            assert 0 <= minimum + maximum - offset <= total_drawdown
+            assert defect(level - 1, maximum) <= cycle_complement_drawdown + 2 * cycle_drawdown
+            assert max(defect(level - 1, point) for point in cycle) <= 2 * total_drawdown
+            for rank, point in enumerate(cycle):
+                assert abs(cycle[(rank + 2) % period] - point) <= 2 * total_drawdown
+                cycle_edges += 1
+            rank_classes = [cycle] if period % 2 else [cycle[::2], cycle[1::2]]
+            for rank_class in rank_classes:
+                points = sorted(rank_class)
+                assert all(right - left <= 2 * total_drawdown
+                           for left, right in zip(points, points[1:]))
+                if period % 2 == 0:
+                    assert points[-1] - points[0] <= 2 * (period // 4) * total_drawdown
+            if period % 2:
+                assert maximum - minimum <= (period - 1) * total_drawdown
+            contact_cycles += 1
+            longer_contact_cycles += period > 2
     print(json.dumps(dict(limit=limit, evaluator='full visited-state orbits',
                           literal_values_checked_through=2584,
                           right_minorant_positions=lower_bound_checks,
                           left_minorant_positions=left_bound_checks,
                           capture_inputs=capture_checks,
                           cycle_positions=cycle_position_checks,
+                          contact_cycle_geometry=dict(contacts=contact_cycles,
+                                                      two_step_edges=cycle_edges,
+                                                      periods_above_two=longer_contact_cycles),
                           frontiers=frontier_rows, gated_frontiers=gated_rows,
                           ungated_frontiers_with_other_hypotheses=ungated_rows,
                           ungated_five_input_counterexample=dict(

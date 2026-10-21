@@ -9,6 +9,11 @@ that an isolated contact satisfying a one-sided barrier forces a precisely
 measured adjacent difference within five inputs at the next level.
 Neither result establishes b=0 or full convergence.
 
+A further conditional theorem describes the whole reached frontier cycle:
+under sublinear drawdowns on that cycle, its scaled limits consist of at
+most two reflected intervals. Its proof uses finite cycle transitivity
+before taking limits.
+
 We use Cloitre's recurrence with its prescribed start and depth:
 
 $$
@@ -284,6 +289,123 @@ Bounded first capture also leaves the interior transient and
 the residue of the prescribed clock on the reached cycle uncontrolled.
 These are actual remaining gaps in proving cumulative contact erosion.
 
+## Cycle geometry under small drawdowns
+
+For any contact n=F_k+t>=47 with 0<=t<=F_(k-2), let Gamma be its reached
+cycle in offsets from A=F_(k-1). Capture puts Gamma in [0,t]. Put E=E_(k-1) and
+H(x)=t-x+E(x). The actual selected offset s is cyclic and satisfies
+E(s)=0; its successor is v=t-s. Define D(n)=n-C(n), and let q_C and q_D
+be the maximum forward drawdowns of C and D restricted to the integer
+arguments A+Gamma. Set q=q_C+q_D, ell=min Gamma and u=max Gamma.
+
+**Finite cycle lemma.** For every primitive period p,
+
+$$
+0\le\ell+u-t\le q,\qquad
+E(u)\le q_D+2q_C,\qquad
+\max_{x\in\Gamma}E(x)\le2q,\qquad
+|H^2(x)-x|\le2q. \tag{10}
+$$
+
+Every orbit S of H^2 on Gamma has consecutive spatial gaps at most 2q.
+Its Hausdorff distance from the real interval [min S,max S] is at most q.
+For odd p there is one such orbit and
+
+$$
+u-\ell\le(p-1)q.
+$$
+
+For even p there are two such orbits, each of diameter at most
+2*floor(p/4)*q.
+
+**Proof.** Compare a preimage of u with ell, and a preimage of ell with u.
+Since H reverses C-values, the restricted C-drawdown gives
+
+$$
+0\le u-H(\ell)\le q_C,\qquad 0\le H(u)-\ell\le q_C.
+$$
+
+Also E(x)=D(A+x)-F_(k-3). Since ell<=s and E(s)=0,
+0<=E(ell)<=q_D. Therefore ell+u-t=E(ell)+u-H(ell) lies in [0,q],
+and E(u)=ell+u-t+H(u)-ell<=q_D+2q_C. For any x in Gamma, x<=u
+implies E(x)-E(u)<=q_D, proving the uniform bound. The exact identity
+H^2(x)-x=E(H(x))-E(x) proves the two-step bound.
+
+If a spatial gap in an H^2-orbit exceeded 2q, no two-step edge could
+cross it. Its two sides would then belong to different orbits, a
+contradiction. Half the maximum gap bounds the distance to the filled
+interval. For odd p the undirected cycle graph of H^2 has diameter
+(p-1)/2; for even p each of its two cycles has diameter floor(p/4).
+Each edge has length at most 2q, proving the period bounds. QED.
+
+**Conditional geometry theorem.** Assume b>0 and, on the actual frontier
+cycles Gamma_k at n_k=F_k+t_k, assume
+
+$$
+q_{C,k}+q_{D,k}=o(N_k),\qquad N_k=F_{k-2}. \tag{11}
+$$
+
+Global sublinear drawdowns of C and D would suffice for (11); neither
+global hypothesis has been proved. Then
+
+$$
+\frac{\min\Gamma_k}{N_k}\to\alpha b,\qquad
+\frac{\max\Gamma_k}{N_k}\to b,\qquad
+\max_{x\in\Gamma_k}\frac{E_{k-1}(x)}{N_k}\to0. \tag{12}
+$$
+
+Along every odd-period subsequence, Gamma_k/N_k converges in Hausdorff
+distance to [alpha*b,b]. For an even-period subsequence, let Gamma_(k,0)
+be the H_k^2-orbit of the actual selected point and
+Gamma_(k,1)=H_k(Gamma_(k,0)). After taking a further subsequence there
+is a number a in [alpha*b,b] such that
+
+$$
+\frac{\Gamma_{k,0}}{N_k}\longrightarrow[a,b],\qquad
+\frac{\Gamma_{k,1}}{N_k}\longrightarrow[\alpha b,b/\alpha-a]. \tag{13}
+$$
+
+Thus every possible whole-cycle limit has at most two reflected end
+intervals. They overlap or touch if a<=b/(2alpha); otherwise there is
+one central gap. At a=b the limit is the two points {alpha*b,b}.
+These hypotheses exclude multiple macroscopic gaps in a frontier-cycle
+limit. They make no assertion about smaller-scale structure.
+
+**Proof.** At the actual selected split, both child defects vanish. Hence
+0<=t_(k-1)-s_k, 0<=t_(k-2)-v_k, and their sum is Delta_k=o(N_k).
+The limit defining b consequently gives
+
+$$
+\frac{t_k}{N_k}\to b/\alpha,\qquad
+\frac{s_k}{N_k}\to b,\qquad \frac{v_k}{N_k}\to\alpha b.
+$$
+
+Fix K in (1). Applying the minorant and (10) at u_k=max Gamma_k gives
+u_k<=c_K*N_k+(q_(D,k)+2q_(C,k))/gamma_K. First let k tend to infinity
+with K fixed, then let K tend to infinity, using c_K->b. Since u_k>=s_k,
+this proves u_k/N_k->b. The first bound in (10) determines ell_k/N_k,
+and its uniform defect bound proves (12).
+
+For odd periods H_k^2 is transitive on Gamma_k, so its gap bound in
+(10), together with (11) and the extrema, proves convergence to the full
+interval. For even periods the class containing s_k has upper endpoint
+tending to b. Extract a limit a of its lower endpoint. Its spatial gap
+bound gives the first interval in (13). On the entire cycle the error
+in H_k(x)=t_k-x+E_(k-1)(x) is o(N_k), uniformly by (12), so reflection
+gives the second interval. This argument uses actual finite cycles;
+it does not pass the diverging prescribed iteration count through a
+limiting map. QED.
+
+There is also a quantitative restriction on periods. Along an odd-period
+frontier subsequence, s_k-v_k=(alpha^3+o(1))*t_k, so
+(p_k-1)*(q_(C,k)+q_(D,k))>=(alpha^3-o(1))*t_k. Odd periods must therefore
+diverge under (11). If all frontier periods remain bounded, they are
+eventually even and both classes have sublinear diameter, giving the
+two-point limit. This permits several finite cycle points to coalesce
+at each limiting endpoint; it does not prove that the actual periods
+equal two. Absolute rank parity is still determined by the prescribed
+depth and entrance, not by naming one class the upper class.
+
 ## Independent checks
 
 The [checker](verification/frontier_dynamics_check.py) uses full visited-state
@@ -294,6 +416,12 @@ the quantitative entrance bound at 408 inputs, and the interior bounds
 at 2075 cycle positions. Seven gated frontiers satisfy the five-input
 theorem in this prefix; levels 19..25 satisfy its other hypotheses but
 are ungated.
+
+The finite cycle lemma is checked at all 2315 non-anchor cap contacts
+from n=47 through 131072, covering 4642 two-step cycle edges and three
+cycles of period greater than two. This includes both spatial gap and
+period inequalities. These checks do not establish the sublinear
+drawdown assumption (11).
 
 For j=16 the frontier is 40 and delta=E_15(40)=3:
 
