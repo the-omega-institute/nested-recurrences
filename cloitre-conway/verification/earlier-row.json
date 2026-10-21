@@ -1,0 +1,190 @@
+{
+  "actual_contact_at_148_verified": true,
+  "basin_certificate": {
+    "even_predecessor_defect_selects": 112,
+    "first_image_interval": [
+      2585,
+      2738
+    ],
+    "interval_enclosures": [
+      {
+        "absolute_rank": 1,
+        "maximum_C": 1747,
+        "minimum_C": 1598,
+        "offset_interval": [
+          -1596,
+          -1443
+        ]
+      },
+      {
+        "absolute_rank": 2,
+        "maximum_C": 3542,
+        "minimum_C": 3426,
+        "offset_interval": [
+          991,
+          1140
+        ]
+      },
+      {
+        "absolute_rank": 3,
+        "maximum_C": 2335,
+        "minimum_C": 2249,
+        "offset_interval": [
+          -804,
+          -688
+        ]
+      },
+      {
+        "absolute_rank": 4,
+        "maximum_C": 3037,
+        "minimum_C": 2950,
+        "offset_interval": [
+          403,
+          489
+        ]
+      },
+      {
+        "absolute_rank": 5,
+        "maximum_C": 2539,
+        "minimum_C": 2505,
+        "offset_interval": [
+          -299,
+          -212
+        ]
+      },
+      {
+        "absolute_rank": 6,
+        "maximum_C": 2809,
+        "minimum_C": 2775,
+        "offset_interval": [
+          199,
+          233
+        ]
+      },
+      {
+        "absolute_rank": 7,
+        "maximum_C": 2581,
+        "minimum_C": 2572,
+        "offset_interval": [
+          -71,
+          -37
+        ]
+      },
+      {
+        "absolute_rank": 8,
+        "maximum_C": 2745,
+        "minimum_C": 2735,
+        "offset_interval": [
+          157,
+          166
+        ]
+      },
+      {
+        "absolute_rank": 9,
+        "maximum_C": 2587,
+        "minimum_C": 2584,
+        "offset_interval": [
+          -7,
+          3
+        ]
+      }
+    ],
+    "odd_predecessor_defect_selects": 45,
+    "parent": 6919,
+    "rank10_interval": [
+      151,
+      154
+    ],
+    "reached_cycle": [
+      45,
+      112
+    ],
+    "reached_phase_defects": [
+      4,
+      4
+    ],
+    "synchronization_offset": 45,
+    "synchronization_rank": 35,
+    "valid_but_unreached_cycle": [
+      87,
+      67
+    ]
+  },
+  "certified_erosion_lower_bound": 6,
+  "coupled_seed_clock_cases": 909,
+  "every_coupled_case_checked_by_literal_residual_iteration": true,
+  "excluded_terminal_interval": [
+    149,
+    154
+  ],
+  "frontiers": {
+    "9": 8,
+    "10": 7,
+    "18": 67,
+    "19": 87
+  },
+  "independent_literal_prefix": 6919,
+  "literal_updates": 15533193,
+  "scope": "Finite earlier-row certificate and exact feedback; no uniform cross-level erosion or convergence claim.",
+  "source_prefix_inclusive": 6764,
+  "transition_images": [
+    {
+      "feedback_image": [
+        4
+      ],
+      "full_image": [
+        4
+      ],
+      "offset": 149
+    },
+    {
+      "feedback_image": [
+        4
+      ],
+      "full_image": [
+        4
+      ],
+      "offset": 150
+    },
+    {
+      "feedback_image": [
+        4
+      ],
+      "full_image": [
+        1,
+        4,
+        8
+      ],
+      "offset": 151
+    },
+    {
+      "feedback_image": [
+        1
+      ],
+      "full_image": [
+        1
+      ],
+      "offset": 152
+    },
+    {
+      "feedback_image": [
+        1
+      ],
+      "full_image": [
+        1,
+        3,
+        6
+      ],
+      "offset": 153
+    },
+    {
+      "feedback_image": [
+        4
+      ],
+      "full_image": [
+        4
+      ],
+      "offset": 154
+    }
+  ]
+}

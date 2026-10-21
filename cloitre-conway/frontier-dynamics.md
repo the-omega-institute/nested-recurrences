@@ -14,6 +14,11 @@ under sublinear drawdowns on that cycle, its scaled limits consist of at
 most two reflected intervals. Its proof uses finite cycle transitivity
 before taking limits.
 
+An exact earlier-row feedback theorem also gives terminal-interval
+exclusion certificates with the seed and depth kept correlated. The checked
+level-20 certificate is uniform over all preceding defects permitted by the
+cap. A cross-level estimate on these excluded intervals remains open.
+
 We use Cloitre's recurrence with its prescribed start and depth:
 
 $$
@@ -405,6 +410,122 @@ two-point limit. This permits several finite cycle points to coalesce
 at each limiting endpoint; it does not prove that the actual periods
 equal two. Absolute rank parity is still determined by the prescribed
 depth and entrance, not by naming one class the upper class.
+
+## Earlier-row feedback preserves the prescribed clock
+
+The dependence on the current row reduces to one preceding defect, with
+its correlation to both the first orbit point and the remaining depth intact.
+Write N=F_k, A=F_(k-1), B=F_(k-2), ell=F_(k-3). The small frontiers
+t_9=8=F_6 and t_10=7<=F_7, together with the contact recursion, imply
+t_j<=F_(j-3) for j>=9. Thus U_k=t_(k-1)+t_(k-2)<=ell for k>=11,
+covering every possible positive contact offset at those levels.
+
+**Exact feedback theorem.** Fix k>=11 and 1<=t<=ell. For 0<=e<=t-1 put
+
+$$
+h_t(e)=A+t-1-e,\qquad z(e)=B+1+e,\qquad
+s_{k,t}(e)=T_{N+t}^{\,A+t-2-e}(B+1+e)-A.
+$$
+
+Then s_(k,t)(e) lies in [0,t], and
+
+$$
+\Phi_{k,t}(e)=E_{k-1}(s_{k,t}(e))+
+E_{k-2}(t-s_{k,t}(e))\in\{0,\ldots,t\}
+$$
+
+uses only C(1),...,C(N-1). The actual row satisfies
+
+$$
+\boxed{E_k(t)=\Phi_{k,t}(E_k(t-1)).} \tag{14}
+$$
+
+**Proof.** The comparison envelopes give ell+1<=C(x)<=A for B+1<=x<N.
+Hence J=[B+1,N-1] is invariant:
+
+$$
+T_{N+t}(J)\subseteq[B+t,N+t-\ell-1]\subseteq J.
+$$
+
+Every z(e) lies in J. Its A-1 points bound every transient by A-2.
+The remaining iteration count A+t-2-e is at least A-1, so the selected
+point is cyclic. All-cycle capture puts it in [A,A+t]. Both child offsets
+are native because they are at most t<=ell; their caps give the range of Phi.
+For the actual e=E_k(t-1), the preceding output is A+t-1-e. Its first
+iterate from N+t-1 is B+1+e, with exactly A+t-2-e iterations remaining.
+Child-defect additivity proves (14). Every lookup after the first stays
+below N. QED.
+
+Each diagnostic e retains its paired seed and remaining depth. This enclosure
+neither chooses a free cycle phase nor asserts another consistent sequence.
+
+**Finite erosion certificate.** Choose 1<=a<=U_k, initialize
+S_(a-1)={0,...,a-1}, and set S_t=Phi_(k,t)(S_(t-1)) successively.
+The actual defect belongs to S_t by the initial cap and (14). Each map's
+output range is the next map's input range. Therefore
+
+$$
+\boxed{0\notin S_t\ (a\le t\le U_k)
+\quad\Longrightarrow\quad\Delta_k\ge U_k-a+1.} \tag{15}
+$$
+
+Every set in this certificate uses earlier rows alone.
+
+### A uniform basin exclusion at level 20
+
+Here N=6765, A=4181, B=2584 and U_20=87+67=154. The
+[checker](verification/earlier_row_check.py) evaluates Phi using only the
+prefix through 6764. The [exact images](verification/earlier-row.json) are:
+
+| t | Phi_(20,t)({0,...,t-1}) | Propagated S_t from S_148={0,...,148} |
+|---|---|---|
+| 149 | {4} | {4} |
+| 150 | {4} | {4} |
+| 151 | {1,4,8} | {4} |
+| 152 | {1} | {1} |
+| 153 | {1,3,6} | {1} |
+| 154 | {4} | {4} |
+
+The earlier prefix thus determines
+(E_20(149),...,E_20(154))=(4,4,4,1,1,4) without supplying E_20(148).
+Equation (15) gives Delta_20>=6; an independent actual contact at 148
+makes this equality. Delta_20=6 was already enumerated. The stronger
+certificate eliminates all uncertainty about the preceding current-row state.
+
+At t=154, every allowed e=0,...,153 gives y_1=2585+e and h=4334-e>=4181.
+Earlier-row interval propagation encloses every trajectory at absolute rank
+10 in offsets [151,154] from A. The evidence records every intervening
+interval with its exact minimum and maximum C-values. Direct iteration gives
+
+$$
+H_{154}^{25}(151)=H_{154}^{25}(152)=
+H_{154}^{25}(153)=H_{154}^{25}(154)=45,\qquad
+H_{154}(45)=112,\quad H_{154}(112)=45.
+$$
+
+All allowed first images synchronize at offset 45 at absolute rank 35.
+Both reached phases have total defect four:
+
+$$
+E_{19}(45)+E_{18}(109)=3+1=4,\qquad
+E_{19}(112)+E_{18}(42)=3+1=4.
+$$
+
+Every permitted depth is later than this synchronization. The exact clock
+selects offset 112 for even e and 45 for odd e; neither is a contact.
+In the same earlier row, {87,67} is a genuine two-cycle, with the marked
+phase E_19(87)+E_18(67)=0. Its basin misses the entire first-image interval
+[2585,2738], even after allowing every capped preceding defect with its
+correlated clock. The actual e=1 gives depth 4333, selected offset 45 and
+C(6919)=4331 rather than the cap 4335. Its first cycle-entry rank is 33;
+rank 35 is the common synchronization rank.
+
+The reproducer checks all 909 seed-and-clock cases by literal residual
+iteration. A separate literal construction through 6919 takes 15533193
+updates and agrees with the independently generated earlier prefix.
+This finite certificate gives no uniform cross-level erosion estimate.
+Excluded widths w_k with sum(w_k/U_k)=infinity would force b=0 by the
+contact-loss budget; such widths remain unproved.
 
 ## Independent checks
 
