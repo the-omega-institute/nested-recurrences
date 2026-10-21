@@ -2572,7 +2572,9 @@ a=v-E_{j-1}(v)\equiv v\pmod2.
 $$
 
 Its low entry offset t-a is at most t-W<W, hence exact; the next high
-offset is a. Lower entry is only at high offset t. Exterior alternation
+offset is a. For x<A, the global cap gives C(x)<=U(x)<=U(A)=D,
+using monotonicity of U rather than C. Lower entry is therefore only at
+high offset t. Exterior alternation
 retains absolute rank: upper entry is low at an odd rank and lower entry
 is high at an even rank.
 
