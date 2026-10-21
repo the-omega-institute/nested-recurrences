@@ -2905,6 +2905,9 @@ Z_i(t-3),&b(t)=3.
 \end{cases}
 $$
 
+A_0,A_1 are the initial rows; the update applies for i>=2. For native
+labels A_i=E_(K+i), take K=1 modulo 3 to match the Fibonacci clock phase.
+
 If f_i+t-A_i(t-1) is odd, the output is zero. Otherwise its permitted
 values are Z_i(t), also allowing Z_i(t-1) if b(t+2)=3 and Z_i(t-2)
 if b(t+1)=3. An upper entry from v=t+s with source defect three
