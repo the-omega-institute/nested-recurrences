@@ -193,12 +193,37 @@ python3 cloitre-conway/verification/earlier_row_check.py --ternary
 ```
 
 Compare with the `amplitude_three` object in the same evidence file. This
-optional check independently regenerates values through 3524577 by visited
+optional check independently regenerates values through 2692797 by visited
 orbits and Brent cycle detection, then checks the eight interval enclosures
 and all 260 paired diagnostic seeds and clocks. A previously verified native
 unsigned-32-bit prefix may be reused with `--values-u32 PATH`; that mode
 checks the certificate but does not regenerate or authenticate the prefix.
 The original command continues to reproduce the level-20 object alone.
+
+For sparse continuation from a shorter earlier prefix:
+
+```sh
+python3 cloitre-conway/verification/earlier_row_check.py --sparse
+```
+
+This regenerates the prefix through 2693049 by both orbit algorithms, then
+computes 512 terms after F_33 without reading the intervening 831528 terms.
+Compare with `sparse_row` in the same evidence file. Every residual query
+is checked against its own offset-dependent bound; both selected points
+and values agree between visited-orbit and Brent selectors.
+
+The larger `sparse_order41` certificate reuses an independently verified
+native unsigned-32-bit prefix through at least 126496067:
+
+```sh
+python3 cloitre-conway/verification/earlier_row_check.py --sparse --order 41 --offsets 4096 --values-u32 PATH
+```
+
+It skips 39084073 earlier terms before F_41 and computes the next 4096
+values. This mode validates the sparse continuation, but does not regenerate
+or authenticate its input prefix. The complete parent prefix is not an
+input or an independently regenerated output. Both modes implement the
+[query-domain theorem](cloitre-conway/frontier-dynamics.md#a-shorter-source-prefix-and-sparse-continuation).
 
 For canonical copy or erasure in the doubled saturated band:
 

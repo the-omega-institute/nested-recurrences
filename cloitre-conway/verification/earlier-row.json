@@ -1,8 +1,13 @@
 {
   "amplitude_three": {
     "status": "PASS",
-    "source_limit": 3524577,
+    "source_limit": 2692797,
     "order": 33,
+    "unread_earlier_interval": [
+      2692798,
+      3524577
+    ],
+    "maximum_query": 2692797,
     "width": 225,
     "source_band": 450,
     "offset": 260,
@@ -297,5 +302,60 @@
       ],
       "offset": 154
     }
-  ]
+  ],
+  "sparse_row": {
+    "status": "PASS",
+    "order": 33,
+    "offsets": 512,
+    "parent_anchor": 3524578,
+    "source_limit": 2693049,
+    "unread_earlier_interval": [
+      2693050,
+      3524577
+    ],
+    "maximum_query": 2693049,
+    "paired_values_and_selected_points": 512,
+    "first_positive_defect": {
+      "offset": 487,
+      "defect": 9,
+      "value": 2178787,
+      "selected_point": 2178309,
+      "depth": 2178795
+    },
+    "defect_histogram": {
+      "0": 510,
+      "9": 2
+    },
+    "scope": "Sparse continuation from the exact Fibonacci anchor and an earlier prefix, with every residual query bounded separately at each offset. Visited-orbit and Brent selectors agree. No intervening-gap or current-row table is read; no convergence claim."
+  },
+  "sparse_order41": {
+    "status": "PASS",
+    "order": 41,
+    "offsets": 4096,
+    "parent_anchor": 165580141,
+    "source_limit": 126496067,
+    "unread_earlier_interval": [
+      126496068,
+      165580140
+    ],
+    "maximum_query": 126496067,
+    "paired_values_and_selected_points": 4096,
+    "first_positive_defect": {
+      "offset": 2705,
+      "defect": 61,
+      "value": 102336799,
+      "selected_point": 102334155,
+      "depth": 102336859
+    },
+    "defect_histogram": {
+      "0": 4088,
+      "13": 1,
+      "28": 2,
+      "35": 2,
+      "37": 1,
+      "57": 1,
+      "61": 1
+    },
+    "scope": "Sparse continuation from the exact Fibonacci anchor and an earlier prefix, with every residual query bounded separately at each offset. Visited-orbit and Brent selectors agree. No intervening-gap or current-row table is read; no convergence claim."
+  }
 }
