@@ -494,15 +494,17 @@ n=F_{q+2}-1,\qquad a=F_{q+1}-1,\qquad b=F_q,
 \qquad(D(n),D(a),D(b))=(0,1,0). \tag{9.2}
 $$
 
-The last values follow from the established anchor-minus-one identities
-and the parity of q. All three shifted budgets vanish. This also shows
+Explicitly, C(F_q)=F_(q-1), C(F_(q+1)-1)=F_q and
+C(F_(q+2)-1)=F_(q+1). Comparing with the golden floors at odd q
+gives the displayed defects. All three shifted budgets vanish. This also shows
 that a positive parent cannot have a zero child and negative carry.
 The cases prove every assertion for n>=65536.
 
 For 3<=n<=65535, the
 [independent checker](verification/golden_budget_check.py) constructs C
-with full visited orbits and Brent cycle detection, compares all values,
-and checks (9.1) and the excess assertions at every actual selected split
+with full visited orbits and Brent cycle detection, compares all values
+and all prescribed selected endpoints through131072, and checks (9.1)
+and the excess assertions at every actual selected split
 using exact integer golden floors. A separate literal prefix checks the
 selected phases through4096. These finite premises, recorded in the
 [certificate](verification/golden-budget.json), finish the proof. QED.
@@ -519,7 +521,8 @@ antichain, then discard the other nonnegative terms. Count repeated numeric
 indices as separate occurrences. In particular, every depth has at most
 P(n) occurrences with D>=2. If P(n)=0, every descendant has D<=1.
 
-There is also a global depth bound. No cycle of T_m, m>=3, contains1:
+There is also a global depth bound. Consider cycles of T_m on its
+state space {1,...,m-1}, m>=3. No such cycle contains1:
 an incoming edge would require C(y)=m-1 with y<=m-1, whereas C(y)<y
 for y>=2 and C(1)=1<m-1. On all remaining cycle indices,
 y/2<=C(y)<=3y/4, using the golden lower bound, C(2)=1 and the
