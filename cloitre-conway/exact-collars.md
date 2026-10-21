@@ -2885,6 +2885,107 @@ Another doubled-window enlargement would require new ternary control
 outside that band. This remaining surrounding-window question prevents
 an unconditional faster collar rate or a global convergence conclusion.
 
+### An amplitude-three traveling history limits the relaxed routing method
+
+The ternary extinction proof permits every entry consistent with its local
+necessary conditions. This relaxation has a sharp limitation: allowing
+defect three admits a persistent traveling history. The construction below
+satisfies the zero left boundary and the prescribed clock parity. It is
+an obstruction to this proof method, not a counterexample to Cloitre's
+recurrence or its conjectured convergence.
+
+**Relaxed amplitude-three rule.** Write A_i(t) in {0,3}, zero for t<=W,
+and f_i=0 when i=0 modulo 3 and f_i=1 otherwise. For source
+b=A_(i-1), lower row a=A_(i-2), define Z_i(t)=0 through W and
+
+$$
+Z_i(t)=\begin{cases}
+a(t),&b(t)=0,\\
+Z_i(t-3),&b(t)=3.
+\end{cases}
+$$
+
+A_0,A_1 are the initial rows; the update applies for i>=2. For native
+labels A_i=E_(K+i), take K=1 modulo 3 to match the Fibonacci clock phase.
+
+If f_i+t-A_i(t-1) is odd, the output is zero. Otherwise its permitted
+values are Z_i(t), also allowing Z_i(t-1) if b(t+2)=3 and Z_i(t-2)
+if b(t+1)=3. An upper entry from v=t+s with source defect three
+starts its high route at v-3=t-d, where d=3-s is one or two; lower
+entry retains the default Z_i(t). The alternatives retain necessary
+entrance information but leave the original exterior orbit's choice free.
+
+**Proposition.** This relaxed rule has a nonzero history at arbitrarily
+large row indices, with A_i(t)=3 implying t>=W+3. Consequently these
+conditions alone do not give a uniform extinction delay for {0,3} windows.
+
+**Proof.** Choose any even U>=W+3. If i=3q+r with r in {0,1,2}, set
+A_i(t)=3P_r(x), x=t-U-2q. All P_r and V_r below are zero at negative
+arguments. At nonnegative arguments use the following twelve-bit prefix,
+followed by the indicated six-bit tail repeated indefinitely:
+
+| r | P_r prefix | P_r repeated tail | V_r prefix | V_r repeated tail |
+|---|---|---|---|---|
+| 0 | `001011001011` | `001011` | `010011011001` | `001001` |
+| 1 | `000100010110` | `010110` | `000100010010` | `010010` |
+| 2 | `000001100110` | `010110` | `001011011011` | `011011` |
+
+The source and lower bits at the same absolute site become
+
+| r | Source B_r(x) | Lower D_r(x) |
+|---|---|---|
+| 0 | P_2(x+2) | P_1(x+2) |
+| 1 | P_0(x) | P_2(x+2) |
+| 2 | P_1(x) | P_0(x) |
+
+The route is Z_i(t)=3V_r(x): the table satisfies
+V_r(x)=D_r(x) if B_r(x)=0, and V_r(x)=V_r(x-3) otherwise.
+The clock reduces to f_r+x-P_r(x-1) modulo 2. On its even branch,
+P_r(x) equals one of V_r(x), V_r(x-1) when B_r(x+2)=1, or
+V_r(x-2) when B_r(x+1)=1; on its odd branch P_r(x)=0.
+
+These are finite table identities for r=0,1,2 and x=0,...,20.
+For x>=15, every queried bit is in a six-periodic tail, including the
+left query x-3 and the clock parity. Thus the cases x=15,...,20
+prove the identities throughout that suffix. For x<0 all lower, source,
+route and output bits are zero; the default zero satisfies the rule.
+The [checker](verification/ternary_erasure_check.py) verifies the prefix
+and a complete tail period directly, without a solver or spatial scan
+being used to infer the infinite statement.
+
+The relation A_(i+3)(t+2)=A_i(t) preserves both Fibonacci phase and
+absolute parity, so the three checked phases cover all rows i>=2.
+The positive front offsets of P_0,P_1,P_2 are respectively 2,3,5.
+Thus every row is nonzero, its front advances two sites per three rows,
+and no positive defect reaches t<W+3. An even U exists for either
+parity of W.
+
+The obstruction also applies to a uniform delay in the inner finite
+band, rather than merely to an unrestricted right tail. For any proposed
+height H>=2, take W=20H+100 (or one larger for odd W), B=2W, and
+the smallest even U>=W+3. The first positive site t_H in row H satisfies
+t_H<=W+H+9. Its backward dependency cone queries offsets at most
+t_H+2H<=W+3H+9, since each row step queries at most two places to
+the right and routing queries only to the left. As alpha>3/5,
+
+$$
+\lfloor\alpha B\rfloor
+\ge W+\lfloor W/5\rfloor
+\ge W+4H+20.
+$$
+
+The entire dependency cone therefore fits inside the permitted inner
+band and hence inside B. Choose the base Fibonacci order sufficiently
+large that B<=F_(K-1), with K=1 modulo 3. Restricting the two starting
+rows to B retains this positive output at height H. These are relaxed
+profiles throughout; no canonical realizability is asserted. QED.
+
+The missing information is which possible entrance is actually reached
+from n-1 under T_n. A larger alphabet calculation that continues to allow
+every local entrance cannot by itself extend the extinction theorem.
+An extension must restore constraints from that exterior orbit or use
+additional arithmetic properties of the actual profiles.
+
 ### Five legal bit patterns and eventual vanishing of a local interaction
 
 The five legal patterns in a three-bit Zeckendorf window are

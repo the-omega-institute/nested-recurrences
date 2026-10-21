@@ -406,5 +406,25 @@
       ]
     }
   ],
+  "amplitude_three_obstruction": {
+    "status": "PASS",
+    "profiles": [
+      ["001011001011", "001011"],
+      ["000100010110", "010110"],
+      ["000001100110", "010110"]
+    ],
+    "routes": [
+      ["010011011001", "001001"],
+      ["000100010010", "010010"],
+      ["001011011011", "011011"]
+    ],
+    "checked_row_phases": 3,
+    "checked_offsets": [-3, 20],
+    "tail_identity_start": 15,
+    "tail_period": 6,
+    "row_translation": [3, 2],
+    "alternate_positive_cases": 8,
+    "scope": "An exact prefix and periodic-tail certificate for a persistent relaxed amplitude-three history with a zero left boundary. The written proof covers all spatial offsets and both collar parities. This is not a canonical recurrence counterexample."
+  },
   "scope": "Two independently implemented exact whole-word transductions recognize the same arbitrary-length languages. Their closed finite automata prove the ternary identity. Actual recurrence application and the finite-window loss use the written proof; this program uses no canonical sequence data or spatial cutoff."
 }

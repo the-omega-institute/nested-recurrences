@@ -61,6 +61,12 @@ preceding defect, retaining its exact seed and clock. A finite certificate
 excludes a terminal interval uniformly over all capped preceding states.
 A cross-level lower bound on these excluded widths remains open.
 
+A [traveling amplitude-three history](cloitre-conway/exact-collars.md#an-amplitude-three-traveling-history-limits-the-relaxed-routing-method)
+shows that the local necessary routing rules alone cannot extend uniform
+extinction to larger alphabets. It satisfies the zero left boundary and
+clock parity but leaves the actual seed-selected entrance unconstrained;
+it is a limitation of that relaxation, not a canonical counterexample.
+
 ## Questions that remain open
 
 1. **Convergence and decay over all integers.** Prove C(n)/n -> alpha,
