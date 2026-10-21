@@ -312,6 +312,48 @@ Every interval endpoint and the final bound are checked by integer
 arithmetic; the infinite-tail conclusion uses this argument rather than extrapolation
 from the bounded range.
 
+**Continuing the enclosure induction.** The proved bound K can now replace
+M when a source cell starts at or above F_41. Cells starting below F_41
+retain M, including the cell that crosses that threshold. The new cap is
+therefore valid throughout every source cell. All other enclosure and
+readout operations are unchanged. Continuing from the same exact prefix
+through F_46-1 gives the following bounds on complete natural rows:
+
+| Row j: F_j<=n<F_(j+1) | Certified upper bound for C(n)/n |
+|---|---|
+| 41 | 33883719/51697408 |
+| 42 | 37081435/56592896 |
+| 43 | 44743721/68364288 |
+| 44 | 567008869/866573824 |
+| 45 | 930025197/1421405696 |
+
+For each row, a cell that crosses a Fibonacci boundary contributes on
+both sides. Its denominator is its smallest source in the row, and all
+comparisons use exact integer cross-products. The independent verifier
+checks all 3310332 derived cells, 331033200 cycle-enclosure queries and
+1752115676 readout slices against strictly earlier cells. This calculation
+continues value intervals; no canonical terms beyond the retained prefix
+are generated. The existing code and
+[evidence](verification/cycle-enclosure.json) contain both passes.
+
+**Theorem (continued computer-assisted tail bound).** For every
+n>=F_44=701408733,
+
+$$
+\frac{C(n)}n\le
+\frac{567008869}{866573824}<0.65431110.
+$$
+
+**Proof.** The row-45 bound is smaller than the row-44 bound, by exact
+cross-multiplication. Thus the two rows together bound the whole window
+[F_44,F_46). The finite-window maximum principle at j=44 extends that
+bound to every later n. QED.
+
+This improves the original M by approximately 0.00118098 and K by
+approximately 0.00114313. It still leaves a positive gap above alpha;
+neither these finite rows nor the infinite-tail implication prove that
+continued enclosure passes converge to alpha.
+
 ### An exact budget for the outermost cap contacts
 
 Use inherited Fibonacci labels and define, on the whole natural block,
