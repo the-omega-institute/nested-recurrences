@@ -442,3 +442,108 @@ The golden liminf remains alpha. The improved upper bound is still strictly
 larger than alpha; interval centers remain the outstanding convergence problem.
 The larger F_36 experiment is useful corroboration, but is not a premise of
 the universal proof.
+
+## 9. A global integer budget for the selected recursion tree
+
+The exact zero set also gives a budget that applies throughout the block
+interiors. Define the golden excess and its shifted positive part by
+
+$$
+D(n)=C(n)-G(n),\qquad P(n)=\max(D(n)-1,0).
+$$
+
+Here D is excess above G, rather than a deficit from a Fibonacci upper cap.
+For every actual selected split a=g(n), b=n-a, n>=3,
+
+$$
+\boxed{P(a)+P(b)\le P(n).} \tag{9.1}
+$$
+
+If D(n)>0, both D(a) and D(b) are at most D(n). If D(n)=0,
+both child excesses are at most1; they need not both vanish.
+These statements use the actual scalar values and selected split bounds.
+They impose no hypothesis on the reached cycle's period.
+The unit shift is necessary: n=12 has actual children7 and5, with
+(D(12),D(7),D(5))=(0,1,0), so D itself has no such additive budget.
+
+**Proof above the finite base.** Let n>=65536. Section4 gives
+D(n)=D(a)+D(b)+delta, with delta in{-1,0,1}.
+If both child excesses are positive, then D(n)>=1 and
+
+$$
+P(a)+P(b)=D(a)+D(b)-2\le D(n)-1=P(n).
+$$
+
+Each child excess is also at most D(n), since the other is at least1.
+If both vanish, (9.1) is immediate.
+
+Suppose exactly one child z has zero excess, and write w for the other.
+When delta>=0, D(w)<=D(n), giving (9.1) and the claimed monotonicity.
+It remains to classify a negative carry. With r(x)={alpha(x+1)},
+delta=-1 requires r(z)+r(w)>=1+alpha, hence r(z)>alpha.
+Section2 puts both children above21845. The exact zero set and the
+fractional-part calculation in Section4 therefore force z=F_q with q odd.
+Moreover r(z)=alpha+alpha^q, so r(w)>=1-alpha^q.
+
+If z=a, then 0<w+1<=F_q, which the one-sided rotation lemma excludes.
+If z=b, the ratio bound a<2b gives
+0<w+1<=2F_q<F_(q+2). The same lemma forces w+1=F_(q+1). Thus
+
+$$
+n=F_{q+2}-1,\qquad a=F_{q+1}-1,\qquad b=F_q,
+\qquad(D(n),D(a),D(b))=(0,1,0). \tag{9.2}
+$$
+
+Explicitly, C(F_q)=F_(q-1), C(F_(q+1)-1)=F_q and
+C(F_(q+2)-1)=F_(q+1). Comparing with the golden floors at odd q
+gives the displayed defects. All three shifted budgets vanish. This also shows
+that a positive parent cannot have a zero child and negative carry.
+The cases prove every assertion for n>=65536.
+
+For 3<=n<=65535, the
+[independent checker](verification/golden_budget_check.py) constructs C
+with full visited orbits and Brent cycle detection, compares all values
+and all prescribed selected endpoints through131072, and checks (9.1)
+and the excess assertions at every actual selected split
+using exact integer golden floors. A separate literal prefix checks the
+selected phases through4096. These finite premises, recorded in the
+[certificate](verification/golden-budget.json), finish the proof. QED.
+
+**Antichain budget and sparse positive part.** In the full actual recursion
+tree rooted at n, every finite antichain of node occurrences satisfies
+
+$$
+\sum_{v\text{ in the antichain}}P(n_v)\le P(n). \tag{9.3}
+$$
+
+To prove this, expand (9.1) from the root to a frontier containing the
+antichain, then discard the other nonnegative terms. Count repeated numeric
+indices as separate occurrences. In particular, every depth has at most
+P(n) occurrences with D>=2. If P(n)=0, every descendant has D<=1.
+
+There is also a global depth bound. Consider cycles of T_m on its
+state space {1,...,m-1}, m>=3. No such cycle contains1:
+an incoming edge would require C(y)=m-1 with y<=m-1, whereas C(y)<y
+for y>=2 and C(1)=1<m-1. On all remaining cycle indices,
+y/2<=C(y)<=3y/4, using the golden lower bound, C(2)=1 and the
+established upper bound for y>=3. If u,v are the minimum and maximum
+cycle points, then u>=m-3v/4 and v<=m-u/2. Consequently
+u>=2m/5 and v<=4m/5. Since the prescribed selector is cyclic,
+both its actual children are at most4m/5.
+
+For n>=2 put H(n)=ceil(log_(5/4)(n/2)). Every selected path reaches an
+initial index by depth H(n). Summing (9.3) over these depths bounds the
+number of positive-budget occurrences in the entire tree by
+P(n)(H(n)+1), hence O(P(n)log n). The root n=1 is trivial.
+
+**A retained path with halving budget.** At every node with positive P,
+(9.1) supplies an actual child whose P is at most floor(P/2). Repeating
+this choice reaches D<=1 in at most
+ceil(log_2(P(n)+1)) selected edges. This path uses actual children; it
+does not replace the prescribed selector or resample a cycle phase.
+
+The budget is a global consequence of the proved golden structure.
+It does not establish convergence: if D(n) is proportional to n, its
+positive budget is still proportional to n, and the retained path can
+have length of order log n. A uniform dispersion estimate or an additional
+mechanism controlling normalized excess remains necessary.

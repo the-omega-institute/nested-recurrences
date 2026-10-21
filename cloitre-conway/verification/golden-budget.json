@@ -1,0 +1,162 @@
+{
+  "limit": 131072,
+  "finite_base_inclusive": [
+    3,
+    65535
+  ],
+  "finite_base_splits": 65533,
+  "higher_corroboration_splits": 65537,
+  "independent_values_compared": 131072,
+  "independent_selectors_compared": 131070,
+  "literal_prefix": 4096,
+  "literal_updates": 5467850,
+  "literal_selectors_compared": 4094,
+  "all_budget_splits_checked": 131070,
+  "positive_parent_monotonicity_checks": 131010,
+  "zero_parents_with_positive_child": 10,
+  "one_zero_negative_carries": [
+    {
+      "index": 12,
+      "children": [
+        7,
+        5
+      ],
+      "defects": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "index": 33,
+      "children": [
+        20,
+        13
+      ],
+      "defects": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "index": 88,
+      "children": [
+        54,
+        34
+      ],
+      "defects": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "index": 232,
+      "children": [
+        143,
+        89
+      ],
+      "defects": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "index": 609,
+      "children": [
+        376,
+        233
+      ],
+      "defects": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "index": 1596,
+      "children": [
+        986,
+        610
+      ],
+      "defects": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "index": 4180,
+      "children": [
+        2583,
+        1597
+      ],
+      "defects": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "index": 10945,
+      "children": [
+        6764,
+        4181
+      ],
+      "defects": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "index": 28656,
+      "children": [
+        17710,
+        10946
+      ],
+      "defects": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "index": 75024,
+      "children": [
+        46367,
+        28657
+      ],
+      "defects": [
+        0,
+        1,
+        0
+      ]
+    }
+  ],
+  "simultaneous_positive_budget_children": 128673,
+  "maximum_tree_height": 24,
+  "positive_occurrence_count_checks": 131070,
+  "total_greedy_spine_edges": 729392,
+  "longest_retained_spine": {
+    "root": 128450,
+    "budget": 2403,
+    "indices": [
+      128450,
+      49939,
+      19560,
+      7706,
+      4629,
+      1808,
+      1092,
+      438,
+      178,
+      75
+    ],
+    "terminal": 32,
+    "terminal_defect": 1
+  },
+  "scope": "The written proof supplies all indices >=65536. Independent finite base checks supply smaller indices. Tree and spine checks corroborate the proved consequences; no uniform dispersion or full convergence claim."
+}

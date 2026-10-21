@@ -185,3 +185,17 @@ checks the interval synchronization certificate and compares the earlier
 prefix with an independent literal construction through 6919. The finite
 certificate proves its stated six-input exclusion; it gives no uniform
 asymptotic contraction.
+
+For the global selected-tree golden-excess budget:
+
+```sh
+python3 cloitre-conway/verification/golden_budget_check.py
+```
+
+Compare its JSON with
+[golden-budget.json](cloitre-conway/verification/golden-budget.json).
+Full-orbit and Brent construction agree through131072; literal construction
+and selected phases agree through4096. The explicit finite premise is every
+actual split below65536. Higher cases and tree/spine counts corroborate the
+[infinite budget proof](cloitre-conway/golden-proof.md#9-a-global-integer-budget-for-the-selected-recursion-tree).
+This separate check does not claim global dispersion or convergence.
