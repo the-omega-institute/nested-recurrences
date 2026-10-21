@@ -19,6 +19,82 @@ def rounded(index, fibonacci):
     return max(golden(index), 2 * (cap // 2))
 
 
+def dilated(index, fibonacci):
+    return 1 if index <= 2 else 2 * upper((index + 1) // 2, fibonacci)
+
+
+def finite_forcing_check(limit, fibonacci):
+    value = lambda index: dilated(index, fibonacci)
+    residual_support = []
+    maximum_c = maximum_r = drawdown_c = drawdown_r = 0
+    for index in range(1, limit + 1):
+        current = value(index)
+        drawdown_c = max(drawdown_c, maximum_c - current)
+        drawdown_r = max(drawdown_r, maximum_r - (index - current))
+        maximum_c = max(maximum_c, current)
+        maximum_r = max(maximum_r, index - current)
+    assert [drawdown_c, drawdown_r] == [0, 1]
+    literal_updates = base_updates = visited_updates = brent_updates = 0
+    for parent in range(3, limit + 1):
+        path, positions = [], {}
+        point = parent - 1
+        while point not in positions:
+            assert 0 < point < parent
+            positions[point] = len(path)
+            path.append(point)
+            point = parent - value(point)
+            visited_updates += 1
+        entrance = positions[point]
+        period = len(path) - entrance
+        depth = value(parent - 1)
+        rank = depth if depth < len(path) else entrance + (depth - entrance) % period
+        selected = path[rank]
+        independent, entrance_b, period_b, updates = brent_selected(parent, value)
+        brent_updates += updates
+        assert (selected, entrance, period) == (independent, entrance_b, period_b)
+        if parent <= 4096:
+            literal = parent - 1
+            for iteration in range(depth):
+                literal = parent - value(literal)
+                literal_updates += 1
+                if parent <= 63:
+                    base_updates += 1
+            assert selected == literal
+        residual = value(selected) + value(parent - selected) - value(parent)
+        if residual:
+            residual_support.append([parent, residual])
+        if parent >= 64:
+            reduced_source = (parent + 1) // 2
+            source_value = lambda index: upper(index, fibonacci)
+            square = lambda index: reduced_source - source_value(
+                reduced_source - source_value(index))
+            reduced = reduced_source
+            while square(reduced) != reduced:
+                next_point = square(reduced)
+                assert next_point < reduced
+                reduced = next_point
+            assert selected == 2 * reduced - parent % 2
+            assert value(parent - 1) % 2 == 0
+            assert 4 * selected >= parent and 8 * (parent - selected) >= parent
+    assert residual_support == [[4, 1], [5, -1], [6, 1], [7, -1],
+                                [8, 1], [9, 1], [10, 1]]
+    return dict(
+        initial_ten=[value(index) for index in range(1, 11)],
+        residual_support=residual_support,
+        literal_base=dict(domain=[3, 63], updates=base_updates),
+        corroboration=dict(limit=limit, visited_updates=visited_updates,
+                           brent_updates=brent_updates,
+                           independent_selector_comparisons=limit - 2,
+                           literal_limit=min(limit, 4096),
+                           literal_updates=literal_updates,
+                           exact_half_scale_selector_checks=limit - 63,
+                           drawdowns=[drawdown_c, drawdown_r]),
+        scope='A(n)=2U(ceil(n/2)) except A(1)=A(2)=1. The written proof '
+              'establishes exact nesting for every n>=11 with this initial '
+              'ten-term prefix. Standard canonical Fibonacci anchors and '
+              'the upper cap U are not retained.')
+
+
 def brent_selected(parent, value):
     depth = value(parent - 1)
     power = period = 1
@@ -155,6 +231,7 @@ def main():
                            odd_clocks=odd_clock_count, drawdowns=[drawdown_c, drawdown_r]),
         instability_knees=dict(orders=[6, 180, 3], count=knee_checks,
                                exact_v_formula_checks=knee_checks - 1, last=last_knee),
+        finite_forcing=finite_forcing_check(limit, fibonacci),
         scope='The literal finite premise supports the written universal bound 10. '
               'The observed bound 2 and additional knee checks are finite corroboration only. '
               'V is an explicit comparison sequence, not canonical Cloitre values.'), indent=2))

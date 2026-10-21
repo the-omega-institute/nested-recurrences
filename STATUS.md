@@ -111,6 +111,15 @@ can also produce a linear change in the nested operator's output. The
 shows why small scalar errors do not control the actual clock. These are
 limitations of approximation arguments; the canonical equation has zero error.
 
+With a different ten-term initialization, an explicit nonconvergent sequence
+[satisfies the exact nested equation at every later index](cloitre-conway/dispersion.md#exact-nesting-after-finitely-many-forced-values).
+Its recurrence error is supported at seven early sources. Any finite
+canonical prefix can also be retained, allowing finitely many subsequent
+forced values before an exact nonconvergent tail. Both drawdowns remain
+bounded, but the canonical Fibonacci anchors and upper cap are lost.
+This shows that exact tail nesting and bounded drawdowns alone do not force
+convergence; the canonical initial history still matters.
+
 ## Questions that remain open
 
 1. **Convergence and decay over all integers.** Prove C(n)/n -> alpha,

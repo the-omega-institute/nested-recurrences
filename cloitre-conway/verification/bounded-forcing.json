@@ -41,9 +41,74 @@
     "exact_v_formula_checks": 58,
     "last": {
       "order": 180,
-      "source": 25632301613452504729039748416369633399,
-      "output_difference": 1672445759041379840132227567949787323
+      "source": 2.5632301613452504e+37,
+      "output_difference": 1.67244575904138e+36
     }
+  },
+  "finite_forcing": {
+    "initial_ten": [
+      1,
+      1,
+      2,
+      2,
+      4,
+      4,
+      6,
+      6,
+      6,
+      6
+    ],
+    "residual_support": [
+      [
+        4,
+        1
+      ],
+      [
+        5,
+        -1
+      ],
+      [
+        6,
+        1
+      ],
+      [
+        7,
+        -1
+      ],
+      [
+        8,
+        1
+      ],
+      [
+        9,
+        1
+      ],
+      [
+        10,
+        1
+      ]
+    ],
+    "literal_base": {
+      "domain": [
+        3,
+        63
+      ],
+      "updates": 1345
+    },
+    "corroboration": {
+      "limit": 131072,
+      "visited_updates": 922409,
+      "brent_updates": 3496078,
+      "independent_selector_comparisons": 131070,
+      "literal_limit": 4096,
+      "literal_updates": 5624085,
+      "exact_half_scale_selector_checks": 131009,
+      "drawdowns": [
+        0,
+        1
+      ]
+    },
+    "scope": "A(n)=2U(ceil(n/2)) except A(1)=A(2)=1. The written proof establishes exact nesting for every n>=11 with this initial ten-term prefix. Standard canonical Fibonacci anchors and the upper cap U are not retained."
   },
   "scope": "The literal finite premise supports the written universal bound 10. The observed bound 2 and additional knee checks are finite corroboration only. V is an explicit comparison sequence, not canonical Cloitre values."
 }

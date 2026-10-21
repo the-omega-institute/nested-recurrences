@@ -351,3 +351,11 @@ observed residual bound two on these finite domains is stronger than the
 proved universal bound ten, and remains a finite observation. This checker
 evaluates the explicit comparison sequence V, not the canonical sequence C;
 it is separate from the eight default replays.
+
+The same checker verifies the
+[finite-forcing construction](cloitre-conway/dispersion.md#exact-nesting-after-finitely-many-forced-values)
+A(n)=2U(ceil(n/2)), with A(1)=A(2)=1. Its separate literal finite premise
+is sources3..63; the infinite dilation argument proves exact nesting for
+every n>=11. The independent selectors, literal clocks and half-scale
+greatest-periodic-point calculation corroborate that argument. This is a
+different ten-term initialization, not the canonical sequence C.
