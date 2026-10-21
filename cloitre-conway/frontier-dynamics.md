@@ -592,6 +592,16 @@ give s>=4 when k>Z_(j-1). If t+s<=B, then
 k_new=s-b(t+s)>=1. If t+s>B, the
 [golden localization](exact-collars.md#simultaneous-extinction-of-binary-cap-defects)
 gives P_(j-1)(t+s)>=floor(alpha B)+1>t, again making k_new positive.
+For completeness, the localization follows directly from the global golden
+lower bound. If v>B, then
+
+$$
+P_m(v)\ge\lfloor\alpha(v+1)+\delta_m\rfloor
+\ge\lfloor\alpha B\rfloor+1,\qquad
+\delta_m=(-1)^{m-1}\alpha^m,
+$$
+
+because v>=B+1 and 2alpha-alpha^m>1 for m=j-1>=21.
 Nonnegative native defects and the quantitative negative-anchor bound give
 
 $$
@@ -604,7 +614,10 @@ point is the high core endpoint A+t at an even absolute rank. For q>0,
 if b(t+q)=3, the next two points reach low offset 3-q and high offset
 t+q-3. If b(t+q)=0, the next lower distance is q<=3, in the negative
 zero plateau; the following point reaches high offset t. Hence the
-even-rank high start is t-d(e). The case q=3 also gives high start t.
+even-rank high start is t-d(e). Each exterior excursion takes two steps;
+the terminal branch takes one step when q=0 and three when q>0. Starting
+from the rank-one lower point, every resulting high start has even
+absolute rank. The case q=3 also gives high start t.
 All these queries lie in the controlled band because t+3<=B.
 
 The high start is at least W. In particular, if d=2 the guard
@@ -612,10 +625,16 @@ b(t+1)=3 and saturation imply t+1-3>=W; if d=1 the other guard
 implies t+2-3>=W. A high offset u with b(u)=3 next visits low offset
 t-u+3 and high offset u-3. The low offset is at most t-W<=W and
 therefore exact. High offsets descend by three until a source contact
-R>=W is reached. The terminal pair is {R,t-R}, with high R at even
+R>=W is reached: whenever u>W and b(u)=3, saturation gives
+u-3=P_m(u)>=W, so a routing step cannot cross below W. At u=W
+saturation forces b(W)=0. The terminal pair is {R,t-R}, with high R at even
 absolute rank. At even depth its two child defects vanish; at odd
 depth their sum is a(R)=z(t-d(e)). This proves (17), and the selected
-point is A+R at even depth, A+t-R at odd depth. QED.
+point is A+R at even depth, A+t-R at odd depth. Finally, the nondecreasing
+golden lower envelope gives C(x)>=G(x)>=G(F_j)=A for x>=F_j.
+Together with the native cap this gives 0<=E_j(t-1)<=t-1, so the actual
+preceding defect is an allowed
+diagnostic state, and (14) gives the claimed actual recurrence. QED.
 
 This determines the first entrance, including the two guarded alternatives,
 without an alphabet assumption on source queries outside B. Bounding how
