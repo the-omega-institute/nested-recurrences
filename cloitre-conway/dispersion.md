@@ -19,6 +19,7 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 - [An exact budget for the outermost cap contacts](#an-exact-budget-for-the-outermost-cap-contacts)
 - [Defect production by the canonical clock](#defect-production-by-the-canonical-clock)
 - [Contact residues on longer cycles](#contact-residues-on-longer-cycles)
+- [Synchronized negative-jump intervals under sublinear drawdown](#synchronized-negative-jump-intervals-under-sublinear-drawdown)
 - [Size-biased martingales and the four-generation dispersion criterion](#size-biased-martingales-and-the-four-generation-dispersion-criterion)
 - [A phase-free lower bound from the prescribed basin](#a-phase-free-lower-bound-from-the-prescribed-basin)
 - [Quadratic basin dispersion in the unit-defect family](#quadratic-basin-dispersion-in-the-unit-defect-family)
@@ -437,6 +438,124 @@ checked using full visited-state orbits through 131072; see
 already fails at n=63: the source contact t=8 has P(9)=7<8 and the
 actual selector is 35, not an endpoint of {34,42}.
 The general statements follow from their proofs, not from these finite checks.
+
+### Synchronized negative-jump intervals under sublinear drawdown
+
+Define the largest forward drawdown before N by
+
+$$
+Q(N)=\max\bigl(\{0\}\cup\{C(u)-C(v):1\le u<v<N\}\bigr).
+$$
+
+The following theorem is conditional on Q(N)=o(N); that estimate itself
+is not proved. It strengthens the description of a possible failure of
+convergence, rather than proving that sublinear drawdown implies convergence.
+
+**Extremal phase locking (unconditional).** Suppose L>0, and let theta_*
+be the least limiting Fibonacci phase among sequences with d(n)->L,
+as in the first section. Along any sequence realizing this extremum,
+
+$$
+\frac{g(n)}n\longrightarrow\alpha,\qquad
+\frac{n-g(n)}n\longrightarrow\alpha^2,\qquad
+\frac{e(n)}n\longrightarrow-\alpha L.
+$$
+
+Every fixed canonical descendant word also has d->L and inherited phase
+theta_*. To see the stronger assertion, both children have d->L by the
+weighted-average argument. Their limiting inherited phases theta_1 and
+theta_2 are at least theta_* by minimality. Positive L and the cap exclude
+Fibonacci endpoint phases. The exact size identity gives
+
+$$
+\theta_*=\alpha\theta_1+\alpha^2\theta_2.
+$$
+
+Since alpha+alpha^2=1, both child phases equal theta_*.
+This fixes the child fractions, and the exact e identity fixes its limit.
+Induction proves the assertion for every fixed descendant word.
+
+**Theorem (synchronized intervals).** Assume Q(N)=o(N) and L>0.
+There exist eta>0 and 1<S_0<S_1<phi such that for every fixed R>=0
+there are arbitrarily large k with
+
+$$
+e(n)\le-\eta n
+\quad\text{for all }j\in\{k-R,\ldots,k\},\quad
+n\in\mathbb Z\cap[S_0F_j,S_1F_j].
+$$
+
+**Proof.** Extremal phase locking has a uniform stability form. For any
+epsilon>0 there are zeta>0 and N_0 such that n>=N_0,
+d(n)>=L-zeta and |n/F_j-theta_*|<=zeta imply
+|e(n)/n+alpha*L|<epsilon. Otherwise counterexamples with zeta tending
+to zero would contradict the phase-locking limit.
+
+Follow the first child r times from an extremal sequence, for each fixed
+0<=r<=R. Its indices m_r have m_r/F_(k-r)->theta_* and
+C(m_r)/F_(k-r)->(alpha+L)*theta_*.
+Choose a small fixed rho>0 and consider all n in
+[(theta_*+rho)F_j,(theta_*+2rho)F_j]. Both n and n-1 eventually
+lie to the right of m_r. The drawdown hypothesis gives, uniformly,
+
+$$
+C(n),C(n-1)\ge(\alpha+L)\theta_*F_j-o(F_j).
+$$
+
+Thus d(n)>=(alpha+L)*theta_*/(theta_*+2rho)-alpha-o(1).
+Choose rho small enough for this bound and the phase to fall within
+the uniform stability neighborhood. With epsilon<alpha*L/2,
+the desired inequality holds with eta=alpha*L/2. The same rho works
+for every fixed R: only the required starting index changes.
+The cap gives 1<theta_*<phi, so rho can also ensure S_1<phi. QED.
+
+Consequently, under Q=o(N), full convergence is equivalent to the absence
+of macroscopic intervals with e(n)<=-eta*n in every fixed interior core,
+for each eta>0. More precisely their maximum lengths must be o(F_k).
+The forward implication follows because convergence makes every selected
+jump o(n); the converse follows from the synchronized-interval theorem.
+
+There is a spatial constraint on every odd-depth member of a surviving
+interval. Fix n, put q=Q(n), and define
+
+$$
+V_n=\max\bigl(\{0\}\cup
+\{C(v)-C(u):1\le u<v<n,\ v-u\le q\}\bigr),\qquad
+\epsilon_n=\max(q,V_n).
+$$
+
+**Crossing lemma.** Let h=C(n-1), g=T_n^h(n-1), and e=T_n(g)-g.
+If (-1)^h*e>0, set a=min(g,T_n(g)), b=max(g,T_n(g)).
+For every integer a+q<z<=b,
+
+$$
+z-\epsilon_n\le T_n^2(z)\le z+\epsilon_n-1.
+$$
+
+This conclusion does not require a period bound or even cyclic selection.
+
+**Proof.** First S=T_n^2 is almost increasing: for x<y,
+S(x)<=S(y)+epsilon_n. If T_n(x)>=T_n(y), the difference is bounded
+by q; otherwise 0<T_n(y)-T_n(x)<=q and the difference is bounded
+by V_n.
+
+The sign condition says that the literal even-rank orbit reaches a and
+the odd-rank orbit reaches b. The even subsequence starts at n-1>=b.
+The point a occurs at positive rank; if T_n(v)=a is its predecessor,
+then T_n(n-1)<=T_n(v)+q=a+q. The odd subsequence therefore starts
+at or below a+q. For each indicated z the even subsequence has a
+downward crossing, S(x)<z<=x, and the odd subsequence an upward
+crossing, w<z<=S(w). Almost monotonicity gives the two stated bounds.
+QED.
+
+At an odd depth with e(n)<=-eta*n, this forces an interval of at least
+eta*n-Q(n) integers on which |T_n^2(z)-z|<=epsilon_n.
+Sublinear Q alone does not establish sublinear V_n, nor does a bound on
+these intervals exclude long runs of even depths. The remaining task is
+to rule out the synchronized stacks using recursive consistency across
+parents and scales. The exact crossing inequalities have been independently
+checked on actual prescribed orbits in the
+[clock checker](verification/canonical_erosion_check.py).
 
 ### Size-biased martingales and the four-generation dispersion criterion
 

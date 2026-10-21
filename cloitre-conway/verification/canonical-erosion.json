@@ -1,7 +1,7 @@
 {
   "source_sha256": {
     "cloitre-conway/verification/canonical_erosion.cpp": "12ae3ce174b8dfd9919814c451ffa5619fef7cfdb870a40bd390dbeecdcdff24",
-    "cloitre-conway/verification/canonical_erosion_check.py": "b77e10c1a61415f9f223f54394f8515925bf732958a4aac9ec364aae39557d7d",
+    "cloitre-conway/verification/canonical_erosion_check.py": "48056622ff716cfc01d96956db3de91364daf98c7f1514eb24b8dedbc1dbd92a",
     "cloitre-conway/verification/conway_explore.py": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4"
   },
   "tail_certificate": {
@@ -381,6 +381,117 @@
     "pairs_with_positive_lower_defects": 40,
     "long_cycles_checked": 77614,
     "marked_long_cycles_in_separation_range": 11,
+    "crossing_positions_checked": 774,
+    "crossing_examples": [
+      {
+        "n": 497,
+        "Q": 7,
+        "V": 13,
+        "interval_inclusive": [
+          298,
+          302
+        ]
+      },
+      {
+        "n": 504,
+        "Q": 7,
+        "V": 13,
+        "interval_inclusive": [
+          306,
+          309
+        ]
+      },
+      {
+        "n": 736,
+        "Q": 9,
+        "V": 14,
+        "interval_inclusive": [
+          443,
+          452
+        ]
+      },
+      {
+        "n": 748,
+        "Q": 9,
+        "V": 17,
+        "interval_inclusive": [
+          455,
+          458
+        ]
+      },
+      {
+        "n": 2089,
+        "Q": 20,
+        "V": 37,
+        "interval_inclusive": [
+          1264,
+          1265
+        ]
+      },
+      {
+        "n": 2103,
+        "Q": 20,
+        "V": 37,
+        "interval_inclusive": [
+          1273,
+          1274
+        ]
+      },
+      {
+        "n": 79635,
+        "Q": 159,
+        "V": 292,
+        "interval_inclusive": [
+          48728,
+          48855
+        ]
+      },
+      {
+        "n": 95350,
+        "Q": 196,
+        "V": 361,
+        "interval_inclusive": [
+          57421,
+          57516
+        ]
+      },
+      {
+        "n": 129568,
+        "Q": 196,
+        "V": 365,
+        "interval_inclusive": [
+          79262,
+          79356
+        ]
+      },
+      {
+        "n": 129665,
+        "Q": 196,
+        "V": 365,
+        "interval_inclusive": [
+          79294,
+          79461
+        ]
+      },
+      {
+        "n": 129674,
+        "Q": 196,
+        "V": 365,
+        "interval_inclusive": [
+          79311,
+          79422
+        ]
+      },
+      {
+        "n": 130526,
+        "Q": 196,
+        "V": 365,
+        "interval_inclusive": [
+          79715,
+          79862
+        ]
+      }
+    ],
     "gate_counterexample": {
       "n": 63,
       "t": 8,

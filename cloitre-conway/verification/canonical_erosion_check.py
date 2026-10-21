@@ -1,6 +1,7 @@
 """Check canonical contact gates and clock-residue bounds using full orbits."""
 
 import json
+from collections import deque
 from pathlib import Path
 import sys
 
@@ -98,6 +99,42 @@ def main():
                     assert cycle[(rank + 2) % period] > cycle[rank]
     assert values[42] - 21 == 8 and values[43] - 21 == 7
     assert selected[63] == 35
+    drawdowns = [0] * (limit + 1)
+    running_maximum = 1
+    for index in range(2, limit + 1):
+        drawdowns[index] = max(drawdowns[index - 1], running_maximum - values[index - 1])
+        running_maximum = max(running_maximum, values[index - 1])
+    candidates = []
+    for parent in range(3, limit + 1):
+        jump = parent - values[selected[parent]] - selected[parent]
+        wrong_step = jump if values[parent - 1] % 2 == 0 else -jump
+        if wrong_step > drawdowns[parent]:
+            candidates.append((wrong_step, parent))
+    crossing_parents = sorted(set(parent for _, parent in candidates[:6])
+                              | set(parent for _, parent in sorted(candidates, reverse=True)[:6]))
+    crossing_positions = 0
+    crossing_records = []
+    for parent in crossing_parents:
+        drawdown = drawdowns[parent]
+        minimum_queue = deque()
+        window_rise = 0
+        for position in range(1, parent):
+            while minimum_queue and minimum_queue[0] < position - drawdown:
+                minimum_queue.popleft()
+            if minimum_queue:
+                window_rise = max(window_rise, values[position] - values[minimum_queue[0]])
+            while minimum_queue and values[minimum_queue[-1]] >= values[position]:
+                minimum_queue.pop()
+            minimum_queue.append(position)
+        error = max(drawdown, window_rise)
+        first = min(selected[parent], parent - values[selected[parent]]) + drawdown + 1
+        last = max(selected[parent], parent - values[selected[parent]])
+        for point in range(first, last + 1):
+            second_iterate = parent - values[parent - values[point]]
+            assert point - error <= second_iterate <= point + error - 1
+            crossing_positions += 1
+        crossing_records.append(dict(n=parent, Q=drawdown, V=window_rise,
+                                     interval_inclusive=[first, last]))
     print(json.dumps(dict(limit=limit, evaluator='full visited-state orbits',
                           gates_checked=gates_checked,
                           gates_after_first_source_defect=noninitial_gates,
@@ -105,6 +142,8 @@ def main():
                           pairs_with_positive_lower_defects=positive_pairs,
                           long_cycles_checked=long_cycles_checked,
                           marked_long_cycles_in_separation_range=marked_cycles_checked,
+                          crossing_positions_checked=crossing_positions,
+                          crossing_examples=crossing_records,
                           gate_counterexample=dict(n=63, t=8, source_contact=True,
                                                    later_offset=9, later_source_value=7, g=35),
                           examples=examples), indent=2))
