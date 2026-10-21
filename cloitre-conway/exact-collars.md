@@ -25,6 +25,7 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 - [A saturated lower barrier and the exclusion of nearby proper cycles](#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)
 - [Every fixed positive offset eventually becomes linear](#every-fixed-positive-offset-eventually-becomes-linear)
 - [Canonical copying in a doubled saturated band](#canonical-copying-in-a-doubled-saturated-band)
+- [One zero initial row extinguishes arbitrary partner amplitudes](#one-zero-initial-row-extinguishes-arbitrary-partner-amplitudes)
 - [Simultaneous extinction of binary cap defects](#simultaneous-extinction-of-binary-cap-defects)
 - [Even cap defects vanish by parity](#even-cap-defects-vanish-by-parity)
 - [Simultaneous extinction of ternary cap defects](#simultaneous-extinction-of-ternary-cap-defects)
@@ -2337,6 +2338,146 @@ The [evidence](verification/doubled-band.json) corroborates the proof;
 the infinite domain uses the already proved barriers. This rule does not
 identify the reached pair in advance, prove faster collar growth, or
 establish convergence.
+
+### One zero initial row extinguishes arbitrary partner amplitudes
+
+An entire zero initial row is stronger than a bound on individual amplitudes.
+It prevents either row parity from supplying both an active entrance guard
+and a positive lower value. The other initial row may have arbitrary defects.
+
+**Theorem.** Let K>=20 and let 2<=W<=B<=min(2W,F_(K-1)) be integers.
+Assume both complete native profiles at K,K+1 satisfy
+P_q(u)>=min(u,W), and suppose one q in {K,K+1} satisfies
+E_q(u)=0 for every 0<=u<=B. Put
+
+$$
+s=2K+1-q,\qquad L=\lfloor\alpha B\rfloor.
+$$
+
+There is no alphabet or parity condition on E_s. Then
+
+$$
+E_{q+2r}(u)=0\quad(r\ge0,\ 0\le u\le B),\qquad
+\boxed{E_j(t)=0\quad(j\ge s+7,\ 0\le t\le L).} \tag{Z.1}
+$$
+
+In particular the uniform delay is at most eight orders after K.
+
+**A whole parity stays zero.** Complete saturation and the exact collar
+through W propagate without an amplitude assumption. At j>=K+2,
+every positive defect at W<u<=B copies a positive defect from row j-2
+at an offset at most u, by the doubled-band theorem. Induction therefore
+preserves zero through the full original B on the q parity. This full-band
+conclusion is needed before analyzing the other parity.
+
+**Zero-source entry keeps the actual clock.** Fix a row j on the other
+parity and W<t<=L. Its source row j-1 is zero through B. Write
+A=F_(j-1), D=F_(j-2), n=F_j+t, and e=E_j(t-1). Current saturation gives
+0<=e<=t-1-W, so the actual first iterate is
+D+1+e<=D+t-W<=A-W<A, inside the earlier-row invariant interval.
+
+Until capture, a lower point A-k maps to A+t+Q_(j-1)(k).
+For an upper point A+u with u>t, its next offset is t-P_(j-1)(u).
+If u<=B, source exactness gives P_(j-1)(u)=u>t. If u>B, golden
+localization gives P_(j-1)(u)>=L+1>t. Thus every such upper point
+returns strictly below A. A lower point can first enter [A,A+t] only
+when Q_(j-1)(k)=0, directly at A+t. Exterior sides alternate from the
+prescribed rank-zero high start, so this first capture has even rank.
+Capture is guaranteed by the all-cycle capture theorem. On the core,
+source exactness makes the map reflection, and the reached pair is
+{A,A+t}, with A+t at even absolute ranks. The prescribed endpoint is
+cyclic. Consequently, including its correlated seed and depth,
+
+$$
+E_j(t)=
+\begin{cases}
+E_{j-2}(t),&F_{j-1}+t-1-E_j(t-1)\text{ is odd},\\
+0,&\text{otherwise}.
+\end{cases} \tag{Z.2}
+$$
+
+No positive amplitude bound was used. No right-neighbor margin is needed:
+the argument uses zero source values through B and localization outside B.
+
+**Four updates erase the other parity.** Put X_r(t)=E_(s+2r)(t) on 0..L.
+Equation (Z.2), together with zero through W, shows that each X_r(t)
+retains its initial integer X_0(t) until possibly becoming zero forever.
+Its parity bit is therefore nonincreasing in r: an initially even value
+always has bit zero; an initially odd value can only change from one to zero.
+This conclusion uses zero-or-original retention, not general monotonicity
+of integer parity.
+
+If X_4(t)>0, all four updates at that site have odd actual depth. Hence
+
+$$
+X_r(t-1)\bmod2=(F_{s+2r-1}+t)\bmod2,\qquad r=1,2,3,4. \tag{Z.3}
+$$
+
+The left side is nonincreasing, including when t-1 lies in the zero
+collar. Fibonacci parity has period three, and a step of two visits all
+three phases. The four bits on the right have equal first and last bits
+and contain both zero and one. They cannot be nonincreasing. Thus X_4=0
+through L, and every later update stays zero. Row s+7 is on the already
+zero parity; row s+8 is the erased row. This proves (Z.1). QED.
+
+**Canonical zero/three windows at starting orders 20 through 40.** In the
+actual sequence, the following are first positive offsets p in the listed
+rows; every preceding offset, including zero, is exact.
+
+| Row q | First positive p | E_q(p) | Starting orders K covered by q in {K,K+1} |
+|---:|---:|---:|---|
+| 20 | 17 | 1 | 20 |
+| 22 | 48 | 1 | 21,22 |
+| 24 | 113 | 1 | 23,24 |
+| 26 | 113 | 1 | 25,26 |
+| 28 | 132 | 1 | 27,28 |
+| 29 | 209 | 2 | 29 |
+| 31 | 226 | 9 | 30,31 |
+| 33 | 487 | 9 | 32,33 |
+| 35 | 487 | 9 | 34,35 |
+| 36 | 2245 | 34 | 36 |
+| 38 | 2245 | 34 | 37,38 |
+| 40 | 2494 | 25 | 39,40 |
+
+Every displayed positive defect is outside {0,3}. Therefore any saturated
+inherited zero/three window with 20<=K<=40 must have B<p in its assigned
+row q. That row is zero throughout B, and (Z.1) proves exactness through
+L at every j>=K+8, without an upper bound on j.
+There can be no positive-creating entrance in the
+[three-route decoder](frontier-dynamics.md#an-exact-three-route-decoder-for-amplitude-three-windows)
+at any later row: on the q parity all routed lower values are zero;
+on the other parity the whole source row is zero, so both guards are inactive.
+The [relaxed traveling histories](#an-amplitude-three-traveling-history-limits-the-relaxed-routing-method)
+cannot start from these canonical inherited windows.
+
+This corollary is a computer-assisted theorem with a finite starting-order
+range and an unbounded later-row conclusion. The general theorem above
+does not require this finite table. The table uses the independently agreeing
+visited-orbit and Brent prefix, through the required index
+F_40+2494=102336649. The
+[checker](verification/earlier_row_check.py) replays every certificate term
+with both exact orbit selectors, checks all six four-clock words, and tests
+the integer clock recurrence with mixed amplitudes. The
+[evidence](verification/earlier-row.json) records the small and extended
+certificates. For a fresh smaller reproduction, run:
+
+```sh
+python3 cloitre-conway/verification/earlier_row_check.py --zero-row
+```
+
+This regenerates and compares both prefixes and covers starting orders
+20..28. For all 20..40, add `--order 40`; this needs a substantially larger
+prefix. An already independently verified native unsigned-32-bit prefix
+can instead be reused with `--values-u32 PATH`. The replays still read
+only earlier terms and retain the prescribed seed and iteration count.
+
+These canonical starting pairs do not test the unresolved interaction
+between an active guard and a positive routed lower value: one of those
+two ingredients is absent at every later row. It remains open whether a
+canonical inherited zero/three pair with positive defects in both initial
+rows exists at a larger starting order. Neither (Z.1) nor the finite table
+controls such a pair or the surrounding window needed for repeated
+enlargement. The full golden-ratio limit remains open.
 
 ### Simultaneous extinction of binary cap defects
 
