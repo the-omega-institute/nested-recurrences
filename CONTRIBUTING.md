@@ -213,6 +213,18 @@ clock phases and both collar parities, ending at the all-zero pair language.
 The actual entrance-chain consequence uses the written proof; this program
 does not estimate the frequency of actual nondefault entrances.
 
+To allow arbitrary suppression while checking that positive-creating
+entrances remain necessary:
+
+```sh
+python3 cloitre-conway/verification/ternary_erasure_check.py --creation-three
+```
+
+Compare with `creation_three` in the same evidence file. Both exact word
+transductions include every allowed zero choice and retain its subsequent
+clock. The final zero-pair identities prove a uniform row-23 bound.
+The actual creation and lower-contact chain use the written proof.
+
 For sparse continuation from a shorter earlier prefix:
 
 ```sh

@@ -999,6 +999,182 @@ it supplies no upper bound on those events or extinction of the actual
 three-channel system. The relaxed traveling history remains compatible
 with this requirement. Full convergence remains open.
 
+### Positive-creating entrances have strictly leftward ancestry
+
+The preceding event count includes entrances that suppress a default
+positive output. A larger relaxation separates those suppressions from
+entrances that create a positive value. Keep the Boolean route, clock,
+boundary and initial rows of (D.1), but allow either zero or the default
+output at every site. Thus
+
+$$
+a_i(t)=0\quad\text{if }f_i+t-a_i(t-1)\text{ is odd},\qquad
+a_i(t)\in\{0,z_i(t)\}\quad\text{otherwise}. \tag{C.1}
+$$
+
+The zero choice is arbitrary at every open clock, including every site
+where the default output would be one. It may change the next clock.
+Both the current output and that next clock are retained in the exact
+word transduction.
+
+**Extinction with arbitrary suppressions.** For every spatial length,
+the system (C.1) has the following uniform zero rows:
+
+| sigma | Last row admitting a positive output | Zero from row | Consecutive zero pair |
+|---|---|---|---|
+| 0 | 21 | 22 | 22,23 |
+| 1 | 20 | 21 | 21,22 |
+| 2 | 22 | 23 | 23,24 |
+
+In particular every row i>=23 vanishes, for all suppression choices and
+either parity of W. This is a computer-assisted infinite theorem. The
+[same checker](verification/ternary_erasure_check.py), with
+`--creation-three`, replaces the deterministic output by precisely the
+allowed choices in (C.1) in each of its two independent transductions.
+Their exact languages agree after every update. In all six phase/parity
+cases the final pair-language is the single-state arbitrary repetition
+of (0,0). The [evidence](verification/ternary-erasure.json) records these
+identities under `creation_three`.
+
+The proof of the arbitrary-length language induction is unchanged: each
+nondeterministic branch records its chosen output in the clock memory,
+and emits that same output in the new pair-word. Thus all suppression
+histories, with their own subsequent clocks, are included. The final
+zero pair and its invariant zero continuation prove extinction on the
+whole half-line. No bounded spatial scan is used for this inference.
+
+**A positive-creating entrance.** Retain the actual inherited-window
+hypotheses K,W,B,T from the preceding subsection. An entrance at (r,u)
+is positive-creating when its actual clock is odd and
+
+$$
+z_r(u)=0,\qquad z_r(u-d_r(u))=1. \tag{C.2}
+$$
+
+This is an actual positive defect E_r(u)=3. Its selected channel has
+d in {1,2}. At its routed source contact R,
+
+$$
+\begin{gathered}
+W+3\le R\le u-d<u,\\
+E_{r-2}(R)=3,\qquad E_{r-1}(R)=0,\qquad
+E_{r-1}(u+3-d)=3. \tag{C.3}
+\end{gathered}
+$$
+
+Indeed z_r(u-d)=1 is the lower defect at the contact reached by
+subtracting three along the source row; that contact satisfies R<=u-d
+and has source defect zero. Its lower defect is three. Saturation
+forbids that lower defect at offsets at most W+2, proving R>=W+3.
+The last equality is the guard for the actual selected channel. In
+particular a creation needs both a lower positive contact strictly to
+the left and a positive source guard to the right. The guard is at
+least three sites to the right of the contact.
+
+If J>=K+23 and W<t<=T, then
+
+$$
+\boxed{E_J(t)=3\quad\Longrightarrow\quad
+\text{a positive-creating entrance occurs at some }
+J-21\le r\le J,\quad W<u\le t.} \tag{C.4}
+$$
+
+If there were no such entrance, every actual open-clock output in
+this rectangle would be at most its default value z_r(u). The actual
+prefix would therefore be a permitted history of (C.1), starting from
+the actual rows J-23,J-22. These initial rows inherit the two zero
+sites after W and the homogeneous alphabet. The normalized phase is
+sigma=J-24 modulo 3; the preceding clock-parity calculation applies.
+The uniform row-23 extinction contradicts E_J(t)=3, proving (C.4).
+This argument allows all actual suppressions of default positives.
+
+**A chain that stays in the inner band.** For J>=K+23 and W<t<=T, put
+
+$$
+N=\left\lfloor\frac{J-K}{23}\right\rfloor.
+$$
+
+A positive E_J(t)=3 forces N distinct positive-creating entrances.
+Their row indices and sites both strictly decrease. Each entrance
+supplies the lower positive contact in (C.3), and these contacts give
+a chain of positive defects (J_ell,t_ell), starting at (J,t), with
+
+$$
+2\le J_{\ell-1}-J_\ell\le23,\qquad
+W+3\le t_\ell\le t_{\ell-1}-1. \tag{C.5}
+$$
+
+For the proof apply (C.4) to a current positive site, then choose its
+creating entrance's lower contact as the next positive site. The
+entrance row is between J_current-21 and J_current, so its lower row
+is between J_current-23 and J_current-2. Its contact is strictly to
+the left. Before step ell<=N, its row is at least
+J-23(ell-1)>=K+23. Every contact remains inside (W,T], because its
+site decreases. Thus (C.4) applies repeatedly without an additional
+right-margin assumption. The next creating entrance is at an earlier
+row and to the left of the previous entrance, making all N distinct.
+
+In particular a positive site must satisfy
+
+$$
+\left\lfloor\frac{J-K}{23}\right\rfloor\le t-W-3. \tag{C.6}
+$$
+
+**An advancing exact prefix.** Equivalently, for every J>=K,
+
+$$
+E_J(t)=0\quad\text{for }0\le t\le
+\min\left(T,\ W+2+\left\lfloor\frac{J-K}{23}\right\rfloor\right).
+\tag{C.7}
+$$
+
+When J<K+23 this is the inherited exact prefix through W+2. At later
+rows, (C.6) excludes a positive defect at every displayed offset, and
+the inherited alphabet leaves only zero. In particular, if T>W+2,
+the entire inner band through T is exact at every row
+J>=K+23(T-W-2). If T<=W+2, it is already exact at row K.
+Thus fixed inherited homogeneous windows have an effective extinction
+bound even when every locally available channel may be selected.
+
+This bound records the cost of the positive-creation ancestry argument.
+It is not a faster collar-growth estimate: the existing
+[one-offset persistence lemma](exact-collars.md#every-fixed-positive-offset-eventually-becomes-linear)
+already advances a permanently exact prefix at asymptotic rate one site
+per three orders. The new information is the required repeated creation
+of positive values from strictly leftward lower contacts.
+
+This advances the exact prefix inside the original controlled band.
+After the whole inner band is zero, complete saturation does improve
+to W'=max(W,T-2). Through T the profile is the identity; at
+T<u<=B the alphabet gives P_j(u)>=u-3>=T-2; and at u>B the golden
+lower bound gives
+
+$$
+P_j(u)\ge\left\lfloor\alpha(u+1)+(-1)^{j-1}\alpha^j\right\rfloor
+\ge\lfloor\alpha B\rfloor\ge T.
+$$
+
+The middle inequality follows from u>=B+1 and j>=20. However,
+restarting with this improved saturation and the same alphabet band B
+leaves the same inner endpoint T. The homogeneous surrounding windows
+needed to enlarge B remain uncontrolled. The relaxed traveling history
+also remains possible: its front moves right while every fixed site
+becomes zero.
+
+Finally, exactness is a local property near the Fibonacci anchor. The
+identity
+
+$$
+C(F_j+u)-\alpha(F_j+u)
+=(-1)^j\alpha^j+\alpha^2u-E_j(u)
+$$
+
+shows that the global limit requires uniform upper-error control
+sup_u(alpha^2u-E_j(u))=o(F_j) on the native row. A zero defect at a
+macroscopic positive offset would instead give a ratio above alpha.
+The present argument does not provide the required macroscopic profile
+or an estimate for the actual exterior channel choices.
+
 ### A seeded branch exclusion at level 33
 
 Take j=33, W=225, B=450 and t=260. The independently regenerated earlier

@@ -83,6 +83,15 @@ shows that a persistent amplitude-three defect needs repeated effective
 nondefault entrances, with a quantitative backward chain of guarded events.
 Bounding the frequency of those actual channel choices remains open.
 
+Allowing arbitrary suppression still gives
+[bounded extinction without positive creation](cloitre-conway/frontier-dynamics.md#positive-creating-entrances-have-strictly-leftward-ancestry).
+Persistent amplitude-three defects therefore require positive-creating
+entrances with a strictly leftward chain of lower contacts, staying
+inside the controlled band. This refines the mechanism of persistence;
+the existing one-offset theorem already gives faster exact-prefix growth.
+Control of the surrounding windows needed for repeated enlargement
+remains open.
+
 A [traveling amplitude-three history](cloitre-conway/exact-collars.md#an-amplitude-three-traveling-history-limits-the-relaxed-routing-method)
 shows that the local necessary routing rules alone cannot extend uniform
 extinction to larger alphabets. It satisfies the zero left boundary and
