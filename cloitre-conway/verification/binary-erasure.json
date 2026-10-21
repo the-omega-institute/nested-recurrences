@@ -303,6 +303,13 @@
       }
     ]
   },
+  "pure_amplitude_two": {
+    "source_lower_pairs": 10917,
+    "impossible_order_zero_mod3_outputs": 52976,
+    "lower_zero_order_two_mod3_outputs": 44912,
+    "positive_candidates_other_phases": 640,
+    "scope": "Finite corroboration of the written parity proof, using abstract saturated profiles with the derived support restrictions. Not a canonical sequence construction or an infinite premise."
+  },
   "canonical": {
     "limit": 832302,
     "literal_prefix": 4096,
