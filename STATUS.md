@@ -36,6 +36,16 @@ The global induction and some exact-neighborhood results are
 premises checked by independent programs. Finite tests of additional
 conjectures remain finite observations. No Lean formalization is included.
 
+The [contact-frontier dynamics theorem](cloitre-conway/frontier-dynamics.md)
+characterizes collapse of the outermost relative contact width by divergence
+of the prescribed first-capture ranks. Positive width forces uniformly
+bounded first capture. A gated isolated frontier produces an exact adjacent
+drop within five inputs at the next level; under sublinear forward drawdown,
+a positive-width frontier must eventually be ungated. Neither contact
+collapse nor sublinear drawdown has been established. Complementary drawdown
+tests in the [dispersion note](cloitre-conway/dispersion.md#complementary-drawdowns-and-the-upward-modulus)
+remain finite observations.
+
 ## Questions that remain open
 
 1. **Convergence and decay over all integers.** Prove C(n)/n -> alpha,

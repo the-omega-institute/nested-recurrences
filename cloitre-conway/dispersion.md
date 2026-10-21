@@ -20,6 +20,7 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 - [Defect production by the canonical clock](#defect-production-by-the-canonical-clock)
 - [Contact residues on longer cycles](#contact-residues-on-longer-cycles)
 - [Synchronized negative-jump intervals under sublinear drawdown](#synchronized-negative-jump-intervals-under-sublinear-drawdown)
+- [Complementary drawdowns and the upward modulus](#complementary-drawdowns-and-the-upward-modulus)
 - [Size-biased martingales and the four-generation dispersion criterion](#size-biased-martingales-and-the-four-generation-dispersion-criterion)
 - [A phase-free lower bound from the prescribed basin](#a-phase-free-lower-bound-from-the-prescribed-basin)
 - [Quadratic basin dispersion in the unit-defect family](#quadratic-basin-dispersion-in-the-unit-defect-family)
@@ -297,6 +298,15 @@ Indeed, at n=F_k+t_k the ratio tends to (1+b)/(phi+b), and subtracting
 alpha gives the displayed expression. Thus a positive surviving contact
 width would force a positive global limiting excess.
 
+The [frontier dynamics theorem](frontier-dynamics.md) gives an independent
+characterization: b=0 exactly when the first-capture ranks at F_k+t_k
+tend to infinity. Positive width instead gives uniformly bounded first
+capture and cycles separated from both capture endpoints. Under a stated
+one-sided gate, an isolated last contact also forces an exact adjacent
+drop within five inputs at the next level. These statements use the
+canonical entrance and clock; the interior transient and ungated frontiers
+remain unresolved.
+
 ### Defect production by the canonical clock
 
 Here the precise entrance and depth yield more than profile additivity.
@@ -558,6 +568,60 @@ to rule out the synchronized stacks using recursive consistency across
 parents and scales. The exact crossing inequalities have been independently
 checked on actual prescribed orbits in the
 [clock checker](verification/canonical_erosion_check.py).
+
+### Complementary drawdowns and the upward modulus
+
+Let D(n)=n-C(n), and distinguish the two drawdowns
+
+$$
+Q_C(N)=\max\bigl(\{0\}\cup\{C(u)-C(v):1\le u<v<N\}\bigr),
+\qquad
+Q_D(N)=\max\bigl(\{0\}\cup\{D(u)-D(v):1\le u<v<N\}\bigr).
+$$
+
+Here Q_C is the Q used above; neither quantity is the amplitude rebound
+along the inner orbit. Both C and D obey the same additive identity at the
+actual selected split, but D does not determine the inner map or its depth.
+
+**Exact modulus bound.** If u<v<n and v-u<=q=Q_C(n), then
+
+$$
+C(v)-C(u)=(v-u)+D(u)-D(v)\le q+Q_D(n).
+$$
+
+Thus the crossing lemma holds with the explicit error
+Q_C(n)+Q_D(n) in place of epsilon_n. In particular both complementary
+drawdowns being sublinear would make this error sublinear. This does not
+exclude macroscopic intervals of approximate two-step returns.
+
+**Open conjecture for the canonical recurrence:**
+
+$$
+Q_D(N)\le2Q_C(N)+1\qquad(N\ge3).
+$$
+
+If true, it would give V_n<=3Q_C(n)+1 and remove V_n as a separate
+smallness hypothesis under Q_C(n)=o(n). It would not establish that
+hypothesis, or rule out the synchronized negative-jump intervals.
+The comparison cap alone does not prove this conjecture.
+
+Two independent orbit algorithms, Brent cycle skipping and full visited-state
+orbits, check the conjectured inequality at every prefix through
+N=134217729. At that endpoint Q_C=10703 and Q_D=11032; the maximum
+of Q_D(N)-2Q_C(N) over the tested prefixes is 1. Replacing the factor 2
+by 1 fails in this range: the maximum of Q_D-Q_C is 795.
+These are finite observations, not an infinite bound.
+
+The same evaluation finds a 495-term all-even interval at
+[102244566,102245060]. In the fixed cores
+[F_k+F_(k-1)/10,F_(k+1)-F_(k-1)/10], the longest all-even interval
+in the generated prefix has 25 terms. The longest consecutive interval
+with e(n)<0 has 30 terms. These maxima do not imply asymptotic parity
+mixing or sublinear interval lengths.
+The [two evaluators](verification/drawdown_geometry.cpp) reproduce the
+[compact evidence](verification/drawdown-geometry.json), including all
+values and selected splits in the recorded 495-term witness and literal
+checks through 4096.
 
 ### Size-biased martingales and the four-generation dispersion criterion
 
