@@ -32,6 +32,7 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 - [Block-terminal means remove intermediate scalar constraints](#block-terminal-means-remove-intermediate-scalar-constraints)
 - [Finite prefixes and exact collars do not force convergence](#finite-prefixes-and-exact-collars-do-not-force-convergence)
 - [Bounded forcing with the complete prescribed clock](#bounded-forcing-with-the-complete-prescribed-clock)
+- [Exact nesting after finitely many forced values](#exact-nesting-after-finitely-many-forced-values)
 - [Exact small-cap closure still does not force convergence](#exact-small-cap-closure-still-does-not-force-convergence)
 
 ### A one-sided landing-displacement criterion
@@ -2852,6 +2853,144 @@ N too. The seed and depth are beyond N, and the entire prescribed
 calculation coincides with V. The remaining sources form a finite set.
 This extension preserves any chosen finite canonical prefix, but its
 bounded additive forcing remains essential to the statement.
+
+### Exact nesting after finitely many forced values
+
+The same nested rule has an explicit nonconvergent solution when ten initial
+values are supplied. Its recurrence error is supported at seven early
+sources; every later calculation uses the exact seed and depth. Its natural
+Fibonacci anchors are doubled, so the standard canonical anchor identities
+and upper cap U are not retained.
+
+Use the preceding definition of U and set
+
+$$
+A(1)=A(2)=1,\qquad
+A(n)=2U\bigl(\lceil n/2\rceil\bigr)\quad(n\ge3).
+$$
+
+**Theorem (finite forcing).** The sequence A is nondecreasing, and for u<v,
+
+$$
+[u-A(u)]-[v-A(v)]\le1.
+$$
+
+For the full prescribed operator,
+
+$$
+\mathcal F[A](n)=A(n)\quad(n\ge11).
+$$
+
+The only nonzero residuals at n>=3 are
+
+| Source n | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| \(\mathcal F[A](n)-A(n)\) | 1 | -1 | 1 | -1 | 1 | 1 | 1 |
+
+In particular, the same nested recurrence with the initial ten values
+
+$$
+1,1,2,2,4,4,6,6,6,6
+$$
+
+has the displayed formula for every later value, and
+
+$$
+\liminf_{n\to\infty}\frac{A(n)}n=\alpha,\qquad
+\limsup_{n\to\infty}\frac{A(n)}n=\frac1{1+\alpha^2}>\alpha.
+$$
+
+This is a sequence with a different finite initialization. It does not
+satisfy the canonical equation at the seven listed sources.
+
+**Proof.** The inequalities U(m)<=m-1 for m>=2 and U(m)>=ceil(m/2)
+give 1<=A(x)<=x and A(x)>=x/2. Also
+
+$$
+A(x)\le\frac{3(x+1)}4,\qquad
+A(v)-A(u)\le v-u+1\quad(u<v).
+$$
+
+The increment bound follows from U's Lipschitz property and the ceiling
+lattice; pairs involving the two initial overrides satisfy it directly.
+This proves both drawdown statements. For a source n, the bounds imply
+x_r>=n/4 after the first step and x_r<=7n/8 after the second.
+At n>=64, the depth exceeds two and both final readout arguments exceed
+two. Thus all queried values and the readout use the displayed dilation
+formula, without either initial override.
+
+For a reduced source m>=8, write R_m for the greatest periodic point of
+T_m^U. The preceding U capture and offset calculation applies already
+at m>=8: its two anchors are at least five and eight respectively,
+and no sparse-odd estimate or prescribed-depth bound is needed for U.
+It gives
+
+$$
+U(R_m)+U(m-R_m)=U(m).
+$$
+
+It is the greatest point that is needed here. An arbitrary U-periodic
+point does not have this readout identity.
+
+If n=2m, the exact depth is h=2U(m), an even integer at least m.
+From the first step onwards the original orbit is even, and
+
+$$
+x_r/2=(T_m^U)^r(m)\qquad(r\ge1).
+$$
+
+The reduced seed m maps into {1,...,m-1}. Its entire extended domain has
+m states, so h>=m ensures cyclic selection. The square map is
+nondecreasing, and its even iterates from the maximal seed m select the
+greatest periodic point. Therefore
+
+$$
+g_A=2R_m,\qquad
+\mathcal F[A](2m)=2U(R_m)+2U(m-R_m)=2U(m)=A(2m).
+$$
+
+If n=2m-1, then h=2U(m-1) is even and at least m-1.
+From the first step onwards the orbit is odd, with
+
+$$
+(x_r+1)/2=(T_m^U)^r(m-1)\qquad(r\ge1).
+$$
+
+The reduced domain has m-1 states, so this full depth is again cyclic.
+The maximal seed and even depth select R_m. Thus
+
+$$
+g_A=2R_m-1,\qquad
+\mathcal F[A](2m-1)=2U(R_m)+2U(m-R_m)=2U(m)=A(2m-1).
+$$
+
+These arguments prove exact nesting at every n>=64. Literal calculation
+at each n=3,...,63 gives precisely the seven residuals in the table,
+completing the stated finite premise. The
+[existing checker](verification/bounded_forcing_check.py) and its
+[evidence](verification/bounded-forcing.json) include this separate finite
+base, independent visited-orbit and Brent
+comparisons, literal clocks, and a third check of the exact half-scale
+selected point. The limiting ratios follow from the dilation formula
+and the two U limits; they are not inferred from a finite scan.
+
+**Any finite canonical prefix can still be prescribed.** Fix N>=2 and put
+W=C through N, W=A afterwards. Both halves satisfy
+x/2<=W(x)<=3(x+1)/4, and W is positive and at most x. At every
+n>max(8N,64), the seed, depth, all subsequent orbit arguments, and
+both readout arguments exceed N by the preceding n/4 and n/8 bounds.
+Consequently the entire prescribed calculation is that of A, and
+
+$$
+\mathcal F[W](n)=W(n)\qquad(n>\max(8N,64)).
+$$
+
+The two limiting ratios are unchanged. Tail drawdowns are bounded by
+zero and one respectively; pairs involving the finite prefix contribute
+only a finite additional bound. Hence finitely supported forcing can
+preserve any chosen actual prefix and still produce a nonconvergent
+exact tail. The forced transition interval is part of this statement:
+it is not another solution from the canonical initial conditions.
 
 ### Exact small-cap closure still does not force convergence
 
