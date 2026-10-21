@@ -428,6 +428,83 @@ def amplitude_three_obstruction():
                       'parities. This is not a canonical recurrence counterexample.')
 
 
+def slow_three_front_certificate():
+    profiles = ['110000', '000110', '011000', '000010', '011000', '000001']
+    routes = [('100101', '100101'), ('000100', '100100'),
+              ('110110', '110110'), ('000110', '010110'),
+              ('011010', '011010'), ('000010', '010010')]
+    selectors = {(0, 1): 1, (1, 4): 1, (2, 2): 1, (5, 1): 2, (5, 5): 1}
+
+    def route(row, offset):
+        if offset < 0:
+            return int(row == 0 and offset == -1)
+        prefix, tail = routes[row]
+        return int(prefix[offset] if offset < 6 else tail[offset % 6])
+
+    def profile(row, offset):
+        quotient, phase = divmod(row, 6)
+        position = offset - 2 * quotient
+        return 0 if position < 0 else int(profiles[phase][position % 6])
+
+    for row in range(6):
+        for offset in range(-4, 21):
+            lower, source = profile(row - 2, offset), profile(row - 1, offset)
+            assert route(row, offset) == (route(row, offset - 3) if source else lower)
+            shift = selectors.get((row, offset % 6), 0) if offset >= 0 else 0
+            if shift:
+                assert profile(row - 1, offset + 3 - shift)
+            clock = (int(row % 3 != 0) + offset - profile(row, offset - 1)) % 2
+            assert profile(row, offset) == (0 if clock else route(row, offset - shift))
+    fronts = [word.index('1') for word in profiles]
+    assert fronts == [0, 3, 1, 4, 1, 5]
+    modified_routes = {}
+    changed = []
+    for offset in range(-4, 21):
+        lower = 0 if offset == 0 else profile(0, offset)
+        source = profile(1, offset)
+        modified_routes[offset] = modified_routes.get(offset - 3, 0) if source else lower
+        if modified_routes[offset] != route(2, offset):
+            changed.append(offset)
+        shift = selectors.get((2, offset % 6), 0) if offset >= 0 else 0
+        clock = (1 + offset - profile(2, offset - 1)) % 2
+        selected = modified_routes.get(offset - shift, 0)
+        assert profile(2, offset) == (0 if clock else selected)
+    assert changed == [0, 3]
+    delays = []
+    for initial_class in range(3):
+        pair = []
+        for site_parity in (0, 1):
+            states = {(0, 0), (0, 1), (1, 0), (1, 1)}
+            last_positive = 1
+            for order in range(2, 12):
+                phase = int((order + initial_class - 1) % 3 != 0)
+                states = {(source, choice) for lower, source in states
+                          for choice in ({0, lower} if not source and
+                                         (phase + site_parity) % 2 == 0 else {0})}
+                if any(output for source, output in states):
+                    last_positive = order
+            assert states == {(0, 0)}
+            pair.append(last_positive + 1)
+        delays.append(pair)
+    assert delays == [[2, 6], [4, 5], [3, 4]]
+    return dict(status='PASS', profiles=profiles, routes=routes,
+                negative_route_exception=[0, -1, 1],
+                selected_channels=[[phase, residue, shift]
+                                   for (phase, residue), shift in selectors.items()],
+                checked_row_phases=6, checked_offsets=[-4, 20],
+                tail_identity_start=9, tail_period=6, row_translation=[6, 2],
+                first_positive_offsets=fronts, asymptotic_front_speed='1/3',
+                one_offset_delays_even_odd=delays,
+                modified_seed_lower_offset=0, changed_row_two_route_offsets=changed,
+                exact_last_positive_row_odd='3t-5 (t>=3)',
+                exact_last_positive_row_even='3t-6 (t>=4)',
+                exact_cutoff_scope='W=0,sigma=0; also every even W by spatial translation',
+                scope='Exact prefix/periodic-tail identities attain the universal '
+                      'one-offset drift coefficient 1/3 in the guarded relaxed rule. '
+                      'The written proof supplies the infinite induction and rate. '
+                      'No canonical realization or global convergence claim.')
+
+
 def main():
     parser = argparse.ArgumentParser()
     modes = parser.add_mutually_exclusive_group()
@@ -435,9 +512,14 @@ def main():
                        help='Prove default-only amplitude-three extinction by whole-word automata.')
     modes.add_argument('--creation-three', action='store_true',
                        help='Prove extinction allowing arbitrary deletion of default-positive outputs.')
+    modes.add_argument('--slow-three', action='store_true',
+                       help='Check the sharp one-third front speed for relaxed amplitude-three routing.')
     arguments = parser.parse_args()
     if not __debug__:
         raise SystemExit('Run without -O; assertions perform the mathematical checks.')
+    if arguments.slow_three:
+        print(json.dumps(slow_three_front_certificate(), indent=2))
+        return
     if arguments.default_three or arguments.creation_three:
         print(json.dumps(default_three_certificate(arguments.creation_three), indent=2))
         return

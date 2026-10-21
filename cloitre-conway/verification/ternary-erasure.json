@@ -1088,5 +1088,117 @@
       }
     ],
     "scope": "Two independent exact whole-word transductions prove extinction of amplitude-three routing while allowing arbitrary suppression of default-positive outputs. Arbitrary-length initial rows have two zero sites after the collar. No spatial cutoff, canonical sequence data, actual creation-frequency upper bound or convergence claim."
+  },
+  "slow_three": {
+    "status": "PASS",
+    "profiles": [
+      "110000",
+      "000110",
+      "011000",
+      "000010",
+      "011000",
+      "000001"
+    ],
+    "routes": [
+      [
+        "100101",
+        "100101"
+      ],
+      [
+        "000100",
+        "100100"
+      ],
+      [
+        "110110",
+        "110110"
+      ],
+      [
+        "000110",
+        "010110"
+      ],
+      [
+        "011010",
+        "011010"
+      ],
+      [
+        "000010",
+        "010010"
+      ]
+    ],
+    "negative_route_exception": [
+      0,
+      -1,
+      1
+    ],
+    "selected_channels": [
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        1,
+        4,
+        1
+      ],
+      [
+        2,
+        2,
+        1
+      ],
+      [
+        5,
+        1,
+        2
+      ],
+      [
+        5,
+        5,
+        1
+      ]
+    ],
+    "checked_row_phases": 6,
+    "checked_offsets": [
+      -4,
+      20
+    ],
+    "tail_identity_start": 9,
+    "tail_period": 6,
+    "row_translation": [
+      6,
+      2
+    ],
+    "first_positive_offsets": [
+      0,
+      3,
+      1,
+      4,
+      1,
+      5
+    ],
+    "asymptotic_front_speed": "1/3",
+    "one_offset_delays_even_odd": [
+      [
+        2,
+        6
+      ],
+      [
+        4,
+        5
+      ],
+      [
+        3,
+        4
+      ]
+    ],
+    "modified_seed_lower_offset": 0,
+    "changed_row_two_route_offsets": [
+      0,
+      3
+    ],
+    "exact_last_positive_row_odd": "3t-5 (t>=3)",
+    "exact_last_positive_row_even": "3t-6 (t>=4)",
+    "exact_cutoff_scope": "W=0,sigma=0; also every even W by spatial translation",
+    "scope": "Exact prefix/periodic-tail identities attain the universal one-offset drift coefficient 1/3 in the guarded relaxed rule. The written proof supplies the infinite induction and rate. No canonical realization or global convergence claim."
   }
 }
