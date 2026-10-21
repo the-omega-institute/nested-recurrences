@@ -186,6 +186,20 @@ prefix with an independent literal construction through 6919. The finite
 certificate proves its stated six-input exclusion; it gives no uniform
 asymptotic contraction.
 
+For canonical copy or erasure in the doubled saturated band:
+
+```sh
+python3 cloitre-conway/verification/doubled_band_check.py
+```
+
+Compare its JSON with
+[doubled-band.json](cloitre-conway/verification/doubled-band.json).
+Independent full-orbit and Brent values agree through832302; all326selected
+clocks in four bands are replayed literally. Complete captured-seed cycles
+and a finite abstract profile check corroborate the
+[infinite theorem](cloitre-conway/exact-collars.md#canonical-copying-in-a-doubled-saturated-band).
+This optional check is separate from the eight default replays.
+
 For the global selected-tree golden-excess budget:
 
 ```sh

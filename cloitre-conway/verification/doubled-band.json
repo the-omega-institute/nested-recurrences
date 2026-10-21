@@ -1,0 +1,92 @@
+{
+  "status": "PASS",
+  "canonical_prefix": 832302,
+  "independent_full_orbit_and_Brent_values_agree": true,
+  "literal_prefix": 4096,
+  "literal_prefix_updates": 5467850,
+  "literal_selected_clock_updates": 112936122,
+  "cases": 326,
+  "all_captured_seed_cycles": 55044,
+  "rows": [
+    {
+      "order": 25,
+      "offsets": [
+        33,
+        64
+      ],
+      "positive_defects": 3,
+      "positive_inner_pair": 0
+    },
+    {
+      "order": 26,
+      "offsets": [
+        33,
+        64
+      ],
+      "positive_defects": 0,
+      "positive_inner_pair": 0
+    },
+    {
+      "order": 29,
+      "offsets": [
+        132,
+        262
+      ],
+      "positive_defects": 15,
+      "positive_inner_pair": 1
+    },
+    {
+      "order": 30,
+      "offsets": [
+        132,
+        262
+      ],
+      "positive_defects": 3,
+      "positive_inner_pair": 3
+    }
+  ],
+  "inner_witnesses": [
+    {
+      "order": 29,
+      "offset": 257,
+      "parent": 514486,
+      "depth": 318067,
+      "selected_offset": 2,
+      "copied_offset": 255,
+      "defect": 2
+    },
+    {
+      "order": 30,
+      "offset": 257,
+      "parent": 832297,
+      "depth": 514485,
+      "selected_offset": 1,
+      "copied_offset": 256,
+      "defect": 3
+    },
+    {
+      "order": 30,
+      "offset": 258,
+      "parent": 832298,
+      "depth": 514483,
+      "selected_offset": 2,
+      "copied_offset": 256,
+      "defect": 3
+    },
+    {
+      "order": 30,
+      "offset": 261,
+      "parent": 832301,
+      "depth": 514489,
+      "selected_offset": 3,
+      "copied_offset": 258,
+      "defect": 3
+    }
+  ],
+  "abstract": {
+    "profiles": 9288,
+    "captured_reached_cycles": 8394,
+    "terminal_clock_phases": 24772
+  },
+  "scope": "Finite corroboration of the written doubled-band theorem. The unconditional infinite domain uses already proved saturated barriers."
+}
