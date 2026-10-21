@@ -1,0 +1,451 @@
+{
+  "status": "PASS",
+  "binary_certificate": {
+    "states": 18,
+    "transitions": 72,
+    "first_two_identically_zero_orders": [
+      9,
+      10
+    ],
+    "rows": [
+      {
+        "parity": 0,
+        "output_orders": [],
+        "carried_orders": [],
+        "successors": [
+          1,
+          2,
+          3,
+          3
+        ]
+      },
+      {
+        "parity": 1,
+        "output_orders": [],
+        "carried_orders": [],
+        "successors": [
+          0,
+          4,
+          5,
+          5
+        ]
+      },
+      {
+        "parity": 1,
+        "output_orders": [
+          2
+        ],
+        "carried_orders": [
+          2,
+          4
+        ],
+        "successors": [
+          0,
+          6,
+          6,
+          6
+        ]
+      },
+      {
+        "parity": 1,
+        "output_orders": [
+          3,
+          5
+        ],
+        "carried_orders": [
+          3,
+          5,
+          7
+        ],
+        "successors": [
+          0,
+          4,
+          7,
+          7
+        ]
+      },
+      {
+        "parity": 0,
+        "output_orders": [],
+        "carried_orders": [
+          2
+        ],
+        "successors": [
+          1,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "parity": 0,
+        "output_orders": [],
+        "carried_orders": [
+          3
+        ],
+        "successors": [
+          1,
+          8,
+          3,
+          3
+        ]
+      },
+      {
+        "parity": 0,
+        "output_orders": [
+          2,
+          4
+        ],
+        "carried_orders": [
+          2,
+          4,
+          6
+        ],
+        "successors": [
+          1,
+          9,
+          10,
+          10
+        ]
+      },
+      {
+        "parity": 0,
+        "output_orders": [
+          3,
+          5,
+          7
+        ],
+        "carried_orders": [
+          3,
+          5,
+          7,
+          9
+        ],
+        "successors": [
+          1,
+          11,
+          12,
+          12
+        ]
+      },
+      {
+        "parity": 1,
+        "output_orders": [
+          2,
+          3,
+          5
+        ],
+        "carried_orders": [
+          2,
+          3,
+          5,
+          7
+        ],
+        "successors": [
+          0,
+          13,
+          13,
+          13
+        ]
+      },
+      {
+        "parity": 1,
+        "output_orders": [],
+        "carried_orders": [
+          2
+        ],
+        "successors": [
+          0,
+          4,
+          14,
+          14
+        ]
+      },
+      {
+        "parity": 1,
+        "output_orders": [
+          3,
+          4,
+          6,
+          8
+        ],
+        "carried_orders": [
+          2,
+          3,
+          4,
+          6,
+          8,
+          10
+        ],
+        "successors": [
+          0,
+          4,
+          15,
+          15
+        ]
+      },
+      {
+        "parity": 1,
+        "output_orders": [
+          2
+        ],
+        "carried_orders": [
+          2,
+          3,
+          4
+        ],
+        "successors": [
+          0,
+          16,
+          16,
+          16
+        ]
+      },
+      {
+        "parity": 1,
+        "output_orders": [],
+        "carried_orders": [
+          3
+        ],
+        "successors": [
+          0,
+          4,
+          5,
+          5
+        ]
+      },
+      {
+        "parity": 0,
+        "output_orders": [
+          2,
+          3,
+          5,
+          7
+        ],
+        "carried_orders": [
+          2,
+          3,
+          5,
+          7,
+          9
+        ],
+        "successors": [
+          1,
+          9,
+          17,
+          17
+        ]
+      },
+      {
+        "parity": 0,
+        "output_orders": [],
+        "carried_orders": [
+          2,
+          3
+        ],
+        "successors": [
+          1,
+          8,
+          8,
+          8
+        ]
+      },
+      {
+        "parity": 0,
+        "output_orders": [
+          3
+        ],
+        "carried_orders": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "successors": [
+          1,
+          11,
+          11,
+          11
+        ]
+      },
+      {
+        "parity": 0,
+        "output_orders": [
+          2,
+          4
+        ],
+        "carried_orders": [
+          2,
+          3,
+          4,
+          6
+        ],
+        "successors": [
+          1,
+          9,
+          10,
+          10
+        ]
+      },
+      {
+        "parity": 1,
+        "output_orders": [],
+        "carried_orders": [
+          2,
+          3
+        ],
+        "successors": [
+          0,
+          4,
+          14,
+          14
+        ]
+      }
+    ]
+  },
+  "canonical": {
+    "limit": 832302,
+    "literal_prefix": 4096,
+    "literal_updates": 5467850,
+    "last_zero_feedback_identities": 2610,
+    "propagated_binary_values": 4587,
+    "positive_identity_cases": [
+      {
+        "initial_order": 18,
+        "order": 20,
+        "offset": 17,
+        "source_last_zero": 17,
+        "defect": 1
+      }
+    ],
+    "rows": [
+      {
+        "initial_order": 11,
+        "saturated_width": 4,
+        "binary_endpoint": 8,
+        "resulting_exact_width": 4,
+        "guaranteed_extinction_order": 21
+      },
+      {
+        "initial_order": 12,
+        "saturated_width": 4,
+        "binary_endpoint": 8,
+        "resulting_exact_width": 4,
+        "guaranteed_extinction_order": 21
+      },
+      {
+        "initial_order": 13,
+        "saturated_width": 4,
+        "binary_endpoint": 8,
+        "resulting_exact_width": 4,
+        "guaranteed_extinction_order": 24
+      },
+      {
+        "initial_order": 14,
+        "saturated_width": 4,
+        "binary_endpoint": 8,
+        "resulting_exact_width": 4,
+        "guaranteed_extinction_order": 24
+      },
+      {
+        "initial_order": 15,
+        "saturated_width": 9,
+        "binary_endpoint": 18,
+        "resulting_exact_width": 11,
+        "guaranteed_extinction_order": 24
+      },
+      {
+        "initial_order": 16,
+        "saturated_width": 9,
+        "binary_endpoint": 18,
+        "resulting_exact_width": 11,
+        "guaranteed_extinction_order": 27
+      },
+      {
+        "initial_order": 17,
+        "saturated_width": 12,
+        "binary_endpoint": 24,
+        "resulting_exact_width": 14,
+        "guaranteed_extinction_order": 27
+      },
+      {
+        "initial_order": 18,
+        "saturated_width": 16,
+        "binary_endpoint": 32,
+        "resulting_exact_width": 19,
+        "guaranteed_extinction_order": 27
+      },
+      {
+        "initial_order": 19,
+        "saturated_width": 16,
+        "binary_endpoint": 32,
+        "resulting_exact_width": 19,
+        "guaranteed_extinction_order": 30
+      },
+      {
+        "initial_order": 20,
+        "saturated_width": 16,
+        "binary_endpoint": 32,
+        "resulting_exact_width": 19,
+        "guaranteed_extinction_order": 30
+      },
+      {
+        "initial_order": 21,
+        "saturated_width": 32,
+        "binary_endpoint": 40,
+        "resulting_exact_width": 24,
+        "guaranteed_extinction_order": 30
+      },
+      {
+        "initial_order": 22,
+        "saturated_width": 32,
+        "binary_endpoint": 40,
+        "resulting_exact_width": 24,
+        "guaranteed_extinction_order": 33
+      },
+      {
+        "initial_order": 23,
+        "saturated_width": 32,
+        "binary_endpoint": 40,
+        "resulting_exact_width": 24,
+        "guaranteed_extinction_order": 33
+      },
+      {
+        "initial_order": 24,
+        "saturated_width": 39,
+        "binary_endpoint": 41,
+        "resulting_exact_width": 25,
+        "guaranteed_extinction_order": 33
+      },
+      {
+        "initial_order": 25,
+        "saturated_width": 39,
+        "binary_endpoint": 41,
+        "resulting_exact_width": 25,
+        "guaranteed_extinction_order": 36
+      },
+      {
+        "initial_order": 26,
+        "saturated_width": 112,
+        "binary_endpoint": 148,
+        "resulting_exact_width": 91,
+        "guaranteed_extinction_order": 36
+      },
+      {
+        "initial_order": 27,
+        "saturated_width": 131,
+        "binary_endpoint": 167,
+        "resulting_exact_width": 103,
+        "guaranteed_extinction_order": 36
+      },
+      {
+        "initial_order": 28,
+        "saturated_width": 131,
+        "binary_endpoint": 167,
+        "resulting_exact_width": 103,
+        "guaranteed_extinction_order": 39
+      }
+    ],
+    "scope": "Independent finite corroboration; extinction orders above 30 are not checked by this prefix. The infinite conclusion uses the written actual-entry proof and exhaustive state closure."
+  }
+}

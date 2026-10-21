@@ -200,6 +200,22 @@ and a finite abstract profile check corroborate the
 [infinite theorem](cloitre-conway/exact-collars.md#canonical-copying-in-a-doubled-saturated-band).
 This optional check is separate from the eight default replays.
 
+For simultaneous extinction of binary cap defects:
+
+```sh
+python3 cloitre-conway/verification/binary_erasure_check.py
+```
+
+Compare its JSON with
+[binary-erasure.json](cloitre-conway/verification/binary-erasure.json).
+The exhaustive 18-state certificate proves an arbitrary-length binary
+feedback identity; the [written proof](cloitre-conway/exact-collars.md#simultaneous-extinction-of-binary-cap-defects)
+derives that identity from the actual orbit and prescribed depth.
+Independent full-orbit and Brent values through 832302, with a literal prefix
+through 4096, corroborate its canonical application. These finite sequence
+checks alone do not prove extinction. This optional check is separate from
+the eight default replays.
+
 For the global selected-tree golden-excess budget:
 
 ```sh

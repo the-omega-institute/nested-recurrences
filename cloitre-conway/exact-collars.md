@@ -25,6 +25,7 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 - [A saturated lower barrier and the exclusion of nearby proper cycles](#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)
 - [Every fixed positive offset eventually becomes linear](#every-fixed-positive-offset-eventually-becomes-linear)
 - [Canonical copying in a doubled saturated band](#canonical-copying-in-a-doubled-saturated-band)
+- [Simultaneous extinction of binary cap defects](#simultaneous-extinction-of-binary-cap-defects)
 - [Five legal bit patterns and eventual vanishing of a local interaction](#five-legal-bit-patterns-and-eventual-vanishing-of-a-local-interaction)
 - [A canonical cap4 window reaches the next Fibonacci digit](#a-canonical-cap4-window-reaches-the-next-fibonacci-digit)
 - [A persistent interaction on canonical index words](#a-persistent-interaction-on-canonical-index-words)
@@ -2334,6 +2335,184 @@ The [evidence](verification/doubled-band.json) corroborates the proof;
 the infinite domain uses the already proved barriers. This rule does not
 identify the reached pair in advance, prove faster collar growth, or
 establish convergence.
+
+### Simultaneous extinction of binary cap defects
+
+The doubled-band theorem preserves positive amplitudes. For unit amplitudes,
+the actual orbit gives more information: its entry and stopping parity force
+an entire inner band to become exact within a bounded number of orders.
+Continue to use the native cap defect E_j(u)=u-P_j(u), not golden excess,
+and put alpha=(sqrt(5)-1)/2.
+
+**Binary extinction theorem.** Let K>=11 and
+
+$$
+1\le W\le B\le\min(2W,F_{K-1}).
+$$
+
+Suppose both complete natural profiles q=K,K+1 satisfy
+P_q(u)>=min(u,W) for 0<=u<=F_(q-1), and both have
+E_q(u) in {0,1} for every 0<=u<=B. Put
+
+$$
+L=\lfloor\alpha B\rfloor,\qquad J=3\lceil K/3\rceil+9.
+$$
+
+Then E_j(t)=0 for all j>=J and 0<=t<=L. The delay J-K is
+9,11,10 for K modulo 3 equal to 0,1,2, respectively. In particular,
+when B=2W the exact width reaches floor(2alpha W) after at most eleven
+orders, independently of W.
+
+**Proof: amplitude propagation.** The common saturated barrier propagates
+from two rows, as proved above. For j>=K+2,
+B<=F_(K-1)<=F_(j-3), so the doubled-band theorem applies to W<t<=B.
+Every positive defect copies one earlier amplitude unchanged, while all
+offsets through W are exact. Consequently
+
+$$
+E_j(t)\in\{0,1\}\qquad(j\ge K,\ 0\le t\le B). \tag{Q.1}
+$$
+
+This induction precedes any use of the current-row defect below.
+
+**Actual entry and clock.** Fix j>=K+2 and 1<=t<=L, and write
+A=F_(j-1), D=F_(j-2), H=F_(j-3), Q=F_(j-4), n=F_j+t.
+For e=E_j(t-1), the prescribed depth and first iterate are exactly
+
+$$
+h=A+t-1-e,\qquad x_1=T_n(n-1)=D+1+e.
+$$
+
+Here e is 0 or 1 by (Q.1). Since j>=13, x_1 lies below A in
+I=[D+1,F_j-1]. The golden lower bound and nondecreasing upper cap give
+H+1<=C(x)<=A on I, hence
+
+$$
+T_n(I)\subseteq[D+t,A+Q+t-1]\subseteq I.
+$$
+
+The last inclusion uses Q+t<=D, equivalent to t<=H. Thus every residual
+orbit point uses the two earlier natural blocks.
+
+Consider entry into the core [A,A+t]. Below the core, C(x)<=D, so
+T_n(x)>=A+t; entry from below is only at its high endpoint. Above the
+core write x=A+v. The invariant interval ensures v<=D-1, within the
+complete source profile. For v>=B+1 the golden bound gives
+
+$$
+P_{j-1}(v)\ge
+\left\lfloor\alpha(v+1)+\delta\right\rfloor,
+\qquad \delta=(-1)^{j-2}\alpha^{j-1}.
+$$
+
+Since j>=13,
+alpha(v+1)+delta>=alpha B+2alpha-alpha^(j-1)>alpha B+1.
+Therefore P_(j-1)(v)>=L+1>t, excluding core entry from this region.
+For t<v<=B, (Q.1) gives P_(j-1)(v)>=v-1>=t. Entry is possible
+only from v=t+1 with defect 1, landing at offset 0.
+
+The rank-zero point n-1 lies above the core. Until entry, exterior sides
+alternate. Entry at offset 0 has odd global rank; entry at offset t has
+even global rank. The all-cycle capture and prescribed-depth theorems
+ensure that the actual terminal rank has reached a captured cycle.
+These ranks retain the original seed and full depth.
+
+**Last-zero feedback.** Let
+
+$$
+\sigma_{j-1}(t)=\max\{v\le t:E_{j-1}(v)=0\}.
+$$
+
+The zero at offset 0 makes this well defined. After either entry, the
+even-rank high offsets start at t. If such an offset v has source
+defect 1, then v>W and its next two offsets are
+
+$$
+v\longmapsto t-v+1\longmapsto v-1.
+$$
+
+The intermediate offset is between 1 and t-W<=B-W<=W, so the
+source profile there is exact. High offsets decrease one at a time until
+sigma=sigma_(j-1)(t). The reached pair is {sigma,t-sigma}, with
+sigma>=min(t,W) and 0<=t-sigma<=W.
+
+At even depth, native child-defect additivity gives
+E_(j-1)(sigma)+E_(j-2)(t-sigma)=0. At odd depth it gives
+E_(j-1)(t-sigma)+E_(j-2)(sigma)=E_(j-2)(sigma).
+Using the original depth h above proves the exact identity
+
+$$
+\boxed{
+E_j(t)=E_{j-2}\bigl(\sigma_{j-1}(t)\bigr)
+\mathbf1_{\{F_{j-1}+t-E_j(t-1)\ {\rm even}\}}.
+} \tag{Q.2}
+$$
+
+All child offsets are at most t<=B<=F_(j-3), so both lower native
+profiles are evaluated inside their domains.
+
+**Finite closure for arbitrary spatial length.** Align the first order to
+K'=3ceil(K/3), and write e_i(t)=E_(K'+i)(t). Treat e_0,e_1 as arbitrary
+binary input rows, zero at t=0. For i>=2 let
+z_i(t)=e_(i-2)(sigma_(K'+i-1)(t)). Equation (Q.2) becomes
+
+$$
+\begin{aligned}
+z_i(t)&=\begin{cases}
+e_{i-2}(t),&e_{i-1}(t)=0,\\
+z_i(t-1),&e_{i-1}(t)=1,
+\end{cases}\\
+e_i(t)&=z_i(t)\mathbf1_{\{f_i+t-e_i(t-1)\ {\rm even}\}},
+\qquad
+f_i=\begin{cases}0,&i\equiv1\pmod3,\\1,&\text{otherwise}.
+\end{cases}
+\end{aligned} \tag{Q.3}
+$$
+
+All e_i(0),z_i(0) vanish. At a fixed t, a state consists of t modulo 2
+and the two binary vectors (e_i(t)) and (z_i(t)), 2<=i<=10.
+Increasing i computes each new column using only that state and the next
+input pair. There are exactly 18 reachable states from the all-zero start,
+under all four possible input pairs. The
+[certificate](verification/binary-erasure.json) lists every state's parity,
+output and carried supports, and four successors. The
+[checker](verification/binary_erasure_check.py) exhausts all 72 transitions,
+checks the stated successor table, and verifies that no state has a nonzero
+output at order 9 or 10. Carried values at those orders are tracked
+separately and need not vanish.
+
+Induction on t now proves e_9(t)=e_10(t)=0 for every spatial position:
+the initial state is listed and each possible next input remains listed.
+This is a finite exhaustive identity for arbitrary row length. It is not
+a test up to a chosen spatial cutoff. Thus rows J=K'+9 and J+1 vanish
+through L. Equation (Q.2) propagates those two zero rows forever.
+The cases with L=0 follow from the exact Fibonacci values. QED.
+
+**Necessary larger-amplitude witness.** Retain K>=11 and a common saturated
+width W in the two complete initial profiles. Suppose j>=K+11, E_j(t)>0,
+and
+
+$$
+\lceil t/\alpha\rceil\le\min(2W,F_{K-1}).
+$$
+
+Then, for some q in {K,K+1} and some W<v<=ceil(t/alpha),
+E_q(v)>=2. Indeed the persistent exact collar implies t>W. If no such
+witness existed, both initial windows through B=ceil(t/alpha) would be
+binary. Since floor(alpha B)>=t, the theorem would force E_j(t)=0,
+a contradiction.
+
+The checker also corroborates (Q.1) and (Q.2) on independently agreeing
+full-orbit and Brent prefixes through 832302, with a literal prefix through
+4096. These checks include a positive feedback case at order 20, offset 17,
+from initial order 18 and saturated width 16. The sequence checks are
+corroboration; the infinite assertion uses the actual-entry proof and
+finite closure above.
+
+This does not yet improve the unconditional collar-growth rate. The
+amplitude bound propagates through the original band [0,B]; another
+multiplicative enlargement would require a larger surrounding binary
+window. Such control has not been proved, and full convergence remains open.
 
 ### Five legal bit patterns and eventual vanishing of a local interaction
 
