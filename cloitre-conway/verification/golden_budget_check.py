@@ -7,6 +7,8 @@ from conway_explore import brent_generate, generate, literal_generate
 
 
 def main():
+    if not __debug__:
+        raise SystemExit('Run without -O; assertions check the finite premises.')
     limit = 131072
     values, preperiods, periods, selected = generate(limit)
     assert values == brent_generate(limit)
