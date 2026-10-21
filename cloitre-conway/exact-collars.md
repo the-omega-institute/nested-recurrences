@@ -2664,9 +2664,10 @@ arguments below use an exhaustive finite automaton identity for words of
 arbitrary length. No spatial cutoff or canonical-prefix fit enters that
 identity.
 
-**Actual gated routing.** Doubled-band copying propagates the ternary
-amplitude bound throughout the original [0,B], while saturation preserves
-exactness through W. Indeed B<=F_(j-3) for j>=K+2. Fix such j and
+**Actual gated routing.** Two-row saturated-barrier propagation preserves
+complete saturated profiles and exactness through W at every later order.
+Doubled-band copying then propagates the ternary amplitude bound throughout
+the original [0,B] by induction, since B<=F_(j-3) for j>=K+2. Fix such j and
 W<t<=L; smaller offsets are already exact. The true depth and first
 iterate are
 
@@ -2679,6 +2680,13 @@ The latter lies between F_(j-2)+1 and F_(j-2)+3. Since j>=13, it is
 strictly below F_(j-1) in the earlier-row invariant interval used in the
 binary proof. That same interval calculation and golden localization
 exclude core entry from source offsets greater than B.
+
+The [all-cycle capture theorem](fibonacci-collars.md#1-all-cycles-near-a-fibonacci-index)
+says that every orbit enters [F_(j-1),F_(j-1)+t], and every cycle lies
+there. Together with the prescribed-depth theorem, it places the actual
+terminal state on a cycle inside this core. The preceding localization
+restricts the possible entrance offsets; core capture itself uses this
+established theorem and excludes every exterior cycle.
 
 An upper exterior point of source offset v>t enters the core at
 d=t-v+E_(j-1)(v). Under the ternary bound, d is 0 or 1 when nonnegative;
@@ -2815,7 +2823,8 @@ A_{12}(t)=A_{10}(t)
 \mathbf1_{\{t-A_{12}(t-1)\text{ even}\}}. \tag{R.4}
 $$
 
-A positive value at odd t would force A_12(t-1) odd and positive.
+If t=W+1 is odd, A_12(W)=0 and (R.4) already forces A_12(t)=0.
+At a later odd site, a positive value would force A_12(t-1) odd and positive.
 At that preceding positive site (R.4) gives A_10(t-1)=A_12(t-1) odd;
 at t it gives A_10(t)>0. But row 10 has phase f_10=1, so its actual
 necessary clock gate requires 1+t-A_10(t-1) even, forcing A_10(t-1)
