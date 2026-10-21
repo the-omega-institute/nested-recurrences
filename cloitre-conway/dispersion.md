@@ -2590,6 +2590,9 @@ g_A=(T_n^A)^{h_A}(n-1),\qquad
 $$
 
 The exponent means exactly h_A applications, including transient steps.
+For fixed n>=3 the domain is {1,...,n-1}. Since 1<=A(x)<=x, the
+map T_n^A sends that domain into itself, and both readout arguments
+are in the same domain.
 Let U be the existing golden upper cap and put
 
 $$
@@ -2625,6 +2628,9 @@ The theorem uses the literal finite premise n=3,...,511, verified by the
 residual interval [-2,2] on the checked prefix is not asserted universally.
 
 **Bounds and sparse odd values.** U is nondecreasing and 1-Lipschitz.
+On a block S=F_j, A=F_(j-1), n=S+t, the golden anchor identity and
+the zero-or-one increments of G give G(S+t)<=A+t. Monotonicity also
+gives G(n)<=G(F_(j+1))=S, so G(n)<=min(A+t,S)=U(n).
 The same monotonicity holds for V, but V can jump by two. We use only
 
 $$
@@ -2669,6 +2675,11 @@ terminal is cyclic. As V is nondecreasing, T_n^V is antitone and has
 only periods one and two. Its square is nondecreasing. Iteration of
 that square from n-1 decreases to its largest fixed point; hence an
 even depth selects the largest periodic point.
+More explicitly, if z is fixed by f=(T_n^V)^2 and h_V is even, then
+z=f^(h_V/2)(z)<=f^(h_V/2)(n-1)=g_V. Once the orbit is cyclic,
+an odd depth instead selects the smallest periodic point: the antitone
+map sends the greatest periodic point to the smallest one. The same
+statements and depth bound apply to U, since G<=U<=3n/4.
 
 At an anchor A=F_k>=5, write B=F_(k-1). The following inequalities hold:
 
@@ -2686,10 +2697,15 @@ alpha*(A-d+1) and B-d+1 is alpha^2*(d-1)+epsilon_k>0 for d>=2.
 The case d=1 follows from floor(alpha*A)>=B-1. The bounds above A
 follow from U's anchor value and Lipschitz property.
 
-Let I be the closed interval between A and n-B. Distance to I does not
-increase under T_n^V. Below I the next distance decreases by at least
-one except possibly at A-1; above I the image is on the lower side or
-inside I, and the following exterior step decreases the distance. Thus
+Let ell=min(A,n-B), r=max(A,n-B), and I=[ell,r]. The applications use
+anchors A<=n. The anchor inequalities make I intersected with the
+operator domain invariant. Below I, at x<=A-2, the image is at least
+ell and at most ell+r-x-1; it is inside I or above it at distance at
+most ell-x-1. The exceptional point A-1, if below I, has distance
+one and an image at distance at most one. Above I, the image is at
+most r and at least ell+r-x; it is inside I or below it without
+increasing distance. The next exterior step decreases any remaining
+distance greater than one. Thus
 distance greater than one decreases within two steps. Every periodic
 point is within distance one of I.
 
@@ -2702,7 +2718,8 @@ $$
 
 Capture at A and at S puts every periodic point in [A-1,S+1] and
 at most A+t+1. For U the capture has no margin, because U(A-1)=B.
-On its captured interval [A,S], the offset map is r -> t-min(r,D).
+On the intersection of its captured intervals, periodic offsets x=A+r
+obey r -> t-min(r,D).
 Its largest periodic point is
 
 $$
@@ -2737,6 +2754,8 @@ V(R)-V(R-8)<=9, and all satisfy y_x>=n/4>=128. This contradicts
 the sparse-odd bound. Some x>=R-8 therefore has f(x)>=x. Iterating
 the nondecreasing f from that x yields a fixed point at least x.
 The largest periodic point g_V is consequently at least R-8.
+The test integers are legal: R is a U-periodic point, so R>=n/4
+and R-8>=120, while R<n.
 
 For the upper bound, if t<=D capture gives g_V<=R+1. If t>=D and
 R<g_V<=S, then U(g_V)=A and
@@ -2809,6 +2828,19 @@ is 2B+E=S-F_(j-5). Both prescribed depths reach their cycles by the
 orbit count above, since n_j>=843. No stopping phase has been assigned
 by hand. Uniformly close scalar profiles therefore need not control
 this nested operator.
+
+At n=843, for example, the two input values agree at the source, while
+their prescribed clocks and readouts differ:
+
+| Input sequence | Value at 843 | Prescribed depth | Selected split | Readout |
+|---|---:|---:|---:|---:|
+| U | 610 | 609 | 466 | 555 |
+| V | 610 | 608 | 521 | 608 |
+
+The reached cycles are respectively (466,521) and (467,521). The
+output difference is 53 although the sequences differ by at most one
+at every argument. The infinite formula above supplies the conclusion;
+this example makes the clock effect directly checkable.
 
 **Corollary (any finite actual prefix).** Fix N and put W(n)=C(n) for
 n<=N and W(n)=V(n) afterwards. Then W retains the two limiting ratios,
