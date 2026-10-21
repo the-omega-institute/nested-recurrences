@@ -54,19 +54,29 @@ def certificate():
                 first_two_identically_zero_orders=[9, 10], rows=rows)
 
 
-def even_profiles(width, endpoint, parity):
-    positions = [offset for offset in range(width + 2, endpoint + 1)
+def even_profiles(width, endpoint, parity, sparse=False):
+    positions = [offset for offset in range(width + 1, endpoint + 1)
                  if offset % 2 == parity]
-    for values in itertools.product((0, 2), repeat=len(positions)):
+    if sparse:
+        yield [0] * (endpoint + 1)
+        for offset in positions:
+            for value in range(2, offset - width + 1, 2):
+                row = [0] * (endpoint + 1)
+                row[offset] = value
+                yield row
+        return
+    for values in itertools.product(*(range(0, offset - width + 1, 2)
+                                      for offset in positions)):
         row = [0] * (endpoint + 1)
         for offset, value in zip(positions, values):
             row[offset] = value
         yield row
 
 
-def pure_two_check():
-    pairs = zero_class = lower_zero = positive = 0
-    for width in range(2, 13):
+def even_defect_check():
+    pairs = zero_class = lower_zero = positive = upper_entries = lower_entries = 0
+    largest = 0
+    for width in range(2, 12):
         endpoint = 2 * width
         inner = (math.isqrt(5 * endpoint * endpoint) - endpoint) // 2
         for phase in range(3):
@@ -74,35 +84,47 @@ def pure_two_check():
             source_parity = int((phase - 2) % 3 != 0)
             lower_parity = int((phase - 3) % 3 != 0)
             for source in even_profiles(width, endpoint, source_parity):
-                for lower in even_profiles(width, endpoint, lower_parity):
+                for lower in even_profiles(width, endpoint, lower_parity, sparse=True):
                     pairs += 1
-                    routed = []
-                    for offset in range(endpoint + 1):
-                        contact = offset
-                        while source[contact]:
-                            assert source[contact] == 2 and contact >= width + 2
-                            contact -= 2
-                        assert contact % 2 == offset % 2
-                        routed.append(lower[contact])
-                    for offset in range(1, inner + 1):
+                    largest = max(largest, max(source), max(lower))
+                    for offset in range(width + 1, inner + 1):
+                        starts = {offset}
+                        lower_entries += 1
+                        for upper in range(offset + 1, endpoint + 1):
+                            start = upper - source[upper]
+                            if start <= offset:
+                                assert source[upper] > 0 and start >= width
+                                assert start % 2 == upper % 2
+                                starts.add(start)
+                                upper_entries += 1
                         outputs = {0}
                         if offset % 2 == parent_parity:
-                            outputs = {routed[offset]}
-                            if source[offset + 1] == 2:
-                                outputs.add(routed[offset - 1])
+                            outputs = set()
+                            for start in starts:
+                                contact = start
+                                while source[contact]:
+                                    contact -= source[contact]
+                                    assert contact >= width
+                                assert contact % 2 == start % 2
+                                outputs.add(lower[contact])
                         if phase == 0:
                             assert outputs == {0}
                             zero_class += 1
                         if phase == 2 and not any(lower[:inner + 1]):
                             assert outputs == {0}
                             lower_zero += 1
-                        positive += 2 in outputs
-    return dict(source_lower_pairs=pairs, impossible_order_zero_mod3_outputs=zero_class,
+                        positive += any(outputs)
+    assert positive > 0 and largest > 2
+    return dict(source_profile_lower_probe_pairs=pairs,
+                all_possible_upper_entries=upper_entries, lower_entries=lower_entries,
+                impossible_order_zero_mod3_outputs=zero_class,
                 lower_zero_order_two_mod3_outputs=lower_zero,
                 positive_candidates_other_phases=positive,
-                scope='Finite corroboration of the written parity proof, using abstract '
-                      'saturated profiles with the derived support restrictions. '
-                      'Not a canonical sequence construction or an infinite premise.')
+                largest_defect_in_profiles=largest,
+                scope='Finite corroboration of the written even-defect proof, using all '
+                      'allowed small source profiles and single-position lower probes '
+                      'with the derived support restrictions. Not a canonical sequence '
+                      'construction or an infinite premise.')
 
 
 def canonical_check():
@@ -173,7 +195,7 @@ def main():
     if not __debug__:
         raise SystemExit('Run without -O; assertions perform the mathematical checks.')
     print(json.dumps(dict(status='PASS', binary_certificate=certificate(),
-                          pure_amplitude_two=pure_two_check(),
+                          even_defects=even_defect_check(),
                           canonical=canonical_check()), indent=2))
 
 

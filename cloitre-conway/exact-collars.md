@@ -26,7 +26,7 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 - [Every fixed positive offset eventually becomes linear](#every-fixed-positive-offset-eventually-becomes-linear)
 - [Canonical copying in a doubled saturated band](#canonical-copying-in-a-doubled-saturated-band)
 - [Simultaneous extinction of binary cap defects](#simultaneous-extinction-of-binary-cap-defects)
-- [Pure amplitude-two extinction by parity](#pure-amplitude-two-extinction-by-parity)
+- [Even cap defects vanish by parity](#even-cap-defects-vanish-by-parity)
 - [Simultaneous extinction of ternary cap defects](#simultaneous-extinction-of-ternary-cap-defects)
 - [Five legal bit patterns and eventual vanishing of a local interaction](#five-legal-bit-patterns-and-eventual-vanishing-of-a-local-interaction)
 - [A canonical cap4 window reaches the next Fibonacci digit](#a-canonical-cap4-window-reaches-the-next-fibonacci-digit)
@@ -2516,15 +2516,17 @@ amplitude bound propagates through the original band [0,B]; another
 multiplicative enlargement would require a larger surrounding binary
 window. Such control has not been proved, and full convergence remains open.
 
-#### Pure amplitude-two extinction by parity
+<a id="pure-amplitude-two-extinction-by-parity"></a>
 
-The other homogeneous positive alphabet, {0,2}, also disappears uniformly.
-Here parity gives a direct proof without a finite-state closure.
+#### Even cap defects vanish by parity
+
+Even defects disappear uniformly without an amplitude bound. The pure
+{0,2} case is a special case of this parity argument.
 
 **Theorem.** Let K>=11 and 2<=W<=B<=min(2W,F_(K-1)). Suppose both
 complete natural profiles q=K,K+1 satisfy P_q(u)>=min(u,W) on
 0<=u<=F_(q-1), and
-E_q(u) belongs to {0,2} throughout 0<=u<=B. Set
+E_q(u) is even throughout 0<=u<=B. Set
 
 $$
 L=\lfloor\alpha B\rfloor,\qquad
@@ -2534,7 +2536,7 @@ $$
 Then E_j(t)=0 for all j>=J and 0<=t<=L. The delays J-K for
 K modulo 3 equal to 0,1,2 are 8,7,6, respectively.
 
-**Proof.** The doubled-band argument propagates E_q(u) in {0,2} on the
+**Proof.** The doubled-band argument propagates even E_q(u) on the
 original band [0,B] for every q>=K. The saturated barrier already makes
 every offset 0<=u<=W exact. If q>=K+2 and E_q(u)>0, then u>W and
 the true depth is F_(q-1)+u-1-E_q(u-1). The preceding defect is even, and
@@ -2547,62 +2549,69 @@ u\equiv F_{q-1}\pmod2
 $$
 
 Fix j>=K+2 and W<t<=L; there is nothing to prove at t<=W.
-Write A=F_(j-1), D=F_(j-2), n=F_j+t. The invariant interval from the
-binary proof remains valid: the first iterate is now D+1 or D+3, still
-strictly below A since j>=13. The golden bound again excludes core entry
-from upper offsets greater than B. For an upper offset t<v<=B, entry
-into [A,A+t] has offset
+Write A=F_(j-1), D=F_(j-2), n=F_j+t. Current-row saturation bounds
+E_j(t-1)<=t-1-W, so the true first iterate satisfies
 
 $$
-d=t-v+E_{j-1}(v)\in\{0,1\}.
+D+1\le T_n(n-1)=D+1+E_j(t-1)
+\le D+t-W\le A-W<A.
 $$
 
-Offset 0 can arise from v=t+2 with source defect 2. Offset 1 requires
-v=t+1 and E_(j-1)(t+1)=2. Lower entry is only at offset t.
-Exterior alternation retains absolute rank: upper entries have odd rank
-and lower entry has even rank. Since source offsets 0 and 1 are exact,
-the even-rank high offsets begin at t or t-1, respectively.
-
-Put e(v)=E_(j-1)(v). At a high offset with e(v)=2, saturation forces
-v>=W+2, and the two-step source action is
+Here B<=F_(j-3) and W>=2 justify the last inequalities. Thus the
+earlier-row invariant interval and golden localization from the binary
+proof remain valid. Entry from upper offsets greater than B is excluded.
+The [all-cycle capture theorem](fibonacci-collars.md#1-all-cycles-near-a-fibonacci-index)
+puts every cycle in [A,A+t] and guarantees that every orbit enters it.
+Together with the prescribed-depth theorem, it places the terminal state
+on a cycle inside this core.
+For an actual upper entry from t<v<=B, put a=P_(j-1)(v). Saturation
+gives W<=a<=t and E_(j-1)(v)>0. Since that defect is even,
 
 $$
-v\longmapsto t-v+2\longmapsto v-2.
+a=v-E_{j-1}(v)\equiv v\pmod2.
 $$
 
-The intermediate offset is at most t-W<W and hence exact. Repeated
-subtraction terminates at a source zero R(a), where a is the high start
-t or t-1. It stays within [W,a] and preserves parity:
+Its low entry offset t-a is at most t-W<W, hence exact; the next high
+offset is a. For x<A, the global cap gives C(x)<=U(x)<=U(A)=D,
+using monotonicity of U rather than C. Lower entry is therefore only at
+high offset t. Exterior alternation
+retains absolute rank: upper entry is low at an odd rank and lower entry
+is high at an even rank.
+
+Put e(v)=E_(j-1)(v). At a high offset with e(v)>0, saturation gives
+v-e(v)>=W, and the two-step source action is
+
+$$
+v\longmapsto t-v+e(v)\longmapsto v-e(v).
+$$
+
+The intermediate offset is at most t-W<W and hence exact. Each high
+return strictly decreases the offset and subtracts an even number.
+It terminates at a source zero R(a), where the high start a is t for
+lower entry and P_(j-1)(v) for upper entry. It stays in [W,a] and preserves
+parity:
 R(a)=a modulo 2. The eventual pair is {R(a),t-R(a)}, with the high
 endpoint at even ranks and the low endpoint at odd ranks.
 The prescribed depth is already on that pair by the established depth
 theorem. At even depth its output defect is zero; at odd depth native
-additivity copies E_(j-2)(R(a)). Consequently, writing
-z(a)=E_(j-2)(R(a)), every positive actual output is restricted to
+additivity copies E_(j-2)(R(a)). All routed offsets are at most
+t<=L<B<=F_(j-3), inside both earlier native domains.
 
-$$
-E_j(t)\in\{z(t)\}\ \cup\
-\bigl(\{z(t-1)\}\ \text{if }E_{j-1}(t+1)=2\bigr). \tag{Q.5}
-$$
-
-This is a necessary restriction on the reached basin, with the original
-clock; it does not assert that either branch can be freely chosen.
-All routed offsets are at most t<=L<B<=F_(j-3), inside both lower
-native domains, and the alternate gate t+1 is at most B.
-
-Now let j>=K+4, so (Q.4) applies to both earlier rows. A positive output
-requires t=F_(j-1) modulo 2. A positive direct copy additionally requires
-t=F_(j-3) modulo 2, because R preserves parity. A positive alternate
-copy requires both t-1=F_(j-3) and t+1=F_(j-2) modulo 2.
+Now let j>=K+4, so (Q.4) applies to both earlier rows. Positivity requires
+t=F_(j-1) and R(a)=F_(j-3) modulo 2. In the lower-entry case R(a)=t
+modulo 2. In the upper-entry case the source defect at v is positive,
+so (Q.4) gives R(a)=a=v=F_(j-2) modulo 2. These two entrance cases
+cover every actual reached pair, including large even jumps.
 
 If j=0 modulo 3, the Fibonacci parity triple
 (F_(j-1),F_(j-2),F_(j-3)) is (1,1,0). Output positivity requires odd t;
-the direct copy requires even t, and the alternate gate also requires
-even t. Both are impossible. Every such row vanishes through L.
+lower entry makes R(a) odd, and upper entry also makes it odd. The
+positive lower child would require even R(a). Both cases are impossible,
+so every such row vanishes through L.
 
 If j=2 modulo 3, that triple is (1,0,1). Output positivity requires
-odd t, while a positive alternate copy requires odd t-1, which is
-impossible. Only the direct copy remains. If row j-2 vanishes through L,
+odd t, while upper entry makes R(a) even and its positive lower child
+would require odd R(a). Only lower entry remains. If row j-2 vanishes through L,
 then so does row j, since R(t)<=t<=L.
 
 Row r therefore vanishes through L; row r+2 vanishes by the direct-copy
@@ -2612,10 +2621,17 @@ by doubled-band copying, require a positive defect two rows below at an
 offset no larger than t. This proves the theorem and the stated delays.
 QED.
 
-The [existing checker](verification/binary_erasure_check.py) also exhausts
-10917 small source/lower profile pairs satisfying the saturation and parity
-restrictions, confirming both residue-class exclusions above. This is
-finite corroboration of the written parity proof, not its infinite premise.
+**Necessary odd witness.** Retain K>=11, W>=2 and the two complete initial
+saturation hypotheses, without assuming even defects. If j>=K+8,
+E_j(t)>0 and B_t=ceil(t/alpha)<=min(2W,F_(K-1)), then one
+initial profile has an odd defect at some W<v<=B_t. Otherwise the
+even-defect theorem applied to B_t would force zero at t.
+
+The [existing checker](verification/binary_erasure_check.py) corroborates
+the two residue exclusions with all allowed small even source profiles
+and single-position lower probes, including amplitudes above two. A copied
+value uses one lower lookup, so these probes exercise every possible
+positive copied position. This finite check is not an infinite premise.
 
 **Mixed-amplitude witness.** For K>=11 and W>=2, retain the two complete
 saturated initial profiles. If j>=K+11, E_j(t)>0 and
@@ -2624,16 +2640,15 @@ W<v<=B contain either a defect at least 3, or both a unit defect and
 a defect of amplitude 2. The two smaller witnesses may lie in different
 rows or at different offsets. Indeed, in the absence of a defect at least
 3, omitting amplitude 2 gives binary extinction, while omitting amplitude
-1 gives pure amplitude-two extinction. Both contradict the surviving
+1 gives even-defect extinction. Both contradict the surviving
 defect. This is a statement about actual earlier values, rather than
 independently chosen local phases.
 
-The binary and pure amplitude-two theorems each use one common positive
-amplitude in the two initial windows. Mixed {0,1,2} windows require the
-whole-word argument below:
-unit defects can change the routed parity, while amplitude-two neighbors
-can open the alternate entry. Neither theorem supplies the larger
-surrounding windows needed for repeated collar enlargement.
+The binary theorem bounds amplitude; the even-defect theorem bounds
+parity while allowing large amplitudes. Mixed {0,1,2} windows require
+the whole-word argument below: unit defects change the routed parity,
+while amplitude-two neighbors open the alternate entry. These results
+still need larger surrounding windows for repeated collar enlargement.
 
 ### Simultaneous extinction of ternary cap defects
 
