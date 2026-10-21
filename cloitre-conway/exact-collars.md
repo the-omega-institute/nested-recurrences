@@ -24,6 +24,7 @@ Finite seed premises are identified in each theorem. Global convergence remains 
 - [The prescribed basin and phase in a positive collar](#the-prescribed-basin-and-phase-in-a-positive-collar)
 - [A saturated lower barrier and the exclusion of nearby proper cycles](#a-saturated-lower-barrier-and-the-exclusion-of-nearby-proper-cycles)
 - [Every fixed positive offset eventually becomes linear](#every-fixed-positive-offset-eventually-becomes-linear)
+- [Canonical copying in a doubled saturated band](#canonical-copying-in-a-doubled-saturated-band)
 - [Five legal bit patterns and eventual vanishing of a local interaction](#five-legal-bit-patterns-and-eventual-vanishing-of-a-local-interaction)
 - [A canonical cap4 window reaches the next Fibonacci digit](#a-canonical-cap4-window-reaches-the-next-fibonacci-digit)
 - [A persistent interaction on canonical index words](#a-persistent-interaction-on-canonical-index-words)
