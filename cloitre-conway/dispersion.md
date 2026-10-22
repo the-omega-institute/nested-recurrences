@@ -17,6 +17,7 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 - [A one-sided landing-displacement criterion](#a-one-sided-landing-displacement-criterion)
 - [A finite-window maximum principle](#a-finite-window-maximum-principle)
 - [A smaller tail bound from cycle enclosures](#a-smaller-tail-bound-from-cycle-enclosures)
+- [Concentrated high terminal values force a uniform loss](#concentrated-high-terminal-values-force-a-uniform-loss)
 - [Continuous cycle readouts do not determine the golden profile](#continuous-cycle-readouts-do-not-determine-the-golden-profile)
 - [An exact budget for the outermost cap contacts](#an-exact-budget-for-the-outermost-cap-contacts)
 - [Defect production by the canonical clock](#defect-production-by-the-canonical-clock)
@@ -354,6 +355,136 @@ This improves the original M by approximately 0.00118098 and K by
 approximately 0.00114313. It still leaves a positive gap above alpha;
 neither these finite rows nor the infinite-tail implication prove that
 continued enclosure passes converge to alpha.
+
+### Concentrated high terminal values force a uniform loss
+
+A finite-window maximum need not propagate without loss. When its near-maximum
+values occupy a sufficiently narrow size range, the actual selected recursion
+tree must put a uniform fraction of its terminal mass outside that range.
+
+**Theorem (terminal-superlevel loss).** Fix j>=40 and put L=F_j and
+U=F_(j+2). Suppose C(x)/x<=M for L<=x<U. Let epsilon>0, and suppose
+
+$$
+\lbrace x\in[L,U):C(x)/x>M-\varepsilon\rbrace\subseteq[s,t],
+\qquad L\le s\le t<U,\qquad \frac ts<\frac54.
+$$
+
+Then, for every integer n>=U,
+
+$$
+\frac{C(n)}n\le M-\frac5{27}\varepsilon.
+$$
+
+**Proof.** Expand the actual selected children at every source at least U,
+stopping at sources below U. Native capture puts every terminal source in
+[L,U); the tree is finite because every child is smaller than its parent.
+Terminal sizes sum to n, and their C-values sum to C(n).
+
+Call a terminal good if its ratio exceeds M-epsilon, and bad otherwise.
+The strict cycle-point bounds put the larger/smaller child ratio in (5/4,2)
+at every expanded node. Two good terminals cannot be siblings, since both
+sizes would lie in [s,t]. Every internal subtree containing a good leaf
+has size greater than 3s/2: the leaf has size at least s and its sibling
+has size greater than s/2. Any subtree containing two good leaves has
+size greater than 2t. Indeed, at their lowest common ancestor both
+children contain good leaves, and they cannot both be single good leaves.
+One child is therefore internal and larger than 3s/2; the other has size
+at least s. Their sum exceeds 5s/2>2t.
+
+Partition the tree by splitting a node unless it is a bad terminal or
+an internal node with a good terminal child y. This process never stops
+at an isolated good terminal, because its parent would already have
+stopped. In a block of the second type, the sibling subtree has size
+less than 2y<=2t. It therefore contains at most one further good leaf.
+Every such block contains one or two good leaves and positive bad mass b.
+
+If there is just one good leaf, its sibling is entirely bad, and the
+block size is b+y<3b. Otherwise, let x be the unique good leaf in y's
+sibling subtree. The sibling of x at its own parent is entirely bad
+and has size greater than x/2, so x<2b. At the top split the sibling of
+y has size x+b>3x/2>=3s/2>t>=y. The lower child-ratio bound gives
+y<4(x+b)/5. Thus this block has size
+
+$$
+b+x+y<\frac95(b+x)<\frac{27}{5}b.
+$$
+
+Bad-terminal blocks have bad fraction one. All blocks partition terminal
+occurrences, so their bad masses sum to more than 5n/27. Averaging the
+terminal ratios, using M on good terminals and M-epsilon on bad ones,
+proves the bound. Repeated numerical source sizes are counted as separate
+tree occurrences throughout. QED.
+
+The coefficient 5/27 is sharp for this abstract split geometry: a
+three-leaf tree with bottom pair (b,x), top good leaf y, and
+x/b tending to 2 from below and y/(b+x) tending to 4/5 from below has
+good-size ratio y/x tending to 6/5<5/4 and bad fraction tending to 5/27.
+This does not assert sharpness or realization by the canonical recurrence.
+No distribution or independence assumption on its clocks enters the proof.
+
+**A sharper loss near the bottom of the terminal window.** If every good
+terminal has size at most t, where 4t<5L and 2t<U, then for every n>=U,
+
+$$
+\frac{C(n)}n\le M-\frac59\varepsilon.
+$$
+
+Indeed, let y be a good terminal and z its sibling. Every node of the
+stopped tree has size at least L. The good terminal cannot be the larger
+child: that would give y>5z/4>=5L/4>t. Therefore 5y/4<z<2y<=2t<U,
+so z is also an original terminal. It is bad, since otherwise their
+expanded parent would have size at most 2t<U. Different good leaves
+have distinct bad siblings. Summing these disjoint cherries gives bad
+mass at least 5/4 times good mass, hence a bad fraction at least 5/9.
+If there are no good terminals, the fraction is one. Averaging proves
+the sharper bound. A lower endpoint s for the good sizes is unnecessary
+in this case.
+
+**Application to the existing certificate.** On [F_44,F_46), use
+M=B=567008869/866573824 from the preceding theorem. Exact comparisons on
+the already independently verified width-512 cells give
+
+$$
+\frac{C(x)}x\le Q:=\frac{930025197}{1421405696}
+\quad\text{outside }[L,t]=[701408733,876760575].
+$$
+
+Here t is the last cell endpoint below 5L/4. Each comparison
+uses the cell upper value divided by the smallest source in that cell's
+intersection with [F_44,F_46). All 1874124 cells above t have ratio at
+most Q, which is the preceding row-45 bound. The largest outside certified
+ratio is attained by upper value 930025197 at cell start 1421405696. This is a
+witness for the enclosure ratio, not an assertion about the exact C-value.
+
+Take epsilon=B-Q. Here 4t<5F_44 and 2t<F_46, so the sharper result
+applies. For every n>=F_46=1836311903,
+
+$$
+\frac{C(n)}n\le B-\frac59(B-Q)
+=\frac{14166945314882203}{21651907665904128}
+<0.65430472.
+$$
+
+The gain over B is approximately 0.00000637966. The
+[integer checker](verification/terminal_superlevel_check.py) consumes the
+existing continued certificate; its output is stored with the
+[cycle-enclosure evidence](verification/cycle-enclosure.json).
+An independent NumPy calculation checks the same outside maximum and
+localization. No later canonical terms are evaluated.
+
+This numerical corollary can also be obtained directly from the earlier
+native-row propagation argument: row 46 has its larger child in closed
+row 45 and its smaller child in closed row 44, giving
+B_46=(5Q+4B)/9. Row 47 is bounded by (2B_46+Q)/3<B_46.
+The finite-window principle at j=46 then gives the same tail bound.
+The terminal theorem supplies a more general condition on the high-value
+set; it is not required for this particular numerical corollary.
+
+This is a positive quantitative loss on an infinite tail. To obtain full
+convergence by repetition, one would still need near-maximum terminal
+sets with a uniform loss mechanism at arbitrarily large orders and losses
+whose cumulative size closes the gap to alpha. That statement is unproved.
 
 ### Continuous cycle readouts do not determine the golden profile
 
