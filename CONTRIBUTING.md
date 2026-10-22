@@ -400,3 +400,16 @@ starting at or above its threshold. Both programs verify every derived
 cell from the original exact prefix, including cells crossing row boundaries.
 Compare with the continuation fields of the same evidence file. No further
 canonical prefix generation is needed.
+
+For the [continuous relaxed cycle family](cloitre-conway/dispersion.md#continuous-cycle-readouts-do-not-determine-the-golden-profile):
+
+```sh
+python3 cloitre-conway/verification/cycle_counterprofile.py
+```
+
+Compare the output with
+[cycle-counterprofile.json](cloitre-conway/verification/cycle-counterprofile.json).
+These are 80-digit checks of explicit real functions and selectors, separate
+from the canonical integer sequence. The written proof covers every source
+and every member of the family. The optional --figure PATH argument requires
+Matplotlib and reproduces the displayed figure for m=4.

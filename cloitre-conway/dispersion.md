@@ -17,6 +17,7 @@ Prerequisites: [global golden structure](golden-proof.md) and the
 - [A one-sided landing-displacement criterion](#a-one-sided-landing-displacement-criterion)
 - [A finite-window maximum principle](#a-finite-window-maximum-principle)
 - [A smaller tail bound from cycle enclosures](#a-smaller-tail-bound-from-cycle-enclosures)
+- [Continuous cycle readouts do not determine the golden profile](#continuous-cycle-readouts-do-not-determine-the-golden-profile)
 - [An exact budget for the outermost cap contacts](#an-exact-budget-for-the-outermost-cap-contacts)
 - [Defect production by the canonical clock](#defect-production-by-the-canonical-clock)
 - [Contact residues on longer cycles](#contact-residues-on-longer-cycles)
@@ -353,6 +354,139 @@ This improves the original M by approximately 0.00118098 and K by
 approximately 0.00114313. It still leaves a positive gap above alpha;
 neither these finite rows nor the infinite-tail implication prove that
 continued enclosure passes converge to alpha.
+
+### Continuous cycle readouts do not determine the golden profile
+
+Retaining only a choice of periodic point loses information, even with
+continuity and monotonicity. The following real profiles separate those
+conditions from the canonical seed and clock.
+
+**Theorem (a continuous relaxed family).** Let m>=4 be an integer and
+q=phi^(1/m). There is a continuous, nondecreasing, 1-Lipschitz function A
+on the positive reals such that:
+
+- A(phi*x)=phi*A(x), with A(phi^j)=alpha*phi^j for every integer j.
+- alpha*x<=A(x)<=min(phi^j,x-alpha^2*phi^j) on phi^j<=x<phi^(j+1).
+- Every real source n>0 has a fixed point or two-cycle of T_n(x)=n-A(x)
+  whose selected point g gives A(n)=A(g)+A(n-g).
+- Every finite positive periodic orbit lies in the native capture interval
+  and in (5n/9,2n/3).
+- The lower and upper limiting ratios are alpha and
+  L_m=q/(alpha+q)>alpha. Both A and x-A have zero forward drawdowns.
+
+For m=4, L_m=0.6460027878..., below both preceding canonical tail bounds.
+As m tends to infinity these nonconstant upper ratios tend to alpha.
+This family concerns real profiles with a chosen periodic readout. It
+does not satisfy the definition of the canonical integer sequence.
+
+![Persistent oscillations of the relaxed ratio in one golden-scale block](verification/cycle-counterprofile.svg)
+
+**Construction.** Put d=alpha^2, e=alpha*q, k=d+e, and ell=alpha*k+d*q.
+For every integer r and q^r<=x<=q^(r+1), set
+
+$$
+A(x)=q^r\min\left(\frac{x}{q^r}-d,\ e\right).
+$$
+
+Adjacent formulas agree at the endpoints, where A(q^r)=alpha*q^r.
+Within each cell A has slope one and then zero. Thus A and x-A are
+nondecreasing, A is 1-Lipschitz, and A(q*x)=q*A(x). Since q^m=phi,
+golden scaling and all golden anchors follow. The ratio is at least alpha
+and reaches its maximum at the knee x=k*q^r:
+
+$$
+L_m=\frac{e}{k}=\frac{q}{\alpha+q}>\alpha.
+$$
+
+Because q<=phi^(1/4)<8/7 and alpha>8/13, L_m<13/20. The golden anchors,
+monotonicity and the Lipschitz bound give the native cap: for
+phi^j<=x<=phi^(j+1), the left anchor gives A(x)<=x-alpha^2*phi^j,
+while the right anchor gives A(x)<=phi^j.
+
+**Exact selectors at every source.** Scaling reduces the calculation to
+1<=n<=q. We have 1<k<ell<q: q-k=d(q-1), ell-k=d(q-k), and
+q-ell=alpha(q-k). The table gives g and its image y=T_n(g):
+
+| Source range | g | y |
+|---|---|---|
+| 1<=n<=k | alpha*n | n-alpha*A(n) |
+| k<=n<=ell | alpha*k | n-alpha^2*q |
+| ell<=n<=q | n-alpha^2*q | g |
+
+In the first row g and y belong to [alpha,alpha*k], where
+A(z)=z-alpha^3. Substitution gives T_n(y)=g. Also n-g=alpha^2*n;
+golden scaling makes the additive readout exact.
+
+In the second row y is in the same ramp, and A(g)=alpha^2*q, so again
+T_n(y)=g. The complement n-g is in the plateau
+[alpha^2*k,alpha^2*q], where A(n-g)=alpha^3*q. Their sum is
+(alpha^2+alpha^3)q=alpha*q=A(n).
+
+In the third row g lies in [alpha*k,alpha*q], where A(g)=alpha^2*q.
+It is a fixed point. Its complement is the anchor alpha^2*q,
+with value alpha^3*q, giving the same exact readout. The selectors agree
+at the shared endpoints. This proves the equation at every real source.
+
+The phase still affects the scalar readout. At the knee n=k, the selected
+point g=alpha*k gives A(k), but its partner y=k-alpha^2*q gives a smaller
+readout, with the exact gap
+
+$$
+A(k)-\bigl(A(y)+A(k-y)\bigr)=\alpha^4(q-1)>0.
+$$
+
+Scaling by q^r scales this gap by q^r. Thus the same captured two-cycle
+has two macroscopically different readouts; specifying which phase is
+selected adds information beyond its period and location.
+
+**Capture of every finite cycle.** Since A is nondecreasing, T_n reverses
+order, so its finite cycles have period at most two. Native capture
+actually follows just from monotonicity of A and H(x)=x-A(x), the golden
+lower bound, and the golden anchors. Let u and v be the minimum and maximum
+of a finite cycle. Order reversal gives u=n-A(v), v=n-A(u), and hence
+H(u)=H(v). Thus H is constant on [u,v]. No golden anchor b can satisfy
+u<b<=v: otherwise H(u)<=alpha^2*u<alpha^2*b=H(b), a contradiction.
+
+Take a<=n<=phi*a with a a golden anchor. If v>a, then either u<a and
+the interval crosses a, or u>=a and n=v+A(u)>a+A(a)=phi*a. Both are
+impossible. If u<alpha*a, then either v>=alpha*a and the interval crosses
+that anchor, or v<alpha*a and n=u+A(v)<alpha*a+A(alpha*a)=a. Thus every
+cycle lies in [alpha*a,a]. Monotonicity puts its predecessor's A-value
+in [alpha^2*a,alpha*a], and the cycle equation gives native capture:
+
+$$
+\max(\alpha a,n-\alpha a)\le x
+\le\min(a,n-\alpha^2a).
+$$
+
+For universal capture, let u and v be the minimum and maximum of a finite
+cycle. The bounds alpha*x<=A(x)<=L_m*x give u>=n-L_m*v and
+v<=n-alpha*u. Hence
+
+$$
+\frac{1-L_m}{1-\alpha L_m}\,n\le u\le v
+\le\frac{1-\alpha}{1-\alpha L_m}\,n.
+$$
+
+Using L_m<13/20 and alpha>3/5, the lower coefficient exceeds 35/61>5/9
+and the upper coefficient is below 40/61<2/3. All periodic points are
+strictly inside the required universal interval.
+
+Finally, anchors q^r and knees k*q^r attain the ratios alpha and L_m
+at arbitrarily large scales, proving both limiting ratios. QED.
+
+The [arithmetic checks](verification/cycle_counterprofile.py) verify the
+three selectors, cycle equations, additive readouts and capture bounds at
+4851 sources with 80-digit arithmetic and reproduce the figure. The
+argument above establishes the infinite family;
+[finite evidence](verification/cycle-counterprofile.json) corroborates it.
+
+Continuity, zero forward drawdowns in both complementary profiles, exact
+golden anchors, and exact readout at captured cycles therefore do not
+determine the golden profile. A canonical convergence proof must use
+additional information, such as the actual seed, stopping time or initial
+history. This result does not exclude canonical convergence or establish
+stagnation of a particular prefix-based enclosure computation.
 
 ### An exact budget for the outermost cap contacts
 
