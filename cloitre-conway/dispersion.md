@@ -366,7 +366,7 @@ tree must put a uniform fraction of its terminal mass outside that range.
 U=F_(j+2). Suppose C(x)/x<=M for L<=x<U. Let epsilon>0, and suppose
 
 $$
-\{x\in[L,U):C(x)/x>M-\varepsilon\}\subseteq[s,t],
+\lbrace x\in[L,U):C(x)/x>M-\varepsilon\rbrace\subseteq[s,t],
 \qquad L\le s\le t<U,\qquad \frac ts<\frac54.
 $$
 
