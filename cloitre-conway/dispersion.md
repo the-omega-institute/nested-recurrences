@@ -367,8 +367,8 @@ on the positive reals such that:
 
 - A(phi*x)=phi*A(x), with A(phi^j)=alpha*phi^j for every integer j.
 - alpha*x<=A(x)<=min(phi^j,x-alpha^2*phi^j) on phi^j<=x<phi^(j+1).
-- Every real source n>0 has a fixed point or two-cycle of T_n(x)=n-A(x)
-  whose selected point g gives A(n)=A(g)+A(n-g).
+- For every real source n>0, the greatest positive periodic point g of
+  T_n(x)=n-A(x) gives A(n)=A(g)+A(n-g).
 - Every finite positive periodic orbit lies in the native capture interval
   and in (5n/9,2n/3).
 - The lower and upper limiting ratios are alpha and
@@ -427,6 +427,47 @@ It is a fixed point. Its complement is the anchor alpha^2*q,
 with value alpha^3*q, giving the same exact readout. The selectors agree
 at the shared endpoints. This proves the equation at every real source.
 
+**The greatest periodic point also gives the exact readout.** This holds
+for every member of the family, not just the three choices above. Put
+tau=d+alpha*k=alpha+d*q. Then 1<tau<k<ell<q. For 1<=n<=q, the
+greatest periodic point v is
+
+| Source range | Greatest periodic point v |
+|---|---|
+| 1<=n<=tau | n-d |
+| tau<=n<=ell | alpha*k |
+| ell<=n<=q | n-d*q |
+
+To see that these are the greatest points, use the monotone-anchor
+argument below with the q-grid anchors. A periodic extrema interval
+cannot cross any such anchor, since H is constant on that interval
+and H(b)=d*b at a grid anchor b. If its maximum exceeded alpha*q,
+both extrema would be at least alpha*q, forcing n>q. If its minimum
+were below alpha, both would be below alpha, forcing n<1. Thus every
+periodic point lies in [alpha,alpha*q]. On this interval A is the ramp
+z-alpha^3 up to alpha*k, then the plateau d*q.
+
+For n<=ell, two ramp points are exchanged precisely when their sum is
+n+alpha^3. The full periodic set is therefore
+
+$$
+\left[\max(\alpha,n-dq),\ \min(\alpha k,n-d)\right].
+$$
+
+A periodic pair cannot have a point strictly above alpha*k and another
+on the ramp: the second iterate of the plateau point would be alpha*k.
+For n>ell the only periodic point is the plateau fixed point n-d*q.
+These observations give the table, including its shared endpoints.
+
+For 1<=n<=tau, A(v)=n-alpha and A(n-v)=A(d)=alpha^3;
+their sum is n-d=A(n). For tau<=n<=k, A(v)=d*q and
+n-v lies on the low ramp [d,d*k], where A(n-v)=n-alpha*k-alpha^4.
+Since alpha*k=d*q+alpha^3 and alpha^3+alpha^4=d, the sum is again
+n-d=A(n). On k<=n<=ell and ell<=n<=q the greatest point is the
+previously checked second and third selector, respectively. Homogeneity
+scales the entire periodic set and its greatest point, proving this
+stronger selector statement for every positive real source.
+
 The phase still affects the scalar readout. At the knee n=k, the selected
 point g=alpha*k gives A(k), but its partner y=k-alpha^2*q gives a smaller
 readout, with the exact gap
@@ -476,8 +517,9 @@ Finally, anchors q^r and knees k*q^r attain the ratios alpha and L_m
 at arbitrarily large scales, proving both limiting ratios. QED.
 
 The [arithmetic checks](verification/cycle_counterprofile.py) verify the
-three selectors, cycle equations, additive readouts and capture bounds at
-4851 sources with 80-digit arithmetic and reproduce the figure. The
+original three selectors at 4851 sources and the greatest periodic selector
+at 6468 sources with 80-digit arithmetic, including all regime endpoints.
+They check cycle equations, additive readouts and capture bounds and reproduce the figure. The
 argument above establishes the infinite family;
 [finite evidence](verification/cycle-counterprofile.json) corroborates it.
 
@@ -487,6 +529,15 @@ determine the golden profile. A canonical convergence proof must use
 additional information, such as the actual seed, stopping time or initial
 history. This result does not exclude canonical convergence or establish
 stagnation of a particular prefix-based enclosure computation.
+
+For an exactly nondecreasing integer input, an even clock from the upper
+seed selects the greatest periodic point once it has reached its cycle.
+The real family therefore also excludes greatest-point selection alone
+as a golden-rigidity argument. It does not identify the limit of the
+canonical full-clock selector. A passage from integer iterates to that
+real selector would require a separate stability argument over a number
+of iterations proportional to the source; such stability is not proved
+by sublinear drawdown bounds alone here.
 
 ### An exact budget for the outermost cap contacts
 

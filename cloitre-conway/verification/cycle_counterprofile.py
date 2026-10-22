@@ -78,6 +78,39 @@ def main():
                                               source - defect * native_anchor) + tolerance * source
                 checked += 1
     assert alpha < maximum < Decimal(13) / 20
+    first_switch = defect + alpha * knee
+    greatest_checked = 0
+    greatest_error = Decimal(0)
+    for exponent in range(-24, 25):
+        scale = ratio ** exponent
+        for region, left, right in ((1, one, first_switch),
+                                    (2, first_switch, knee),
+                                    (3, knee, transition),
+                                    (4, transition, ratio)):
+            for step in range(33):
+                source = left + (right - left) * step / 32
+                if region == 1:
+                    selected = source - defect
+                elif region in (2, 3):
+                    selected = alpha * knee
+                else:
+                    selected = source - defect * ratio
+                source *= scale
+                selected *= scale
+                partner = source - profile(selected)
+                residuals = [source - profile(partner) - selected,
+                             profile(selected) + profile(source - selected)
+                             - profile(source)]
+                error = max(abs(value) / source for value in residuals)
+                greatest_error = max(greatest_error, error)
+                assert error < tolerance
+                if region <= 3:
+                    lower = max(alpha * scale, source - defect * ratio * scale)
+                    for sample in range(9):
+                        point = lower + (selected - lower) * sample / 8
+                        return_error = source - profile(source - profile(point)) - point
+                        assert abs(return_error) / source < tolerance
+                greatest_checked += 1
     knee_partner = knee - defect * ratio
     phase_gap = profile(knee) - profile(knee_partner) - profile(knee - knee_partner)
     exact_gap = alpha ** 4 * (ratio - one)
@@ -86,8 +119,11 @@ def main():
         sources_checked=checked, precision_digits=80,
         maximum_relative_residual=str(maximum_error), maximum_ratio=str(maximum),
         knee_phase_gap=str(exact_gap),
+        greatest_selector_sources_checked=greatest_checked,
+        greatest_selector_maximum_relative_residual=str(greatest_error),
         scope='Finite high-precision checks of all three explicit selectors, '
-              'their cycles/readouts and capture bounds. The written proof '
+              'their cycles/readouts and capture bounds, plus the greatest '
+              'periodic selector and its periodic interval. The written proof '
               'establishes the construction for all positive reals; these '
               'checks alone do not.'), indent=2))
     if arguments.figure:
