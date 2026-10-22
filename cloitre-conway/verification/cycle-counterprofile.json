@@ -1,0 +1,7 @@
+{
+  "sources_checked": 4851,
+  "precision_digits": 80,
+  "maximum_relative_residual": "1.1947906359334056116926980787310879475086703828775770147942681983936034594935648E-79",
+  "maximum_ratio": "0.64600278780751461665841252759177737787566883192696874054334242723054893926220474",
+  "scope": "Finite high-precision checks of all three explicit selectors, their cycles/readouts and capture bounds. The written proof establishes the construction for all positive reals; these checks alone do not."
+}
