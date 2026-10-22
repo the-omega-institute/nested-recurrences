@@ -7,6 +7,8 @@ import numpy as np
 
 
 def main():
+    if not __debug__:
+        raise RuntimeError('certificate verification requires enabled assertions')
     parser = argparse.ArgumentParser()
     parser.add_argument('values', type=Path)
     parser.add_argument('certificate', type=Path)
