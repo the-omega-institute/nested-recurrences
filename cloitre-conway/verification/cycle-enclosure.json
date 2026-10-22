@@ -60,6 +60,56 @@
       206552064
     ]
   },
+  "continuation": {
+    "bootstrap_bound": "19580084505646265/29872542956223744",
+    "bootstrap_threshold": 165580141,
+    "cap_rule": "Use the bootstrap bound only when the source cell starts at or above its threshold; retain the old M cap for the cell crossing that threshold.",
+    "enclosure": {
+      "cell_width": 512,
+      "known_prefix_through": 141422079,
+      "derived_through": 1836311902,
+      "max_iterations": 100,
+      "total_iterations": 117381884,
+      "max_readout_cells": 9503,
+      "total_readout_cells": 1752115676,
+      "row41_contact_cells": 0,
+      "row41_bound": [135534876, 206789632],
+      "row_bounds": {
+        "41": [135534876, 206789632],
+        "42": [222488610, 339557376],
+        "43": [357949768, 546914304],
+        "44": [567008869, 866573824],
+        "45": [930025197, 1421405696]
+      }
+    },
+    "independent_verification": {
+      "cell_width": 512,
+      "known_prefix_through": 141422079,
+      "derived_through": 1836311902,
+      "known_cells_verified": 276215,
+      "derived_cells_verified": 3310332,
+      "independent_enclosure_queries": 331033200,
+      "readout_cells_verified": 1752115676,
+      "row_bounds": {
+        "41": "33883719/51697408",
+        "42": "37081435/56592896",
+        "43": "44743721/68364288",
+        "44": "567008869/866573824",
+        "45": "930025197/1421405696"
+      },
+      "tail_threshold": 701408733,
+      "tail_bound": "567008869/866573824",
+      "tail_bound_float": 0.6543110965234971,
+      "improvement": 0.001143128928269646,
+      "scope": "Independent sparse-table verification of every cell from the retained canonical prefix, using the previously proved tail cap. The finite-window argument at order44 supplies the infinite conclusion."
+    },
+    "tail": {
+      "threshold": 701408733,
+      "bound": "567008869/866573824",
+      "bound_float": 0.6543110965234971,
+      "scope": "Rows44 and45 together give this bound on the entire window[F44,F46). The finite-window maximum principle extends it to every later index. Full convergence remains open."
+    }
+  },
   "tail": {
     "threshold": 165580141,
     "old_bound": "42085100/64203827",

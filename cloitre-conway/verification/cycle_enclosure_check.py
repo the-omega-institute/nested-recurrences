@@ -7,6 +7,8 @@ import numpy as np
 
 
 def main():
+    if not __debug__:
+        raise RuntimeError('certificate verification requires enabled assertions')
     parser = argparse.ArgumentParser()
     parser.add_argument('values', type=Path)
     parser.add_argument('certificate', type=Path)
@@ -15,7 +17,8 @@ def main():
     width, known, end = map(int, raw[:3])
     assert 16 <= width <= 65536
     assert 102334155 <= known + 1 <= 165580141
-    assert end == 267914295
+    assert end in (267914295, 1836311902)
+    continuation = end == 1836311902
     bounds = raw[3:].reshape(-1, 2)
     cells = len(bounds)
     assert cells == end // width + 1
@@ -72,8 +75,8 @@ def main():
     lower_readout = np.empty(len(first), dtype=np.uint32)
     upper_readout = np.empty(len(first), dtype=np.uint32)
     readout_cells = 0
-    for start in range(0, len(first), 4096):
-        stop = min(start + 4096, len(first))
+    for start in range(0, len(first), 256):
+        stop = min(start + 256, len(first))
         counts = right[start:stop] // width - left[start:stop] // width + 1
         offsets = np.concatenate(([0], np.cumsum(counts)))
         parent = np.repeat(np.arange(start, stop), counts)
@@ -100,11 +103,43 @@ def main():
     assert np.all((root + 1) * (root + 1) > radicand)
     golden = (root - shifted) // 2
     lower_readout = np.maximum(lower_readout, golden)
-    upper_readout = np.minimum(upper_readout, 42085100 * last // 64203827)
+    scalar_cap = (np.array([
+        42085100 * int(source) // 64203827 if source_first < fib[41]
+        else 19580084505646265 * int(source) // 29872542956223744
+        for source_first, source in zip(first, last)], dtype=np.uint32) if continuation
+        else 42085100 * last // 64203827)
+    upper_readout = np.minimum(upper_readout, scalar_cap)
     upper_readout = np.minimum(upper_readout,
                               np.minimum(last - fib[order_last - 2], fib[order_last]))
     assert np.array_equal(bounds[known_cells:, 0], lower_readout)
     assert np.array_equal(bounds[known_cells:, 1], upper_readout)
+    if continuation:
+        row_bounds = {}
+        for order in range(41, 46):
+            in_row = (last >= fib[order]) & (first < fib[order + 1])
+            source_first = np.maximum(first[in_row], fib[order])
+            upper_row = upper_readout[in_row].astype(np.int64)
+            witness = int(np.argmax(upper_row / source_first))
+            numerator = int(upper_row[witness])
+            denominator = int(source_first[witness])
+            assert np.all(upper_row * denominator <= numerator * source_first)
+            row_bounds[order] = Fraction(numerator, denominator)
+        tail_bound = max(row_bounds[44], row_bounds[45])
+        old = Fraction(19580084505646265, 29872542956223744)
+        assert tail_bound < old
+        print(json.dumps(dict(
+            cell_width=width, known_prefix_through=known, derived_through=end,
+            known_cells_verified=known_cells, derived_cells_verified=len(first),
+            independent_enclosure_queries=100 * len(first),
+            readout_cells_verified=readout_cells,
+            row_bounds={order: str(value) for order, value in row_bounds.items()},
+            tail_threshold=int(fib[44]), tail_bound=str(tail_bound),
+            tail_bound_float=float(tail_bound), improvement=float(old - tail_bound),
+            scope='Independent sparse-table verification of every cell from the '
+                  'retained canonical prefix, using the previously proved tail '
+                  'cap. The finite-window argument at order44 supplies the '
+                  'infinite conclusion.'), indent=2))
+        return
     row = last >= fib[41]
     source_first = np.maximum(first[row], fib[41])
     upper_row = upper_readout[row].astype(np.int64)

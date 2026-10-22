@@ -384,3 +384,19 @@ a different range-query algorithm. The temporary bounds file is reproducible
 and is not a sequence-value array. This optional check is separate from the
 eight default replays; the written propagation argument supplies the infinite
 tail bound. Full golden-ratio convergence remains open.
+
+To reproduce the stronger continued tail bound, first use the proved
+initial-pass bound as described in the same note, then continue the
+enclosures through Fibonacci order 46 with the same retained prefix:
+
+```sh
+/tmp/cycle_enclosure /tmp/conway-values.u32 512 /tmp/continued-bounds.u32 46
+python3 cloitre-conway/verification/cycle_enclosure_check.py /tmp/conway-values.u32 /tmp/continued-bounds.u32
+```
+
+The optional final argument selects terminal order 42 (the default) or 46.
+The latter reuses the established tail bound as a cap only on source cells
+starting at or above its threshold. Both programs verify every derived
+cell from the original exact prefix, including cells crossing row boundaries.
+Compare with the continuation fields of the same evidence file. No further
+canonical prefix generation is needed.

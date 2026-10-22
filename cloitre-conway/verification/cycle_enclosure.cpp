@@ -167,8 +167,8 @@ int main(int argc, char** argv) {
             throw std::runtime_error("unknown generation option");
         return generate_values(std::strtoul(argv[2], nullptr, 10), argv[3], visited);
     }
-    if (argc != 3 && argc != 4)
-        throw std::runtime_error("expected values path, cell width, optional certificate path");
+    if (argc < 3 || argc > 5)
+        throw std::runtime_error("expected values path, width, optional certificate and terminal order");
     const std::uint32_t width = std::strtoul(argv[2], nullptr, 10);
     if (width < 16 || width > 65536) throw std::runtime_error("invalid width");
     const int descriptor = open(argv[1], O_RDONLY);
@@ -183,15 +183,19 @@ int main(int argc, char** argv) {
     if (values == MAP_FAILED) throw std::runtime_error("mmap failed");
     const auto retained_cells = (bytes / sizeof(*values)) / width;
     const auto first_unknown = retained_cells * width;
+    const auto terminal_order = argc == 5 ? std::strtoul(argv[4], nullptr, 10) : 42;
+    if (terminal_order != 42 && terminal_order != 46)
+        throw std::runtime_error("terminal order must be42 or46");
+    const bool continuation = terminal_order == 46;
     std::vector<std::uint32_t> fibonacci {0, 1};
-    while (fibonacci.size() <= 44) fibonacci.push_back(
+    while (fibonacci.size() <= 46) fibonacci.push_back(
         fibonacci.back() + fibonacci[fibonacci.size() - 2]);
     if (first_unknown < fibonacci[40] || first_unknown > fibonacci[41])
         throw std::runtime_error("known prefix must end between Fibonacci orders40 and41");
-    if (argc == 4 && std::filesystem::exists(argv[3]) &&
+    if (argc >= 4 && std::filesystem::exists(argv[3]) &&
         std::filesystem::equivalent(argv[1], argv[3]))
         throw std::runtime_error("certificate output must differ from the input prefix");
-    const auto end = fibonacci[42] - 1;
+    const auto end = fibonacci[terminal_order] - 1;
     Oracle bounds(std::size_t(end) / width + 1, width);
     for (std::size_t cell = 0; cell < retained_cells; ++cell) {
         Range range {std::numeric_limits<std::uint32_t>::max(), 0};
@@ -217,6 +221,7 @@ int main(int argc, char** argv) {
     std::uint64_t total_iterations = 0, total_readout_cells = 0;
     std::uint32_t maximum_numerator = 0, maximum_denominator = 1;
     std::uint32_t contact_cells = 0;
+    std::vector<std::pair<std::uint32_t, std::uint32_t>> row_bounds(terminal_order, {0, 1});
     constexpr std::uint64_t numerator = 42085100, denominator = 64203827;
     for (std::size_t cell = retained_cells; cell * width <= end; ++cell) {
         const auto first = std::uint32_t(cell * width);
@@ -252,12 +257,16 @@ int main(int argc, char** argv) {
         total_readout_cells += readout_cells;
         const auto last_order = order_of(last);
         readout.lower = std::max(readout.lower, golden(first));
-        readout.upper = std::min(readout.upper, std::uint32_t(numerator * last / denominator));
+        const auto scalar_cap = continuation && first >= fibonacci[41]
+            ? std::uint32_t(static_cast<unsigned __int128>(19580084505646265ULL)
+                            * last / 29872542956223744ULL)
+            : std::uint32_t(numerator * last / denominator);
+        readout.upper = std::min(readout.upper, scalar_cap);
         readout.upper = std::min(readout.upper,
             std::min(last - fibonacci[last_order - 2], fibonacci[last_order]));
         if (readout.lower > readout.upper) throw std::runtime_error("inconsistent bound");
         bounds.insert(cell, readout);
-        if (last >= fibonacci[41]) {
+        if (last >= fibonacci[41] && first < fibonacci[42]) {
             const auto source_first = std::max(first, fibonacci[41]);
             if (denominator * readout.upper >= numerator * source_first) ++contact_cells;
             if (std::uint64_t(readout.upper) * maximum_denominator >
@@ -265,6 +274,14 @@ int main(int argc, char** argv) {
                 maximum_numerator = readout.upper;
                 maximum_denominator = source_first;
             }
+        }
+        const auto first_order = std::max(decltype(last_order)(41), order_of(first));
+        for (auto order = first_order; order <= last_order; ++order) {
+            const auto source_first = std::max(first, fibonacci[order]);
+            auto& maximum = row_bounds[order];
+            if (std::uint64_t(readout.upper) * maximum.second >
+                std::uint64_t(maximum.first) * source_first)
+                maximum = {readout.upper, source_first};
         }
     }
     std::cout << "{\"cell_width\":" << width
@@ -276,8 +293,18 @@ int main(int argc, char** argv) {
               << ",\"total_readout_cells\":" << total_readout_cells
               << ",\"row41_contact_cells\":" << contact_cells
               << ",\"row41_bound\":[" << maximum_numerator << ','
-              << maximum_denominator << "]}\n";
-    if (argc == 4) {
+              << maximum_denominator << "]";
+    if (continuation) {
+        std::cout << ",\"row_bounds\":{";
+        for (std::size_t order = 41; order < terminal_order; ++order) {
+            if (order != 41) std::cout << ',';
+            std::cout << '\"' << order << "\":[" << row_bounds[order].first
+                      << ',' << row_bounds[order].second << ']';
+        }
+        std::cout << '}';
+    }
+    std::cout << "}\n";
+    if (argc >= 4) {
         std::ofstream certificate(argv[3], std::ios::binary);
         if (!certificate) throw std::runtime_error("certificate output unavailable");
         const std::uint32_t header[] = {width, std::uint32_t(first_unknown - 1), end};
