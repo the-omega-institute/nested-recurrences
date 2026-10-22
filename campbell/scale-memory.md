@@ -302,6 +302,13 @@ therefore identifies the endpoint directly. Cloitre's parent value is a
 sum of two child values and can leave their allocation ambiguous, even on
 an actual five-cycle. With lower profiles supplied, a second-child cap
 determines a periodic seed and removes separate cycle/phase labels.
+The [complete interior fibre](../cloitre-conway/recursive-descent.md#interior-descent-preserves-a-scalar-valid-phase-ambiguity)
+also has a checked cross-cycle ambiguity: all five parent readouts stay
+fixed while the descendants' joint coefficients change. Its one-bit
+phase certificate uses actual smaller profiles; it is not an input lower
+bound for computing C. Supplying Campbell's parent value already fixes
+its endpoint, so this scalar-to-child distinction persists across the
+two arithmetic families.
 
 The checker generates18 contexts at q3..8 from the recurrence, checks
 all90 canonical words, verifies every selected endpoint by literal

@@ -1,6 +1,6 @@
 {
   "status": "Exact moving negative plateau, shelf-barrier seed and boundary arithmetic closure; two-collar and single-negative-seed premises and finite corroboration; orbit bounds use golden-proof.md, and exact-collars.md states the induction, propagation and boundary proofs; no Lean formalization.",
-  "source_sha256": "a616de6325a609c1260f7a33aa849849f65f76bd1d66d4461f55b89367d4a951",
+  "source_sha256": "423f4a3c7f6c6fb479526957562bddd3394798b24f2530611663649501306140",
   "evaluator_source_sha256": "7049c4cb9334d512fc96f329d3982ca70dd0cd05350966cca88713ebd3c943e4",
   "limit": 131071,
   "sequence_sha256": "9458171d926d541155296e14eb186d6962f8ce14b7c540959c11e373de8b3faf",
@@ -8672,6 +8672,214 @@
                 7
               ]
             ],
+            "interior_descent": {
+              "scalar_ratio_bounds": [
+                "21/34",
+                "8900/13459"
+              ],
+              "first_child_ratio_bounds": [
+                "77503/135353",
+                "174967/270706"
+              ],
+              "threshold": 317811,
+              "normalized_descendant_bounds": {
+                "a": [
+                  "154928497/135353000",
+                  "174967/135353"
+                ],
+                "b": [
+                  "191382261/270706000",
+                  "115700/135353"
+                ],
+                "aa": [
+                  "12007423302991/18320434609000",
+                  "30613451089/36640869218"
+                ],
+                "ab": [
+                  "14832699374283/36640869218000",
+                  "10121840950/18320434609"
+                ],
+                "ba": [
+                  "14832699374283/36640869218000",
+                  "10121840950/18320434609"
+                ],
+                "bb": [
+                  "18322746285879/73281738436000",
+                  "6693245000/18320434609"
+                ]
+              },
+              "symbolic_orders_inclusive": [
+                32,
+                120
+              ],
+              "symbolic_gateway_cases": 18690,
+              "actual_orders_inclusive": [
+                32,
+                34
+              ],
+              "gateway_occurrences": 420,
+              "unique_gateways": 84,
+              "selected_tree_occurrences": 2940,
+              "minimum_actual_upper_anchor_caps_by_depth": {
+                "0": 250476,
+                "1": 78530,
+                "2": 23363
+              },
+              "canonical_fibres": [
+                {
+                  "index": 1663944,
+                  "value": 1095358,
+                  "strip": [
+                    952773,
+                    1075466
+                  ],
+                  "all_cycle_lengths": [
+                    1,
+                    1,
+                    1,
+                    17,
+                    25
+                  ],
+                  "periodic_points": 45,
+                  "distinct_scalar_outputs": 43,
+                  "scalar_valid_phases": [
+                    1003797,
+                    1003866
+                  ],
+                  "prescribed_phase": 1003866
+                },
+                {
+                  "index": 1663946,
+                  "value": 1095294,
+                  "strip": [
+                    952774,
+                    1075467
+                  ],
+                  "all_cycle_lengths": [
+                    1,
+                    3,
+                    4,
+                    10
+                  ],
+                  "periodic_points": 18,
+                  "distinct_scalar_outputs": 18,
+                  "scalar_valid_phases": [
+                    1004031
+                  ],
+                  "prescribed_phase": 1004031
+                },
+                {
+                  "index": 1663947,
+                  "value": 1095357,
+                  "strip": [
+                    952775,
+                    1075468
+                  ],
+                  "all_cycle_lengths": [
+                    1,
+                    4,
+                    31
+                  ],
+                  "periodic_points": 36,
+                  "distinct_scalar_outputs": 35,
+                  "scalar_valid_phases": [
+                    1003766
+                  ],
+                  "prescribed_phase": 1003766
+                },
+                {
+                  "index": 1663949,
+                  "value": 1095552,
+                  "strip": [
+                    952776,
+                    1075469
+                  ],
+                  "all_cycle_lengths": [
+                    2,
+                    2,
+                    2,
+                    3,
+                    3,
+                    4,
+                    4,
+                    6,
+                    13
+                  ],
+                  "periodic_points": 39,
+                  "distinct_scalar_outputs": 38,
+                  "scalar_valid_phases": [
+                    1003951
+                  ],
+                  "prescribed_phase": 1003951
+                },
+                {
+                  "index": 1663951,
+                  "value": 1095322,
+                  "strip": [
+                    952777,
+                    1075471
+                  ],
+                  "all_cycle_lengths": [
+                    12
+                  ],
+                  "periodic_points": 12,
+                  "distinct_scalar_outputs": 12,
+                  "scalar_valid_phases": [
+                    1003537
+                  ],
+                  "prescribed_phase": 1003537
+                }
+              ],
+              "ratio_strip_vertices": 613471,
+              "independent_full_domain_vertices": 8319732,
+              "scalar_valid_phase_vectors": 2,
+              "phase_vector_certificate_bits": 1,
+              "alternative_rows": [
+                {
+                  "first_child": 1003866,
+                  "second_child": 660078,
+                  "child_values": [
+                    659999,
+                    435359
+                  ],
+                  "child_caps": [
+                    172041,
+                    78870
+                  ],
+                  "period": 25,
+                  "prescribed": true
+                },
+                {
+                  "first_child": 1003797,
+                  "second_child": 660147,
+                  "child_values": [
+                    660057,
+                    435301
+                  ],
+                  "child_caps": [
+                    171983,
+                    78928
+                  ],
+                  "period": 17,
+                  "prescribed": false
+                }
+              ],
+              "descendant_interactions": {
+                "actual": {
+                  "first_child_indices": -579,
+                  "first_child_values": -623,
+                  "second_child_values": 457,
+                  "parent_values": -166
+                },
+                "alternative": {
+                  "first_child_indices": -648,
+                  "first_child_values": -565,
+                  "second_child_values": 399,
+                  "parent_values": -166
+                }
+              },
+              "scope": "Infinite all-cycle ratio strip and two-generation actual gateway separation by F_(K-2)/100 at K>=32. The upper-anchor cap budget gives Q>=ceil(F_(K-2)/(100P_K)), so every fixed-cap kernel has zero additive occupation at depths1/2 eventually; no uniform dispersion or positive limiting golden defect follows. Finite canonical all-cycle fibres are independently exhausted by strip indegree pruning and full-domain paths. Exactly two scalar-valid phase vectors need one certificate bit; prescribed iteration derives the true choice, so this is not an evaluation-input minimum. Parent interactions stay fixed while child interactions differ across the two certificates. Full interior value/clock construction and the original goal remain open."
+            },
             "root_scalar_joint": 0,
             "gateway_index_joint": 0,
             "gateway_readout_joint": -166,

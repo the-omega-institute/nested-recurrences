@@ -215,6 +215,47 @@ A stronger interior-time bound must use additional family information. The
 following return certificate distinguishes this time bound from the size of
 a proof that encodes many transitions arithmetically.
 
+### A ratio strip for high-order cycles
+
+The global envelopes also confine interior cycles without constructing
+their profiles. Put
+
+$$
+\ell=21/34,\qquad b=8900/13459,\qquad
+L=\frac{1-b}{1-\ell b}=\frac{77503}{135353},\qquad
+H=\frac{1-\ell}{1-\ell b}=\frac{174967}{270706}.
+\tag{R.1}
+$$
+
+**Ratio-strip theorem.** Every cycle whose points are at least F_28
+lies in[LN,HN] for T_N(x)=N-C(x). In particular this applies when
+the two-anchor capture core has lower endpoint at least F_28.
+If the whole strip is above that threshold, its integer points are
+invariant under T_N. This narrows the cycle search domain; it does
+not select a basin or phase.
+
+**Proof.** First, ell*n<=C(n)<=b*n for all n>=F_28=317811.
+For the lower bound, alpha>55/89 because5*89^2>199^2. Thus
+C(n)>=G(n)>=(55/89)(n+1)-1>=(21/34)n for n>=1156.
+For the upper bound above349525 use the established
+[global ratio certificate](golden-proof.md#8-shorter-certificates-and-the-global-limsup).
+Between F_28 and349525, the upper cap is n-F_26, and
+4559*349525<=13459*F_26. This gives the same b bound there,
+without a new finite premise.
+
+Let m and M be the minimum and maximum points of a cycle. Since
+its images are the same set,
+
+$$
+m\ge N-bM,\qquad M\le N-\ell m.
+$$
+
+Combining gives m>=LN and then M<=HN. For a point in the strip,
+the same scalar bounds give N-b*HN=LN<=T_N(x)<=N-ell*LN=HN.
+Integer images therefore remain between ceil(LN) and floor(HN).
+QED. The statement is about every qualified cycle, not only the
+one reached from the prescribed start.
+
 ### Defect-plateau return certificates
 
 Long transients need not require long certificates. Let `Psi(u)=t-H(u)` on

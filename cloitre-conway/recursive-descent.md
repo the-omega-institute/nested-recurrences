@@ -49,6 +49,7 @@ Fibonacci neighborhood, even when its support has holes.
 - [Binary prefixes close with two response states](#binary-prefixes-close-with-two-response-states)
 - [Arithmetic support cones shrink the shared response word](#arithmetic-support-cones-shrink-the-shared-response-word)
 - [The exterior replay reaches an unbounded profile after two steps](#the-exterior-replay-reaches-an-unbounded-profile-after-two-steps)
+- [Interior descent preserves a scalar-valid phase ambiguity](#interior-descent-preserves-a-scalar-valid-phase-ambiguity)
 - [Cap4 query profiles and the information they carry](#cap4-query-profiles-and-the-information-they-carry)
 
 ### Recursive windows with a parameter at every row
@@ -2395,6 +2396,143 @@ canonical context with an independent greedy decomposition;117180
 arithmetic cases cover orders28..120. No new finite premise is added
 to the infinite theorem. Full word/landing construction, the actual
 five-window minimum and uniform dispersion remain open.
+
+### Interior descent preserves a scalar-valid phase ambiguity
+
+The interior family in(G.2) does not immediately return to the solved
+bounded-cap neighborhoods under additive descent. Its first two selected
+generations stay a fixed fraction of the scale from every Fibonacci
+anchor. At a concrete five-row window, even supplying all five interior
+values leaves a choice between two scalar-valid child phases in different
+cycles. This separates knowing a readout from knowing its descendants.
+
+**Two-generation interior theorem.** Use K>=32 and the(G.1)-(G.2)
+domain, set B=F_(K-2), and let Y=2B-v+q. In the actual selected
+binary tree rooted at Y, every node through depth2 satisfies
+
+$$
+\operatorname{dist}(n,\{F_h:h\ge2\})\ge B/100. \tag{H.1}
+$$
+
+Write n=F_h-u in its closed upper-anchor block. Its cap response obeys
+
+$$
+Q_h(u)\ge\left\lceil\frac{B}{100P_K}\right\rceil,
+\tag{H.2}
+$$
+
+where P_K is the quadratic budget in(C.1). Thus every fixed-cap
+neighborhood is absent from these first two generations at all
+sufficiently large K. Here Q_h=F_(h-1)-C(n) is the upper-anchor cap;
+it is not the linear-piece deficit U(n)-C(n) in(G.4).
+
+**Proof.** Let L,H be the constants in the
+[ratio-strip theorem](fibonacci-collars.md#a-ratio-strip-for-high-order-cycles),
+c=1-H and d=1-L. The first selected child of a node has fraction
+between L and H; its complement has fraction between c and d,
+provided its cycles satisfy that theorem's threshold.
+For Y and its first two children the respective capture lower anchors
+are F_(K-2),F_(K-3),F_(K-4). They are at least F_28 when K>=32.
+The block assignments below justify using precisely these anchors.
+Also B>=1000(4K+20), first true at32 and preserved by Fibonacci
+growth. Hence1999/1000<=Y/B<2.
+
+Let a and b denote first and second child edges. The interval bounds
+for all six nonroot nodes are
+
+| Path | Lower n/B | Upper n/B | Fibonacci block containing n |
+|---|---|---|---|
+|a|(1999/1000)L|2H|[F_(K-2),F_(K-1)]|
+|b|(1999/1000)c|2d|[F_(K-3),F_(K-2)]|
+|aa|(1999/1000)L^2|2H^2|[F_(K-3),F_(K-2)]|
+|ab,ba|(1999/1000)Lc|2Hd|[F_(K-4),F_(K-3)]|
+|bb|(1999/1000)c^2|2d^2|[F_(K-5),F_(K-4)]|
+
+The first row pair follows by applying the strip at Y; it places the
+children in the stated blocks, so the threshold holds before the
+second application. Put r=F_(K-3)/B. The invariant ratio interval
+[21/34,34/55] under r->1/(1+r), starting at F_8/F_9, gives
+21/34<=r<=34/55. The normalized anchors in the table are
+1+r,1,r,1-r,2r-1. Exact rational substitution shows that every
+displayed interval has a margin greater than1/100 from both of its
+anchors. The tightest lower margin is
+(1999/1000)c^2-(2*34/55-1)>1/100; the bb upper margin is
+(1-34/55)-2d^2>1/100. The other rows have larger margins.
+The root margin is already at least B/3 by(G.3), proving(H.1).
+
+For each node its upper gap u is at least B/100>L_K>=L_h,
+so the exact zero plateau excludes Q_h(u)=0. Applying(C.1), and
+using h<=K and P_h<=P_K, proves(H.2). These inequalities inherit
+the previous infinite theorems; the finite checks below are corroboration.
+
+For Benoît's additive martingale, the mass of any fixed-cap kernel at
+depth1 or2 in this family is consequently zero for sufficiently large
+K. A proof relying on immediate entry to that kernel cannot close the
+interior step. This is not an obstruction to a longer-horizon proof or
+to dispersion within the interior itself. It supplies no positive
+limiting golden defect and no uniform dispersion inequality.
+
+**The complete scalar-valid phase contract.** Supply distinct interior
+indices Y_i, their actual values C(Y_i), and all smaller C-values.
+For each row retain every periodic point x of T_(Y_i) satisfying
+C(x)+C(Y_i-x)=C(Y_i). Do not yet impose the prescribed start/depth
+or supply a chosen cycle. A label distinguishes the retained child
+phases. The allocation-seed theorem gives one bijective allocation
+label across cycles, rather than separate cycle and phase labels.
+If the retained counts are M_i and the rows are distinct, the full
+phase-vector alphabet has product M_i symbols; its exact fixed-length
+code uses ceil(log2(product M_i)) bits. This minimum concerns the
+declared periodic-certificate alphabet. With the smaller prefix supplied,
+literal iteration can derive the true choice, so it is not an independent
+input lower bound for actual evaluation.
+
+**A checked five-row fibre.** At the canonical gateway window from(G.8),
+the ratio strip contains every cycle, not just the reached one. Exhausting
+its integer points gives
+
+| Original pattern | Y_i | Periods of all cycles | Scalar-valid first children | Actual first child |
+|---|---:|---|---|---:|
+|000|1663944|1,1,1,17,25|1003797,1003866|1003866|
+|100|1663946|1,3,4,10|1004031|1004031|
+|010|1663947|1,4,31|1003766|1003766|
+|001|1663949|2,2,2,3,3,4,4,6,13|1003951|1003951|
+|101|1663951|12|1003537|1003537|
+
+The full vector therefore has exactly two retained possibilities and
+needs exactly one bit in this contract. Within each prescribed cycle
+the scalar-valid phase is unique; that restricted census would miss
+the other000 cycle and falsely report no residual choice.
+
+Both000 alternatives use genuine smaller C-values:
+
+| First child | Complement | Child values | Child caps | Cycle period |
+|---:|---:|---|---|---:|
+|1003866|660078|659999,435359|172041,78870|25|
+|1003797|660147|660057,435301|171983,78928|17|
+
+Each sum is the actual parent value1095358 and each cap sum is250911.
+Only the first row is prescribed by the recurrence. The other is a
+scalar-valid periodic certificate, not an alternative actual sequence.
+
+The five actual first-child indices have joint coefficient-579;
+their scalar values have coefficient-623, and the second-child values
+have coefficient457, adding to the parent coefficient-166. Substituting
+the other000 phase changes these three coefficients to-648,-565,399,
+while all five parent values and their coefficient-166 stay fixed.
+Thus even knowing the parent interaction, including its101 readout,
+does not determine the descendant interactions in this contract.
+The ambiguity is visible in subsequent child readouts. Campbell's
+parent value is its selected endpoint, so supplying that scalar already
+resolves the corresponding endpoint choice.
+
+The [checker](verification/collar_check.py) verifies the selected trees
+for420 gateway occurrences at orders32..34. It independently compares
+an indegree-pruned census on the ratio strip with a full-domain path
+census for all five displayed maps. The existing independently regenerated
+prefix and literal gateway checks supply the C-values and prescribed
+endpoints. The finite fibre minimum is exact for this window; deriving
+interior values, full clock construction, the actual input minimum and
+uniform dispersion remain open.
 
 ### Cap4 query profiles and the information they carry
 
