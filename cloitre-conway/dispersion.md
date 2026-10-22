@@ -427,6 +427,18 @@ It is a fixed point. Its complement is the anchor alpha^2*q,
 with value alpha^3*q, giving the same exact readout. The selectors agree
 at the shared endpoints. This proves the equation at every real source.
 
+The phase still affects the scalar readout. At the knee n=k, the selected
+point g=alpha*k gives A(k), but its partner y=k-alpha^2*q gives a smaller
+readout, with the exact gap
+
+$$
+A(k)-\bigl(A(y)+A(k-y)\bigr)=\alpha^4(q-1)>0.
+$$
+
+Scaling by q^r scales this gap by q^r. Thus the same captured two-cycle
+has two macroscopically different readouts; specifying which phase is
+selected adds information beyond its period and location.
+
 **Capture of every finite cycle.** Since A is nondecreasing, T_n reverses
 order. Its finite cycles have period at most two. The function x+A(x) is
 strictly increasing, so the fixed point is unique. For n in

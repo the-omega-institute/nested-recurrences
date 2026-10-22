@@ -78,9 +78,14 @@ def main():
                                               source - defect * native_anchor) + tolerance * source
                 checked += 1
     assert alpha < maximum < Decimal(13) / 20
+    knee_partner = knee - defect * ratio
+    phase_gap = profile(knee) - profile(knee_partner) - profile(knee - knee_partner)
+    exact_gap = alpha ** 4 * (ratio - one)
+    assert exact_gap > 0 and abs(phase_gap - exact_gap) < tolerance
     print(json.dumps(dict(
         sources_checked=checked, precision_digits=80,
         maximum_relative_residual=str(maximum_error), maximum_ratio=str(maximum),
+        knee_phase_gap=str(exact_gap),
         scope='Finite high-precision checks of all three explicit selectors, '
               'their cycles/readouts and capture bounds. The written proof '
               'establishes the construction for all positive reals; these '
