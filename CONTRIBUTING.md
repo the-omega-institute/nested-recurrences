@@ -401,6 +401,18 @@ cell from the original exact prefix, including cells crossing row boundaries.
 Compare with the continuation fields of the same evidence file. No further
 canonical prefix generation is needed.
 
+For the [terminal-superlevel loss](cloitre-conway/dispersion.md#concentrated-high-terminal-values-force-a-uniform-loss),
+reuse that independently validated continuation file:
+
+```sh
+python3 cloitre-conway/verification/terminal_superlevel_check.py /tmp/continued-bounds.u32
+```
+
+This standard-library check certifies the high-value localization and exact
+loss constants. Compare with `terminal_superlevel` in the same evidence file.
+It consumes the enclosure certificate; it does not replace the preceding
+independent verification of that certificate from the canonical prefix.
+
 For the [continuous relaxed cycle family](cloitre-conway/dispersion.md#continuous-cycle-readouts-do-not-determine-the-golden-profile):
 
 ```sh
