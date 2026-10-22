@@ -4,5 +4,7 @@
   "maximum_relative_residual": "1.1947906359334056116926980787310879475086703828775770147942681983936034594935648E-79",
   "maximum_ratio": "0.64600278780751461665841252759177737787566883192696874054334242723054893926220474",
   "knee_phase_gap": "0.018651383681067533453734384088370076044722576401807527621076384475324475251940632",
-  "scope": "Finite high-precision checks of all three explicit selectors, their cycles/readouts and capture bounds. The written proof establishes the construction for all positive reals; these checks alone do not."
+  "greatest_selector_sources_checked": 6468,
+  "greatest_selector_maximum_relative_residual": "1.0904376304752804639533934973611134676173473053974982886591738918335333908280903E-79",
+  "scope": "Finite high-precision checks of all three explicit selectors, their cycles/readouts and capture bounds, plus the greatest periodic selector and its periodic interval. The written proof establishes the construction for all positive reals; these checks alone do not."
 }

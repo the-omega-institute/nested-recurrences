@@ -58,10 +58,10 @@ positions. The sublinear drawdown hypothesis remains unproved.
 
 A [continuous relaxed family](cloitre-conway/dispersion.md#continuous-cycle-readouts-do-not-determine-the-golden-profile)
 preserves the golden anchors and native cap, has zero forward drawdowns
-in both complementary profiles, and admits exact readouts at captured
-fixed points or two-cycles for every real source. Its ratio still oscillates,
+in both complementary profiles, and gives exact readouts at the greatest
+captured periodic point for every real source. Its ratio still oscillates,
 even below the current canonical tail bound. These are real profiles with
-a choice of cycle point. Those limiting conditions alone therefore do not
+a greatest-point selector. Those limiting conditions alone therefore do not
 replace the actual seed and clock in the canonical integer recurrence.
 
 An [earlier-row feedback theorem](cloitre-conway/frontier-dynamics.md#earlier-row-feedback-preserves-the-prescribed-clock)
