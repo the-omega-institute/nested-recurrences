@@ -110,6 +110,22 @@
       "scope": "Rows44 and45 together give this bound on the entire window[F44,F46). The finite-window maximum principle extends it to every later index. Full convergence remains open."
     }
   },
+  "terminal_superlevel": {
+    "terminal_window": [701408733, 1836311903],
+    "checked_cells": 2216609,
+    "outside_cells": 2213289,
+    "superlevel_container": [865732608, 867432447],
+    "outside_bound": "567563869/867435520",
+    "outside_bound_witness": [567563869, 867435520],
+    "previous_bound": "567008869/866573824",
+    "epsilon": "14923441527/1468158038359040",
+    "bad_mass_fraction": "233802911/867432447",
+    "improvement": "1163048023716961699/424509306598833977256960",
+    "tail_threshold": 2602297341,
+    "tail_bound": "277759986837088771923311/424509306598833977256960",
+    "tail_bound_float": 0.654308356776675,
+    "scope": "Exact integer comparisons on an already validated cycle-enclosure certificate. This program does not validate its input against the canonical prefix; cycle_enclosure_check.py supplies that separate check. The written terminal-mass argument supplies the infinite tail."
+  },
   "tail": {
     "threshold": 165580141,
     "old_bound": "42085100/64203827",
