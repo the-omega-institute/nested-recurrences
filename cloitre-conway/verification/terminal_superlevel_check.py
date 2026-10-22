@@ -19,6 +19,8 @@ def main():
     good_first, good_last = 865732608, 867432447
     assert lower_source <= good_first <= good_last < upper_source
     assert 4 * good_last < 5 * good_first
+    assert 4 * good_last < 5 * lower_source
+    assert 2 * good_last < upper_source
     bound = Fraction(567008869, 866573824)
     outside_bound = Fraction(567563869, 867435520)
     maximum_value, maximum_source = 0, 1
@@ -40,7 +42,7 @@ def main():
             maximum_value, maximum_source = upper, first
     assert Fraction(maximum_value, maximum_source) == outside_bound
     epsilon = bound - outside_bound
-    bad_mass_fraction = Fraction(lower_source, 3 * good_last)
+    bad_mass_fraction = Fraction(5, 9)
     improvement = epsilon * bad_mass_fraction
     assert epsilon > 0 and 0 < bad_mass_fraction <= 1
     print(json.dumps(dict(
@@ -50,7 +52,7 @@ def main():
         outside_bound=str(outside_bound), outside_bound_witness=[maximum_value, maximum_source],
         previous_bound=str(bound), epsilon=str(epsilon),
         bad_mass_fraction=str(bad_mass_fraction), improvement=str(improvement),
-        tail_threshold=max(upper_source, 3 * good_last),
+        tail_threshold=upper_source,
         tail_bound=str(bound - improvement), tail_bound_float=float(bound - improvement),
         scope='Exact integer comparisons on an already validated cycle-enclosure '
               'certificate. This program does not validate its input against the '

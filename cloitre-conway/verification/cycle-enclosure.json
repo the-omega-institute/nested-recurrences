@@ -119,11 +119,11 @@
     "outside_bound_witness": [567563869, 867435520],
     "previous_bound": "567008869/866573824",
     "epsilon": "14923441527/1468158038359040",
-    "bad_mass_fraction": "233802911/867432447",
-    "improvement": "1163048023716961699/424509306598833977256960",
-    "tail_threshold": 2602297341,
-    "tail_bound": "277759986837088771923311/424509306598833977256960",
-    "tail_bound_float": 0.654308356776675,
+    "bad_mass_fraction": "5/9",
+    "improvement": "4974480509/880894823015424",
+    "tail_threshold": 1836311903,
+    "tail_bound": "576374283088585/880894823015424",
+    "tail_bound_float": 0.6543054494469347,
     "scope": "Exact integer comparisons on an already validated cycle-enclosure certificate. This program does not validate its input against the canonical prefix; cycle_enclosure_check.py supplies that separate check. The written terminal-mass argument supplies the infinite tail."
   },
   "tail": {

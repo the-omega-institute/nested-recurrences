@@ -406,6 +406,24 @@ admissible sibling pair consists of two good terminal sizes; the same proof
 then uses any upper bound t on their sizes. No distribution or independence
 assumption on the prescribed clocks enters this argument.
 
+**A sharper loss near the bottom of the terminal window.** If every good
+terminal has size at most t, where 4t<5L and 2t<U, then for every n>=U,
+
+$$
+\frac{C(n)}n\le M-\frac59\varepsilon.
+$$
+
+Indeed, let y be a good terminal and z its sibling. Every node of the
+stopped tree has size at least L. The good terminal cannot be the larger
+child: that would give y>5z/4>=5L/4>t. Therefore 5y/4<z<2y<=2t<U,
+so z is also an original terminal. It is bad, since otherwise their
+expanded parent would have size at most 2t<U. Different good leaves
+have distinct bad siblings. Summing these disjoint cherries gives bad
+mass at least 5/4 times good mass, hence a bad fraction at least 5/9.
+If there are no good terminals, the fraction is one. Averaging proves
+the sharper bound. A lower endpoint s for the good sizes is unnecessary
+in this case.
+
 **Application to the existing certificate.** On [F_44,F_46), use
 M=B=567008869/866573824 from the preceding theorem. Exact comparisons on
 the already independently verified width-512 cells give
@@ -421,15 +439,16 @@ intersection with [F_44,F_46). The largest outside certified ratio is Q,
 attained by the upper value 567563869 at cell start 867435520. This is a
 witness for the enclosure ratio, not an assertion about the exact C-value.
 
-Take epsilon=B-Q. The theorem gives, for every n>=2602297341,
+Take epsilon=B-Q. Here 4t<5F_44 and 2t<F_46, so the sharper result
+applies. For every n>=F_46=1836311903,
 
 $$
-\frac{C(n)}n\le B-(B-Q)\frac{701408733}{2602297341}
-=\frac{277759986837088771923311}{424509306598833977256960}
-<0.65430836.
+\frac{C(n)}n\le B-\frac59(B-Q)
+=\frac{576374283088585}{880894823015424}
+<0.65430545.
 $$
 
-The gain over B is approximately 0.00000273975. The
+The gain over B is approximately 0.00000564708. The
 [integer checker](verification/terminal_superlevel_check.py) consumes the
 existing continued certificate; its output is stored with the
 [cycle-enclosure evidence](verification/cycle-enclosure.json).
