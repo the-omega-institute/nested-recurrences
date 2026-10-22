@@ -403,7 +403,7 @@ and M-epsilon on bad ones, proves the bound. QED.
 
 The interval condition can be replaced by the direct condition that no
 admissible sibling pair consists of two good terminal sizes; the same proof
-then uses any upper bound t on their sizes. No distribution or independence
+then uses any upper bound t>=L on their sizes. No distribution or independence
 assumption on the prescribed clocks enters this argument.
 
 **A sharper loss near the bottom of the terminal window.** If every good
@@ -455,6 +455,14 @@ existing continued certificate; its output is stored with the
 [cycle-enclosure evidence](verification/cycle-enclosure.json).
 An independent NumPy calculation checks the same outside maximum and
 localization. No later canonical terms are evaluated.
+
+This numerical corollary can also be obtained directly from the earlier
+native-row propagation argument: row 46 has its larger child in closed
+row 45 and its smaller child in closed row 44, giving
+B_46=(5Q+4B)/9. Row 47 is bounded by (2B_46+Q)/3<B_46.
+The finite-window principle at j=46 then gives the same tail bound.
+The terminal theorem supplies a more general condition on the high-value
+set; it is not required for this particular numerical corollary.
 
 This is a positive quantitative loss on an infinite tail. To obtain full
 convergence by repetition, one would still need near-maximum terminal
