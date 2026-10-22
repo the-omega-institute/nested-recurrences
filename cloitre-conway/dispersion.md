@@ -429,14 +429,15 @@ M=B=567008869/866573824 from the preceding theorem. Exact comparisons on
 the already independently verified width-512 cells give
 
 $$
-\frac{C(x)}x\le Q:=\frac{567563869}{867435520}
-\quad\text{outside }[s,t]=[865732608,867432447].
+\frac{C(x)}x\le Q:=\frac{930025197}{1421405696}
+\quad\text{outside }[L,t]=[701408733,876760575].
 $$
 
-The interval endpoints are cell boundaries, and 4t<5s. Each comparison
+Here t is the last cell endpoint below 5L/4. Each comparison
 uses the cell upper value divided by the smallest source in that cell's
-intersection with [F_44,F_46). The largest outside certified ratio is Q,
-attained by the upper value 567563869 at cell start 867435520. This is a
+intersection with [F_44,F_46). All 1874124 cells above t have ratio at
+most Q, which is the preceding row-45 bound. The largest outside certified
+ratio is attained by upper value 930025197 at cell start 1421405696. This is a
 witness for the enclosure ratio, not an assertion about the exact C-value.
 
 Take epsilon=B-Q. Here 4t<5F_44 and 2t<F_46, so the sharper result
@@ -444,11 +445,11 @@ applies. For every n>=F_46=1836311903,
 
 $$
 \frac{C(n)}n\le B-\frac59(B-Q)
-=\frac{576374283088585}{880894823015424}
-<0.65430545.
+=\frac{14166945314882203}{21651907665904128}
+<0.65430472.
 $$
 
-The gain over B is approximately 0.00000564708. The
+The gain over B is approximately 0.00000637966. The
 [integer checker](verification/terminal_superlevel_check.py) consumes the
 existing continued certificate; its output is stored with the
 [cycle-enclosure evidence](verification/cycle-enclosure.json).
