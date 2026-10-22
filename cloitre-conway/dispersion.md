@@ -370,10 +370,10 @@ $$
 \qquad L\le s\le t<U,\qquad \frac ts<\frac54.
 $$
 
-Then, for every integer n>=max(U,ceil(3t)),
+Then, for every integer n>=U,
 
 $$
-\frac{C(n)}n\le M-\varepsilon\frac{L}{3t}.
+\frac{C(n)}n\le M-\frac5{27}\varepsilon.
 $$
 
 **Proof.** Expand the actual selected children at every source at least U,
@@ -384,27 +384,44 @@ Terminal sizes sum to n, and their C-values sum to C(n).
 Call a terminal good if its ratio exceeds M-epsilon, and bad otherwise.
 The strict cycle-point bounds put the larger/smaller child ratio in (5/4,2)
 at every expanded node. Two good terminals cannot be siblings, since both
-sizes would lie in [s,t]. Consequently, any subtree containing only good
-terminals is a single good terminal: a larger finite binary tree would have
-a deepest internal node with two good terminal children.
+sizes would lie in [s,t]. Every internal subtree containing a good leaf
+has size greater than 3s/2: the leaf has size at least s and its sibling
+has size greater than s/2. Any subtree containing two good leaves has
+size greater than 2t. Indeed, at their lowest common ancestor both
+children contain good leaves, and they cannot both be single good leaves.
+One child is therefore internal and larger than 3s/2; the other has size
+at least s. Their sum exceeds 5s/2>2t.
 
-Cut the tree by expanding a node while its size is at least 3t, unless it
-is already a terminal of the original tree. An original terminal of size
-at least 3t is bad and contributes its entire size as bad mass. Every other
-cut block has size less than 3t and has a parent of size at least 3t.
-Since the child ratio is less than two, this block has size greater than t.
-It therefore cannot contain only good terminals. It contains a bad terminal
-of size at least L, so its bad-mass fraction exceeds L/(3t). The large
-terminal blocks have fraction one, which is at least L/(3t).
+Partition the tree by splitting a node unless it is a bad terminal or
+an internal node with a good terminal child y. This process never stops
+at an isolated good terminal, because its parent would already have
+stopped. In a block of the second type, the sibling subtree has size
+less than 2y<=2t. It therefore contains at most one further good leaf.
+Every such block contains one or two good leaves and positive bad mass b.
 
-The disjoint cut blocks partition the root mass. Thus the bad terminal mass
-is at least nL/(3t). Averaging the terminal ratios, using M on good terminals
-and M-epsilon on bad ones, proves the bound. QED.
+If there is just one good leaf, its sibling is entirely bad, and the
+block size is b+y<3b. Otherwise, let x be the unique good leaf in y's
+sibling subtree. The sibling of x at its own parent is entirely bad
+and has size greater than x/2, so x<2b. At the top split the sibling of
+y has size x+b>3x/2>=3s/2>t>=y. The lower child-ratio bound gives
+y<4(x+b)/5. Thus this block has size
 
-The interval condition can be replaced by the direct condition that no
-admissible sibling pair consists of two good terminal sizes; the same proof
-then uses any upper bound t>=L on their sizes. No distribution or independence
-assumption on the prescribed clocks enters this argument.
+$$
+b+x+y<\frac95(b+x)<\frac{27}{5}b.
+$$
+
+Bad-terminal blocks have bad fraction one. All blocks partition terminal
+occurrences, so their bad masses sum to more than 5n/27. Averaging the
+terminal ratios, using M on good terminals and M-epsilon on bad ones,
+proves the bound. Repeated numerical source sizes are counted as separate
+tree occurrences throughout. QED.
+
+The coefficient 5/27 is sharp for this abstract split geometry: a
+three-leaf tree with bottom pair (b,x), top good leaf y, and
+x/b tending to 2 from below and y/(b+x) tending to 4/5 from below has
+good-size ratio y/x tending to 6/5<5/4 and bad fraction tending to 5/27.
+This does not assert sharpness or realization by the canonical recurrence.
+No distribution or independence assumption on its clocks enters the proof.
 
 **A sharper loss near the bottom of the terminal window.** If every good
 terminal has size at most t, where 4t<5L and 2t<U, then for every n>=U,
