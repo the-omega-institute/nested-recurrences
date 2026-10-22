@@ -440,18 +440,19 @@ has two macroscopically different readouts; specifying which phase is
 selected adds information beyond its period and location.
 
 **Capture of every finite cycle.** Since A is nondecreasing, T_n reverses
-order. Its finite cycles have period at most two. The function x+A(x) is
-strictly increasing, so the fixed point is unique. For n in
-[a,phi*a], where a is a golden anchor, its position lies in [alpha*a,a]
-by the anchor values at the two endpoints.
+order, so its finite cycles have period at most two. Native capture
+actually follows just from monotonicity of A and H(x)=x-A(x), the golden
+lower bound, and the golden anchors. Let u and v be the minimum and maximum
+of a finite cycle. Order reversal gives u=n-A(v), v=n-A(u), and hence
+H(u)=H(v). Thus H is constant on [u,v]. No golden anchor b can satisfy
+u<b<=v: otherwise H(u)<=alpha^2*u<alpha^2*b=H(b), a contradiction.
 
-If u<v form a proper two-cycle, then A(v)-A(u)=v-u. The Lipschitz bound
-forces slope one throughout [u,v]. Such an interval cannot contain a
-q-anchor in its interior, because A is constant immediately to that
-anchor's left. The unique fixed point lies strictly between u and v.
-Since alpha*a and a are q-anchors, neither endpoint of the two-cycle
-can leave [alpha*a,a]. Monotonicity now puts every predecessor's A-value
-in [alpha^2*a,alpha*a]. Applying the cycle equation gives native capture:
+Take a<=n<=phi*a with a a golden anchor. If v>a, then either u<a and
+the interval crosses a, or u>=a and n=v+A(u)>a+A(a)=phi*a. Both are
+impossible. If u<alpha*a, then either v>=alpha*a and the interval crosses
+that anchor, or v<alpha*a and n=u+A(v)<alpha*a+A(alpha*a)=a. Thus every
+cycle lies in [alpha*a,a]. Monotonicity puts its predecessor's A-value
+in [alpha^2*a,alpha*a], and the cycle equation gives native capture:
 
 $$
 \max(\alpha a,n-\alpha a)\le x
