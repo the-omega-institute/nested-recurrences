@@ -206,6 +206,20 @@ both values and selected splits through 4096 are recorded in
 [compact evidence](verification/canonical-erosion.json).
 This is a computer-assisted infinite-tail bound, not a convergence proof.
 
+A separate full independent evaluation of the later two-block window gives
+
+$$
+\max_{F_{43}\le n<F_{45}}\frac{C(n)}n
+=\frac{367631381}{561724478}<0.65446923,
+$$
+
+with the maximum attained only at n=561724478. There are 701408733
+indices in this window. Thus the same rational bound holds for every
+n>=F_43. [Programs and compact evidence](verification/certificate-F45/README.md)
+include Cloitre's evaluator and an independent Brent regeneration from
+initial values. This direct certificate is separate from the stronger
+cycle-enclosure bounds below.
+
 ### A smaller tail bound from cycle enclosures
 
 The preceding certificate supplies M=42085100/64203827 on the whole

@@ -35,6 +35,11 @@ and iteration depth in [the definition](cloitre-conway/README.md#definition).
 | At the least extremal phase both child phases lock exactly. If forward drawdowns are sublinear, failure of convergence forces synchronized intervals of strong negative jumps across arbitrarily many consecutive Fibonacci levels. Every wrong clock orientation also forces a spatial interval of approximate two-step returns. Sublinear drawdown and exclusion of those intervals remain unproved. | [Phase locking and synchronized intervals](cloitre-conway/dispersion.md#synchronized-negative-jump-intervals-under-sublinear-drawdown) |
 | Local recursive interfaces and variance estimates are proved under explicit context and domain hypotheses. They give partial routes toward convergence; the uniform dispersion inequality remains open. | [Technical research map](cloitre-conway/README.md#technical-research-map) |
 
+A standalone [exact two-block certificate through F45](cloitre-conway/verification/certificate-F45/README.md)
+is also available with an independent regeneration from initial values.
+It supports the finite-window maximum principle without replacing the
+stronger cycle-enclosure and terminal-loss results above.
+
 The global induction and some exact-neighborhood results are
 **computer-assisted proofs**: an infinite argument uses explicit finite
 premises checked by independent programs. Finite tests of additional

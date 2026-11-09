@@ -138,6 +138,12 @@ from the eight default replays. Only the finite-window maximum principle
 turns its stated finite comparisons into an infinite-tail assertion;
 the contact and clock observations do not establish global convergence.
 
+The later [F45 certificate](cloitre-conway/verification/certificate-F45/README.md)
+recomputes the sequence from its initial values and checks the entire
+window [F43,F45). It uses about 4.6 GB and verifies the updated exact
+maximum as well as negative-jump shell maxima through 2^28. This separate
+larger check is optional and is not part of the eight default replays.
+
 For the complementary-drawdown conjecture and parity geometry, build
 the separate two-evaluator check:
 
